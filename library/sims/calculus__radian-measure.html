@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Unit Circle: Degrees and Radians using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Unit Circle: Degrees and Radians MicroSim
+// CANVAS_HEIGHT: 520
+// Students drag a point around the unit circle and read the angle in
+// degrees, radians, and multiples of pi, with sin and cos projection
+// lines. A turtle icon at the center rotates to match, bridging turtle
+// headings to the math module's radians.
+// Bloom level: Understand/Apply (interpret, convert, use) - direct
+// manipulation with live dual readouts.
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 470;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+let angleDeg = 45; // current angle in degrees, 0..360
+let dragging = false;
+
+// circle geometry, recomputed each frame
+let cx, cy, r;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  // snap buttons for landmark angles
+  let snaps = [0, 45, 90, 180, 270];
+  let x = 10;
+  for (let a of snaps) {
+    let b = createButton(a + '°');
+    b.parent(mainElement);
+    b.position(x, drawHeight + 10);
+    b.mousePressed(() => { angleDeg = a; });
+    x += 62;
+  }
+
+  describe('Drag a point around the unit circle and read the angle in degrees, radians, and multiples of pi, with sine and cosine projection lines. Snap buttons jump to landmark angles, and a turtle at the center rotates to match the heading.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Unit Circle: Degrees and Radians', canvasWidth / 2, 8);
+
+  // circle geometry
+  cx = canvasWidth * 0.32;
+  cy = 258;
+  r = 155;
+
+  drawCircle();
+  drawReadouts();
+
+  // control-row hint
+  fill(120);
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  if (canvasWidth >= 560) {
+    text('jump to a landmark angle, or drag the orange point', 330, drawHeight + 25);
+  }
+}
+
+function drawCircle() {
+  let a = radians(angleDeg);
+  let px = cx + cos(a) * r;
+  let py = cy - sin(a) * r;
+
+  // axes
+  stroke(200);
+  strokeWeight(1);
+  line(cx - r - 20, cy, cx + r + 20, cy);
+  line(cx, cy - r - 20, cx, cy + r + 20);
+
+  // circle
+  noFill();
+  stroke(150);
+  strokeWeight(1.5);
+  circle(cx, cy, r * 2);
+
+  // swept arc from 0 to the angle
+  noFill();
+  stroke('darkorange');
+  strokeWeight(4);
+  arc(cx, cy, r * 0.5, r * 0.5, -a, 0);
+
+  // projection lines: cos on the x-axis, sin as the vertical drop
+  stroke('steelblue');
+  strokeWeight(2.5);
+  drawingContext.setLineDash([6, 5]);
+  line(px, py, px, cy); // vertical: sin
+  drawingContext.setLineDash([]);
+  stroke('seagreen');
+  strokeWeight(3.5);
+  line(cx, cy, px, cy);  // horizontal along axis: cos
+  // sin bar drawn solid on the y-axis for reading
+  stroke('steelblue');
+  line(cx, cy, cx, py);
+
+  // radius to the point
+  stroke(120);
+  strokeWeight(1.5);
+  line(cx, cy, px, py);
+
+  // labels for the projections
+  noStroke();
+  textSize(14);
+  fill('seagreen');
+  textAlign(CENTER, TOP);
+  text('cos', (cx + px) / 2, cy + 6);
+  fill('steelblue');
+  textAlign(RIGHT, CENTER);
+  text('sin', cx - 8, (cy + py) / 2);
+
+  // the turtle at the center, rotated to the heading
+  push();
+  translate(cx, cy);
+  rotate(-a);
+  fill('seagreen');
+  stroke('white');
+  strokeWeight(1.5);
+  triangle(16, 0, -9, -9, -9, 9);
+  pop();
+
+  // the draggable point
+  noStroke();
+  fill('darkorange');
+  circle(px, py, dragging ? 24 : 18);
+
+  // angle labels on the axes
+  noStroke();
+  fill(130);
+  textSize(13);
+  textAlign(LEFT, CENTER);
+  text('0°', cx + r + 26, cy);
+  textAlign(CENTER, BOTTOM);
+  text('90°', cx, cy - r - 24);
+  textAlign(RIGHT, CENTER);
+  text('180°', cx - r - 26, cy);
+  textAlign(CENTER, TOP);
+  text('270°', cx, cy + r + 24);
+}
+
+// readout panel on the right
+function drawReadouts() {
+  let x = canvasWidth * 0.62;
+  let w = canvasWidth - x - 15;
+  let y = 52;
+  let h = 396;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(x, y, w, h, 10);
+
+  let a = radians(angleDeg);
+  let piMult = angleDeg / 180;
+
+  noStroke();
+  textAlign(LEFT, TOP);
+
+  // degrees
+  fill(100);
+  textSize(14);
+  text('degrees (turtle turns):', x + 14, y + 14);
+  fill('darkorange');
+  textSize(26);
+  text(angleDeg + '°', x + 14, y + 34);
+
+  // radians
+  fill(100);
+  textSize(14);
+  text('radians (math module):', x + 14, y + 82);
+  fill('midnightblue');
+  textSize(26);
+  text(a.toFixed(2), x + 14, y + 102);
+  textSize(17);
+  text('= ' + piMult.toFixed(2) + ' × π', x + 14, y + 134);
+
+  // conversion formula
+  fill(120);
+  textSize(13);
+  text('radians = degrees × π / 180', x + 14, y + 166);
+
+  // divider
+  stroke(220);
+  strokeWeight(1);
+  line(x + 12, y + 192, x + w - 12, y + 192);
+
+  // sin and cos
+  noStroke();
+  fill('steelblue');
+  textSize(16);
+  text('math.sin(' + a.toFixed(2) + ')', x + 14, y + 206);
+  textSize(22);
+  text('= ' + sin(a).toFixed(2), x + 14, y + 228);
+
+  fill('seagreen');
+  textSize(16);
+  text('math.cos(' + a.toFixed(2) + ')', x + 14, y + 266);
+  textSize(22);
+  text('= ' + cos(a).toFixed(2), x + 14, y + 288);
+
+  // landmark reminder
+  fill(120);
+  textSize(13);
+  text('half a turn (180°) is π radians;', x + 14, y + 330);
+  text('a full turn (360°) is 2π.', x + 14, y + 348);
+}
+
+// --- direct manipulation: drag the point around the circle ---
+function mousePressed() {
+  if (mouseY > drawHeight || mouseY < 0) return;
+  let d = dist(mouseX, mouseY, cx, cy);
+  if (d > r * 0.4 && d < r + 40) {
+    dragging = true;
+    updateAngleFromMouse();
+  }
+}
+
+function mouseDragged() {
+  if (dragging) {
+    updateAngleFromMouse();
+  }
+}
+
+function mouseReleased() {
+  dragging = false;
+}
+
+function updateAngleFromMouse() {
+  let a = atan2(cy - mouseY, mouseX - cx); // screen y is flipped
+  let deg = Math.round(degrees(a));
+  angleDeg = ((deg % 360) + 360) % 360;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

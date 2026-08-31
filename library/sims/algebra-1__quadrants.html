@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coordinate Plane and Quadrants</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Coordinate Plane and Quadrants
+// Interactive diagram showing the coordinate plane structure
+
+let canvasWidth = 700;
+let drawHeight = 650;
+let canvasHeight = drawHeight;
+
+let hoveredQuadrant = -1;
+let samplePoints = [
+  { x: 3, y: 4, label: 'A', color: '#9C27B0' },
+  { x: -2, y: 5, label: 'B', color: '#FF9800' },
+  { x: -4, y: -3, label: 'C', color: '#4CAF50' },
+  { x: 5, y: -2, label: 'D', color: '#F44336' }
+];
+
+let quadrantColors = [
+  { bg: '#FFFDE7', name: 'I', signs: '(+, +)' },
+  { bg: '#E8F5E9', name: 'II', signs: '(−, +)' },
+  { bg: '#E3F2FD', name: 'III', signs: '(−, −)' },
+  { bg: '#FFEBEE', name: 'IV', signs: '(+, −)' }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  describe('Interactive coordinate plane showing four quadrants with sample points', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  background('#FFFFFF');
+
+  // Title
+  fill('#1565C0');
+  textSize(18);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text('The Coordinate Plane: Locating Points with Ordered Pairs', canvasWidth / 2, 8);
+  textStyle(NORMAL);
+
+  checkHover();
+  drawQuadrants();
+  drawAxes();
+  drawGrid();
+  drawPoints();
+  drawLegend();
+}
+
+function checkHover() {
+  hoveredQuadrant = -1;
+  let cx = canvasWidth / 2;
+  let cy = drawHeight / 2 + 20;
+
+  if (mouseX > cx && mouseY < cy && mouseY > 40) hoveredQuadrant = 0; // QI
+  else if (mouseX < cx && mouseY < cy && mouseY > 40) hoveredQuadrant = 1; // QII
+  else if (mouseX < cx && mouseY > cy) hoveredQuadrant = 2; // QIII
+  else if (mouseX > cx && mouseY > cy) hoveredQuadrant = 3; // QIV
+}
+
+function drawQuadrants() {
+  let cx = canvasWidth / 2;
+  let cy = drawHeight / 2 + 20;
+  let w = canvasWidth / 2 - 20;
+  let h = (drawHeight - 60) / 2;
+
+  // Draw quadrant backgrounds
+  noStroke();
+
+  // QI (upper right)
+  fill(hoveredQuadrant === 0 ? '#FFF59D' : quadrantColors[0].bg);
+  rect(cx, 40, w, h);
+
+  // QII (upper left)
+  fill(hoveredQuadrant === 1 ? '#A5D6A7' : quadrantColors[1].bg);
+  rect(20, 40, w, h);
+
+  // QIII (lower left)
+  fill(hoveredQuadrant === 2 ? '#90CAF9' : quadrantColors[2].bg);
+  rect(20, cy, w, h);
+
+  // QIV (lower right)
+  fill(hoveredQuadrant === 3 ? '#EF9A9A' : quadrantColors[3].bg);
+  rect(cx, cy, w, h);
+
+  // Quadrant labels
+  textSize(24);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+
+  fill('#FBC02D');
+  text('I', cx + w / 2, 40 + h / 2);
+  fill('#388E3C');
+  text('II', 20 + w / 2, 40 + h / 2);
+  fill('#1976D2');
+  text('III', 20 + w / 2, cy + h / 2);
+  fill('#D32F2F');
+  text('IV', cx + w / 2, cy + h / 2);
+
+  textStyle(NORMAL);
+
+  // Sign conventions in each quadrant
+  textSize(12);
+  fill('#666');
+  text(quadrantColors[0].signs, cx + w / 2, 40 + h / 2 + 25);
+  text(quadrantColors[1].signs, 20 + w / 2, 40 + h / 2 + 25);
+  text(quadrantColors[2].signs, 20 + w / 2, cy + h / 2 + 25);
+  text(quadrantColors[3].signs, cx + w / 2, cy + h / 2 + 25);
+}
+
+function drawGrid() {
+  let cx = canvasWidth / 2;
+  let cy = drawHeight / 2 + 20;
+  let gridSize = 35;
+
+  stroke('#E0E0E0');
+  strokeWeight(1);
+
+  // Vertical lines
+  for (let x = cx - gridSize * 8; x <= cx + gridSize * 8; x += gridSize) {
+    if (x !== cx) {
+      line(x, 40, x, drawHeight - 20);
+    }
+  }
+
+  // Horizontal lines
+  for (let y = cy - gridSize * 8; y <= cy + gridSize * 8; y += gridSize) {
+    if (y !== cy && y > 40 && y < drawHeight - 20) {
+      line(20, y, canvasWidth - 20, y);
+    }
+  }
+}
+
+function drawAxes() {
+  let cx = canvasWidth / 2;
+  let cy = drawHeight / 2 + 20;
+  let gridSize = 35;
+
+  // X-axis (blue)
+  stroke('#1565C0');
+  strokeWeight(3);
+  line(20, cy, canvasWidth - 20, cy);
+
+  // Arrow on x-axis
+  fill('#1565C0');
+  noStroke();
+  triangle(canvasWidth - 20, cy, canvasWidth - 35, cy - 8, canvasWidth - 35, cy + 8);
+
+  // Y-axis (red)
+  stroke('#C62828');
+  strokeWeight(3);
+  line(cx, 40, cx, drawHeight - 20);
+
+  // Arrow on y-axis
+  fill('#C62828');
+  noStroke();
+  triangle(cx, 40, cx - 8, 55, cx + 8, 55);
+
+  // Origin
+  fill('#333');
+  ellipse(cx, cy, 10, 10);
+
+  // Axis labels
+  textSize(12);
+  textAlign(CENTER, CENTER);
+
+  // X-axis numbers
+  fill('#1565C0');
+  for (let i = -8; i <= 8; i++) {
+    if (i !== 0) {
+      let x = cx + i * gridSize;
+      if (x > 30 && x < canvasWidth - 30) {
+        text(i, x, cy + 18);
+      }
+    }
+  }
+
+  // Y-axis numbers
+  fill('#C62828');
+  for (let i = -8; i <= 8; i++) {
+    if (i !== 0) {
+      let y = cy - i * gridSize;
+      if (y > 50 && y < drawHeight - 30) {
+        text(i, cx - 18, y);
+      }
+    }
+  }
+
+  // Axis labels
+  fill('#1565C0');
+  textSize(14);
+  textStyle(BOLD);
+  text('x', canvasWidth - 35, cy + 25);
+  textStyle(NORMAL);
+
+  fill('#C62828');
+  textStyle(BOLD);
+  text('y', cx + 20, 50);
+  textStyle(NORMAL);
+
+  // Origin label
+  fill('#333');
+  textSize(12);
+  text('(0, 0)', cx + 22, cy + 18);
+}
+
+function drawPoints() {
+  let cx = canvasWidth / 2;
+  let cy = drawHeight / 2 + 20;
+  let gridSize = 35;
+
+  for (let pt of samplePoints) {
+    let px = cx + pt.x * gridSize;
+    let py = cy - pt.y * gridSize;
+
+    // Point
+    fill(pt.color);
+    noStroke();
+    ellipse(px, py, 14, 14);
+
+    // Label
+    fill(pt.color);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, BOTTOM);
+    text(pt.label + '(' + pt.x + ', ' + pt.y + ')', px, py - 10);
+    textStyle(NORMAL);
+  }
+}
+
+function drawLegend() {
+  let legX = 25;
+  let legY = drawHeight - 90;
+
+  fill('#FAFAFA');
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  rect(legX, legY, 200, 75, 5);
+
+  fill('#424242');
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text('Ordered Pair: (x, y)', legX + 10, legY + 8);
+  textStyle(NORMAL);
+
+  textSize(10);
+  text('• x-coordinate: left/right from origin', legX + 10, legY + 26);
+  text('• y-coordinate: up/down from origin', legX + 10, legY + 40);
+  text('• Hover over quadrants to highlight', legX + 10, legY + 54);
+
+  // Sign convention legend
+  let sigX = canvasWidth - 225;
+  fill('#FAFAFA');
+  stroke('#E0E0E0');
+  rect(sigX, legY, 200, 75, 5);
+
+  fill('#424242');
+  textSize(11);
+  textStyle(BOLD);
+  noStroke();
+  text('Sign Conventions:', sigX + 10, legY + 8);
+  textStyle(NORMAL);
+
+  textSize(10);
+  text('+x to the right, −x to the left', sigX + 10, legY + 26);
+  text('+y upward, −y downward', sigX + 10, legY + 40);
+  text('Origin is the center (0, 0)', sigX + 10, legY + 54);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 700);
+    canvasWidth = max(canvasWidth, 500);
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Radical Simplification Interactive Tool using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Radical Simplification Interactive Tool — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "radical-simplification-interactive-tool",
+  "title": "Radical Simplification Interactive Tool",
+  "kind": "quiz",
+  "objective": "Learn to simplify radical expressions by identifying and extracting perfect square or perfect cube factors",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Value A",
+  "bLabel": "Value B",
+  "choices": [
+    "Factor first",
+    "Add radicands",
+    "Square the radicand"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Learn to simplify radical expressions by identifying and extracting perfect square or perfect cube factors
+//
+//     Canvas layout (850x700px):
+//     - Top area (850x150): Problem and input
+//     - Middle area (850x400): Visual factorization workspace
+//     - Bottom area (850x150): Answer check and feedback
+//
+//     Visual elements:
+//     - Problem display: "Simplify: $\sqrt{72}$"
+//     - Factor tree visualization showing prime factorization
+//     - Perfect square/cube highlighting
+//     - Drag-and-drop interface for grouping factors
+//     - Visual representation of "moving factors outside"
+//     - Step-by-step solution display
+//     - Answer input area
+//
+//     Interactive controls:
+//     - Dropdown: Choose radical type (square root, cube root)
+//     - Input or random generator: Number to simplify
+//     - Button: "Show factor tree"
+//     - Draggable factor tiles for grouping
+//     - Input: Simplified answer (e.g., "6√2")
+//     - Button: "Check answer"
+//     - Button: "Show solution"
+//     - Button: "New problem"
+//
+//     Default parameters:
+//     - Radical type: Square root
+//     - Number: 72
+//
+//     Behavior (Factor tree):
+//     - Display number at top
+//     - Branch into factors
+//     - Continue until all prime factors shown
+//     - Highlight pairs (for square roots) or triplets (for cube roots)
+//     - Use color to group factors:
+//       - Red: first perfect square/cube
+//       - Blue: second perfect square/cube
+//       - Gray: leftover factors
+//
+//     Behavior (Grouping):
+//     - Student drags factor tiles into groups
+//     - Snap to position when grouped correctly
+//     - Automatically compute √(group) when complete
+//     - Show factors "jumping outside" the radical
+//     - Animate simplification process
+//
+//     Behavior (Answer check):
+//     - Accept answers in form "a√b" or "a∛b"
+//     - Validate correctness
+//     - If correct: green checkmark, celebration
+//     - If incorrect: show where answer differs, offer hint
+//     - "Show solution" provides full step-by-step
+//
+//     Problem types:
+//     - Square roots: √8, √12, √18, √20, √45, √50, √72, √98, √128, √200
+//     - Cube roots: ∛16, ∛54, ∛128, ∛250
+//     - Variables: √(x⁴), √(18a²b³)
+//
+//     Visual features:
+//     - Factor tree with branching animation
+//     - Color-coded perfect squares/cubes
+//     - Drag-and-drop grouping interface
+//     - Visual "extraction" of factors from radical
+//     - Clear typography for mathematical notation
+//
+//     Learning reinforcements:
+//     - Display: "Look for pairs of identical factors (for square roots)"
+//     - Display: "Look for triplets of identical factors (for cube roots)"
+//     - Hint system: "Try factoring 72 = 36 × 2"
+//     - Progress tracker showing mastery
+//
+//     Implementation: p5.js with drag-and-drop, animation, math expression parsing, and validation
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Types Venn Diagram MicroSim</title>
+    <!-- Import the P5.js library from the CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        main {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <!-- Import our custom MicroSim code -->
+    <script>// Number Types Venn Diagram MicroSim
+// This visualization shows the relationships between different types of numbers
+
+// Canvas dimensions - REQUIRED structure
+let canvasWidth = 800;              // Initial width (responsive)
+let drawHeight = 600;               // Drawing/simulation area height
+let controlHeight = 100;            // Controls area height
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;                    // Margin for visual elements
+let sliderLeftMargin = 150;         // Left margin for slider positioning
+let defaultTextSize = 16;           // Base text size
+
+// Number type regions with positions and example numbers
+let regions = [];
+let hoveredRegion = null;
+
+// Control visibility
+let showLabels = true;
+let showExamples = true;
+
+function setup() {
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  
+  // Create checkbox controls
+  labelsCheckbox = createCheckbox('Show Labels', true);
+  labelsCheckbox.position(margin, drawHeight + 15);
+  labelsCheckbox.changed(() => {
+    showLabels = labelsCheckbox.checked();
+  });
+  
+  examplesCheckbox = createCheckbox('Show Examples', true);
+  examplesCheckbox.position(margin, drawHeight + 45);
+  examplesCheckbox.changed(() => {
+    showExamples = examplesCheckbox.checked();
+  });
+  
+  describe('Interactive Venn diagram showing the relationships between different types of numbers including Natural, Whole, Integer, Rational, Irrational, and Real numbers', LABEL);
+  
+  // Initialize regions
+  initializeRegions();
+}
+
+function initializeRegions() {
+  regions = [];
+  
+  // Calculate responsive positions
+  let centerX = canvasWidth / 2;
+  let centerY = drawHeight / 2;
+  
+  // Real Numbers (rectangle - universal set)
+  regions.push({
+    type: 'rect',
+    name: 'Real Numbers',
+    x: margin + 20,
+    y: 60,
+    width: canvasWidth - 2 * margin - 40,
+    height: drawHeight - 80,
+    color: color(240, 240, 255),
+    strokeColor: color(0, 0, 139),
+    description: 'All numbers on the number line, including both rational and irrational numbers',
+    examples: []
+  });
+  
+  // Rational Numbers (left circle)
+  let rationalX = centerX - 120;
+  let rationalY = centerY + 20;
+  let rationalRadius = 180;
+  
+  regions.push({
+    type: 'circle',
+    name: 'Rational',
+    x: rationalX,
+    y: rationalY,
+    radius: rationalRadius,
+    color: color(255, 240, 245, 180),
+    strokeColor: color(139, 0, 139),
+    description: 'Numbers that can be expressed as a ratio of two integers (a/b where b ≠ 0)',
+    examples: ['3/4', '0.5', '-2']
+  });
+  
+  // Integers (smaller circle inside Rational)
+  let integerRadius = 120;
+  regions.push({
+    type: 'circle',
+    name: 'Integers',
+    x: rationalX,
+    y: rationalY,
+    radius: integerRadius,
+    color: color(255, 250, 205, 180),
+    strokeColor: color(184, 134, 11),
+    description: 'Whole numbers and their negatives (..., -2, -1, 0, 1, 2, ...)',
+    examples: ['-5', '0', '42']
+  });
+  
+  // Whole Numbers (smaller circle inside Integers)
+  let wholeRadius = 70;
+  regions.push({
+    type: 'circle',
+    name: 'Whole',
+    x: rationalX,
+    y: rationalY,
+    radius: wholeRadius,
+    color: color(240, 255, 240, 180),
+    strokeColor: color(34, 139, 34),
+    description: 'Natural numbers plus zero (0, 1, 2, 3, ...)',
+    examples: ['0', '7', '100']
+  });
+  
+  // Natural Numbers (smallest circle inside Whole)
+  let naturalRadius = 35;
+  regions.push({
+    type: 'circle',
+    name: 'Natural',
+    x: rationalX,
+    y: rationalY,
+    radius: naturalRadius,
+    color: color(255, 255, 224, 200),
+    strokeColor: color(255, 140, 0),
+    description: 'Counting numbers (1, 2, 3, 4, ...)',
+    examples: ['1', '2', '3']
+  });
+  
+  // Irrational Numbers (right side)
+  regions.push({
+    type: 'region',
+    name: 'Irrational',
+    x: centerX + 120,
+    y: centerY,
+    width: 160,
+    height: 200,
+    color: color(255, 250, 250, 0),
+    strokeColor: color(178, 34, 34),
+    description: 'Numbers that cannot be expressed as a ratio of integers (non-repeating, non-terminating decimals)',
+    examples: ['π', '√2', 'e']
+  });
+}
+
+function draw() {
+  // Drawing area (light blue background)
+  fill('aliceblue');
+  rect(0, 0, width, drawHeight);
+  
+  // Control area (white background)
+  fill('white');
+  rect(0, drawHeight, width, controlHeight);
+  
+  // Title
+  fill('black');
+  textSize(28);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Number Types Venn Diagram', canvasWidth/2, 15);
+  
+  // Reset text settings
+  textSize(defaultTextSize);
+  textAlign(LEFT, CENTER);
+  
+  // Update hovered region
+  hoveredRegion = getHoveredRegion();
+  
+  // Draw all regions (reverse order so smallest circles are on top)
+  for (let i = 0; i < regions.length; i++) {
+    drawRegion(regions[i]);
+  }
+  
+  // Draw examples in regions
+  if (showExamples) {
+    drawExamples();
+  }
+  
+  // Draw tooltip if hovering
+  if (hoveredRegion) {
+    drawTooltip(hoveredRegion);
+  }
+  
+  // Draw control labels
+  fill('black');
+  textSize(defaultTextSize);
+  textAlign(LEFT, TOP);
+  text('Controls:', margin, drawHeight + 75);
+}
+
+function drawRegion(region) {
+  // Check if hovered
+  let isHovered = hoveredRegion === region;
+  
+  // Set colors
+  if (isHovered) {
+    fill(red(region.color), green(region.color), blue(region.color), 220);
+    strokeWeight(3);
+  } else {
+    fill(region.color);
+    strokeWeight(2);
+  }
+  stroke(region.strokeColor);
+  
+  // Draw shape
+  if (region.type === 'rect') {
+    rect(region.x, region.y, region.width, region.height);
+    
+    // Draw label if enabled
+    if (showLabels) {
+      fill(region.strokeColor);
+      noStroke();
+      textSize(20);
+      textAlign(CENTER, TOP);
+      text(region.name, region.x + region.width / 2, region.y + 10);
+    }
+  } else if (region.type === 'circle') {
+    circle(region.x, region.y, region.radius * 2);
+    
+    // Draw label if enabled
+    if (showLabels) {
+      fill(region.strokeColor);
+      noStroke();
+      textSize(18);
+      textAlign(CENTER, CENTER);
+      // Position label at top of circle
+      text(region.name, region.x, region.y - region.radius + 25);
+    }
+  } else if (region.type === 'region') {
+    // Irrational numbers region (no fill, just outline)
+    noFill();
+    rect(region.x - region.width/2, region.y - region.height/2, region.width, region.height);
+    
+    // Draw label if enabled
+    if (showLabels) {
+      fill(region.strokeColor);
+      noStroke();
+      textSize(18);
+      textAlign(CENTER, CENTER);
+      text(region.name, region.x, region.y - region.height/2 + 25);
+    }
+  }
+  
+  // Reset
+  strokeWeight(1);
+}
+
+function drawExamples() {
+  // Draw examples for each region
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  noStroke();
+  
+  // Natural numbers examples (innermost)
+  fill(139, 69, 19);
+  text(regions[4].examples.join(', '), regions[4].x, regions[4].y);
+  
+  // Whole numbers examples (in the ring between Whole and Natural)
+  fill(34, 139, 34);
+  text(regions[3].examples[0], regions[3].x - 40, regions[3].y - 30);
+  
+  // Integer examples (in the ring between Integers and Whole)
+  fill(139, 69, 19);
+  text(regions[2].examples[0], regions[2].x + 60, regions[2].y - 50);
+  text(regions[2].examples[2], regions[2].x - 70, regions[2].y + 40);
+  
+  // Rational numbers examples (in the ring between Rational and Integers)
+  fill(139, 0, 139);
+  text(regions[1].examples[0], regions[1].x + 100, regions[1].y - 90);
+  text(regions[1].examples[1], regions[1].x - 110, regions[1].y + 80);
+  
+  // Irrational numbers examples
+  fill(178, 34, 34);
+  textSize(18);
+  text(regions[5].examples[0], regions[5].x, regions[5].y - 40);
+  text(regions[5].examples[1], regions[5].x, regions[5].y);
+  text(regions[5].examples[2], regions[5].x, regions[5].y + 40);
+}
+
+function getHoveredRegion() {
+  // Check from smallest to largest for proper nesting
+  for (let i = regions.length - 1; i >= 0; i--) {
+    let region = regions[i];
+    
+    if (mouseY > drawHeight) {
+      return null; // In control area
+    }
+    
+    if (region.type === 'rect') {
+      if (mouseX >= region.x && mouseX <= region.x + region.width &&
+          mouseY >= region.y && mouseY <= region.y + region.height) {
+        return region;
+      }
+    } else if (region.type === 'circle') {
+      let d = dist(mouseX, mouseY, region.x, region.y);
+      if (d <= region.radius) {
+        return region;
+      }
+    } else if (region.type === 'region') {
+      if (mouseX >= region.x - region.width/2 && 
+          mouseX <= region.x + region.width/2 &&
+          mouseY >= region.y - region.height/2 && 
+          mouseY <= region.y + region.height/2) {
+        return region;
+      }
+    }
+  }
+  return null;
+}
+
+function drawTooltip(region) {
+  // Calculate tooltip position
+  let tooltipX = mouseX + 15;
+  let tooltipY = mouseY - 30;
+  
+  // Calculate tooltip dimensions
+  textSize(14);
+  let tooltipWidth = max(300, textWidth(region.description) + 20);
+  tooltipWidth = min(tooltipWidth, canvasWidth - 40);
+  let tooltipHeight = 60;
+  
+  // Keep tooltip on screen
+  if (tooltipX + tooltipWidth > canvasWidth - margin) {
+    tooltipX = mouseX - tooltipWidth - 15;
+  }
+  if (tooltipY < margin) {
+    tooltipY = mouseY + 30;
+  }
+  if (tooltipY + tooltipHeight > drawHeight - margin) {
+    tooltipY = drawHeight - tooltipHeight - margin;
+  }
+  
+  // Draw tooltip background
+  fill(255, 255, 240, 250);
+  stroke(0);
+  strokeWeight(2);
+  rect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 5);
+  
+  // Draw tooltip text
+  fill(0);
+  noStroke();
+  textSize(14);
+  textAlign(LEFT, TOP);
+  
+  // Name
+  textStyle(BOLD);
+  text(region.name + ' Numbers', tooltipX + 10, tooltipY + 8);
+  
+  // Description
+  textStyle(NORMAL);
+  let words = region.description.split(' ');
+  let line = '';
+  let y = tooltipY + 28;
+  for (let word of words) {
+    let testLine = line + word + ' ';
+    if (textWidth(testLine) > tooltipWidth - 20 && line.length > 0) {
+      text(line, tooltipX + 10, y);
+      line = word + ' ';
+      y += 16;
+    } else {
+      line = testLine;
+    }
+  }
+  text(line, tooltipX + 10, y);
+  
+  // Reset
+  strokeWeight(1);
+  textStyle(NORMAL);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  initializeRegions();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+}
+</script>
+</body>
+</html>

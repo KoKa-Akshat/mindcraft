@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Context Window Budget Visualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;}</style>
+    <script>// Context Window Budget Visualizer — 4 sliders + auto-computed retrieval capacity
+// CANVAS_HEIGHT: 620
+
+let canvasWidth = 900;
+let drawHeight = 560;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+const GOLD = '#e9c46a';
+const TEAL = '#00897b';
+const INDIGO = '#3949ab';
+const ORANGE = '#f57c00';
+const STEEL = '#5b7fbd';
+const GRAY = '#9e9e9e';
+
+const TOTAL = 8000;
+const MARGIN_TOK = 800;
+
+let sys = 400, fs = 600, query = 200, out = 2000;
+let sysSlider, fsSlider, querySlider, outSlider;
+let simpleBtn, complexBtn, auditBtn;
+
+function setup() {
+    updateCanvasSize();
+    const c = createCanvas(canvasWidth, canvasHeight);
+    c.parent(document.querySelector('main'));
+    textFont('Arial');
+    sysSlider = createSlider(100, 800, 400, 10);   sysSlider.parent(document.querySelector('main'));
+    fsSlider  = createSlider(0, 2000, 600, 10);    fsSlider.parent(document.querySelector('main'));
+    querySlider = createSlider(50, 500, 200, 10);  querySlider.parent(document.querySelector('main'));
+    outSlider = createSlider(500, 4000, 2000, 50); outSlider.parent(document.querySelector('main'));
+    sysSlider.input(() => sys = sysSlider.value());
+    fsSlider.input(() => fs = fsSlider.value());
+    querySlider.input(() => query = querySlider.value());
+    outSlider.input(() => out = outSlider.value());
+    simpleBtn  = makeUseBtn('Simple Status Query', 300, 0, 100, 1000);
+    complexBtn = makeUseBtn('Complex Exception', 500, 1200, 250, 2500);
+    auditBtn   = makeUseBtn('Audit Report', 400, 0, 200, 3500);
+    layoutControls();
+    describe('Token-budget allocation explorer. Four sliders control system prompt, few-shot examples, user query, and output reservation budgets. Retrieved context is auto-calculated from the remainder; the bar flashes red if the budget is exceeded.', LABEL);
+}
+
+function makeUseBtn(label, s, f, q, o) {
+    const b = createButton(label);
+    b.parent(document.querySelector('main'));
+    b.style('font-size','11px'); b.style('padding','6px 10px');
+    b.style('border-radius','4px'); b.style('border','none');
+    b.style('background-color', INDIGO); b.style('color','white');
+    b.style('font-weight','bold'); b.style('cursor','pointer');
+    b.mousePressed(() => {
+        sys = s; fs = f; query = q; out = o;
+        sysSlider.value(s); fsSlider.value(f); querySlider.value(q); outSlider.value(o);
+    });
+    return b;
+}
+
+function layoutControls() {
+    const sx = canvasWidth * 0.55;
+    sysSlider.position(sx, 100); sysSlider.size(220);
+    fsSlider.position(sx, 140); fsSlider.size(220);
+    querySlider.position(sx, 180); querySlider.size(220);
+    outSlider.position(sx, 220); outSlider.size(220);
+    simpleBtn.position(margin + 20, drawHeight + 15);
+    complexBtn.position(margin + 170, drawHeight + 15);
+    auditBtn.position(margin + 320, drawHeight + 15);
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(canvasWidth, canvasHeight); layoutControls(); }
+function updateCanvasSize() { const el = document.querySelector('main'); if (el) canvasWidth = el.offsetWidth; }
+
+function retrievalAvail() {
+    return TOTAL - sys - fs - query - out - MARGIN_TOK;
+}
+
+function draw() {
+    background('aliceblue');
+    stroke('silver'); fill('aliceblue'); rect(0,0,canvasWidth,drawHeight);
+    noStroke(); fill('white'); rect(0,drawHeight,canvasWidth,controlHeight);
+    stroke('silver'); noFill(); rect(0,drawHeight,canvasWidth,controlHeight);
+
+    noStroke(); fill('black');
+    textSize(14); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('Context Window Budget — total ' + TOTAL.toLocaleString() + ' tokens', margin, 8);
+    textStyle(NORMAL);
+
+    // Left: stacked horizontal bar + breakdown
+    const barLeft = margin + 20;
+    const barTop = 70;
+    const barH = 60;
+    const barW = canvasWidth * 0.50 - 40;
+    const avail = retrievalAvail();
+    const overrun = avail < 0;
+
+    // Outer bar
+    noStroke(); fill('#eceff1');
+    rect(barLeft, barTop, barW, barH, 6);
+    // Segments
+    let cx = barLeft;
+    const draws = [
+        { tokens: sys, color: GOLD, name: 'System' },
+        { tokens: fs,  color: TEAL, name: 'Few-Shot' },
+        { tokens: max(0, avail), color: INDIGO, name: 'Retrieved Ctx' },
+        { tokens: query, color: ORANGE, name: 'Query' },
+        { tokens: out, color: STEEL, name: 'Output Reserve' },
+        { tokens: MARGIN_TOK, color: GRAY, name: 'Safety Margin' }
+    ];
+    if (overrun) {
+        // Flash red strip
+        fill('#ffcdd2'); rect(barLeft, barTop, barW, barH, 6);
+    }
+    for (const d of draws) {
+        if (d.tokens <= 0) continue;
+        const segW = (d.tokens / TOTAL) * barW;
+        fill(d.color); rect(cx, barTop, segW, barH);
+        if (segW > 24) {
+            fill('white'); textSize(9); textStyle(BOLD); textAlign(CENTER, CENTER);
+            text(d.tokens, cx + segW / 2, barTop + barH / 2);
+            textStyle(NORMAL);
+        }
+        cx += segW;
+    }
+
+    // Legend below bar
+    let ly = barTop + barH + 14;
+    textSize(10); textAlign(LEFT, CENTER);
+    for (const d of draws) {
+        fill(d.color); noStroke(); rect(barLeft, ly, 12, 12, 2);
+        fill('#212121');
+        text(d.name + ' — ' + d.tokens + ' tokens', barLeft + 18, ly + 6);
+        ly += 16;
+    }
+
+    // Right: slider labels
+    fill('black'); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('Component allocations', canvasWidth * 0.55, 76);
+    textStyle(NORMAL);
+    fill(GOLD);   text('System Prompt: ' + sys + ' tokens',       canvasWidth * 0.55, 100 - 16);
+    fill(TEAL);   text('Few-Shot:      ' + fs + ' tokens',        canvasWidth * 0.55, 140 - 16);
+    fill(ORANGE); text('User Query:    ' + query + ' tokens',     canvasWidth * 0.55, 180 - 16);
+    fill(STEEL);  text('Output:        ' + out + ' tokens',       canvasWidth * 0.55, 220 - 16);
+
+    // Capacity panel
+    const capX = barLeft;
+    const capY = ly + 14;
+    const capW = canvasWidth - 2 * margin - 40;
+    const capH = drawHeight - capY - 12;
+    noStroke();
+    fill(overrun ? '#ffebee' : '#e8f5e9');
+    stroke(overrun ? '#c62828' : '#2e7d32');
+    rect(capX, capY, capW, capH, 6);
+    noStroke();
+    fill(overrun ? '#c62828' : '#1b5e20');
+    textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(overrun ? '⚠ Budget exceeded — reduce a component'
+                 : 'Retrieval Capacity', capX + 12, capY + 8);
+    textStyle(NORMAL);
+    if (!overrun) {
+        fill('#212121'); textSize(11);
+        text('Available for retrieved context: ' + avail + ' tokens', capX + 12, capY + 30);
+        text('Decision traces @ 300 tok each: ' + Math.floor(avail / 300), capX + 12, capY + 48);
+        text('Compressed traces @ 150 tok each: ' + Math.floor(avail / 150), capX + 12, capY + 66);
+        let rec = '';
+        if (avail < 1500) rec = 'Tight: prefer compressed traces or restrict to top precedents.';
+        else if (avail < 3000) rec = 'Moderate: typical 5-8 traces fit comfortably with summary.';
+        else rec = 'Generous: full traces plus auxiliary policy versions can be included.';
+        fill('#33691e'); textStyle(ITALIC);
+        text(rec, capX + 12, capY + 88, capW - 24, capH - 96);
+        textStyle(NORMAL);
+    } else {
+        fill('#b71c1c'); textSize(11);
+        text('Used: ' + (sys + fs + query + out + MARGIN_TOK) + ' tokens of ' + TOTAL + ' available before retrieval.',
+            capX + 12, capY + 30, capW - 24, capH - 36);
+    }
+}
+</script>
+</head><body><main></main></body></html>

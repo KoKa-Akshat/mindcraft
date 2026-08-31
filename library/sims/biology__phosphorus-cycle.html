@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Interconnected Biogeochemical Cycles using vis-network</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script>// Interconnected Biogeochemical Cycles - vis-network
+// CANVAS_HEIGHT: 625
+// Shows how carbon, nitrogen, phosphorus, and water cycles are linked through shared processes
+
+document.addEventListener('DOMContentLoaded', function () {
+  const main = document.querySelector('main');
+
+  // Title
+  const title = document.createElement('div');
+  title.style.cssText = 'text-align:center;padding:8px;font-size:18px;font-weight:bold;color:#3e2723;font-family:Arial,Helvetica,sans-serif;';
+  title.textContent = 'Interconnected Biogeochemical Cycles';
+  main.appendChild(title);
+
+  // Layout container
+  const container = document.createElement('div');
+  container.style.display = 'flex';
+  container.style.width = '100%';
+  container.style.height = '520px';
+  container.style.fontFamily = 'Arial, Helvetica, sans-serif';
+  main.appendChild(container);
+
+  // Network container
+  const networkDiv = document.createElement('div');
+  networkDiv.id = 'network';
+  networkDiv.style.flex = '2';
+  networkDiv.style.height = '100%';
+  networkDiv.style.border = '1px solid #ccc';
+  networkDiv.style.borderRadius = '8px';
+  networkDiv.style.background = '#f8f9f5';
+  container.appendChild(networkDiv);
+
+  // Info panel
+  const infoPanel = document.createElement('div');
+  infoPanel.id = 'info-panel';
+  infoPanel.style.flex = '1';
+  infoPanel.style.padding = '15px';
+  infoPanel.style.overflowY = 'auto';
+  infoPanel.style.borderLeft = '2px solid #6d4c41';
+  infoPanel.style.background = '#fff';
+  infoPanel.style.maxWidth = '280px';
+  infoPanel.innerHTML = '<h3 style="color:#3e2723;margin-top:0;">Connected Cycles</h3>' +
+    '<p style="color:#5d4037;font-size:13px;">Click any node to see how the biogeochemical cycles are linked through shared processes.</p>' +
+    '<p style="color:#9e9e9e;font-size:12px;">Four major cycles connected by key ecological processes.</p>';
+  container.appendChild(infoPanel);
+
+  // Controls
+  const controls = document.createElement('div');
+  controls.style.cssText = 'display:flex;gap:8px;padding:8px;flex-wrap:wrap;align-items:center;';
+  const resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Reset View';
+  resetBtn.style.cssText = 'font-size:13px;padding:6px 14px;cursor:pointer;background:#5d4037;color:white;border:none;border-radius:4px;';
+  controls.appendChild(resetBtn);
+  main.appendChild(controls);
+
+  // Node definitions
+  const defs = {
+    // Major cycle hubs
+    1: { label: 'Carbon\nCycle', group: 'carbon', def: 'The biogeochemical cycle by which carbon is exchanged among the atmosphere, oceans, soil, rocks, and living organisms.' },
+    2: { label: 'Nitrogen\nCycle', group: 'nitrogen', def: 'The cycle of nitrogen through fixation, nitrification, assimilation, ammonification, and denitrification between atmosphere, soil, water, and organisms.' },
+    3: { label: 'Phosphorus\nCycle', group: 'phosphorus', def: 'The movement of phosphorus through rocks, soil, water, and organisms. Unlike other cycles, has no significant atmospheric phase.' },
+    4: { label: 'Water\nCycle', group: 'water', def: 'The continuous movement of water through evaporation, condensation, precipitation, runoff, and infiltration across Earth\'s surface and atmosphere.' },
+    // Shared process nodes
+    5: { label: 'Decomposition', group: 'process', def: 'Breakdown of dead organic matter releases carbon (as CO2), nitrogen (as NH4+), and phosphorus back into soil and water. Requires water.' },
+    6: { label: 'Runoff', group: 'process', def: 'Water flowing over land carries dissolved nitrogen (NO3-) and phosphorus into streams, lakes, and oceans. Major pathway for nutrient transport.' },
+    7: { label: 'Plant Growth', group: 'process', def: 'Plants absorb CO2 (carbon), NO3-/NH4+ (nitrogen), H2PO4- (phosphorus), and H2O (water). Links all four cycles through primary production.' },
+    8: { label: 'Soil\nProcesses', group: 'process', def: 'Weathering, microbial activity, and chemical reactions in soil cycle all four elements. Soil is the critical intersection of all biogeochemical cycles.' },
+    // Secondary link nodes
+    9:  { label: 'Photosynthesis', group: 'process', def: 'Uses CO2 and H2O to produce glucose and O2. Directly links the carbon and water cycles through energy capture.' },
+    10: { label: 'Ocean\nAbsorption', group: 'process', def: 'Oceans absorb CO2 (carbon sink), dissolved nitrogen, and phosphorus. Ocean chemistry links carbon, nitrogen, and water cycles.' },
+    11: { label: 'Atmospheric\nExchange', group: 'process', def: 'CO2 and N2 cycle through the atmosphere. Water vapor is the key transport medium. Phosphorus has minimal atmospheric phase.' }
+  };
+
+  const groupColors = {
+    'carbon':     { bg: '#e0e0e0', border: '#616161', font: '#212121' },
+    'nitrogen':   { bg: '#bbdefb', border: '#1565c0', font: '#0d47a1' },
+    'phosphorus': { bg: '#ffe0b2', border: '#e65100', font: '#bf360c' },
+    'water':      { bg: '#b3e5fc', border: '#0288d1', font: '#01579b' },
+    'process':    { bg: '#c8e6c9', border: '#2e7d32', font: '#1b5e20' }
+  };
+
+  // Fixed positions -- cycles at corners, processes in between
+  // Slight y-offsets to avoid perfectly horizontal edges
+  const positions = {
+    1:  { x: -220, y: -160 },  // Carbon (top-left)
+    2:  { x: 220, y: -150 },   // Nitrogen (top-right, offset y by 10)
+    3:  { x: 220, y: 170 },    // Phosphorus (bottom-right)
+    4:  { x: -220, y: 160 },   // Water (bottom-left)
+    5:  { x: 60, y: -30 },     // Decomposition (center-right)
+    6:  { x: 80, y: 110 },     // Runoff (center-bottom)
+    7:  { x: -60, y: 10 },     // Plant Growth (center-left)
+    8:  { x: 0, y: 80 },       // Soil Processes (center)
+    9:  { x: -160, y: -40 },   // Photosynthesis (left)
+    10: { x: 160, y: 30 },     // Ocean Absorption (right)
+    11: { x: 0, y: -110 }      // Atmospheric Exchange (top-center)
+  };
+
+  // Build nodes
+  let nodesArray = [];
+  for (let id in defs) {
+    let d = defs[id];
+    let gc = groupColors[d.group];
+    let isCycle = ['carbon', 'nitrogen', 'phosphorus', 'water'].indexOf(d.group) >= 0;
+    nodesArray.push({
+      id: parseInt(id),
+      label: d.label,
+      x: positions[id].x,
+      y: positions[id].y,
+      color: { background: gc.bg, border: gc.border, highlight: { background: '#fff', border: gc.border } },
+      font: { color: gc.font, size: isCycle ? 14 : 12, face: 'Arial', bold: isCycle },
+      shape: isCycle ? 'box' : 'ellipse',
+      borderWidth: isCycle ? 3 : 2,
+      margin: isCycle ? 12 : 8,
+      fixed: true,
+      title: d.def,
+      size: isCycle ? undefined : 20
+    });
+  }
+
+  // Edge definitions with coupling strength as width
+  let edgesArray = [
+    // Decomposition connects C, N, P
+    { from: 5, to: 1, label: 'releases CO\u2082', arrows: 'to', color: { color: '#616161' }, width: 3 },
+    { from: 5, to: 2, label: 'releases NH\u2084\u207a', arrows: 'to', color: { color: '#1565c0' }, width: 3 },
+    { from: 5, to: 3, label: 'releases PO\u2084\u00b3\u207b', arrows: 'to', color: { color: '#e65100' }, width: 2.5 },
+    // Runoff connects Water, N, P
+    { from: 6, to: 4, label: 'driven by', arrows: 'to', color: { color: '#0288d1' }, width: 3 },
+    { from: 6, to: 2, label: 'carries NO\u2083\u207b', arrows: 'to', color: { color: '#1565c0' }, width: 2.5 },
+    { from: 6, to: 3, label: 'carries PO\u2084\u00b3\u207b', arrows: 'to', color: { color: '#e65100' }, width: 2.5 },
+    // Plant Growth connects all four
+    { from: 7, to: 1, label: 'fixes CO\u2082', arrows: 'to', color: { color: '#616161' }, width: 3 },
+    { from: 7, to: 2, label: 'absorbs N', arrows: 'to', color: { color: '#1565c0' }, width: 2.5 },
+    { from: 7, to: 3, label: 'absorbs P', arrows: 'to', color: { color: '#e65100' }, width: 2 },
+    { from: 7, to: 4, label: 'uses H\u2082O', arrows: 'to', color: { color: '#0288d1' }, width: 3 },
+    // Soil Processes connects all four
+    { from: 8, to: 1, label: 'stores C', arrows: 'to', color: { color: '#616161' }, width: 2, dashes: [5, 5] },
+    { from: 8, to: 2, label: 'N transform', arrows: 'to', color: { color: '#1565c0' }, width: 2, dashes: [5, 5] },
+    { from: 8, to: 3, label: 'P weathering', arrows: 'to', color: { color: '#e65100' }, width: 2, dashes: [5, 5] },
+    { from: 8, to: 4, label: 'infiltration', arrows: 'to', color: { color: '#0288d1' }, width: 2, dashes: [5, 5] },
+    // Photosynthesis connects C and Water
+    { from: 9, to: 1, label: 'fixes carbon', arrows: 'to', color: { color: '#616161' }, width: 2.5 },
+    { from: 9, to: 4, label: 'splits H\u2082O', arrows: 'to', color: { color: '#0288d1' }, width: 2.5 },
+    // Ocean Absorption connects C, N, Water
+    { from: 10, to: 1, label: 'absorbs CO\u2082', arrows: 'to', color: { color: '#616161' }, width: 2 },
+    { from: 10, to: 2, label: 'dissolves N', arrows: 'to', color: { color: '#1565c0' }, width: 1.5 },
+    { from: 10, to: 4, label: 'ocean mass', arrows: 'to', color: { color: '#0288d1' }, width: 2 },
+    // Atmospheric Exchange connects C, N, Water
+    { from: 11, to: 1, label: 'CO\u2082 exchange', arrows: 'to', color: { color: '#616161' }, width: 2.5 },
+    { from: 11, to: 2, label: 'N\u2082 reservoir', arrows: 'to', color: { color: '#1565c0' }, width: 2 },
+    { from: 11, to: 4, label: 'water vapor', arrows: 'to', color: { color: '#0288d1' }, width: 2.5 }
+  ];
+
+  let nodes = new vis.DataSet(nodesArray);
+  let edges = new vis.DataSet(edgesArray);
+
+  let options = {
+    physics: false,
+    interaction: {
+      dragNodes: false,
+      dragView: false,
+      zoomView: false,
+      hover: true,
+      navigationButtons: true,
+      selectConnectedEdges: false
+    },
+    edges: {
+      font: { size: 9, color: '#757575', strokeWidth: 2, strokeColor: '#f8f9f5' },
+      smooth: { type: 'curvedCW', roundness: 0.15 }
+    }
+  };
+
+  let network = new vis.Network(networkDiv, { nodes, edges }, options);
+
+  network.once('afterDrawing', function () {
+    network.fit({ animation: false });
+  });
+
+  // Click handler
+  let highlightedNodes = new Set();
+  let highlightedEdges = new Set();
+
+  network.on('click', function (params) {
+    resetHighlights();
+    if (params.nodes.length > 0) {
+      let nodeId = params.nodes[0];
+      let d = defs[nodeId];
+      let connEdges = network.getConnectedEdges(nodeId);
+      let connNodes = network.getConnectedNodes(nodeId);
+
+      highlightedNodes.add(nodeId);
+      connNodes.forEach(function (n) { highlightedNodes.add(n); });
+      connEdges.forEach(function (e) { highlightedEdges.add(e); });
+
+      nodesArray.forEach(function (n) {
+        nodes.update({ id: n.id, opacity: highlightedNodes.has(n.id) ? 1.0 : 0.15 });
+      });
+      edgesArray.forEach(function (e, idx) {
+        let edgeId = edges.getIds()[idx];
+        edges.update({ id: edgeId, hidden: !highlightedEdges.has(edgeId) });
+      });
+
+      let groupNames = {
+        'carbon': 'Carbon Cycle', 'nitrogen': 'Nitrogen Cycle',
+        'phosphorus': 'Phosphorus Cycle', 'water': 'Water Cycle',
+        'process': 'Shared Process'
+      };
+      let connLabels = connNodes.map(function (n) { return defs[n].label.replace(/\n/g, ' '); }).join(', ');
+      infoPanel.innerHTML =
+        '<h3 style="color:' + groupColors[d.group].font + ';margin-top:0;">' + d.label.replace(/\n/g, ' ') + '</h3>' +
+        '<p style="color:#9e9e9e;font-size:11px;margin:2px 0;">Type: ' + groupNames[d.group] + '</p>' +
+        '<p style="color:#3e2723;font-size:13px;">' + d.def + '</p>' +
+        '<hr style="border:none;border-top:1px solid #e0e0e0;">' +
+        '<p style="color:#5d4037;font-size:12px;"><strong>Linked to:</strong> ' + connLabels + '</p>' +
+        '<p style="color:#9e9e9e;font-size:11px;">' + connNodes.length + ' connections</p>';
+    }
+  });
+
+  function resetHighlights() {
+    highlightedNodes.clear();
+    highlightedEdges.clear();
+    nodesArray.forEach(function (n) { nodes.update({ id: n.id, opacity: 1.0 }); });
+    edgesArray.forEach(function (e, idx) {
+      let edgeId = edges.getIds()[idx];
+      edges.update({ id: edgeId, hidden: false });
+    });
+  }
+
+  resetBtn.addEventListener('click', function () {
+    resetHighlights();
+    infoPanel.innerHTML = '<h3 style="color:#3e2723;margin-top:0;">Connected Cycles</h3>' +
+      '<p style="color:#5d4037;font-size:13px;">Click any node to see how the biogeochemical cycles are linked through shared processes.</p>' +
+      '<p style="color:#9e9e9e;font-size:12px;">Four major cycles connected by key ecological processes.</p>';
+    network.fit({ animation: true });
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:12px;padding:8px;font-size:11px;flex-wrap:wrap;';
+  legend.innerHTML =
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:#e0e0e0;border:2px solid #616161;display:inline-block;border-radius:3px;"></span> Carbon</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:#bbdefb;border:2px solid #1565c0;display:inline-block;border-radius:3px;"></span> Nitrogen</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:#ffe0b2;border:2px solid #e65100;display:inline-block;border-radius:3px;"></span> Phosphorus</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:#b3e5fc;border:2px solid #0288d1;display:inline-block;border-radius:3px;"></span> Water</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:#c8e6c9;border:2px solid #2e7d32;display:inline-block;border-radius:50%;"></span> Shared Process</span>';
+  main.appendChild(legend);
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

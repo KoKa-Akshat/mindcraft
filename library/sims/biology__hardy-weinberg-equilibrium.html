@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Hardy-Weinberg Equilibrium Calculator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Hardy-Weinberg Equilibrium Calculator
+// Input observed genotype counts → calculate p, q, expected frequencies
+// Bar chart comparing observed vs expected, chi-square test
+
+let canvasWidth = 800;
+let drawHeight = 410;
+let controlHeight = 90;
+let canvasHeight = drawHeight + controlHeight;
+
+// Observed counts
+let obsAA = 320;
+let obsAa = 480;
+let obsaa = 200;
+
+// Input mode: 'counts' or 'slider'
+let inputMode = 'counts';
+let pSliderVal = 0.5; // for slider mode
+
+// Preset examples
+const presets = [
+    { name: 'In HWE', AA: 320, Aa: 480, aa: 200, desc: 'p=0.56, population in equilibrium' },
+    { name: 'Selection', AA: 500, Aa: 350, aa: 150, desc: 'Excess homozygous dominant (directional selection)' },
+    { name: 'Drift', AA: 80, Aa: 60, aa: 60, desc: 'Small population (N=200), deviation from HWE' }
+];
+
+// Editable fields
+let activeField = null; // 'AA', 'Aa', 'aa'
+let fieldText = { 'AA': '320', 'Aa': '480', 'aa': '200' };
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    let total = obsAA + obsAa + obsaa;
+    if (total === 0) total = 1;
+
+    // Calculate allele frequencies
+    let p, q;
+    if (inputMode === 'slider') {
+        p = pSliderVal;
+        q = 1 - p;
+    } else {
+        p = (2 * obsAA + obsAa) / (2 * total);
+        q = 1 - p;
+    }
+
+    // Expected genotype frequencies under HWE
+    let expAA_freq = p * p;
+    let expAa_freq = 2 * p * q;
+    let expaa_freq = q * q;
+
+    // Expected counts
+    let expAA = expAA_freq * total;
+    let expAa = expAa_freq * total;
+    let expaa = expaa_freq * total;
+
+    // Observed frequencies
+    let obsAA_freq = obsAA / total;
+    let obsAa_freq = obsAa / total;
+    let obsaa_freq = obsaa / total;
+
+    // Chi-square
+    let chi2 = 0;
+    if (expAA > 0) chi2 += pow(obsAA - expAA, 2) / expAA;
+    if (expAa > 0) chi2 += pow(obsAa - expAa, 2) / expAa;
+    if (expaa > 0) chi2 += pow(obsaa - expaa, 2) / expaa;
+
+    // df = 1 for HWE test (3 genotypes - 1 estimated parameter - 1)
+    let inEquilibrium = chi2 < 3.841; // p > 0.05 for df=1
+
+    drawInputPanel(total, p, q);
+    drawBarChart(obsAA_freq, obsAa_freq, obsaa_freq, expAA_freq, expAa_freq, expaa_freq);
+    drawCalculations(p, q, expAA_freq, expAa_freq, expaa_freq, expAA, expAa, expaa, total);
+    drawChiSquare(chi2, inEquilibrium, obsAA, obsAa, obsaa, expAA, expAa, expaa);
+    drawControls();
+}
+
+function drawInputPanel(total, p, q) {
+    let panelX = 10;
+    let panelY = 8;
+    let panelW = canvasWidth * 0.32;
+    let panelH = 130;
+
+    fill(255, 252, 245);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    fill(60);
+    noStroke();
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Observed Genotype Counts', panelX + 10, panelY + 8);
+    textStyle(NORMAL);
+
+    let fieldY = panelY + 30;
+    let fieldW = 60;
+    let fieldH = 24;
+    let labelX = panelX + 15;
+    let inputX = panelX + 80;
+
+    // AA field
+    drawInputField(labelX, inputX, fieldY, fieldW, fieldH, 'AA', 'p²');
+    fieldY += 30;
+    drawInputField(labelX, inputX, fieldY, fieldW, fieldH, 'Aa', '2pq');
+    fieldY += 30;
+    drawInputField(labelX, inputX, fieldY, fieldW, fieldH, 'aa', 'q²');
+
+    // Total and allele frequencies
+    fill(80);
+    textSize(10);
+    textAlign(LEFT, TOP);
+    let infoX = inputX + fieldW + 15;
+    text(`N = ${total}`, infoX, panelY + 35);
+    text(`p = ${p.toFixed(4)}`, infoX, panelY + 50);
+    text(`q = ${q.toFixed(4)}`, infoX, panelY + 65);
+    text(`p + q = ${(p + q).toFixed(4)}`, infoX, panelY + 80);
+}
+
+function drawInputField(labelX, inputX, y, w, h, label, formula) {
+    // Label
+    fill(40);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text(label, labelX, y + h / 2);
+    textStyle(NORMAL);
+
+    fill(120);
+    textSize(9);
+    text(`(${formula})`, labelX + 25, y + h / 2);
+
+    // Input box
+    let isActive = activeField === label;
+    fill(isActive ? 255 : 245);
+    stroke(isActive ? [52, 152, 219] : [180, 180, 180]);
+    strokeWeight(isActive ? 2 : 1);
+    rect(inputX, y, w, h, 4);
+
+    fill(40);
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text(fieldText[label], inputX + w / 2, y + h / 2);
+}
+
+function drawBarChart(obsAA, obsAa, obsaa, expAA, expAa, expaa) {
+    let chartX = canvasWidth * 0.36;
+    let chartY = 35;
+    let chartW = canvasWidth * 0.35;
+    let chartH = 130;
+
+    // Title
+    fill(60);
+    noStroke();
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('Observed vs Expected Frequencies', chartX + chartW / 2, chartY - 25);
+    textStyle(NORMAL);
+
+    // Y-axis
+    stroke(180);
+    strokeWeight(1);
+    line(chartX, chartY, chartX, chartY + chartH);
+    line(chartX, chartY + chartH, chartX + chartW, chartY + chartH);
+
+    // Y-axis labels
+    fill(100);
+    textSize(9);
+    textAlign(RIGHT, CENTER);
+    for (let i = 0; i <= 4; i++) {
+        let yVal = i * 0.25;
+        let yPos = chartY + chartH - (yVal * chartH);
+        text(yVal.toFixed(2), chartX - 5, yPos);
+        stroke(230);
+        strokeWeight(0.5);
+        line(chartX + 1, yPos, chartX + chartW, yPos);
+    }
+
+    let groups = [
+        { label: 'AA', obs: obsAA, exp: expAA },
+        { label: 'Aa', obs: obsAa, exp: expAa },
+        { label: 'aa', obs: obsaa, exp: expaa }
+    ];
+
+    let groupW = chartW / 3;
+    let barW = groupW * 0.3;
+
+    for (let i = 0; i < groups.length; i++) {
+        let g = groups[i];
+        let gx = chartX + i * groupW + groupW * 0.15;
+
+        // Observed bar
+        let obsH = g.obs * chartH;
+        fill(52, 152, 219, 200);
+        stroke(41, 128, 185);
+        strokeWeight(1);
+        rect(gx, chartY + chartH - obsH, barW, obsH, 2, 2, 0, 0);
+
+        // Expected bar (outline)
+        let expH = g.exp * chartH;
+        noFill();
+        stroke(231, 76, 60);
+        strokeWeight(2);
+        drawingContext.setLineDash([4, 3]);
+        rect(gx + barW + 4, chartY + chartH - expH, barW, expH, 2, 2, 0, 0);
+        drawingContext.setLineDash([]);
+
+        // Label
+        fill(60);
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, TOP);
+        text(g.label, gx + barW + 2, chartY + chartH + 4);
+
+        // Values above bars
+        fill(52, 152, 219);
+        textSize(8);
+        textAlign(CENTER, BOTTOM);
+        text(g.obs.toFixed(3), gx + barW / 2, chartY + chartH - obsH - 2);
+
+        fill(231, 76, 60);
+        text(g.exp.toFixed(3), gx + barW + 4 + barW / 2, chartY + chartH - expH - 2);
+    }
+
+    // Legend
+    let legX = chartX + chartW - 80;
+    let legY = chartY - 5;
+
+    fill(52, 152, 219);
+    noStroke();
+    rect(legX, legY, 10, 10);
+    fill(60);
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text('Observed', legX + 14, legY + 5);
+
+    noFill();
+    stroke(231, 76, 60);
+    strokeWeight(2);
+    drawingContext.setLineDash([3, 2]);
+    rect(legX, legY + 14, 10, 10);
+    drawingContext.setLineDash([]);
+    fill(60);
+    noStroke();
+    text('Expected', legX + 14, legY + 19);
+}
+
+function drawCalculations(p, q, expAA, expAa, expaa, expAAcount, expAacount, expaacount, total) {
+    let panelX = 10;
+    let panelY = 150;
+    let panelW = canvasWidth * 0.32;
+    let panelH = 100;
+
+    fill(245, 250, 255);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    fill(60);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('HWE Expected Values', panelX + 10, panelY + 6);
+    textStyle(NORMAL);
+
+    textSize(10);
+    let ty = panelY + 24;
+    text(`p² = ${p.toFixed(4)}² = ${expAA.toFixed(4)}`, panelX + 12, ty);
+    text(`→ ${expAAcount.toFixed(1)} individuals`, panelX + panelW * 0.6, ty);
+    ty += 16;
+    text(`2pq = 2×${p.toFixed(4)}×${q.toFixed(4)} = ${expAa.toFixed(4)}`, panelX + 12, ty);
+    text(`→ ${expAacount.toFixed(1)}`, panelX + panelW * 0.6, ty);
+    ty += 16;
+    text(`q² = ${q.toFixed(4)}² = ${expaa.toFixed(4)}`, panelX + 12, ty);
+    text(`→ ${expaacount.toFixed(1)}`, panelX + panelW * 0.6, ty);
+    ty += 16;
+    fill(100);
+    text(`Sum = ${(expAA + expAa + expaa).toFixed(4)}`, panelX + 12, ty);
+}
+
+function drawChiSquare(chi2, inEquilibrium, obsAA, obsAa, obsaa, expAA, expAa, expaa) {
+    let panelX = 10;
+    let panelY = 260;
+    let panelW = canvasWidth - 20;
+    let panelH = drawHeight - panelY - 5;
+
+    fill(inEquilibrium ? [235, 255, 240] : [255, 240, 240]);
+    stroke(inEquilibrium ? [100, 200, 120] : [200, 100, 100]);
+    strokeWeight(1.5);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    fill(60);
+    noStroke();
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Chi-Square Goodness-of-Fit Test (df = 1)', panelX + 10, panelY + 8);
+    textStyle(NORMAL);
+
+    // Formula
+    textSize(10);
+    let fy = panelY + 28;
+
+    // Show calculation for each genotype
+    let terms = [
+        { label: 'AA', obs: obsAA, exp: expAA },
+        { label: 'Aa', obs: obsAa, exp: expAa },
+        { label: 'aa', obs: obsaa, exp: expaa }
+    ];
+
+    let tx = panelX + 15;
+    text('χ² = Σ (observed - expected)² / expected', tx, fy);
+    fy += 18;
+
+    for (let i = 0; i < terms.length; i++) {
+        let t = terms[i];
+        let termVal = t.exp > 0 ? pow(t.obs - t.exp, 2) / t.exp : 0;
+        fill(80);
+        text(`${t.label}: (${t.obs.toFixed(0)} - ${t.exp.toFixed(1)})² / ${t.exp.toFixed(1)} = ${termVal.toFixed(4)}`, tx + 10, fy);
+        fy += 15;
+    }
+
+    // Total chi2
+    fill(40);
+    textSize(11);
+    textStyle(BOLD);
+    text(`χ² = ${chi2.toFixed(4)}`, tx, fy + 3);
+    textStyle(NORMAL);
+
+    // Critical value and verdict
+    let verdictX = panelX + panelW * 0.55;
+    let verdictY = panelY + 30;
+
+    fill(100);
+    textSize(10);
+    textAlign(LEFT, TOP);
+    text('Critical value (α = 0.05, df = 1): 3.841', verdictX, verdictY);
+
+    verdictY += 20;
+    fill(inEquilibrium ? [20, 130, 50] : [200, 50, 50]);
+    textSize(14);
+    textStyle(BOLD);
+    text(inEquilibrium ? '✓ In Hardy-Weinberg Equilibrium' : '✗ NOT in Hardy-Weinberg Equilibrium', verdictX, verdictY);
+    textStyle(NORMAL);
+
+    verdictY += 22;
+    fill(80);
+    textSize(10);
+    if (inEquilibrium) {
+        text(`χ² (${chi2.toFixed(2)}) < 3.841 → p > 0.05`, verdictX, verdictY);
+        text('Fail to reject H₀: population is in HWE', verdictX, verdictY + 14);
+    } else {
+        text(`χ² (${chi2.toFixed(2)}) ≥ 3.841 → p ≤ 0.05`, verdictX, verdictY);
+        text('Reject H₀: population deviates from HWE', verdictX, verdictY + 14);
+        text('Possible causes: selection, drift, migration, non-random mating', verdictX, verdictY + 28);
+    }
+}
+
+function drawControls() {
+    let cy = drawHeight + 8;
+
+    // Preset buttons
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text('Presets:', 15, cy + 15);
+
+    let bx = 75;
+    let btnH = 28;
+
+    for (let i = 0; i < presets.length; i++) {
+        let p = presets[i];
+        let btnW = textWidth(p.name) + 20;
+
+        fill(200, 210, 230);
+        stroke(150);
+        strokeWeight(1);
+        rect(bx, cy + 2, btnW, btnH, 6);
+
+        fill(40);
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        text(p.name, bx + btnW / 2, cy + 2 + btnH / 2);
+
+        bx += btnW + 8;
+    }
+
+    // Reset button
+    fill(180, 80, 80);
+    stroke(150);
+    strokeWeight(1);
+    rect(bx + 10, cy + 2, 55, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('Reset', bx + 37, cy + 2 + btnH / 2);
+
+    // Preset description
+    fill(100);
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text('Click a preset to load example data, or type counts in the input fields above.', 15, cy + 50);
+
+    // Equations reminder
+    textAlign(RIGHT, CENTER);
+    text('p² + 2pq + q² = 1    |    p + q = 1', canvasWidth - 15, cy + 50);
+}
+
+function mousePressed() {
+    let cy = drawHeight + 8;
+    let btnH = 28;
+
+    // Check preset buttons
+    let bx = 75;
+    for (let i = 0; i < presets.length; i++) {
+        let p = presets[i];
+        textSize(11);
+        let btnW = textWidth(p.name) + 20;
+
+        if (mouseX >= bx && mouseX <= bx + btnW &&
+            mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+            obsAA = p.AA;
+            obsAa = p.Aa;
+            obsaa = p.aa;
+            fieldText['AA'] = String(obsAA);
+            fieldText['Aa'] = String(obsAa);
+            fieldText['aa'] = String(obsaa);
+            activeField = null;
+            return;
+        }
+        bx += btnW + 8;
+    }
+
+    // Reset button
+    if (mouseX >= bx + 10 && mouseX <= bx + 65 &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        obsAA = 0; obsAa = 0; obsaa = 0;
+        fieldText = { 'AA': '0', 'Aa': '0', 'aa': '0' };
+        activeField = 'AA';
+        return;
+    }
+
+    // Check input fields
+    let panelX = 10;
+    let panelY = 8;
+    let inputX = panelX + 80;
+    let fieldW = 60;
+    let fieldH = 24;
+    let fields = ['AA', 'Aa', 'aa'];
+    let fieldY = panelY + 30;
+
+    activeField = null;
+    for (let i = 0; i < fields.length; i++) {
+        let fy = fieldY + i * 30;
+        if (mouseX >= inputX && mouseX <= inputX + fieldW &&
+            mouseY >= fy && mouseY <= fy + fieldH) {
+            activeField = fields[i];
+            return;
+        }
+    }
+}
+
+function keyPressed() {
+    if (!activeField) return;
+
+    if (keyCode === BACKSPACE || keyCode === DELETE) {
+        fieldText[activeField] = fieldText[activeField].slice(0, -1);
+        updateFromFields();
+        return false;
+    }
+
+    if (keyCode === TAB) {
+        let fields = ['AA', 'Aa', 'aa'];
+        let idx = fields.indexOf(activeField);
+        activeField = fields[(idx + 1) % 3];
+        return false;
+    }
+
+    if (keyCode === ENTER || keyCode === RETURN) {
+        activeField = null;
+        return false;
+    }
+
+    if (key >= '0' && key <= '9') {
+        if (fieldText[activeField].length < 6) {
+            fieldText[activeField] += key;
+            updateFromFields();
+        }
+        return false;
+    }
+}
+
+function updateFromFields() {
+    obsAA = parseInt(fieldText['AA']) || 0;
+    obsAa = parseInt(fieldText['Aa']) || 0;
+    obsaa = parseInt(fieldText['aa']) || 0;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

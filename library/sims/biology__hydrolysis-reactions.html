@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Condensation and Hydrolysis Reaction Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Condensation and Hydrolysis Reaction Simulator
+// Students explain which atoms leave to form water in condensation
+// and which bond is broken by water in hydrolysis.
+// Bloom Level: Understand (L2) — step-through animation
+// MicroSim template version 2026.02
+
+// Canvas dimensions
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Reaction type selector
+let reactionSelect;
+
+// Buttons
+let addMonomerBtn;
+let hydrolyzeBtn;
+let buildFiveBtn;
+let resetBtn;
+
+// State
+let polymer = []; // array of monomer objects
+let waterMolecules = []; // floating water molecules
+let animationState = 'idle'; // 'idle', 'condensing', 'hydrolyzing'
+let animProgress = 0; // 0 to 1
+let condensationSpeed = 0.003125;
+let condensationPaused = false;
+let condensationPauseTimer = 0;
+let condensationPauseDuration = 120; // ~2 seconds at 60fps
+let hydrolysisPaused = false;
+let hydrolysisPauseTimer = 0;
+let hydrolysisPauseDuration = 180; // ~3 seconds at 60fps
+let hydrolysisSpeed = 0.008;
+let incomingMonomer = null;
+let outgoingMonomer = null;
+let incomingWater = null;
+let outgoingWater = null;
+let waterCount = 0;
+let buildQueue = 0; // for "build to 5" rapid mode
+let currentPolyStartX = null; // smooth centering — current visual position
+let polyLerpSpeed = 0.08; // how fast the chain slides to its new center
+let energyFlash = 0; // flash timer for energy indicator
+let energyDirection = 0; // 1 = up (condensation), -1 = down (hydrolysis)
+
+// Monomer visual properties per reaction type
+let monomerTypes = {
+  'Polypeptide': {
+    name: 'Amino Acid',
+    colors: ['#E8715A', '#5B8DEE', '#50C878', '#DDA0DD', '#F4A460',
+             '#87CEEB', '#FFD700', '#FF6B6B', '#98D8C8', '#C39BD3'],
+    leftGroup: 'H-',
+    rightGroup: '-OH',
+    bondLabel: 'Peptide Bond',
+    width: 70,
+    height: 45
+  },
+  'Polysaccharide': {
+    name: 'Glucose',
+    colors: ['#FFB347', '#87CEEB', '#98D8C8', '#DDA0DD', '#F4A460',
+             '#E8715A', '#5B8DEE', '#50C878', '#FFD700', '#C39BD3'],
+    leftGroup: 'H-',
+    rightGroup: '-OH',
+    bondLabel: 'Glycosidic Bond',
+    width: 70,
+    height: 45
+  },
+  'Polynucleotide': {
+    name: 'Nucleotide',
+    colors: ['#87CEEB', '#98D8C8', '#FFB347', '#DDA0DD', '#F4A460',
+             '#E8715A', '#5B8DEE', '#50C878', '#FFD700', '#C39BD3'],
+    leftGroup: 'H-',
+    rightGroup: '-OH',
+    bondLabel: 'Phosphodiester Bond',
+    width: 70,
+    height: 45
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  // Row 1: Select + Add Monomer + Hydrolyze
+  reactionSelect = createSelect();
+  reactionSelect.option('Polypeptide');
+  reactionSelect.option('Polysaccharide');
+  reactionSelect.option('Polynucleotide');
+  reactionSelect.position(10, drawHeight + 8);
+  reactionSelect.changed(resetSim);
+
+  addMonomerBtn = createButton('Add Monomer');
+  addMonomerBtn.position(150, drawHeight + 8);
+  addMonomerBtn.mousePressed(startCondensation);
+
+  hydrolyzeBtn = createButton('Hydrolyze');
+  hydrolyzeBtn.position(265, drawHeight + 8);
+  hydrolyzeBtn.mousePressed(startHydrolysis);
+
+  // Row 2: Build to 5 + Reset
+  buildFiveBtn = createButton('Build to 5');
+  buildFiveBtn.position(10, drawHeight + 43);
+  buildFiveBtn.mousePressed(buildToFive);
+
+  resetBtn = createButton('Reset');
+  resetBtn.position(110, drawHeight + 43);
+  resetBtn.mousePressed(resetSim);
+
+  // Start with one monomer
+  addInitialMonomer();
+
+  describe('Interactive simulation of condensation and hydrolysis reactions showing monomers joining into polymers and breaking apart, with water molecules forming or being consumed.', LABEL);
+}
+
+function addInitialMonomer() {
+  let mt = monomerTypes[reactionSelect.value()];
+  polymer.push({
+    colorIndex: 0,
+    x: 0, // will be calculated in draw
+    y: 0
+  });
+}
+
+function resetSim() {
+  polymer = [];
+  waterMolecules = [];
+  waterCount = 0;
+  animationState = 'idle';
+  animProgress = 0;
+  incomingMonomer = null;
+  outgoingMonomer = null;
+  incomingWater = null;
+  outgoingWater = null;
+  buildQueue = 0;
+  energyFlash = 0;
+  currentPolyStartX = null;
+  addInitialMonomer();
+}
+
+function getPolymerTargetX() {
+  let mt = monomerTypes[reactionSelect.value()];
+  let totalWidth = polymer.length * (mt.width + 10) - 10;
+  return (canvasWidth - totalWidth) / 2;
+}
+
+function getPolymerStartX() {
+  let targetX = getPolymerTargetX();
+  if (currentPolyStartX === null) {
+    currentPolyStartX = targetX;
+  }
+  // Smoothly lerp toward the target
+  currentPolyStartX += (targetX - currentPolyStartX) * polyLerpSpeed;
+  // Snap if very close to avoid endless sub-pixel drift
+  if (Math.abs(currentPolyStartX - targetX) < 0.5) {
+    currentPolyStartX = targetX;
+  }
+  return currentPolyStartX;
+}
+
+function startCondensation() {
+  if (animationState !== 'idle') return;
+  if (polymer.length >= 7) return; // max chain length for display
+  animationState = 'condensing';
+  animProgress = 0;
+  condensationPaused = false;
+  condensationPauseTimer = 0;
+  let mt = monomerTypes[reactionSelect.value()];
+  incomingMonomer = {
+    colorIndex: polymer.length % mt.colors.length,
+    startX: canvasWidth + 50,
+    startY: drawHeight / 2
+  };
+}
+
+function startHydrolysis() {
+  if (animationState !== 'idle') return;
+  if (polymer.length <= 1) return; // need at least 2
+  animationState = 'hydrolyzing';
+  animProgress = 0;
+  hydrolysisPaused = false;
+  hydrolysisPauseTimer = 0;
+  // Water comes in from right side
+  let mt = monomerTypes[reactionSelect.value()];
+  let lastIdx = polymer.length - 1;
+  let startX = getPolymerStartX();
+  let bondX = startX + lastIdx * (mt.width + 10) - 5;
+  incomingWater = {
+    startX: canvasWidth + 30,
+    startY: drawHeight / 2 - 60,
+    targetX: bondX,
+    targetY: drawHeight / 2 - 50
+  };
+}
+
+function buildToFive() {
+  if (animationState !== 'idle') return;
+  let needed = 5 - polymer.length;
+  if (needed <= 0) return;
+  buildQueue = needed;
+  startCondensation();
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Draw regions
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(20);
+  text('Condensation & Hydrolysis Reactions', canvasWidth / 2, 10);
+
+  let mt = monomerTypes[reactionSelect.value()];
+
+  // Calculate polymer positions
+  let polyStartX = getPolymerStartX();
+  let polyY = drawHeight / 2;
+
+  // Update animation
+  if (animationState === 'condensing') {
+    if (condensationPaused) {
+      // Hold on the "These atoms form H₂O" text
+      condensationPauseTimer++;
+      if (condensationPauseTimer >= condensationPauseDuration) {
+        condensationPaused = false;
+        condensationPauseTimer = 0;
+      }
+    } else {
+      animProgress += condensationSpeed;
+      // Pause at start of phase 2 to show the "These atoms form H₂O" text
+      if (animProgress >= 0.4 && animProgress < 0.42 && !condensationPaused && animProgress - condensationSpeed < 0.4) {
+        condensationPaused = true;
+        animProgress = 0.5; // midpoint of phase 2 for best text display
+      }
+      if (animProgress >= 1) {
+        finishCondensation();
+      }
+    }
+  } else if (animationState === 'hydrolyzing') {
+    if (hydrolysisPaused) {
+      hydrolysisPauseTimer++;
+      if (hydrolysisPauseTimer >= hydrolysisPauseDuration) {
+        hydrolysisPaused = false;
+        hydrolysisPauseTimer = 0;
+      }
+    } else {
+      animProgress += hydrolysisSpeed;
+      // Pause at start of phase 2 to show the "H₂O splits here" text
+      if (animProgress >= 0.3 && animProgress - hydrolysisSpeed < 0.3 && !hydrolysisPaused) {
+        hydrolysisPaused = true;
+        animProgress = 0.45; // midpoint of phase 2 for best text display
+      }
+      if (animProgress >= 1) {
+        finishHydrolysis();
+      }
+    }
+  }
+
+  // Draw polymer chain
+  for (let i = 0; i < polymer.length; i++) {
+    let mx = polyStartX + i * (mt.width + 10);
+    let my = polyY;
+    polymer[i].x = mx;
+    polymer[i].y = my;
+
+    // Draw bond between monomers
+    if (i > 0) {
+      let bondX = mx - 5;
+      let bondHighlight = false;
+      // Highlight last bond during hydrolysis
+      if (animationState === 'hydrolyzing' && i === polymer.length - 1 && animProgress > 0.3) {
+        bondHighlight = true;
+      }
+      stroke(bondHighlight ? 'red' : 'darkgray');
+      strokeWeight(bondHighlight ? 3 : 2);
+      let prevX = polyStartX + (i - 1) * (mt.width + 10) + mt.width;
+      line(prevX, my, mx, my);
+
+      // Bond label on first bond
+      if (i === 1) {
+        noStroke();
+        fill('gray');
+        textSize(11);
+        textAlign(CENTER, TOP);
+        text(mt.bondLabel, (prevX + mx) / 2, my + mt.height / 2 + 5);
+      }
+    }
+
+    drawMonomer(mx, my, i, mt, false, false);
+  }
+
+  // Draw functional groups on chain ends
+  if (polymer.length > 0) {
+    noStroke();
+    textSize(14);
+    textAlign(RIGHT, CENTER);
+    let firstX = polyStartX;
+    let lastX = polyStartX + (polymer.length - 1) * (mt.width + 10) + mt.width;
+
+    // Left end group
+    fill('royalblue');
+    text(mt.leftGroup, firstX - 3, polyY);
+
+    // Right end group - highlight during condensation
+    textAlign(LEFT, CENTER);
+    let rightHighlight = animationState === 'condensing' && animProgress > 0.2 && animProgress < 0.6;
+    fill(rightHighlight ? 'red' : 'crimson');
+    textSize(rightHighlight ? 16 : 14);
+    text(mt.rightGroup, lastX + 3, polyY);
+  }
+
+  // Draw incoming monomer during condensation
+  if (animationState === 'condensing' && incomingMonomer) {
+    let targetX = polyStartX + polymer.length * (mt.width + 10);
+    let targetY = polyY;
+    let phase = animProgress;
+
+    if (phase < 0.4) {
+      // Phase 1: Monomer slides in from right
+      let t = phase / 0.4;
+      let cx = lerp(incomingMonomer.startX, targetX, easeOutCubic(t));
+      let cy = lerp(incomingMonomer.startY, targetY, easeOutCubic(t));
+      drawMonomer(cx, cy, incomingMonomer.colorIndex, mt, false, false);
+
+      // Show functional groups on incoming monomer
+      noStroke();
+      textSize(14);
+      textAlign(RIGHT, CENTER);
+      fill('royalblue');
+      text(mt.leftGroup, cx - 3, cy);
+      textAlign(LEFT, CENTER);
+      fill('crimson');
+      text(mt.rightGroup, cx + mt.width + 3, cy);
+
+    } else if (phase < 0.6) {
+      // Phase 2: Highlight the atoms that will form water (red flash)
+      let cx = targetX;
+      let cy = targetY;
+      drawMonomer(cx, cy, incomingMonomer.colorIndex, mt, false, false);
+
+      // Highlighted groups
+      let flashAlpha = sin((phase - 0.4) / 0.2 * PI) * 255;
+      noStroke();
+      textSize(16);
+
+      // OH from right end of polymer
+      let lastPolyX = polyStartX + (polymer.length - 1) * (mt.width + 10) + mt.width;
+      textAlign(LEFT, CENTER);
+      fill(255, 0, 0);
+      text('-OH', lastPolyX + 3, polyY);
+
+      // H from incoming monomer
+      textAlign(RIGHT, CENTER);
+      fill(255, 0, 0);
+      text('H-', cx - 3, cy);
+
+      // Draw arrow showing these will combine
+      stroke(255, 0, 0, 200);
+      strokeWeight(2);
+      let midX = (lastPolyX + 3 + cx - 3) / 2;
+      let arrowY = polyY - 35;
+      noFill();
+      arc(midX, polyY - 10, 40, 30, PI, 0);
+
+      noStroke();
+      fill(255, 0, 0, 200);
+      textAlign(CENTER, BOTTOM);
+      textSize(13);
+      text('These atoms form H₂O', midX, arrowY - 5);
+
+    } else {
+      // Phase 3: Snap together, water molecule drifts away
+      let cx = targetX;
+      let cy = targetY;
+      drawMonomer(cx, cy, incomingMonomer.colorIndex, mt, false, false);
+
+      // Bond forming
+      stroke('darkgray');
+      strokeWeight(2);
+      let prevEnd = polyStartX + (polymer.length - 1) * (mt.width + 10) + mt.width;
+      line(prevEnd, polyY, cx, cy);
+
+      // Water molecule drifting up and away
+      let wt = (phase - 0.6) / 0.4;
+      let wx = (prevEnd + cx) / 2 + wt * 30;
+      let wy = polyY - 30 - wt * 60;
+      drawWaterMolecule(wx, wy, 1.0);
+    }
+  }
+
+  // Draw incoming water and hydrolysis animation
+  if (animationState === 'hydrolyzing' && polymer.length > 1) {
+    let lastIdx = polymer.length - 1;
+    let bondX = polyStartX + lastIdx * (mt.width + 10) - 5;
+    let phase = animProgress;
+
+    if (phase < 0.3) {
+      // Phase 1: Water slides in toward the last bond
+      let t = phase / 0.3;
+      let wx = lerp(incomingWater.startX, incomingWater.targetX, easeOutCubic(t));
+      let wy = lerp(incomingWater.startY, incomingWater.targetY, easeOutCubic(t));
+      drawWaterMolecule(wx, wy, 1.0);
+    } else if (phase < 0.6) {
+      // Phase 2: Water splits, atoms attach
+      let t = (phase - 0.3) / 0.3;
+      drawWaterMolecule(incomingWater.targetX, incomingWater.targetY, 1.0 - t);
+
+      // Show splitting labels
+      noStroke();
+      fill(255, 0, 0);
+      textSize(14);
+      textAlign(CENTER, BOTTOM);
+      let splitT = easeOutCubic(t);
+      text('H₂O splits here', bondX + 5, polyY - 75);
+
+      // OH drifts right, H drifts left
+      textAlign(LEFT, CENTER);
+      let ohX = lerp(incomingWater.targetX, bondX + 15, splitT);
+      let ohY = lerp(incomingWater.targetY, polyY - 15, splitT);
+      text('-OH', ohX, ohY);
+
+      textAlign(RIGHT, CENTER);
+      let hX = lerp(incomingWater.targetX, bondX - 5, splitT);
+      let hY = lerp(incomingWater.targetY, polyY - 15, splitT);
+      text('H-', hX, hY);
+    } else {
+      // Phase 3: Bond breaks, last monomer slides away
+      let t = (phase - 0.6) / 0.4;
+      let lastMon = polymer[lastIdx];
+      let slideX = lastMon.x + easeOutCubic(t) * 80;
+      drawMonomer(slideX, polyY, lastIdx % mt.colors.length, mt, false, false);
+
+      // Show restored functional groups
+      noStroke();
+      textSize(14);
+      // OH on the newly freed end of the remaining chain
+      let prevEnd = polyStartX + (lastIdx - 1) * (mt.width + 10) + mt.width;
+      textAlign(LEFT, CENTER);
+      fill('crimson');
+      text('-OH', prevEnd + 3, polyY);
+
+      // H on the freed monomer
+      textAlign(RIGHT, CENTER);
+      fill('royalblue');
+      text('H-', slideX - 3, polyY);
+      textAlign(LEFT, CENTER);
+      fill('crimson');
+      text('-OH', slideX + mt.width + 3, polyY);
+    }
+  }
+
+  // Draw floating water molecules
+  for (let w of waterMolecules) {
+    w.y -= 0.3;
+    w.x += sin(frameCount * 0.02 + w.phase) * 0.3;
+    if (w.y > 0) {
+      drawWaterMolecule(w.x, w.y, max(0, min(1, (w.y / 100))));
+    }
+  }
+  // Remove off-screen water
+  waterMolecules = waterMolecules.filter(w => w.y > -20);
+
+  // Draw energy indicator
+  drawEnergyIndicator(mt);
+
+  // Draw counters
+  drawCounters();
+
+  // Draw info text
+  drawInfoText(mt);
+
+  // Update button enabled/disabled states
+  updateButtonStates();
+
+  // Control region status text
+  noStroke();
+  fill('gray');
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  let statusText = polymer.length + ' monomer' + (polymer.length !== 1 ? 's' : '') + ' in chain';
+  if (polymer.length > 1) {
+    statusText += ', ' + (polymer.length - 1) + ' bond' + (polymer.length - 1 !== 1 ? 's' : '');
+  }
+  text(statusText, 250, drawHeight + 55);
+}
+
+function drawMonomer(x, y, colorIdx, mt, highlightLeft, highlightRight) {
+  let c = mt.colors[colorIdx % mt.colors.length];
+  fill(c);
+  stroke('gray');
+  strokeWeight(1);
+  rect(x, y - mt.height / 2, mt.width, mt.height, 8);
+
+  // Monomer label
+  noStroke();
+  fill(0, 0, 0, 180);
+  textSize(11);
+  textAlign(CENTER, CENTER);
+  text(mt.name, x + mt.width / 2, y);
+}
+
+function drawWaterMolecule(x, y, opacity) {
+  let a = opacity * 255;
+  // Oxygen
+  fill(30, 100, 220, a);
+  noStroke();
+  ellipse(x, y, 22, 22);
+
+  // Hydrogens
+  fill(220, 60, 60, a);
+  ellipse(x - 12, y - 10, 14, 14);
+  ellipse(x + 12, y - 10, 14, 14);
+
+  // Label
+  fill(0, 0, 0, a);
+  noStroke();
+  textSize(11);
+  textAlign(CENTER, CENTER);
+  text('O', x, y);
+  textSize(9);
+  text('H', x - 12, y - 10);
+  text('H', x + 12, y - 10);
+
+  // H2O label below
+  textSize(12);
+  fill(0, 0, 0, a * 0.7);
+  textAlign(CENTER, TOP);
+  text('H₂O', x, y + 14);
+}
+
+function drawEnergyIndicator(mt) {
+  let indicatorX = canvasWidth - 100;
+  let indicatorY = 60;
+
+  noStroke();
+  fill(0, 0, 0, 150);
+  textSize(13);
+  textAlign(CENTER, TOP);
+  text('Energy', indicatorX, indicatorY - 15);
+
+  if (animationState === 'condensing') {
+    // Energy required (upward arrow)
+    stroke('orangered');
+    strokeWeight(2);
+    let arrowLen = 40;
+    line(indicatorX, indicatorY + arrowLen, indicatorX, indicatorY);
+    // Arrowhead
+    line(indicatorX, indicatorY, indicatorX - 6, indicatorY + 10);
+    line(indicatorX, indicatorY, indicatorX + 6, indicatorY + 10);
+
+    noStroke();
+    fill('orangered');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text('Energy Required', indicatorX, indicatorY + arrowLen + 5);
+    text('(Dehydration)', indicatorX, indicatorY + arrowLen + 19);
+  } else if (animationState === 'hydrolyzing') {
+    // Energy released (downward arrow)
+    stroke('forestgreen');
+    strokeWeight(2);
+    let arrowLen = 40;
+    line(indicatorX, indicatorY, indicatorX, indicatorY + arrowLen);
+    // Arrowhead
+    line(indicatorX, indicatorY + arrowLen, indicatorX - 6, indicatorY + arrowLen - 10);
+    line(indicatorX, indicatorY + arrowLen, indicatorX + 6, indicatorY + arrowLen - 10);
+
+    noStroke();
+    fill('forestgreen');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text('Energy Released', indicatorX, indicatorY + arrowLen + 5);
+    text('(Hydrolysis)', indicatorX, indicatorY + arrowLen + 19);
+  } else {
+    // Idle — show neutral
+    stroke('gray');
+    strokeWeight(1);
+    let arrowLen = 40;
+    line(indicatorX, indicatorY, indicatorX, indicatorY + arrowLen);
+    noStroke();
+    fill('gray');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text('Idle', indicatorX, indicatorY + arrowLen + 5);
+  }
+}
+
+function drawCounters() {
+  noStroke();
+  textSize(14);
+  textAlign(LEFT, TOP);
+
+  // Water counter
+  fill('steelblue');
+  text('Water molecules released: ' + waterCount, margin, drawHeight - 60);
+
+  // Chain info
+  fill('darkslategray');
+  textSize(13);
+  if (polymer.length > 1) {
+    text('Bonds formed: ' + (polymer.length - 1), margin, drawHeight - 40);
+  }
+}
+
+function drawInfoText(mt) {
+  // Brief explanation at bottom of draw area
+  noStroke();
+  fill(0, 0, 0, 140);
+  textSize(12);
+  textAlign(CENTER, BOTTOM);
+
+  if (animationState === 'condensing') {
+    text('Condensation (dehydration synthesis): –OH and H– are removed, forming H₂O', canvasWidth / 2, drawHeight - 8);
+  } else if (animationState === 'hydrolyzing') {
+    text('Hydrolysis: H₂O splits into –OH and H–, breaking the bond', canvasWidth / 2, drawHeight - 8);
+  } else {
+    text('Click "Add Monomer" for condensation or "Hydrolyze" to break the last bond', canvasWidth / 2, drawHeight - 8);
+  }
+}
+
+function finishCondensation() {
+  let mt = monomerTypes[reactionSelect.value()];
+  // Add the monomer to the chain
+  polymer.push({
+    colorIndex: incomingMonomer.colorIndex,
+    x: 0,
+    y: 0
+  });
+  waterCount++;
+
+  // Add a floating water molecule
+  let lastIdx = polymer.length - 1;
+  let polyStartX = getPolymerStartX();
+  let bondX = polyStartX + (lastIdx - 1) * (mt.width + 10) + mt.width;
+  waterMolecules.push({
+    x: bondX,
+    y: drawHeight / 2 - 40,
+    phase: random(TWO_PI)
+  });
+
+  animationState = 'idle';
+  animProgress = 0;
+  incomingMonomer = null;
+
+  // If building to 5, continue
+  if (buildQueue > 1) {
+    buildQueue--;
+    if (polymer.length < 7) {
+      setTimeout(() => startCondensation(), 200);
+    } else {
+      buildQueue = 0;
+    }
+  } else {
+    buildQueue = 0;
+  }
+}
+
+function finishHydrolysis() {
+  // Remove last monomer
+  polymer.pop();
+  waterCount = max(0, waterCount - 1);
+
+  animationState = 'idle';
+  animProgress = 0;
+  incomingWater = null;
+}
+
+function updateButtonStates() {
+  let animating = animationState !== 'idle';
+
+  // Add Monomer: disabled during animation or at max chain length
+  addMonomerBtn.attribute('disabled', (animating || polymer.length >= 7) ? '' : null);
+  if (animating || polymer.length >= 7) {
+    addMonomerBtn.attribute('disabled', '');
+  } else {
+    addMonomerBtn.removeAttribute('disabled');
+  }
+
+  // Hydrolyze: disabled during animation or chain has only 1 monomer
+  if (animating || polymer.length <= 1) {
+    hydrolyzeBtn.attribute('disabled', '');
+  } else {
+    hydrolyzeBtn.removeAttribute('disabled');
+  }
+
+  // Build to 5: disabled during animation or already at 5+
+  if (animating || polymer.length >= 5) {
+    buildFiveBtn.attribute('disabled', '');
+  } else {
+    buildFiveBtn.removeAttribute('disabled');
+  }
+
+  // Reaction select: disabled during animation
+  if (animating) {
+    reactionSelect.attribute('disabled', '');
+  } else {
+    reactionSelect.removeAttribute('disabled');
+  }
+}
+
+function easeOutCubic(t) {
+  return 1 - pow(1 - t, 3);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

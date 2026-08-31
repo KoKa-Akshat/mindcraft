@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Electoral College — Interactive Map</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Electoral College — Interactive Tile Cartogram
+// CANVAS_HEIGHT: 720
+
+let containerWidth;
+let canvasWidth = 800;
+let drawHeight = 660;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+
+// State data: code, electoral votes, lean, grid position (col, row) in a 12x8 cartogram.
+// Lean: 'B' = safe blue, 'R' = safe red, 'S' = swing.
+const STATES = [
+    { c: 'AK', ev: 3,  lean: 'R', col: 0,  row: 7 },
+    { c: 'WA', ev: 12, lean: 'B', col: 1,  row: 1 },
+    { c: 'OR', ev: 8,  lean: 'B', col: 1,  row: 2 },
+    { c: 'CA', ev: 54, lean: 'B', col: 1,  row: 3 },
+    { c: 'HI', ev: 4,  lean: 'B', col: 0,  row: 6 },
+    { c: 'NV', ev: 6,  lean: 'S', col: 2,  row: 3 },
+    { c: 'ID', ev: 4,  lean: 'R', col: 2,  row: 1 },
+    { c: 'MT', ev: 4,  lean: 'R', col: 3,  row: 1 },
+    { c: 'WY', ev: 3,  lean: 'R', col: 3,  row: 2 },
+    { c: 'UT', ev: 6,  lean: 'R', col: 2,  row: 2 },
+    { c: 'AZ', ev: 11, lean: 'S', col: 2,  row: 4 },
+    { c: 'CO', ev: 10, lean: 'B', col: 3,  row: 3 },
+    { c: 'NM', ev: 5,  lean: 'B', col: 3,  row: 4 },
+    { c: 'ND', ev: 3,  lean: 'R', col: 4,  row: 1 },
+    { c: 'SD', ev: 3,  lean: 'R', col: 4,  row: 2 },
+    { c: 'NE', ev: 5,  lean: 'R', col: 4,  row: 3 },
+    { c: 'KS', ev: 6,  lean: 'R', col: 4,  row: 4 },
+    { c: 'OK', ev: 7,  lean: 'R', col: 4,  row: 5 },
+    { c: 'TX', ev: 40, lean: 'R', col: 4,  row: 6 },
+    { c: 'MN', ev: 10, lean: 'B', col: 5,  row: 1 },
+    { c: 'IA', ev: 6,  lean: 'R', col: 5,  row: 3 },
+    { c: 'MO', ev: 10, lean: 'R', col: 5,  row: 4 },
+    { c: 'AR', ev: 6,  lean: 'R', col: 5,  row: 5 },
+    { c: 'LA', ev: 8,  lean: 'R', col: 5,  row: 6 },
+    { c: 'WI', ev: 10, lean: 'S', col: 6,  row: 2 },
+    { c: 'IL', ev: 19, lean: 'B', col: 6,  row: 3 },
+    { c: 'TN', ev: 11, lean: 'R', col: 6,  row: 5 },
+    { c: 'MS', ev: 6,  lean: 'R', col: 6,  row: 6 },
+    { c: 'IN', ev: 11, lean: 'R', col: 7,  row: 3 },
+    { c: 'KY', ev: 8,  lean: 'R', col: 7,  row: 4 },
+    { c: 'AL', ev: 9,  lean: 'R', col: 7,  row: 6 },
+    { c: 'MI', ev: 15, lean: 'S', col: 7,  row: 2 },
+    { c: 'OH', ev: 17, lean: 'R', col: 8,  row: 3 },
+    { c: 'WV', ev: 4,  lean: 'R', col: 8,  row: 4 },
+    { c: 'GA', ev: 16, lean: 'S', col: 8,  row: 6 },
+    { c: 'FL', ev: 30, lean: 'R', col: 8,  row: 7 },
+    { c: 'PA', ev: 19, lean: 'S', col: 9,  row: 3 },
+    { c: 'VA', ev: 13, lean: 'B', col: 9,  row: 4 },
+    { c: 'NC', ev: 16, lean: 'S', col: 9,  row: 5 },
+    { c: 'SC', ev: 9,  lean: 'R', col: 9,  row: 6 },
+    { c: 'NY', ev: 28, lean: 'B', col: 9,  row: 2 },
+    { c: 'NJ', ev: 14, lean: 'B', col: 10, row: 3 },
+    { c: 'DE', ev: 3,  lean: 'B', col: 10, row: 4 },
+    { c: 'MD', ev: 10, lean: 'B', col: 10, row: 5 },
+    { c: 'DC', ev: 3,  lean: 'B', col: 10, row: 6 },
+    { c: 'VT', ev: 3,  lean: 'B', col: 10, row: 1 },
+    { c: 'NH', ev: 4,  lean: 'B', col: 11, row: 1 },
+    { c: 'ME', ev: 4,  lean: 'B', col: 11, row: 0 },
+    { c: 'MA', ev: 11, lean: 'B', col: 11, row: 2 },
+    { c: 'CT', ev: 7,  lean: 'B', col: 11, row: 3 },
+    { c: 'RI', ev: 4,  lean: 'B', col: 11, row: 4 }
+];
+
+let assignment = {}; // state code -> 'A' | 'B' | null
+
+let mode = 'lean';   // 'lean' | 'coalition'
+let modeBtn, resetBtn, reformBtn;
+let showReform = false;
+
+function setup() {
+    updateCanvasSize();
+    const c = createCanvas(containerWidth, containerHeight);
+    c.parent(document.querySelector('main'));
+    textSize(13);
+
+    STATES.forEach(s => assignment[s.c] = null);
+
+    modeBtn = createButton('Switch to "Build a Coalition" Mode');
+    modeBtn.position(10, drawHeight + 10);
+    modeBtn.mousePressed(() => {
+        mode = (mode === 'lean') ? 'coalition' : 'lean';
+        modeBtn.html(mode === 'lean' ? 'Switch to "Build a Coalition" Mode' : 'Show "Lean" View');
+    });
+
+    resetBtn = createButton('Reset Coalition');
+    resetBtn.position(280, drawHeight + 10);
+    resetBtn.mousePressed(() => { STATES.forEach(s => assignment[s.c] = null); });
+
+    reformBtn = createButton('Reform Options');
+    reformBtn.position(420, drawHeight + 10);
+    reformBtn.mousePressed(() => { showReform = !showReform; });
+}
+
+function draw() {
+    updateCanvasSize();
+    background(248, 249, 250);
+
+    noStroke();
+    fill(26, 58, 108);
+    textSize(17);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('Electoral College — 538 Electoral Votes (270 to win)', canvasWidth / 2, 6);
+    textStyle(NORMAL);
+    textSize(11);
+    fill(73, 80, 87);
+    text(mode === 'lean'
+            ? 'Default view: states colored by recent partisan lean. Switch to coalition mode to assign states to candidates.'
+            : 'Click states to assign to Candidate A (blue) or Candidate B (red). First to 270 EV wins.',
+         canvasWidth / 2, 28);
+
+    // Tile cartogram area
+    const mapTop = 50;
+    const mapH = 280;
+    const mapLeft = 20;
+    const mapRight = canvasWidth - 20;
+    const mapW = mapRight - mapLeft;
+    const cols = 12, rows = 8;
+    const cell = Math.min((mapW - 20) / cols, mapH / rows) - 2;
+    const gridX = mapLeft + (mapW - cell * cols) / 2;
+    const gridY = mapTop;
+
+    // Tally
+    let aEV = 0, bEV = 0, undet = 0;
+    let safeB = 0, safeR = 0, swing = 0;
+    for (const s of STATES) {
+        const a = assignment[s.c];
+        if (a === 'A') aEV += s.ev;
+        else if (a === 'B') bEV += s.ev;
+        else undet += s.ev;
+        if (s.lean === 'B') safeB += s.ev;
+        else if (s.lean === 'R') safeR += s.ev;
+        else swing += s.ev;
+    }
+
+    // Draw tiles
+    for (const s of STATES) {
+        const x = gridX + s.col * (cell + 2);
+        const y = gridY + s.row * (cell + 2);
+        let fillCol;
+        if (mode === 'lean') {
+            if (s.lean === 'B') fillCol = color(33, 100, 200);
+            else if (s.lean === 'R') fillCol = color(200, 50, 50);
+            else fillCol = color(255, 200, 50);
+        } else {
+            const a = assignment[s.c];
+            if (a === 'A') fillCol = color(33, 100, 200);
+            else if (a === 'B') fillCol = color(200, 50, 50);
+            else fillCol = color(220, 220, 220);
+        }
+        fill(fillCol);
+        stroke(255);
+        strokeWeight(1);
+        rect(x, y, cell, cell, 4);
+        noStroke();
+        // EV count
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        textSize(Math.max(9, cell * 0.30));
+        text(s.c, x + cell / 2, y + cell * 0.30);
+        textStyle(NORMAL);
+        textSize(Math.max(8, cell * 0.26));
+        text(s.ev, x + cell / 2, y + cell * 0.66);
+        // Click handling
+        if (mouseIsPressed && _justClicked &&
+            mouseX >= x && mouseX <= x + cell &&
+            mouseY >= y && mouseY <= y + cell) {
+            if (mode === 'coalition') {
+                const cur = assignment[s.c];
+                assignment[s.c] = (cur === null) ? 'A' : (cur === 'A') ? 'B' : null;
+            }
+            _justClicked = false;
+        }
+    }
+
+    // Tally bar
+    const tallyY = gridY + rows * (cell + 2) + 16;
+    const tallyW = canvasWidth - 40;
+    drawTallyBar(20, tallyY, tallyW, 36, aEV, bEV, undet);
+
+    // Stats panel
+    const statY = tallyY + 50;
+    fill(255);
+    stroke(180);
+    rect(20, statY, canvasWidth - 40, 70, 6);
+    noStroke();
+    fill(50);
+    textAlign(LEFT, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    text('Map at a glance', 30, statY + 8);
+    textStyle(NORMAL);
+    text('Safe Blue (recent elections): ' + safeB + ' EV   |   Safe Red: ' + safeR + ' EV   |   Swing: ' + swing + ' EV',
+         30, statY + 26);
+    text('Competitive states ("swing"): about 6–10 in recent elections. Non-competitive: ~40 states.',
+         30, statY + 44);
+    if (mode === 'coalition') {
+        const winner = aEV >= 270 ? 'A' : (bEV >= 270 ? 'B' : null);
+        textStyle(BOLD);
+        if (winner) {
+            fill(winner === 'A' ? color(33, 100, 200) : color(200, 50, 50));
+            text('★ Candidate ' + winner + ' wins with ' + (winner === 'A' ? aEV : bEV) + ' EV.',
+                 canvasWidth - 200, statY + 26);
+        } else {
+            fill(80);
+            text('No winner yet — need 270 EV.', canvasWidth - 200, statY + 26);
+        }
+        textStyle(NORMAL);
+    }
+
+    // Reform panel
+    if (showReform) {
+        const ry = statY + 80;
+        fill(255, 248, 220);
+        stroke(193, 154, 0);
+        rect(20, ry, canvasWidth - 40, drawHeight - ry - 10, 6);
+        noStroke();
+        fill(102, 77, 0);
+        textAlign(LEFT, TOP);
+        textSize(11);
+        textStyle(BOLD);
+        text('Reform Options', 30, ry + 6);
+        textStyle(NORMAL);
+        text('• National Popular Vote Interstate Compact: states pledge their EVs to the popular-vote winner once states totaling 270 EV have signed (currently ~209 EV signed).',
+             30, ry + 22, canvasWidth - 60, 36);
+        text('• Proportional allocation: split each state\'s EVs by congressional district (Maine + Nebraska already do).',
+             30, ry + 60, canvasWidth - 60, 36);
+        text('• Direct popular election: would require a constitutional amendment (2/3 Congress + 3/4 states).',
+             30, ry + 92, canvasWidth - 60, 36);
+    }
+
+    // Control region
+    noStroke();
+    fill(233, 236, 239);
+    rect(0, drawHeight, canvasWidth, controlHeight);
+    fill(50);
+    textAlign(LEFT, TOP);
+    textSize(11);
+    text('Mode: ' + (mode === 'lean' ? 'Lean view' : 'Coalition mode (click states to assign)'),
+         10, drawHeight + 38);
+}
+
+function drawTallyBar(x, y, w, h, aEV, bEV, undet) {
+    // Three segments + 270 marker
+    const total = 538;
+    const aW = (aEV / total) * w;
+    const bW = (bEV / total) * w;
+    const uW = (undet / total) * w;
+    fill(33, 100, 200);
+    rect(x, y, aW, h, 4, 0, 0, 4);
+    fill(220, 220, 220);
+    rect(x + aW, y, uW, h);
+    fill(200, 50, 50);
+    rect(x + aW + uW, y, bW, h, 0, 4, 4, 0);
+
+    // 270 marker (centered at midpoint)
+    stroke(0);
+    strokeWeight(2);
+    line(x + w / 2, y - 4, x + w / 2, y + h + 4);
+    strokeWeight(1);
+    noStroke();
+    fill(0);
+    textAlign(CENTER, BOTTOM);
+    textSize(10);
+    text('270 to win', x + w / 2, y - 6);
+
+    // Numbers in segments
+    fill(255);
+    textAlign(LEFT, CENTER);
+    textSize(12);
+    textStyle(BOLD);
+    if (aW > 30) text('A: ' + aEV, x + 6, y + h / 2);
+    if (bW > 30) text('B: ' + bEV, x + aW + uW + bW - 50, y + h / 2);
+    fill(80);
+    if (uW > 30) text('Undecided: ' + undet, x + aW + 6, y + h / 2);
+    textStyle(NORMAL);
+}
+
+let _justClicked = false;
+function mousePressed() { _justClicked = true; }
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

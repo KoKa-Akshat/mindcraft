@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Barrier Stack</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// The Barrier Stack: Obstacles to Quantum Computing Viability
+// A p5.js MicroSim showing stacked barriers from fundamental physics to economics
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Barrier data — bottom to top (index 0 is the bottom-most, most fundamental layer)
+let barriers = [
+    {
+        name: "Decoherence",
+        category: "Physics",
+        color: "#C62828",
+        textColor: "#FFFFFF",
+        difficulty: 10,
+        height: 70,
+        brief: "Fundamental interaction with environment destroys quantum states",
+        detail: "Qubits lose coherence in microseconds to milliseconds. No known way to eliminate decoherence — only mitigate it. This is not an engineering problem; it is a consequence of thermodynamics and quantum mechanics.",
+        stateOfArt: "Best coherence times: ~1 ms (superconducting), ~10 s (trapped ion)",
+        needed: "Need coherence times 1,000-1,000,000x longer for useful computation",
+        timeline: "No known path to solving — fundamental physics limit"
+    },
+    {
+        name: "Error Rates",
+        category: "Physics",
+        color: "#D84315",
+        textColor: "#FFFFFF",
+        difficulty: 9,
+        height: 62,
+        brief: "Gate error rates set a floor determined by decoherence and control precision",
+        detail: "Two-qubit gate errors are typically 0.1-1%. The fault-tolerance threshold requires ~0.1% or better. Improving further hits diminishing returns as decoherence fundamentally limits precision.",
+        stateOfArt: "Best two-qubit gate fidelity: ~99.9% (trapped ion), ~99.5% (superconducting)",
+        needed: "Need consistent 99.99%+ fidelity across all qubits simultaneously",
+        timeline: "Incremental progress possible, but decoherence sets hard floor"
+    },
+    {
+        name: "Error Correction Overhead",
+        category: "Physics",
+        color: "#E65100",
+        textColor: "#FFFFFF",
+        difficulty: 9,
+        height: 58,
+        brief: "1,000-10,000 physical qubits needed per logical qubit",
+        detail: "Quantum error correction (e.g., surface code) requires massive redundancy. At current error rates, ~1,000-10,000 physical qubits encode one logical qubit. This is set by information theory and error rates — not by engineering choices.",
+        stateOfArt: "Google demonstrated distance-7 surface code with 101 physical qubits (1 logical qubit)",
+        needed: "Need millions of physical qubits for ~1,000 logical qubits",
+        timeline: "Improves only if error rates improve — circular dependency"
+    },
+    {
+        name: "Connectivity Limitations",
+        category: "Mixed",
+        color: "#F9A825",
+        textColor: "#333333",
+        difficulty: 7,
+        height: 50,
+        brief: "Limited qubit-to-qubit connections increase circuit depth and errors",
+        detail: "Most hardware has nearest-neighbor connectivity only. Algorithms requiring all-to-all connectivity need SWAP gates that add depth and errors. Partly physics (interaction range), partly engineering (chip layout).",
+        stateOfArt: "Superconducting: nearest-neighbor grid; Trapped ion: all-to-all (but slow)",
+        needed: "Need high-fidelity long-range connections without excessive overhead",
+        timeline: "Moderate improvements expected; fundamental tradeoffs remain"
+    },
+    {
+        name: "Cryogenic Requirements",
+        category: "Engineering",
+        color: "#4FC3F7",
+        textColor: "#333333",
+        difficulty: 6,
+        height: 46,
+        brief: "Superconducting qubits require cooling to 15 millikelvin",
+        detail: "Dilution refrigerators are expensive ($1-5M), power-hungry, and have limited cooling capacity. Scaling to millions of qubits may exceed what current cryogenic technology can cool in a single unit.",
+        stateOfArt: "Largest systems: ~1,000 qubits in a single dilution refrigerator",
+        needed: "Need to cool millions of qubits — may require modular cryogenic architectures",
+        timeline: "Engineering improvements possible with significant investment"
+    },
+    {
+        name: "Wiring and Control",
+        category: "Engineering",
+        color: "#2196F3",
+        textColor: "#FFFFFF",
+        difficulty: 6,
+        height: 42,
+        brief: "Each qubit needs multiple control lines — wiring doesn't scale",
+        detail: "Current systems use 2-3 coaxial cables per qubit running from room temperature to millikelvin stages. At 1 million qubits, that is 2-3 million cables — physically impossible with current architectures. Heat load from wiring also degrades performance.",
+        stateOfArt: "~1,000 qubits with individual wiring; cryo-CMOS multiplexing in early research",
+        needed: "Need multiplexed control or on-chip control electronics at millikelvin",
+        timeline: "Active research area; 5-15 years for practical solutions"
+    },
+    {
+        name: "Energy Consumption",
+        category: "Engineering",
+        color: "#43A047",
+        textColor: "#FFFFFF",
+        difficulty: 5,
+        height: 38,
+        brief: "Quantum systems consume 25-100 kW to operate a few hundred qubits",
+        detail: "A dilution refrigerator plus control electronics consumes 25+ kW for ~1,000 qubits. Scaling to millions of qubits could require megawatts — comparable to a classical supercomputer but solving far smaller problems.",
+        stateOfArt: "Current systems: ~25-100 kW for hundreds of noisy qubits",
+        needed: "Need dramatic efficiency gains or problems worth the energy cost",
+        timeline: "Scales with system size — no fundamental breakthrough expected"
+    },
+    {
+        name: "Infrastructure Cost",
+        category: "Engineering",
+        color: "#2E7D32",
+        textColor: "#FFFFFF",
+        difficulty: 7,
+        height: 42,
+        brief: "Total cost aggregates all barriers below — billions for a useful machine",
+        detail: "A fault-tolerant quantum computer requires solving ALL barriers below simultaneously. Estimated cost: $5-50 billion for a single useful machine. Classical alternatives keep improving at lower cost. The economic case requires problems worth billions that only quantum can solve.",
+        stateOfArt: "Total industry investment: ~$40B+ with zero commercial return",
+        needed: "Need clear economic advantage over improving classical systems",
+        timeline: "Depends on all other barriers — most optimistic estimates: 15-30 years"
+    }
+];
+
+let hoveredBarrier = -1;
+let showEngineering = true;
+let clickedBarrier = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("The Barrier Stack: Obstacles to Quantum Computing Viability", canvasWidth / 2, 10);
+
+    // Layout calculations
+    let stackLeft = 160;
+    let stackRight = canvasWidth - margin;
+    let stackWidth = stackRight - stackLeft;
+    let labelLeft = 10;
+
+    // Calculate total stack height and starting Y (stack grows upward from bottom)
+    let totalStackHeight = 0;
+    for (let i = 0; i < barriers.length; i++) {
+        totalStackHeight += barriers[i].height;
+    }
+
+    let stackBottom = drawHeight - 30;
+    let stackTop = stackBottom - totalStackHeight;
+
+    // Ensure stack fits — scale if needed
+    let availableHeight = drawHeight - 70;
+    let scaleFactor = 1;
+    if (totalStackHeight > availableHeight) {
+        scaleFactor = availableHeight / totalStackHeight;
+        stackTop = 40;
+        stackBottom = stackTop + availableHeight;
+    }
+
+    // Axis labels
+    push();
+    fill('#666');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    // Bottom label
+    text("Most Fundamental", stackLeft + stackWidth / 2, stackBottom + 16);
+    // Top label
+    text("Most Practical", stackLeft + stackWidth / 2, stackTop - 16);
+    // Arrow indicators
+    textStyle(NORMAL);
+    textSize(14);
+    text("\u25B2", stackLeft + stackWidth / 2 - 70, stackTop - 16);
+    text("\u25BC", stackLeft + stackWidth / 2 - 70, stackBottom + 16);
+    pop();
+
+    // Detect hover
+    hoveredBarrier = -1;
+    let currentY = stackBottom;
+    for (let i = 0; i < barriers.length; i++) {
+        let bHeight = barriers[i].height * scaleFactor;
+        let blockTop = currentY - bHeight;
+        if (mouseX >= stackLeft && mouseX <= stackRight &&
+            mouseY >= blockTop && mouseY < currentY) {
+            hoveredBarrier = i;
+        }
+        currentY = blockTop;
+    }
+
+    // Draw barrier blocks from bottom to top
+    currentY = stackBottom;
+    for (let i = 0; i < barriers.length; i++) {
+        let b = barriers[i];
+        let bHeight = b.height * scaleFactor;
+        let blockTop = currentY - bHeight;
+        let isHovered = (hoveredBarrier === i);
+        let isClicked = (clickedBarrier === i);
+
+        // Determine if this barrier should be shown as active
+        let isActive = showEngineering || b.category === "Physics" || b.category === "Mixed";
+
+        // Draw the block
+        if (isActive) {
+            fill(b.color);
+            if (isHovered || isClicked) {
+                stroke('#1A237E');
+                strokeWeight(3);
+            } else {
+                stroke('rgba(0,0,0,0.2)');
+                strokeWeight(1);
+            }
+        } else {
+            fill(200, 200, 200, 150);
+            stroke('rgba(0,0,0,0.1)');
+            strokeWeight(1);
+        }
+        rect(stackLeft, blockTop, stackWidth, bHeight, 3);
+
+        // Category label on left
+        noStroke();
+        if (isActive) {
+            if (b.category === "Physics") {
+                fill('#C62828');
+            } else if (b.category === "Mixed") {
+                fill('#F57F17');
+            } else {
+                fill('#1565C0');
+            }
+        } else {
+            fill(180);
+        }
+        textSize(10);
+        textAlign(RIGHT, CENTER);
+        textStyle(BOLD);
+        text(b.category, stackLeft - 8, blockTop + bHeight / 2 - 7);
+
+        // Category indicator
+        textStyle(NORMAL);
+        textSize(9);
+        if (b.category === "Physics") {
+            text("Barrier", stackLeft - 8, blockTop + bHeight / 2 + 5);
+        } else if (b.category === "Mixed") {
+            text("Barrier", stackLeft - 8, blockTop + bHeight / 2 + 5);
+        } else {
+            text("Barrier", stackLeft - 8, blockTop + bHeight / 2 + 5);
+        }
+
+        // Block content
+        if (isActive) {
+            fill(b.textColor);
+        } else {
+            fill(150);
+        }
+        noStroke();
+
+        // Barrier name
+        textSize(isHovered ? 15 : 14);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        let nameX = stackLeft + 12;
+        text(b.name, nameX, blockTop + bHeight / 2 - 8);
+
+        // Brief description
+        textSize(isHovered ? 11 : 10);
+        textStyle(NORMAL);
+        let briefText = b.brief;
+        // Truncate if block is small
+        let maxChars = floor((stackWidth - 180) / 5.5);
+        if (briefText.length > maxChars) {
+            briefText = briefText.substring(0, maxChars) + "...";
+        }
+        text(briefText, nameX, blockTop + bHeight / 2 + 8);
+
+        // Difficulty score on right
+        let scoreX = stackRight - 60;
+        if (isActive) {
+            fill(b.textColor);
+        } else {
+            fill(150);
+        }
+        textSize(12);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(b.difficulty + "/10", scoreX, blockTop + bHeight / 2 - 6);
+        textSize(9);
+        textStyle(NORMAL);
+        text("difficulty", scoreX, blockTop + bHeight / 2 + 7);
+
+        currentY = blockTop;
+    }
+
+    // Dependency arrows — draw lines between adjacent layers on the left side
+    currentY = stackBottom;
+    for (let i = 0; i < barriers.length - 1; i++) {
+        let bHeight = barriers[i].height * scaleFactor;
+        let blockTop = currentY - bHeight;
+        let arrowX = stackLeft - 45;
+
+        // Show clicked dependencies
+        if (clickedBarrier >= 0 && i >= clickedBarrier) {
+            stroke('#3F51B5');
+            strokeWeight(2);
+            fill('#3F51B5');
+            // Vertical connector
+            line(arrowX, blockTop, arrowX, blockTop - 4);
+            // Arrowhead
+            triangle(arrowX, blockTop - 6, arrowX - 3, blockTop - 2, arrowX + 3, blockTop - 2);
+        }
+
+        currentY = blockTop;
+    }
+
+    // Hover detail tooltip
+    if (hoveredBarrier >= 0) {
+        let b = barriers[hoveredBarrier];
+        let tooltipW = min(520, canvasWidth - 20);
+        let tooltipH = 100;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = drawHeight - tooltipH - 8;
+
+        // Ensure tooltip doesn't overlap with the stack
+        if (tooltipY < stackTop) {
+            tooltipY = stackTop;
+        }
+
+        // Tooltip background
+        fill(255, 255, 255, 245);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        // Tooltip text
+        noStroke();
+        let tx = tooltipX + 12;
+        let ty = tooltipY + 10;
+        let lineSpacing = 16;
+
+        // Name and category
+        fill('#333');
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text(b.name + " (" + b.category + " Barrier) — Difficulty: " + b.difficulty + "/10", tx, ty);
+
+        // State of the art
+        fill('#555');
+        textSize(10);
+        textStyle(NORMAL);
+        text("Current: " + b.stateOfArt, tx, ty + lineSpacing);
+
+        // What's needed
+        fill('#C62828');
+        textStyle(NORMAL);
+        text("Needed: " + b.needed, tx, ty + lineSpacing * 2);
+
+        // Timeline
+        fill('#1565C0');
+        textStyle(ITALIC);
+        text("Outlook: " + b.timeline, tx, ty + lineSpacing * 3);
+
+        // Full description
+        fill('#333');
+        textStyle(NORMAL);
+        textSize(9);
+        let descMaxChars = floor((tooltipW - 24) / 4.5);
+        let descText = b.detail;
+        if (descText.length > descMaxChars) {
+            descText = descText.substring(0, descMaxChars) + "...";
+        }
+        text(descText, tx, ty + lineSpacing * 4);
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    let instructions = "Hover over a barrier layer to see details. Click to highlight dependencies above.";
+    text(instructions, canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function mousePressed() {
+    if (hoveredBarrier >= 0) {
+        if (clickedBarrier === hoveredBarrier) {
+            clickedBarrier = -1; // Toggle off
+        } else {
+            clickedBarrier = hoveredBarrier;
+        }
+        redraw();
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

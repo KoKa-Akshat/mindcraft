@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>cAMP Signaling Cascade using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// cAMP Signaling Cascade MicroSim
+// Bloom Level: Apply (L3) - trace the GPCR-cAMP-PKA cascade
+// Canvas: responsive width x 500 height
+
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 460;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 12;
+
+// Step-through state
+let currentStep = 0;
+let totalSteps = 8;
+let isPlaying = false;
+let playTimer = 0;
+let playInterval = 90; // frames between auto-advance
+
+// PDE toggle
+let pdeActive = false;
+
+// Buttons
+let nextBtn, prevBtn, playBtn, pdeBtn;
+
+// Tooltip
+let hoveredMolecule = null;
+
+// Layout
+let cascadeX, cascadeW, infoX, infoW;
+
+// Cascade data
+const steps = [
+  {
+    name: 'Epinephrine',
+    shape: 'hexagon',
+    color: '#FF9800',
+    label: 'Epinephrine (ligand)',
+    action: 'Binds to GPCR on cell surface',
+    detail: 'A hormone released by the adrenal glands during the "fight or flight" response. It is the first messenger in this signaling cascade.',
+    amplification: 1,
+    ampLabel: '1 ligand molecule'
+  },
+  {
+    name: 'GPCR',
+    shape: 'membrane',
+    color: '#795548',
+    label: 'GPCR (7-pass receptor)',
+    action: 'Conformational change activates G protein',
+    detail: 'G protein-coupled receptors span the membrane 7 times. Ligand binding on the extracellular side triggers a shape change that activates G proteins on the cytoplasmic side.',
+    amplification: 1,
+    ampLabel: '1 receptor activated'
+  },
+  {
+    name: 'G protein',
+    shape: 'oval',
+    color: '#9C27B0',
+    label: 'G protein (Ga-GTP)',
+    action: 'GDP->GTP exchange; activates adenylyl cyclase',
+    detail: 'The alpha subunit exchanges GDP for GTP, detaches from the beta-gamma subunits, and activates adenylyl cyclase. This is the first amplification step.',
+    amplification: 10,
+    ampLabel: '~10 G proteins activated'
+  },
+  {
+    name: 'Adenylyl cyclase',
+    shape: 'diamond',
+    color: '#FDD835',
+    label: 'Adenylyl cyclase',
+    action: 'Converts ATP -> cAMP',
+    detail: 'This membrane-bound enzyme converts many ATP molecules into cAMP (cyclic AMP), the second messenger. Each adenylyl cyclase produces ~100 cAMP molecules.',
+    amplification: 100,
+    ampLabel: '~100 cAMP produced'
+  },
+  {
+    name: 'cAMP',
+    shape: 'circles',
+    color: '#2196F3',
+    label: 'cAMP (second messenger)',
+    action: '4 cAMP bind to and activate PKA',
+    detail: 'Cyclic AMP is a small diffusible second messenger. Four cAMP molecules bind to the regulatory subunits of PKA, releasing the active catalytic subunits.',
+    amplification: 100,
+    ampLabel: '~100 cAMP molecules'
+  },
+  {
+    name: 'PKA',
+    shape: 'pentagon',
+    color: '#4CAF50',
+    label: 'PKA (active)',
+    action: 'Phosphorylates target proteins',
+    detail: 'Protein Kinase A adds phosphate groups to serine/threonine residues on target proteins, changing their activity. Each PKA can phosphorylate many targets.',
+    amplification: 1000,
+    ampLabel: '~1,000 proteins phosphorylated'
+  },
+  {
+    name: 'Target proteins',
+    shape: 'multi',
+    color: '#00BCD4',
+    label: 'Target proteins',
+    action: 'Enzyme activation or inhibition',
+    detail: 'Phosphorylated target proteins include glycogen phosphorylase (activated) and glycogen synthase (inhibited). The phosphorylation cascade amplifies the signal further.',
+    amplification: 10000,
+    ampLabel: '~10,000 substrate molecules affected'
+  },
+  {
+    name: 'Cellular response',
+    shape: 'box',
+    color: '#E91E63',
+    label: 'Cellular Response',
+    action: 'Glycogen breakdown -> glucose release',
+    detail: 'The final outcome: glycogen is broken down into glucose-1-phosphate, which is converted to glucose-6-phosphate and released into the blood. One epinephrine molecule triggers millions of glucose molecules.',
+    amplification: 100000,
+    ampLabel: '~100,000+ glucose molecules released'
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  prevBtn = createButton('Previous');
+  prevBtn.parent(mainElement);
+  prevBtn.mousePressed(() => { if (currentStep > 0) currentStep--; updateButtons(); });
+
+  nextBtn = createButton('Next Step');
+  nextBtn.parent(mainElement);
+  nextBtn.mousePressed(() => { if (currentStep < totalSteps - 1) currentStep++; updateButtons(); });
+
+  playBtn = createButton('Play All');
+  playBtn.parent(mainElement);
+  playBtn.mousePressed(togglePlay);
+
+  pdeBtn = createButton('PDE: OFF');
+  pdeBtn.parent(mainElement);
+  pdeBtn.mousePressed(togglePDE);
+
+  positionControls();
+  updateButtons();
+  describe('Step-through cAMP signaling cascade showing signal amplification from GPCR to cellular response');
+}
+
+function draw() {
+  updateCanvasSize();
+  updateLayout();
+  background('aliceblue');
+
+  // Drawing region
+  stroke('silver');
+  strokeWeight(1);
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('cAMP Signaling Cascade', canvasWidth / 2, 6);
+  textStyle(NORMAL);
+  textSize(11);
+  fill(80);
+  text('Signal Amplification: 1 hormone -> 100,000+ molecules', canvasWidth / 2, 26);
+
+  drawCascade();
+  drawInfoPanel();
+  drawAmplificationBar();
+
+  // Auto-play
+  if (isPlaying) {
+    playTimer++;
+    if (playTimer >= playInterval) {
+      playTimer = 0;
+      if (currentStep < totalSteps - 1) {
+        currentStep++;
+        updateButtons();
+      } else {
+        isPlaying = false;
+        playBtn.html('Play All');
+      }
+    }
+  }
+
+  // PDE effect
+  if (pdeActive && currentStep >= 4) {
+    drawPDEEffect();
+  }
+}
+
+function updateLayout() {
+  cascadeX = margin;
+  cascadeW = canvasWidth * 0.55;
+  infoX = cascadeX + cascadeW + 8;
+  infoW = canvasWidth - infoX - margin;
+}
+
+// ---- CASCADE DIAGRAM ----
+function drawCascade() {
+  let stepH = (drawHeight - 80) / totalSteps;
+  let cx = cascadeX + cascadeW / 2;
+
+  // Membrane line between steps 1 and 2
+  let memY = 44 + stepH * 1.5;
+  stroke('#8D6E63');
+  strokeWeight(4);
+  line(cascadeX + 20, memY, cascadeX + cascadeW - 20, memY);
+  noStroke();
+  fill('#8D6E63');
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  text('Cell membrane', cascadeX + 24, memY - 10);
+  textSize(8);
+  fill(120);
+  text('Extracellular', cascadeX + 24, memY - 22);
+  text('Cytoplasm', cascadeX + 24, memY + 12);
+
+  for (let i = 0; i < totalSteps; i++) {
+    let y = 50 + i * stepH;
+    let step = steps[i];
+    let isActive = i <= currentStep;
+    let isCurrent = i === currentStep;
+
+    // Connection arrow to next step
+    if (i < totalSteps - 1) {
+      let nextY = 50 + (i + 1) * stepH;
+      if (isActive) {
+        stroke(step.color);
+        strokeWeight(2);
+      } else {
+        stroke(200);
+        strokeWeight(1);
+      }
+      drawArrow(cx, y + stepH * 0.3, cx, nextY - stepH * 0.15);
+    }
+
+    // Draw molecule shape
+    let alpha = isActive ? 255 : 80;
+    let shapeW = isCurrent ? 120 : 100;
+    let shapeH = isCurrent ? 32 : 26;
+
+    push();
+    if (isCurrent) {
+      // Glow effect
+      noStroke();
+      let glowCol = color(step.color);
+      glowCol.setAlpha(40);
+      fill(glowCol);
+      ellipse(cx, y, shapeW + 20, shapeH + 16);
+    }
+
+    let fillCol = color(step.color);
+    fillCol.setAlpha(alpha);
+    fill(fillCol);
+    stroke(isActive ? step.color : 180);
+    strokeWeight(isCurrent ? 2.5 : 1.5);
+
+    if (step.shape === 'hexagon') {
+      drawHexagon(cx, y, shapeW / 2, shapeH / 2);
+    } else if (step.shape === 'membrane') {
+      rect(cx - shapeW / 2, y - shapeH / 2, shapeW, shapeH, 4);
+      // 7-pass lines
+      stroke(255, 255, 255, alpha);
+      strokeWeight(1);
+      for (let j = 0; j < 7; j++) {
+        let lx = cx - shapeW / 2 + 8 + j * (shapeW - 16) / 6;
+        line(lx, y - shapeH / 2 + 3, lx, y + shapeH / 2 - 3);
+      }
+    } else if (step.shape === 'oval') {
+      ellipse(cx, y, shapeW, shapeH);
+    } else if (step.shape === 'diamond') {
+      drawDiamond(cx, y, shapeW / 2, shapeH / 2);
+    } else if (step.shape === 'circles') {
+      // Multiple small circles for cAMP
+      let numCircles = pdeActive ? 1 : min(6, 2 + currentStep - 4);
+      if (i > currentStep) numCircles = 0;
+      let startXc = cx - (numCircles - 1) * 12;
+      for (let j = 0; j < max(1, numCircles); j++) {
+        let bx = startXc + j * 24;
+        ellipse(bx, y, 22, 22);
+      }
+    } else if (step.shape === 'pentagon') {
+      drawPentagon(cx, y, shapeW / 2, shapeH / 2);
+    } else if (step.shape === 'multi') {
+      // Multiple small shapes
+      for (let j = -1; j <= 1; j++) {
+        rect(cx + j * 35 - 14, y - 10, 28, 20, 4);
+      }
+    } else {
+      // box
+      rect(cx - shapeW / 2, y - shapeH / 2, shapeW, shapeH, 8);
+    }
+    pop();
+
+    // Label
+    noStroke();
+    fill(isActive ? 30 : 160);
+    textAlign(CENTER, CENTER);
+    textSize(isCurrent ? 11 : 10);
+    textStyle(isCurrent ? BOLD : NORMAL);
+
+    if (step.shape === 'circles') {
+      text(step.name, cx, y);
+    } else if (step.shape === 'multi') {
+      text(step.name, cx, y);
+    } else {
+      text(step.name, cx, y);
+    }
+    textStyle(NORMAL);
+
+    // Amplification count on the left
+    if (isActive && i <= currentStep) {
+      fill(step.color);
+      textAlign(RIGHT, CENTER);
+      textSize(10);
+      textStyle(BOLD);
+      let ampText = 'x' + formatNumber(step.amplification);
+      text(ampText, cx - shapeW / 2 - 8, y);
+      textStyle(NORMAL);
+    }
+  }
+}
+
+// ---- INFO PANEL ----
+function drawInfoPanel() {
+  let step = steps[currentStep];
+
+  // Panel background
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(infoX, 44, infoW, drawHeight - 100, 8);
+
+  let px = infoX + 10;
+  let py = 52;
+  let pw = infoW - 20;
+
+  // Step indicator
+  noStroke();
+  fill(step.color);
+  textAlign(LEFT, TOP);
+  textSize(10);
+  text('Step ' + (currentStep + 1) + ' of ' + totalSteps, px, py);
+  py += 16;
+
+  // Title
+  fill(30);
+  textSize(14);
+  textStyle(BOLD);
+  text(step.label, px, py, pw);
+  textStyle(NORMAL);
+  py += 22;
+
+  // Action
+  fill(step.color);
+  textSize(12);
+  textStyle(BOLD);
+  text(step.action, px, py, pw);
+  textStyle(NORMAL);
+  py += 36;
+
+  // Description
+  fill(60);
+  textSize(11);
+  text(step.detail, px, py, pw);
+  py += 90;
+
+  // Amplification section
+  fill(30);
+  textSize(12);
+  textStyle(BOLD);
+  text('Signal Amplification:', px, py);
+  textStyle(NORMAL);
+  py += 18;
+
+  // Amplification bar
+  let barW = pw - 10;
+  let maxAmp = 100000;
+  let ampFrac = log(step.amplification + 1) / log(maxAmp + 1);
+
+  fill(230);
+  noStroke();
+  rect(px, py, barW, 16, 4);
+  fill(step.color);
+  rect(px, py, barW * ampFrac, 16, 4);
+
+  fill(30);
+  textSize(10);
+  textAlign(LEFT, CENTER);
+  text(step.ampLabel, px, py + 24);
+
+  py += 42;
+
+  // Cascade summary
+  if (currentStep === totalSteps - 1) {
+    fill('#E91E63');
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Signal amplification complete!', px, py);
+    textStyle(NORMAL);
+    py += 16;
+    fill(60);
+    textSize(10);
+    text('One epinephrine molecule triggered the release of over 100,000 glucose molecules through a multi-step enzyme cascade.', px, py, pw);
+  }
+
+  // PDE info
+  if (pdeActive) {
+    py = drawHeight - 100;
+    fill('#F44336');
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Phosphodiesterase (PDE) Active', px, py);
+    textStyle(NORMAL);
+    py += 16;
+    fill(80);
+    textSize(10);
+    text('PDE degrades cAMP -> AMP, stopping the signal. PKA returns to its inactive state. This prevents continuous stimulation.', px, py, pw);
+  }
+}
+
+// ---- AMPLIFICATION BAR (bottom of cascade) ----
+function drawAmplificationBar() {
+  let barY = drawHeight - 48;
+  let barX = cascadeX + 20;
+  let barW = cascadeW - 40;
+
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(10);
+  textStyle(BOLD);
+  text('Amplification Cascade', cascadeX + cascadeW / 2, barY - 14);
+  textStyle(NORMAL);
+
+  // Background
+  fill(235);
+  rect(barX, barY, barW, 12, 4);
+
+  // Progress sections with colors
+  let totalLog = log(100001);
+  for (let i = 0; i <= currentStep; i++) {
+    let startFrac = i === 0 ? 0 : log(steps[i - 1].amplification + 1) / totalLog;
+    let endFrac = log(steps[i].amplification + 1) / totalLog;
+    let sx = barX + barW * startFrac;
+    let ex = barX + barW * endFrac;
+    fill(steps[i].color);
+    noStroke();
+    rect(sx, barY, ex - sx, 12, i === 0 ? 4 : 0, i === currentStep ? 4 : 0, i === currentStep ? 4 : 0, i === 0 ? 4 : 0);
+  }
+
+  // Labels
+  fill(80);
+  textSize(8);
+  textAlign(LEFT, TOP);
+  text('x1', barX, barY + 14);
+  textAlign(CENTER, TOP);
+  text('x100', barX + barW * 0.4, barY + 14);
+  textAlign(RIGHT, TOP);
+  text('x100,000', barX + barW, barY + 14);
+}
+
+// ---- PDE EFFECT ----
+function drawPDEEffect() {
+  // Draw X marks over cAMP
+  let stepH = (drawHeight - 80) / totalSteps;
+  let cx = cascadeX + cascadeW / 2;
+  let cAMPy = 50 + 4 * stepH;
+
+  stroke('#F44336');
+  strokeWeight(3);
+  line(cx - 20, cAMPy - 15, cx + 20, cAMPy + 15);
+  line(cx + 20, cAMPy - 15, cx - 20, cAMPy + 15);
+
+  noStroke();
+  fill('#F44336');
+  textSize(9);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text('PDE degrades cAMP', cx, cAMPy + 25);
+  textStyle(NORMAL);
+}
+
+// ---- SHAPE DRAWING HELPERS ----
+function drawHexagon(cx, cy, rx, ry) {
+  beginShape();
+  for (let i = 0; i < 6; i++) {
+    let angle = TWO_PI / 6 * i - PI / 6;
+    vertex(cx + cos(angle) * rx, cy + sin(angle) * ry);
+  }
+  endShape(CLOSE);
+}
+
+function drawDiamond(cx, cy, rx, ry) {
+  beginShape();
+  vertex(cx, cy - ry);
+  vertex(cx + rx, cy);
+  vertex(cx, cy + ry);
+  vertex(cx - rx, cy);
+  endShape(CLOSE);
+}
+
+function drawPentagon(cx, cy, rx, ry) {
+  beginShape();
+  for (let i = 0; i < 5; i++) {
+    let angle = TWO_PI / 5 * i - HALF_PI;
+    vertex(cx + cos(angle) * rx, cy + sin(angle) * ry);
+  }
+  endShape(CLOSE);
+}
+
+function drawArrow(x1, y1, x2, y2) {
+  line(x1, y1, x2, y2);
+  let angle = atan2(y2 - y1, x2 - x1);
+  let sz = 6;
+  let currentStroke = drawingContext.strokeStyle;
+  push();
+  noStroke();
+  fill(currentStroke);
+  triangle(
+    x2, y2,
+    x2 - cos(angle - 0.4) * sz, y2 - sin(angle - 0.4) * sz,
+    x2 - cos(angle + 0.4) * sz, y2 - sin(angle + 0.4) * sz
+  );
+  pop();
+}
+
+function formatNumber(n) {
+  if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+  return n.toString();
+}
+
+// ---- BUTTON STATE ----
+function updateButtons() {
+  if (prevBtn) prevBtn.attribute(currentStep === 0 ? 'disabled' : 'enabled', currentStep === 0 ? '' : '');
+  if (currentStep === 0) {
+    prevBtn.attribute('disabled', '');
+  } else {
+    prevBtn.removeAttribute('disabled');
+  }
+  if (currentStep === totalSteps - 1) {
+    nextBtn.attribute('disabled', '');
+  } else {
+    nextBtn.removeAttribute('disabled');
+  }
+}
+
+function togglePlay() {
+  isPlaying = !isPlaying;
+  if (isPlaying && currentStep === totalSteps - 1) {
+    currentStep = 0;
+  }
+  playTimer = 0;
+  playBtn.html(isPlaying ? 'Pause' : 'Play All');
+  updateButtons();
+}
+
+function togglePDE() {
+  pdeActive = !pdeActive;
+  pdeBtn.html(pdeActive ? 'PDE: ON' : 'PDE: OFF');
+  pdeBtn.style('background-color', pdeActive ? '#FFCDD2' : '');
+}
+
+// ---- CONTROLS ----
+function positionControls() {
+  let y = drawHeight + 8;
+  prevBtn.position(margin, y);
+  nextBtn.position(margin + 80, y);
+  playBtn.position(margin + 170, y);
+  pdeBtn.position(margin + 255, y);
+}
+
+// ---- RESPONSIVE ----
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  updateLayout();
+  positionControls();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

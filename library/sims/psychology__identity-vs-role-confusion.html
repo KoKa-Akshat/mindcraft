@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Two Kinds of Identity</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>/* vis-network MicroSim Stylesheet
+   Layout: 2/3 graph panel + 1/3 info panel. Click a node to see its details.
+*/
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: Arial, Helvetica, sans-serif; }
+
+.container { display: flex; width: 100%; height: 100%; }
+
+.graph-panel { position: relative; width: 66.67%; height: 100%; background: aliceblue; }
+#network { width: 100%; height: 100%; }
+
+.title {
+    position: absolute; top: 6px; left: 0; right: 0;
+    text-align: center; font-size: 15px; font-weight: bold;
+    color: #1a3a5c; pointer-events: none; padding: 0 8px;
+}
+
+.info-panel {
+    width: 33.33%; height: 100%; background: #f8f9fa;
+    border-left: 1px solid #dee2e6; padding: 15px; overflow-y: auto;
+}
+.info-panel h3 {
+    font-size: 18px; color: #333; margin-bottom: 10px;
+    padding-bottom: 8px; border-bottom: 2px solid #2a9d8f;
+}
+.info-title { font-size: 16px; font-weight: bold; color: #21867a; margin-bottom: 8px; }
+.info-content { font-size: 14px; line-height: 1.5; color: #444; }
+.info-content .mini {
+    display: block; margin-top: 8px; padding: 6px 8px;
+    background: #eef6f5; border-left: 3px solid #2a9d8f; font-size: 13px; color: #2b2b2b;
+}
+.info-placeholder { color: #888; font-style: italic; font-size: 14px; }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="graph-panel">
+            <div id="network"></div>
+            <div class="title">Two Kinds of &ldquo;Identity&rdquo;</div>
+        </div>
+        <div class="info-panel">
+            <h3>Details</h3>
+            <div id="info-display"><p class="info-placeholder">Click a node to see details</p></div>
+        </div>
+    </div>
+    <script>
+        const TEAL = { background: '#2a9d8f', border: '#1f7a6f' };
+        const VIOLET = { background: '#7b6cc4', border: '#544a91' };
+        window.GRAPH = {
+            layout: 'hierarchical', direction: 'UD',
+            nodes: [
+                { id: 'Root', label: 'Two systems that both say "identity"', color: { background: '#37474f', border: '#1c2529' } },
+                { id: 'L0', label: 'Learner Identity (Chapter 6)', color: TEAL, borderWidth: 4 },
+                { id: 'L1', label: 'Raw actor in an xAPI statement', color: TEAL },
+                { id: 'L2', label: 'identity service (per-district HMAC salt)', color: TEAL },
+                { id: 'L3', label: 'student_key (pseudonymous)', color: TEAL },
+                { id: 'L4', label: 'Used by: Stream Processor, analytics stores. Never a login.', color: TEAL },
+                { id: 'H0', label: 'Human Identity (this chapter)', color: VIOLET, borderWidth: 4 },
+                { id: 'H1', label: 'District admin / teacher / author logs in', color: VIOLET },
+                { id: 'H2', label: 'Keycloak (dev) / customer IdP (prod), OpenID Connect', color: VIOLET },
+                { id: 'H3', label: 'Signed token carrying a role', color: VIOLET },
+                { id: 'H4', label: 'Used by: Admin API, Analytics API, Dash. Enforces RBAC.', color: VIOLET }
+            ],
+            edges: [
+                { from: 'Root', to: 'L0' }, { from: 'L0', to: 'L1' }, { from: 'L1', to: 'L2' }, { from: 'L2', to: 'L3' }, { from: 'L3', to: 'L4' },
+                { from: 'Root', to: 'H0' }, { from: 'H0', to: 'H1' }, { from: 'H1', to: 'H2' }, { from: 'H2', to: 'H3' }, { from: 'H3', to: 'H4' }
+            ],
+            nodeInfo: {
+                'Root': { title: 'Two "identities"', description: 'Two entirely separate systems both use the word &ldquo;identity.&rdquo; Keeping them apart is essential: one is about pseudonymizing learners, the other about logging in humans.' },
+                'L0': { title: 'Learner Identity', description: 'The Chapter 6 pseudonymization system. It answers &ldquo;which learner is this statement about?&rdquo; without ever storing a login. Contrast with Human Identity, which is about who is signed in.' },
+                'L1': { title: 'Raw actor', description: 'The directly-identifying actor (homePage + name) inside an incoming statement &mdash; the only place raw learner identity exists.' },
+                'L2': { title: 'identity service', description: 'Applies a per-district HMAC salt to pseudonymize the actor. This service is NOT a login system.' },
+                'L3': { title: 'student_key', description: 'The irreversible pseudonymous key. Everything downstream uses this &mdash; it can never be used to log in.' },
+                'L4': { title: 'Consumers', description: 'Used by the Stream Processor and analytics stores. Breach exposure: the pseudonymous keys and their analytics &mdash; but not names, and not login credentials.' },
+                'H0': { title: 'Human Identity', description: 'This chapter&rsquo;s human SSO system. It answers &ldquo;who is logged in, and what may they do?&rdquo; &mdash; a completely different concern from pseudonymizing learners.' },
+                'H1': { title: 'Human logs in', description: 'A district admin, teacher, or author signs in &mdash; a real person with credentials.' },
+                'H2': { title: 'Keycloak / IdP', description: 'Keycloak in dev, a customer identity provider in prod, using OpenID Connect. This IS a login system.' },
+                'H3': { title: 'Signed token', description: 'On success the IdP issues a signed token carrying the user&rsquo;s role.' },
+                'H4': { title: 'Consumers', description: 'Used by the Admin API, Analytics API, and Dash dashboards to enforce RBAC. Breach exposure: an attacker could impersonate a logged-in human &mdash; a different risk than the learner-key system, which is why they are kept apart.' }
+            }
+        };
+    </script>
+    <script>/* vis-app.js — shared vis-network MicroSim driver.
+   Each main.html defines window.GRAPH before loading this script:
+
+   window.GRAPH = {
+     nodes: [ {id, label, color, group, level?}, ... ],
+     edges: [ {from, to, label?, dashes?}, ... ],
+     nodeInfo: { id: {title, description}, ... },
+     layout: 'physics' | 'hierarchical',   // default physics
+     direction: 'UD' | 'LR',               // hierarchical only
+   };
+   Click a node -> its details render in the #info-display panel.
+*/
+(function () {
+  const G = window.GRAPH || { nodes: [], edges: [], nodeInfo: {} };
+  const container = document.getElementById('network');
+  const nodes = new vis.DataSet(G.nodes);
+  const edges = new vis.DataSet(G.edges);
+
+  const options = {
+    nodes: {
+      shape: 'box',
+      font: { size: 15, color: '#ffffff', face: 'Arial', multi: false },
+      borderWidth: 2,
+      margin: 9,
+      widthConstraint: { maximum: 170 },
+      shadow: { enabled: true, size: 4, x: 1, y: 1, color: 'rgba(0,0,0,0.15)' }
+    },
+    edges: {
+      arrows: { to: { enabled: true, scaleFactor: 0.6 } },
+      color: { color: '#9aa7b4', highlight: '#e63946' },
+      font: { size: 12, color: '#3a3a3a', strokeWidth: 4, strokeColor: '#ffffff', align: 'middle' },
+      smooth: { enabled: true, type: 'dynamic' }
+    },
+    physics: {
+      enabled: true,
+      stabilization: { enabled: true, iterations: 220 },
+      barnesHut: { gravitationalConstant: -7500, springLength: 150, springConstant: 0.04, avoidOverlap: 0.4 }
+    },
+    interaction: { hover: true, tooltipDelay: 999999, navigationButtons: false, zoomView: true, dragView: true }
+  };
+
+  if (G.layout === 'hierarchical') {
+    options.layout = {
+      hierarchical: {
+        enabled: true,
+        direction: G.direction || 'UD',
+        sortMethod: 'directed',
+        levelSeparation: 110,
+        nodeSpacing: 150,
+        treeSpacing: 160
+      }
+    };
+    options.physics = false;
+  }
+
+  const network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
+  window.__net = network; // exposed for test harness
+  network.once('stabilizationIterationsDone', function () {
+    network.setOptions({ physics: false });
+    network.fit({ animation: false });
+  });
+  // Fit once more after a beat (covers hierarchical layouts that skip stabilization)
+  setTimeout(function () { try { network.fit({ animation: false }); } catch (e) {} }, 400);
+
+  const infoDisplay = document.getElementById('info-display');
+  const def = '<p class="info-placeholder">Click a node to see details</p>';
+  network.on('click', function (params) {
+    if (params.nodes && params.nodes.length) {
+      const info = (G.nodeInfo || {})[params.nodes[0]];
+      if (info) {
+        infoDisplay.innerHTML =
+          '<div class="info-title">' + info.title + '</div>' +
+          '<div class="info-content">' + info.description + '</div>';
+        return;
+      }
+    }
+    infoDisplay.innerHTML = def;
+  });
+})();
+</script>
+</body>
+</html>

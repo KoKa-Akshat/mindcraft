@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Certificate Chain of Trust</title>
+    <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+}
+main { display: block; width: 100%; height: 100%; }
+.layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.diagram-panel {
+    width: 60%;
+    height: 100%;
+    background: aliceblue;
+    border-right: 1px solid #cbd5e1;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+.diagram-title {
+    font-size: 17px;
+    color: #0d47a1;
+    text-align: center;
+    padding: 10px 8px 0 8px;
+    font-weight: 600;
+}
+.mermaid {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+.mermaid svg { max-width: 100%; height: auto; }
+.info-panel {
+    width: 40%;
+    height: 100%;
+    padding: 12px;
+    overflow: visible;
+    background: #ffffff;
+}
+.info-panel h3 {
+    font-size: 16px;
+    color: #455a64;
+    margin: 10px 0 6px 0;
+}
+.legend {
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 10px;
+    background: #fff;
+}
+.legend-title { font-weight: 600; margin-bottom: 6px; color: #455a64; }
+.legend-item { display: flex; align-items: center; margin: 3px 0; }
+.legend-dot {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 1px solid #607d8b;
+    flex-shrink: 0;
+}
+.callout {
+    border: 1px solid #d4af37;
+    background: #fffdf3;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    color: #5d4d12;
+    margin-bottom: 6px;
+}
+.callout-title { font-weight: 600; margin-bottom: 4px; color: #8a6d1b; }
+.callout ol { margin: 0 0 0 18px; padding: 0; }
+.callout li { margin: 3px 0; line-height: 1.35; }
+#panelWrap { position: relative; }
+#panel {
+    background-color: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    line-height: 1.4;
+}
+.node, .node * { cursor: pointer; }
+
+@media (max-width: 700px) {
+    html, body { overflow: auto; }
+    .layout { flex-direction: column; }
+    .diagram-panel, .info-panel { width: 100%; }
+    .diagram-panel { border-right: none; border-bottom: 1px solid #cbd5e1; }
+}
+</style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+                subGraphTitleMargin: { top: 10, bottom: 14 }
+            }
+        });
+    </script>
+</head>
+<body>
+    <main>
+    <div class="layout">
+        <div class="diagram-panel">
+            <h2 class="diagram-title">Certificate Chain of Trust</h2>
+            <div class="mermaid">
+flowchart TB
+    subgraph root ["Root CA — trust anchor"]
+        Root["Root CA: Example Trust Root<br/>Self-signed<br/>Lives in browser trust store<br/>Offline HSM"]:::rootNode
+    end
+    subgraph mid ["Intermediate CAs"]
+        IntA["Intermediate CA A"]:::caNode
+        IntB["Intermediate CA B"]:::caNode
+    end
+    subgraph leaf ["End-entity certificates"]
+        WWW["www.example.com"]:::leafNode
+        API["api.example.com"]:::leafNode
+        MAIL["mail.example.com"]:::leafNode
+    end
+
+    Root -- signs --> IntA
+    Root -- signs --> IntB
+    IntA -- signs --> WWW
+    IntA -- signs --> API
+    IntB -- signs --> MAIL
+
+    classDef rootNode fill:#1565c0,stroke:#d4af37,stroke-width:4px,color:#ffffff,font-size:14px
+    classDef caNode fill:#455a64,stroke:#263238,stroke-width:2px,color:#ffffff,font-size:15px
+    classDef leafNode fill:#ffffff,stroke:#d84315,stroke-width:2px,color:#212529,font-size:14px
+
+    linkStyle default stroke:#90a4ae,stroke-width:2px,font-size:13px
+            </div>
+        </div>
+        <div class="info-panel">
+            <div class="legend">
+                <div class="legend-title">Legend</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#1565c0;border-color:#d4af37;border-width:2px"></span>Gold border = trust anchor</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#1565c0"></span>Blue = CA certificate</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#455a64"></span>Slate = intermediate CA</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#ffffff;border-color:#d84315"></span>White / orange = end entity</div>
+            </div>
+            <div class="callout">
+                <div class="callout-title">Verification path (reverse direction)</div>
+                <ol>
+                    <li>Browser receives <b>www.example.com</b> certificate</li>
+                    <li>&uarr; verifies its signature using <b>Intermediate CA A</b> public key</li>
+                    <li>&uarr; verifies that signature using <b>Root CA</b> public key</li>
+                    <li>&uarr; Root CA in the trust store? &rarr; <b>trust established</b></li>
+                </ol>
+            </div>
+            <h3>Node Details</h3>
+            <div id="panelWrap">
+                <div id="panel">Hover or tap a certificate to see its role.</div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <script>// CANVAS_HEIGHT: 540
+// Certificate Chain of Trust — Mermaid hover interaction.
+// Hovering or tapping a node explains its role in the PKI hierarchy. The static
+// "Verification path" callout in the info panel shows the reverse direction a
+// browser actually walks when validating a certificate.
+
+const nodeInfo = {
+  'Root': 'The Root CA is the trust anchor. Its certificate is self-signed and ' +
+    'pre-installed in the browser/OS trust store. The private key is kept offline ' +
+    'in a hardware security module (HSM) and is used rarely — only to sign ' +
+    'intermediates — so a compromise is extremely costly to an attacker.',
+  'IntA': 'Intermediate CA A is signed by the Root CA and does the day-to-day ' +
+    'work of issuing end-entity certificates. Using intermediates means the ' +
+    'precious root key stays offline; if an intermediate is compromised it can ' +
+    'be revoked without replacing the root in every trust store.',
+  'IntB': 'Intermediate CA B is a sibling intermediate, also signed by the Root ' +
+    'CA. Separating issuance across intermediates limits blast radius: revoking ' +
+    'one does not invalidate certificates issued by the other.',
+  'WWW': 'www.example.com is an end-entity (leaf) certificate signed by ' +
+    'Intermediate CA A. The server presents this certificate plus the chain up ' +
+    'to (but not including) the root, which the browser already trusts.',
+  'API': 'api.example.com is another leaf certificate signed by Intermediate ' +
+    'CA A. Each leaf certificate binds a public key to a specific domain name; ' +
+    'the signature proves a CA vouched for that binding.',
+  'MAIL': 'mail.example.com is a leaf certificate signed by Intermediate CA B. ' +
+    'Its chain therefore runs MAIL -> Intermediate CA B -> Root CA, a different ' +
+    'path from the www and api certificates.'
+};
+
+const panel = document.getElementById('panel');
+
+function showInfo(id) {
+  if (nodeInfo[id]) panel.textContent = nodeInfo[id];
+}
+
+function setupNodeHover() {
+  const nodes = document.querySelectorAll('.node');
+  nodes.forEach(node => {
+    const nodeId = node.id.replace('flowchart-', '').split('-')[0];
+    if (nodeInfo[nodeId]) {
+      node.addEventListener('mouseenter', () => showInfo(nodeId));
+      node.addEventListener('click', () => showInfo(nodeId));
+    }
+  });
+}
+
+function waitForMermaid() {
+  const mermaidDiv = document.querySelector('.mermaid');
+  const svg = mermaidDiv ? mermaidDiv.querySelector('svg') : null;
+  if (svg && document.querySelectorAll('.node').length > 0) {
+    setupNodeHover();
+  } else {
+    setTimeout(waitForMermaid, 100);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => setTimeout(waitForMermaid, 100));
+} else {
+  setTimeout(waitForMermaid, 100);
+}
+</script>
+</body>
+</html>

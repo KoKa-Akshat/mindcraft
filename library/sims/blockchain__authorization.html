@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Authentication vs Authorization Comparison Infographic using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Authentication vs Authorization Comparison Infographic - p5.js
+// CANVAS_HEIGHT: 526
+// Side-by-side comparison clarifying authentication ("who are you?") versus
+// authorization ("what can you do?") with healthcare examples.
+
+let containerWidth, canvasWidth = 900;
+let drawHeight = 440;
+let controlHeight = 30;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 18;
+let defaultTextSize = 16;
+
+const SIDES = [
+  { title: 'AUTHENTICATION', q: 'Who are you?', color: '#2b6cb0', accent: '#e7f0fa',
+    def: 'Verifies a user\'s identity through credentials.',
+    asks: ['Are you who you claim to be?', 'Can you prove your identity?'],
+    listTitle: 'Methods', items: ['Password', 'MFA token (phone)', 'Biometric (fingerprint)', 'Smart card'],
+    example: 'Dr. Sarah Chen logs in with username + password, then confirms with a fingerprint scan.',
+    ok: 'Identity verified: Dr. Sarah Chen', no: 'Access denied: invalid credentials' },
+  { title: 'AUTHORIZATION', q: 'What can you do?', color: '#2e7d32', accent: '#e8f3e8',
+    def: 'Determines what resources an authenticated user may access.',
+    asks: ['What data can you view?', 'What actions can you perform?'],
+    listTitle: 'Factors', items: ['User role', 'Department', 'Treatment relationship', 'Data sensitivity'],
+    example: 'As an authenticated cardiologist, Dr. Chen may view her own patients\' records but not psychiatry notes for unrelated patients.',
+    ok: 'Allowed: view cardiology records', no: 'Blocked: no treatment relationship' }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Authentication versus authorization comparison: a split-screen contrasting identity verification ("who are you?") with access control ("what can you do?"), each with methods, a healthcare example, and outcomes.', LABEL);
+  noLoop();
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('white'); stroke('silver'); strokeWeight(1); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight); noStroke();
+  fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('Authentication vs. Authorization', canvasWidth / 2, 8);
+
+  const colW = (canvasWidth - 2 * margin - 14) / 2;
+  SIDES.forEach((s, i) => {
+    const x = margin + i * (colW + 14), y = 40, h = drawHeight - y - 44;
+    stroke(s.color); strokeWeight(2); fill(s.accent); rect(x, y, colW, h, 10); noStroke();
+    // header
+    fill(s.color); rect(x, y, colW, 46, 10); fill('white'); textAlign(CENTER, TOP); textStyle(BOLD); textSize(16);
+    text(s.title, x + 8, y + 7, colW - 16); textStyle(NORMAL); textSize(12.5); text('"' + s.q + '"', x + 8, y + 28, colW - 16);
+    let yy = y + 58;
+    fill('#1a2733'); textAlign(LEFT, TOP); textSize(12.5); text(s.def, x + 14, yy, colW - 28); yy += 40;
+    // asks
+    fill(s.color); textStyle(BOLD); textSize(11.5); text('Asks:', x + 14, yy); textStyle(NORMAL); yy += 16;
+    fill('#444'); textSize(11.5); s.asks.forEach(a => { text('• ' + a, x + 18, yy, colW - 34); yy += 16; });
+    yy += 4;
+    // methods/factors
+    fill(s.color); textStyle(BOLD); textSize(11.5); text(s.listTitle + ':', x + 14, yy); textStyle(NORMAL); yy += 16;
+    s.items.forEach((it, k) => {
+      const cxp = x + 18 + (k % 2) * (colW / 2 - 6);
+      if (k % 2 === 0 && k > 0) yy += 0;
+      fill('white'); stroke(s.color); strokeWeight(1); rect(cxp, yy + Math.floor(k / 2) * 26, colW / 2 - 22, 22, 4); noStroke();
+      fill('#333'); textAlign(LEFT, CENTER); textSize(10.5); text(it, cxp + 6, yy + Math.floor(k / 2) * 26 + 11, colW / 2 - 30);
+    });
+    yy += Math.ceil(s.items.length / 2) * 26 + 8;
+    // example
+    fill(s.color); textAlign(LEFT, TOP); textStyle(BOLD); textSize(11.5); text('Example:', x + 14, yy); textStyle(NORMAL); yy += 15;
+    fill('#444'); textSize(11); text(s.example, x + 14, yy, colW - 28); yy += 50;
+    // outcomes
+    fill('#1c7a30'); textSize(11); text('✓ ' + s.ok, x + 14, yy, colW - 28); yy += 18;
+    fill('#c0392b'); text('✗ ' + s.no, x + 14, yy, colW - 28);
+  });
+
+  // center divider note
+  fill('#15334d'); textAlign(CENTER, TOP); textSize(11.5); textStyle(BOLD);
+  text('Authentication comes first (prove identity); authorization follows (decide access). Both are required.', canvasWidth / 2, drawHeight - 18);
+  textStyle(NORMAL);
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); redraw(); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

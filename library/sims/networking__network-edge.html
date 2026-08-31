@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Edge versus Core in a Small Network using vis-network</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script>// Edge versus Core in a Small Network - vis-network
+// CANVAS_HEIGHT: 560
+// A deterministic node-link diagram that distinguishes the network edge
+// (end systems) from the network core (routers in a partial mesh).
+// Bloom level: Understand.
+
+document.addEventListener('DOMContentLoaded', function () {
+  const AMBER = '#F5A623';
+  const SLATE = '#546e7a';
+
+  const main = document.querySelector('main');
+
+  // Title
+  const title = document.createElement('div');
+  title.textContent = 'Edge versus Core in a Small Network';
+  title.style.cssText = 'font:bold 20px Arial,sans-serif;text-align:center;' +
+    'padding:8px 0 4px;color:#212529;';
+  main.appendChild(title);
+
+  // Network container
+  const container = document.createElement('div');
+  container.style.cssText =
+    'width:100%;height:470px;background:#f7fbff;border:1px solid silver;';
+  main.appendChild(container);
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'font:13px Arial,sans-serif;text-align:center;' +
+    'padding:6px 0;color:#37474f;';
+  legend.innerHTML =
+    '<span style="color:#F5A623;font-weight:bold;">●</span> End system (host) &nbsp;&nbsp;' +
+    '<span style="color:#546e7a;font-weight:bold;">⬢</span> Router (network node) &nbsp;&nbsp;' +
+    '<span style="color:#F5A623;">—</span> edge link &nbsp;&nbsp;' +
+    '<span style="color:#546e7a;font-weight:bold;">━</span> high-bandwidth core link';
+  main.appendChild(legend);
+
+  // Nodes with fixed deterministic positions (network coordinate space)
+  const nodes = new vis.DataSet([
+    // Left edge — end systems
+    mkHost('laptop',  'Laptop',      -360, -150),
+    mkHost('phone',   'Phone',       -360,  -50),
+    mkHost('desktop', 'Desktop',     -360,   50),
+    mkHost('iot',     'IoT Sensor',  -360,  150),
+    // Core — routers in a partial mesh
+    mkRouter('r1', 'R1', -110, -120),
+    mkRouter('r2', 'R2', -110,  120),
+    mkRouter('r3', 'R3',   20,    0),
+    mkRouter('r4', 'R4',  150, -110),
+    mkRouter('r5', 'R5',  150,  110),
+    // Right edge — servers
+    mkServer('web', 'Web Server', 380, -110),
+    mkServer('dns', 'DNS Server', 380,    0),
+    mkServer('db',  'Database',   380,  110)
+  ]);
+
+  const edges = new vis.DataSet([
+    // edge links (end system <-> router): thin amber
+    edgeLink('laptop', 'r1'), edgeLink('phone', 'r1'),
+    edgeLink('desktop', 'r2'), edgeLink('iot', 'r2'),
+    edgeLink('web', 'r4'), edgeLink('dns', 'r5'), edgeLink('db', 'r5'),
+    // core links (router <-> router): thick slate
+    coreLink('r1', 'r2'), coreLink('r1', 'r3'), coreLink('r2', 'r3'),
+    coreLink('r3', 'r4'), coreLink('r3', 'r5'), coreLink('r4', 'r5')
+  ]);
+
+  function mkHost(id, label, x, y) {
+    return { id, label, x, y, fixed: true, shape: 'dot', size: 18,
+      color: { background: AMBER, border: '#c77f12' },
+      font: { size: 14, color: '#212529' }, title: 'End System (host)',
+      shadow: true };
+  }
+  function mkServer(id, label, x, y) {
+    return { id, label, x, y, fixed: true, shape: 'box', margin: 8,
+      color: { background: AMBER, border: '#c77f12' },
+      font: { size: 14, color: '#212529' }, title: 'End System (host)',
+      shadow: true, shapeProperties: { borderRadius: 6 } };
+  }
+  function mkRouter(id, label, x, y) {
+    return { id, label, x, y, fixed: true, shape: 'hexagon', size: 22,
+      color: { background: SLATE, border: '#37474f' },
+      font: { size: 15, color: 'white' }, title: 'Network Node (router)',
+      shadow: true };
+  }
+  function edgeLink(a, b) {
+    return { from: a, to: b, color: { color: AMBER }, width: 1.5,
+      title: 'Communication Link', smooth: false };
+  }
+  function coreLink(a, b) {
+    return { from: a, to: b, color: { color: SLATE }, width: 4,
+      title: 'Communication Link', smooth: false };
+  }
+
+  const options = {
+    physics: false,
+    interaction: { hover: true, zoomView: false, dragView: false,
+      dragNodes: false, tooltipDelay: 80 },
+    nodes: { borderWidth: 2 }
+  };
+
+  const network = new vis.Network(container, { nodes, edges }, options);
+  network.fit({ animation: false });
+
+  // Paint the three background zones (edge / core / edge) behind the graph.
+  network.on('beforeDrawing', function (ctx) {
+    drawZone(ctx, -620, -260, 360, 520, 'rgba(245,166,35,0.10)', 'Network Edge', '#b8860b');
+    drawZone(ctx, -260, -260, 520, 520, 'rgba(84,110,122,0.10)', 'Network Core', '#546e7a');
+    drawZone(ctx,  260, -260, 360, 520, 'rgba(245,166,35,0.10)', 'Network Edge', '#b8860b');
+  });
+
+  function drawZone(ctx, x, y, w, h, fill, label, labelColor) {
+    ctx.save();
+    ctx.fillStyle = fill;
+    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = labelColor;
+    ctx.globalAlpha = 0.35;
+    ctx.font = 'bold 26px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + w / 2, y + 34);
+    ctx.restore();
+  }
+
+  window.addEventListener('resize', function () {
+    network.fit({ animation: false });
+  });
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

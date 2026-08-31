@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Congestion Control Phases and Algorithms using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Congestion Control Phases and Algorithms (Reno / CUBIC / BBR)
+// CANVAS_HEIGHT: 600
+// Plots cwnd over time for TCP Reno, CUBIC, and BBR on the same simulated path
+// with configurable bandwidth, RTT, loss, and buffer. Bloom: Understand,
+// Analyze, Evaluate.
+
+let containerWidth;
+let canvasWidth = 960;
+let drawHeight = 460;
+let controlHeight = 140;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+let sliderLeftMargin = 250;
+
+const RENO = '#3f51b5', CUBIC = '#F5A623', BBR = '#2e7d32';
+const STEPS = 140;
+const MSS_BITS = 12000;
+
+let bwSlider, rttSlider, lossSlider, bufSlider;
+let stepButton, playButton, resetButton, focusSelect, competeBtn;
+let compete = false;
+let cursor = 0, isPlaying = false;
+let data = null;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  bwSlider = createSlider(0, 100, 50, 1);      // log → 1..10000 Mbps
+  rttSlider = createSlider(10, 500, 80, 5);
+  lossSlider = createSlider(0, 50, 5, 1);      // tenths of % → 0..5%
+  bufSlider = createSlider(0, 80, 20, 1);      // hundredths → 0..0.8 ... use /20 → BDP multiples
+  [bwSlider, rttSlider, lossSlider, bufSlider].forEach((s, i) => { s.position(sliderLeftMargin, drawHeight + 8 + i * 24); s.size(canvasWidth - sliderLeftMargin - margin); s.input(recompute); });
+  stepButton = createButton('Step ▶'); stepButton.position(10, drawHeight + 108); stepButton.mousePressed(() => { isPlaying = false; playButton.html('Play'); cursor = min(STEPS, cursor + 8); });
+  playButton = createButton('Play'); playButton.position(80, drawHeight + 108); playButton.mousePressed(() => { if (cursor >= STEPS) cursor = 0; isPlaying = !isPlaying; playButton.html(isPlaying ? 'Pause' : 'Play'); });
+  resetButton = createButton('Reset'); resetButton.position(140, drawHeight + 108); resetButton.mousePressed(() => { cursor = 0; isPlaying = false; playButton.html('Play'); });
+  focusSelect = createSelect(); focusSelect.position(205, drawHeight + 108); ['all', 'Reno', 'CUBIC', 'BBR'].forEach(o => focusSelect.option(o));
+  competeBtn = createButton('Add competing flows'); competeBtn.position(300, drawHeight + 108); competeBtn.mousePressed(() => { compete = !compete; competeBtn.html(compete ? 'Single flow' : 'Add competing flows'); recompute(); });
+  recompute();
+  describe('A time-versus-cwnd plot comparing TCP Reno, CUBIC, and BBR on one ' +
+    'simulated link, with sliders for bandwidth, RTT, loss rate, and buffer ' +
+    'size, and dashed lines for the bottleneck capacity and BDP.', LABEL);
+}
+
+function bwMbps() { return Math.round(Math.pow(10, bwSlider.value() / 100 * 4)); }   // 1..10000
+
+function recompute() {
+  const bw = bwMbps() * 1e6, rtt = rttSlider.value() / 1000, loss = lossSlider.value() / 1000;
+  let bdp = (bw * rtt) / MSS_BITS;   // segments
+  bdp = constrain(bdp, 4, 4000);
+  let capacity = bdp + (bufSlider.value() / 20) * bdp;
+  if (compete) capacity = capacity / 2;
+  // deterministic pseudo-random for stable plot
+  let seed = (bwSlider.value() * 7 + rttSlider.value() * 13 + lossSlider.value() * 17 + bufSlider.value() * 3 + 1) >>> 0;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+
+  const reno = [], cubic = [], bbr = [], lossR = [], lossC = [];
+  // Reno
+  let cw = 1, ssth = capacity, ss = true;
+  for (let t = 0; t < STEPS; t++) {
+    reno.push(cw);
+    if (ss) { cw *= 2; if (cw >= ssth) { cw = ssth; ss = false; } } else cw += 1;
+    if (cw > capacity || rnd() < loss) { ssth = max(2, Math.floor(cw / 2)); cw = ssth; ss = false; lossR.push(t); }
+  }
+  // CUBIC
+  let cc = 1, wmax = capacity, epoch = 0; const C = 0.4, beta = 0.3;
+  for (let t = 0; t < STEPS; t++) {
+    cubic.push(cc);
+    const K = Math.cbrt(wmax * beta / C);
+    const tt = (t - epoch);
+    cc = C * Math.pow(tt - K, 3) + wmax;
+    if (cc < 1) cc = 1;
+    if (cc > capacity || rnd() < loss * 0.7) { wmax = max(2, cc); cc = cc * (1 - beta); epoch = t; lossC.push(t); }
+  }
+  // BBR
+  let bb = 1;
+  for (let t = 0; t < STEPS; t++) {
+    bbr.push(bb);
+    if (bb < bdp) bb *= 2; else bb = bdp * (1.05 + 0.08 * Math.sin(t / 4));
+    bb = constrain(bb, 1, capacity * 1.1);
+  }
+  data = { reno, cubic, bbr, capacity, bdp, lossR, lossC };
+}
+
+function draw() {
+  updateCanvasSize();
+  stroke('silver'); strokeWeight(1);
+  fill('aliceblue'); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  if (isPlaying) { cursor += 1.2; if (cursor >= STEPS) { cursor = STEPS; isPlaying = false; playButton.html('Play'); } }
+
+  noStroke(); fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('Congestion Control: Reno vs. CUBIC vs. BBR', canvasWidth / 2, 6);
+
+  const px = 54, py = 44, pw = canvasWidth - px - margin, ph = drawHeight - py - 70;
+  noStroke(); fill('#fbfbfb'); stroke('#cfd8dc'); rect(px, py, pw, ph);
+  const maxY = Math.max(data.capacity * 1.15, ...data.reno, ...data.cubic) * 1.05;
+  const X = t => px + (t / STEPS) * pw;
+  const Y = v => py + ph - (v / maxY) * ph;
+
+  // gridlines + capacity/BDP
+  stroke('#90a4ae'); strokeWeight(1); drawingContext.setLineDash([5, 4]);
+  line(px, Y(data.capacity), px + pw, Y(data.capacity));
+  stroke('#26a69a'); line(px, Y(data.bdp), px + pw, Y(data.bdp));
+  drawingContext.setLineDash([]);
+  noStroke(); fill('#607d8b'); textAlign(LEFT, BOTTOM); textSize(10);
+  text('bottleneck capacity', px + 4, Y(data.capacity) - 1);
+  fill('#00897b'); text('BDP', px + 4, Y(data.bdp) - 1);
+
+  // axes labels
+  fill('#37474f'); textAlign(CENTER, TOP); textSize(11); text('time (RTTs) →', px + pw / 2, py + ph + 4);
+  push(); translate(px - 40, py + ph / 2); rotate(-HALF_PI); textAlign(CENTER, CENTER); text('cwnd (segments)', 0, 0); pop();
+
+  const focus = focusSelect.value();
+  drawTrace(data.reno, RENO, X, Y, focus === 'all' || focus === 'Reno');
+  drawTrace(data.cubic, CUBIC, X, Y, focus === 'all' || focus === 'CUBIC');
+  drawTrace(data.bbr, BBR, X, Y, focus === 'all' || focus === 'BBR');
+
+  // loss markers
+  for (const t of data.lossR) if (t <= cursor) { stroke(RENO); strokeWeight(1); noFill(); circle(X(t), Y(data.reno[t]), 6); }
+
+  // legend
+  let lx = px + pw - 220, ly = py + 12; textAlign(LEFT, CENTER); textSize(12); noStroke();
+  fill(RENO); rect(lx, ly - 5, 16, 4); fill('#37474f'); text('Reno (sawtooth)', lx + 22, ly); ly += 16;
+  fill(CUBIC); rect(lx, ly - 5, 16, 4); fill('#37474f'); text('CUBIC', lx + 22, ly); ly += 16;
+  fill(BBR); rect(lx, ly - 5, 16, 4); fill('#37474f'); text('BBR (BDP-seeking)', lx + 22, ly);
+
+  // slider labels
+  noStroke(); fill('black'); textAlign(LEFT, CENTER); textSize(13);
+  text('Bandwidth: ' + bwMbps() + ' Mbps', 10, drawHeight + 18);
+  text('RTT: ' + rttSlider.value() + ' ms', 10, drawHeight + 42);
+  text('Loss rate: ' + (lossSlider.value() / 10).toFixed(1) + '%', 10, drawHeight + 66);
+  text('Buffer: ' + (bufSlider.value() / 20).toFixed(2) + ' × BDP', 10, drawHeight + 90);
+}
+
+function drawTrace(arr, col, X, Y, on) {
+  stroke(col); strokeWeight(on ? 2.5 : 1); noFill();
+  if (!on) drawingContext.globalAlpha = 0.3;
+  beginShape();
+  for (let t = 0; t <= cursor && t < arr.length; t++) vertex(X(t), Y(arr[t]));
+  endShape();
+  drawingContext.globalAlpha = 1;
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); [bwSlider, rttSlider, lossSlider, bufSlider].forEach(s => s.size(canvasWidth - sliderLeftMargin - margin)); redraw(); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

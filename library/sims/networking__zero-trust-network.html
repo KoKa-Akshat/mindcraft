@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Zero Trust vs Castle-and-Moat</title>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 12px; font-family: 'Segoe UI', Arial, sans-serif; background: #fff; color: #212529; }
+        h2 { margin: 0 0 6px 0; color: #1a3a6c; font-size: 16px; }
+        .controls { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0; align-items: center; font-size: 12px; }
+        button { background: #1a3a6c; color: white; border: none; padding: 7px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+        button:hover { background: #2e5285; }
+        .layout { display: grid; grid-template-columns: 1fr 280px; gap: 10px; height: 540px; }
+        @media (max-width: 700px) { .layout { grid-template-columns: 1fr; height: auto; } #network { height: 380px !important; } }
+        #network { border: 1px solid #ced4da; border-radius: 4px; background: #fafbfc; height: 100%; }
+        #side-panel { border: 1px solid #ced4da; border-radius: 4px; background: #fafbfc; padding: 10px; overflow-y: auto; height: 100%; font-size: 12px; }
+        #panel-title { font-size: 13px; font-weight: bold; color: #1a3a6c; margin-bottom: 6px; }
+        #panel-body p { margin: 4px 0; }
+        .panels-label { display: flex; justify-content: space-between; padding: 0 12px; font-size: 12px; color: #555; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <h2>Zero Trust vs Castle-and-Moat</h2>
+    <div class="controls">
+        <button id="compromise">Simulate Compromised Credential</button>
+        <button id="unhealthy">Simulate Unhealthy Device</button>
+        <button id="reset">Reset</button>
+    </div>
+    <div class="layout">
+        <div id="network"></div>
+        <div id="side-panel">
+            <div id="panel-title"></div>
+            <div id="panel-body"></div>
+        </div>
+    </div>
+    <div class="panels-label"><span><strong>Castle-and-Moat (left)</strong></span><span><strong>Zero Trust (right)</strong></span></div>
+    <script>// Zero Trust vs Castle-and-Moat - vis-network side-by-side
+// Two networks; attacker token shows blast radius in each
+// CANVAS_HEIGHT: 720
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Castle-and-moat (left): -500 to -100 x range
+  // Zero trust (right): 100 to 500 x range
+  const CASTLE_BG = '#90A4AE';
+  const ZT_BG = '#43A047';
+  const ID = '#C2185B';
+
+  const nodes = new vis.DataSet([
+    // Castle
+    { id: 'c-user', label: 'User\n(VPN)', x: -550, y: -100, shape: 'box', color: { background: '#90CAF9', border: '#1976D2' } },
+    { id: 'c-perim', label: 'Perimeter\nFirewall', x: -400, y: -100, shape: 'box', color: { background: CASTLE_BG, border: '#37474F' }, font: { color: 'white' } },
+    { id: 'c-app1', label: 'App\nServer 1', x: -200, y: -200, shape: 'ellipse', color: { background: '#FFE0B2', border: '#E65100' } },
+    { id: 'c-app2', label: 'App\nServer 2', x: -200, y: -100, shape: 'ellipse', color: { background: '#FFE0B2', border: '#E65100' } },
+    { id: 'c-db', label: 'Database', x: -200, y: 0, shape: 'database', color: { background: '#FFCCBC', border: '#BF360C' } },
+    { id: 'c-fs', label: 'File\nShare', x: -200, y: 100, shape: 'box', color: { background: '#FFE0B2', border: '#E65100' } },
+    // ZT
+    { id: 'z-user', label: 'User', x: 100, y: -200, shape: 'box', color: { background: '#90CAF9', border: '#1976D2' } },
+    { id: 'z-pep', label: 'Policy\nEnforcement\nPoint', x: 280, y: 0, shape: 'box', color: { background: ZT_BG, border: '#1B5E20' }, font: { color: 'white', size: 10 } },
+    { id: 'z-idp', label: 'Identity\nProvider', x: 380, y: -180, shape: 'box', color: { background: ID, border: '#7F0000' }, font: { color: 'white', size: 10 } },
+    { id: 'z-pe', label: 'Policy\nEngine', x: 380, y: -90, shape: 'box', color: { background: ZT_BG, border: '#1B5E20' }, font: { color: 'white', size: 10 } },
+    { id: 'z-dev', label: 'Device\nPosture', x: 380, y: 0, shape: 'box', color: { background: ZT_BG, border: '#1B5E20' }, font: { color: 'white', size: 10 } },
+    { id: 'z-app1', label: 'App\nServer 1', x: 500, y: -200, shape: 'ellipse', color: { background: '#FFE0B2', border: '#E65100' } },
+    { id: 'z-app2', label: 'App\nServer 2', x: 500, y: -100, shape: 'ellipse', color: { background: '#FFE0B2', border: '#E65100' } },
+    { id: 'z-db', label: 'Database', x: 500, y: 0, shape: 'database', color: { background: '#FFCCBC', border: '#BF360C' } },
+    { id: 'z-fs', label: 'File\nShare', x: 500, y: 100, shape: 'box', color: { background: '#FFE0B2', border: '#E65100' } }
+  ]);
+
+  const baseEdges = [
+    // Castle edges - flat trust
+    { id: 'ce1', from: 'c-user', to: 'c-perim', label: 'VPN' },
+    { id: 'ce2', from: 'c-perim', to: 'c-app1' },
+    { id: 'ce3', from: 'c-perim', to: 'c-app2' },
+    { id: 'ce4', from: 'c-perim', to: 'c-db' },
+    { id: 'ce5', from: 'c-perim', to: 'c-fs' },
+    { id: 'ce6', from: 'c-app1', to: 'c-db' },
+    { id: 'ce7', from: 'c-app2', to: 'c-fs' },
+    // ZT edges
+    { id: 'ze1', from: 'z-user', to: 'z-pep' },
+    { id: 'ze2', from: 'z-pep', to: 'z-idp', dashes: true, label: 'who?' },
+    { id: 'ze3', from: 'z-pep', to: 'z-pe', dashes: true, label: 'allowed?' },
+    { id: 'ze4', from: 'z-pep', to: 'z-dev', dashes: true, label: 'healthy?' },
+    { id: 'ze5', from: 'z-pep', to: 'z-app1', label: 'per-request' },
+    { id: 'ze6', from: 'z-pep', to: 'z-app2', label: 'per-request' },
+    { id: 'ze7', from: 'z-pep', to: 'z-db', label: 'per-request' },
+    { id: 'ze8', from: 'z-pep', to: 'z-fs', label: 'per-request' }
+  ];
+
+  const edges = new vis.DataSet(baseEdges.map(e => ({ ...e, color: { color: '#546E7A' }, font: { size: 9, align: 'top' }, smooth: { type: 'cubicBezier' }, width: 1 })));
+
+  const network = new vis.Network(document.getElementById('network'), { nodes, edges }, {
+    physics: false,
+    interaction: { hover: true, dragNodes: false, zoomView: true, dragView: true },
+    nodes: { borderWidth: 2, font: { size: 10, face: 'Arial' }, shadow: { enabled: true, size: 2 }, widthConstraint: { minimum: 70, maximum: 100 } }
+  });
+
+  const info = {
+    'c-user': 'A user connecting via VPN. Once authenticated to the VPN concentrator, they have broad access.',
+    'c-perim': 'Perimeter firewall. Trust is binary: outside (no trust) vs inside (full trust).',
+    'c-app1': 'Internal app server. Reachable by anyone inside the network.',
+    'c-app2': 'Internal app server. Reachable by anyone inside the network.',
+    'c-db': 'Internal database. Trusts internal network connections.',
+    'c-fs': 'Internal file share. Often the highest-value target.',
+    'z-user': 'User. No implicit trust based on network location.',
+    'z-pep': 'Policy Enforcement Point. Sits in front of every resource and consults the policy engine on every request.',
+    'z-idp': 'Identity Provider. Authenticates users and devices.',
+    'z-pe': 'Policy Engine. Evaluates the rule: does this user/device get this access right now?',
+    'z-dev': 'Device Posture Service. Reports whether the device is healthy (patched, encrypted, no active malware signal).',
+    'z-app1': 'Resource, individually protected.',
+    'z-app2': 'Resource, individually protected.',
+    'z-db': 'Resource, individually protected.',
+    'z-fs': 'Resource, individually protected.'
+  };
+
+  const panelTitle = document.getElementById('panel-title');
+  const panelBody = document.getElementById('panel-body');
+  function show(id) {
+    if (!info[id]) {
+      panelTitle.textContent = 'Click any node';
+      panelBody.innerHTML = '<p style="color:#666;font-size:12px;">Click any node for definition. Use the buttons below to simulate compromise scenarios.</p>';
+      return;
+    }
+    panelTitle.textContent = (nodes.get(id).label || '').replace(/\n/g, ' ');
+    panelBody.innerHTML = '<p>' + info[id] + '</p>';
+  }
+  show(null);
+  network.on('click', p => { if (p.nodes.length) show(p.nodes[0]); else show(null); });
+
+  let scenario = null;
+  function clearScenario() {
+    baseEdges.forEach(e => edges.update({ id: e.id, color: { color: '#546E7A' }, width: 1 }));
+    nodes.forEach(n => {
+      const orig = n.id.startsWith('c-') || n.id.startsWith('z-');
+      if (orig) {
+        // we'd need original color, just leave as-is but reset opacity
+        nodes.update({ id: n.id, opacity: 1 });
+      }
+    });
+  }
+
+  document.getElementById('compromise').addEventListener('click', function () {
+    clearScenario();
+    // Castle: red flood
+    ['c-user', 'c-perim', 'c-app1', 'c-app2', 'c-db', 'c-fs'].forEach(id => nodes.update({ id, opacity: 1 }));
+    ['ce1', 'ce2', 'ce3', 'ce4', 'ce5', 'ce6', 'ce7'].forEach(id => edges.update({ id, color: { color: '#C62828' }, width: 4 }));
+    // ZT: blocked at PEP
+    edges.update({ id: 'ze1', color: { color: '#C62828' }, width: 4 });
+    panelTitle.textContent = 'Compromised Credential Simulation';
+    panelBody.innerHTML =
+      '<p><strong>Castle-and-Moat blast radius:</strong> 5 resources reachable. Once past the perimeter, the attacker can move laterally to App1, App2, DB, and the File Share.</p>' +
+      '<p><strong>Zero Trust blast radius:</strong> Possibly 1 resource (only what the policy currently permits the user). The credential alone is not enough — device posture, MFA, and per-resource policy must all evaluate to ALLOW.</p>';
+  });
+
+  document.getElementById('unhealthy').addEventListener('click', function () {
+    clearScenario();
+    edges.update({ id: 'ze4', color: { color: '#C62828' }, width: 4 });
+    edges.update({ id: 'ze5', color: { color: '#C62828' }, dashes: true, width: 3 });
+    edges.update({ id: 'ze6', color: { color: '#C62828' }, dashes: true, width: 3 });
+    edges.update({ id: 'ze7', color: { color: '#C62828' }, dashes: true, width: 3 });
+    edges.update({ id: 'ze8', color: { color: '#C62828' }, dashes: true, width: 3 });
+    panelTitle.textContent = 'Device Unhealthy';
+    panelBody.innerHTML =
+      '<p>The Device Posture service flags the user\'s laptop as unhealthy (e.g., out-of-date patching, EDR alert).</p>' +
+      '<p>The PEP refuses access to <strong>all four resources</strong> mid-session — even though credentials are valid.</p>' +
+      '<p>Castle-and-Moat has no equivalent: once the user is on VPN, no device-posture check exists.</p>';
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    clearScenario();
+    show(null);
+  });
+});
+</script>
+</body>
+</html>

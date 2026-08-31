@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Brewing Beer Process Explorer</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: aliceblue; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>(function (global) {
+  const Map = {
+    A: 'ᴬ',
+    B: 'ᴮ',
+    C: '꜀',
+    D: 'ᴅ',
+    E: 'ᴱ',
+    G: 'ᴳ',
+    H: 'ᴴ',
+    I: 'ᴵ',
+    J: 'ᴶ',
+    K: 'ᴷ',
+    L: 'ᴸ',
+    M: 'ᴹ',
+    N: 'ᴺ',
+    O: 'ᴼ',
+    P: 'ᴾ',
+    R: 'ᴿ',
+    S: 'ˢ',
+    T: 'ᵀ',
+    U: 'ᵁ',
+    V: 'ⱽ',
+    W: 'ʷ',
+    X: 'ˣ',
+    Y: 'ʸ',
+    Z: 'ᶻ',
+    a: 'ᵃ',
+    b: 'ᵇ',
+    d: 'ᵈ',
+    e: 'ᵉ',
+    g: 'ᵍ',
+    h: 'ʰ',
+    i: 'ᶦ',
+    j: 'ʲ',
+    k: 'ᵏ',
+    l: 'ˡ',
+    m: 'ᵐ',
+    n: 'ⁿ',
+    o: 'ᵒ',
+    p: 'ᵖ',
+    r: 'ʳ',
+    s: 'ˢ',
+    t: 'ᵗ',
+    u: 'ᵘ',
+    v: 'ᵛ',
+    w: 'ʷ',
+    x: 'ˣ',
+    y: 'ʸ',
+    z: 'ᶻ',
+    '+': '⁺',
+    '-': '⁻',
+    '0': '⁰',
+    '1': '¹',
+    '2': '²',
+    '3': '³',
+    '4': '⁴',
+    '5': '⁵',
+    '6': '⁶',
+    '7': '⁷',
+    '8': '⁸',
+    '9': '⁹'
+  };
+
+  function convertSuperscriptOption(str) {
+    return str.replace(/\^([A-Za-z0-9+\-])/g, (_, ch) => MAP[ch] || ch);
+  }
+
+  function buildSuperscriptTokens(str, baseSize) {
+    const tokens = [];
+    const size = baseSize || 16;
+    let totalWidth = 0;
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '^' && i + 1 < str.length) {
+        const supChar = str[i + 1];
+        textSize(size * 0.75);
+        const width = textWidth(supChar);
+        tokens.push({ text: supChar, isSup: true, width });
+        totalWidth += width;
+        i += 2;
+      } else {
+        textSize(size);
+        const width = textWidth(str[i]);
+        tokens.push({ text: str[i], isSup: false, width });
+        totalWidth += width;
+        i++;
+      }
+    }
+    textSize(size);
+    return { tokens, totalWidth };
+  }
+
+  function drawSuperscriptText(str, x, y, baseSize, align = 'left', metrics = null) {
+    const size = baseSize || 16;
+    const tokenData = metrics || buildSuperscriptTokens(str, size);
+    const tokens = tokenData.tokens;
+    const totalWidth = tokenData.totalWidth;
+
+    let cursor = x;
+    if (align === 'center') cursor -= totalWidth / 2;
+    else if (align === 'right') cursor -= totalWidth;
+
+    push();
+    textAlign(LEFT, CENTER);
+    noStroke();
+    for (const token of tokens) {
+      if (token.isSup) {
+        textSize(size * 0.75);
+        text(token.text, cursor, y - size * 0.45);
+      } else {
+        textSize(size);
+        text(token.text, cursor, y);
+      }
+      cursor += token.width;
+    }
+    pop();
+    textSize(size);
+  }
+
+  global.SuperscriptText = {
+    convertSuperscriptOption,
+    buildSuperscriptTokens,
+    drawSuperscriptText
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+    <script>// Brewing Beer Process Explorer MicroSim — v2
+// Step-through five brewing images with optional overlay labels and infobox.
+
+let canvasWidth = 900;
+let drawHeight = 520;
+let controlHeight = 100;
+let infoboxHeight = 180;
+let canvasHeight;
+const margin = 12;
+const imgAspect = 2; // 1200x600 = 2:1
+
+let stepImages = [];
+let currentStep = 0;
+let showLabels = true;
+let showLabelsCheckbox;
+let stepButtons = [];
+
+const stepData = [
+  {
+    title: 'Step 1: Glucose Feedstock Preparation',
+    image: 'step-1.png',
+    description: 'On the left, the copper mash tun holds crushed barley grains releasing pale starch granules into steaming water. Stainless piping carries the golden wort through a heat exchanger (center) into the conical fermenter on the right, where oval tan yeast cells float near the inlet.\n\nIn the magnified inset (lower right), look for: light tan coiled starch chains (spirals of linked hexagons) being cleaved by blue-green wedge-shaped amylase enzymes; pairs of linked gold hexagons (maltose); and single warm-gold glowing hexagons (free glucose) \u2014 the fuel yeast will consume in the next step.',
+    labels: [
+      { text: 'Mash Tun', x: 0.17, y: 0.22 },
+      { text: 'Crushed Barley', x: 0.17, y: 0.45 },
+      { text: 'Amylase Enzymes', x: 0.72, y: 0.60 },
+      { text: 'Heat Exchanger', x: 0.37, y: 0.72 },
+      { text: 'Conical Fermenter', x: 0.68, y: 0.15 },
+      { text: 'Yeast Cells', x: 0.68, y: 0.48 },
+      { text: 'Starch Chains', x: 0.78, y: 0.72 },
+      { text: 'Glucose Monomers', x: 0.85, y: 0.88 },
+      { text: 'Maltose', x: 0.65, y: 0.88 }
+    ]
+  },
+  {
+    title: 'Step 2: Glycolysis in the Fermenter',
+    image: 'step-2.png',
+    description: 'The fermenter (left) is filled with amber wort; dozens of oval tan yeast cells are suspended inside. Instrumentation probes (center-right) monitor temperature, pH, and dissolved oxygen.\n\nIn the magnified inset (lower right), follow the reaction left to right: a warm-gold hexagonal glucose enters through a transporter in the cell membrane (left edge), then passes through a conveyor of ten colored enzyme shapes. At the far right, two orange-red triangular pyruvate molecules emerge. Above the chain, bright yellow glowing ATP spheres (energy) and violet glowing NADH spheres (electron carriers) float upward. Faint mitochondria with internal folds sit inactive at the cell\u2019s edge.',
+    labels: [
+      { text: 'Conical Fermenter', x: 0.22, y: 0.10 },
+      { text: 'Amber Wort', x: 0.22, y: 0.50 },
+      { text: 'Yeast Cells', x: 0.55, y: 0.30 },
+      { text: 'CO\u2082 Bubbles', x: 0.22, y: 0.30 },
+      { text: 'Glucose', x: 0.58, y: 0.78 },
+      { text: 'Enzyme Chain', x: 0.72, y: 0.85 },
+      { text: 'Pyruvate', x: 0.88, y: 0.78 },
+      { text: 'ATP', x: 0.68, y: 0.62 },
+      { text: 'NADH', x: 0.78, y: 0.62 },
+      { text: 'Instrumentation', x: 0.42, y: 0.38 }
+    ]
+  },
+  {
+    title: 'Step 3: Pyruvate Pool (Anaerobic)',
+    image: 'step-3.png',
+    description: 'The fermenter (left) is now sealed with a tri-clamp lid. A blow-off hose (upper center) runs to a sanitizer bucket (lower center). Cool blue-gray lighting signals the anaerobic shift. A faint CO\u2082 headspace haze sits above the wort surface.\n\nIn the magnified inset (lower right): orange-red triangular pyruvate molecules crowd the cytoplasm with nowhere to go. Violet glowing NADH spheres accumulate in clusters (upper area of inset). Along the right side, two mitochondria show blocked membrane channels with red barrier marks and dim inactive cristae. Sparse gray NAD\u207A spheres (no glow) signal the bottleneck \u2014 without recycling NADH back to NAD\u207A, glycolysis will stall.',
+    labels: [
+      { text: 'Sealed Fermenter', x: 0.22, y: 0.10 },
+      { text: 'Blow-off Hose', x: 0.38, y: 0.18 },
+      { text: 'CO\u2082 Headspace', x: 0.22, y: 0.35 },
+      { text: 'Yeast Cells', x: 0.22, y: 0.55 },
+      { text: 'Pyruvate (accumulating)', x: 0.55, y: 0.80 },
+      { text: 'NADH Clusters', x: 0.72, y: 0.42 },
+      { text: 'Blocked Mitochondria', x: 0.85, y: 0.58 },
+      { text: 'Sanitizer Bucket', x: 0.42, y: 0.88 }
+    ]
+  },
+  {
+    title: 'Step 4: Acetaldehyde + CO\u2082 Release',
+    image: 'step-4.png',
+    description: 'Peak fermentation! The fermenter (left) shows vigorous CO\u2082 bubbles streaming upward, thick krausen foam at the wort surface (upper left), and an actively bubbling blow-off hose (upper center). The background (right) is filled with rising translucent bubbles. Warm amber-orange lighting reflects the intense activity.\n\nIn the magnified inset (lower right): a large multi-lobed blue-purple pyruvate decarboxylase enzyme dominates the center, with a small green diamond TPP cofactor in its active site. An orange-red triangular pyruvate enters the enzyme; a translucent white CO\u2082 sphere is ejected upward, and a salmon-pink V-shaped acetaldehyde (2 carbons) exits the other side. More CO\u2082 bubbles rise through the cytoplasm. Violet NADH spheres from Step 3 remain, waiting for Step 5.',
+    labels: [
+      { text: 'Active Fermenter', x: 0.22, y: 0.10 },
+      { text: 'Krausen Foam', x: 0.22, y: 0.32 },
+      { text: 'CO\u2082 Bubbles', x: 0.75, y: 0.25 },
+      { text: 'Blow-off Tube', x: 0.38, y: 0.18 },
+      { text: 'Pyruvate Decarboxylase', x: 0.65, y: 0.55 },
+      { text: 'TPP Cofactor', x: 0.68, y: 0.68 },
+      { text: 'Acetaldehyde', x: 0.82, y: 0.72 },
+      { text: 'CO\u2082 Released', x: 0.60, y: 0.42 },
+      { text: 'Pyruvate', x: 0.55, y: 0.78 }
+    ]
+  },
+  {
+    title: 'Step 5: Ethanol Formation & Conditioning',
+    image: 'step-5.png',
+    description: 'The fermenter (left) has quieted \u2014 fewer bubbles, collapsed foam, and clearer golden beer. Yeast cells clump and sink toward the bottom cone. A transfer line (center) runs to a horizontal conditioning tank (right). A CO\u2082 capture dome (upper right) collects residual gas.\n\nIn the magnified inset (lower right): a large copper-brown multi-lobed alcohol dehydrogenase enzyme holds a salmon-pink V-shaped acetaldehyde. A violet NADH sphere approaches from the left, transferring electrons as a luminous violet light trail through the enzyme. A pale blue-green round ethanol molecule exits right. The spent NADH becomes a gray NAD\u207A sphere (no glow) that drifts back toward the glycolysis enzymes, completing the recycling loop \u2014 the true purpose of fermentation.',
+    labels: [
+      { text: 'Settling Fermenter', x: 0.22, y: 0.10 },
+      { text: 'Clear Beer', x: 0.22, y: 0.40 },
+      { text: 'Flocculating Yeast', x: 0.22, y: 0.75 },
+      { text: 'Transfer Line', x: 0.50, y: 0.55 },
+      { text: 'Conditioning Tank', x: 0.80, y: 0.35 },
+      { text: 'Alcohol Dehydrogenase', x: 0.65, y: 0.65 },
+      { text: 'Acetaldehyde', x: 0.55, y: 0.75 },
+      { text: 'NADH \u2192 NAD\u207A', x: 0.65, y: 0.80 },
+      { text: 'Ethanol', x: 0.82, y: 0.75 },
+      { text: 'CO\u2082 Capture', x: 0.78, y: 0.15 }
+    ]
+  }
+];
+
+function preload() {
+  for (let i = 0; i < stepData.length; i++) {
+    stepImages[i] = loadImage(stepData[i].image,
+      () => {},
+      () => { stepImages[i] = null; }
+    );
+  }
+}
+
+function setup() {
+  updateCanvasSize();
+  canvasHeight = drawHeight + controlHeight + infoboxHeight;
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Step buttons
+  for (let i = 0; i < stepData.length; i++) {
+    let btn = createButton(`Step ${i + 1}`);
+    btn.mousePressed(createStepHandler(i));
+    btn.parent(document.querySelector('main'));
+    stepButtons.push(btn);
+  }
+
+  // Show Labels checkbox — default ON
+  showLabelsCheckbox = createCheckbox(' Show Labels', true);
+  showLabelsCheckbox.parent(document.querySelector('main'));
+  showLabelsCheckbox.changed(() => { showLabels = showLabelsCheckbox.checked(); });
+
+  updateControlPositions();
+  styleButtons();
+}
+
+function createStepHandler(i) {
+  return function() { currentStep = i; };
+}
+
+function draw() {
+  updateCanvasSize();
+  canvasHeight = drawHeight + controlHeight + infoboxHeight;
+  resizeCanvas(canvasWidth, canvasHeight, true);
+
+  background('aliceblue');
+
+  // Title
+  noStroke();
+  fill('#103049');
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(Math.max(18, canvasWidth * 0.028));
+  text('Brewing Beer Process Explorer', canvasWidth / 2, margin);
+
+  // Step title
+  let titleY = margin + Math.max(22, canvasWidth * 0.032) + 4;
+  textSize(Math.max(14, canvasWidth * 0.022));
+  textStyle(NORMAL);
+  fill('#6b3a0a');
+  text(stepData[currentStep].title, canvasWidth / 2, titleY);
+
+  // Image area
+  let imgTop = titleY + Math.max(18, canvasWidth * 0.026) + 8;
+  let imgWidth = canvasWidth - margin * 2;
+  let imgHeight = imgWidth / imgAspect;
+
+  // Clamp image to fit in drawHeight
+  if (imgTop + imgHeight > drawHeight - 4) {
+    imgHeight = drawHeight - imgTop - 4;
+    imgWidth = imgHeight * imgAspect;
+  }
+
+  let imgX = (canvasWidth - imgWidth) / 2;
+  let imgY = imgTop;
+
+  // Draw image or placeholder
+  let img = stepImages[currentStep];
+  if (img) {
+    image(img, imgX, imgY, imgWidth, imgHeight);
+  } else {
+    fill('#e8e0d4');
+    stroke('#c9b99a');
+    rect(imgX, imgY, imgWidth, imgHeight, 8);
+    noStroke();
+    fill('#8b7355');
+    textAlign(CENTER, CENTER);
+    textSize(16);
+    text('Image not yet available\n(' + stepData[currentStep].image + ')', imgX + imgWidth / 2, imgY + imgHeight / 2);
+  }
+
+  // Draw labels overlay
+  if (showLabels) {
+    let labels = stepData[currentStep].labels;
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    let labelSize = Math.max(11, Math.min(14, canvasWidth * 0.015));
+    textSize(labelSize);
+
+    for (let lbl of labels) {
+      let lx = imgX + lbl.x * imgWidth;
+      let ly = imgY + lbl.y * imgHeight;
+      let tw = textWidth(lbl.text) + 12;
+      let th = labelSize + 10;
+
+      // Background pill
+      fill(0, 0, 0, 160);
+      noStroke();
+      rect(lx - tw / 2, ly - th / 2, tw, th, th / 2);
+
+      // Text
+      fill(255);
+      noStroke();
+      text(lbl.text, lx, ly);
+    }
+  }
+
+  // Control area background
+  fill(255);
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Infobox
+  drawInfobox();
+
+  styleButtons();
+}
+
+function drawInfobox() {
+  let boxY = drawHeight + controlHeight - 10;
+  let boxX = margin;
+  let boxW = canvasWidth - margin * 2;
+  let boxH = infoboxHeight - margin + 20;
+  let padding = 14;
+
+  // Box background
+  stroke('#b88a4a');
+  strokeWeight(1.5);
+  fill('#fff8ee');
+  rect(boxX, boxY, boxW, boxH, 10);
+  noStroke();
+
+  // Header
+  fill('#5a3010');
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  let headerSize = Math.max(13, Math.min(16, canvasWidth * 0.018));
+  textSize(headerSize);
+  text('What is happening:', boxX + padding, boxY + padding);
+
+  // Description text — wrapped
+  textStyle(NORMAL);
+  fill('#3d2a14');
+  let descSize = Math.max(12, Math.min(14, canvasWidth * 0.016));
+  textSize(descSize);
+  let textX = boxX + padding;
+  let textY = boxY + padding + headerSize + 8;
+  let textW = boxW - padding * 2;
+  let textH = boxH - padding * 2 - headerSize - 8;
+  text(stepData[currentStep].description, textX, textY, textW, textH);
+}
+
+function styleButtons() {
+  let btnWidth = Math.max(60, Math.min(110, (canvasWidth - margin * 2 - 40) / 5));
+  let totalBtnWidth = btnWidth * 5 + 10 * 4;
+  let startX = (canvasWidth - totalBtnWidth) / 2;
+  let btnY = drawHeight + 12;
+
+  for (let i = 0; i < stepButtons.length; i++) {
+    let btn = stepButtons[i];
+    let x = startX + i * (btnWidth + 10);
+    btn.position(x, btnY);
+    btn.size(btnWidth, 34);
+
+    if (i === currentStep) {
+      btn.style('background-color', '#d97706');
+      btn.style('color', '#fff');
+      btn.style('font-weight', 'bold');
+      btn.style('border', '2px solid #b45309');
+    } else {
+      btn.style('background-color', '#f3e8d0');
+      btn.style('color', '#4a2d0a');
+      btn.style('font-weight', 'normal');
+      btn.style('border', '1px solid #c9b99a');
+    }
+    btn.style('border-radius', '6px');
+    btn.style('cursor', 'pointer');
+    btn.style('font-size', '14px');
+  }
+
+  // Checkbox position
+  let cbY = btnY + 46;
+  showLabelsCheckbox.position(startX, cbY);
+  showLabelsCheckbox.style('font-size', '14px');
+  showLabelsCheckbox.style('color', '#333');
+}
+
+function updateControlPositions() {
+  styleButtons();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (!container) return;
+  const bounds = container.getBoundingClientRect();
+  canvasWidth = Math.floor(bounds.width);
+  let imgWidth = canvasWidth - margin * 2;
+  let imgHeight = imgWidth / imgAspect;
+  // title ~30px + step title ~24px + gap ~16px + image + gap ~4px
+  drawHeight = 30 + 24 + 16 + imgHeight + 4;
+  if (drawHeight < 300) drawHeight = 300;
+
+  // Scale infobox height based on width
+  infoboxHeight = Math.max(160, Math.min(220, canvasWidth * 0.22));
+}
+
+function windowResized() {
+  updateCanvasSize();
+  canvasHeight = drawHeight + controlHeight + infoboxHeight;
+  resizeCanvas(canvasWidth, canvasHeight, true);
+  updateControlPositions();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br />
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

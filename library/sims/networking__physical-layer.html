@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>OSI vs. TCP/IP Layer Mapping using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// OSI vs. TCP/IP Layer Mapping
+// CANVAS_HEIGHT: 612
+// Side-by-side OSI (7-layer) and TCP/IP (5- or 4-layer) stacks with bracket
+// lines showing how OSI layers collapse into TCP/IP layers.
+// Bloom level: Understand.
+
+let containerWidth;
+let canvasWidth = 900;
+let drawHeight = 560;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+
+let fourLayer = false;       // false = 5-layer view, true = 4-layer view
+let httpHighlight = false;
+let viewButton, httpButton;
+
+// group colors shared across both stacks
+const C = { app: '#F5A623', trans: '#1976D2', net: '#2e7d32', link: '#5D4037', phys: '#546e7a' };
+
+// OSI layers top->bottom; group ties color + bracket target
+const osi = [
+  { name: '7 Application',  group: 'app',   protos: ['HTTP', 'FTP', 'SMTP', 'DNS'] },
+  { name: '6 Presentation', group: 'app',   protos: ['TLS/SSL', 'JPEG', 'MIME'] },
+  { name: '5 Session',      group: 'app',   protos: ['Sockets', 'RPC', 'NetBIOS'] },
+  { name: '4 Transport',    group: 'trans', protos: ['TCP', 'UDP', 'QUIC'] },
+  { name: '3 Network',      group: 'net',   protos: ['IP', 'ICMP', 'OSPF/BGP'] },
+  { name: '2 Data Link',    group: 'link',  protos: ['Ethernet', 'Wi-Fi 802.11', 'ARP'] },
+  { name: '1 Physical',     group: 'phys',  protos: ['Cable', 'Fiber', 'Radio', 'RJ-45'] }
+];
+
+// TCP/IP layers in 5-layer view; 4-layer merges Link+Physical
+const tcp5 = [
+  { name: 'Application', group: 'app',   protos: ['HTTP', 'DNS', 'TLS', 'SMTP'] },
+  { name: 'Transport',   group: 'trans', protos: ['TCP', 'UDP'] },
+  { name: 'Internet',    group: 'net',   protos: ['IP', 'ICMP'] },
+  { name: 'Link',        group: 'link',  protos: ['Ethernet', 'Wi-Fi', 'ARP'] },
+  { name: 'Physical',    group: 'phys',  protos: ['Cable', 'Fiber', 'Radio'] }
+];
+const tcp4 = [
+  { name: 'Application', group: 'app',   protos: ['HTTP', 'DNS', 'TLS', 'SMTP'] },
+  { name: 'Transport',   group: 'trans', protos: ['TCP', 'UDP'] },
+  { name: 'Internet',    group: 'net',   protos: ['IP', 'ICMP'] },
+  { name: 'Link',        group: 'link',  protos: ['Ethernet', 'Wi-Fi', 'cables', 'fiber'] }
+];
+
+// HTTP-over-TLS-over-TCP-over-IPv6 example placement by group
+const httpStack = { app: 'HTTP / TLS', trans: 'TCP', net: 'IPv6', link: 'Ethernet', phys: 'copper' };
+
+let hover = null;   // {stack:'osi'|'tcp', idx}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  viewButton = createButton('Show 4-layer view');
+  viewButton.position(10, drawHeight + 10);
+  viewButton.mousePressed(() => { fourLayer = !fourLayer;
+    viewButton.html(fourLayer ? 'Show 5-layer view' : 'Show 4-layer view'); });
+
+  httpButton = createButton('Highlight HTTP request');
+  httpButton.position(180, drawHeight + 10);
+  httpButton.mousePressed(() => { httpHighlight = !httpHighlight;
+    httpButton.html(httpHighlight ? 'Clear HTTP highlight' : 'Highlight HTTP request'); });
+
+  describe('Side-by-side comparison of the seven-layer OSI model and the ' +
+    'four or five layer TCP/IP model, with bracket lines showing how the OSI ' +
+    'application, presentation, and session layers collapse into a single ' +
+    'TCP/IP application layer.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  stroke('silver'); strokeWeight(1);
+  fill('aliceblue'); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  noStroke(); fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('OSI vs. TCP/IP Layer Mapping', canvasWidth / 2, 6);
+
+  const tcp = fourLayer ? tcp4 : tcp5;
+  const stackW = min(220, canvasWidth * 0.28);
+  const leftX = margin;
+  const rightX = canvasWidth - margin - stackW;
+  const top = 70;
+  const totalH = drawHeight - top - 20;
+
+  hover = null;
+  // Stack headers
+  noStroke(); fill('#37474f'); textAlign(CENTER, BOTTOM); textSize(14);
+  text('OSI Reference Model', leftX + stackW / 2, top - 4);
+  text('TCP/IP Model (' + (fourLayer ? '4' : '5') + '-layer)', rightX + stackW / 2, top - 4);
+
+  const osiH = totalH / osi.length;
+  const tcpH = totalH / tcp.length;
+
+  // Bracket lines first (under bands' right edges)
+  drawBrackets(leftX + stackW, rightX, top, osiH, tcpH, tcp);
+
+  // OSI bands
+  for (let i = 0; i < osi.length; i++) {
+    drawBand(osi[i], leftX, top + i * osiH, stackW, osiH, 'osi', i);
+  }
+  // TCP/IP bands
+  for (let i = 0; i < tcp.length; i++) {
+    drawBand(tcp[i], rightX, top + i * tcpH, stackW, tcpH, 'tcp', i);
+  }
+
+  if (hover) drawCallout();
+
+  noStroke(); fill('#455a64'); textAlign(LEFT, CENTER); textSize(13);
+  text('Hover a layer for example protocols.', 360, drawHeight + 25);
+}
+
+function drawBand(layer, x, y, w, h, stack, idx) {
+  const hot = mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h - 2;
+  if (hot) hover = { stack, idx };
+  stroke('#607d8b'); strokeWeight(hot ? 2.5 : 1);
+  fill(C[layer.group]);
+  rect(x, y, w, h - 2, 6);
+  noStroke(); fill(layer.group === 'app' ? '#3e2723' : 'white');
+  textAlign(LEFT, CENTER); textSize(13);
+  text(layer.name, x + 8, y + (h - 2) / 2);
+  if (httpHighlight && httpStack[layer.group]) {
+    const badge = httpStack[layer.group];
+    fill('#4a148c'); textAlign(RIGHT, CENTER); textSize(11);
+    const bw = textWidth(badge) + 12;
+    noStroke(); fill(255, 255, 255, 235); rect(x + w - bw - 6, y + (h - 2) / 2 - 9, bw, 18, 4);
+    fill('#4a148c'); text(badge, x + w - 10, y + (h - 2) / 2);
+  }
+}
+
+function drawBrackets(osiRight, tcpLeft, top, osiH, tcpH, tcp) {
+  // map each OSI group to its tcp index
+  const tcpIndexByGroup = {};
+  tcp.forEach((l, i) => { if (!(l.group in tcpIndexByGroup)) tcpIndexByGroup[l.group] = i; });
+  // in 4-layer, phys maps to link
+  const groupTarget = g => (g in tcpIndexByGroup) ? g : 'link';
+
+  strokeWeight(6); stroke(245, 166, 35, 80); noFill();
+  for (let i = 0; i < osi.length; i++) {
+    const g = groupTarget(osi[i].group);
+    const ti = tcpIndexByGroup[g];
+    const y1 = top + i * osiH + osiH / 2;
+    const y2 = top + ti * tcpH + tcpH / 2;
+    const midX = (osiRight + tcpLeft) / 2;
+    line(osiRight, y1, midX, y1);
+    line(midX, y1, midX, y2);
+    line(midX, y2, tcpLeft, y2);
+  }
+}
+
+function drawCallout() {
+  const layer = hover.stack === 'osi' ? osi[hover.idx] : (fourLayer ? tcp4 : tcp5)[hover.idx];
+  const lines = layer.protos;
+  const w = 230;
+  const x = constrain(mouseX + 12, margin, canvasWidth - w - margin);
+  const hgt = 28 + lines.length * 16;
+  const y = constrain(mouseY + 12, 70, drawHeight - hgt - 4);
+  stroke('#37474f'); strokeWeight(1); fill(255, 255, 255, 248);
+  rect(x, y, w, hgt, 8);
+  noStroke(); fill('black'); textAlign(LEFT, TOP); textSize(13);
+  text(layer.name + ' — example protocols', x + 10, y + 7, w - 20, 18);
+  fill('#37474f'); textSize(12);
+  for (let i = 0; i < lines.length; i++) text('• ' + lines[i], x + 10, y + 28 + i * 16);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

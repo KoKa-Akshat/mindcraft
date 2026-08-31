@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Boolean Logic Lab using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Boolean Logic Lab MicroSim
+// CANVAS_HEIGHT: 510
+// Students set two True/False inputs and an operator (and/or/not) and
+// watch a result lamp light up. When the first input decides the answer,
+// the second input grays out with a "Python never looked here" badge -
+// short-circuit evaluation made visible. A truthiness panel shows the
+// bool() verdict for common values like 0, "", and [].
+// Bloom level: Understand/Apply (classify, explain, demonstrate).
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 430;
+let controlHeight = 80; // two rows of selects
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+let aSelect, opSelect, bSelect, truthySelect;
+
+// truthiness table for the bonus panel
+let truthyValues = {
+  '0':      { verdict: false, why: 'Zero is the one false number.' },
+  '1':      { verdict: true,  why: 'Any non-zero number is True.' },
+  '42':     { verdict: true,  why: 'Any non-zero number is True.' },
+  '""':     { verdict: false, why: 'An empty string has nothing in it.' },
+  '"hi"':   { verdict: true,  why: 'A string with characters is True.' },
+  '[]':     { verdict: false, why: 'An empty list has nothing in it.' },
+  '[3, 7]': { verdict: true,  why: 'A list with items is True.' },
+  'None':   { verdict: false, why: 'None means "no value at all."' }
+};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  aSelect = createSelect();
+  aSelect.parent(mainElement);
+  aSelect.position(40, drawHeight + 8);
+  aSelect.option('True');
+  aSelect.option('False');
+
+  opSelect = createSelect();
+  opSelect.parent(mainElement);
+  opSelect.position(150, drawHeight + 8);
+  opSelect.option('and');
+  opSelect.option('or');
+  opSelect.option('not');
+
+  bSelect = createSelect();
+  bSelect.parent(mainElement);
+  bSelect.position(255, drawHeight + 8);
+  bSelect.option('True');
+  bSelect.option('False');
+  bSelect.selected('False');
+
+  truthySelect = createSelect();
+  truthySelect.parent(mainElement);
+  truthySelect.position(90, drawHeight + 44);
+  for (let v of Object.keys(truthyValues)) {
+    truthySelect.option(v);
+  }
+
+  describe('Set two True/False inputs and an operator to see the result of and, or, and not. When the first input decides the answer, the second input grays out to show Python never evaluated it. A truthiness panel shows bool() verdicts for values like 0, empty string, and empty list.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  let a = aSelect.value() === 'True';
+  let op = opSelect.value();
+  let b = bSelect.value() === 'True';
+
+  // result and whether B was even looked at
+  let result, bChecked;
+  if (op === 'and') {
+    result = a && b;
+    bChecked = a; // False and ? -> already decided
+  } else if (op === 'or') {
+    result = a || b;
+    bChecked = !a; // True or ? -> already decided
+  } else {
+    result = !a;
+    bChecked = false; // not uses only one value
+  }
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Boolean Logic Lab', canvasWidth / 2, 8);
+
+  drawCircuit(a, op, b, result, bChecked);
+  drawTruthiness();
+
+  // control labels
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text('A:', 15, drawHeight + 20);
+  text('B:', 230, drawHeight + 20);
+  text('bool(', 15, drawHeight + 56);
+  // the closing paren after the truthiness select
+  text(')', 200, drawHeight + 56);
+}
+
+// the main circuit: A block, operator block, B block, result lamp
+function drawCircuit(a, op, b, result, bChecked) {
+  let cy = 150;
+  let blockW = 130;
+  let blockH = 54;
+  let ax = canvasWidth * 0.17;
+  let bx = canvasWidth * 0.17;
+  let ay = cy - 55;
+  let by = cy + 55;
+  let opx = canvasWidth * 0.47;
+  let lampX = canvasWidth * 0.78;
+
+  // the full expression as code
+  noStroke();
+  fill('midnightblue');
+  textAlign(CENTER, TOP);
+  textSize(22);
+  let expr = (op === 'not') ? 'not ' + boolText(a) : boolText(a) + ' ' + op + ' ' + boolText(b);
+  text(expr + '   →   ' + boolText(result), canvasWidth / 2, 48);
+
+  // wires
+  stroke(180);
+  strokeWeight(2);
+  line(ax + blockW / 2, ay + blockH / 2 - 10, opx - blockW / 2, cy - 8);
+  if (op !== 'not') {
+    stroke(bChecked ? 180 : 230);
+    line(bx + blockW / 2, by + blockH / 2 - 15, opx - blockW / 2, cy + 8);
+  }
+  stroke(180);
+  line(opx + blockW / 2, cy, lampX - 42, cy);
+
+  // input A block
+  drawValueBlock(ax, ay, blockW, blockH, 'A = ' + boolText(a), a, true);
+
+  // input B block (grayed when never evaluated)
+  if (op === 'not') {
+    drawSkippedBlock(bx, by, blockW, blockH, 'B (not used)', 'not uses only one value');
+  } else if (!bChecked) {
+    drawSkippedBlock(bx, by, blockW, blockH, 'B = ' + boolText(b), 'Python never looked here!');
+  } else {
+    drawValueBlock(bx, by, blockW, blockH, 'B = ' + boolText(b), b, true);
+  }
+
+  // operator block
+  fill('white');
+  stroke('midnightblue');
+  strokeWeight(2.5);
+  rect(opx - blockW / 2, cy - blockH / 2, blockW, blockH, 10);
+  noStroke();
+  fill('midnightblue');
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  text(op, opx, cy);
+
+  // result lamp
+  stroke(120);
+  strokeWeight(2);
+  fill(result ? color(80, 200, 90) : color(225));
+  circle(lampX, cy, 74);
+  noStroke();
+  fill(result ? 'white' : color(120));
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  text(boolText(result), lampX, cy);
+  fill(100);
+  textSize(13);
+  textAlign(CENTER, TOP);
+  text('result', lampX, cy + 44);
+
+  // short-circuit explanation strip
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(15);
+  if (op === 'and' && !a) {
+    fill('darkorange');
+    text('Short-circuit: A is False, so "False and anything" is False. Python skips B entirely.', canvasWidth / 2, 248);
+  } else if (op === 'or' && a) {
+    fill('darkorange');
+    text('Short-circuit: A is True, so "True or anything" is True. Python skips B entirely.', canvasWidth / 2, 248);
+  } else if (op === 'not') {
+    fill(90);
+    text('not flips one value: not ' + boolText(a) + ' is ' + boolText(!a) + '.', canvasWidth / 2, 248);
+  } else {
+    fill(90);
+    text('A alone cannot decide, so Python checks B too.', canvasWidth / 2, 248);
+  }
+}
+
+function drawValueBlock(x, y, w, h, label, value, checked) {
+  stroke(value ? 'seagreen' : 'indianred');
+  strokeWeight(2.5);
+  fill(value ? color(220, 242, 220) : color(250, 228, 228));
+  rect(x - w / 2, y - h / 2, w, h, 10);
+  noStroke();
+  fill('black');
+  textAlign(CENTER, CENTER);
+  textSize(17);
+  text(label, x, y);
+}
+
+function drawSkippedBlock(x, y, w, h, label, badge) {
+  stroke(200);
+  strokeWeight(1.5);
+  fill(240);
+  rect(x - w / 2, y - h / 2, w, h, 10);
+  noStroke();
+  fill(150);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text(label, x, y);
+  fill('darkorange');
+  textSize(13);
+  textAlign(CENTER, TOP);
+  text(badge, x, y + h / 2 + 5);
+}
+
+// the truthiness bonus panel
+function drawTruthiness() {
+  let panelX = 15;
+  let panelY = 300;
+  let panelW = canvasWidth - 30;
+  let panelH = 116;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('bonus: truthiness — every value can act as a Boolean', panelX + 12, panelY + 8);
+
+  let v = truthySelect.value();
+  let info = truthyValues[v];
+
+  fill('midnightblue');
+  textSize(20);
+  textAlign(LEFT, TOP);
+  text('bool(' + v + ')  →  ', panelX + 16, panelY + 36);
+  fill(info.verdict ? 'seagreen' : 'indianred');
+  text(boolText(info.verdict), panelX + 16 + textWidth('bool(' + v + ')  →  '), panelY + 36);
+
+  fill('black');
+  textSize(defaultTextSize);
+  text(info.why, panelX + 16, panelY + 68, panelW - 32, 40);
+  fill(120);
+  textSize(13);
+  text('Pick another value in the dropdown below.', panelX + 16, panelY + 92, panelW - 32, 20);
+}
+
+function boolText(v) {
+  return v ? 'True' : 'False';
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

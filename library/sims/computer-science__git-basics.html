@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <!-- CANVAS_HEIGHT: 400 -->
+    <title>Git and GitHub Workflow MicroSim</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #fff; color: #212529; }
+        main { padding: 8px 12px; }
+        h3 { margin: 2px 0 10px; color: #1a3a6c; font-size: 18px; }
+        .mermaid { text-align: center; }
+        #info { margin-top: 10px; font-size: 13px; color: #333; min-height: 20px; border-top: 1px solid #eee; padding-top: 8px; }
+    </style>
+</head>
+<body>
+    <main>
+        <h3>Git &amp; GitHub Workflow</h3>
+        <pre class="mermaid">
+flowchart LR
+  WD["Working Directory<br/>(your files)"] -->|"git add + git commit"| LR2["Local Repository<br/>(.git on your computer)"]
+  LR2 -->|"git push"| GH["GitHub<br/>(remote repository)"]
+  GH -.->|"git pull / git clone"| WD
+  classDef loc fill:#2E7D32,stroke:#333,color:#fff;
+  class WD,LR2,GH loc;
+  click WD showInfo
+  click LR2 showInfo
+  click GH showInfo
+        </pre>
+        <div id="info">Click a location to learn where Git stores data, and the commands that move it between the three places.</div>
+    </main>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        const INFO = {
+            WD: '<strong>Working Directory:</strong> the actual project files you edit. <em>git add</em> stages changes and <em>git commit</em> saves them into the local repository.',
+            LR2: '<strong>Local Repository (.git):</strong> the full history stored on your own computer. <em>git push</em> sends your commits up to GitHub.',
+            GH: '<strong>GitHub (remote):</strong> the shared copy in the cloud. <em>git pull</em> brings others\' changes down, and <em>git clone</em> makes a fresh local copy.',
+        };
+        window.showInfo = function (id) { document.getElementById('info').innerHTML = INFO[id] || ''; };
+        mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', flowchart: { useMaxWidth: true, htmlLabels: true } });
+    </script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Transportation Networks</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>/* US Transportation Networks Stylesheet */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: aliceblue;
+}
+
+h2 {
+    text-align: center;
+    margin: 8px 0 4px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+}
+
+.info {
+    padding: 10px 14px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    max-width: 250px;
+}
+
+.info h4 {
+    margin: 0 0 8px;
+    color: #1565C0;
+    font-size: 16px;
+    border-bottom: 2px solid #42A5F5;
+    padding-bottom: 4px;
+}
+
+.info p {
+    color: #555;
+    font-size: 12px;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+.info .stat { font-weight: bold; color: #333; }
+
+.controls-container {
+    background: white;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid #ddd;
+}
+
+.control-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    border: 2px solid #1565C0;
+    background: white;
+    color: #1565C0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.control-btn:hover, .control-btn.active {
+    background: #1565C0;
+    color: white;
+}
+
+.quiz-panel {
+    background: #E3F2FD;
+    padding: 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.quiz-panel.hidden { display: none; }
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.quiz-progress { font-size: 12px; font-weight: bold; color: #1565C0; }
+.stars-display { display: flex; gap: 4px; }
+
+.gold-star {
+    font-size: 18px;
+    color: gold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s;
+}
+
+.gold-star.animated { opacity: 1; transform: scale(1); }
+
+.quiz-question { font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+
+.quiz-options {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.quiz-option {
+    padding: 8px 16px;
+    font-size: 12px;
+    border: 2px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-option:hover { border-color: #1565C0; }
+.quiz-option.correct { border-color: forestgreen; background: #e8f5e9; }
+.quiz-option.incorrect { border-color: crimson; background: #ffebee; }
+
+.quiz-feedback { margin-top: 10px; font-size: 13px; font-weight: bold; }
+.quiz-feedback.correct { color: forestgreen; }
+.quiz-feedback.incorrect { color: crimson; }
+
+.legend-container {
+    background: white;
+    padding: 8px 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.legend-title { font-size: 12px; font-weight: bold; margin-bottom: 6px; }
+
+.legend-items {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+
+.legend-item i {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    border-radius: 2px;
+    border: 1px solid #666;
+}
+
+.legend-item .icon {
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.hover-instruction {
+    text-align: center;
+    font-size: 11px;
+    color: #888;
+    padding: 4px;
+    font-style: italic;
+}
+
+.celebration-container {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 9999;
+}
+
+.exploding-star {
+    position: absolute;
+    animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(0.5) translateY(-100px); opacity: 0; }
+}
+</style>
+</head>
+<body>
+    <h2>US Transportation Networks</h2>
+    <div class="subtitle">Highways, Railroads, Airports, and Ports</div>
+
+    <div id="map"></div>
+
+    <div class="controls-container">
+        <button id="allBtn" class="control-btn active">All</button>
+        <button id="highwayBtn" class="control-btn">Highways</button>
+        <button id="railBtn" class="control-btn">Railroads</button>
+        <button id="airBtn" class="control-btn">Airports</button>
+        <button id="portBtn" class="control-btn">Ports</button>
+        <button id="quizBtn" class="control-btn">Quiz Me!</button>
+        <button id="resetBtn" class="control-btn">Reset</button>
+    </div>
+
+    <div id="quizPanel" class="quiz-panel hidden">
+        <div class="quiz-header">
+            <div class="quiz-progress" id="quizProgress">Question 1 of 6</div>
+            <div class="stars-display" id="starsDisplay"></div>
+        </div>
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+
+    <div class="legend-container">
+        <div class="legend-title">Transportation Types</div>
+        <div class="legend-items">
+            <div class="legend-item"><i style="background: #E53935;"></i> Interstate Highways</div>
+            <div class="legend-item"><i style="background: #5D4037;"></i> Railroads</div>
+            <div class="legend-item"><span class="icon">✈</span> Airports</div>
+            <div class="legend-item"><span class="icon">⚓</span> Ports</div>
+        </div>
+    </div>
+
+    <div class="hover-instruction">Click on transportation hubs to learn more</div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>/* US Transportation Networks MicroSim */
+
+// Major Interstate Highways
+const interstateHighways = [
+    {
+        name: 'I-95',
+        route: [[47, -68], [42, -71], [40, -74], [39, -75], [35, -78], [32, -81], [30, -81], [26, -80]],
+        length: '1,920 miles',
+        desc: 'East Coast corridor from Maine to Florida',
+        states: 'ME, NH, MA, RI, CT, NY, NJ, PA, DE, MD, VA, NC, SC, GA, FL'
+    },
+    {
+        name: 'I-10',
+        route: [[30, -81], [30, -85], [30, -90], [30, -94], [30, -98], [32, -107], [33, -112], [34, -118]],
+        length: '2,460 miles',
+        desc: 'Southern corridor from Florida to California',
+        states: 'FL, AL, MS, LA, TX, NM, AZ, CA'
+    },
+    {
+        name: 'I-90',
+        route: [[42, -71], [43, -76], [42, -79], [42, -84], [42, -87], [44, -93], [44, -100], [44, -104], [47, -117], [47, -122]],
+        length: '3,020 miles',
+        desc: 'Northern corridor from Boston to Seattle',
+        states: 'MA, NY, PA, OH, IN, IL, WI, MN, SD, WY, MT, ID, WA'
+    },
+    {
+        name: 'I-80',
+        route: [[41, -74], [41, -77], [41, -80], [41, -84], [41, -88], [41, -96], [41, -104], [41, -112], [40, -117], [38, -122]],
+        length: '2,900 miles',
+        desc: 'Transcontinental route from NYC to San Francisco',
+        states: 'NJ, PA, OH, IN, IL, IA, NE, WY, UT, NV, CA'
+    },
+    {
+        name: 'I-40',
+        route: [[35, -77], [36, -80], [36, -84], [35, -87], [35, -90], [35, -95], [35, -100], [35, -107], [35, -112], [34, -118]],
+        length: '2,555 miles',
+        desc: 'Route 66 replacement across the Southwest',
+        states: 'NC, TN, AR, OK, TX, NM, AZ, CA'
+    }
+];
+
+// Major Railroad Corridors
+const railCorridors = [
+    {
+        name: 'Northeast Corridor',
+        route: [[42.4, -71], [41.8, -72.7], [41, -74], [40, -75], [39, -76.6], [38.9, -77]],
+        desc: 'Busiest rail corridor - Amtrak Northeast Regional',
+        passengers: '12 million/year'
+    },
+    {
+        name: 'California Corridor',
+        route: [[37.8, -122.4], [37.3, -121.9], [36.6, -121.9], [34.1, -118.2]],
+        desc: 'Pacific Surfliner and Capitol Corridor',
+        passengers: '5 million/year'
+    },
+    {
+        name: 'Transcontinental Route',
+        route: [[41, -74], [41, -88], [41, -104], [41, -112], [40, -122]],
+        desc: 'Historic cross-country rail route',
+        passengers: 'California Zephyr service'
+    }
+];
+
+// Major Airports
+const majorAirports = [
+    { name: 'Hartsfield-Jackson Atlanta', code: 'ATL', lat: 33.64, lng: -84.43, passengers: '93M', rank: 1, hub: 'Delta' },
+    { name: 'Dallas/Fort Worth', code: 'DFW', lat: 32.90, lng: -97.04, passengers: '73M', rank: 2, hub: 'American' },
+    { name: 'Denver International', code: 'DEN', lat: 39.86, lng: -104.67, passengers: '69M', rank: 3, hub: 'United, Frontier' },
+    { name: "Chicago O'Hare", code: 'ORD', lat: 41.98, lng: -87.90, passengers: '68M', rank: 4, hub: 'United, American' },
+    { name: 'Los Angeles International', code: 'LAX', lat: 33.94, lng: -118.41, passengers: '88M', rank: 5, hub: 'Multiple' },
+    { name: 'John F. Kennedy', code: 'JFK', lat: 40.64, lng: -73.78, passengers: '62M', rank: 6, hub: 'JetBlue, Delta' },
+    { name: 'San Francisco', code: 'SFO', lat: 37.62, lng: -122.38, passengers: '57M', rank: 7, hub: 'United' },
+    { name: 'Seattle-Tacoma', code: 'SEA', lat: 47.45, lng: -122.31, passengers: '50M', rank: 8, hub: 'Alaska, Delta' },
+    { name: 'Miami International', code: 'MIA', lat: 25.79, lng: -80.29, passengers: '52M', rank: 9, hub: 'American' },
+    { name: 'Phoenix Sky Harbor', code: 'PHX', lat: 33.44, lng: -112.01, passengers: '46M', rank: 10, hub: 'American, Southwest' }
+];
+
+// Major Ports
+const majorPorts = [
+    { name: 'Port of Los Angeles', lat: 33.73, lng: -118.27, cargo: '9.2M TEU', rank: 1, type: 'Container' },
+    { name: 'Port of Long Beach', lat: 33.76, lng: -118.19, cargo: '8.1M TEU', rank: 2, type: 'Container' },
+    { name: 'Port of New York/New Jersey', lat: 40.67, lng: -74.04, cargo: '7.5M TEU', rank: 3, type: 'Container' },
+    { name: 'Port of Savannah', lat: 32.08, lng: -81.10, cargo: '5.8M TEU', rank: 4, type: 'Container' },
+    { name: 'Port of Houston', lat: 29.73, lng: -95.02, cargo: '4.0M TEU', rank: 5, type: 'Container, Oil' },
+    { name: 'Port of Seattle', lat: 47.58, lng: -122.35, cargo: '3.5M TEU', rank: 6, type: 'Container' },
+    { name: 'Port of New Orleans', lat: 29.94, lng: -90.05, cargo: 'Bulk/General', rank: 7, type: 'River, Oil' },
+    { name: 'Port of Charleston', lat: 32.79, lng: -79.93, cargo: '2.8M TEU', rank: 8, type: 'Container' }
+];
+
+const quizQuestions = [
+    { q: 'Which is the busiest US airport?', a: 'Atlanta (ATL)', opts: ['Atlanta (ATL)', 'Los Angeles (LAX)', 'Chicago (ORD)', 'Dallas (DFW)'] },
+    { q: 'Which interstate runs from Maine to Florida?', a: 'I-95', opts: ['I-95', 'I-75', 'I-85', 'I-65'] },
+    { q: 'Which port handles the most cargo?', a: 'Los Angeles', opts: ['Los Angeles', 'New York', 'Houston', 'Savannah'] },
+    { q: 'Which rail corridor is the busiest?', a: 'Northeast Corridor', opts: ['Northeast Corridor', 'California Corridor', 'Midwest Corridor', 'Southeast Corridor'] },
+    { q: 'Which interstate crosses the entire US?', a: 'I-80', opts: ['I-80', 'I-70', 'I-40', 'I-90'] },
+    { q: 'How many miles of interstate highways in the US?', a: 'About 50,000', opts: ['About 50,000', 'About 25,000', 'About 100,000', 'About 75,000'] },
+    { q: 'Which city has two major ports?', a: 'Los Angeles/Long Beach', opts: ['Los Angeles/Long Beach', 'New York/Newark', 'Seattle/Tacoma', 'San Francisco/Oakland'] },
+    { q: 'Which airline hub is in Denver?', a: 'United and Frontier', opts: ['United and Frontier', 'Delta', 'American', 'Southwest'] }
+];
+
+let map;
+let highwayLines = [];
+let railLines = [];
+let airportMarkers = [];
+let portMarkers = [];
+let info;
+let quizMode = false;
+let currentQuestion = 0;
+let score = 0;
+let shuffledQuestions = [];
+const TOTAL_QUESTIONS = 6;
+let currentView = 'all';
+
+function init() {
+    map = L.map('map', {
+        center: [39, -96],
+        zoom: 4,
+        minZoom: 3,
+        maxZoom: 8
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO'
+    }).addTo(map);
+
+    // Add info control
+    info = L.control({ position: 'topright' });
+    info.onAdd = function() {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
+    info.update = function(data) {
+        if (data) {
+            if (data.type === 'highway') {
+                this._div.innerHTML = `
+                    <h4>🛣️ ${data.name}</h4>
+                    <p><span class="stat">Length:</span> ${data.length}</p>
+                    <p><span class="stat">States:</span> ${data.states}</p>
+                    <p>${data.desc}</p>
+                `;
+            } else if (data.type === 'rail') {
+                this._div.innerHTML = `
+                    <h4>🚂 ${data.name}</h4>
+                    <p><span class="stat">Passengers:</span> ${data.passengers}</p>
+                    <p>${data.desc}</p>
+                `;
+            } else if (data.type === 'airport') {
+                this._div.innerHTML = `
+                    <h4>✈️ ${data.name}</h4>
+                    <p><span class="stat">Code:</span> ${data.code}</p>
+                    <p><span class="stat">Passengers:</span> ${data.passengers}/year</p>
+                    <p><span class="stat">US Rank:</span> #${data.rank}</p>
+                    <p><span class="stat">Hub:</span> ${data.hub}</p>
+                `;
+            } else if (data.type === 'port') {
+                this._div.innerHTML = `
+                    <h4>⚓ ${data.name}</h4>
+                    <p><span class="stat">Cargo:</span> ${data.cargo}</p>
+                    <p><span class="stat">US Rank:</span> #${data.rank}</p>
+                    <p><span class="stat">Type:</span> ${data.portType}</p>
+                `;
+            }
+        } else {
+            this._div.innerHTML = `
+                <h4>US Transportation</h4>
+                <p><span class="stat">Interstates:</span> 48,000+ miles</p>
+                <p><span class="stat">Railroads:</span> 140,000 miles</p>
+                <p><span class="stat">Airports:</span> 5,000+ public</p>
+                <p><span class="stat">Ports:</span> 300+ commercial</p>
+            `;
+        }
+    };
+    info.addTo(map);
+
+    // Add all transportation elements
+    addHighways();
+    addRailroads();
+    addAirports();
+    addPorts();
+
+    // Setup controls
+    document.getElementById('allBtn').addEventListener('click', () => showView('all'));
+    document.getElementById('highwayBtn').addEventListener('click', () => showView('highway'));
+    document.getElementById('railBtn').addEventListener('click', () => showView('rail'));
+    document.getElementById('airBtn').addEventListener('click', () => showView('air'));
+    document.getElementById('portBtn').addEventListener('click', () => showView('port'));
+    document.getElementById('quizBtn').addEventListener('click', startQuiz);
+    document.getElementById('resetBtn').addEventListener('click', resetView);
+
+    info.update(null);
+}
+
+function addHighways() {
+    interstateHighways.forEach(highway => {
+        const line = L.polyline(highway.route, {
+            color: '#E53935',
+            weight: 3,
+            opacity: 0.8
+        });
+
+        line.on('click', () => {
+            if (!quizMode) info.update({ type: 'highway', ...highway });
+        });
+
+        line.bindTooltip(highway.name, { permanent: false, direction: 'center' });
+        highwayLines.push(line);
+    });
+}
+
+function addRailroads() {
+    railCorridors.forEach(rail => {
+        const line = L.polyline(rail.route, {
+            color: '#5D4037',
+            weight: 3,
+            opacity: 0.8,
+            dashArray: '10, 5'
+        });
+
+        line.on('click', () => {
+            if (!quizMode) info.update({ type: 'rail', ...rail });
+        });
+
+        line.bindTooltip(rail.name, { permanent: false, direction: 'center' });
+        railLines.push(line);
+    });
+}
+
+function addAirports() {
+    majorAirports.forEach(airport => {
+        const size = airport.rank <= 3 ? 16 : airport.rank <= 6 ? 14 : 12;
+        const icon = L.divIcon({
+            className: 'airport-marker',
+            html: `<span style="font-size: ${size}px;">✈️</span>`,
+            iconSize: [size, size],
+            iconAnchor: [size/2, size/2]
+        });
+
+        const marker = L.marker([airport.lat, airport.lng], { icon })
+            .on('click', () => {
+                if (!quizMode) info.update({ type: 'airport', ...airport });
+            });
+
+        marker.bindTooltip(`${airport.code} - ${airport.name}`, { permanent: false, direction: 'top' });
+        airportMarkers.push(marker);
+    });
+}
+
+function addPorts() {
+    majorPorts.forEach(port => {
+        const icon = L.divIcon({
+            className: 'port-marker',
+            html: '<span style="font-size: 14px;">⚓</span>',
+            iconSize: [14, 14],
+            iconAnchor: [7, 7]
+        });
+
+        const marker = L.marker([port.lat, port.lng], { icon })
+            .on('click', () => {
+                if (!quizMode) info.update({ type: 'port', portType: port.type, ...port });
+            });
+
+        marker.bindTooltip(port.name, { permanent: false, direction: 'top' });
+        portMarkers.push(marker);
+    });
+}
+
+function showView(view) {
+    currentView = view;
+
+    // Update button states
+    document.getElementById('allBtn').classList.toggle('active', view === 'all');
+    document.getElementById('highwayBtn').classList.toggle('active', view === 'highway');
+    document.getElementById('railBtn').classList.toggle('active', view === 'rail');
+    document.getElementById('airBtn').classList.toggle('active', view === 'air');
+    document.getElementById('portBtn').classList.toggle('active', view === 'port');
+
+    // Clear all layers
+    highwayLines.forEach(l => map.removeLayer(l));
+    railLines.forEach(l => map.removeLayer(l));
+    airportMarkers.forEach(m => map.removeLayer(m));
+    portMarkers.forEach(m => map.removeLayer(m));
+
+    // Add appropriate layers
+    if (view === 'all' || view === 'highway') {
+        highwayLines.forEach(l => l.addTo(map));
+    }
+    if (view === 'all' || view === 'rail') {
+        railLines.forEach(l => l.addTo(map));
+    }
+    if (view === 'all' || view === 'air') {
+        airportMarkers.forEach(m => m.addTo(map));
+    }
+    if (view === 'all' || view === 'port') {
+        portMarkers.forEach(m => m.addTo(map));
+    }
+
+    info.update(null);
+}
+
+function startQuiz() {
+    quizMode = true;
+    currentQuestion = 0;
+    score = 0;
+    shuffledQuestions = [...quizQuestions].sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS);
+
+    document.getElementById('quizBtn').classList.add('active');
+    document.getElementById('quizPanel').classList.remove('hidden');
+    document.getElementById('starsDisplay').innerHTML = '';
+
+    showView('all');
+    info.update(null);
+
+    showQuestion();
+}
+
+function showQuestion() {
+    if (currentQuestion >= TOTAL_QUESTIONS) {
+        showResults();
+        return;
+    }
+
+    const q = shuffledQuestions[currentQuestion];
+    document.getElementById('quizProgress').textContent = `Question ${currentQuestion + 1} of ${TOTAL_QUESTIONS}`;
+    document.getElementById('quizQuestion').textContent = q.q;
+    document.getElementById('quizFeedback').textContent = '';
+    document.getElementById('quizFeedback').className = 'quiz-feedback';
+
+    let options = [...q.opts];
+    options.sort(() => Math.random() - 0.5);
+
+    const optionsDiv = document.getElementById('quizOptions');
+    optionsDiv.innerHTML = options.map(opt =>
+        `<button class="quiz-option" data-answer="${opt}">${opt}</button>`
+    ).join('');
+
+    optionsDiv.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.addEventListener('click', () => checkAnswer(btn, q.a));
+    });
+}
+
+function checkAnswer(btn, correct) {
+    const selected = btn.dataset.answer;
+    const isCorrect = selected === correct;
+
+    document.querySelectorAll('.quiz-option').forEach(b => {
+        b.disabled = true;
+        if (b.dataset.answer === correct) {
+            b.classList.add('correct');
+        } else if (b === btn && !isCorrect) {
+            b.classList.add('incorrect');
+        }
+    });
+
+    if (isCorrect) {
+        score++;
+        document.getElementById('quizFeedback').textContent = 'Correct!';
+        document.getElementById('quizFeedback').classList.add('correct');
+        addStar();
+    } else {
+        document.getElementById('quizFeedback').textContent = `The answer is: ${correct}`;
+        document.getElementById('quizFeedback').classList.add('incorrect');
+    }
+
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+    }, 1500);
+}
+
+function addStar() {
+    const display = document.getElementById('starsDisplay');
+    const star = document.createElement('span');
+    star.className = 'gold-star';
+    star.textContent = '⭐';
+    display.appendChild(star);
+    setTimeout(() => star.classList.add('animated'), 50);
+}
+
+function showResults() {
+    document.getElementById('quizQuestion').textContent =
+        score === TOTAL_QUESTIONS ? 'Perfect Score!' : 'Quiz Complete!';
+    document.getElementById('quizOptions').innerHTML =
+        `<p>You got ${score} of ${TOTAL_QUESTIONS} correct!</p>
+         <button class="quiz-option" onclick="startQuiz()">Try Again</button>`;
+    document.getElementById('quizFeedback').textContent = '';
+
+    if (score === TOTAL_QUESTIONS) celebrate();
+}
+
+function resetView() {
+    quizMode = false;
+    document.getElementById('quizBtn').classList.remove('active');
+    document.getElementById('quizPanel').classList.add('hidden');
+    map.setView([39, -96], 4);
+    showView('all');
+}
+
+function celebrate() {
+    const container = document.createElement('div');
+    container.className = 'celebration-container';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const star = document.createElement('div');
+            star.className = 'exploding-star';
+            star.textContent = '⭐';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            container.appendChild(star);
+        }, i * 100);
+    }
+
+    setTimeout(() => container.remove(), 3000);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

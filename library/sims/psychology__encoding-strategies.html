@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Visual Encoding Channel Explorer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: aliceblue; }
+    </style>
+    <script>// Visual Encoding Channel Explorer
+// Compare 6 encoding channels showing the same dataset
+// Bloom Level: Understand (L2)
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 520;
+let canvasHeight = drawHeight;
+
+let dataValues = [];
+let dataLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+let showValues = true;
+let hoveredPanel = -1;
+let hoveredItem = -1;
+let currentDataset = 'random';
+
+let panels = [
+  { name: 'Position', rating: 'Excellent', ratingColor: [52, 168, 83] },
+  { name: 'Length', rating: 'Excellent', ratingColor: [52, 168, 83] },
+  { name: 'Color Saturation', rating: 'Fair', ratingColor: [251, 140, 0] },
+  { name: 'Size', rating: 'Fair', ratingColor: [251, 140, 0] },
+  { name: 'Angle', rating: 'Poor', ratingColor: [229, 57, 53] },
+  { name: 'Shape + Hue', rating: 'Categorical', ratingColor: [100, 100, 100] }
+];
+
+function generateData(type) {
+  let vals = [];
+  if (type === 'nearly-equal') {
+    let base = 50 + Math.floor(Math.random() * 20);
+    for (let i = 0; i < 8; i++) vals.push(base + Math.floor(Math.random() * 10) - 5);
+  } else if (type === 'wide-range') {
+    for (let i = 0; i < 8; i++) vals.push(5 + Math.floor(Math.random() * 95));
+  } else if (type === 'two-clusters') {
+    for (let i = 0; i < 4; i++) vals.push(20 + Math.floor(Math.random() * 15));
+    for (let i = 0; i < 4; i++) vals.push(70 + Math.floor(Math.random() * 15));
+    // Shuffle
+    for (let i = vals.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let tmp = vals[i]; vals[i] = vals[j]; vals[j] = tmp;
+    }
+  } else {
+    for (let i = 0; i < 8; i++) vals.push(10 + Math.floor(Math.random() * 90));
+  }
+  return vals;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  dataValues = generateData('random');
+  buildControls();
+  describe('Six panels showing the same dataset encoded through different visual channels: position, length, color saturation, size, angle, and shape plus hue.');
+}
+
+function buildControls() {
+  let mainEl = document.querySelector('main');
+  let controlDiv = document.createElement('div');
+  controlDiv.id = 'encoding-controls';
+  controlDiv.style.cssText = 'background: white; border: 1px solid silver; padding: 12px; font-family: Arial, sans-serif; font-size: 14px;';
+  mainEl.appendChild(controlDiv);
+
+  let row = document.createElement('div');
+  row.style.cssText = 'display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center;';
+
+  // Dataset dropdown
+  let selectLabel = document.createElement('label');
+  selectLabel.textContent = 'Dataset: ';
+  selectLabel.style.fontWeight = 'bold';
+  let sel = document.createElement('select');
+  sel.style.cssText = 'padding: 4px 8px; font-size: 14px; border-radius: 4px; border: 1px solid silver;';
+  let options = [
+    { value: 'random', text: 'Random' },
+    { value: 'nearly-equal', text: 'Nearly Equal' },
+    { value: 'wide-range', text: 'Wide Range' },
+    { value: 'two-clusters', text: 'Two Clusters' }
+  ];
+  options.forEach(function(opt) {
+    let o = document.createElement('option');
+    o.value = opt.value;
+    o.textContent = opt.text;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', function() {
+    currentDataset = sel.value;
+    dataValues = generateData(currentDataset);
+  });
+  selectLabel.appendChild(sel);
+  row.appendChild(selectLabel);
+
+  // Randomize button
+  let randBtn = document.createElement('button');
+  randBtn.textContent = 'Randomize Data';
+  randBtn.style.cssText = 'padding: 6px 14px; font-size: 14px; cursor: pointer; border: 1px solid #4285F4; border-radius: 4px; background: #4285F4; color: white; font-weight: bold;';
+  randBtn.addEventListener('click', function() {
+    dataValues = generateData(currentDataset);
+  });
+  row.appendChild(randBtn);
+
+  // Show Values toggle
+  let valLabel = document.createElement('label');
+  valLabel.style.cssText = 'display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 2px solid #34A853; border-radius: 6px; font-weight: bold; color: #34A853;';
+  let valCb = document.createElement('input');
+  valCb.type = 'checkbox';
+  valCb.checked = true;
+  valCb.style.cssText = 'width: 18px; height: 18px;';
+  valCb.addEventListener('change', function() {
+    showValues = valCb.checked;
+    valLabel.style.background = valCb.checked ? '#34A85315' : 'white';
+  });
+  valLabel.appendChild(valCb);
+  valLabel.appendChild(document.createTextNode('Show Values'));
+  valLabel.style.background = '#34A85315';
+  row.appendChild(valLabel);
+
+  controlDiv.appendChild(row);
+
+  // Data display
+  let dataDiv = document.createElement('div');
+  dataDiv.id = 'data-display';
+  dataDiv.style.cssText = 'text-align: center; margin-top: 8px; font-size: 14px; color: #555;';
+  controlDiv.appendChild(dataDiv);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Update data display
+  let dataDiv = document.getElementById('data-display');
+  if (dataDiv) {
+    let parts = [];
+    for (let i = 0; i < dataValues.length; i++) {
+      parts.push(dataLabels[i] + '=' + dataValues[i]);
+    }
+    dataDiv.innerHTML = 'Data: ' + parts.join(', ');
+  }
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(18);
+  text('Visual Encoding Channel Explorer', canvasWidth / 2, 8);
+
+  // Panel grid layout
+  let margin = 12;
+  let titleH = 34;
+  let cols = canvasWidth > 500 ? 3 : 2;
+  let rows = Math.ceil(6 / cols);
+  let pW = (canvasWidth - margin * (cols + 1)) / cols;
+  let pH = (drawHeight - titleH - margin * (rows + 1)) / rows;
+
+  hoveredPanel = -1;
+  hoveredItem = -1;
+
+  for (let p = 0; p < 6; p++) {
+    let col = p % cols;
+    let row = Math.floor(p / cols);
+    let px = margin + col * (pW + margin);
+    let py = titleH + margin + row * (pH + margin);
+
+    // Panel background
+    let isHoverPanel = (mouseX > px && mouseX < px + pW && mouseY > py && mouseY < py + pH);
+    if (isHoverPanel) hoveredPanel = p;
+
+    fill(255);
+    stroke(isHoverPanel ? '#4285F4' : '#ccc');
+    strokeWeight(isHoverPanel ? 2 : 1);
+    rect(px, py, pW, pH, 6);
+
+    // Panel title and rating
+    noStroke();
+    fill(60);
+    textAlign(LEFT, TOP);
+    textSize(14);
+    text(panels[p].name, px + 8, py + 4);
+
+    let rc = panels[p].ratingColor;
+    fill(rc[0], rc[1], rc[2]);
+    textAlign(RIGHT, TOP);
+    textSize(11);
+    text(panels[p].rating, px + pW - 8, py + 6);
+
+    // Drawing area within panel
+    let drawX = px + 8;
+    let drawY = py + 22;
+    let drawW = pW - 16;
+    let drawH = pH - 30;
+
+    push();
+    // Clip to panel area
+    let itemHover = -1;
+
+    if (p === 0) {
+      itemHover = drawPosition(drawX, drawY, drawW, drawH, isHoverPanel);
+    } else if (p === 1) {
+      itemHover = drawLength(drawX, drawY, drawW, drawH, isHoverPanel);
+    } else if (p === 2) {
+      itemHover = drawColorSaturation(drawX, drawY, drawW, drawH, isHoverPanel);
+    } else if (p === 3) {
+      itemHover = drawSizeCircles(drawX, drawY, drawW, drawH, isHoverPanel);
+    } else if (p === 4) {
+      itemHover = drawAnglePie(drawX, drawY, drawW, drawH, isHoverPanel);
+    } else if (p === 5) {
+      itemHover = drawShapeHue(drawX, drawY, drawW, drawH, isHoverPanel);
+    }
+
+    if (isHoverPanel && itemHover >= 0) hoveredItem = itemHover;
+
+    pop();
+  }
+
+  // Tooltip
+  if (hoveredPanel >= 0 && hoveredItem >= 0) {
+    let tipText = dataLabels[hoveredItem] + ' = ' + dataValues[hoveredItem];
+    textSize(14);
+    let tw = textWidth(tipText) + 16;
+    let tx = mouseX + 12;
+    let ty = mouseY - 28;
+    if (tx + tw > canvasWidth) tx = mouseX - tw - 4;
+    if (ty < 0) ty = mouseY + 12;
+    fill(50, 50, 50, 220);
+    noStroke();
+    rect(tx, ty, tw, 24, 4);
+    fill(255);
+    textAlign(LEFT, CENTER);
+    text(tipText, tx + 8, ty + 12);
+  }
+}
+
+function drawPosition(dx, dy, dw, dh, isHover) {
+  let itemW = dw / 8;
+  let maxVal = 100;
+  let hovered = -1;
+
+  // Axis line
+  stroke(200);
+  strokeWeight(1);
+  line(dx, dy + dh, dx + dw, dy + dh);
+  line(dx, dy, dx, dy + dh);
+
+  for (let i = 0; i < 8; i++) {
+    let cx = dx + itemW * i + itemW / 2;
+    let cy = dy + dh - (dataValues[i] / maxVal) * (dh - 10);
+    let isItemHover = isHover && dist(mouseX, mouseY, cx, cy) < 8;
+    if (isItemHover) hovered = i;
+
+    fill(isItemHover ? '#1a73e8' : '#4285F4');
+    noStroke();
+    ellipse(cx, cy, isItemHover ? 14 : 10, isItemHover ? 14 : 10);
+
+    if (showValues) {
+      fill(100);
+      textAlign(CENTER, BOTTOM);
+      textSize(10);
+      noStroke();
+      text(dataValues[i], cx, cy - 8);
+    }
+
+    // Label
+    fill(120);
+    textAlign(CENTER, TOP);
+    textSize(10);
+    noStroke();
+    text(dataLabels[i], cx, dy + dh + 2);
+  }
+  return hovered;
+}
+
+function drawLength(dx, dy, dw, dh, isHover) {
+  let barH = (dh - 4) / 8 - 2;
+  let maxVal = 100;
+  let hovered = -1;
+
+  for (let i = 0; i < 8; i++) {
+    let by = dy + i * (barH + 2) + 2;
+    let bw = (dataValues[i] / maxVal) * (dw - 30);
+    let isItemHover = isHover && mouseX > dx && mouseX < dx + 30 + bw && mouseY > by && mouseY < by + barH;
+    if (isItemHover) hovered = i;
+
+    // Label
+    fill(100);
+    noStroke();
+    textAlign(RIGHT, CENTER);
+    textSize(10);
+    text(dataLabels[i], dx + 14, by + barH / 2);
+
+    // Bar
+    fill(isItemHover ? '#1a73e8' : '#4285F4');
+    noStroke();
+    rect(dx + 18, by, bw, barH, 2);
+
+    if (showValues) {
+      fill(100);
+      textAlign(LEFT, CENTER);
+      textSize(10);
+      text(dataValues[i], dx + 20 + bw, by + barH / 2);
+    }
+  }
+  return hovered;
+}
+
+function drawColorSaturation(dx, dy, dw, dh, isHover) {
+  let cols = 4;
+  let rows = 2;
+  let rw = (dw - 4) / cols - 2;
+  let rh = (dh - 16) / rows - 2;
+  let hovered = -1;
+
+  for (let i = 0; i < 8; i++) {
+    let col = i % cols;
+    let row = Math.floor(i / cols);
+    let rx = dx + 2 + col * (rw + 2);
+    let ry = dy + 2 + row * (rh + 2);
+    let sat = map(dataValues[i], 0, 100, 20, 255);
+    let isItemHover = isHover && mouseX > rx && mouseX < rx + rw && mouseY > ry && mouseY < ry + rh;
+    if (isItemHover) hovered = i;
+
+    fill(0, 100, 220, sat);
+    stroke(isItemHover ? '#1a73e8' : '#ddd');
+    strokeWeight(isItemHover ? 2 : 1);
+    rect(rx, ry, rw, rh, 3);
+
+    // Label
+    fill(sat > 150 ? 255 : 60);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(dataLabels[i], rx + rw / 2, ry + rh / 2 - (showValues ? 6 : 0));
+
+    if (showValues) {
+      textSize(10);
+      text(dataValues[i], rx + rw / 2, ry + rh / 2 + 8);
+    }
+  }
+  return hovered;
+}
+
+function drawSizeCircles(dx, dy, dw, dh, isHover) {
+  let maxR = min(dw, dh) / 5;
+  let minR = 6;
+  let hovered = -1;
+
+  // Layout circles in 2 rows of 4
+  for (let i = 0; i < 8; i++) {
+    let col = i % 4;
+    let row = Math.floor(i / 4);
+    let cx = dx + (col + 0.5) * (dw / 4);
+    let cy = dy + (row + 0.5) * (dh / 2);
+    let r = map(dataValues[i], 0, 100, minR, maxR);
+    let isItemHover = isHover && dist(mouseX, mouseY, cx, cy) < r;
+    if (isItemHover) hovered = i;
+
+    fill(isItemHover ? 'rgba(66,133,244,0.7)' : 'rgba(66,133,244,0.4)');
+    stroke(isItemHover ? '#1a73e8' : '#4285F4');
+    strokeWeight(1);
+    ellipse(cx, cy, r * 2, r * 2);
+
+    fill(60);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(dataLabels[i], cx, cy - (showValues ? 6 : 0));
+    if (showValues) {
+      textSize(9);
+      text(dataValues[i], cx, cy + 7);
+    }
+  }
+  return hovered;
+}
+
+function drawAnglePie(dx, dy, dw, dh, isHover) {
+  let cx = dx + dw / 2;
+  let cy = dy + dh / 2;
+  let r = min(dw, dh) / 2 - 4;
+  let total = 0;
+  for (let i = 0; i < 8; i++) total += dataValues[i];
+
+  let hovered = -1;
+  let startAngle = -HALF_PI;
+  let hues = [0, 30, 60, 120, 180, 210, 260, 310];
+
+  for (let i = 0; i < 8; i++) {
+    let sweep = (dataValues[i] / total) * TWO_PI;
+    let endAngle = startAngle + sweep;
+    let midAngle = startAngle + sweep / 2;
+
+    // Check hover
+    if (isHover) {
+      let a = atan2(mouseY - cy, mouseX - cx);
+      let d = dist(mouseX, mouseY, cx, cy);
+      // Normalize angles for comparison
+      let normA = ((a % TWO_PI) + TWO_PI) % TWO_PI;
+      let normStart = ((startAngle % TWO_PI) + TWO_PI) % TWO_PI;
+      let normEnd = ((endAngle % TWO_PI) + TWO_PI) % TWO_PI;
+      if (d < r) {
+        if (normStart < normEnd) {
+          if (normA >= normStart && normA < normEnd) hovered = i;
+        } else {
+          if (normA >= normStart || normA < normEnd) hovered = i;
+        }
+      }
+    }
+
+    let isItemHover = hovered === i;
+    let h = hues[i];
+    fill(isItemHover ? color('hsla(' + h + ',70%,45%,0.9)') : color('hsla(' + h + ',60%,55%,0.7)'));
+    stroke(255);
+    strokeWeight(1.5);
+    arc(cx, cy, r * 2, r * 2, startAngle, endAngle, PIE);
+
+    // Label
+    let labelR = r * 0.65;
+    let lx = cx + cos(midAngle) * labelR;
+    let ly = cy + sin(midAngle) * labelR;
+    fill(255);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(10);
+    text(dataLabels[i], lx, ly - (showValues ? 5 : 0));
+    if (showValues) {
+      textSize(9);
+      text(dataValues[i], lx, ly + 7);
+    }
+
+    startAngle = endAngle;
+  }
+  return hovered;
+}
+
+function drawShapeHue(dx, dy, dw, dh, isHover) {
+  let cols = 4;
+  let rows = 2;
+  let cellW = dw / cols;
+  let cellH = dh / rows;
+  let hovered = -1;
+  let shapeHues = [0, 45, 90, 160, 200, 260, 300, 340];
+  // 0=circle, 1=square, 2=triangle, 3=diamond, 4=cross, 5=star, 6=pentagon, 7=hexagon
+  let shapeNames = ['circle', 'square', 'triangle', 'diamond', 'circle', 'square', 'triangle', 'diamond'];
+
+  for (let i = 0; i < 8; i++) {
+    let col = i % cols;
+    let row = Math.floor(i / cols);
+    let cx = dx + col * cellW + cellW / 2;
+    let cy = dy + row * cellH + cellH / 2;
+    let sz = min(cellW, cellH) * 0.45;
+
+    let isItemHover = isHover && dist(mouseX, mouseY, cx, cy) < sz;
+    if (isItemHover) hovered = i;
+
+    let h = shapeHues[i];
+    fill(color('hsla(' + h + ',65%,50%,' + (isItemHover ? '0.9' : '0.6') + ')'));
+    stroke(isItemHover ? color('hsla(' + h + ',65%,35%,1)') : 'transparent');
+    strokeWeight(isItemHover ? 2 : 0);
+
+    // Draw shape
+    let stype = i % 4;
+    if (stype === 0) {
+      ellipse(cx, cy - 4, sz, sz);
+    } else if (stype === 1) {
+      rectMode(CENTER);
+      rect(cx, cy - 4, sz * 0.85, sz * 0.85, 2);
+      rectMode(CORNER);
+    } else if (stype === 2) {
+      triangle(cx, cy - 4 - sz / 2, cx - sz / 2, cy - 4 + sz / 2, cx + sz / 2, cy - 4 + sz / 2);
+    } else {
+      // Diamond
+      quad(cx, cy - 4 - sz / 2, cx + sz / 2, cy - 4, cx, cy - 4 + sz / 2, cx - sz / 2, cy - 4);
+    }
+
+    // Label
+    fill(60);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(10);
+    text(dataLabels[i], cx, cy + sz / 2);
+  }
+  return hovered;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Visual Encoding Explorer Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Forensic Imaging & Hash Verification Workflow</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    main { display: block; }
+  </style>
+</head>
+<body>
+  <main></main>
+  <script>// Forensic Imaging & Hash Verification Workflow — Understand (L2)
+// CANVAS_HEIGHT: 500
+// Explain the forensic imaging procedure (original drive -> write-blocker ->
+// workstation -> forensic image -> hash verification) and verify image
+// integrity by comparing hashes. "Simulate Tamper" shows how a 1-bit change
+// completely changes the hash, producing a MISMATCH.
+
+let canvasWidth = 900;
+const drawHeight = 450;
+const controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+const margin = 15;
+const defaultTextSize = 16;
+
+const DATA_C = '#1769c9';
+const HW_C = '#6b7280';
+const OK_C = '#2e9e57';
+const BAD_C = '#c0392b';
+
+let tamperButton, algoSelect;
+let selected = 4;       // default: Hash Verification (shows the comparison)
+let tampered = false;
+let computeT = 0;       // frames remaining of the "computing hash" animation
+let stationRects = [];
+
+const STATIONS = [
+  { name: 'Original Drive', icon: 'drive', kind: 'hw',
+    purpose: 'The seized storage device (the suspect’s drive). The goal is to copy it without altering a single byte.',
+    proc: 'It is never analyzed directly. It is connected only through a write-blocker.' },
+  { name: 'Write-Blocker', icon: 'block', kind: 'hw',
+    purpose: 'Hardware that allows the workstation to READ the drive but physically BLOCKS any write back to it.',
+    proc: 'This is what preserves evidence integrity — the original cannot be changed during imaging.' },
+  { name: 'Forensic Workstation', icon: 'pc', kind: 'hw',
+    purpose: 'The trusted analysis computer running imaging software (e.g., dd, FTK Imager, Guymager).',
+    proc: 'It reads the drive through the write-blocker and writes a copy to new storage.' },
+  { name: 'Forensic Image', icon: 'image', kind: 'data',
+    purpose: 'A bit-for-bit copy of the original (raw/dd or .E01). All examination is performed on this copy.',
+    proc: 'Because it is identical to the source, findings on the image apply to the original.' },
+  { name: 'Hash Verification', icon: 'verify', kind: 'data',
+    purpose: 'Compute a cryptographic hash of the original AND of the image. Matching hashes prove the copy is identical.',
+    proc: 'A hash is a fixed-length fingerprint of the data; even a 1-bit change produces a totally different value.' }
+];
+
+const HASH = {
+  original: {
+    'MD5': '9e107d9d372bb6826bd81d3542a419d6',
+    'SHA-256': 'd7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592'
+  },
+  tampered: {
+    'MD5': 'e4d909c290d0fb1ca068ffaddf22cbd0',
+    'SHA-256': 'ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c'
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  const cnv = createCanvas(canvasWidth, canvasHeight);
+  cnv.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  tamperButton = createButton('Simulate Tamper');
+  tamperButton.mousePressed(toggleTamper);
+  algoSelect = createSelect();
+  algoSelect.option('MD5');
+  algoSelect.option('SHA-256');
+  algoSelect.selected('SHA-256');
+  positionControls();
+}
+function positionControls() {
+  const r = drawHeight + 12;
+  tamperButton.position(margin, r);
+  algoSelect.position(margin + 160, r);
+}
+function updateCanvasSize() {
+  const c = document.querySelector('main');
+  if (c) canvasWidth = Math.max(800, Math.floor(c.getBoundingClientRect().width));
+}
+function windowResized() {
+  updateCanvasSize(); resizeCanvas(canvasWidth, canvasHeight); positionControls();
+}
+
+function toggleTamper() {
+  tampered = !tampered;
+  tamperButton.html(tampered ? 'Restore Image' : 'Simulate Tamper');
+  computeT = 48; // recompute the image hash
+}
+
+function curHash(which) {
+  const algo = algoSelect.value();
+  return (which === 'image' && tampered ? HASH.tampered : HASH.original)[algo];
+}
+
+function draw() {
+  background('#eef2f7');
+  noStroke();
+  fill('#f4f4f4'); rect(0, drawHeight, canvasWidth, controlHeight);
+  if (computeT > 0) computeT--;
+
+  fill('#173a63'); textAlign(CENTER, TOP); textSize(20); textStyle(BOLD);
+  text('Forensic Imaging & Hash Verification', canvasWidth / 2, 8); textStyle(NORMAL);
+
+  drawWorkflow(margin, 44, canvasWidth - 2 * margin, 120);
+  drawDetail(margin, 176, canvasWidth - 2 * margin, 78);
+  drawHashPanel(margin, 262, canvasWidth - 2 * margin, drawHeight - 262 - 12);
+}
+
+function drawWorkflow(x, y, w, h) {
+  const n = STATIONS.length;
+  const slot = w / n;
+  const bw = slot * 0.62, bh = 64, cy = y + 36;
+  stationRects = [];
+  // arrows between stations (animated data flow, left -> right)
+  for (let i = 0; i < n - 1; i++) {
+    const ax = x + slot * (i + 0.5) + bw / 2;
+    const bx = x + slot * (i + 1.5) - bw / 2;
+    stroke('#b8c2d0'); strokeWeight(2); line(ax, cy, bx, cy);
+    noStroke(); fill('#b8c2d0'); triangle(bx, cy, bx - 7, cy - 4, bx - 7, cy + 4);
+    // moving data dots
+    for (let d = 0; d < 3; d++) {
+      const tt = ((frameCount * 0.012) + d / 3) % 1;
+      const px = lerp(ax, bx - 7, tt);
+      fill(DATA_C); circle(px, cy, 5);
+    }
+  }
+  // stations
+  for (let i = 0; i < n; i++) {
+    const sx = x + slot * (i + 0.5);
+    const st = STATIONS[i], sel = i === selected;
+    stationRects.push({ i, x: sx - bw / 2, y: cy - bh / 2, w: bw, h: bh });
+    stroke(sel ? '#0b3d91' : (st.kind === 'data' ? DATA_C : HW_C));
+    strokeWeight(sel ? 2.5 : 1.4);
+    fill(sel ? '#eaf2ff' : '#ffffff');
+    rect(sx - bw / 2, cy - bh / 2, bw, bh, 8);
+    drawIcon(st.icon, sx, cy - 6, st.kind === 'data' ? DATA_C : HW_C);
+    noStroke(); fill('#1a3a6c'); textAlign(CENTER, TOP); textSize(10.5); textStyle(BOLD);
+    text(st.name, sx - bw / 2 + 3, cy + bh / 2 + 5, bw - 6); textStyle(NORMAL);
+  }
+  // write-blocker: blocked reverse-flow indicator under station 1
+  const wbx = x + slot * 1.5;
+  noStroke(); fill(BAD_C); textAlign(CENTER, TOP); textSize(10);
+  const ry = cy + bh / 2 + 22;
+  stroke(BAD_C); strokeWeight(2);
+  line(wbx + 26, ry, wbx - 26, ry);
+  fill(BAD_C); noStroke(); triangle(wbx - 26, ry, wbx - 20, ry - 4, wbx - 20, ry + 4);
+  // crossed-out circle
+  stroke(BAD_C); strokeWeight(2); noFill(); circle(wbx, ry, 16);
+  line(wbx - 6, ry - 6, wbx + 6, ry + 6);
+  noStroke(); fill(BAD_C); textSize(9.5);
+  text('no write-back to original', wbx, ry + 10);
+}
+
+function drawIcon(kind, cx, cy, c) {
+  push(); translate(cx, cy); stroke(c); strokeWeight(1.6); noFill();
+  if (kind === 'drive') {
+    ellipse(0, -8, 26, 8); line(-13, -8, -13, 8); line(13, -8, 13, 8); ellipse(0, 8, 26, 8);
+  } else if (kind === 'block') {
+    rect(-12, -10, 24, 20, 3); fill(c); noStroke(); rect(-3, -10, 6, 20);
+  } else if (kind === 'pc') {
+    rect(-13, -10, 26, 16, 2); fill(c); noStroke(); rect(-5, 7, 10, 3);
+  } else if (kind === 'image') {
+    rect(-10, -12, 20, 24, 2); stroke(c); line(-5, -5, 5, -5); line(-5, 1, 5, 1); line(-5, 7, 2, 7);
+  } else if (kind === 'verify') {
+    ellipse(0, 0, 24, 24); stroke(c); strokeWeight(2.4);
+    line(-6, 0, -1, 6); line(-1, 6, 7, -6);
+  }
+  pop();
+}
+
+function drawDetail(x, y, w, h) {
+  noStroke(); fill('#ffffff'); stroke('#d6deea'); strokeWeight(1);
+  rect(x, y, w, h, 8); noStroke();
+  const st = STATIONS[selected];
+  fill('#173a63'); textAlign(LEFT, TOP); textSize(13); textStyle(BOLD);
+  text(st.name, x + 14, y + 8); textStyle(NORMAL);
+  fill('#33404f'); textSize(11.5);
+  text(st.purpose + '  ' + st.proc, x + 150, y + 8, w - 165, h - 14);
+  fill('#8a93a3'); textSize(10); textAlign(LEFT, BOTTOM);
+  text('Click any station above to read its role.', x + 14, y + h - 8);
+}
+
+function drawHashPanel(x, y, w, h) {
+  noStroke(); fill('#ffffff'); stroke('#d6deea'); strokeWeight(1);
+  rect(x, y, w, h, 8); noStroke();
+  const algo = algoSelect.value();
+  fill('#173a63'); textAlign(LEFT, TOP); textSize(13); textStyle(BOLD);
+  text('Hash Verification  (' + algo + ', ' + (algo === 'MD5' ? '32' : '64') + ' hex chars)',
+    x + 14, y + 10); textStyle(NORMAL);
+
+  const colW = (w - 60) / 2;
+  drawHashBox(x + 14, y + 36, colW, 'Original Drive', curHash('original'), false);
+  drawHashBox(x + 32 + colW, y + 36, colW, 'Forensic Image', curHash('image'),
+    tampered && computeT === 0);
+
+  // result banner
+  const by = y + 36 + 78;
+  const match = !tampered;
+  const showResult = computeT === 0;
+  noStroke(); fill(showResult ? (match ? '#e6f4ec' : '#fdeaea') : '#eef2f7');
+  stroke(showResult ? (match ? OK_C : BAD_C) : '#c9d3e0'); strokeWeight(1.5);
+  rect(x + 14, by, w - 28, 30, 6); noStroke();
+  fill(showResult ? (match ? OK_C : BAD_C) : '#5b6472');
+  textAlign(CENTER, CENTER); textSize(14); textStyle(BOLD);
+  text(showResult ? (match ? '✓ MATCH — image verified identical to original'
+                            : '✗ MISMATCH — image differs from original')
+                  : 'computing hash…', x + w / 2, by + 15);
+  textStyle(NORMAL);
+
+  fill('#5b6472'); textAlign(LEFT, TOP); textSize(11);
+  text(tampered
+    ? 'A single changed byte makes the entire hash different — that is why hashing detects any tampering.'
+    : 'Identical hashes prove the forensic image is a perfect, unaltered copy of the source drive.',
+    x + 14, by + 38, w - 28);
+}
+
+function drawHashBox(x, y, w, label, hashVal, changed) {
+  noStroke(); fill('#f7faff'); stroke('#dde5f0'); strokeWeight(1);
+  rect(x, y, w, 70, 6); noStroke();
+  fill('#173a63'); textAlign(LEFT, TOP); textSize(11); textStyle(BOLD);
+  text(label, x + 10, y + 8); textStyle(NORMAL);
+  // hash text (monospace), wrap to 32 chars per line
+  let shown = hashVal;
+  const computing = label === 'Forensic Image' && computeT > 0;
+  if (computing) {
+    const hx = '0123456789abcdef';
+    let r = '';
+    for (let i = 0; i < hashVal.length; i++) r += hx[(frameCount * 7 + i * 13) % 16];
+    shown = r;
+    fill('#8a93a3');
+  } else if (changed) {
+    fill(BAD_C);
+  } else fill('#2a2f37');
+  textFont('monospace'); textSize(11);
+  const per = 32;
+  let ty = y + 26;
+  for (let i = 0; i < shown.length; i += per) {
+    text(shown.substring(i, i + per), x + 10, ty); ty += 16;
+  }
+  textFont('sans-serif');
+}
+
+function mousePressed() {
+  for (const s of stationRects) {
+    if (mouseX >= s.x && mouseX <= s.x + s.w && mouseY >= s.y && mouseY <= s.y + s.h) {
+      selected = s.i; return;
+    }
+  }
+}
+</script>
+  <p><a href="./index.md">Back to Documentation</a></p>
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Translation Step-Through Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Translation Step-Through Simulator
+// Shows initiation, elongation, and termination of translation
+// with visible A, P, E sites, tRNA movement, and polypeptide growth
+
+// mRNA sequence: AUG GCU UAC AAA CGC UGA
+// Encodes: Met-Ala-Tyr-Lys-Arg-Stop
+
+let canvasWidth = 800;
+let drawHeight = 420;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let sliderLeftMargin = 140;
+
+// Codon table subset
+const codonTable = {
+    'AUG': { aa: 'Met', abbr: 'M', color: [46, 204, 113] },
+    'GCU': { aa: 'Ala', abbr: 'A', color: [52, 152, 219] },
+    'UAC': { aa: 'Tyr', abbr: 'Y', color: [155, 89, 182] },
+    'AAA': { aa: 'Lys', abbr: 'K', color: [231, 76, 60] },
+    'CGC': { aa: 'Arg', abbr: 'R', color: [230, 126, 34] },
+    'UGA': { aa: 'Stop', abbr: '*', color: [149, 165, 166] }
+};
+
+// Complement for anticodons
+function getAnticodon(codon) {
+    let map = { 'A': 'U', 'U': 'A', 'G': 'C', 'C': 'G' };
+    return codon.split('').map(b => map[b]).join('');
+}
+
+let mRNA = 'AUGGCUUACAAACGCUGA';
+let codons = [];
+let currentStep = 0;
+let totalSteps = 0;
+let showAnticodons = true;
+
+// Steps structure:
+// 0: Initial state - mRNA alone
+// 1: Small subunit binds
+// 2: Initiator tRNA enters P site
+// 3: Large subunit joins (initiation complete)
+// Then for each codon after AUG (positions 1-4):
+//   step A: tRNA arrives at A site (codon recognition)
+//   step B: Peptide bond forms
+//   step C: Translocation (tRNA moves P→E, A→P)
+// Final: Release factor binds, polypeptide released
+
+let steps = [];
+let polypeptide = [];
+
+function buildSteps() {
+    codons = [];
+    for (let i = 0; i < mRNA.length; i += 3) {
+        codons.push(mRNA.substring(i, i + 3));
+    }
+
+    steps = [];
+
+    // Initiation
+    steps.push({
+        phase: 'Initiation',
+        title: 'mRNA Ready',
+        desc: 'The mRNA strand has been transcribed and processed. Translation begins when the small ribosomal subunit recognizes the 5\' cap and scans for the start codon (AUG).',
+        readingPos: -1,
+        pSite: null,
+        aSite: null,
+        eSite: null,
+        chain: [],
+        smallSub: false,
+        largeSub: false,
+        releaseFactor: false
+    });
+
+    steps.push({
+        phase: 'Initiation',
+        title: 'Small Subunit Binds',
+        desc: 'The small (40S) ribosomal subunit binds to the 5\' end of the mRNA and scans downstream until it finds the start codon AUG.',
+        readingPos: 0,
+        pSite: null,
+        aSite: null,
+        eSite: null,
+        chain: [],
+        smallSub: true,
+        largeSub: false,
+        releaseFactor: false
+    });
+
+    steps.push({
+        phase: 'Initiation',
+        title: 'Initiator tRNA Enters P Site',
+        desc: 'The initiator Met-tRNA (carrying methionine) base-pairs with AUG in the P site. Its anticodon UAC pairs with the start codon AUG.',
+        readingPos: 0,
+        pSite: { codon: 'AUG', codonIdx: 0 },
+        aSite: null,
+        eSite: null,
+        chain: ['Met'],
+        smallSub: true,
+        largeSub: false,
+        releaseFactor: false
+    });
+
+    steps.push({
+        phase: 'Initiation',
+        title: 'Large Subunit Joins',
+        desc: 'The large (60S) ribosomal subunit joins, creating the complete ribosome with A (aminoacyl), P (peptidyl), and E (exit) sites. Initiation is complete.',
+        readingPos: 0,
+        pSite: { codon: 'AUG', codonIdx: 0 },
+        aSite: null,
+        eSite: null,
+        chain: ['Met'],
+        smallSub: true,
+        largeSub: true,
+        releaseFactor: false
+    });
+
+    // Elongation cycles for codons 1 through 4 (GCU, UAC, AAA, CGC)
+    let growingChain = ['Met'];
+    for (let ci = 1; ci < codons.length - 1; ci++) {
+        let codon = codons[ci];
+        let info = codonTable[codon];
+        let prevCodon = codons[ci - 1];
+
+        // Step A: Codon recognition - tRNA arrives at A site
+        steps.push({
+            phase: 'Elongation',
+            title: `Codon Recognition (${codon})`,
+            desc: `An aminoacyl-tRNA carrying ${info.aa} (anticodon ${getAnticodon(codon)}) enters the A site and base-pairs with the mRNA codon ${codon}. EF-Tu (GTP) delivers the tRNA.`,
+            readingPos: ci,
+            pSite: { codon: prevCodon, codonIdx: ci - 1 },
+            aSite: { codon: codon, codonIdx: ci },
+            eSite: ci >= 2 ? { codon: codons[ci - 2], codonIdx: ci - 2 } : null,
+            chain: [...growingChain],
+            smallSub: true,
+            largeSub: true,
+            releaseFactor: false
+        });
+
+        // Step B: Peptide bond formation
+        growingChain.push(info.aa);
+        steps.push({
+            phase: 'Elongation',
+            title: `Peptide Bond Formation`,
+            desc: `The ribosome catalyzes a peptide bond between the growing polypeptide chain (in the P site) and the new amino acid ${info.aa} (in the A site). The chain transfers to the A-site tRNA.`,
+            readingPos: ci,
+            pSite: { codon: prevCodon, codonIdx: ci - 1, empty: true },
+            aSite: { codon: codon, codonIdx: ci, hasChain: true },
+            eSite: ci >= 2 ? { codon: codons[ci - 2], codonIdx: ci - 2 } : null,
+            chain: [...growingChain],
+            smallSub: true,
+            largeSub: true,
+            bondForming: true,
+            releaseFactor: false
+        });
+
+        // Step C: Translocation
+        steps.push({
+            phase: 'Elongation',
+            title: `Translocation`,
+            desc: `The ribosome translocates one codon downstream (5'→3'). The deacylated tRNA moves from P to E site, the peptidyl-tRNA moves from A to P site, and the A site is now empty for the next tRNA.`,
+            readingPos: ci,
+            pSite: { codon: codon, codonIdx: ci },
+            aSite: null,
+            eSite: { codon: prevCodon, codonIdx: ci - 1 },
+            chain: [...growingChain],
+            smallSub: true,
+            largeSub: true,
+            releaseFactor: false
+        });
+    }
+
+    // Termination
+    let lastCodingIdx = codons.length - 2;
+    steps.push({
+        phase: 'Termination',
+        title: 'Stop Codon Reached (UGA)',
+        desc: 'The ribosome encounters the stop codon UGA in the A site. No tRNA has an anticodon for stop codons. Instead, a release factor protein enters the A site.',
+        readingPos: codons.length - 1,
+        pSite: { codon: codons[lastCodingIdx], codonIdx: lastCodingIdx },
+        aSite: { codon: 'UGA', codonIdx: codons.length - 1, isStop: true },
+        eSite: null,
+        chain: [...growingChain],
+        smallSub: true,
+        largeSub: true,
+        releaseFactor: true
+    });
+
+    steps.push({
+        phase: 'Termination',
+        title: 'Polypeptide Released',
+        desc: 'The release factor triggers hydrolysis of the bond between the polypeptide and the last tRNA. The completed polypeptide (Met-Ala-Tyr-Lys-Arg) is released. The ribosome subunits dissociate.',
+        readingPos: codons.length - 1,
+        pSite: null,
+        aSite: null,
+        eSite: null,
+        chain: [...growingChain],
+        smallSub: false,
+        largeSub: false,
+        releaseFactor: false,
+        released: true
+    });
+
+    totalSteps = steps.length;
+}
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+    buildSteps();
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    let step = steps[currentStep];
+
+    drawMRNAStrand(step);
+    drawRibosome(step);
+    drawTRNAs(step);
+    drawPolypeptideChain(step);
+    drawStepInfo(step);
+    drawControls(step);
+}
+
+function drawMRNAStrand(step) {
+    let mW = canvasWidth * 0.7;
+    let mX = canvasWidth * 0.15;
+    let mY = drawHeight * 0.52;
+    let codonW = mW / codons.length;
+
+    // mRNA backbone
+    stroke(60);
+    strokeWeight(3);
+    line(mX, mY, mX + mW, mY);
+
+    // 5' and 3' labels
+    fill(60);
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text("5'", mX - 15, mY);
+    text("3'", mX + mW + 15, mY);
+
+    // Draw each codon
+    for (let i = 0; i < codons.length; i++) {
+        let cx = mX + i * codonW;
+        let info = codonTable[codons[i]];
+        let isReading = (step.readingPos === i);
+        let isStart = (i === 0);
+        let isStopCodon = (codons[i] === 'UGA');
+
+        // Codon background
+        if (isReading && step.readingPos >= 0) {
+            fill(255, 255, 100, 80);
+            noStroke();
+            rect(cx + 2, mY - 18, codonW - 4, 36, 4);
+        }
+
+        // Codon text
+        noStroke();
+        textSize(constrain(codonW * 0.3, 10, 14));
+        textAlign(CENTER, CENTER);
+
+        if (isStart) {
+            fill(46, 204, 113);
+        } else if (isStopCodon) {
+            fill(231, 76, 60);
+        } else {
+            fill(40);
+        }
+        text(codons[i], cx + codonW / 2, mY - 8);
+
+        // Codon position label
+        fill(140);
+        textSize(9);
+        text((i + 1), cx + codonW / 2, mY + 14);
+    }
+
+    // Label
+    fill(80);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text('mRNA', mX - 12, mY - 28);
+}
+
+function drawRibosome(step) {
+    if (!step.smallSub && !step.released) return;
+    if (step.released) return;
+
+    let mW = canvasWidth * 0.7;
+    let mX = canvasWidth * 0.15;
+    let mY = drawHeight * 0.52;
+    let codonW = mW / codons.length;
+
+    // Center ribosome over the reading position
+    let rPos = max(0, step.readingPos);
+    // Ribosome spans 3 codons (E, P, A)
+    let ribCenterX = mX + (rPos + 0.5) * codonW;
+
+    let ribW = codonW * 3.2;
+    let ribH = 80;
+
+    // Small subunit (bottom)
+    if (step.smallSub) {
+        fill(200, 180, 150, 180);
+        stroke(160, 140, 110);
+        strokeWeight(2);
+        arc(ribCenterX, mY + 8, ribW, ribH * 0.6, 0, PI, CHORD);
+
+        fill(80);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text('Small subunit', ribCenterX, mY + 22);
+    }
+
+    // Large subunit (top)
+    if (step.largeSub) {
+        fill(180, 160, 130, 180);
+        stroke(140, 120, 90);
+        strokeWeight(2);
+        arc(ribCenterX, mY - 8, ribW * 1.1, ribH * 0.8, PI, TWO_PI, CHORD);
+
+        fill(80);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text('Large subunit', ribCenterX, mY - 32);
+    }
+
+    // Site labels (E, P, A)
+    if (step.largeSub) {
+        textSize(12);
+        fill(100);
+        textAlign(CENTER, CENTER);
+        let siteY = mY - 50;
+
+        // E site
+        fill(180, 180, 180);
+        text('E', ribCenterX - codonW, siteY);
+
+        // P site
+        fill(100, 180, 100);
+        text('P', ribCenterX, siteY);
+
+        // A site
+        fill(100, 150, 220);
+        text('A', ribCenterX + codonW, siteY);
+    }
+}
+
+function drawTRNAs(step) {
+    let mW = canvasWidth * 0.7;
+    let mX = canvasWidth * 0.15;
+    let mY = drawHeight * 0.52;
+    let codonW = mW / codons.length;
+
+    let rPos = max(0, step.readingPos);
+    let ribCenterX = mX + (rPos + 0.5) * codonW;
+
+    // P site tRNA
+    if (step.pSite) {
+        let px = ribCenterX;
+        let info = codonTable[step.pSite.codon];
+        if (info) {
+            drawSingleTRNA(px, mY, info, step.pSite.codon, step.pSite.empty, false);
+        }
+    }
+
+    // A site tRNA
+    if (step.aSite) {
+        let ax = ribCenterX + codonW;
+        let info = codonTable[step.aSite.codon];
+        if (info) {
+            if (step.aSite.isStop) {
+                // Release factor instead of tRNA
+                if (step.releaseFactor) {
+                    drawReleaseFactor(ax, mY);
+                }
+            } else {
+                drawSingleTRNA(ax, mY, info, step.aSite.codon, false, step.bondForming);
+            }
+        }
+    }
+
+    // E site tRNA (faded, exiting)
+    if (step.eSite) {
+        let ex = ribCenterX - codonW;
+        let info = codonTable[step.eSite.codon];
+        if (info) {
+            drawSingleTRNA(ex, mY, info, step.eSite.codon, true, false, true);
+        }
+    }
+}
+
+function drawSingleTRNA(x, mY, info, codon, empty, bondForming, faded) {
+    let alpha = faded ? 80 : 255;
+    let tY = mY - 60;
+    let tH = 50;
+
+    // tRNA stem (inverted L shape)
+    stroke(info.color[0], info.color[1], info.color[2], alpha);
+    strokeWeight(3);
+    // Vertical stem
+    line(x, mY - 20, x, tY);
+    // Horizontal arm
+    line(x, tY, x + 15, tY - 10);
+
+    // Anticodon at bottom
+    if (showAnticodons) {
+        noStroke();
+        fill(info.color[0], info.color[1], info.color[2], alpha);
+        textSize(9);
+        textAlign(CENTER, CENTER);
+        text(getAnticodon(codon), x, mY - 14);
+    }
+
+    // Amino acid circle at top
+    if (!empty) {
+        fill(info.color[0], info.color[1], info.color[2], alpha);
+        stroke(255, alpha);
+        strokeWeight(1);
+        ellipse(x + 15, tY - 10, 22, 22);
+
+        fill(255, alpha);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text(info.abbr, x + 15, tY - 10);
+    }
+
+    // Bond forming indicator
+    if (bondForming) {
+        stroke(255, 200, 0);
+        strokeWeight(2);
+        drawingContext.setLineDash([3, 3]);
+        line(x - 10, tY - 5, x + 5, tY - 5);
+        drawingContext.setLineDash([]);
+    }
+}
+
+function drawReleaseFactor(x, mY) {
+    // Draw release factor as a diamond shape
+    let y = mY - 55;
+    fill(231, 76, 60, 200);
+    stroke(192, 57, 43);
+    strokeWeight(2);
+
+    beginShape();
+    vertex(x, y - 18);
+    vertex(x + 14, y);
+    vertex(x, y + 18);
+    vertex(x - 14, y);
+    endShape(CLOSE);
+
+    fill(255);
+    noStroke();
+    textSize(8);
+    textAlign(CENTER, CENTER);
+    text('Release', x, y - 4);
+    text('Factor', x, y + 6);
+}
+
+function drawPolypeptideChain(step) {
+    let chain = step.chain;
+    if (chain.length === 0) return;
+
+    let startX = canvasWidth * 0.05;
+    let startY = drawHeight * 0.15;
+    let circR = 18;
+    let spacing = constrain((canvasWidth * 0.85) / max(chain.length, 5), circR + 4, circR + 14);
+
+    // Title
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text('Polypeptide:', startX, startY - 18);
+
+    if (step.released) {
+        fill(46, 204, 113, 40);
+        noStroke();
+        rect(startX - 5, startY - circR - 5, chain.length * spacing + 10, circR * 2 + 10, 6);
+    }
+
+    for (let i = 0; i < chain.length; i++) {
+        let cx = startX + i * spacing + circR;
+        let cy = startY;
+
+        // Peptide bond line
+        if (i > 0) {
+            stroke(100);
+            strokeWeight(2);
+            line(cx - spacing + circR / 2, cy, cx - circR / 2, cy);
+        }
+
+        // Amino acid circle
+        let aa = chain[i];
+        let codon = codons[i];
+        let info = codonTable[codon];
+
+        fill(info.color[0], info.color[1], info.color[2]);
+        stroke(255);
+        strokeWeight(2);
+        ellipse(cx, cy, circR * 2, circR * 2);
+
+        // Label
+        fill(255);
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        text(info.abbr, cx, cy - 2);
+        textSize(8);
+        text(aa, cx, cy + 10);
+    }
+}
+
+function drawStepInfo(step) {
+    let panelX = 10;
+    let panelY = drawHeight * 0.72;
+    let panelW = canvasWidth - 20;
+    let panelH = drawHeight * 0.26;
+
+    // Background
+    fill(255, 250, 240);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    // Phase badge
+    let badgeColor;
+    if (step.phase === 'Initiation') badgeColor = [46, 204, 113];
+    else if (step.phase === 'Elongation') badgeColor = [52, 152, 219];
+    else badgeColor = [231, 76, 60];
+
+    fill(badgeColor[0], badgeColor[1], badgeColor[2]);
+    noStroke();
+    rect(panelX + 8, panelY + 8, textWidth(step.phase) + 16, 20, 10);
+    fill(255);
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text(step.phase, panelX + 16, panelY + 18);
+
+    // Title
+    fill(40);
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text(step.title, panelX + 8 + textWidth(step.phase) + 24, panelY + 9);
+    textStyle(NORMAL);
+
+    // Description (word wrap)
+    fill(70);
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textLeading(15);
+    let descX = panelX + 12;
+    let descY = panelY + 32;
+    let descW = panelW - 24;
+
+    // Simple word wrap
+    let words = step.desc.split(' ');
+    let line = '';
+    let ly = descY;
+    for (let w of words) {
+        let test = line + w + ' ';
+        if (textWidth(test) > descW) {
+            text(line, descX, ly);
+            line = w + ' ';
+            ly += 15;
+        } else {
+            line = test;
+        }
+    }
+    text(line, descX, ly);
+}
+
+function drawControls(step) {
+    let cy = drawHeight + 10;
+
+    // Step counter
+    fill(60);
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text(`Step ${currentStep + 1} of ${totalSteps}`, 15, cy + 15);
+
+    // Previous button
+    let prevX = canvasWidth * 0.3;
+    let btnW = 80;
+    let btnH = 32;
+
+    if (currentStep > 0) {
+        fill(100, 150, 220);
+    } else {
+        fill(180);
+    }
+    stroke(80);
+    strokeWeight(1);
+    rect(prevX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('◀ Previous', prevX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Next button
+    let nextX = prevX + btnW + 15;
+    if (currentStep < totalSteps - 1) {
+        fill(46, 204, 113);
+    } else {
+        fill(180);
+    }
+    stroke(80);
+    strokeWeight(1);
+    rect(nextX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Next ▶', nextX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Reset button
+    let resetX = nextX + btnW + 15;
+    fill(200, 100, 100);
+    stroke(80);
+    strokeWeight(1);
+    rect(resetX, cy + 2, 60, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text('Reset', resetX + 30, cy + 2 + btnH / 2);
+
+    // Show anticodons toggle
+    let togX = resetX + 75;
+    fill(showAnticodons ? [52, 152, 219] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(togX, cy + 2, 120, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text(showAnticodons ? '✓ Anticodons' : 'Anticodons', togX + 60, cy + 2 + btnH / 2);
+
+    // Progress bar
+    let progX = 15;
+    let progY = cy + 48;
+    let progW = canvasWidth - 30;
+    let progH = 8;
+
+    fill(220);
+    noStroke();
+    rect(progX, progY, progW, progH, 4);
+
+    // Colored segments for phases
+    let initEnd = 4;
+    let elongEnd = totalSteps - 2;
+
+    for (let i = 0; i <= currentStep; i++) {
+        let sx = progX + (i / totalSteps) * progW;
+        let sw = progW / totalSteps;
+        if (i < initEnd) fill(46, 204, 113);
+        else if (i < elongEnd) fill(52, 152, 219);
+        else fill(231, 76, 60);
+        noStroke();
+        rect(sx, progY, sw + 1, progH, i === 0 ? 4 : 0, i === currentStep ? 4 : 0, i === currentStep ? 4 : 0, i === 0 ? 4 : 0);
+    }
+
+    // Phase labels under progress bar
+    textSize(9);
+    fill(46, 204, 113);
+    textAlign(LEFT, TOP);
+    text('Initiation', progX, progY + 12);
+    fill(52, 152, 219);
+    textAlign(CENTER, TOP);
+    text('Elongation', progX + progW * 0.5, progY + 12);
+    fill(231, 76, 60);
+    textAlign(RIGHT, TOP);
+    text('Termination', progX + progW, progY + 12);
+
+    // Codon sequence summary at bottom
+    textSize(10);
+    textAlign(LEFT, TOP);
+    let seqY = cy + 72;
+    let seqX = 15;
+    for (let i = 0; i < codons.length; i++) {
+        let info = codonTable[codons[i]];
+        fill(info.color[0], info.color[1], info.color[2]);
+        let label = `${codons[i]}(${info.abbr})`;
+        text(label, seqX, seqY);
+        seqX += textWidth(label) + 8;
+    }
+}
+
+function mousePressed() {
+    let cy = drawHeight + 10;
+    let btnH = 32;
+
+    let prevX = canvasWidth * 0.3;
+    let btnW = 80;
+    let nextX = prevX + btnW + 15;
+    let resetX = nextX + btnW + 15;
+    let togX = resetX + 75;
+
+    // Previous button
+    if (mouseX >= prevX && mouseX <= prevX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep > 0) currentStep--;
+    }
+
+    // Next button
+    if (mouseX >= nextX && mouseX <= nextX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep < totalSteps - 1) currentStep++;
+    }
+
+    // Reset button
+    if (mouseX >= resetX && mouseX <= resetX + 60 &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        currentStep = 0;
+    }
+
+    // Anticodon toggle
+    if (mouseX >= togX && mouseX <= togX + 120 &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        showAnticodons = !showAnticodons;
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

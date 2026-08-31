@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="quantum-risk-return-scatter">
+    <title>Risk vs. Return: Where QC Investment Falls</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Risk-Adjusted Returns: Quantum Technologies vs. Classical Alternatives</h1>
+        <div class="controls">
+            <button id="toggle-frontier">Hide Efficient Frontier</button>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="riskReturnChart"></canvas>
+        </div>
+        <div id="detail-panel">
+            <button class="close-btn" onclick="closeDetail()">&times;</button>
+            <h3 id="detail-title"></h3>
+            <div id="detail-body"></div>
+        </div>
+    </div>
+    <script>
+// Data for investment categories
+const investments = [
+    {
+        label: "Atomic Clocks",
+        x: 10, y: 370, r: 8,
+        color: "#388E3C",
+        pSuccess: "95%",
+        ev: "+$3.5B",
+        totalInvestment: "$500M",
+        detail: "Atomic clocks are a mature quantum technology with proven commercial markets in GPS, telecommunications, and financial trading. Low risk because the physics is well-understood and products already exist."
+    },
+    {
+        label: "Quantum Magnetometers",
+        x: 20, y: 370, r: 8,
+        color: "#4CAF50",
+        pSuccess: "90%",
+        ev: "+$2.8B",
+        totalInvestment: "$600M",
+        detail: "Quantum magnetometers (SQUIDs, NV-center sensors) have established applications in medical imaging (MEG), geological surveying, and military detection. Strong near-term revenue potential."
+    },
+    {
+        label: "Quantum Gravimeters",
+        x: 30, y: 275, r: 12,
+        color: "#66BB6A",
+        pSuccess: "80%",
+        ev: "+$1.5B",
+        totalInvestment: "$800M",
+        detail: "Quantum gravimeters offer advantages in mineral exploration, civil engineering, and defense. Market is smaller than magnetometers but physics risk is low. Several commercial products are already deployed."
+    },
+    {
+        label: "QKD",
+        x: 40, y: 40, r: 14,
+        color: "#FFC107",
+        pSuccess: "60%",
+        ev: "+$200M",
+        totalInvestment: "$2B",
+        detail: "Quantum Key Distribution works physically but faces economic headwinds: classical post-quantum cryptography (PQC) may be 'good enough' at far lower cost. Market adoption has been slow outside government mandates."
+    },
+    {
+        label: "Classical AI Hardware",
+        x: 15, y: 350, r: 18,
+        color: "#1565C0",
+        pSuccess: "92%",
+        ev: "+$50B",
+        totalInvestment: "$30B",
+        detail: "GPUs, TPUs, and custom AI accelerators have massive proven demand. The AI hardware market is growing 30%+ annually. Risk is primarily competitive, not technical. High investment but high confidence in returns."
+    },
+    {
+        label: "Quantum Computing",
+        x: 90, y: -90, r: 24,
+        color: "#E53935",
+        pSuccess: "2-5%",
+        ev: "-$40B",
+        totalInvestment: "$50B+",
+        detail: "Quantum computing requires simultaneous breakthroughs in error correction, qubit coherence, and scalable manufacturing. No commercially useful quantum algorithm has outperformed classical hardware on a real-world problem. The expected value is deeply negative given current physics constraints."
+    }
+];
+
+// Generate efficient frontier curve points
+function generateEfficientFrontier() {
+    const points = [];
+    for (let risk = 5; risk <= 95; risk += 1) {
+        // Model: return = a * sqrt(risk) - b, representing diminishing returns at higher risk
+        const ret = 120 * Math.sqrt(risk / 100) * 100 / 100 - 5;
+        // Cap at a reasonable maximum
+        const cappedRet = Math.min(ret, 500);
+        points.push({ x: risk, y: cappedRet });
+    }
+    return points;
+}
+
+// Build datasets
+const frontierData = generateEfficientFrontier();
+
+const bubbleData = investments.map(inv => ({
+    x: inv.x,
+    y: inv.y,
+    r: inv.r
+}));
+
+const bubbleColors = investments.map(inv => inv.color);
+const bubbleBorders = investments.map(inv => inv.color);
+
+// Chart configuration
+const ctx = document.getElementById("riskReturnChart").getContext("2d");
+
+// Custom plugin: draw shaded regions and break-even line
+const regionPlugin = {
+    id: "regionShading",
+    beforeDatasetsDraw(chart) {
+        const { ctx: c, chartArea: { left, right, top, bottom }, scales: { x, y } } = chart;
+
+        // Green region: upper-left (attractive)
+        c.save();
+        c.fillStyle = "rgba(76, 175, 80, 0.07)";
+        const greenRight = x.getPixelForValue(35);
+        const greenBottom = y.getPixelForValue(100);
+        c.fillRect(left, top, greenRight - left, greenBottom - top);
+        c.restore();
+
+        // Red region: lower-right (unattractive)
+        c.save();
+        c.fillStyle = "rgba(229, 57, 53, 0.07)";
+        const redLeft = x.getPixelForValue(60);
+        const redTop = y.getPixelForValue(50);
+        c.fillRect(redLeft, redTop, right - redLeft, bottom - redTop);
+        c.restore();
+
+        // Break-even line at y=0
+        c.save();
+        c.strokeStyle = "#999";
+        c.setLineDash([6, 4]);
+        c.lineWidth = 1.5;
+        const zeroY = y.getPixelForValue(0);
+        c.beginPath();
+        c.moveTo(left, zeroY);
+        c.lineTo(right, zeroY);
+        c.stroke();
+        c.restore();
+
+        // Break-even label
+        c.save();
+        c.fillStyle = "#888";
+        c.font = "11px sans-serif";
+        c.fillText("Break-even line", right - 95, zeroY - 6);
+        c.restore();
+
+        // Region labels
+        c.save();
+        c.font = "11px sans-serif";
+        c.fillStyle = "rgba(76, 175, 80, 0.5)";
+        c.fillText("Attractive", left + 8, top + 18);
+        c.fillStyle = "rgba(229, 57, 53, 0.5)";
+        c.fillText("Unattractive", right - 78, bottom - 8);
+        c.restore();
+    }
+};
+
+// Custom plugin: draw labels near bubbles
+const labelPlugin = {
+    id: "bubbleLabels",
+    afterDatasetsDraw(chart) {
+        const dataset = chart.data.datasets.find(d => d.label === "Investments");
+        if (!dataset) return;
+        const meta = chart.getDatasetMeta(chart.data.datasets.indexOf(dataset));
+        const { ctx: c } = chart;
+
+        c.save();
+        c.font = "bold 11px sans-serif";
+        c.textAlign = "center";
+
+        meta.data.forEach((element, i) => {
+            const inv = investments[i];
+            const xPos = element.x;
+            const yPos = element.y;
+            const radius = element.options.radius || inv.r;
+
+            c.fillStyle = inv.color;
+            // Position label above the bubble
+            c.fillText(inv.label, xPos, yPos - radius - 5);
+        });
+
+        c.restore();
+    }
+};
+
+const chart = new Chart(ctx, {
+    type: "bubble",
+    data: {
+        datasets: [
+            {
+                label: "Efficient Frontier",
+                type: "line",
+                data: frontierData,
+                borderColor: "#3F51B5",
+                borderWidth: 2,
+                borderDash: [8, 4],
+                pointRadius: 0,
+                fill: false,
+                tension: 0.4,
+                order: 2
+            },
+            {
+                label: "Investments",
+                data: bubbleData,
+                backgroundColor: bubbleColors.map(c => c + "BB"),
+                borderColor: bubbleBorders,
+                borderWidth: 2,
+                order: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: { top: 20, right: 15, bottom: 5, left: 5 }
+        },
+        scales: {
+            x: {
+                type: "linear",
+                min: 0,
+                max: 100,
+                title: {
+                    display: true,
+                    text: "Investment Risk (σ %)",
+                    font: { size: 13, weight: "bold" }
+                },
+                ticks: {
+                    callback: v => v + "%"
+                },
+                grid: { color: "rgba(0,0,0,0.06)" }
+            },
+            y: {
+                type: "linear",
+                min: -150,
+                max: 500,
+                title: {
+                    display: true,
+                    text: "Expected Return (%)",
+                    font: { size: 13, weight: "bold" }
+                },
+                ticks: {
+                    callback: v => v + "%"
+                },
+                grid: { color: "rgba(0,0,0,0.06)" }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    filter: item => item.text !== "Investments",
+                    usePointStyle: true,
+                    font: { size: 11 }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    title: function (context) {
+                        if (context[0].dataset.label === "Investments") {
+                            return investments[context[0].dataIndex].label;
+                        }
+                        return "";
+                    },
+                    label: function (context) {
+                        if (context.dataset.label === "Investments") {
+                            const inv = investments[context.dataIndex];
+                            return [
+                                `Risk (σ): ${inv.x}%`,
+                                `Expected Return: ${inv.y}%`,
+                                `P(success): ${inv.pSuccess}`,
+                                `E[V]: ${inv.ev}`,
+                                `Total Investment: ${inv.totalInvestment}`
+                            ];
+                        }
+                        return `Risk: ${context.raw.x}%, Return: ${context.raw.y.toFixed(0)}%`;
+                    }
+                },
+                backgroundColor: "rgba(0,0,0,0.85)",
+                titleFont: { size: 13, weight: "bold" },
+                bodyFont: { size: 12 },
+                padding: 10,
+                cornerRadius: 6
+            }
+        },
+        onClick: function (event, elements) {
+            if (elements.length > 0) {
+                const el = elements[0];
+                if (chart.data.datasets[el.datasetIndex].label === "Investments") {
+                    showDetail(el.index);
+                }
+            }
+        }
+    },
+    plugins: [regionPlugin, labelPlugin]
+});
+
+// Toggle efficient frontier visibility
+let frontierVisible = true;
+const toggleBtn = document.getElementById("toggle-frontier");
+
+toggleBtn.addEventListener("click", function () {
+    frontierVisible = !frontierVisible;
+    chart.data.datasets[0].hidden = !frontierVisible;
+    toggleBtn.textContent = frontierVisible ? "Hide Efficient Frontier" : "Show Efficient Frontier";
+    toggleBtn.classList.toggle("inactive", !frontierVisible);
+    chart.update();
+});
+
+// Detail panel
+function showDetail(index) {
+    const inv = investments[index];
+    const panel = document.getElementById("detail-panel");
+    document.getElementById("detail-title").textContent = inv.label;
+    document.getElementById("detail-body").innerHTML = `
+        <p><strong>Risk (σ):</strong> ${inv.x}% &nbsp;|&nbsp;
+        <strong>Expected Return:</strong> ${inv.y}% &nbsp;|&nbsp;
+        <strong>P(success):</strong> ${inv.pSuccess} &nbsp;|&nbsp;
+        <strong>E[V]:</strong> ${inv.ev} &nbsp;|&nbsp;
+        <strong>Total Investment:</strong> ${inv.totalInvestment}</p>
+        <p>${inv.detail}</p>
+    `;
+    panel.style.display = "block";
+}
+
+function closeDetail() {
+    document.getElementById("detail-panel").style.display = "none";
+}
+
+</script>
+</body>
+</html>

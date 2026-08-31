@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>TCP Three-Way Handshake and Termination using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// TCP Three-Way Handshake and Termination
+// CANVAS_HEIGHT: 658
+// A labeled sequence diagram of TCP setup, data exchange, and the four-way
+// close, with state labels, packet drop, and half-close.
+// Bloom: Understand, Analyze, Evaluate.
+
+let containerWidth;
+let canvasWidth = 940;
+let drawHeight = 560;
+let controlHeight = 98;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+
+const AMBER = '#F5A623', SLATE = '#546e7a', RED = '#e53935';
+
+// segments: dir 'cs' (client->server) or 'sc'; flags; seq/ack labels; states after
+const segs = [
+  { dir: 'cs', label: 'SYN', flag: 'SYN', info: 'seq=100', cs: 'SYN_SENT', ss: 'SYN_RCVD' },
+  { dir: 'sc', label: 'SYN, ACK', flag: 'SYN', info: 'seq=500 ack=101', ss: 'SYN_RCVD' },
+  { dir: 'cs', label: 'ACK', info: 'ack=501', cs: 'ESTABLISHED', ss: 'ESTABLISHED' },
+  { dir: 'cs', label: 'DATA', info: 'seq=101 len=200' },
+  { dir: 'sc', label: 'ACK', info: 'ack=301' },
+  { dir: 'sc', label: 'DATA', info: 'seq=501 len=300' },
+  { dir: 'cs', label: 'ACK', info: 'ack=801' },
+  { dir: 'cs', label: 'FIN', flag: 'FIN', info: 'seq=301', cs: 'FIN_WAIT_1', ss: 'CLOSE_WAIT' },
+  { dir: 'sc', label: 'ACK', info: 'ack=302', cs: 'FIN_WAIT_2' },
+  { dir: 'sc', label: 'FIN', flag: 'FIN', info: 'seq=801', ss: 'LAST_ACK', half: true },
+  { dir: 'cs', label: 'ACK', info: 'ack=802', cs: 'TIME_WAIT', ss: 'CLOSED' }
+];
+
+let step = 0, isPlaying = false, frameAcc = 0;
+let showStates = true, dropPkt = false, halfClose = false;
+let stepButton, playButton, resetButton, statesBtn, dropBtn, halfBtn;
+const DROP_IDX = 3;   // the segment that gets dropped when enabled
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  stepButton = createButton('Step ▶'); stepButton.position(10, drawHeight + 8); stepButton.mousePressed(doStep);
+  playButton = createButton('Play'); playButton.position(80, drawHeight + 8); playButton.mousePressed(togglePlay);
+  resetButton = createButton('Reset'); resetButton.position(140, drawHeight + 8); resetButton.mousePressed(() => { step = 0; isPlaying = false; playButton.html('Play'); });
+  statesBtn = createButton('TCP states: ON'); statesBtn.position(205, drawHeight + 8); statesBtn.mousePressed(() => { showStates = !showStates; statesBtn.html('TCP states: ' + (showStates ? 'ON' : 'OFF')); });
+  dropBtn = createButton('Drop a packet: OFF'); dropBtn.position(10, drawHeight + 46); dropBtn.mousePressed(() => { dropPkt = !dropPkt; dropBtn.html('Drop a packet: ' + (dropPkt ? 'ON' : 'OFF')); step = 0; });
+  halfBtn = createButton('Half-close: OFF'); halfBtn.position(160, drawHeight + 46); halfBtn.mousePressed(() => { halfClose = !halfClose; halfBtn.html('Half-close: ' + (halfClose ? 'ON' : 'OFF')); step = 0; });
+  describe('A TCP sequence diagram between a client and server timelines, ' +
+    'showing the three-way handshake, data exchange, and four-way termination ' +
+    'with connection states beside each timeline.', LABEL);
+}
+
+function rendered() {
+  // build the displayed segment list (insert a retransmit if dropping)
+  const list = [];
+  for (let i = 0; i < segs.length; i++) {
+    list.push({ ...segs[i], dropped: dropPkt && i === DROP_IDX, orig: i });
+    if (dropPkt && i === DROP_IDX) list.push({ ...segs[i], retx: true, orig: i });
+    if (halfClose && segs[i].half) break;   // stop after server FIN in half-close demo
+  }
+  return list;
+}
+
+function doStep() { isPlaying = false; playButton.html('Play'); const L = rendered(); if (step < L.length) step++; }
+function togglePlay() { const L = rendered(); if (step >= L.length) step = 0; isPlaying = !isPlaying; playButton.html(isPlaying ? 'Pause' : 'Play'); }
+
+function draw() {
+  updateCanvasSize();
+  stroke('silver'); strokeWeight(1);
+  fill('aliceblue'); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  const L = rendered();
+  if (isPlaying) { frameAcc++; if (frameAcc > 40) { frameAcc = 0; if (step < L.length) step++; else { isPlaying = false; playButton.html('Play'); } } }
+
+  noStroke(); fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('TCP Handshake, Data, and Termination', canvasWidth / 2, 6);
+
+  const clientX = canvasWidth * 0.28, serverX = canvasWidth * 0.72;
+  const top = 80, bottom = drawHeight - 26;
+  // timelines + headers
+  noStroke(); fill('#37474f'); textAlign(CENTER, TOP); textSize(15);
+  text('Client', clientX, 44); text('Server', serverX, 44);
+  stroke('#90a4ae'); strokeWeight(2); line(clientX, top, clientX, bottom); line(serverX, top, serverX, bottom);
+
+  // current states
+  let cState = 'CLOSED', sState = 'LISTEN';
+  const rowH = (bottom - top - 10) / Math.max(11, L.length);
+  for (let i = 0; i < min(step, L.length); i++) {
+    const s = L[i]; const y = top + 16 + i * rowH;
+    drawSegment(s, clientX, serverX, y);
+    if (!s.dropped) { if (s.cs) cState = s.cs; if (s.ss) sState = s.ss; }
+  }
+  if (halfClose && step >= L.length) { noStroke(); fill('#6a1b9a'); textAlign(CENTER, TOP); textSize(12); text('Half-closed: client done sending; server may keep sending.', canvasWidth / 2, bottom - 4); }
+
+  // state labels
+  if (showStates) {
+    noStroke(); fill('#1565c0'); textAlign(RIGHT, CENTER); textSize(12); text(cState, clientX - 46, top - 10);
+    textAlign(LEFT, CENTER); text(sState, serverX + 46, top - 10);
+  }
+
+  // progress
+  noStroke(); fill('#455a64'); textAlign(LEFT, CENTER); textSize(12);
+  text('Step ' + min(step, L.length) + ' / ' + L.length, 600, drawHeight + 56);
+}
+
+function drawSegment(s, cx, sx, y) {
+  const fromX = s.dir === 'cs' ? cx : sx;
+  const toX = s.dir === 'cs' ? sx : cx;
+  const dropped = s.dropped;
+  const endX = dropped ? lerp(fromX, toX, 0.55) : toX;
+  const slope = 10 * (s.dir === 'cs' ? 1 : 1);
+  stroke(s.dir === 'cs' ? AMBER : SLATE); strokeWeight(s.retx ? 1.5 : 2);
+  if (s.retx) { /* show retransmit dashed */ drawDashed(fromX, y, endX, y + slope); } else line(fromX, y, endX, y + slope);
+  // arrowhead or drop X
+  if (dropped) { stroke(RED); strokeWeight(2); const mx = endX, my = y + slope; line(mx - 6, my - 6, mx + 6, my + 6); line(mx - 6, my + 6, mx + 6, my - 6); }
+  else { noStroke(); fill(s.dir === 'cs' ? AMBER : SLATE); const dir = s.dir === 'cs' ? 1 : -1; triangle(endX, y + slope, endX - dir * 9, y + slope - 4, endX - dir * 9, y + slope + 4); }
+  // label
+  noStroke(); fill('#263238'); textAlign(CENTER, BOTTOM); textSize(12);
+  let lbl = (s.retx ? 'retransmit ' : '') + s.label;
+  text(lbl, (fromX + endX) / 2, y - 1);
+  fill('#607d8b'); textFont('monospace'); textSize(10); textAlign(CENTER, TOP); text(s.info, (fromX + endX) / 2, y + slope + 1); textFont('Arial');
+  // flag badge
+  if (s.flag && !s.retx) { noStroke(); fill(s.flag === 'SYN' ? '#2e7d32' : '#c62828'); rectMode(CENTER); rect((fromX + endX) / 2, y - 16, 34, 13, 2); rectMode(CORNER); fill('white'); textAlign(CENTER, CENTER); textSize(9); text(s.flag, (fromX + endX) / 2, y - 16); }
+}
+
+function drawDashed(x1, y1, x2, y2) { const d = dist(x1, y1, x2, y2), steps = floor(d / 7); for (let i = 0; i < steps; i += 2) { const t1 = i / steps, t2 = min(1, (i + 1) / steps); line(lerp(x1, x2, t1), lerp(y1, y2, t1), lerp(x1, x2, t2), lerp(y1, y2, t2)); } }
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); redraw(); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

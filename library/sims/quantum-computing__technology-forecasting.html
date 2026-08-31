@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"timeline.json": "[\n  {\n    \"id\": 1,\n    \"content\": \"Shor's Algorithm Published\",\n    \"start\": \"1994-01-01\",\n    \"category\": \"milestone\",\n    \"notes\": \"Peter Shor demonstrates a quantum algorithm that can factor large integers exponentially faster than any known classical algorithm, providing the first compelling reason to build a quantum computer.\"\n  },\n  {\n    \"id\": 2,\n    \"content\": \"First 2-Qubit Gate\",\n    \"start\": \"1998-01-01\",\n    \"category\": \"milestone\",\n    \"notes\": \"Researchers demonstrate the first controlled-NOT gate on two qubits, proving basic quantum logic operations are physically possible.\"\n  },\n  {\n    \"id\": 3,\n    \"content\": \"Predictions of useful QC by 2010\",\n    \"start\": \"2000-01-01\",\n    \"category\": \"prediction\",\n    \"notes\": \"Multiple researchers and institutions predict commercially useful quantum computers within a decade. Status: FAILED. No useful quantum computation was achieved by 2010.\",\n    \"status\": \"failed\"\n  },\n  {\n    \"id\": 4,\n    \"content\": \"D-Wave founded, promises quantum speedup\",\n    \"start\": \"2001-01-01\",\n    \"category\": \"prediction\",\n    \"notes\": \"D-Wave Systems is founded with bold claims about delivering quantum speedup through quantum annealing. Decades later, no clear quantum advantage has been demonstrated over classical optimization.\",\n    \"status\": \"failed\"\n  },\n  {\n    \"id\": 5,\n    \"content\": \"Preskill coins 'NISQ'\",\n    \"start\": \"2012-01-01\",\n    \"category\": \"milestone\",\n    \"notes\": \"John Preskill introduces the term Noisy Intermediate-Scale Quantum (NISQ), acknowledging that near-term devices will be too error-prone for fault-tolerant computation. The term implicitly concedes that useful quantum computing is further away than previously hoped.\"\n  },\n  {\n    \"id\": 6,\n    \"content\": \"Predictions of quantum advantage by 2020\",\n    \"start\": \"2015-01-01\",\n    \"category\": \"prediction\",\n    \"notes\": \"A new wave of predictions claims quantum advantage (solving a commercially relevant problem faster than classical) will arrive by 2020. Status: FAILED. No commercially relevant quantum advantage was demonstrated.\",\n    \"status\": \"failed\"\n  },\n  {\n    \"id\": 7,\n    \"content\": \"Google 'Quantum Supremacy' claim\",\n    \"start\": \"2019-10-01\",\n    \"category\": \"milestone\",\n    \"notes\": \"Google claims quantum supremacy with its 53-qubit Sycamore processor on a random circuit sampling task. The claim is disputed: IBM argues a classical supercomputer could solve the same task in days, not millennia. The task itself has no known commercial application.\"\n  },\n  {\n    \"id\": 8,\n    \"content\": \"Predictions of useful QC by 2025\",\n    \"start\": \"2019-06-01\",\n    \"category\": \"prediction\",\n    \"notes\": \"Industry leaders and investors predict commercially useful quantum computers by 2025. Status: FAILED. As of 2025, no commercial quantum advantage has been demonstrated.\",\n    \"status\": \"failed\"\n  },\n  {\n    \"id\": 9,\n    \"content\": \"IBM 1,121-qubit processor\",\n    \"start\": \"2023-12-01\",\n    \"category\": \"milestone\",\n    \"notes\": \"IBM unveils its 1,121-qubit Condor processor. However, the processor lacks error correction and cannot perform useful fault-tolerant computations. More qubits without error correction does not equal more computational power.\"\n  },\n  {\n    \"id\": 10,\n    \"content\": \"Microsoft predicts useful QC by 2028\",\n    \"start\": \"2024-03-01\",\n    \"category\": \"prediction\",\n    \"notes\": \"Microsoft announces a roadmap predicting commercially useful quantum computing by 2028, based on its topological qubit approach. The topological qubit itself has yet to be conclusively demonstrated.\",\n    \"status\": \"pending\"\n  },\n  {\n    \"id\": 11,\n    \"content\": \"No commercial quantum advantage demonstrated\",\n    \"start\": \"2025-01-01\",\n    \"category\": \"reality\",\n    \"notes\": \"As of 2025, after 30+ years of research and tens of billions in investment, no quantum computer has demonstrated a clear advantage over classical computers on any commercially relevant problem. Every prediction of 'useful quantum computing by year X' has failed.\"\n  }\n]\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Physics Bet Timeline</title>
+    <script src="https://unpkg.com/vis-timeline@7.7.3/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <link href="https://unpkg.com/vis-timeline@7.7.3/styles/vis-timeline-graph2d.min.css" rel="stylesheet">
+    <style>body {
+    background: aliceblue;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 15px;
+}
+
+h2 {
+    text-align: center;
+    color: #3F51B5;
+    margin: 5px 0 10px 0;
+    font-size: 1.3rem;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 6px 14px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    opacity: 0.85;
+}
+
+.filter-btn.active {
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+}
+
+.filter-btn[data-category="all"] {
+    border-color: #3F51B5;
+    color: #3F51B5;
+}
+.filter-btn[data-category="all"].active {
+    background: #3F51B5;
+    color: white;
+}
+
+.filter-btn[data-category="milestone"] {
+    border-color: #1976D2;
+    color: #1976D2;
+}
+.filter-btn[data-category="milestone"].active {
+    background: #1976D2;
+    color: white;
+}
+
+.filter-btn[data-category="prediction"] {
+    border-color: #E65100;
+    color: #E65100;
+}
+.filter-btn[data-category="prediction"].active {
+    background: #E65100;
+    color: white;
+}
+
+.filter-btn[data-category="reality"] {
+    border-color: #C62828;
+    color: #C62828;
+}
+.filter-btn[data-category="reality"].active {
+    background: #C62828;
+    color: white;
+}
+
+#timeline {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+}
+
+#event-details {
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    min-height: 40px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+#event-details .detail-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+#event-details .detail-category {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+}
+
+#event-details .detail-category.milestone { background: #1976D2; }
+#event-details .detail-category.prediction { background: #E65100; }
+#event-details .detail-category.reality { background: #C62828; }
+
+#event-details .detail-status {
+    font-weight: 700;
+    margin-left: 6px;
+}
+#event-details .detail-status.failed { color: #C62828; }
+#event-details .detail-status.pending { color: #F57C00; }
+
+#event-details .detail-notes {
+    margin-top: 6px;
+    color: #333;
+}
+
+/* vis-timeline item overrides */
+.vis-item.milestone {
+    background-color: #1976D2;
+    border-color: #0D47A1;
+    color: white;
+}
+
+.vis-item.prediction {
+    background-color: #FF7043;
+    border-color: #E65100;
+    color: white;
+}
+
+.vis-item.reality {
+    background-color: #C62828;
+    border-color: #8E0000;
+    color: white;
+}
+
+.vis-item .vis-item-overflow {
+    overflow: visible;
+}
+
+.vis-item .vis-item-content {
+    white-space: nowrap;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Tooltip styling */
+.vis-tooltip {
+    background-color: #333 !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 0.82rem !important;
+    max-width: 300px !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    line-height: 1.4 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Physics Bet Timeline: Predictions vs. Reality</h2>
+        <div class="legend">
+            <div class="legend-item"><span class="legend-swatch" style="background:#1976D2"></span> Milestone</div>
+            <div class="legend-item"><span class="legend-swatch" style="background:#FF7043"></span> Prediction</div>
+            <div class="legend-item"><span class="legend-swatch" style="background:#C62828"></span> Reality Check</div>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn" data-category="all">All</button>
+            <button class="filter-btn" data-category="milestone">Milestones</button>
+            <button class="filter-btn" data-category="prediction">Predictions</button>
+            <button class="filter-btn" data-category="reality">Reality Checks</button>
+        </div>
+        <div id="timeline"></div>
+        <div id="event-details">Click an event for details. Scroll to zoom, drag to pan.</div>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', function () {
+
+    const categoryColors = {
+        milestone:  { bg: '#1976D2', border: '#0D47A1' },
+        prediction: { bg: '#FF7043', border: '#E65100' },
+        reality:    { bg: '#C62828', border: '#8E0000' }
+    };
+
+    const statusLabels = {
+        failed:  'FAILED',
+        pending: 'PENDING'
+    };
+
+    let allItems = [];
+    let timeline = null;
+
+    fetch('timeline.json')
+        .then(r => r.json())
+        .then(data => {
+            allItems = data.map(d => {
+                const statusText = d.status ? ` [${statusLabels[d.status] || d.status.toUpperCase()}]` : '';
+                return {
+                    id: d.id,
+                    content: d.content,
+                    start: d.start,
+                    className: d.category,
+                    title: d.content + statusText + ': ' + (d.notes || ''),
+                    _category: d.category,
+                    _notes: d.notes || '',
+                    _status: d.status || null
+                };
+            });
+            initTimeline(allItems);
+            setupFilters();
+        })
+        .catch(err => {
+            document.getElementById('event-details').textContent = 'Error loading timeline data: ' + err.message;
+        });
+
+    function initTimeline(items) {
+        const container = document.getElementById('timeline');
+        const dataSet = new vis.DataSet(items);
+
+        const options = {
+            width: '100%',
+            height: '100%',
+            margin: { item: 12 },
+            orientation: { axis: 'bottom' },
+            zoomMin: 1000 * 60 * 60 * 24 * 365 * 2,   // 2 years
+            zoomMax: 1000 * 60 * 60 * 24 * 365 * 40,   // 40 years
+            min: new Date(1990, 0, 1),
+            max: new Date(2030, 0, 1),
+            start: new Date(1992, 0, 1),
+            end: new Date(2027, 0, 1),
+            showTooltips: true,
+            tooltip: {
+                followMouse: true,
+                overflowMethod: 'cap'
+            },
+            stack: true,
+            horizontalScroll: true,
+            zoomKey: 'ctrlKey'
+        };
+
+        timeline = new vis.Timeline(container, dataSet, options);
+
+        timeline.on('select', function (properties) {
+            if (properties.items.length === 0) {
+                showDefaultDetails();
+                return;
+            }
+            const itemId = properties.items[0];
+            const item = items.find(i => i.id === itemId);
+            if (item) showDetails(item);
+        });
+    }
+
+    function showDetails(item) {
+        const panel = document.getElementById('event-details');
+        const year = new Date(item.start).getFullYear();
+
+        let statusHtml = '';
+        if (item._status) {
+            statusHtml = `<span class="detail-status ${item._status}">${statusLabels[item._status] || item._status.toUpperCase()}</span>`;
+        }
+
+        panel.innerHTML =
+            `<div class="detail-title">${year}: ${item.content}</div>` +
+            `<span class="detail-category ${item._category}">${item._category}</span>` +
+            statusHtml +
+            `<div class="detail-notes">${item._notes}</div>`;
+    }
+
+    function showDefaultDetails() {
+        document.getElementById('event-details').innerHTML = 'Click an event for details. Scroll to zoom, drag to pan.';
+    }
+
+    function setupFilters() {
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                buttons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const cat = this.getAttribute('data-category');
+                const filtered = cat === 'all'
+                    ? allItems
+                    : allItems.filter(i => i._category === cat);
+
+                timeline.setItems(new vis.DataSet(filtered));
+                showDefaultDetails();
+            });
+        });
+        // Set "All" as active by default
+        document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+    }
+});
+</script>
+</body>
+</html>

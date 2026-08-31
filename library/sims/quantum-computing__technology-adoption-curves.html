@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Technology Success Indicator Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Technology Success Indicator Analysis
+// A p5.js MicroSim comparing technologies across six success indicators
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Indicator labels (columns)
+let indicators = [
+    "Working at\nSmall Scale",
+    "Cost Decreasing\nTrajectory",
+    "Clear Use\nCases",
+    "Industry\nAdoption",
+    "Revenue Exceeds\nInvestment",
+    "Independent\nVerification"
+];
+
+// Status values: "green" = yes, "yellow" = partial, "red" = no
+let technologies = [
+    {
+        name: "Transistor",
+        scores: ["green", "green", "green", "green", "green", "green"],
+        details: [
+            "First transistor demonstrated at Bell Labs in 1947 worked reliably at small scale.",
+            "Cost per transistor has fallen exponentially for 70+ years (Moore's Law).",
+            "Computing, communications, and control applications were obvious from the start.",
+            "Industry adoption began in the 1950s with hearing aids, radios, and military electronics.",
+            "Revenue exceeded investment within a decade of commercialization.",
+            "Independently replicated at dozens of labs worldwide within years of invention."
+        ]
+    },
+    {
+        name: "Internet",
+        scores: ["green", "green", "green", "green", "green", "green"],
+        details: [
+            "ARPANET demonstrated reliable packet switching between four nodes in 1969.",
+            "Cost per bit transmitted has fallen steadily for decades.",
+            "Email, file transfer, and remote access were immediate practical applications.",
+            "Commercial ISPs emerged in the early 1990s; enterprise adoption followed rapidly.",
+            "Internet-based businesses generate trillions in annual revenue.",
+            "TCP/IP protocols independently implemented and verified by thousands of organizations."
+        ]
+    },
+    {
+        name: "GPS",
+        scores: ["green", "green", "green", "green", "green", "green"],
+        details: [
+            "First GPS satellites demonstrated accurate positioning in the 1970s.",
+            "Receiver costs dropped from thousands of dollars to under a dollar per chip.",
+            "Navigation, surveying, and timing applications were clear from the outset.",
+            "Military adoption in the 1980s; civilian adoption exploded in the 2000s.",
+            "GPS-enabled services generate billions in annual commercial revenue.",
+            "Positioning accuracy independently verified by military, civilian, and scientific users."
+        ]
+    },
+    {
+        name: "Solar Panels",
+        scores: ["green", "green", "green", "green", "green", "green"],
+        details: [
+            "First practical silicon solar cell demonstrated at Bell Labs in 1954.",
+            "Cost per watt has fallen 99% since 1976, continuing to decline.",
+            "Electricity generation for satellites, off-grid, and grid-scale applications.",
+            "Utility-scale solar farms deployed globally; rooftop adoption widespread.",
+            "Solar is now the cheapest source of electricity in most of the world.",
+            "Efficiency and output independently measured by national labs worldwide."
+        ]
+    },
+    {
+        name: "Quantum\nComputing",
+        scores: ["yellow", "red", "red", "red", "red", "yellow"],
+        details: [
+            "Small quantum circuits demonstrated, but no useful computation achieved at any scale.",
+            "Cost per qubit is increasing, not decreasing. Error correction adds massive overhead.",
+            "No commercial problem identified where QC outperforms classical computing.",
+            "No enterprise has deployed QC for production workloads. Usage is experimental only.",
+            "Total industry revenue is a tiny fraction of the billions invested. No path to profitability.",
+            "Quantum advantage claims are contested. Google's 2019 claim was challenged by IBM within days."
+        ]
+    }
+];
+
+let selectedCell = null; // {row, col} of clicked cell
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Technology Success Indicator Analysis", canvasWidth / 2, 10);
+
+    // Table layout
+    let tableTop = 45;
+    let rowLabelWidth = 110;
+    let tableLeft = rowLabelWidth + 10;
+    let tableRight = canvasWidth - margin;
+    let tableWidth = tableRight - tableLeft;
+    let colWidth = tableWidth / indicators.length;
+    let headerHeight = 50;
+    let rowHeight = 50;
+    let cellSize = 28;
+
+    // Column headers
+    fill('#3F51B5');
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    for (let c = 0; c < indicators.length; c++) {
+        let cx = tableLeft + c * colWidth + colWidth / 2;
+        text(indicators[c], cx, tableTop + headerHeight / 2);
+    }
+
+    // Header divider
+    stroke('#BDBDBD');
+    strokeWeight(1);
+    line(tableLeft - 5, tableTop + headerHeight, tableRight, tableTop + headerHeight);
+
+    // Draw rows
+    for (let r = 0; r < technologies.length; r++) {
+        let tech = technologies[r];
+        let ry = tableTop + headerHeight + r * rowHeight + rowHeight / 2;
+
+        // Alternating row background
+        if (r % 2 === 0) {
+            fill(230, 240, 255, 80);
+        } else {
+            fill(255, 255, 255, 80);
+        }
+        noStroke();
+        rect(0, tableTop + headerHeight + r * rowHeight, canvasWidth, rowHeight);
+
+        // Highlight quantum computing row
+        if (r === technologies.length - 1) {
+            fill(255, 235, 230, 120);
+            noStroke();
+            rect(0, tableTop + headerHeight + r * rowHeight, canvasWidth, rowHeight);
+        }
+
+        // Row label
+        let isQC = (r === technologies.length - 1);
+        fill(isQC ? '#D32F2F' : '#333');
+        noStroke();
+        textSize(12);
+        textAlign(RIGHT, CENTER);
+        textStyle(isQC ? BOLD : NORMAL);
+        text(tech.name, rowLabelWidth, ry);
+
+        // Cells
+        for (let c = 0; c < indicators.length; c++) {
+            let cx = tableLeft + c * colWidth + colWidth / 2;
+            let status = tech.scores[c];
+            let isSelected = selectedCell && selectedCell.row === r && selectedCell.col === c;
+
+            // Cell highlight if selected
+            if (isSelected) {
+                fill(63, 81, 181, 40);
+                noStroke();
+                rect(cx - colWidth / 2, tableTop + headerHeight + r * rowHeight, colWidth, rowHeight);
+            }
+
+            // Draw status indicator
+            if (status === "green") {
+                drawCheckmark(cx, ry, cellSize, isSelected);
+            } else if (status === "yellow") {
+                drawPartial(cx, ry, cellSize, isSelected);
+            } else {
+                drawCross(cx, ry, cellSize, isSelected);
+            }
+        }
+
+        // Row divider
+        stroke('#E0E0E0');
+        strokeWeight(0.5);
+        line(10, tableTop + headerHeight + (r + 1) * rowHeight, tableRight, tableTop + headerHeight + (r + 1) * rowHeight);
+    }
+
+    // Summary row
+    let summaryY = tableTop + headerHeight + technologies.length * rowHeight;
+    fill('#E8EAF6');
+    noStroke();
+    rect(0, summaryY, canvasWidth, rowHeight);
+
+    // Summary label
+    fill('#3F51B5');
+    noStroke();
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    textStyle(BOLD);
+    text("Success\nScore", rowLabelWidth, summaryY + rowHeight / 2);
+
+    // Calculate and display scores
+    for (let r = 0; r < technologies.length; r++) {
+        let tech = technologies[r];
+        let score = 0;
+        for (let c = 0; c < indicators.length; c++) {
+            if (tech.scores[c] === "green") score += 2;
+            else if (tech.scores[c] === "yellow") score += 1;
+        }
+        // Compute column position based on technology index in a transposed sense
+        // Actually we need scores per technology displayed in a summary row
+        // We need to show each technology's total score in its row
+    }
+
+    // Draw score for each technology in their respective rows on the right side
+    let scoreColX = tableRight + 0; // We'll overlay on the summary row differently
+
+    // Actually, let's show scores in the summary row under each technology name
+    // But the summary is horizontal. Let's show the score at the end of each row instead.
+
+    // Recalculate: show score at the far right of each row
+    let scoreX = tableRight - 5;
+    textSize(11);
+    textAlign(CENTER, CENTER);
+
+    // Score header
+    fill('#3F51B5');
+    textStyle(BOLD);
+    textSize(10);
+    text("Score", canvasWidth - margin / 2 - 5, tableTop + headerHeight / 2);
+
+    // Score values per technology
+    for (let r = 0; r < technologies.length; r++) {
+        let tech = technologies[r];
+        let score = 0;
+        let maxScore = indicators.length * 2;
+        for (let c = 0; c < indicators.length; c++) {
+            if (tech.scores[c] === "green") score += 2;
+            else if (tech.scores[c] === "yellow") score += 1;
+        }
+        let ry = tableTop + headerHeight + r * rowHeight + rowHeight / 2;
+        let ratio = score / maxScore;
+
+        // Color based on score
+        if (ratio >= 0.7) fill('#2E7D32');
+        else if (ratio >= 0.4) fill('#F57F17');
+        else fill('#D32F2F');
+
+        textSize(13);
+        textStyle(BOLD);
+        text(score + "/" + maxScore, canvasWidth - margin / 2 - 5, ry);
+    }
+
+    // Remove the summary row - redraw the area with the detail panel instead
+    // Detail panel for selected cell
+    fill('aliceblue');
+    noStroke();
+    rect(0, summaryY, canvasWidth, drawHeight - summaryY);
+
+    // Border for detail panel
+    stroke('#BDBDBD');
+    strokeWeight(1);
+    line(10, summaryY, tableRight, summaryY);
+
+    if (selectedCell !== null) {
+        let tech = technologies[selectedCell.row];
+        let detail = tech.details[selectedCell.col];
+        let indicatorName = indicators[selectedCell.col].replace('\n', ' ');
+        let techName = tech.name.replace('\n', ' ');
+
+        // Detail header
+        fill('#3F51B5');
+        noStroke();
+        textSize(13);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text(techName + " - " + indicatorName, margin, summaryY + 10);
+
+        // Status indicator
+        let status = tech.scores[selectedCell.col];
+        let statusLabel = status === "green" ? "YES" : (status === "yellow" ? "PARTIAL" : "NO");
+        let statusColor = status === "green" ? '#2E7D32' : (status === "yellow" ? '#F57F17' : '#D32F2F');
+        fill(statusColor);
+        textSize(12);
+        textStyle(BOLD);
+        textAlign(RIGHT, TOP);
+        text(statusLabel, canvasWidth - margin, summaryY + 10);
+
+        // Detail text
+        fill('#333');
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(NORMAL);
+        let detailWidth = canvasWidth - margin * 2;
+        text(detail, margin, summaryY + 32, detailWidth, 80);
+    } else {
+        // Prompt
+        fill('#888');
+        noStroke();
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        textStyle(ITALIC);
+        let panelMid = summaryY + (drawHeight - summaryY) / 2;
+        text("Click any cell to see a detailed explanation", canvasWidth / 2, panelMid);
+    }
+
+    // Legend in control region
+    let legendY = drawHeight + controlHeight / 2;
+    textSize(11);
+    textStyle(NORMAL);
+    textAlign(LEFT, CENTER);
+
+    let legendStartX = canvasWidth / 2 - 180;
+
+    // Green check legend
+    drawCheckmark(legendStartX, legendY, 18, false);
+    fill('#333');
+    noStroke();
+    text("Yes", legendStartX + 14, legendY);
+
+    // Yellow partial legend
+    drawPartial(legendStartX + 60, legendY, 18, false);
+    fill('#333');
+    noStroke();
+    text("Partial", legendStartX + 74, legendY);
+
+    // Red X legend
+    drawCross(legendStartX + 150, legendY, 18, false);
+    fill('#333');
+    noStroke();
+    text("No", legendStartX + 164, legendY);
+
+    // Score legend
+    fill('#888');
+    textSize(10);
+    textAlign(RIGHT, CENTER);
+    text("Score: Green=2, Yellow=1, Red=0", canvasWidth - margin, legendY);
+}
+
+function drawCheckmark(cx, cy, sz, highlighted) {
+    let r = sz / 2;
+    // Circle background
+    fill(highlighted ? '#1B5E20' : '#4CAF50');
+    noStroke();
+    ellipse(cx, cy, sz, sz);
+
+    // Checkmark
+    stroke('white');
+    strokeWeight(2.5);
+    noFill();
+    let s = r * 0.5;
+    line(cx - s * 0.6, cy, cx - s * 0.1, cy + s * 0.5);
+    line(cx - s * 0.1, cy + s * 0.5, cx + s * 0.7, cy - s * 0.4);
+}
+
+function drawPartial(cx, cy, sz, highlighted) {
+    let r = sz / 2;
+    fill(highlighted ? '#E65100' : '#FFC107');
+    noStroke();
+    ellipse(cx, cy, sz, sz);
+
+    // Tilde / dash
+    stroke('white');
+    strokeWeight(2.5);
+    noFill();
+    let s = r * 0.5;
+    line(cx - s * 0.6, cy, cx + s * 0.6, cy);
+}
+
+function drawCross(cx, cy, sz, highlighted) {
+    let r = sz / 2;
+    fill(highlighted ? '#B71C1C' : '#F44336');
+    noStroke();
+    ellipse(cx, cy, sz, sz);
+
+    // X mark
+    stroke('white');
+    strokeWeight(2.5);
+    noFill();
+    let s = r * 0.35;
+    line(cx - s, cy - s, cx + s, cy + s);
+    line(cx + s, cy - s, cx - s, cy + s);
+}
+
+function mousePressed() {
+    // Determine which cell was clicked
+    let tableTop = 45;
+    let rowLabelWidth = 110;
+    let tableLeft = rowLabelWidth + 10;
+    let tableRight = canvasWidth - margin;
+    let tableWidth = tableRight - tableLeft;
+    let colWidth = tableWidth / indicators.length;
+    let headerHeight = 50;
+    let rowHeight = 50;
+
+    let clickedRow = -1;
+    let clickedCol = -1;
+
+    for (let r = 0; r < technologies.length; r++) {
+        let rowTop = tableTop + headerHeight + r * rowHeight;
+        if (mouseY >= rowTop && mouseY < rowTop + rowHeight) {
+            clickedRow = r;
+        }
+    }
+
+    for (let c = 0; c < indicators.length; c++) {
+        let colLeft = tableLeft + c * colWidth;
+        if (mouseX >= colLeft && mouseX < colLeft + colWidth) {
+            clickedCol = c;
+        }
+    }
+
+    if (clickedRow >= 0 && clickedCol >= 0) {
+        // Toggle if same cell clicked again
+        if (selectedCell && selectedCell.row === clickedRow && selectedCell.col === clickedCol) {
+            selectedCell = null;
+        } else {
+            selectedCell = { row: clickedRow, col: clickedCol };
+        }
+    } else {
+        selectedCell = null;
+    }
+
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

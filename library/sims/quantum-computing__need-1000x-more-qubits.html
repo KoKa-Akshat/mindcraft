@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Error Rate Gap: Quantum vs. Classical</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Error Rate Gap: Quantum vs. Classical
+// Visualizes the logarithmic gap between quantum and classical error rates
+// and projects when the gap might close based on improvement rate.
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Slider
+let improvementSlider;
+
+// Logarithmic scale range
+let logTop = 0;      // 10^0 at top
+let logBottom = -20;  // 10^-20 at bottom
+
+// Key error rate levels (as log10 exponents)
+let currentQuantumBest = -3;
+let qecThreshold = -4;
+let usefulCompTop = -6;
+let usefulCompBottom = -10;
+let classicalTop = -15;
+let classicalBottom = -18;
+
+// Current year for projections
+let currentYear = 2026;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Create improvement rate slider
+    improvementSlider = createSlider(1, 20, 5, 1);
+    improvementSlider.parent(document.querySelector('main'));
+    improvementSlider.position(sliderLeftMargin, drawHeight + 30);
+    improvementSlider.size(canvasWidth - sliderLeftMargin - margin * 2);
+    improvementSlider.input(function() { redraw(); });
+
+    noLoop();
+    textFont('Arial');
+}
+
+function logToY(logVal) {
+    // Map log10 value to y pixel position
+    // logTop (0) maps to top of scale, logBottom (-20) maps to bottom
+    let scaleTop = 60;
+    let scaleBottom = drawHeight - 30;
+    return map(logVal, logTop, logBottom, scaleTop, scaleBottom);
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Error Rate Gap: Quantum vs. Classical", canvasWidth / 2, 8);
+
+    let improvementRate = improvementSlider.value(); // percent improvement per year in log terms (x0.1 per N years)
+
+    // Scale position
+    let scaleX = 100;
+    let scaleTop = 60;
+    let scaleBottom = drawHeight - 30;
+    let barAreaLeft = scaleX + 60;
+    let barAreaRight = canvasWidth - margin;
+
+    // Draw the vertical logarithmic scale
+    stroke('#666');
+    strokeWeight(2);
+    line(scaleX, scaleTop, scaleX, scaleBottom);
+
+    // Scale tick marks and labels
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+    fill('#333');
+    noStroke();
+
+    for (let exp = 0; exp >= logBottom; exp -= 2) {
+        let y = logToY(exp);
+        // Tick mark
+        stroke('#666');
+        strokeWeight(1);
+        line(scaleX - 6, y, scaleX, y);
+        // Grid line
+        stroke('#DDD');
+        strokeWeight(0.5);
+        line(scaleX, y, barAreaRight, y);
+        // Label
+        noStroke();
+        fill('#333');
+        textSize(11);
+        textAlign(RIGHT, CENTER);
+        if (exp === 0) {
+            text("10\u2070 (1)", scaleX - 10, y);
+        } else {
+            text("10" + superscript(exp), scaleX - 10, y);
+        }
+    }
+
+    // Scale axis label
+    push();
+    fill('#333');
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    translate(18, (scaleTop + scaleBottom) / 2);
+    rotate(-HALF_PI);
+    text("Error Rate per Operation", 0, 0);
+    pop();
+
+    // --- Draw zones and markers ---
+
+    let zoneLeft = barAreaLeft;
+    let zoneWidth = barAreaRight - barAreaLeft;
+
+    // Classical zone (blue)
+    let classTopY = logToY(classicalTop);
+    let classBotY = logToY(classicalBottom);
+    fill(63, 81, 181, 40);
+    noStroke();
+    rect(zoneLeft, classTopY, zoneWidth, classBotY - classTopY);
+    // Zone label
+    fill('#3F51B5');
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text("Classical Computing", zoneLeft + 10, (classTopY + classBotY) / 2 - 10);
+    textStyle(NORMAL);
+    textSize(11);
+    text("10\u207B\u00B9\u2075 to 10\u207B\u00B9\u2078 errors/op", zoneLeft + 10, (classTopY + classBotY) / 2 + 8);
+
+    // Useful computation zone (green)
+    let usefulTopY = logToY(usefulCompTop);
+    let usefulBotY = logToY(usefulCompBottom);
+    fill(76, 175, 80, 40);
+    noStroke();
+    rect(zoneLeft, usefulTopY, zoneWidth, usefulBotY - usefulTopY);
+    // Zone label
+    fill('#2E7D32');
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text("Useful Computation Target", zoneLeft + 10, (usefulTopY + usefulBotY) / 2 - 10);
+    textStyle(NORMAL);
+    textSize(11);
+    text("10\u207B\u2076 to 10\u207B\u00B9\u2070 errors/op", zoneLeft + 10, (usefulTopY + usefulBotY) / 2 + 8);
+
+    // QEC threshold (yellow dashed line)
+    let qecY = logToY(qecThreshold);
+    stroke('#DAA520');
+    strokeWeight(2);
+    drawingContext.setLineDash([8, 6]);
+    line(scaleX, qecY, barAreaRight, qecY);
+    drawingContext.setLineDash([]);
+    // Label
+    noStroke();
+    fill('#B8860B');
+    textSize(12);
+    textAlign(RIGHT, BOTTOM);
+    textStyle(BOLD);
+    text("QEC Threshold (10\u207B\u2074)", barAreaRight, qecY - 4);
+    textStyle(NORMAL);
+    textSize(10);
+    text("Error correction becomes theoretically possible below this line", barAreaRight, qecY + 14);
+
+    // Current best quantum error rate (orange marker)
+    let quantumY = logToY(currentQuantumBest);
+    stroke('#FF7043');
+    strokeWeight(3);
+    line(scaleX, quantumY, barAreaRight, quantumY);
+    // Marker triangle
+    fill('#FF7043');
+    noStroke();
+    triangle(scaleX - 2, quantumY - 8, scaleX - 2, quantumY + 8, scaleX + 10, quantumY);
+    // Label
+    fill('#E65100');
+    textSize(13);
+    textAlign(RIGHT, TOP);
+    textStyle(BOLD);
+    text("Current Best Quantum: ~10\u207B\u00B3", barAreaRight, quantumY + 4);
+
+    // --- Draw the GAP arrow ---
+    let gapArrowX = zoneLeft + zoneWidth / 2 + 80;
+    let gapTopY = quantumY + 12;
+    let gapBotY = classTopY - 8;
+
+    // Arrow shaft
+    stroke('#D32F2F');
+    strokeWeight(3);
+    line(gapArrowX, gapTopY, gapArrowX, gapBotY);
+
+    // Top arrowhead (pointing up toward quantum)
+    fill('#D32F2F');
+    noStroke();
+    triangle(gapArrowX - 8, gapTopY + 2, gapArrowX + 8, gapTopY + 2, gapArrowX, gapTopY - 6);
+
+    // Bottom arrowhead (pointing down toward classical)
+    triangle(gapArrowX - 8, gapBotY - 2, gapArrowX + 8, gapBotY - 2, gapArrowX, gapBotY + 6);
+
+    // GAP label
+    fill('#D32F2F');
+    textSize(16);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    let gapMidY = (gapTopY + gapBotY) / 2;
+    text("GAP", gapArrowX + 14, gapMidY - 10);
+    textSize(12);
+    textStyle(NORMAL);
+    text("~12 orders of", gapArrowX + 14, gapMidY + 6);
+    text("magnitude", gapArrowX + 14, gapMidY + 20);
+
+    // --- Projection calculations ---
+    // improvement rate: orders of magnitude gained per decade
+    // slider value = 10x improvement factor per decade (1 to 20)
+    // e.g., slider=10 means 1 order of magnitude per decade
+    let ordersPerDecade = improvementRate / 10.0;
+
+    // Years to reach each threshold from current -3
+    let yearsToQEC = abs(qecThreshold - currentQuantumBest) / ordersPerDecade * 10;
+    let yearsToUseful = abs(usefulCompTop - currentQuantumBest) / ordersPerDecade * 10;
+    let yearsToClassical = abs(classicalTop - currentQuantumBest) / ordersPerDecade * 10;
+
+    let yearQEC = currentYear + yearsToQEC;
+    let yearUseful = currentYear + yearsToUseful;
+    let yearClassical = currentYear + yearsToClassical;
+
+    // Draw projection info box
+    let infoBoxX = zoneLeft + 6;
+    let infoBoxY = scaleBottom - 110;
+    let infoBoxW = 260;
+    let infoBoxH = 100;
+
+    fill(255, 255, 255, 220);
+    stroke('#3F51B5');
+    strokeWeight(1.5);
+    rect(infoBoxX, infoBoxY, infoBoxW, infoBoxH, 6);
+
+    noStroke();
+    fill('#3F51B5');
+    textSize(12);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("Projected Year to Reach:", infoBoxX + 10, infoBoxY + 8);
+
+    textStyle(NORMAL);
+    textSize(11);
+    fill('#333');
+    let lineY = infoBoxY + 28;
+    let lineSpacing = 20;
+
+    fill('#B8860B');
+    text("QEC Threshold (10\u207B\u2074):", infoBoxX + 10, lineY);
+    textAlign(RIGHT, TOP);
+    textStyle(BOLD);
+    text(yearQEC > 2200 ? "After 2200" : round(yearQEC).toString(), infoBoxX + infoBoxW - 10, lineY);
+
+    textAlign(LEFT, TOP);
+    textStyle(NORMAL);
+    fill('#2E7D32');
+    text("Useful Computation (10\u207B\u2076):", infoBoxX + 10, lineY + lineSpacing);
+    textAlign(RIGHT, TOP);
+    textStyle(BOLD);
+    text(yearUseful > 2200 ? "After 2200" : round(yearUseful).toString(), infoBoxX + infoBoxW - 10, lineY + lineSpacing);
+
+    textAlign(LEFT, TOP);
+    textStyle(NORMAL);
+    fill('#3F51B5');
+    text("Classical Level (10\u207B\u00B9\u2075):", infoBoxX + 10, lineY + lineSpacing * 2);
+    textAlign(RIGHT, TOP);
+    textStyle(BOLD);
+    text(yearClassical > 2200 ? "After 2200" : round(yearClassical).toString(), infoBoxX + infoBoxW - 10, lineY + lineSpacing * 2);
+
+    // --- Projected position marker ---
+    // Show where quantum error rate would be in 10 years
+    let projectedLog = currentQuantumBest - ordersPerDecade;
+    if (projectedLog < logBottom) projectedLog = logBottom;
+    let projY = logToY(projectedLog);
+
+    stroke('#FF7043');
+    strokeWeight(1.5);
+    drawingContext.setLineDash([4, 4]);
+    line(scaleX, projY, barAreaRight, projY);
+    drawingContext.setLineDash([]);
+
+    noStroke();
+    fill('#FF7043');
+    textSize(10);
+    textAlign(LEFT, BOTTOM);
+    textStyle(ITALIC);
+    text("Projected in 10 yrs: ~10" + superscript(round(projectedLog)), scaleX + 8, projY - 2);
+
+    // --- Control region labels ---
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("Improvement rate:", 10, drawHeight + 42);
+
+    // Slider value display
+    fill('#3F51B5');
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    let sliderRight = sliderLeftMargin + improvementSlider.width + 10;
+    text(nf(ordersPerDecade, 1, 1) + " orders/decade", sliderRight, drawHeight + 42);
+
+    // Slider min/max labels
+    fill('#888');
+    textSize(10);
+    textStyle(NORMAL);
+    textAlign(LEFT, TOP);
+    text("0.1", sliderLeftMargin, drawHeight + 52);
+    textAlign(RIGHT, TOP);
+    text("2.0", sliderLeftMargin + improvementSlider.width, drawHeight + 52);
+}
+
+function superscript(num) {
+    // Convert a negative integer to Unicode superscript characters
+    let s = num.toString();
+    let result = "";
+    let superDigits = {
+        '0': '\u2070', '1': '\u00B9', '2': '\u00B2', '3': '\u00B3',
+        '4': '\u2074', '5': '\u2075', '6': '\u2076', '7': '\u2077',
+        '8': '\u2078', '9': '\u2079', '-': '\u207B'
+    };
+    for (let i = 0; i < s.length; i++) {
+        result += superDigits[s[i]] || s[i];
+    }
+    return result;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    improvementSlider.size(canvasWidth - sliderLeftMargin - margin * 2);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

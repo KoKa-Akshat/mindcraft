@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slope-Intercept Form Explorer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input[type="range"] {
+            cursor: pointer;
+        }
+    </style>
+    <script>// Slope-Intercept Form Explorer
+// Interactive y = mx + b grapher with sliders
+
+let canvasWidth = 900;
+let drawHeight = 600;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+
+let slopeSlider, interceptSlider;
+let m = 1, b = 0;
+
+let gridScale = 25;
+let originX, originY;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  originX = canvasWidth * 0.45;
+  originY = drawHeight / 2;
+
+  // Create sliders
+  let sliderY = drawHeight + 30;
+
+  // Slope slider
+  let slopeLabel = createSpan('Slope (m):');
+  slopeLabel.position(20, sliderY - 5);
+  slopeLabel.style('font-family', 'Arial');
+  slopeLabel.style('font-size', '14px');
+  slopeLabel.parent(document.querySelector('main'));
+
+  slopeSlider = createSlider(-3, 3, 1, 0.25);
+  slopeSlider.position(110, sliderY);
+  slopeSlider.style('width', '200px');
+  slopeSlider.parent(document.querySelector('main'));
+
+  // Y-intercept slider
+  let intLabel = createSpan('Y-intercept (b):');
+  intLabel.position(350, sliderY - 5);
+  intLabel.style('font-family', 'Arial');
+  intLabel.style('font-size', '14px');
+  intLabel.parent(document.querySelector('main'));
+
+  interceptSlider = createSlider(-5, 5, 0, 0.5);
+  interceptSlider.position(470, sliderY);
+  interceptSlider.style('width', '200px');
+  interceptSlider.parent(document.querySelector('main'));
+
+  describe('Interactive slope-intercept form explorer with sliders for slope and y-intercept', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  originX = canvasWidth * 0.45;
+
+  m = slopeSlider.value();
+  b = interceptSlider.value();
+
+  // Draw area background
+  background('#FAFAFA');
+  fill('#FFFFFF');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  drawGrid();
+  drawLine();
+  drawInfoPanel();
+  drawControlPanel();
+}
+
+function drawGrid() {
+  push();
+  translate(originX, originY);
+
+  // Grid lines
+  stroke('#E8E8E8');
+  strokeWeight(0.5);
+  for (let x = -10; x <= 10; x++) {
+    line(x * gridScale, -10 * gridScale, x * gridScale, 10 * gridScale);
+  }
+  for (let y = -10; y <= 10; y++) {
+    line(-10 * gridScale, y * gridScale, 10 * gridScale, y * gridScale);
+  }
+
+  // Axes
+  stroke('#757575');
+  strokeWeight(1.5);
+  line(-10 * gridScale, 0, 10 * gridScale, 0);
+  line(0, -10 * gridScale, 0, 10 * gridScale);
+
+  // Axis labels
+  fill('#757575');
+  textSize(10);
+  textAlign(CENTER, TOP);
+  for (let x = -10; x <= 10; x++) {
+    if (x !== 0 && x % 2 === 0) text(x, x * gridScale, 5);
+  }
+  textAlign(RIGHT, CENTER);
+  for (let y = -10; y <= 10; y++) {
+    if (y !== 0 && y % 2 === 0) text(-y, -5, y * gridScale);
+  }
+
+  pop();
+}
+
+function drawLine() {
+  push();
+  translate(originX, originY);
+
+  // Determine line color based on slope
+  let lineColor;
+  if (m === 0) {
+    lineColor = '#2E7D32'; // Green for horizontal
+  } else if (m > 0) {
+    lineColor = '#D32F2F'; // Red for positive
+  } else {
+    lineColor = '#7B1FA2'; // Purple for negative
+  }
+
+  // Draw the line
+  stroke(lineColor);
+  strokeWeight(3);
+
+  let x1 = -10;
+  let x2 = 10;
+  let y1 = m * x1 + b;
+  let y2 = m * x2 + b;
+
+  // Clip to visible area
+  line(x1 * gridScale, -y1 * gridScale, x2 * gridScale, -y2 * gridScale);
+
+  // Y-intercept point
+  noStroke();
+  fill('#4CAF50');
+  ellipse(0, -b * gridScale, 16, 16);
+  fill('#FFFFFF');
+  ellipse(0, -b * gridScale, 8, 8);
+
+  // Y-intercept label
+  fill('#2E7D32');
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(LEFT, CENTER);
+  text(`(0, ${b})`, 12, -b * gridScale);
+  textStyle(NORMAL);
+
+  // Rise/run triangle (if slope != 0)
+  if (m !== 0) {
+    let startX = 0;
+    let startY = b;
+    let endX = 1;
+    let endY = m * endX + b;
+
+    // Run arrow
+    stroke('#1976D2');
+    strokeWeight(2);
+    line(startX * gridScale, -startY * gridScale, endX * gridScale, -startY * gridScale);
+
+    // Rise arrow
+    let riseColor = m > 0 ? '#4CAF50' : '#FF9800';
+    stroke(riseColor);
+    line(endX * gridScale, -startY * gridScale, endX * gridScale, -endY * gridScale);
+
+    // Right angle
+    stroke('#9E9E9E');
+    strokeWeight(1);
+    noFill();
+    let signY = m > 0 ? 1 : -1;
+    rect(endX * gridScale - 6, -startY * gridScale - signY * 6, 6, signY * 6);
+
+    // Labels
+    noStroke();
+    textSize(9);
+    fill('#1976D2');
+    textAlign(CENTER, TOP);
+    text('1', 0.5 * gridScale, -startY * gridScale + 5);
+
+    fill(riseColor);
+    textAlign(LEFT, CENTER);
+    text(m.toString(), endX * gridScale + 6, -(startY + endY) / 2 * gridScale);
+  }
+
+  // Additional points on line
+  noStroke();
+  fill(lineColor);
+  for (let x = -4; x <= 4; x += 2) {
+    if (x !== 0) {
+      let y = m * x + b;
+      if (y >= -9 && y <= 9) {
+        ellipse(x * gridScale, -y * gridScale, 8, 8);
+      }
+    }
+  }
+
+  pop();
+}
+
+function drawInfoPanel() {
+  // Info panel on the right side
+  let panelX = canvasWidth - 220;
+  let panelY = 20;
+  let panelW = 200;
+  let panelH = 260;
+
+  fill('#FFFFFF');
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  // Title
+  fill('#1565C0');
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Equation', panelX + panelW / 2, panelY + 15);
+  textStyle(NORMAL);
+
+  // Equation display
+  let eqY = panelY + 50;
+
+  // Format equation nicely
+  let eqStr = formatEquation(m, b);
+
+  fill('#424242');
+  textSize(18);
+  textStyle(BOLD);
+  text(eqStr, panelX + panelW / 2, eqY);
+  textStyle(NORMAL);
+
+  // Component breakdown
+  eqY += 45;
+  textSize(12);
+  textAlign(LEFT, TOP);
+
+  // Slope info
+  fill('#D32F2F');
+  text('Slope:', panelX + 15, eqY);
+  fill('#424242');
+  text(`m = ${m}`, panelX + 70, eqY);
+
+  // Y-intercept info
+  eqY += 25;
+  fill('#4CAF50');
+  text('Y-intercept:', panelX + 15, eqY);
+  fill('#424242');
+  text(`b = ${b}`, panelX + 95, eqY);
+
+  // Interpretation
+  eqY += 40;
+  fill('#757575');
+  textSize(11);
+
+  let slopeType, slopeDesc;
+  if (m === 0) {
+    slopeType = 'Horizontal line';
+    slopeDesc = 'y = ' + b + ' (constant)';
+  } else if (m > 0) {
+    slopeType = 'Positive slope';
+    slopeDesc = 'Rises left to right';
+  } else {
+    slopeType = 'Negative slope';
+    slopeDesc = 'Falls left to right';
+  }
+
+  textAlign(CENTER, TOP);
+  text(slopeType, panelX + panelW / 2, eqY);
+  text(slopeDesc, panelX + panelW / 2, eqY + 16);
+
+  if (m !== 0) {
+    eqY += 45;
+    let steepness = abs(m) > 1 ? 'Steep' : (abs(m) < 1 ? 'Gentle' : 'Moderate');
+    text(`${steepness} (|m| = ${abs(m).toFixed(2)})`, panelX + panelW / 2, eqY);
+  }
+}
+
+function formatEquation(slope, yInt) {
+  let eq = 'y = ';
+
+  if (slope === 0) {
+    eq += yInt;
+  } else if (slope === 1) {
+    eq += 'x';
+  } else if (slope === -1) {
+    eq += '-x';
+  } else {
+    eq += slope + 'x';
+  }
+
+  if (slope !== 0) {
+    if (yInt > 0) {
+      eq += ' + ' + yInt;
+    } else if (yInt < 0) {
+      eq += ' - ' + abs(yInt);
+    }
+  }
+
+  return eq;
+}
+
+function drawControlPanel() {
+  // Panel background
+  fill('#F5F5F5');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Divider
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  // Slider values display
+  fill('#424242');
+  textSize(12);
+  textStyle(BOLD);
+  textAlign(LEFT, CENTER);
+  noStroke();
+  text(`m = ${m}`, 320, drawHeight + 30);
+  text(`b = ${b}`, 680, drawHeight + 30);
+  textStyle(NORMAL);
+
+  // Instructions
+  fill('#9E9E9E');
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  text('Adjust sliders to change the line equation y = mx + b', canvasWidth / 2, drawHeight + controlHeight - 10);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  originX = canvasWidth * 0.45;
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 900);
+    canvasWidth = max(canvasWidth, 700);
+    gridScale = (canvasWidth * 0.45) / 10;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

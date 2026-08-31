@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Island Biogeography Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Island Biogeography Simulator
+// CANVAS_HEIGHT: 630
+// Demonstrates species-area relationship and distance effect
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 400;
+let graphHeight = 150;
+let controlHeight = 80;
+let canvasHeight = drawHeight + graphHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Controls
+let sizeSlider, distSlider;
+let fastBtn, resetBtn, pauseBtn;
+
+// Simulation state
+let islandSpecies = [];
+let maxSpeciesPool = 60;
+let speciesHistory = [];
+let maxHistory = 200;
+let running = false;
+let frameCounter = 0;
+let immigrationRate = 0;
+let extinctionRate = 0;
+let equilibriumCount = 0;
+
+// Visual - migrating arcs
+let migrants = [];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Island biogeography simulator showing species colonization and extinction', LABEL);
+
+  sizeSlider = createSlider(20, 200, 80, 5);
+  sizeSlider.parent(document.querySelector('main'));
+  sizeSlider.style('width', '120px');
+
+  distSlider = createSlider(50, 300, 150, 10);
+  distSlider.parent(document.querySelector('main'));
+  distSlider.style('width', '120px');
+
+  pauseBtn = createButton('Start');
+  pauseBtn.parent(document.querySelector('main'));
+  pauseBtn.mousePressed(() => { running = !running; pauseBtn.html(running ? 'Pause' : 'Start'); });
+
+  fastBtn = createButton('Fast Forward');
+  fastBtn.parent(document.querySelector('main'));
+  fastBtn.mousePressed(() => { for (let i = 0; i < 50; i++) updateSim(); });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(resetSim);
+
+  resetSim();
+}
+
+function resetSim() {
+  islandSpecies = [];
+  for (let i = 0; i < 5; i++) {
+    islandSpecies.push(makeSpecies());
+  }
+  speciesHistory = [islandSpecies.length];
+  migrants = [];
+  frameCounter = 0;
+  running = false;
+  if (pauseBtn) pauseBtn.html('Start');
+}
+
+function makeSpecies() {
+  return {
+    x: 0, y: 0, // positioned in draw
+    col: color(random(50, 200), random(80, 200), random(50, 200)),
+    shape: floor(random(4)), // 0=circle, 1=square, 2=triangle, 3=diamond
+    fadeOut: false,
+    alpha: 255
+  };
+}
+
+function updateSim() {
+  let islandSize = sizeSlider.value();
+  let dist = distSlider.value();
+
+  // Immigration rate decreases with distance, depends on empty slots
+  let emptySlots = max(0, maxSpeciesPool - islandSpecies.length);
+  immigrationRate = (emptySlots / maxSpeciesPool) * (300 / dist) * 0.15;
+
+  // Extinction rate increases with fewer species (crowding on small island)
+  extinctionRate = (islandSpecies.length / maxSpeciesPool) * (200 / islandSize) * 0.12;
+
+  // Equilibrium
+  equilibriumCount = round(maxSpeciesPool * immigrationRate / (immigrationRate + extinctionRate + 0.001));
+
+  // Immigration event
+  if (random() < immigrationRate && islandSpecies.length < maxSpeciesPool) {
+    islandSpecies.push(makeSpecies());
+    // Add visual migrant
+    migrants.push({ progress: 0, col: islandSpecies[islandSpecies.length - 1].col });
+  }
+
+  // Extinction event
+  if (random() < extinctionRate && islandSpecies.length > 0) {
+    let idx = floor(random(islandSpecies.length));
+    islandSpecies[idx].fadeOut = true;
+  }
+
+  // Remove faded species
+  islandSpecies = islandSpecies.filter(s => !s.fadeOut || s.alpha > 10);
+  for (let s of islandSpecies) {
+    if (s.fadeOut) s.alpha -= 30;
+  }
+
+  frameCounter++;
+  if (frameCounter % 2 === 0) {
+    speciesHistory.push(islandSpecies.length);
+    if (speciesHistory.length > maxHistory) speciesHistory.shift();
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Ocean background
+  fill(160, 210, 240);
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Graph area
+  fill('#f5f5f5');
+  rect(0, drawHeight, canvasWidth, graphHeight);
+
+  // Control area
+  fill('white');
+  noStroke();
+  rect(0, drawHeight + graphHeight, canvasWidth, controlHeight);
+
+  if (running && frameCount % 6 === 0) {
+    updateSim();
+  }
+
+  let islandSize = sizeSlider.value();
+  let dist = distSlider.value();
+
+  // Draw mainland
+  fill(80, 140, 60);
+  noStroke();
+  rect(0, 40, 60, drawHeight - 80, 0, 10, 10, 0);
+  // Trees on mainland
+  fill(40, 110, 40);
+  for (let y = 60; y < drawHeight - 60; y += 25) {
+    triangle(35, y - 12, 25, y + 5, 45, y + 5);
+  }
+
+  noStroke();
+  fill(40);
+  textSize(11);
+  textAlign(CENTER, TOP);
+  text('Mainland', 30, drawHeight - 35);
+
+  // Draw island
+  let islandX = 60 + map(dist, 50, 300, 80, canvasWidth - 150);
+  let islandR = map(islandSize, 20, 200, 30, 90);
+  fill(120, 170, 80);
+  noStroke();
+  ellipse(islandX, drawHeight / 2, islandR * 2, islandR * 1.5);
+  // Sand
+  fill(210, 195, 140);
+  ellipse(islandX, drawHeight / 2 + islandR * 0.4, islandR * 1.8, islandR * 0.5);
+  // Green top
+  fill(90, 160, 60);
+  ellipse(islandX, drawHeight / 2 - islandR * 0.2, islandR * 1.5, islandR * 0.8);
+
+  // Draw species on island
+  let cols = ceil(sqrt(islandSpecies.length));
+  for (let i = 0; i < islandSpecies.length; i++) {
+    let s = islandSpecies[i];
+    let row = floor(i / max(cols, 1));
+    let col2 = i % max(cols, 1);
+    let sx = islandX - islandR * 0.5 + (col2 / max(cols, 1)) * islandR;
+    let sy = drawHeight / 2 - islandR * 0.3 + (row / max(cols, 1)) * islandR * 0.6;
+    let sz = 6;
+
+    let a = s.fadeOut ? s.alpha : 255;
+    fill(red(s.col), green(s.col), blue(s.col), a);
+    noStroke();
+    if (s.shape === 0) ellipse(sx, sy, sz, sz);
+    else if (s.shape === 1) rect(sx - sz / 2, sy - sz / 2, sz, sz);
+    else if (s.shape === 2) triangle(sx, sy - sz / 2, sx - sz / 2, sy + sz / 2, sx + sz / 2, sy + sz / 2);
+    else { // diamond
+      beginShape();
+      vertex(sx, sy - sz / 2);
+      vertex(sx + sz / 2, sy);
+      vertex(sx, sy + sz / 2);
+      vertex(sx - sz / 2, sy);
+      endShape(CLOSE);
+    }
+  }
+
+  // Draw migration arcs
+  for (let i = migrants.length - 1; i >= 0; i--) {
+    let m = migrants[i];
+    m.progress += 0.03;
+    if (m.progress >= 1) { migrants.splice(i, 1); continue; }
+    let mx = lerp(55, islandX - islandR, m.progress);
+    let my = drawHeight / 2 - sin(m.progress * PI) * 60;
+    fill(red(m.col), green(m.col), blue(m.col), 200);
+    noStroke();
+    ellipse(mx, my, 5, 5);
+  }
+
+  // Stats
+  noStroke();
+  fill(40);
+  textSize(13);
+  textAlign(LEFT, TOP);
+  text('Species: ' + islandSpecies.length, islandX - islandR, 15);
+  textSize(11);
+  text('Immigration: ' + nf(immigrationRate, 1, 3), islandX - islandR, 32);
+  text('Extinction: ' + nf(extinctionRate, 1, 3), islandX - islandR, 46);
+  text('Equilibrium: ~' + equilibriumCount, islandX - islandR, 60);
+
+  // Draw graph
+  drawGraph();
+
+  // Control labels
+  let ctrlY = drawHeight + graphHeight;
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Size: ' + sizeSlider.value(), 5, ctrlY + 15);
+  text('Dist: ' + distSlider.value(), canvasWidth * 0.45, ctrlY + 15);
+
+  positionControls();
+}
+
+function drawGraph() {
+  let gx = 40;
+  let gy = drawHeight + 15;
+  let gw = canvasWidth - 60;
+  let gh = graphHeight - 35;
+
+  stroke(100);
+  strokeWeight(1);
+  line(gx, gy, gx, gy + gh);
+  line(gx, gy + gh, gx + gw, gy + gh);
+
+  noStroke();
+  fill(80);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('Time', gx + gw / 2, gy + gh + 3);
+  textAlign(RIGHT, CENTER);
+  text(maxSpeciesPool, gx - 3, gy);
+  text('0', gx - 3, gy + gh);
+
+  if (speciesHistory.length < 2) return;
+
+  // Species count line
+  stroke(50, 130, 80);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let i = 0; i < speciesHistory.length; i++) {
+    let px = gx + (i / maxHistory) * gw;
+    let py = gy + gh - (speciesHistory[i] / maxSpeciesPool) * gh;
+    vertex(px, py);
+  }
+  endShape();
+
+  // Equilibrium line
+  stroke(200, 100, 50, 150);
+  strokeWeight(1);
+  let eqY = gy + gh - (equilibriumCount / maxSpeciesPool) * gh;
+  line(gx, eqY, gx + gw, eqY);
+  noStroke();
+  fill(200, 100, 50);
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  text('Eq', gx + gw + 3, eqY);
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  let ctrlY = drawHeight + graphHeight;
+  // Row 1: size slider + distance slider
+  sizeSlider.position(ox + 45, oy + ctrlY + 5);
+  sizeSlider.size(canvasWidth * 0.32);
+  distSlider.position(ox + canvasWidth * 0.52, oy + ctrlY + 5);
+  distSlider.size(canvasWidth * 0.32);
+  // Row 2: buttons
+  pauseBtn.position(ox + 10, oy + ctrlY + 40);
+  fastBtn.position(ox + 80, oy + ctrlY + 40);
+  resetBtn.position(ox + 200, oy + ctrlY + 40);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Exponent Types Interactive Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Exponent Types Interactive Explorer — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "exponent-types-interactive-explorer",
+  "title": "Exponent Types Interactive Explorer",
+  "kind": "quiz",
+  "objective": "Explore how different types of exponents (positive, zero, negative) affect the value of powers",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Value A",
+  "bLabel": "Value B",
+  "choices": [
+    "Add exponents",
+    "Multiply exponents",
+    "Keep exponents"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Explore how different types of exponents (positive, zero, negative) affect the value of powers
+//
+//     Canvas layout (900x600px):
+//     - Left area (600x600): Visualization area
+//     - Right area (300x600): Controls and information
+//
+//     Visual elements:
+//     - Large display showing the expression $b^n$
+//     - Calculation shown step-by-step
+//     - Visual representation:
+//       - For positive exponents: show repeated multiplication with boxes
+//       - For zero exponent: show the pattern decreasing to 1
+//       - For negative exponents: show reciprocal with fraction visualization
+//     - Number line showing result's position
+//     - Color coding: positive (blue), zero (green), negative (red)
+//
+//     Interactive controls:
+//     - Slider: Base value b (-10 to 10, excluding 0)
+//     - Slider: Exponent value n (-5 to 5)
+//     - Display: Current expression (e.g., "3^(-2)")
+//     - Display: Expanded form (e.g., "1/(3×3)")
+//     - Display: Decimal value (e.g., "= 0.111...")
+//     - Display: Fraction form (e.g., "= 1/9")
+//     - Button: "Show pattern" (demonstrates exponent sequence)
+//
+//     Default parameters:
+//     - Base: 2
+//     - Exponent: 3
+//
+//     Behavior:
+//     - When sliders change, all displays update immediately
+//     - For positive exponents:
+//       - Show boxes representing each multiplication
+//       - Animate the calculation
+//     - For zero exponent:
+//       - Show pattern: b^2, b^1, b^0 with arrows showing division
+//       - Highlight that result is always 1
+//     - For negative exponents:
+//       - Show flip to reciprocal
+//       - Display both fraction and decimal forms
+//     - "Show pattern" button animates through sequence
+//
+//     Visual features:
+//     - Smooth transitions between different exponent types
+//     - Color-coded regions for positive/zero/negative
+//     - Clear typography for expressions
+//     - Tooltips explaining each step
+//
+//     Learning reinforcements:
+//     - Display: "Any non-zero number to the power 0 equals 1"
+//     - Display: "Negative exponents mean 'take the reciprocal'"
+//     - Display: "Larger positive exponents = larger values"
+//
+//     Implementation: p5.js with dynamic text, shape rendering, and smooth animations
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

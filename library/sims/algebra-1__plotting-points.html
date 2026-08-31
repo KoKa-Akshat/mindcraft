@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Coordinate Plane Interactive Plotter using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Coordinate Plane Interactive Plotter — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "coordinate-plane-interactive-plotter",
+  "title": "Coordinate Plane Interactive Plotter",
+  "kind": "coordinate",
+  "objective": "Practice plotting points on the coordinate plane and identifying quadrants",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Slope / x-value",
+  "bLabel": "Intercept / y-value",
+  "choices": [
+    "Linear",
+    "Quadratic",
+    "Vertical"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Practice plotting points on the coordinate plane and identifying quadrants
+//
+//     Canvas layout (700x700px):
+//     - Main area (600x600): Coordinate grid
+//     - Right panel (100x600): Information and controls
+//     - Bottom panel (700x100): Instructions and feedback
+//
+//     Visual elements:
+//     - Coordinate grid from -10 to +10 on both axes
+//     - Major gridlines every 1 unit (light gray)
+//     - Minor gridlines every 0.5 units (very light gray)
+//     - x-axis and y-axis (bold black lines)
+//     - Origin marked with special indicator
+//     - Four quadrants shaded in different pastel colors
+//     - Plotted points shown as colored circles
+//     - Point labels showing coordinates
+//
+//     Interactive controls:
+//     - Input: x-coordinate (-10 to 10)
+//     - Input: y-coordinate (-10 to 10)
+//     - Button: "Plot Point"
+//     - Button: "Clear All Points"
+//     - Dropdown: "Challenge Mode" (on/off)
+//     - Display: List of plotted points with quadrant identification
+//
+//     Game mode (Challenge):
+//     - Show coordinates and ask student to click where point should be
+//     - Immediate feedback on accuracy
+//     - Score tracking
+//     - Progressive difficulty (starts with integer coordinates, adds decimals)
+//
+//     Default parameters:
+//     - Grid range: -10 to +10
+//     - Challenge mode: off
+//     - Points plotted: none
+//
+//     Behavior:
+//     - When coordinates entered and "Plot" clicked:
+//       - Animate a point appearing at that location
+//       - Add point to list with quadrant identification
+//       - Highlight the quadrant briefly
+//     - Mouse hover over grid: show current coordinates
+//     - Click on grid: show coordinates and option to plot there
+//     - In challenge mode:
+//       - Display target coordinates
+//       - Student clicks location
+//       - Show distance from correct position
+//       - Award points based on accuracy
+//
+//     Visual features:
+//     - Quadrant colors:
+//       - Quadrant I: light yellow
+//       - Quadrant II: light blue
+//       - Quadrant III: light green
+//       - Quadrant IV: light pink
+//     - Plotted points: bold colors with labels
+//     - Hover effects: highlight nearest gridpoint
+//
+//     Information display:
+//     - Current mouse position coordinates
+//     - Quadrant name for current position
+//     - List of all plotted points:
+//       - "(3, 5) - Quadrant I"
+//       - "(-2, 4) - Quadrant II"
+//       - etc.
+//
+//     Implementation: p5.js with mouse interaction, input validation, smooth animations
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Search Race using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Search Race MicroSim
+// CANVAS_HEIGHT: 520
+// Students pick a target number and step linear and binary search side
+// by side. Linear plods left to right; binary discards half the shelf
+// per check. A shuffled-shelf trap preset shows why binary search NEEDS
+// sorted data.
+// Bloom level: Analyze/Evaluate (compare, test, justify).
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 440;
+let controlHeight = 80; // row 1: target slider, row 2: select + buttons
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+let targetSlider, dataSelect, stepButton, playButton, resetButton;
+let isPlaying = false;
+
+let shelf = [];         // the 31 values on the shelf
+let target = 24;
+// linear trace: [{idx, found}]  binary trace: [{lo, hi, mid, found, dir}]
+let linTrace = [], binTrace = [];
+let linPos = -1, binPos = -1;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  targetSlider = createSlider(1, 62, 24, 1);
+  targetSlider.parent(mainElement);
+  targetSlider.position(sliderLeftMargin, drawHeight + 10);
+  targetSlider.size(canvasWidth - sliderLeftMargin - margin);
+  targetSlider.input(rebuild);
+
+  dataSelect = createSelect();
+  dataSelect.parent(mainElement);
+  dataSelect.position(10, drawHeight + 44);
+  dataSelect.option('sorted shelf');
+  dataSelect.option('shuffled shelf (trap!)');
+  dataSelect.changed(rebuild);
+
+  stepButton = createButton('Step');
+  stepButton.parent(mainElement);
+  stepButton.position(190, drawHeight + 44);
+  stepButton.mousePressed(() => {
+    isPlaying = false;
+    playButton.html('Auto-play');
+    stepOnce();
+  });
+
+  playButton = createButton('Auto-play');
+  playButton.parent(mainElement);
+  playButton.position(250, drawHeight + 44);
+  playButton.mousePressed(() => {
+    isPlaying = !isPlaying;
+    playButton.html(isPlaying ? 'Pause' : 'Auto-play');
+  });
+
+  resetButton = createButton('Reset');
+  resetButton.parent(mainElement);
+  resetButton.position(345, drawHeight + 44);
+  resetButton.mousePressed(rebuild);
+
+  rebuild();
+
+  describe('Pick a target number and step linear and binary search side by side over a shelf of 31 numbered boxes. Linear checks left to right while binary discards half the shelf per check. A shuffled-shelf preset shows why binary search needs sorted data.', LABEL);
+}
+
+// ---------- build the shelf and both search traces ----------
+function rebuild() {
+  isPlaying = false;
+  if (playButton) playButton.html('Auto-play');
+  target = targetSlider ? targetSlider.value() : 24;
+
+  // shelf values: the even numbers 2..62 (odd targets are absent on purpose)
+  shelf = [];
+  for (let i = 0; i < 31; i++) shelf.push(2 * (i + 1));
+  if (dataSelect && dataSelect.value().startsWith('shuffled')) {
+    for (let i = shelf.length - 1; i > 0; i--) {
+      let j = Math.floor(random(i + 1));
+      [shelf[i], shelf[j]] = [shelf[j], shelf[i]];
+    }
+  }
+
+  // linear search trace
+  linTrace = [];
+  for (let i = 0; i < shelf.length; i++) {
+    let found = shelf[i] === target;
+    linTrace.push({ idx: i, found: found });
+    if (found) break;
+  }
+
+  // binary search trace (runs its midpoint logic even on shuffled data)
+  binTrace = [];
+  let lo = 0, hi = shelf.length - 1;
+  while (lo <= hi) {
+    let mid = Math.floor((lo + hi) / 2);
+    let found = shelf[mid] === target;
+    let dir = found ? 'found' : (target < shelf[mid] ? 'left' : 'right');
+    binTrace.push({ lo: lo, hi: hi, mid: mid, found: found, dir: dir });
+    if (found) break;
+    if (target < shelf[mid]) hi = mid - 1; else lo = mid + 1;
+  }
+
+  linPos = -1;
+  binPos = -1;
+}
+
+function stepOnce() {
+  let advanced = false;
+  if (linPos < linTrace.length - 1) { linPos += 1; advanced = true; }
+  if (binPos < binTrace.length - 1) { binPos += 1; advanced = true; }
+  if (!advanced) {
+    isPlaying = false;
+    playButton.html('Auto-play');
+  }
+}
+
+function laneDone(pos, trace) {
+  return pos >= trace.length - 1 && pos >= 0;
+}
+
+// ---------- drawing ----------
+function draw() {
+  updateCanvasSize();
+
+  if (isPlaying && frameCount % 30 === 0) {
+    stepOnce();
+  }
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Search Race', canvasWidth / 2, 8);
+
+  noStroke();
+  fill('midnightblue');
+  textSize(17);
+  text('find ' + target + ' on a shelf of 31 boxes', canvasWidth / 2, 40);
+
+  drawLinearLane(98);
+  drawBinaryLane(226);
+  drawScoreboard();
+
+  // control labels
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text('Target: ' + target, 15, drawHeight + 20);
+}
+
+function laneGeometry() {
+  let x0 = 20;
+  let boxW = (canvasWidth - 40) / 31;
+  return { x0: x0, boxW: boxW };
+}
+
+function drawLinearLane(y) {
+  let { x0, boxW } = laneGeometry();
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  let checks = linPos + 1;
+  text('LINEAR SEARCH — start at the left, check every box    (checks: ' + Math.max(0, checks) + ')', x0, y - 20);
+
+  let cur = linPos >= 0 ? linTrace[linPos] : null;
+  for (let i = 0; i < shelf.length; i++) {
+    let checked = cur && i < cur.idx;
+    let isCur = cur && i === cur.idx;
+    let isFound = isCur && cur.found;
+    if (isFound) {
+      fill('seagreen'); stroke('seagreen');
+    } else if (isCur) {
+      fill(255, 224, 130); stroke('darkorange');
+    } else if (checked) {
+      fill(228); stroke(190);
+    } else {
+      fill('white'); stroke(150);
+    }
+    strokeWeight(isCur ? 2 : 1);
+    rect(x0 + i * boxW, y, boxW - 2, 40, 3);
+    noStroke();
+    fill(isFound ? 'white' : (checked ? color(160) : 'black'));
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(shelf[i], x0 + i * boxW + (boxW - 2) / 2, y + 20);
+  }
+
+  // status
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, TOP);
+  if (laneDone(linPos, linTrace)) {
+    let last = linTrace[linTrace.length - 1];
+    fill(last.found ? 'seagreen' : 'indianred');
+    text(last.found ? 'found it in ' + linTrace.length + ' checks'
+      : 'checked all 31 boxes — not on the shelf', x0, y + 46);
+  }
+}
+
+function drawBinaryLane(y) {
+  let { x0, boxW } = laneGeometry();
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  let checks = binPos + 1;
+  text('BINARY SEARCH — check the middle, throw away half    (checks: ' + Math.max(0, checks) + ')', x0, y - 20);
+
+  let cur = binPos >= 0 ? binTrace[binPos] : null;
+  for (let i = 0; i < shelf.length; i++) {
+    let inRange = !cur || (i >= cur.lo && i <= cur.hi);
+    let isMid = cur && i === cur.mid;
+    let isFound = isMid && cur.found;
+    if (isFound) {
+      fill('seagreen'); stroke('seagreen');
+    } else if (isMid) {
+      fill(255, 224, 130); stroke('darkorange');
+    } else if (!inRange) {
+      fill(238); stroke(210);
+    } else {
+      fill('white'); stroke(150);
+    }
+    strokeWeight(isMid ? 2 : 1);
+    rect(x0 + i * boxW, y, boxW - 2, 40, 3);
+    noStroke();
+    fill(isFound ? 'white' : (!inRange ? color(190) : 'black'));
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(shelf[i], x0 + i * boxW + (boxW - 2) / 2, y + 20);
+  }
+
+  // status
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, TOP);
+  if (cur && !laneDone(binPos, binTrace)) {
+    fill(90);
+    text(cur.dir === 'left' ? 'target is smaller — throw away the RIGHT half'
+      : 'target is bigger — throw away the LEFT half', x0, y + 46);
+  } else if (laneDone(binPos, binTrace)) {
+    let last = binTrace[binTrace.length - 1];
+    fill(last.found ? 'seagreen' : 'indianred');
+    text(last.found ? 'found it in ' + binTrace.length + ' checks'
+      : 'range is empty after ' + binTrace.length + ' checks — reports NOT FOUND', x0, y + 46);
+  }
+}
+
+function drawScoreboard() {
+  let panelX = 15;
+  let panelY = 300;
+  let panelW = canvasWidth - 30;
+  let panelH = 128;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize);
+
+  let bothDone = laneDone(linPos, linTrace) && laneDone(binPos, binTrace);
+  let shuffled = dataSelect && dataSelect.value().startsWith('shuffled');
+  let binLast = binTrace[binTrace.length - 1];
+  let actuallyOnShelf = shelf.includes(target);
+
+  if (linPos < 0 && binPos < 0) {
+    fill('black');
+    text('Predict first: how many checks will EACH search need to find ' + target + '?', panelX + 14, panelY + 10, panelW - 28, 40);
+    fill(120);
+    textSize(14);
+    text('Tip: odd targets are not on the shelf (it holds only even numbers) — watch how each search discovers that. Binary search can only find ' + Math.ceil(Math.log2(32)) + ' checks\' worth of work in 31 boxes.', panelX + 14, panelY + 46, panelW - 28, 70);
+  } else if (bothDone && shuffled && actuallyOnShelf && !binLast.found) {
+    fill('indianred');
+    text('THE TRAP: ' + target + ' IS on the shelf, but binary search reported NOT FOUND!', panelX + 14, panelY + 10, panelW - 28, 44);
+    fill('black');
+    textSize(14);
+    text('Throwing away half the shelf only works when the shelf is sorted — on shuffled data the "wrong half" may hold the target. Binary search REQUIRES sorted data; linear search never cares.', panelX + 14, panelY + 56, panelW - 28, 66);
+  } else if (bothDone) {
+    fill('darkgreen');
+    text('RESULT — binary: ' + binTrace.length + ' checks    linear: ' + linTrace.length + ' checks', panelX + 14, panelY + 10, panelW - 28, 30);
+    fill('black');
+    textSize(14);
+    text('Each binary check cuts the problem in HALF: 31 → 15 → 7 → 3 → 1. That halving is why binary search stays fast even on a million boxes (about 20 checks!) — as long as the data is sorted.', panelX + 14, panelY + 44, panelW - 28, 70);
+  } else {
+    fill('black');
+    text('Keep stepping — watch how much of each shelf is still in play.', panelX + 14, panelY + 10, panelW - 28, 40);
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  targetSlider.size(canvasWidth - sliderLeftMargin - margin);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

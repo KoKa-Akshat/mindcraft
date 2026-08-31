@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Comparative Anatomy Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Comparative Anatomy Explorer — Image overlay version
+// Students hover over species columns to learn about forelimb homology
+// MicroSim version 2026.02
+// Note - we did not refactor this code to use the ../shared-libs/diagram.js library
+// because we wanted to allow teachers to easily copy and paste this code into the
+// p5 web editor without needing to also copy the shared library files.
+
+let containerWidth;
+let canvasWidth = 800;
+let titleHeight = 36;
+let labelHeight = 28;
+let imgDisplayHeight = 380;
+let infoboxHeight = 120;
+let controlHeight = 50;
+let canvasHeight = titleHeight + labelHeight + imgDisplayHeight + infoboxHeight + controlHeight;
+let containerHeight = canvasHeight;
+
+let forelimbImg;
+let hoveredSpecies = -1;
+
+// Mode and quiz state
+let mode = 'explore';
+let modeButton;
+let classifyButtons = [];
+let currentQuestion = 0;
+let quizScore = 0;
+let quizFeedback = '';
+let feedbackColor = '';
+let quizDone = false;
+
+const speciesData = [
+  {
+    name: 'Human',
+    function: 'Manipulation & tool use',
+    summary: 'The human arm retains the generalized mammalian forelimb plan with a long humerus, separate radius and ulna allowing forearm rotation, 8 flexible carpal bones, and 14 long phalanges enabling precise grip. This is the "baseline" pattern — all five bone groups are clearly visible and proportional.',
+    apTip: 'The human arm is often used as the reference limb on the ap exam. Know that the same five bone groups appear in all vertebrate forelimbs — this is the definition of homologous structures.'
+  },
+  {
+    name: 'Whale',
+    function: 'Swimming (flipper)',
+    summary: 'The whale flipper contains the same five bone groups, but dramatically modified: the humerus is extremely short and thick, the radius and ulna are flattened plates, and the phalanges are greatly elongated with extra bones (hyperphalangy) to form a broad paddle. The entire structure is encased in a smooth, rigid flipper — you cannot see the fingers from the outside.',
+    apTip: 'Whale flippers are the classic ap exam example of homologous structures. Despite looking nothing like a human arm externally, the internal bone pattern proves common ancestry with land mammals.'
+  },
+  {
+    name: 'Bat',
+    function: 'Powered flight (membrane wing)',
+    summary: 'The bat wing has a short, strong humerus, an elongated radius (the dominant forearm bone), a vestigial ulna, and spectacularly elongated finger bones (phalanges) that spread apart like tent poles supporting a thin membrane (patagium). This is the opposite strategy from the bird — flexible, membranous wings supported by spread fingers.',
+    apTip: 'Bat wings vs. bird wings is a common ap exam question testing analogous vs. homologous. Bat and bird wings are ANALOGOUS (same function, different structure). But bat wing and human arm are HOMOLOGOUS (same bones, different function).'
+  },
+  {
+    name: 'Dog',
+    function: 'Running (quadrupedal locomotion)',
+    summary: 'The dog forelimb has robust, weight-bearing bones throughout. The humerus and radius/ulna are strong and straight. The "wrist" (carpals) sits high on the leg — what most people mistake for the dog\'s "knee." Dogs are digitigrade, meaning they walk on their toes (phalanges), with elongated metacarpals acting as an extra leg segment for speed.',
+    apTip: 'The dog forelimb is proportionally most similar to the human arm — same bones, similar proportions. This makes it a good exam comparison to show that homology can exist even when function differs (manipulation vs. running).'
+  },
+  {
+    name: 'Bird',
+    function: 'Powered flight (feathered wing)',
+    summary: 'The bird wing takes the opposite approach from the bat: instead of elongating the fingers, birds fused and reduced them. The humerus is hollow (pneumatic) for weight savings, the ulna is larger than the radius with bumps where flight feathers attach, and the hand bones are fused into a rigid carpometacarpus. Only three reduced digits remain.',
+    apTip: 'Bird wings and bat wings serve the same function (flight) but achieve it through completely different structural modifications — this is convergent evolution producing analogous structures. Both still contain the five homologous bone groups inherited from their common ancestor.'
+  }
+];
+
+const quizQuestions = [
+  { pair: ['Human arm', 'Whale flipper'], answer: 'homologous', explanation: 'Same underlying bone structure (humerus, radius, ulna, carpals, phalanges) inherited from a common ancestor, but modified for different functions.' },
+  { pair: ['Bird wing', 'Insect wing'], answer: 'analogous', explanation: 'Both are used for flight, but they evolved independently — bird wings have bones while insect wings are made of chitin. This is convergent evolution.' },
+  { pair: ['Whale hip bones', '(no function)'], answer: 'vestigial', explanation: 'Whales retain tiny, non-functional pelvic bones — remnants from their four-legged terrestrial ancestors.' },
+  { pair: ['Human appendix', '(reduced organ)'], answer: 'vestigial', explanation: 'The appendix is a reduced cecum inherited from herbivorous ancestors where it aided in cellulose digestion.' },
+  { pair: ['Bat wing', 'Bird wing'], answer: 'analogous', explanation: 'Both fly, but bat wings use elongated finger bones with a membrane while bird wings use fused hand bones with feathers — different skeletal origins.' },
+  { pair: ['Dog forelimb', 'Human arm'], answer: 'homologous', explanation: 'Both share the same bone set from a common mammalian ancestor, modified for different locomotion styles.' },
+  { pair: ['Human arm', 'Bat wing'], answer: 'homologous', explanation: 'Same set of bones — humerus, radius, ulna, carpals, phalanges — inherited from a common ancestor but shaped differently by natural selection.' },
+  { pair: ['Eye of octopus', 'Eye of human'], answer: 'analogous', explanation: 'Both are camera-type eyes that evolved independently — a classic example of convergent evolution in distantly related lineages.' }
+];
+
+function preload() {
+  forelimbImg = loadImage('forelimbs.png');
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  // Mode toggle button
+  modeButton = createButton('Switch to Quiz Mode');
+  modeButton.parent(mainElement);
+  modeButton.mousePressed(toggleMode);
+  modeButton.style('font-size', '14px');
+  modeButton.style('padding', '5px 14px');
+  modeButton.style('cursor', 'pointer');
+
+  // Quiz answer buttons (hidden initially)
+  let labels = ['Homologous', 'Analogous', 'Vestigial'];
+  let btnColors = ['#2ECC71', '#3498DB', '#E67E22'];
+  for (let i = 0; i < 3; i++) {
+    let btn = createButton(labels[i]);
+    btn.parent(mainElement);
+    btn.style('font-size', '14px');
+    btn.style('padding', '5px 18px');
+    btn.style('cursor', 'pointer');
+    btn.style('background-color', btnColors[i]);
+    btn.style('color', 'white');
+    btn.style('border', 'none');
+    btn.style('border-radius', '4px');
+    btn.hide();
+    let answerVal = labels[i].toLowerCase();
+    btn.mousePressed(() => checkAnswer(answerVal));
+    classifyButtons.push(btn);
+  }
+
+  positionButtons();
+  describe('Comparative Anatomy Explorer showing forelimb homology across five vertebrate species with column hover descriptions and classification quiz.', LABEL);
+}
+
+function positionButtons() {
+  let btnY = titleHeight + labelHeight + imgDisplayHeight + infoboxHeight + 10;
+  modeButton.position(10, btnY);
+  for (let i = 0; i < classifyButtons.length; i++) {
+    classifyButtons[i].position(canvasWidth / 2 - 140 + i * 120, btnY);
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+  background(255);
+
+  // Outer border
+  stroke('silver');
+  strokeWeight(1);
+  noFill();
+  rect(0, 0, canvasWidth - 1, canvasHeight - 1);
+
+  // Title
+  noStroke();
+  fill('#2C3E50');
+  textAlign(CENTER, CENTER);
+  textSize(Math.min(22, canvasWidth * 0.032));
+  textStyle(BOLD);
+  text('Comparative Anatomy — Vertebrate Forelimb Homology', canvasWidth / 2, titleHeight / 2);
+  textStyle(NORMAL);
+
+  // Column dimensions
+  let colW = canvasWidth / 5;
+  let imgTop = titleHeight + labelHeight;
+
+  // Detect hovered column
+  if (mouseY >= imgTop && mouseY <= imgTop + imgDisplayHeight && mouseX >= 0 && mouseX <= canvasWidth) {
+    hoveredSpecies = Math.floor(mouseX / colW);
+    if (hoveredSpecies >= 5) hoveredSpecies = 4;
+    if (hoveredSpecies < 0) hoveredSpecies = 0;
+  } else {
+    hoveredSpecies = -1;
+  }
+
+  // Column labels
+  textSize(Math.min(15, canvasWidth * 0.023));
+  textAlign(CENTER, CENTER);
+  for (let i = 0; i < 5; i++) {
+    let x = i * colW;
+    let isHovered = (hoveredSpecies === i);
+
+    // Label background
+    if (isHovered) {
+      fill('#2C3E50');
+    } else {
+      fill('#ECF0F1');
+    }
+    noStroke();
+    // draw a background rectangle for the label
+    rect(x, titleHeight, colW, labelHeight);
+
+    // Label text
+    fill(isHovered ? 'white' : '#2C3E50');
+    noStroke();
+    textStyle(BOLD);
+    text(speciesData[i].name, x + colW / 2, titleHeight + labelHeight / 2);
+    textStyle(NORMAL);
+
+    textSize(Math.min(15, canvasWidth * 0.023));
+  }
+
+  // Draw image
+  image(forelimbImg, 0, imgTop, canvasWidth, imgDisplayHeight);
+
+  // Column hover highlight
+  if (hoveredSpecies >= 0) {
+    let x = hoveredSpecies * colW;
+    // Semi-transparent highlight on OTHER columns (dim them)
+    for (let i = 0; i < 5; i++) {
+      if (i !== hoveredSpecies) {
+        fill(255, 255, 255, 120);
+        noStroke();
+        // Draw a white rectangle over the non-hovered columns to dim them.
+        // We want to highlight the hovered column by dimming the others
+        rect(i * colW, imgTop, colW, imgDisplayHeight);
+      }
+    }
+    // Highlight border on hovered column
+    noFill();
+    stroke('#2C3E50');
+    strokeWeight(3);
+    rect(x + 1, imgTop, colW - 2, imgDisplayHeight);
+  }
+
+  // Column divider lines
+  stroke('#ddd');
+  strokeWeight(1);
+  for (let i = 1; i < 5; i++) {
+    line(i * colW, imgTop, i * colW, imgTop + imgDisplayHeight);
+  }
+
+  // Infobox area
+  let infoTop = imgTop + imgDisplayHeight;
+  fill('#F8F9FA');
+  stroke('#ddd');
+  strokeWeight(1);
+  rect(0, infoTop, canvasWidth, infoboxHeight);
+
+  if (mode === 'explore') {
+    drawExploreInfo(infoTop);
+  } else {
+    drawQuizInfo(infoTop);
+  }
+
+  // Control area
+  let ctrlTop = infoTop + infoboxHeight;
+  fill('white');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, ctrlTop, canvasWidth, controlHeight);
+}
+
+function drawExploreInfo(infoTop) {
+  noStroke();
+  if (hoveredSpecies >= 0) {
+    let sp = speciesData[hoveredSpecies];
+    let pad = 12;
+    let textW = canvasWidth - pad * 2;
+
+    // Species name header
+    fill('#2C3E50');
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    textSize(Math.min(15, canvasWidth * 0.022));
+    text(sp.name + ' — ' + sp.function, pad, infoTop + 8);
+    textStyle(NORMAL);
+
+    // Description
+    fill('#333');
+    textSize(Math.min(12, canvasWidth * 0.017));
+    text(sp.summary, pad, infoTop + 28, textW, 50);
+
+    // ap tip
+    fill('#B7950B');
+    textSize(Math.min(11, canvasWidth * 0.015));
+    textStyle(ITALIC);
+    text('ap Tip: ' + sp.apTip, pad, infoTop + 80, textW, 36);
+    textStyle(NORMAL);
+  } else {
+    fill('#999');
+    textAlign(CENTER, CENTER);
+    textSize(Math.min(14, canvasWidth * 0.02));
+    textStyle(ITALIC);
+    text('Hover over a species column to see how the same five bone groups have been modified for different functions.', canvasWidth / 2, infoTop + infoboxHeight / 2);
+    textStyle(NORMAL);
+  }
+}
+
+function drawQuizInfo(infoTop) {
+  noStroke();
+  let pad = 12;
+  let textW = canvasWidth - pad * 2;
+
+  if (quizDone) {
+    fill('#1A5276');
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    textStyle(BOLD);
+    text('Score: ' + quizScore + ' / ' + quizQuestions.length, canvasWidth / 2, infoTop + 35);
+    textStyle(NORMAL);
+    textSize(14);
+    fill('#2C3E50');
+    text(quizScore >= 6 ? 'Excellent work!' : 'Keep studying — you\'ll get there!', canvasWidth / 2, infoTop + 65);
+    return;
+  }
+
+  if (currentQuestion < quizQuestions.length) {
+    let q = quizQuestions[currentQuestion];
+
+    fill('#2C3E50');
+    textAlign(CENTER, TOP);
+    textSize(13);
+    text('Question ' + (currentQuestion + 1) + ' of ' + quizQuestions.length + '    |    Score: ' + quizScore, canvasWidth / 2, infoTop + 8);
+
+    textSize(Math.min(17, canvasWidth * 0.025));
+    textStyle(BOLD);
+    fill('black');
+    text(q.pair[0] + '    vs.    ' + q.pair[1], canvasWidth / 2, infoTop + 30);
+    textStyle(NORMAL);
+
+    textSize(12);
+    fill('#666');
+    text('Is this pair homologous, analogous, or vestigial?', canvasWidth / 2, infoTop + 55);
+  }
+
+  if (quizFeedback) {
+    fill(feedbackColor === 'green' ? '#1E8449' : '#C0392B');
+    textAlign(CENTER, TOP);
+    textSize(Math.min(11, canvasWidth * 0.016));
+    text(quizFeedback, pad, infoTop + 72, textW, 44);
+  }
+}
+
+function checkAnswer(answer) {
+  if (quizDone || currentQuestion >= quizQuestions.length) return;
+
+  let q = quizQuestions[currentQuestion];
+
+  if (answer === q.answer) {
+    quizScore++;
+    quizFeedback = 'Correct! ' + q.explanation;
+    feedbackColor = 'green';
+  } else {
+    quizFeedback = 'Not quite — the answer is ' + q.answer + '. ' + q.explanation;
+    feedbackColor = 'red';
+  }
+
+  currentQuestion++;
+  if (currentQuestion >= quizQuestions.length) {
+    quizDone = true;
+  }
+
+  setTimeout(() => { quizFeedback = ''; }, 6000);
+}
+
+function toggleMode() {
+  if (mode === 'explore') {
+    mode = 'classify';
+    modeButton.html('Switch to Explore Mode');
+    for (let btn of classifyButtons) btn.show();
+    currentQuestion = 0;
+    quizScore = 0;
+    quizFeedback = '';
+    quizDone = false;
+  } else {
+    mode = 'explore';
+    modeButton.html('Switch to Quiz Mode');
+    for (let btn of classifyButtons) btn.hide();
+    quizFeedback = '';
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  positionButtons();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

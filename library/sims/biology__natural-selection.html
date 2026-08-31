@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Coevolution Arms Race using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Coevolution Arms Race Simulator
+// CANVAS_HEIGHT: 515
+// Shows trait escalation between predator and prey populations
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 400;
+let controlHeight = 115;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Populations - arrays of trait values
+let predPop = [];
+let preyPop = [];
+let popSize = 100;
+let generation = 0;
+let maxGenerations = 100;
+
+// History
+let predAvgHistory = [];
+let preyAvgHistory = [];
+
+// Controls
+let mutationSlider, selectionSlider;
+let resetBtn, stepBtn, runBtn, modeRadio;
+let running = false;
+let traitMode = 'speed'; // 'speed' or 'toxicity'
+let showSummary = false;
+let summaryDismissed = false;
+let okBtn;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Coevolution arms race showing trait escalation over generations', LABEL);
+
+  mutationSlider = createSlider(0.01, 0.2, 0.05, 0.01);
+  mutationSlider.parent(document.querySelector('main'));
+  mutationSlider.style('width', '110px');
+
+  selectionSlider = createSlider(0.1, 1.0, 0.5, 0.05);
+  selectionSlider.parent(document.querySelector('main'));
+  selectionSlider.style('width', '110px');
+
+  runBtn = createButton('Start Simulation');
+  runBtn.parent(document.querySelector('main'));
+  runBtn.mousePressed(() => { running = !running; runBtn.html(running ? 'Pause Simulation' : 'Start Simulation'); });
+
+  stepBtn = createButton('Step');
+  stepBtn.parent(document.querySelector('main'));
+  stepBtn.mousePressed(() => { if (!running) runGeneration(); });
+
+  modeRadio = createRadio();
+  modeRadio.parent(document.querySelector('main'));
+  modeRadio.option('speed', 'Speed Mode');
+  modeRadio.option('toxicity', 'Venom Toxicity Mode');
+  modeRadio.selected('speed');
+  modeRadio.changed(() => {
+    traitMode = modeRadio.value();
+    resetSim();
+  });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(resetSim);
+
+  okBtn = createButton('OK');
+  okBtn.parent(document.querySelector('main'));
+  okBtn.mousePressed(() => {
+    showSummary = false;
+    summaryDismissed = true;
+    okBtn.hide();
+    running = true;
+    runBtn.html('Pause Simulation');
+  });
+  okBtn.hide();
+
+  resetSim();
+}
+
+function resetSim() {
+  predPop = [];
+  preyPop = [];
+  for (let i = 0; i < popSize; i++) {
+    predPop.push(50 + randomGaussian() * 5);
+    preyPop.push(50 + randomGaussian() * 5);
+  }
+  generation = 0;
+  predAvgHistory = [avg(predPop)];
+  preyAvgHistory = [avg(preyPop)];
+  running = false;
+  showSummary = false;
+  summaryDismissed = false;
+  if (runBtn) runBtn.html('Start Simulation');
+  if (okBtn) okBtn.hide();
+}
+
+function avg(arr) {
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+function runGeneration() {
+  if (generation >= maxGenerations) return;
+  let mutRate = mutationSlider.value();
+  let selStr = selectionSlider.value();
+
+  // Pair up and determine outcomes
+  let preyFitness = new Array(popSize).fill(0);
+  let predFitness = new Array(popSize).fill(0);
+
+  for (let i = 0; i < popSize; i++) {
+    let pi = floor(random(popSize));
+    let diff = predPop[i] - preyPop[pi];
+    let catchProb = 1 / (1 + exp(-diff * selStr * 0.1));
+    if (random() < catchProb) {
+      predFitness[i] += 1;
+    } else {
+      preyFitness[pi] += 1;
+    }
+  }
+
+  // Reproduce with selection
+  let newPred = reproduce(predPop, predFitness, mutRate);
+  let newPrey = reproduce(preyPop, preyFitness, mutRate);
+
+  predPop = newPred;
+  preyPop = newPrey;
+  generation++;
+
+  predAvgHistory.push(avg(predPop));
+  preyAvgHistory.push(avg(preyPop));
+}
+
+function reproduce(pop, fitness, mutRate) {
+  let totalFit = fitness.reduce((a, b) => a + b, 0) + popSize * 0.1; // baseline fitness
+  let newPop = [];
+  for (let i = 0; i < popSize; i++) {
+    // Fitness-proportional selection
+    let r = random(totalFit);
+    let cumulative = 0;
+    let parent = 0;
+    for (let j = 0; j < popSize; j++) {
+      cumulative += fitness[j] + 0.1;
+      if (cumulative >= r) { parent = j; break; }
+    }
+    let offspring = pop[parent] + randomGaussian() * mutRate * 10;
+    offspring = max(0, offspring);
+    newPop.push(offspring);
+  }
+  return newPop;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('#fff8f0');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  if (running && frameCount % 8 === 0) {
+    runGeneration();
+  }
+
+  let halfW = canvasWidth / 2;
+  let histH = 100;
+
+  // Title
+  noStroke();
+  fill(40);
+  textSize(15);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  let traitLabel = traitMode === 'speed' ? 'Speed' : 'Toxicity/Resistance';
+  text('Coevolution Arms Race: ' + traitLabel, canvasWidth / 2, 5);
+  textStyle(NORMAL);
+
+  // Generation counter
+  textSize(13);
+  text('Generation: ' + generation, canvasWidth / 2, 25);
+
+  // Draw histograms
+  drawHistogram(predPop, 10, 50, halfW - 20, histH, [200, 60, 60], 'Predator ' + (traitMode === 'speed' ? 'Speed' : 'Venom Strength') + ' Distribution');
+  drawHistogram(preyPop, halfW + 10, 50, halfW - 20, histH, [50, 150, 50], 'Prey ' + (traitMode === 'speed' ? 'Speed' : 'Resistance') + ' Distribution');
+
+  // Draw organisms
+  drawOrganisms(predPop, 10, 160, halfW - 20, 80, [200, 60, 60]);
+  drawOrganisms(preyPop, halfW + 10, 160, halfW - 20, 80, [50, 150, 50]);
+
+  // Averages
+  noStroke();
+  fill(200, 60, 60);
+  textSize(12);
+  textAlign(CENTER, TOP);
+  let avgLabel = traitMode === 'speed' ? 'Average Speed: ' : 'Average Strength: ';
+  text(avgLabel + nf(avg(predPop), 1, 1), halfW / 2, 250);
+  fill(50, 150, 50);
+  text(avgLabel + nf(avg(preyPop), 1, 1), halfW + halfW / 2, 250);
+
+  // Trait history graph
+  drawTraitGraph(10, 270, canvasWidth - 20, drawHeight - 280);
+
+  // Controls labels
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Mutation: ' + nf(mutationSlider.value(), 1, 2), 5, drawHeight + 15);
+  text('Selection: ' + nf(selectionSlider.value(), 1, 2), 5, drawHeight + 50);
+
+  positionControls();
+
+  // Pause and show summary at gen 50
+  if (generation === 50 && !summaryDismissed && !showSummary) {
+    showSummary = true;
+    running = false;
+    runBtn.html('Start Simulation');
+    okBtn.show();
+  }
+
+  if (showSummary) {
+    fill(255, 255, 200, 220);
+    stroke(180, 150, 50);
+    strokeWeight(1);
+    let sx = canvasWidth * 0.15;
+    rect(sx, 100, canvasWidth * 0.7, 50, 8);
+    noStroke();
+    fill(80, 60, 0);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    let predEsc = nf(avg(predPop) - predAvgHistory[0], 1, 1);
+    let preyEsc = nf(avg(preyPop) - preyAvgHistory[0], 1, 1);
+    text('After 50 gens: Predator trait +' + predEsc + ', Prey trait +' + preyEsc, canvasWidth / 2, 118);
+    // OK button is positioned in positionControls
+  }
+}
+
+function drawHistogram(pop, x, y, w, h, col, label) {
+  let bins = 20;
+  let minVal = 0;
+  let maxVal = 150;
+  let counts = new Array(bins).fill(0);
+  for (let v of pop) {
+    let b = constrain(floor(map(v, minVal, maxVal, 0, bins)), 0, bins - 1);
+    counts[b]++;
+  }
+  let maxCount = max(counts);
+  if (maxCount === 0) maxCount = 1;
+
+  let barW = w / bins;
+  for (let i = 0; i < bins; i++) {
+    let barH = (counts[i] / maxCount) * h * 0.8;
+    fill(col[0], col[1], col[2], 180);
+    noStroke();
+    rect(x + i * barW, y + h - barH, barW - 1, barH);
+  }
+
+  noStroke();
+  fill(col[0], col[1], col[2]);
+  textSize(12);
+  textAlign(CENTER, BOTTOM);
+  text(label, x + w / 2, y - 2);
+}
+
+function drawOrganisms(pop, x, y, w, h, col) {
+  noStroke();
+  let count = min(pop.length, 50);
+  let cols = ceil(sqrt(count));
+  let rows = ceil(count / cols);
+  let cellW = w / cols;
+  let cellH = h / rows;
+  let barH = max(2, cellH * 0.4);
+  let maxBarW = cellW - 2;
+  for (let i = 0; i < count; i++) {
+    let c = i % cols;
+    let r = floor(i / cols);
+    let bx = x + c * cellW + 1;
+    let by = y + r * cellH + (cellH - barH) / 2;
+    let bw = map(pop[i], 0, 150, maxBarW * 0.05, maxBarW);
+    bw = constrain(bw, 2, maxBarW);
+    fill(col[0], col[1], col[2], 180);
+    rect(bx, by, bw, barH, 1);
+  }
+}
+
+function drawTraitGraph(x, y, w, h) {
+  // Background
+  fill(250, 250, 255);
+  stroke(200);
+  strokeWeight(1);
+  rect(x, y, w, h);
+
+  noStroke();
+  fill(80);
+  textSize(11);
+  textAlign(CENTER, TOP);
+  text('Trait Value Over Generations', x + w / 2, y + 2);
+
+  if (predAvgHistory.length < 2) return;
+
+  let maxGen = maxGenerations;
+
+  // Auto-scale y-axis to data range with padding
+  let allVals = predAvgHistory.concat(preyAvgHistory);
+  let minTrait = Math.min(...allVals);
+  let maxTrait = Math.max(...allVals);
+  let padding = Math.max((maxTrait - minTrait) * 0.2, 5);
+  minTrait = Math.max(0, minTrait - padding);
+  maxTrait = maxTrait + padding;
+
+  // Y-axis labels
+  noStroke();
+  fill(150);
+  textSize(9);
+  textAlign(RIGHT, CENTER);
+  text(nf(maxTrait, 1, 0), x + 22, y + 14);
+  text(nf(minTrait, 1, 0), x + 22, y + h - 4);
+
+  // Predator line
+  stroke(200, 60, 60);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let i = 0; i < predAvgHistory.length; i++) {
+    let vy = y + h - ((predAvgHistory[i] - minTrait) / (maxTrait - minTrait)) * h;
+    vertex(x + (i / maxGen) * w, vy);
+  }
+  endShape();
+
+  // Prey line
+  stroke(50, 150, 50);
+  beginShape();
+  for (let i = 0; i < preyAvgHistory.length; i++) {
+    let vy = y + h - ((preyAvgHistory[i] - minTrait) / (maxTrait - minTrait)) * h;
+    vertex(x + (i / maxGen) * w, vy);
+  }
+  endShape();
+}
+
+// Position controls based on canvas location to ensure they stay aligned on window resize
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: mutation slider
+  mutationSlider.position(ox + 100, oy + drawHeight + 5);
+  mutationSlider.size(canvasWidth - 130);
+  // Row 2: selection slider
+  selectionSlider.position(ox + 100, oy + drawHeight + 40);
+  selectionSlider.size(canvasWidth - 130);
+  // Row 3: buttons and mode radio
+  // "Start Simulation"
+  runBtn.position(ox + 10, oy + drawHeight + 75);
+  // "Step" button
+  stepBtn.position(ox + 140, oy + drawHeight + 75);
+  // "Reset" button
+  resetBtn.position(ox + 200, oy + drawHeight + 75);
+  // Mode radio button
+  modeRadio.position(ox + 280, oy + drawHeight + 78);
+  // OK button centered on summary box
+  if (showSummary) {
+    okBtn.position(ox + canvasWidth / 2 - 15, oy + 135);
+  }
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Water Molecule Polarity using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Water Molecule Polarity MicroSim
+// Step-through reveal: bare molecule → partial charges → dipole → H-bonds
+
+let canvasWidth = 620;
+let drawHeight = 370;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+
+// State: which overlays are visible
+let showCharges = false;
+let showDipole = false;
+let showHBonds = false;
+
+// Layout regions
+let drawAreaW, infoPanelX, infoPanelW;
+
+// Central molecule position
+let centerX, centerY;
+let molScale = 1;
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+    computeLayout();
+}
+
+function computeLayout() {
+    drawAreaW = canvasWidth * 0.63;
+    infoPanelX = drawAreaW + 6;
+    infoPanelW = canvasWidth - infoPanelX - 8;
+    centerX = drawAreaW * 0.5;
+    centerY = drawHeight * 0.42;
+    molScale = min(drawAreaW / 420, drawHeight / 380, 1.3);
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    // Draw area border
+    noFill();
+    stroke(200);
+    strokeWeight(1);
+    rect(0, 0, drawAreaW, drawHeight);
+
+    // Info panel background
+    fill(248, 250, 255);
+    stroke(210);
+    rect(infoPanelX - 4, 2, infoPanelW + 6, drawHeight - 4, 6);
+
+    drawMolecules();
+    drawInfoPanel();
+    drawControls();
+}
+
+// ===========================
+// MOLECULE DRAWING
+// ===========================
+
+function drawMolecules() {
+    push();
+    translate(centerX, centerY);
+    let s = molScale;
+
+    // Bond angle
+    let bondLen = 90 * s;
+    let halfAngle = radians(104.5 / 2);
+
+    // Hydrogen positions relative to oxygen at (0,0)
+    let h1x = -bondLen * sin(halfAngle);
+    let h1y = bondLen * cos(halfAngle);
+    let h2x = bondLen * sin(halfAngle);
+    let h2y = bondLen * cos(halfAngle);
+
+    // Neighboring molecules (shown when H-bonds active)
+    if (showHBonds) {
+        drawNeighborMolecules(h1x, h1y, h2x, h2y, s);
+    }
+
+    // Covalent bonds (thick lines)
+    stroke(120);
+    strokeWeight(4 * s);
+    line(0, 0, h1x, h1y);
+    line(0, 0, h2x, h2y);
+
+    // Covalent bond length labels
+    fill(100);
+    noStroke();
+    textSize(9 * s);
+    textAlign(CENTER, CENTER);
+    let labelOffset = 14 * s;
+    push();
+    let mid1x = h1x * 0.5 - labelOffset;
+    let mid1y = h1y * 0.5;
+    text('0.10 nm', mid1x, mid1y);
+    pop();
+    push();
+    let mid2x = h2x * 0.5 + labelOffset;
+    let mid2y = h2y * 0.5;
+    text('0.10 nm', mid2x, mid2y);
+    pop();
+
+    // Bond angle arc
+    noFill();
+    stroke(80, 80, 200);
+    strokeWeight(1.5 * s);
+    let arcR = 35 * s;
+    let startA = HALF_PI - halfAngle;
+    let endA = HALF_PI + halfAngle;
+    arc(0, 0, arcR * 2, arcR * 2, startA, endA);
+
+    // Angle label
+    fill(60, 60, 180);
+    noStroke();
+    textSize(11 * s);
+    textAlign(CENTER, CENTER);
+    text('104.5°', 0, arcR + 14 * s);
+
+    // Oxygen atom
+    fill(220, 60, 60);
+    noStroke();
+    ellipse(0, 0, 50 * s, 50 * s);
+    fill(255);
+    textSize(18 * s);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('O', 0, 0);
+    textStyle(NORMAL);
+
+    // Hydrogen atoms
+    fill(200, 200, 210);
+    stroke(150);
+    strokeWeight(1);
+    ellipse(h1x, h1y, 34 * s, 34 * s);
+    ellipse(h2x, h2y, 34 * s, 34 * s);
+    fill(60);
+    noStroke();
+    textSize(14 * s);
+    text('H', h1x, h1y);
+    text('H', h2x, h2y);
+
+    // Partial charge labels
+    if (showCharges) {
+        textSize(16 * s);
+        textStyle(BOLD);
+        // δ⁻ near oxygen
+        fill(180, 40, 40);
+        text('\u03B4\u207B', 0, -32 * s);
+        // δ⁺ near hydrogens
+        fill(40, 40, 180);
+        text('\u03B4\u207A', h1x - 20 * s, h1y + 22 * s);
+        text('\u03B4\u207A', h2x + 20 * s, h2y + 22 * s);
+        textStyle(NORMAL);
+    }
+
+    // Dipole arrow
+    if (showDipole) {
+        let dipoleStartY = (h1y + h2y) / 2 + 10 * s;
+        let dipoleEndY = -40 * s;
+        stroke(0, 120, 200);
+        strokeWeight(4 * s);
+        line(0, dipoleStartY, 0, dipoleEndY);
+        // Arrowhead
+        fill(0, 120, 200);
+        noStroke();
+        triangle(0, dipoleEndY - 8 * s,
+                 -8 * s, dipoleEndY + 4 * s,
+                 8 * s, dipoleEndY + 4 * s);
+        // Label
+        fill(0, 100, 180);
+        textSize(11 * s);
+        textStyle(BOLD);
+        textAlign(LEFT, CENTER);
+        text('Net dipole', 12 * s, (dipoleStartY + dipoleEndY) / 2);
+        textStyle(NORMAL);
+        textAlign(CENTER, CENTER);
+    }
+
+    pop();
+}
+
+function drawNeighborMolecules(h1x, h1y, h2x, h2y, s) {
+    // Neighbor 1: H-bonded to H1 (upper-left)
+    let n1ox = h1x - 70 * s;
+    let n1oy = h1y + 80 * s;
+    drawSmallWater(n1ox, n1oy, s * 0.55, -0.4);
+
+    // H-bond dashed line from H1 to neighbor O
+    drawHBond(h1x, h1y, n1ox, n1oy, s);
+
+    // Neighbor 2: H-bonded to H2 (upper-right)
+    let n2ox = h2x + 70 * s;
+    let n2oy = h2y + 80 * s;
+    drawSmallWater(n2ox, n2oy, s * 0.55, 0.4);
+
+    // H-bond dashed line from H2 to neighbor O
+    drawHBond(h2x, h2y, n2ox, n2oy, s);
+}
+
+function drawSmallWater(ox, oy, s, rotAngle) {
+    push();
+    translate(ox, oy);
+    rotate(rotAngle);
+
+    let bondLen = 90 * s;
+    let halfAngle = radians(104.5 / 2);
+    let sh1x = -bondLen * sin(halfAngle);
+    let sh1y = bondLen * cos(halfAngle);
+    let sh2x = bondLen * sin(halfAngle);
+    let sh2y = bondLen * cos(halfAngle);
+
+    // Bonds
+    stroke(150);
+    strokeWeight(2.5 * s / 0.55);
+    line(0, 0, sh1x, sh1y);
+    line(0, 0, sh2x, sh2y);
+
+    // Oxygen
+    fill(220, 80, 80, 200);
+    noStroke();
+    ellipse(0, 0, 36 * s / 0.55, 36 * s / 0.55);
+    fill(255);
+    textSize(12 * s / 0.55);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('O', 0, 0);
+    textStyle(NORMAL);
+
+    // Hydrogens
+    fill(200, 200, 210, 200);
+    stroke(150, 150, 150, 150);
+    strokeWeight(1);
+    ellipse(sh1x, sh1y, 24 * s / 0.55, 24 * s / 0.55);
+    ellipse(sh2x, sh2y, 24 * s / 0.55, 24 * s / 0.55);
+    fill(80);
+    noStroke();
+    textSize(10 * s / 0.55);
+    text('H', sh1x, sh1y);
+    text('H', sh2x, sh2y);
+
+    // Partial charges on neighbors
+    if (showCharges) {
+        textSize(11 * s / 0.55);
+        textStyle(BOLD);
+        fill(180, 40, 40);
+        text('\u03B4\u207B', 0, -22 * s / 0.55);
+        fill(40, 40, 180);
+        text('\u03B4\u207A', sh1x - 12 * s / 0.55, sh1y + 14 * s / 0.55);
+        text('\u03B4\u207A', sh2x + 12 * s / 0.55, sh2y + 14 * s / 0.55);
+        textStyle(NORMAL);
+    }
+
+    pop();
+}
+
+function drawHBond(x1, y1, x2, y2, s) {
+    // Dashed blue line
+    stroke(30, 120, 220);
+    strokeWeight(2.5 * s);
+    drawingContext.setLineDash([6 * s, 4 * s]);
+    line(x1, y1, x2, y2);
+    drawingContext.setLineDash([]);
+
+    // Label
+    let mx = (x1 + x2) / 2;
+    let my = (y1 + y2) / 2;
+    fill(20, 90, 180);
+    noStroke();
+    textSize(9 * s);
+    textAlign(CENTER, CENTER);
+
+    push();
+    translate(mx, my);
+    let a = atan2(y2 - y1, x2 - x1);
+    if (abs(a) > HALF_PI) a += PI;
+    rotate(a);
+    text('H-bond ~0.18 nm', 0, -10 * s);
+    pop();
+}
+
+// ===========================
+// INFO PANEL
+// ===========================
+
+function drawInfoPanel() {
+    let px = infoPanelX + 8;
+    let py = 14;
+    let pw = infoPanelW - 16;
+
+    fill(40);
+    noStroke();
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+
+    let title = '';
+    let body = '';
+
+    if (showHBonds) {
+        title = 'Hydrogen Bonds';
+        body = 'The partial positive charge (\u03B4\u207A) on each hydrogen is attracted to the partial negative charge (\u03B4\u207B) on the oxygen of a neighboring water molecule.\n\n' +
+               'This electrostatic attraction is called a hydrogen bond. Each water molecule can form up to 4 hydrogen bonds (2 through its H atoms, 2 through its lone pairs on O).\n\n' +
+               'H-bonds are about 10x weaker than covalent bonds but collectively give water its remarkable properties: high boiling point, high specific heat, cohesion, and solvent ability.\n\n' +
+               'H-bond length: ~0.18 nm\nO\u2013H covalent bond: ~0.10 nm';
+    } else if (showDipole) {
+        title = 'Net Dipole Moment';
+        body = 'Because the water molecule has a bent geometry (104.5\u00B0), the two polar O\u2013H bond dipoles do NOT cancel each other out.\n\n' +
+               'If water were linear (180\u00B0), the two bond dipoles would point in opposite directions and cancel. But the bent shape means they add as vectors, producing a net dipole pointing from the H atoms toward the O atom.\n\n' +
+               'This makes water a polar molecule with a permanent dipole moment of 1.85 Debye \u2014 one of the most polar small molecules.\n\n' +
+               'This polarity is why water is such an excellent solvent for ionic and polar substances.';
+    } else if (showCharges) {
+        title = 'Partial Charges';
+        body = 'Oxygen is much more electronegative than hydrogen:\n\n' +
+               '\u2022 O electronegativity: 3.44\n' +
+               '\u2022 H electronegativity: 2.20\n' +
+               '\u2022 Difference: 1.24\n\n' +
+               'This difference means the shared electrons in each O\u2013H bond spend more time near the oxygen atom, giving it a partial negative charge (\u03B4\u207B) and leaving each hydrogen with a partial positive charge (\u03B4\u207A).\n\n' +
+               'The bonds are polar covalent \u2014 electrons are shared unequally but not completely transferred (which would make them ionic).';
+    } else {
+        title = 'Water Molecule';
+        body = 'Water (H\u2082O) consists of one oxygen atom covalently bonded to two hydrogen atoms.\n\n' +
+               'The bond angle is 104.5\u00B0 \u2014 slightly less than the ideal tetrahedral angle (109.5\u00B0) because oxygen\'s two lone pairs repel the bonding pairs more strongly (VSEPR theory).\n\n' +
+               'Each O\u2013H covalent bond is 0.10 nm long.\n\n' +
+               'Use the buttons below to explore how this simple geometry leads to water\'s extraordinary properties.';
+    }
+
+    text(title, px, py);
+    textStyle(NORMAL);
+    py += 22;
+
+    // Colored accent line
+    if (showHBonds) stroke(30, 120, 220);
+    else if (showDipole) stroke(0, 120, 200);
+    else if (showCharges) stroke(200, 60, 60);
+    else stroke(100, 100, 180);
+    strokeWeight(2);
+    line(px, py, px + pw, py);
+    py += 8;
+
+    // Body text with word wrap
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    text(body, px, py, pw, drawHeight - py - 10);
+}
+
+// ===========================
+// CONTROLS
+// ===========================
+
+function drawControls() {
+    let cy = drawHeight + 4;
+    let btnH = 30;
+    let gap = 6;
+    let bx = 8;
+
+    // Button definitions
+    let buttons = [
+        { label: 'Partial Charges', active: showCharges, color: [200, 80, 80] },
+        { label: 'Dipole', active: showDipole, color: [0, 120, 200] },
+        { label: 'H-Bonds', active: showHBonds, color: [30, 120, 220] },
+        { label: 'Reset', active: false, color: [120, 120, 120] }
+    ];
+
+    let totalW = canvasWidth - 16;
+    let btnW = (totalW - gap * (buttons.length - 1)) / buttons.length;
+
+    for (let i = 0; i < buttons.length; i++) {
+        let b = buttons[i];
+        let x = bx + i * (btnW + gap);
+
+        if (b.active) {
+            fill(b.color[0], b.color[1], b.color[2]);
+        } else {
+            fill(220, 225, 235);
+        }
+        stroke(b.color[0], b.color[1], b.color[2]);
+        strokeWeight(b.active ? 2 : 1);
+        rect(x, cy, btnW, btnH, 6);
+
+        fill(b.active ? 255 : 60);
+        noStroke();
+        textSize(12);
+        textStyle(BOLD);
+        textAlign(CENTER, CENTER);
+        text(b.label, x + btnW / 2, cy + btnH / 2);
+        textStyle(NORMAL);
+    }
+
+    // Instructions line
+    fill(120);
+    textSize(9);
+    textAlign(CENTER, TOP);
+    text('Click buttons to reveal each layer of water\'s polarity story', canvasWidth / 2, cy + btnH + 5);
+}
+
+// ===========================
+// INTERACTION
+// ===========================
+
+function mousePressed() {
+    let cy = drawHeight + 4;
+    let btnH = 30;
+    let gap = 6;
+    let bx = 8;
+    let totalW = canvasWidth - 16;
+    let btnW = (totalW - gap * 3) / 4;
+
+    if (mouseY >= cy && mouseY <= cy + btnH) {
+        for (let i = 0; i < 4; i++) {
+            let x = bx + i * (btnW + gap);
+            if (mouseX >= x && mouseX <= x + btnW) {
+                if (i === 0) {
+                    showCharges = !showCharges;
+                } else if (i === 1) {
+                    showDipole = !showDipole;
+                } else if (i === 2) {
+                    showHBonds = !showHBonds;
+                } else if (i === 3) {
+                    showCharges = false;
+                    showDipole = false;
+                    showHBonds = false;
+                }
+                return;
+            }
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    computeLayout();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

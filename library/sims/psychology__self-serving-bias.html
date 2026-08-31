@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bias Feedback Loop</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+    <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #f5f5f5; display: flex; justify-content: center; }
+.container { max-width: 900px; width: 100%; }
+canvas { display: block; border-radius: 8px; }
+</style>
+</head>
+<body>
+    <div class="container" id="canvas-container">
+        <script>// Bias Feedback Loop - p5.js MicroSim
+// Four-stage circular feedback loop showing how ML bias self-reinforces
+
+let canvasWidth = 900;
+const canvasHeight = 500;
+
+const INDIGO = [48, 63, 159];
+const AMBER = [212, 136, 15];
+const GOLD = [255, 215, 0];
+const CHAMPAGNE = [255, 248, 231];
+const RED = [211, 47, 47];
+const DARK_AMBER = [176, 109, 11];
+const GREEN = [46, 125, 50];
+
+let stages = [];
+let arrows = [];
+let selectedStage = -1;
+let breakBoxExpanded = false;
+let hoveredArrow = -1;
+let glowAngle = 0;
+
+const mitigations = [
+    'Fairness-aware algorithms',
+    'Human review of predictions',
+    'Disparate impact testing',
+    'Regular bias audits'
+];
+
+const arrowDescriptions = [
+    'Training data shapes model weights -- historical patterns become encoded rules',
+    'Model scores influence decision-makers -- predictions feel objective and authoritative',
+    'Decisions create real outcomes for real people -- who gets hired, promoted, developed',
+    'Outcomes become tomorrow\'s training data -- the loop closes and bias compounds'
+];
+
+function updateCanvasSize() {
+    let container = document.getElementById('canvas-container');
+    if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('canvas-container');
+    textFont('Arial');
+
+    buildStages();
+    buildArrows();
+}
+
+function buildStages() {
+    let cx = canvasWidth / 2;
+    let cy = 210;
+    let rx = min(canvasWidth * 0.26, 200);
+    let ry = 120;
+
+    stages = [
+        {
+            label: 'Biased\nTraining Data',
+            color: INDIGO,
+            detail: 'Historical patterns reflect systemic inequities in hiring, promotion, and development.',
+            x: cx, y: cy - ry,
+            w: 160, h: 56
+        },
+        {
+            label: 'Biased Model\nPredictions',
+            color: AMBER,
+            detail: 'Model learns and reproduces biased patterns as "objective" scores.',
+            x: cx + rx, y: cy,
+            w: 160, h: 56
+        },
+        {
+            label: 'Biased\nDecisions',
+            color: RED,
+            detail: 'Predictions influence management actions: who gets development, who gets flagged.',
+            x: cx, y: cy + ry,
+            w: 160, h: 56
+        },
+        {
+            label: 'Biased\nOutcomes',
+            color: DARK_AMBER,
+            detail: 'Actions create data that confirms the original bias, closing the loop.',
+            x: cx - rx, y: cy,
+            w: 160, h: 56
+        }
+    ];
+}
+
+function buildArrows() {
+    arrows = [];
+    for (let i = 0; i < 4; i++) {
+        let from = stages[i];
+        let to = stages[(i + 1) % 4];
+        arrows.push({ from: i, to: (i + 1) % 4, desc: arrowDescriptions[i] });
+    }
+}
+
+function draw() {
+    background(245);
+
+    // Title
+    fill(30);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(15);
+    text('ML Bias Feedback Loop', canvasWidth / 2, 22);
+
+    let cx = canvasWidth / 2;
+    let cy = 210;
+
+    // Center label
+    fill(120);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text('Self-Reinforcing', cx, cy - 12);
+    text('Cycle', cx, cy + 4);
+
+    // Warning triangle
+    drawWarningIcon(cx, cy + 30);
+
+    // Animated glow dot traveling clockwise
+    glowAngle += 0.008;
+    if (glowAngle > TWO_PI) glowAngle -= TWO_PI;
+    drawGlowDot(cx, cy);
+
+    // Draw curved arrows between stages
+    hoveredArrow = -1;
+    for (let i = 0; i < 4; i++) {
+        drawCurvedArrow(i);
+    }
+
+    // Draw stages
+    for (let i = 0; i < 4; i++) {
+        drawStage(i);
+    }
+
+    // Break the Cycle box
+    drawBreakBox();
+
+    // Detail panel at bottom
+    drawDetailPanel();
+}
+
+function drawGlowDot(cx, cy) {
+    let rx = min(canvasWidth * 0.26, 200);
+    let ry = 120;
+
+    // Map angle to ellipse position (clockwise starting from top)
+    // Offset so angle 0 = top
+    let a = glowAngle - HALF_PI;
+    let gx = cx + rx * cos(a);
+    let gy = cy + ry * sin(a);
+
+    // Outer glow
+    noStroke();
+    for (let r = 30; r > 0; r -= 3) {
+        fill(255, 215, 0, map(r, 0, 30, 80, 0));
+        ellipse(gx, gy, r, r);
+    }
+
+    // Core dot
+    fill(...GOLD);
+    noStroke();
+    ellipse(gx, gy, 10, 10);
+}
+
+function drawWarningIcon(x, y) {
+    let s = 22;
+    fill(255, 193, 7);
+    stroke(180, 140, 0);
+    strokeWeight(1.5);
+    triangle(x, y - s * 0.6, x - s * 0.55, y + s * 0.4, x + s * 0.55, y + s * 0.4);
+
+    fill(80);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(15);
+    text('!', x, y);
+}
+
+function drawStage(i) {
+    let s = stages[i];
+    let isSelected = (selectedStage === i);
+    let isHovered = isMouseInRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h);
+
+    // Shadow
+    if (isSelected || isHovered) {
+        noStroke();
+        fill(0, 0, 0, 25);
+        rect(s.x - s.w / 2 + 3, s.y - s.h / 2 + 3, s.w, s.h, 10);
+    }
+
+    // Background
+    if (isSelected) {
+        fill(255);
+        stroke(...s.color);
+        strokeWeight(3);
+    } else if (isHovered) {
+        fill(255, 252, 245);
+        stroke(...s.color);
+        strokeWeight(2);
+    } else {
+        fill(...s.color);
+        stroke(40);
+        strokeWeight(1);
+    }
+    rect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h, 10);
+
+    // Label
+    if (isSelected || isHovered) {
+        fill(...s.color);
+    } else {
+        fill(255);
+    }
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(12);
+
+    let lines = s.label.split('\n');
+    for (let l = 0; l < lines.length; l++) {
+        let yOff = (l - (lines.length - 1) / 2) * 16;
+        text(lines[l], s.x, s.y + yOff);
+    }
+
+    // Stage number badge
+    let badgeX = s.x - s.w / 2 + 14;
+    let badgeY = s.y - s.h / 2 + 14;
+    fill(isSelected || isHovered ? [...s.color, 200] : [255, 255, 255, 180]);
+    noStroke();
+    ellipse(badgeX, badgeY, 18, 18);
+    fill(isSelected || isHovered ? 255 : [...s.color]);
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text(i + 1, badgeX, badgeY);
+}
+
+function drawCurvedArrow(i) {
+    let from = stages[i];
+    let to = stages[(i + 1) % 4];
+
+    let cx = canvasWidth / 2;
+    let cy = 210;
+
+    // Control points for bezier -- pull toward center for curvature
+    let midX = (from.x + to.x) / 2;
+    let midY = (from.y + to.y) / 2;
+    let pullX = (midX + cx) / 2;
+    let pullY = (midY + cy) / 2;
+
+    // Adjust start/end to be at edge of rounded rects
+    let startPt = getEdgePoint(from, to.x, to.y);
+    let endPt = getEdgePoint(to, from.x, from.y);
+
+    // Check hover
+    let isHover = isMouseNearBezier(startPt.x, startPt.y, pullX, pullY, pullX, pullY, endPt.x, endPt.y, 12);
+    if (isHover && selectedStage === -1) {
+        hoveredArrow = i;
+    }
+
+    // Draw the bezier
+    noFill();
+    stroke(isHover ? [...GOLD] : [100, 100, 100]);
+    strokeWeight(isHover ? 3.5 : 2);
+    bezier(startPt.x, startPt.y, pullX, pullY, pullX, pullY, endPt.x, endPt.y);
+
+    // Arrowhead at end
+    let t = 0.95;
+    let bx = bezierPoint(startPt.x, pullX, pullX, endPt.x, t);
+    let by = bezierPoint(startPt.y, pullY, pullY, endPt.y, t);
+    let angle = atan2(endPt.y - by, endPt.x - bx);
+
+    fill(isHover ? GOLD : [100]);
+    noStroke();
+    push();
+    translate(endPt.x, endPt.y);
+    rotate(angle);
+    triangle(0, 0, -12, -5, -12, 5);
+    pop();
+
+    // Arrow hover tooltip
+    if (isHover && selectedStage === -1 && !isMouseInBreakBox()) {
+        let tx = mouseX + 15;
+        let ty = mouseY - 30;
+        let tw = min(280, canvasWidth - tx - 20);
+        if (tx + tw > canvasWidth - 10) tx = mouseX - tw - 15;
+
+        fill(255, 252, 240);
+        stroke(180);
+        strokeWeight(1);
+        rect(tx, ty, tw, 36, 6);
+
+        fill(60);
+        noStroke();
+        textAlign(LEFT, CENTER);
+        textSize(11);
+        text(arrowDescriptions[i], tx + 8, ty + 18);
+    }
+}
+
+function getEdgePoint(stage, targetX, targetY) {
+    let dx = targetX - stage.x;
+    let dy = targetY - stage.y;
+    let angle = atan2(dy, dx);
+
+    let hw = stage.w / 2 + 4;
+    let hh = stage.h / 2 + 4;
+
+    let ex, ey;
+    // Find intersection with rounded rect (approximated as ellipse)
+    let px = hw * cos(angle);
+    let py = hh * sin(angle);
+    let scale = min(hw / abs(cos(angle) + 0.001), hh / abs(sin(angle) + 0.001));
+    scale = min(scale, sqrt(hw * hw + hh * hh));
+
+    ex = stage.x + scale * cos(angle) * 0.85;
+    ey = stage.y + scale * sin(angle) * 0.85;
+
+    return { x: ex, y: ey };
+}
+
+function drawBreakBox() {
+    let bx = canvasWidth / 2 + 50;
+    let by = 330;
+    let bw = breakBoxExpanded ? 260 : 170;
+    let bh = breakBoxExpanded ? 110 : 36;
+
+    // Adjust position if expanded
+    if (breakBoxExpanded) {
+        bx = canvasWidth / 2 - bw / 2 + 60;
+    }
+
+    let isHover = isMouseInRect(bx, by, bw, bh);
+
+    // Box
+    fill(breakBoxExpanded ? 245 : 255);
+    stroke(...GREEN);
+    strokeWeight(isHover || breakBoxExpanded ? 2.5 : 1.5);
+    rect(bx, by, bw, bh, 8);
+
+    if (!breakBoxExpanded) {
+        // Collapsed state
+        fill(...GREEN);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(12);
+        text('Break the Cycle  +', bx + bw / 2, by + bh / 2);
+    } else {
+        // Expanded state
+        fill(...GREEN);
+        noStroke();
+        textAlign(LEFT, TOP);
+        textSize(13);
+        text('Break the Cycle:', bx + 12, by + 10);
+
+        textSize(11);
+        fill(60);
+        for (let i = 0; i < mitigations.length; i++) {
+            let checkColor = GREEN;
+            fill(...checkColor);
+            textAlign(LEFT, TOP);
+            text('\u2713', bx + 16, by + 32 + i * 19);
+            fill(60);
+            text(mitigations[i], bx + 32, by + 32 + i * 19);
+        }
+
+        // Close X
+        fill(140);
+        textAlign(RIGHT, TOP);
+        textSize(14);
+        text('\u00D7', bx + bw - 10, by + 6);
+    }
+}
+
+function isMouseInBreakBox() {
+    let bx = canvasWidth / 2 + 50;
+    let by = 330;
+    let bw = breakBoxExpanded ? 260 : 170;
+    let bh = breakBoxExpanded ? 110 : 36;
+    if (breakBoxExpanded) {
+        bx = canvasWidth / 2 - bw / 2 + 60;
+    }
+    return isMouseInRect(bx, by, bw, bh);
+}
+
+function drawDetailPanel() {
+    let py = canvasHeight - 60;
+    fill(255);
+    stroke(200);
+    strokeWeight(1);
+    rect(10, py, canvasWidth - 20, 50, 8);
+
+    if (selectedStage >= 0) {
+        let s = stages[selectedStage];
+        fill(...s.color);
+        noStroke();
+        textAlign(LEFT, CENTER);
+        textSize(13);
+        let stageLabel = s.label.replace('\n', ' ');
+        text('Stage ' + (selectedStage + 1) + ': ' + stageLabel, 24, py + 16);
+
+        fill(60);
+        textSize(12);
+        text(s.detail, 24, py + 36);
+    } else {
+        fill(140);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(13);
+        text('Click a stage to see details, or hover arrows to see transition descriptions', canvasWidth / 2, py + 25);
+    }
+}
+
+function isMouseInRect(rx, ry, rw, rh) {
+    return mouseX >= rx && mouseX <= rx + rw && mouseY >= ry && mouseY <= ry + rh;
+}
+
+function isMouseNearBezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2, tolerance) {
+    // Sample bezier at intervals and check distance
+    for (let t = 0; t <= 1; t += 0.05) {
+        let bx = bezierPoint(x1, cx1, cx2, x2, t);
+        let by = bezierPoint(y1, cy1, cy2, y2, t);
+        if (dist(mouseX, mouseY, bx, by) < tolerance) return true;
+    }
+    return false;
+}
+
+function mousePressed() {
+    // Check stages
+    for (let i = 0; i < stages.length; i++) {
+        let s = stages[i];
+        if (isMouseInRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h)) {
+            selectedStage = (selectedStage === i) ? -1 : i;
+            return;
+        }
+    }
+
+    // Check break box
+    let bx = canvasWidth / 2 + 50;
+    let by = 330;
+    let bw = breakBoxExpanded ? 260 : 170;
+    let bh = breakBoxExpanded ? 110 : 36;
+    if (breakBoxExpanded) {
+        bx = canvasWidth / 2 - bw / 2 + 60;
+    }
+
+    if (isMouseInRect(bx, by, bw, bh)) {
+        if (breakBoxExpanded) {
+            // Check if clicking the X
+            if (mouseX > bx + bw - 25 && mouseY < by + 25) {
+                breakBoxExpanded = false;
+            }
+        } else {
+            breakBoxExpanded = true;
+        }
+        return;
+    }
+
+    // Click elsewhere deselects
+    selectedStage = -1;
+    breakBoxExpanded = false;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    buildStages();
+    buildArrows();
+}
+</script>
+    </div>
+</body>
+</html>

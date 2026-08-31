@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Leverage Point Explorer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Leverage Point Explorer
+// Based on Donella Meadows' 12 Leverage Points for Intervening in a System
+// Applied to the Quantum Computing Hype System
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Leverage points data — ordered from weakest (12) to strongest (1)
+// Displayed bottom to top: weakest at bottom, strongest at top
+let leveragePoints = [
+    {
+        rank: 12,
+        name: "Constants & Parameters",
+        qcExample: "Increase qubit count from 1,000 to 2,000",
+        description: "Tweaking numbers within an existing system. Easy to do, almost no systemic impact. Adding more qubits without fixing error rates is like rearranging deck chairs.",
+        effectiveness: 1
+    },
+    {
+        rank: 11,
+        name: "Buffer Sizes",
+        qcExample: "Increase quantum computing R&D budgets",
+        description: "Making stabilizing stocks bigger. More funding cushions short-term setbacks but does not change the dynamics that consume the funding without producing results.",
+        effectiveness: 1.5
+    },
+    {
+        rank: 10,
+        name: "Stock-and-Flow Structures",
+        qcExample: "Build new quantum computing centers and labs",
+        description: "Physical infrastructure and accumulations. New labs and facilities expand capacity but lock in existing approaches, making it harder to pivot when evidence warrants it.",
+        effectiveness: 2
+    },
+    {
+        rank: 9,
+        name: "Delays",
+        qcExample: "Shorten peer review cycles for QC claims",
+        description: "The lengths of time relative to system response rates. Faster scrutiny of extraordinary claims could prevent years of misallocation before hype claims are tested.",
+        effectiveness: 3
+    },
+    {
+        rank: 8,
+        name: "Balancing Feedback Loops",
+        qcExample: "Strengthen independent physics review boards",
+        description: "Negative feedback loops that keep the system in check. Independent review of quantum computing milestones against physics constraints provides corrective pressure on inflated claims.",
+        effectiveness: 4
+    },
+    {
+        rank: 7,
+        name: "Reinforcing Feedback Loops",
+        qcExample: "Break the hype-investment-hype cycle",
+        description: "Positive feedback loops that amplify change. The QC hype cycle is self-reinforcing: hype attracts investment, investment funds PR, PR generates more hype. Weakening any link breaks the spiral.",
+        effectiveness: 5
+    },
+    {
+        rank: 6,
+        name: "Information Flows",
+        qcExample: "Require public disclosure of all QC benchmark failures",
+        description: "Who has access to what information and when. Publication bias hides negative results. If every failed benchmark were as visible as every success, the field's trajectory would look very different.",
+        effectiveness: 6
+    },
+    {
+        rank: 5,
+        name: "Rules of the System",
+        qcExample: "Reform funding criteria to require classical baselines",
+        description: "Incentives, punishments, and constraints. If every QC grant required demonstrating advantage over the best classical algorithm, most current research directions would not survive review.",
+        effectiveness: 7
+    },
+    {
+        rank: 4,
+        name: "Power to Change Structure",
+        qcExample: "Empower skeptical physicists on funding panels",
+        description: "The ability to add, change, or evolve system structure. Who sits on review panels determines what gets funded. Including informed skeptics changes the entire selection landscape.",
+        effectiveness: 8
+    },
+    {
+        rank: 3,
+        name: "Goals of the System",
+        qcExample: "Redefine success as 'economic value delivered' not 'qubits shipped'",
+        description: "The purpose or function of the system. If the goal shifts from 'advance quantum computing' to 'solve commercially relevant problems,' most QC programs would need to justify their existence differently.",
+        effectiveness: 9
+    },
+    {
+        rank: 2,
+        name: "Mindset / Paradigm",
+        qcExample: "Shift from 'quantum is inevitable' to 'quantum must prove its case'",
+        description: "The shared assumptions out of which the system arises. The current paradigm assumes quantum computing will eventually work at scale. Questioning that assumption changes everything downstream.",
+        effectiveness: 9.5
+    },
+    {
+        rank: 1,
+        name: "Transcending Paradigms",
+        qcExample: "Question whether quantum computing is the right approach at all",
+        description: "The ability to step outside any paradigm and see all paradigms as mental models, not truth. Perhaps the future of computing lies in directions we have not yet imagined, not in scaling quantum mechanics.",
+        effectiveness: 10
+    }
+];
+
+let hoveredPoint = -1;
+let expandedPoint = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+// Map effectiveness (1-10) to a color gradient from red (weak) to green (strong)
+function effectivenessColor(effectiveness) {
+    let t = (effectiveness - 1) / 9; // normalize 0 to 1
+    let r = floor(lerp(220, 40, t));
+    let g = floor(lerp(60, 167, t));
+    let b = floor(lerp(60, 70, t));
+    return color(r, g, b);
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Leverage Points for Intervening in the QC Hype System", canvasWidth / 2, 8);
+
+    // Subtitle
+    textSize(11);
+    textStyle(ITALIC);
+    fill('#666');
+    text("Based on Donella Meadows' 12 Leverage Points (1999)", canvasWidth / 2, 30);
+
+    // Layout
+    let listTop = 50;
+    let listBottom = drawHeight - 10;
+    let availableHeight = listBottom - listTop;
+    let itemCount = leveragePoints.length;
+
+    // Calculate item height — if one is expanded, give it more space
+    let expandedExtra = 60;
+    let baseItemHeight;
+    if (expandedPoint >= 0) {
+        baseItemHeight = (availableHeight - expandedExtra) / itemCount;
+    } else {
+        baseItemHeight = availableHeight / itemCount;
+    }
+
+    // Determine hover based on mouse position
+    hoveredPoint = -1;
+    let checkY = listTop;
+    for (let i = itemCount - 1; i >= 0; i--) {
+        let idx = itemCount - 1 - i; // index into leveragePoints (bottom=0 weakest, top=11 strongest)
+        let thisHeight = baseItemHeight;
+        if (expandedPoint === idx) thisHeight += expandedExtra;
+
+        if (mouseX >= margin && mouseX <= canvasWidth - margin &&
+            mouseY >= checkY && mouseY < checkY + thisHeight) {
+            hoveredPoint = idx;
+        }
+        checkY += thisHeight;
+    }
+
+    // Draw items from top (strongest, index 11) to bottom (weakest, index 0)
+    let currentY = listTop;
+    let barLeft = 200;
+    let barMaxWidth = canvasWidth - barLeft - margin - 10;
+
+    // Effectiveness scale label
+    push();
+    fill('#999');
+    noStroke();
+    textSize(9);
+    textAlign(LEFT, BOTTOM);
+    textStyle(NORMAL);
+    text("EFFECTIVENESS", barLeft, listTop - 1);
+    pop();
+
+    // Side labels
+    push();
+    fill('#999');
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    // Top label
+    text("STRONGEST", margin + 20, listTop + 8);
+    // Bottom label
+    text("WEAKEST", margin + 20, listBottom - 8);
+    // Arrow
+    textSize(12);
+    text("\u25B2", margin + 20, listTop + 22);
+    text("\u25BC", margin + 20, listBottom - 22);
+    pop();
+
+    for (let i = itemCount - 1; i >= 0; i--) {
+        let lp = leveragePoints[i];
+        let thisHeight = baseItemHeight;
+        let isExpanded = (expandedPoint === i);
+        if (isExpanded) thisHeight += expandedExtra;
+        let isHovered = (hoveredPoint === i);
+
+        let rowMidY = currentY + (isExpanded ? baseItemHeight / 2 : thisHeight / 2);
+
+        // Background highlight on hover
+        if (isHovered) {
+            fill(240, 240, 255, 180);
+            noStroke();
+            rect(margin, currentY, canvasWidth - 2 * margin, thisHeight, 4);
+        }
+
+        // Rank number
+        fill('#333');
+        noStroke();
+        textSize(isHovered ? 15 : 13);
+        textAlign(RIGHT, CENTER);
+        textStyle(BOLD);
+        text("#" + lp.rank, margin + 35, rowMidY);
+
+        // Leverage point name
+        textSize(isHovered ? 13 : 11);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        fill('#333');
+        let nameX = margin + 42;
+        let nameMaxW = barLeft - nameX - 5;
+        // Word wrap for name
+        text(lp.name, nameX, rowMidY);
+
+        // Effectiveness bar
+        let barWidth = (lp.effectiveness / 10) * barMaxWidth;
+        let barHeight = min(thisHeight * 0.45, 22);
+        let barColor = effectivenessColor(lp.effectiveness);
+
+        fill(barColor);
+        if (isHovered) {
+            stroke('#333');
+            strokeWeight(1.5);
+        } else {
+            noStroke();
+        }
+        rect(barLeft, rowMidY - barHeight / 2, barWidth, barHeight, 3);
+
+        // QC example text on/after the bar
+        noStroke();
+        fill('#333');
+        textSize(isHovered ? 11 : 10);
+        textStyle(NORMAL);
+        textAlign(LEFT, CENTER);
+        let exampleX = barLeft + barWidth + 8;
+        let exampleMaxW = canvasWidth - exampleX - margin;
+        if (exampleMaxW > 80) {
+            let exText = lp.qcExample;
+            // Truncate if needed
+            let maxChars = floor(exampleMaxW / 5.5);
+            if (exText.length > maxChars) {
+                exText = exText.substring(0, maxChars - 2) + "...";
+            }
+            text(exText, exampleX, rowMidY);
+        }
+
+        // If expanded, show description below
+        if (isExpanded) {
+            fill('#444');
+            textSize(10);
+            textStyle(NORMAL);
+            textAlign(LEFT, TOP);
+            let descX = margin + 42;
+            let descW = canvasWidth - descX - margin - 10;
+            let descY = rowMidY + barHeight / 2 + 8;
+            text(lp.description, descX, descY, descW, expandedExtra - 10);
+        }
+
+        // Divider line
+        stroke(220);
+        strokeWeight(0.5);
+        line(margin + 40, currentY + thisHeight, canvasWidth - margin, currentY + thisHeight);
+
+        currentY += thisHeight;
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Click a leverage point to expand its description. Hover for details.", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function mousePressed() {
+    if (hoveredPoint >= 0) {
+        if (expandedPoint === hoveredPoint) {
+            expandedPoint = -1;
+        } else {
+            expandedPoint = hoveredPoint;
+        }
+        redraw();
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

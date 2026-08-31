@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"data.json": "{\n  \"nodes\": [\n    {\n      \"id\": 1,\n      \"label\": \"Compelling\\nNarrative\",\n      \"title\": \"Bold claims about transformative technology create a compelling story that attracts attention and investment\",\n      \"category\": \"trigger\",\n      \"x\": -200,\n      \"y\": -200,\n      \"example\": \"Quantum computing will break all encryption, cure diseases, and revolutionize finance \u2014 a narrative so sweeping it resists scrutiny.\"\n    },\n    {\n      \"id\": 2,\n      \"label\": \"Media\\nCoverage\",\n      \"title\": \"Press amplifies innovation claims, prioritizing dramatic narratives over technical nuance\",\n      \"category\": \"amplifier\",\n      \"x\": 100,\n      \"y\": -250,\n      \"example\": \"Headlines like 'Quantum Supremacy Achieved!' generate clicks, while the fine print \u2014 that the demo solved no useful problem \u2014 gets buried.\"\n    },\n    {\n      \"id\": 3,\n      \"label\": \"Investor\\nInterest\",\n      \"title\": \"Capital allocators respond to compelling narratives and media attention by exploring investment opportunities\",\n      \"category\": \"financial\",\n      \"x\": 300,\n      \"y\": -100,\n      \"example\": \"VCs see quantum computing coverage everywhere and begin allocating funds, worried about missing the next big platform shift.\"\n    },\n    {\n      \"id\": 4,\n      \"label\": \"Valuation\\nInflation\",\n      \"title\": \"Capital inflow drives up company valuations far beyond what current technology or revenue justifies\",\n      \"category\": \"financial\",\n      \"x\": 300,\n      \"y\": 100,\n      \"example\": \"QC startups with zero revenue reach billion-dollar valuations based on potential alone, while classical computing competitors trade at 10x earnings.\"\n    },\n    {\n      \"id\": 5,\n      \"label\": \"Talent\\nRush\",\n      \"title\": \"High valuations and media attention attract researchers and engineers, draining talent from other productive fields\",\n      \"category\": \"resource\",\n      \"x\": 100,\n      \"y\": 250,\n      \"example\": \"Top physics PhDs leave productive classical research to join QC startups offering equity packages based on inflated valuations.\"\n    },\n    {\n      \"id\": 6,\n      \"label\": \"Over-\\npromising\",\n      \"title\": \"Pressure from investors and inflated expectations drives companies to make claims beyond what the technology can deliver\",\n      \"category\": \"risk\",\n      \"x\": -200,\n      \"y\": 200,\n      \"example\": \"Companies promise 'quantum advantage within 2 years' to justify valuations, knowing the physics doesn't support that timeline.\"\n    },\n    {\n      \"id\": 7,\n      \"label\": \"Delivery\\nFailures\",\n      \"title\": \"When overpromised milestones are missed, credibility erodes and the gap between claims and reality becomes visible\",\n      \"category\": \"risk\",\n      \"x\": -300,\n      \"y\": 0,\n      \"example\": \"Promised fault-tolerant systems don't materialize. Error rates remain orders of magnitude too high. Customers see no ROI.\"\n    },\n    {\n      \"id\": 8,\n      \"label\": \"Disillusion-\\nment\",\n      \"title\": \"Accumulated failures and unmet promises trigger a reassessment of the entire technology narrative\",\n      \"category\": \"outcome\",\n      \"x\": 0,\n      \"y\": 0,\n      \"example\": \"After years of missed milestones, institutional investors begin writing down QC positions and media coverage turns skeptical.\"\n    },\n    {\n      \"id\": 9,\n      \"label\": \"FOMO\\nPressure\",\n      \"title\": \"Fear of missing out creates urgency to invest before 'it's too late,' bypassing careful due diligence\",\n      \"category\": \"amplifier\",\n      \"x\": 350,\n      \"y\": -250,\n      \"example\": \"Fund managers invest in QC not because of technical conviction, but because competitors are investing and LPs are asking about it.\"\n    },\n    {\n      \"id\": 10,\n      \"label\": \"Information\\nAsymmetry\",\n      \"title\": \"Most investors lack the physics knowledge to evaluate QC claims, creating a knowledge gap exploited by hype\",\n      \"category\": \"risk\",\n      \"x\": -350,\n      \"y\": -150,\n      \"example\": \"Investors can't distinguish between 1,000 noisy qubits and 1,000 error-corrected logical qubits \u2014 a difference that changes everything.\"\n    },\n    {\n      \"id\": 11,\n      \"label\": \"Skeptic\\nVoices\",\n      \"title\": \"Critical analysts and scientists who question the narrative provide a balancing force \u2014 when they are heard\",\n      \"category\": \"outcome\",\n      \"x\": -350,\n      \"y\": 150,\n      \"example\": \"Physicists who point out that error correction requires 1,000-10,000 physical qubits per logical qubit are dismissed as 'not visionary.'\"\n    },\n    {\n      \"id\": 12,\n      \"label\": \"Reality\\nGap\",\n      \"title\": \"The widening distance between what is promised and what is technically achievable\",\n      \"category\": \"risk\",\n      \"x\": -150,\n      \"y\": 100,\n      \"example\": \"Roadmaps promise millions of logical qubits by 2030, but labs struggle to maintain coherence in systems of 100 physical qubits.\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"from\": 1,\n      \"to\": 2,\n      \"label\": \"(+) generates\\ncoverage\",\n      \"title\": \"Compelling narratives are irresistible to media \u2014 they generate clicks and views\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 2,\n      \"to\": 3,\n      \"label\": \"(+) attracts\\ninvestors\",\n      \"title\": \"Widespread media coverage signals opportunity, drawing investor attention\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 3,\n      \"to\": 4,\n      \"label\": \"(+) inflates\\nvaluations\",\n      \"title\": \"More capital chasing limited QC companies drives valuations up\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 4,\n      \"to\": 5,\n      \"label\": \"(+) attracts\\ntalent\",\n      \"title\": \"High valuations fund generous compensation packages that draw top talent\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 5,\n      \"to\": 6,\n      \"label\": \"(+) pressure\\nto deliver\",\n      \"title\": \"Talented hires need to justify their salaries and equity with ambitious promises\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 6,\n      \"to\": 7,\n      \"label\": \"(+) leads to\\nfailures\",\n      \"title\": \"Promises that exceed technical reality inevitably result in missed milestones\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 7,\n      \"to\": 8,\n      \"label\": \"(+) causes\\ndisillusionment\",\n      \"title\": \"Visible delivery failures erode confidence and trigger reassessment\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 8,\n      \"to\": 3,\n      \"label\": \"(-) dampens\\ninvestment\",\n      \"title\": \"Disillusionment reduces investor willingness to fund QC ventures (balancing loop B1)\",\n      \"polarity\": \"-\",\n      \"loop\": \"B1\"\n    },\n    {\n      \"from\": 4,\n      \"to\": 6,\n      \"label\": \"(+) pressure to\\noverpromise\",\n      \"title\": \"Sky-high valuations create pressure to justify them with ever-bolder claims\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 8,\n      \"to\": 1,\n      \"label\": \"(-) reality\\ncheck\",\n      \"title\": \"Disillusionment forces more realistic framing of innovation claims (balancing loop B2)\",\n      \"polarity\": \"-\",\n      \"loop\": \"B2\"\n    },\n    {\n      \"from\": 4,\n      \"to\": 9,\n      \"label\": \"(+) rising values\\nfuel FOMO\",\n      \"title\": \"Watching valuations climb makes non-investors fear they're missing out\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 9,\n      \"to\": 3,\n      \"label\": \"(+) FOMO drives\\ninvestment\",\n      \"title\": \"Fear of missing out bypasses due diligence and drives capital in (reinforcing loop R1)\",\n      \"polarity\": \"+\",\n      \"loop\": \"R1\"\n    },\n    {\n      \"from\": 10,\n      \"to\": 3,\n      \"label\": \"(+) ignorance\\nenables hype\",\n      \"title\": \"When investors can't evaluate claims, they rely on narratives instead of evidence\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 10,\n      \"to\": 11,\n      \"label\": \"(-) skeptics\\ndismissed\",\n      \"title\": \"Information asymmetry means skeptics' technical arguments fall on deaf ears\",\n      \"polarity\": \"-\",\n      \"loop\": null\n    },\n    {\n      \"from\": 11,\n      \"to\": 3,\n      \"label\": \"(-) caution\\nslows investment\",\n      \"title\": \"When heard, skeptic voices reduce investor enthusiasm (balancing loop B3)\",\n      \"polarity\": \"-\",\n      \"loop\": \"B3\"\n    },\n    {\n      \"from\": 12,\n      \"to\": 11,\n      \"label\": \"(+) gap feeds\\nskepticism\",\n      \"title\": \"As the gap between promises and reality widens, skeptics gain evidence and credibility\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 12,\n      \"to\": 8,\n      \"label\": \"(+) gap drives\\ndisillusionment\",\n      \"title\": \"A visible reality gap accelerates the shift from enthusiasm to disillusionment\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    },\n    {\n      \"from\": 7,\n      \"to\": 12,\n      \"label\": \"(+) failures\\nwiden gap\",\n      \"title\": \"Each delivery failure makes the distance between claims and reality more obvious\",\n      \"polarity\": \"+\",\n      \"loop\": null\n    }\n  ],\n  \"categories\": {\n    \"trigger\": {\n      \"color\": \"#4285F4\",\n      \"label\": \"Trigger\"\n    },\n    \"amplifier\": {\n      \"color\": \"#FF7043\",\n      \"label\": \"Amplifier\"\n    },\n    \"financial\": {\n      \"color\": \"#34A853\",\n      \"label\": \"Financial\"\n    },\n    \"resource\": {\n      \"color\": \"#7E57C2\",\n      \"label\": \"Resource\"\n    },\n    \"risk\": {\n      \"color\": \"#EA4335\",\n      \"label\": \"Risk\"\n    },\n    \"outcome\": {\n      \"color\": \"#9E9E9E\",\n      \"label\": \"Outcome\"\n    }\n  },\n  \"loops\": {\n    \"R1\": {\n      \"label\": \"R1: FOMO Loop\",\n      \"type\": \"reinforcing\",\n      \"nodes\": [3, 4, 9],\n      \"description\": \"Rising valuations create FOMO, which drives more investment, which inflates valuations further.\"\n    },\n    \"B1\": {\n      \"label\": \"B1: Disillusionment Loop\",\n      \"type\": \"balancing\",\n      \"nodes\": [3, 4, 5, 6, 7, 8],\n      \"description\": \"The main bubble cycle: investment leads to overpromising, failures, and disillusionment that dampens further investment.\"\n    },\n    \"B2\": {\n      \"label\": \"B2: Reality Check Loop\",\n      \"type\": \"balancing\",\n      \"nodes\": [1, 2, 3, 4, 5, 6, 7, 8],\n      \"description\": \"Disillusionment forces more realistic narratives, slowing the hype cycle at its source.\"\n    },\n    \"B3\": {\n      \"label\": \"B3: Skeptic Loop\",\n      \"type\": \"balancing\",\n      \"nodes\": [11, 3],\n      \"description\": \"Skeptic voices provide a balancing force against investor enthusiasm, when information asymmetry allows them to be heard.\"\n    }\n  }\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Bubble Dynamics Model</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+#network {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background: rgba(240, 248, 255, 0.9);
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+#legend {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    min-width: 140px;
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-edge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.legend-line {
+    width: 20px;
+    height: 2px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-instructions {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
+    line-height: 1.4;
+}
+
+#right-panel {
+    position: absolute;
+    top: 55px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 12px 16px;
+    width: 250px;
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+#panel-title {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+#panel-body {
+    color: #555;
+}
+
+#panel-body .connection-list {
+    margin-top: 8px;
+    padding-left: 0;
+    list-style: none;
+}
+
+#panel-body .connection-list li {
+    padding: 3px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+#panel-body .connection-list li:last-child {
+    border-bottom: none;
+}
+
+.connection-arrow {
+    color: #999;
+    font-weight: bold;
+}
+
+.polarity-positive {
+    color: #34A853;
+    font-weight: bold;
+}
+
+.polarity-negative {
+    color: #EA4335;
+    font-weight: bold;
+}
+
+#loop-filter {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+}
+
+#loop-filter button {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+#loop-filter button:hover {
+    background: #e8eaf6;
+}
+
+#loop-filter button.active {
+    background: #3F51B5;
+    color: #fff;
+    border-color: #3F51B5;
+}
+</style>
+</head>
+<body>
+    <div id="title">Technology Bubble Dynamics Model</div>
+
+    <div id="legend">
+        <div class="legend-title">Categories</div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #4285F4;"></span> Trigger
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #FF7043;"></span> Amplifier
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #34A853;"></span> Financial
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #7E57C2;"></span> Resource
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #EA4335;"></span> Risk
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #9E9E9E;"></span> Outcome
+        </div>
+        <div class="legend-title" style="margin-top: 8px;">Edge Polarity</div>
+        <div class="legend-edge">
+            <span class="legend-line" style="background: #34A853;"></span> (+) Reinforcing
+        </div>
+        <div class="legend-edge">
+            <span class="legend-line" style="background: #EA4335;"></span> (-) Balancing
+        </div>
+        <div class="legend-instructions">Click a node to highlight connections.<br>Hover edges for causal details.<br>Click empty space to reset.</div>
+    </div>
+
+    <div id="right-panel">
+        <div id="panel-title">Select a Variable</div>
+        <div id="panel-body">Click on any node to see a QC-specific example and its causal connections in the bubble dynamics model.</div>
+    </div>
+
+    <div id="network"></div>
+
+    <div id="loop-filter">
+        <button class="active" data-filter="all">Show All</button>
+        <button data-filter="reinforcing">Reinforcing Loops</button>
+        <button data-filter="balancing">Balancing Loops</button>
+    </div>
+
+    <script>// Technology Bubble Dynamics Model
+// vis-network interactive causal loop diagram
+
+let network = null;
+let graphData = null;
+let allNodes = null;
+let allEdges = null;
+let currentFilter = 'all';
+
+fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        graphData = data;
+        initNetwork(data);
+        initFilterButtons();
+    })
+    .catch(err => console.error('Failed to load data.json:', err));
+
+function initNetwork(data) {
+    const container = document.getElementById('network');
+    const categoryColors = data.categories;
+
+    // Build vis-network nodes
+    const nodeArray = data.nodes.map(n => {
+        const cat = categoryColors[n.category];
+        // Scale node size by number of connections
+        const connectionCount = data.edges.filter(e => e.from === n.id || e.to === n.id).length;
+        const nodeSize = 25 + connectionCount * 3;
+
+        return {
+            id: n.id,
+            label: n.label,
+            title: n.title,
+            x: n.x * 1.6,
+            y: n.y * 1.3,
+            fixed: { x: true, y: true },
+            color: {
+                background: cat.color,
+                border: darkenColor(cat.color, 0.3),
+                highlight: {
+                    background: lightenColor(cat.color, 0.2),
+                    border: darkenColor(cat.color, 0.4)
+                },
+                hover: {
+                    background: lightenColor(cat.color, 0.15),
+                    border: darkenColor(cat.color, 0.35)
+                }
+            },
+            font: {
+                color: '#fff',
+                size: 12,
+                face: 'Arial',
+                strokeWidth: 2,
+                strokeColor: 'rgba(0,0,0,0.5)',
+                multi: true
+            },
+            shape: 'ellipse',
+            size: nodeSize,
+            borderWidth: 2,
+            shadow: {
+                enabled: true,
+                color: 'rgba(0,0,0,0.15)',
+                size: 6,
+                x: 2,
+                y: 2
+            },
+            category: n.category,
+            example: n.example
+        };
+    });
+
+    // Build vis-network edges
+    const edgeArray = data.edges.map((e, i) => {
+        const edgeColor = e.polarity === '-' ? '#EA4335' : '#34A853';
+        return {
+            id: i,
+            from: e.from,
+            to: e.to,
+            label: '',
+            title: e.title,
+            arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+            color: {
+                color: edgeColor,
+                highlight: '#3F51B5',
+                hover: darkenColor(edgeColor, 0.2)
+            },
+            width: 1.8,
+            hoverWidth: 0.5,
+            selectionWidth: 1,
+            smooth: {
+                type: 'curvedCW',
+                roundness: 0.18
+            },
+            font: {
+                size: 9,
+                color: '#444',
+                strokeWidth: 2,
+                strokeColor: 'rgba(240, 248, 255, 0.9)',
+                align: 'middle',
+                multi: true
+            },
+            edgeLabel: e.label,
+            polarity: e.polarity,
+            loop: e.loop
+        };
+    });
+
+    allNodes = new vis.DataSet(nodeArray);
+    allEdges = new vis.DataSet(edgeArray);
+
+    const options = {
+        interaction: {
+            zoomView: false,
+            dragView: false,
+            dragNodes: false,
+            hover: true,
+            tooltipDelay: 200
+        },
+        physics: {
+            enabled: false
+        },
+        nodes: {
+            chosen: true
+        },
+        edges: {
+            chosen: true
+        }
+    };
+
+    network = new vis.Network(container, { nodes: allNodes, edges: allEdges }, options);
+
+    // Click handler: highlight connected nodes and cycle path
+    network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+            highlightNode(params.nodes[0]);
+        } else {
+            resetHighlight();
+            resetPanel();
+        }
+    });
+
+    // Hover handler: show edge labels on hover
+    network.on('hoverEdge', function(params) {
+        const edge = allEdges.get(params.edge);
+        if (edge && edge.edgeLabel) {
+            allEdges.update({ id: edge.id, label: edge.edgeLabel });
+        }
+    });
+
+    network.on('blurEdge', function(params) {
+        allEdges.update({ id: params.edge, label: '' });
+    });
+}
+
+function highlightNode(nodeId) {
+    const node = allNodes.get(nodeId);
+    if (!node) return;
+
+    // Find connected edges and nodes
+    const connectedEdges = allEdges.get().filter(e => e.from === nodeId || e.to === nodeId);
+    const connectedNodeIds = new Set([nodeId]);
+    connectedEdges.forEach(e => {
+        connectedNodeIds.add(e.from);
+        connectedNodeIds.add(e.to);
+    });
+
+    // Dim unconnected nodes
+    const nodeUpdates = allNodes.get().map(n => {
+        if (connectedNodeIds.has(n.id)) {
+            return { id: n.id, opacity: 1.0 };
+        } else {
+            return { id: n.id, opacity: 0.15 };
+        }
+    });
+    allNodes.update(nodeUpdates);
+
+    // Highlight connected edges, dim others, show labels on connected
+    const edgeUpdates = allEdges.get().map(e => {
+        const isConnected = e.from === nodeId || e.to === nodeId;
+        if (isConnected) {
+            const edgeColor = e.polarity === '-' ? '#EA4335' : '#34A853';
+            return {
+                id: e.id,
+                color: { color: darkenColor(edgeColor, 0.1), highlight: '#3F51B5' },
+                width: 3.5,
+                label: e.edgeLabel
+            };
+        } else {
+            return {
+                id: e.id,
+                color: { color: 'rgba(153,153,153,0.12)', highlight: '#3F51B5' },
+                width: 0.5,
+                label: ''
+            };
+        }
+    });
+    allEdges.update(edgeUpdates);
+
+    // Update right panel
+    updatePanel(nodeId, connectedEdges);
+}
+
+function resetHighlight() {
+    const nodeUpdates = allNodes.get().map(n => ({
+        id: n.id,
+        opacity: 1.0
+    }));
+    allNodes.update(nodeUpdates);
+
+    const edgeUpdates = allEdges.get().map(e => {
+        const edgeColor = e.polarity === '-' ? '#EA4335' : '#34A853';
+        return {
+            id: e.id,
+            color: { color: edgeColor, highlight: '#3F51B5', hover: darkenColor(edgeColor, 0.2) },
+            width: 1.8,
+            label: ''
+        };
+    });
+    allEdges.update(edgeUpdates);
+
+    // Reapply current filter
+    if (currentFilter !== 'all') {
+        applyFilter(currentFilter);
+    }
+}
+
+function updatePanel(nodeId, connectedEdges) {
+    const node = allNodes.get(nodeId);
+    const panelTitle = document.getElementById('panel-title');
+    const panelBody = document.getElementById('panel-body');
+
+    const catLabel = graphData.categories[node.category].label;
+
+    // Find which loops this node belongs to
+    const nodeLoops = [];
+    if (graphData.loops) {
+        for (const [key, loop] of Object.entries(graphData.loops)) {
+            if (loop.nodes.includes(nodeId)) {
+                nodeLoops.push(loop);
+            }
+        }
+    }
+
+    let connectionsHtml = '<ul class="connection-list">';
+    connectedEdges.forEach(e => {
+        const otherNodeId = e.from === nodeId ? e.to : e.from;
+        const otherNode = allNodes.get(otherNodeId);
+        const direction = e.from === nodeId ? '\u2192' : '\u2190';
+        const polarityClass = e.polarity === '-' ? 'polarity-negative' : 'polarity-positive';
+        const polaritySymbol = e.polarity === '-' ? '(-)' : '(+)';
+        connectionsHtml += `<li><span class="connection-arrow">${direction}</span> <span class="${polarityClass}">${polaritySymbol}</span> ${otherNode.label.replace('\n', ' ')}</li>`;
+    });
+    connectionsHtml += '</ul>';
+
+    let loopsHtml = '';
+    if (nodeLoops.length > 0) {
+        loopsHtml = '<p style="margin-top:10px;font-weight:bold;font-size:12px;">Feedback Loops:</p><ul class="connection-list">';
+        nodeLoops.forEach(loop => {
+            const loopColor = loop.type === 'reinforcing' ? '#34A853' : '#EA4335';
+            loopsHtml += `<li style="color:${loopColor};font-weight:bold;">${loop.label}</li>`;
+            loopsHtml += `<li style="font-size:11px;color:#666;">${loop.description}</li>`;
+        });
+        loopsHtml += '</ul>';
+    }
+
+    panelTitle.textContent = node.label.replace('\n', ' ');
+    panelBody.innerHTML = `
+        <p><strong>Category:</strong> ${catLabel}</p>
+        <p style="margin-top:6px;">${node.title}</p>
+        <p style="margin-top:8px;font-style:italic;color:#444;">"${node.example}"</p>
+        <p style="margin-top:10px;font-weight:bold;font-size:12px;">Connections (${connectedEdges.length}):</p>
+        ${connectionsHtml}
+        ${loopsHtml}
+    `;
+}
+
+function resetPanel() {
+    document.getElementById('panel-title').textContent = 'Select a Variable';
+    document.getElementById('panel-body').textContent = 'Click on any node to see a QC-specific example and its causal connections in the bubble dynamics model.';
+}
+
+// Loop filter buttons
+function initFilterButtons() {
+    const buttons = document.querySelectorAll('#loop-filter button');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            resetHighlight();
+            resetPanel();
+            applyFilter(currentFilter);
+        });
+    });
+}
+
+function applyFilter(filter) {
+    if (filter === 'all') {
+        // Show everything at full opacity
+        const nodeUpdates = allNodes.get().map(n => ({ id: n.id, opacity: 1.0 }));
+        allNodes.update(nodeUpdates);
+        const edgeUpdates = allEdges.get().map(e => {
+            const edgeColor = e.polarity === '-' ? '#EA4335' : '#34A853';
+            return {
+                id: e.id,
+                color: { color: edgeColor, highlight: '#3F51B5', hover: darkenColor(edgeColor, 0.2) },
+                width: 1.8
+            };
+        });
+        allEdges.update(edgeUpdates);
+        return;
+    }
+
+    // Get all loop nodes and edges for the selected type
+    const loopNodeIds = new Set();
+    const loopEdgeLoops = new Set();
+
+    if (graphData.loops) {
+        for (const [key, loop] of Object.entries(graphData.loops)) {
+            if (loop.type === filter) {
+                loop.nodes.forEach(id => loopNodeIds.add(id));
+                loopEdgeLoops.add(key);
+            }
+        }
+    }
+
+    // Find edges that belong to the filtered loops
+    const matchingEdges = allEdges.get().filter(e => {
+        if (filter === 'reinforcing') return e.polarity === '+' && loopNodeIds.has(e.from) && loopNodeIds.has(e.to);
+        if (filter === 'balancing') return e.loop && loopEdgeLoops.has(e.loop) || (e.polarity === '-' && loopNodeIds.has(e.from) && loopNodeIds.has(e.to));
+        return false;
+    });
+
+    const matchingEdgeIds = new Set(matchingEdges.map(e => e.id));
+    const activeNodeIds = new Set();
+    matchingEdges.forEach(e => {
+        activeNodeIds.add(e.from);
+        activeNodeIds.add(e.to);
+    });
+
+    // Dim non-matching nodes
+    const nodeUpdates = allNodes.get().map(n => ({
+        id: n.id,
+        opacity: activeNodeIds.has(n.id) ? 1.0 : 0.15
+    }));
+    allNodes.update(nodeUpdates);
+
+    // Dim non-matching edges
+    const edgeUpdates = allEdges.get().map(e => {
+        if (matchingEdgeIds.has(e.id)) {
+            const edgeColor = e.polarity === '-' ? '#EA4335' : '#34A853';
+            return {
+                id: e.id,
+                color: { color: edgeColor, highlight: '#3F51B5' },
+                width: 2.5,
+                label: e.edgeLabel
+            };
+        } else {
+            return {
+                id: e.id,
+                color: { color: 'rgba(153,153,153,0.1)', highlight: '#3F51B5' },
+                width: 0.3,
+                label: ''
+            };
+        }
+    });
+    allEdges.update(edgeUpdates);
+}
+
+// Color utility functions
+function darkenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.round(rgb.r * (1 - amount))}, ${Math.round(rgb.g * (1 - amount))}, ${Math.round(rgb.b * (1 - amount))})`;
+}
+
+function lightenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.min(255, Math.round(rgb.r + (255 - rgb.r) * amount))}, ${Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount))}, ${Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount))})`;
+}
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Sleep Deprivation Impact Simulator MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Sleep Deprivation Impact Simulator - MicroSim (sleep hours -> next-day gauges + bedtime justification)
+// CANVAS_HEIGHT: 532
+// Grades 9-12, Evaluate (L5): students vary nightly sleep duration to see cognitive, emotional,
+// immune, and metabolic effects, then justify a target bedtime against a fixed 6:30 a.m. wake time.
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 470;
+let controlHeight = 62;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+let sliderLeftMargin = 190;
+
+let sleepSlider;
+let bedtimeInput;
+let checkButton;
+let resetButton;
+
+let feedback = '';        // feedback text after Check My Reasoning
+let feedbackKind = '';    // 'good' | 'close' | 'short' | 'ask' | ''
+let showAnswer = false;   // Stage 4 model-answer reveal
+
+// Fixed scenario data (Stage 3/4)
+let scenario = {
+  wakeLabel: '6:30 a.m.',
+  wakeMin: 6 * 60 + 30,      // minutes after midnight
+  targetSleep: 8,            // recommended hours
+  practiceEnd: '9:00 p.m.',
+  homework: '~1.5 hrs homework'
+};
+
+// Four outcome dimensions. Each maps sleep hours -> a 0..100 "healthy" score.
+let dims = [
+  { name: 'Cognitive', color: 'steelblue' },
+  { name: 'Emotional', color: 'mediumpurple' },
+  { name: 'Immune',    color: 'seagreen' },
+  { name: 'Metabolic', color: 'goldenrod' }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  sleepSlider = createSlider(4, 10, 8, 0.5);
+  sleepSlider.parent(document.querySelector('main'));
+
+  bedtimeInput = createInput('');
+  bedtimeInput.parent(document.querySelector('main'));
+  bedtimeInput.attribute('placeholder', 'Target bedtime, e.g. 10:30 pm');
+
+  checkButton = createButton('Check My Reasoning');
+  checkButton.mousePressed(checkReasoning);
+  checkButton.parent(document.querySelector('main'));
+
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetSim);
+  resetButton.parent(document.querySelector('main'));
+
+  layoutControls();
+  describe('A sleep-duration slider from 4 to 10 hours drives four bar gauges showing next-day ' +
+    'cognitive, emotional, immune, and metabolic effects, with the steepest drop below 6 hours. ' +
+    'A student schedule with a fixed 6:30 a.m. wake time asks the learner to type and justify a ' +
+    'target bedtime, then reveals model bedtime math and a trade-off.', LABEL);
+}
+
+function layoutControls() {
+  // Slider row (label drawn to its left on the canvas)
+  sleepSlider.position(sliderLeftMargin, drawHeight + 12);
+  sleepSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  // Text input + buttons row
+  let rowY = drawHeight + 36;
+  bedtimeInput.position(margin, rowY);
+  bedtimeInput.size(150);
+  checkButton.position(margin + 162, rowY);
+  resetButton.position(margin + 162 + 158, rowY);
+}
+
+// Research-informed weighting: 8+ hrs ~ full healthy score; steep drop-off below 6 hrs.
+// Each dimension has its own sensitivity so the four gauges diverge realistically.
+function dimScore(hours, idx) {
+  // Base "sleep sufficiency" curve, 0..1, sharpest loss under 6 hrs.
+  let s;
+  if (hours >= 8) s = 1.0;
+  else if (hours >= 7) s = 0.90 + (hours - 7) * 0.10;   // 7->0.90, 8->1.00
+  else if (hours >= 6) s = 0.72 + (hours - 6) * 0.18;   // 6->0.72, 7->0.90
+  else if (hours >= 5) s = 0.45 + (hours - 5) * 0.27;   // 5->0.45, 6->0.72
+  else s = 0.22 + (hours - 4) * 0.23;                   // 4->0.22, 5->0.45
+
+  // Per-dimension sensitivity below full sleep (cognitive & emotional hit hardest first).
+  let deficit = 1 - s;
+  let sens = [1.15, 1.10, 0.85, 0.80][idx];   // cognitive, emotional, immune, metabolic
+  let score = 1 - deficit * sens;
+  return Math.max(0, Math.min(1, score)) * 100;
+}
+
+function scoreColor(v) {
+  if (v >= 75) return 'seagreen';
+  if (v >= 50) return 'goldenrod';
+  return 'indianred';
+}
+
+function scoreLabel(v) {
+  if (v >= 75) return 'Healthy';
+  if (v >= 50) return 'Strained';
+  return 'Impaired';
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue'); stroke('silver'); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+  noStroke();
+
+  // Title
+  fill('black'); textAlign(CENTER, TOP); textSize(19);
+  text('Sleep Deprivation Impact Simulator', canvasWidth / 2, 8);
+
+  let hours = sleepSlider.value();
+
+  // Split: left 55% gauges, right 45% scenario
+  let splitX = Math.round(canvasWidth * 0.55);
+  drawGauges(margin, 40, splitX - margin - 8, hours);
+  drawScenario(splitX + 6, 40, canvasWidth - (splitX + 6) - margin);
+
+  // Slider label (control strip)
+  noStroke(); fill('black'); textAlign(LEFT, CENTER); textSize(14);
+  text('Sleep last night: ' + hours.toFixed(1) + ' hrs', margin, drawHeight + 19);
+
+  cursor(ARROW);
+}
+
+// ---- Left panel: four bar gauges driven by the slider ----
+function drawGauges(x, y, w, hours) {
+  push();
+  // header
+  noStroke(); fill('midnightblue'); textAlign(LEFT, TOP); textSize(13);
+  text('Next-day effects', x, y);
+  noStroke(); fill('dimgray'); textSize(10);
+  text('Drag the slider (4-10 hrs) and watch each gauge shift.', x, y + 17, w, 26);
+
+  let gy = y + 44;
+  let rowH = 66;
+  let barH = 20;
+  let barW = w - 4;
+
+  for (let i = 0; i < dims.length; i++) {
+    let v = dimScore(hours, i);
+    let ry = gy + i * rowH;
+
+    // dimension name
+    noStroke(); fill(dims[i].color); textAlign(LEFT, BOTTOM); textSize(13);
+    text(dims[i].name, x, ry + 12);
+
+    // status word at right of the name line
+    noStroke(); fill(scoreColor(v)); textAlign(RIGHT, BOTTOM); textSize(11);
+    text(scoreLabel(v) + '  ' + Math.round(v) + '%', x + barW, ry + 12);
+
+    // gauge track
+    let by = ry + 16;
+    noStroke(); fill('white'); stroke('silver'); strokeWeight(1);
+    rect(x, by, barW, barH, 5);
+    // healthy-zone tick at 75%
+    stroke('lightgray'); strokeWeight(1);
+    let tickX = x + barW * 0.75;
+    line(tickX, by, tickX, by + barH);
+    // fill
+    noStroke(); fill(scoreColor(v));
+    rect(x, by, barW * (v / 100), barH, 5);
+  }
+  pop();
+}
+
+// ---- Right panel: schedule scenario + justification prompt / model answer ----
+function drawScenario(x, y, w) {
+  push();
+  // Panel card
+  fill('lightyellow'); stroke('goldenrod'); strokeWeight(1.5);
+  rect(x, y, w, drawHeight - y - margin, 10);
+  noStroke();
+
+  let pad = 10;
+  let ix = x + pad;
+  let iw = w - pad * 2;
+  let cy = y + pad;
+
+  fill('saddlebrown'); textAlign(LEFT, TOP); textSize(13);
+  text('Your school-night schedule', ix, cy); cy += 20;
+
+  // Schedule facts
+  fill('black'); textSize(11);
+  let facts = [
+    '• Wake up: ' + scenario.wakeLabel + ' (fixed)',
+    '• Practice ends: ' + scenario.practiceEnd,
+    '• Then: ' + scenario.homework,
+    '• Goal: at least ' + scenario.targetSleep + ' hrs of sleep'
+  ];
+  for (let f of facts) { text(f, ix, cy, iw, 16); cy += 16; }
+  cy += 6;
+
+  if (!showAnswer) {
+    // Stage 3 prompt
+    fill('midnightblue'); textSize(11);
+    text('What target bedtime gives you ' + scenario.targetSleep +
+      ' hrs before a ' + scenario.wakeLabel + ' wake-up? Type it below and justify it.',
+      ix, cy, iw, 52);
+    cy += 54;
+
+    // Feedback area
+    if (feedback) {
+      let fc = feedbackKind === 'good' ? 'seagreen'
+        : feedbackKind === 'short' ? 'indianred'
+        : 'goldenrod';
+      fill(fc); textAlign(LEFT, TOP); textSize(11);
+      text(feedback, ix, cy, iw, drawHeight - cy - margin - 4);
+    } else {
+      fill('dimgray'); textSize(10);
+      text('Enter a bedtime, then press "Check My Reasoning".', ix, cy, iw, 40);
+    }
+  } else {
+    // Stage 4 model answer
+    fill('seagreen'); textSize(12); textAlign(LEFT, TOP);
+    text('Model answer', ix, cy); cy += 18;
+
+    fill('black'); textSize(11);
+    let mathLines = [
+      'Math: 6:30 a.m. wake - 8 hrs sleep = 10:30 p.m. bedtime.',
+      '(Add ~15 min to fall asleep -> aim for lights-out by 10:15 p.m.)'
+    ];
+    for (let m of mathLines) { text(m, ix, cy, iw, 30); cy += (m.length > 46 ? 30 : 16); }
+    cy += 4;
+
+    fill('saddlebrown'); textSize(11); text('Trade-off to negotiate:', ix, cy); cy += 16;
+    fill('black'); textSize(11);
+    text('Practice ends at 9:00 p.m. and homework needs ~1.5 hrs. To hit ' +
+      '10:30 p.m., you would start homework right after practice or move some to a study ' +
+      'hall, cutting screen time or a late activity short.', ix, cy, iw, drawHeight - cy - margin - 4);
+  }
+  pop();
+}
+
+// Parse a bedtime string like "10:30 pm", "22:30", "11pm" -> minutes after midnight, or null.
+function parseBedtime(str) {
+  if (!str) return null;
+  let s = str.toLowerCase().trim();
+  let ampm = null;
+  if (s.indexOf('pm') >= 0) ampm = 'pm';
+  else if (s.indexOf('am') >= 0) ampm = 'am';
+  s = s.replace(/am|pm|\.|\s/g, '');
+  let h, m = 0;
+  if (s.indexOf(':') >= 0) {
+    let parts = s.split(':');
+    h = parseInt(parts[0], 10);
+    m = parseInt(parts[1], 10);
+  } else {
+    h = parseInt(s, 10);
+  }
+  if (isNaN(h) || isNaN(m)) return null;
+  if (ampm === 'pm' && h < 12) h += 12;
+  if (ampm === 'am' && h === 12) h = 0;
+  if (ampm === null && h <= 11) h += 12;   // assume evening if no meridiem given
+  return (h * 60 + m) % (24 * 60);
+}
+
+function checkReasoning() {
+  let raw = bedtimeInput.value();
+  let bt = parseBedtime(raw);
+  if (bt === null) {
+    feedback = 'Type a bedtime like "10:30 pm" so we can check the math.';
+    feedbackKind = 'ask';
+    return;
+  }
+  // Sleep from bedtime to 6:30 a.m. (wrap past midnight).
+  let mins = scenario.wakeMin - bt;
+  if (mins <= 0) mins += 24 * 60;
+  let hrs = mins / 60;
+
+  if (hrs >= scenario.targetSleep - 0.1 && hrs <= scenario.targetSleep + 1.5) {
+    feedback = 'Nice — that bedtime yields about ' + hrs.toFixed(1) + ' hrs before a ' +
+      scenario.wakeLabel + ' wake-up, meeting the ' + scenario.targetSleep +
+      '-hr goal. Press "Show Model Answer" to compare your justification.';
+    feedbackKind = 'good';
+  } else if (hrs > scenario.targetSleep + 1.5) {
+    feedback = 'That gives about ' + hrs.toFixed(1) + ' hrs — more than enough, but check ' +
+      'whether that bedtime is realistic with practice and homework. Press "Show Model Answer".';
+    feedbackKind = 'close';
+  } else {
+    feedback = 'That leaves only about ' + hrs.toFixed(1) + ' hrs — short of the ' +
+      scenario.targetSleep + '-hr goal, which pushes the gauges down. Try an earlier ' +
+      'bedtime, then press "Show Model Answer".';
+    feedbackKind = 'short';
+  }
+  showAnswer = true;
+  checkButton.html('Show Model Answer');
+}
+
+function resetSim() {
+  sleepSlider.value(8);
+  bedtimeInput.value('');
+  feedback = '';
+  feedbackKind = '';
+  showAnswer = false;
+  checkButton.html('Check My Reasoning');
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  layoutControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

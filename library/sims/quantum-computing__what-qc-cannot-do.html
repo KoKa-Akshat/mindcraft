@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="workload-distribution">
+    <title>Global Compute Workload Distribution</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Global Compute Workload Distribution</h2>
+        <div class="toggle-bar">
+            <button id="btn-doughnut" class="toggle-btn active" onclick="showView('doughnut')">Workload Distribution</button>
+            <button id="btn-bar" class="toggle-btn" onclick="showView('bar')">QC Applicability by Category</button>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="chart-canvas"></canvas>
+        </div>
+        <div id="qc-summary" class="qc-summary"></div>
+        <div id="tooltip-info" class="tooltip-info"></div>
+    </div>
+    <script>
+// Workload distribution data
+const categories = [
+    {
+        name: "Web/Cloud Services",
+        pct: 40,
+        qcPct: 0,
+        color: "#78909C",
+        reason: "Serving web pages, APIs, and cloud infrastructure is entirely classical. Quantum computing offers no advantage for request routing, load balancing, or HTTP processing."
+    },
+    {
+        name: "AI/ML Training",
+        pct: 20,
+        qcPct: 0.15,
+        color: "#42A5F5",
+        reason: "Neural network training relies on matrix multiplication on GPUs/TPUs. Quantum ML algorithms remain theoretical with no demonstrated advantage on practical models."
+    },
+    {
+        name: "Database/Analytics",
+        pct: 15,
+        qcPct: 0.1,
+        color: "#66BB6A",
+        reason: "SQL queries, OLAP, and data warehousing run on classical architectures. Grover's search offers only quadratic speedup, which GPUs already exceed in practice."
+    },
+    {
+        name: "Scientific Simulation",
+        pct: 10,
+        qcPct: 0.5,
+        color: "#26A69A",
+        reason: "Quantum chemistry and materials simulation are the strongest QC use case, but only a small fraction of scientific computing involves quantum-scale molecular problems."
+    },
+    {
+        name: "Financial Modeling",
+        pct: 5,
+        qcPct: 0.1,
+        color: "#FFA726",
+        reason: "Monte Carlo simulations could theoretically benefit from quantum amplitude estimation, but current classical methods are fast enough and quantum hardware is far too noisy."
+    },
+    {
+        name: "Cryptography",
+        pct: 3,
+        qcPct: 0.3,
+        color: "#EF5350",
+        reason: "Shor's algorithm threatens RSA/ECC, but post-quantum classical cryptography is already being deployed. The QC 'advantage' here is breaking things, not computing better."
+    },
+    {
+        name: "Optimization Problems",
+        pct: 5,
+        qcPct: 0.15,
+        color: "#AB47BC",
+        reason: "Logistics, scheduling, and combinatorial optimization are often cited, but no quantum algorithm has demonstrated practical advantage over classical heuristics at scale."
+    },
+    {
+        name: "Other",
+        pct: 2,
+        qcPct: 0,
+        color: "#BDBDBD",
+        reason: "Embedded systems, IoT, desktop applications, and other workloads are entirely classical with no quantum computing applicability."
+    }
+];
+
+// Calculate total QC-addressable percentage
+const totalQC = categories.reduce((sum, c) => sum + c.qcPct, 0);
+const totalClassical = 100 - totalQC;
+
+let currentChart = null;
+let currentView = "doughnut";
+
+function updateSummary() {
+    const el = document.getElementById("qc-summary");
+    el.innerHTML = `Even under <strong>optimistic</strong> assumptions, quantum computing could potentially address only <strong>${totalQC.toFixed(1)}%</strong> of global computational workloads. The remaining <strong>${totalClassical.toFixed(1)}%</strong> will remain entirely classical. And even the ${totalQC.toFixed(1)}% requires breakthroughs in error correction that may never be achieved.`;
+}
+
+function showTooltip(text) {
+    const el = document.getElementById("tooltip-info");
+    el.style.display = "block";
+    el.innerHTML = text;
+}
+
+function hideTooltip() {
+    const el = document.getElementById("tooltip-info");
+    el.style.display = "none";
+}
+
+function createDoughnutChart() {
+    const ctx = document.getElementById("chart-canvas").getContext("2d");
+
+    const labels = categories.map(c => c.name);
+    const data = categories.map(c => c.pct);
+    const colors = categories.map(c => c.color);
+
+    currentChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors,
+                borderColor: "white",
+                borderWidth: 2,
+                hoverBorderWidth: 3,
+                hoverOffset: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "45%",
+            plugins: {
+                legend: {
+                    position: "right",
+                    labels: {
+                        padding: 12,
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        font: { size: 11 },
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            return data.labels.map((label, i) => ({
+                                text: `${label} (${data.datasets[0].data[i]}%)`,
+                                fillStyle: data.datasets[0].backgroundColor[i],
+                                strokeStyle: data.datasets[0].backgroundColor[i],
+                                lineWidth: 0,
+                                pointStyle: "circle",
+                                index: i
+                            }));
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const cat = categories[context.dataIndex];
+                            return `${cat.name}: ${cat.pct}% of global compute`;
+                        },
+                        afterLabel: function(context) {
+                            const cat = categories[context.dataIndex];
+                            const qcLabel = cat.qcPct > 0
+                                ? `QC-addressable: ~${cat.qcPct}%`
+                                : "QC-addressable: 0%";
+                            return qcLabel;
+                        }
+                    }
+                },
+                datalabels: {
+                    color: "white",
+                    font: { weight: "bold", size: 12 },
+                    formatter: function(value) {
+                        return value >= 5 ? value + "%" : "";
+                    }
+                }
+            },
+            onClick: function(evt, elements) {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    const cat = categories[idx];
+                    const qcText = cat.qcPct > 0
+                        ? `<strong>QC-addressable portion:</strong> ~${cat.qcPct}% of global compute`
+                        : "<strong>QC-addressable portion:</strong> None";
+                    showTooltip(
+                        `<strong>${cat.name}</strong> (${cat.pct}% of global compute)<br>${qcText}<br><em>${cat.reason}</em>`
+                    );
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+
+function createBarChart() {
+    const ctx = document.getElementById("chart-canvas").getContext("2d");
+
+    const labels = categories.map(c => c.name);
+    const classicalData = categories.map(c => c.pct - c.qcPct);
+    const qcData = categories.map(c => c.qcPct);
+
+    currentChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Classical Only",
+                    data: classicalData,
+                    backgroundColor: categories.map(c => c.color),
+                    borderWidth: 0
+                },
+                {
+                    label: "Potentially QC-Addressable",
+                    data: qcData,
+                    backgroundColor: "#E53935",
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: "y",
+            scales: {
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: "Percentage of Global Compute",
+                        font: { size: 12 }
+                    },
+                    max: 45,
+                    ticks: {
+                        callback: function(value) {
+                            return value + "%";
+                        }
+                    }
+                },
+                y: {
+                    stacked: true,
+                    ticks: {
+                        font: { size: 11 }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: "top",
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: "rect",
+                        font: { size: 11 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const val = context.parsed.x;
+                            if (val === 0) return null;
+                            return `${context.dataset.label}: ${val.toFixed(2)}%`;
+                        },
+                        afterBody: function(tooltipItems) {
+                            const idx = tooltipItems[0].dataIndex;
+                            const cat = categories[idx];
+                            return cat.reason;
+                        }
+                    }
+                },
+                datalabels: {
+                    display: function(context) {
+                        return context.datasetIndex === 0 && context.dataset.data[context.dataIndex] >= 3;
+                    },
+                    color: "white",
+                    font: { weight: "bold", size: 11 },
+                    anchor: "center",
+                    align: "center",
+                    formatter: function(value, context) {
+                        const cat = categories[context.dataIndex];
+                        return cat.pct + "%";
+                    }
+                }
+            },
+            onClick: function(evt, elements) {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    const cat = categories[idx];
+                    const qcText = cat.qcPct > 0
+                        ? `<strong>QC-addressable:</strong> ~${cat.qcPct}% of global compute`
+                        : "<strong>QC-addressable:</strong> None";
+                    showTooltip(
+                        `<strong>${cat.name}</strong> (${cat.pct}% of global compute)<br>${qcText}<br><em>${cat.reason}</em>`
+                    );
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+
+function showView(view) {
+    currentView = view;
+
+    // Update toggle buttons
+    document.getElementById("btn-doughnut").classList.toggle("active", view === "doughnut");
+    document.getElementById("btn-bar").classList.toggle("active", view === "bar");
+
+    // Destroy existing chart
+    if (currentChart) {
+        currentChart.destroy();
+        currentChart = null;
+    }
+
+    hideTooltip();
+
+    if (view === "doughnut") {
+        createDoughnutChart();
+    } else {
+        createBarChart();
+    }
+}
+
+// Initialize
+updateSummary();
+showView("doughnut");
+
+</script>
+</body>
+</html>

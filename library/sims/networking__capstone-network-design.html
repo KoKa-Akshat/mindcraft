@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cross-Tier Capstone Architecture MicroSim</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #fff; color: #212529; }
+        main { padding: 8px 12px; }
+        h3 { margin: 2px 0 8px; color: #1a3a6c; font-size: 18px; }
+        #controls { margin-bottom: 8px; font-size: 14px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        #controls label { display: inline-flex; align-items: center; gap: 5px; }
+        #net { width: 100%; border: 1px solid #dee2e6; border-radius: 6px; background: #fbfcfd; }
+        #info { margin-top: 8px; font-size: 13px; color: #333; min-height: 18px; }
+        button { font-size: 13px; padding: 4px 10px; cursor: pointer; }
+    </style>
+    <script>// Cross-Tier Capstone Architecture - vis-network
+// CANVAS_HEIGHT: 410
+document.addEventListener('DOMContentLoaded', function () {
+  const main = document.querySelector('main');
+  main.innerHTML =
+    '<h3>Cross-Tier Capstone Architecture</h3>' +
+    '<div id="controls"><label>Example Project: <select id="proj"><option>Distance sensor to smart alert</option><option>Sound classifier to NeoPixel signal</option></select></label></div>' +
+    '<div id="net" style="height:290px"></div>' +
+    '<div id="info">Click a node to trace a reading from sensor to final action.</div>';
+
+  const projects = {
+    'Distance sensor to smart alert': {
+      subs: ['reads distance', 'sends over Wi-Fi', 'decides if too close', 'sounds an alert'],
+      edges: ['sensor reading', 'data over Wi-Fi', 'decision'],
+      defs: ['Pico measures distance with a time-of-flight sensor (Ch. 12).', 'The Pico W relays the reading over Wi-Fi (Ch. 13).', 'The Pi 5 decides whether the distance is unsafe.', 'The output triggers a buzzer or on-screen alert.'],
+    },
+    'Sound classifier to NeoPixel signal': {
+      subs: ['captures sound', 'streams audio', 'classifies wake word (Ch. 16 AI HAT+)', 'lights NeoPixels'],
+      edges: ['audio samples', 'audio over Wi-Fi', 'classification'],
+      defs: ['Pico captures audio from a microphone (Ch. 15).', 'The Pico W streams samples over Wi-Fi.', 'The Pi 5 + AI HAT+ classifies the sound (Ch. 16).', 'The result drives a NeoPixel lighting signal (Ch. 5).'],
+    },
+  };
+  const names = ['Pico Sensor Node', 'Wi-Fi Link (Pico W)', 'Raspberry Pi 5', 'Action / Output'];
+  const colors = ['#3F51B5', '#C2185B', '#2E7D32', '#D4AF37'];
+  const nodes = new vis.DataSet(); const edges = new vis.DataSet();
+  const network = new vis.Network(document.getElementById('net'), { nodes, edges }, {
+    layout: { hierarchical: { direction: 'LR', sortMethod: 'directed', levelSeparation: 150, nodeSpacing: 80 } },
+    physics: false, interaction: { zoomView: false, dragView: false }, edges: { color: '#888', font: { size: 11 } },
+  });
+  network.once('afterDrawing', () => network.fit());
+  let curDefs = [];
+  function build(name) {
+    const p = projects[name]; curDefs = p.defs;
+    nodes.clear(); edges.clear();
+    for (let i = 0; i < 4; i++) nodes.add({ id: i + 1, label: names[i] + '\n(' + p.subs[i] + ')', color: { background: colors[i], border: '#333' }, font: { color: 'white', size: 12, multi: true }, shape: 'box' });
+    for (let i = 0; i < 3; i++) edges.add({ from: i + 1, to: i + 2, label: p.edges[i], title: p.edges[i], arrows: 'to' });
+    network.fit();
+  }
+  const info = document.getElementById('info');
+  network.on('click', p => { if (p.nodes.length) { const i = p.nodes[0] - 1; info.innerHTML = '<strong>' + names[i] + ':</strong> ' + curDefs[i]; } });
+  document.getElementById('proj').onchange = function () { build(this.value); info.textContent = 'Click a node to trace a reading from sensor to final action.'; };
+  build('Distance sensor to smart alert');
+});
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<!-- CANVAS_HEIGHT: 560 -->
+<title>Stereotype-to-Discrimination Pathway Map</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: Arial, Helvetica, sans-serif; background: white; }
+  main { display: block; width: 100%; padding: 8px; }
+  h3 { text-align: center; color: navy; font-size: 18px; margin: 2px 0; }
+  .subtitle { text-align: center; color: dimgray; font-size: 12px; margin-bottom: 6px; }
+  .wrap { position: relative; }
+  #network { width: 100%; height: 400px; border: 1px solid silver; border-radius: 6px; background: aliceblue; }
+  .legend { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.92); border: 1px solid #cbd5e1; border-radius: 5px; padding: 6px 9px; font-size: 11px; line-height: 1.7; }
+  .legend .k { display: inline-block; width: 13px; height: 13px; margin-right: 6px; vertical-align: middle; border: 1px solid #555; }
+  .legend .circle { border-radius: 50%; }
+  .legend .line { display:inline-block; width: 18px; height: 0; margin-right:6px; vertical-align: middle; border: 0; border-top: 3px solid #222; }
+  .legend .line.green { border-top: 3px solid #2e8b57; }
+  .infobox { margin-top: 8px; background: #f8fafc; border-left: 4px solid steelblue; border-radius: 4px; padding: 9px 11px; font-size: 13px; color: #334155; line-height: 1.5; min-height: 88px; }
+  .infobox strong { color: navy; }
+  .infobox .reflect { display: block; margin-top: 5px; color: seagreen; font-style: italic; }
+</style>
+</head>
+<body>
+<main>
+  <h3>Stereotype-to-Discrimination Pathway Map</h3>
+  <div class="subtitle">Follow the pathway from a stereotype to discrimination. Hover for a definition; click a red outcome or a green intervention to learn more.</div>
+  <div class="wrap">
+    <div id="network"></div>
+    <div class="legend">
+      <span class="k circle" style="background:#e08a2f;"></span>Stereotype / Prejudice<br>
+      <span class="k" style="background:#c0392b;"></span>Discrimination outcome<br>
+      <span class="k circle" style="background:#3f9d5a;"></span>Intervention<br>
+      <span class="line"></span>Leads To<br>
+      <span class="line green"></span>Most Directly Addresses
+    </div>
+  </div>
+  <div class="infobox" id="infobox">A <strong>stereotype</strong> can grow into <strong>prejudice</strong>, which can lead to <strong>discrimination</strong> — either by one person or built into an institution. The green interventions show what most directly addresses each part of the pathway. Hover or click any node to learn more.</div>
+</main>
+<script>
+const box = document.getElementById('infobox');
+const INTRO = 'A <strong>stereotype</strong> can grow into <strong>prejudice</strong>, which can lead to <strong>discrimination</strong> — either by one person or built into an institution. The green interventions show what most directly addresses each part of the pathway. Hover or click any node to learn more.';
+
+// Explicit left-to-right positions. Every edge has a non-zero slope (and back-edges are curved),
+// so no edge label lands on a perfectly horizontal line — the vis-network label-render bug.
+const nodeDefs = [
+  { id:'stereotype', label:'Stereotype\n(oversimplified\ngroup belief)', type:'source', x:-430, y:-30,
+    hover:'Stereotype: an oversimplified belief that all members of a group are the same.',
+    full:'A stereotype is an oversimplified belief that everyone in a group is the same, ignoring the real differences between individuals. Stereotypes are where the pathway to discrimination usually begins.' },
+  { id:'prejudice', label:'Prejudice\n(negative attitude\nfrom stereotype)', type:'source', x:-150, y:20,
+    hover:'Prejudice: a negative attitude or feeling toward a group, based on a stereotype.',
+    full:'Prejudice is a negative attitude or feeling toward a whole group, built on a stereotype. It is the emotional step between believing a stereotype and acting on it.' },
+  { id:'indiv', label:'Individual\nDiscrimination', type:'outcome', x:110, y:-135,
+    hover:'Individual discrimination: one person treating another unfairly because of their group.',
+    full:'Individual discrimination is one person treating another unfairly because of the group they belong to. Example: a student refuses to be lab partners with a classmate because of that classmate’s background. It comes from personal prejudice and is best addressed by changing attitudes through genuine contact and speaking up.' },
+  { id:'systemic', label:'Systemic\n(Institutional)\nDiscrimination', type:'outcome', x:110, y:150,
+    hover:'Systemic discrimination: unfairness built into the rules and practices of institutions.',
+    full:'Systemic (institutional) discrimination is unfairness built into rules and practices, not just one person’s choice. Example: a school’s discipline policy is applied more harshly to students from one group, even when no single person intends harm. It is best addressed by examining and changing the policy itself.' },
+  { id:'interrupt', label:'Interrupt\nStereotypes\nDirectly', type:'intervention', x:405, y:-205,
+    hover:'Interrupting stereotypes directly: speaking up to challenge a stereotype when you hear it.',
+    full:'Interrupting stereotypes directly means calmly challenging a stereotype the moment you hear it, so it does not go unquestioned. This intervention works at the very start of the pathway, at the stereotype itself.' },
+  { id:'contact', label:'Genuine Contact\n& Accurate\nInformation', type:'intervention', x:405, y:-65,
+    hover:'Genuine contact and accurate information: meeting real people and learning true facts that break stereotypes.',
+    full:'Genuine contact and accurate information means getting to know real people and learning true facts, which dissolves the stereotype and the individual prejudice built on it. It interrupts the pathway at the stereotype and at individual discrimination.' },
+  { id:'policies', label:'Examine Policies\nfor Systemic\nBias', type:'intervention', x:405, y:95,
+    hover:'Examining policies for systemic bias: checking rules and practices for hidden unfairness.',
+    full:'Examining policies for systemic bias means auditing rules, budgets, and practices for hidden unfairness and changing them. Because systemic discrimination lives in institutions, this is the intervention that most directly addresses it.' },
+  { id:'support', label:'Support People\nWho Experience\nDiscrimination', type:'intervention', x:405, y:240,
+    hover:'Supporting people who experience discrimination: standing with and helping those treated unfairly.',
+    full:'Supporting people who experience discrimination means standing with those who are harmed and helping them recover and be heard. It reduces the damage of both individual and systemic discrimination while other changes take hold.' }
+];
+
+const STYLE = {
+  source:       { shape:'dot',  size:24, bg:'#e08a2f', border:'#a85f14', fc:'#3a2600' },
+  outcome:      { shape:'box',  bg:'#c0392b', border:'#7d241b', fc:'white' },
+  intervention: { shape:'dot',  size:22, bg:'#3f9d5a', border:'#256b3a', fc:'#0f2e1a' }
+};
+
+const nodes = [], info = {}, hoverInfo = {};
+nodeDefs.forEach(n => {
+  const s = STYLE[n.type];
+  const node = { id:n.id, label:n.label, shape:s.shape,
+    color:{ background:s.bg, border:s.border, highlight:{ background:s.bg, border:'#111' } },
+    font:{ size:12, color:s.fc, face:'Arial' }, borderWidth:2, x:n.x, y:n.y };
+  if (s.shape === 'dot') node.size = s.size; else node.margin = 8;
+  nodes.push(node);
+  info[n.id] = { title:n.label.replace(/\n/g,' '), full:n.full };
+  hoverInfo[n.id] = n.hover;
+});
+
+// "Leads To" (dark, forward) and "Most Directly Addresses" (green, curved back toward targets)
+const LEAD = { color:{ color:'#333', highlight:'#000' }, width:2.5, label:'leads to',
+  font:{ size:9, color:'#333', strokeWidth:3, strokeColor:'aliceblue' } };
+const ADDR = { color:{ color:'#2e8b57', highlight:'#1f6b40' }, width:2, label:'addresses', dashes:[6,4],
+  font:{ size:9, color:'#2e8b57', strokeWidth:3, strokeColor:'aliceblue' } };
+
+const edges = [
+  Object.assign({ from:'stereotype', to:'prejudice', smooth:{ type:'cubicBezier', roundness:0.2 } }, LEAD),
+  Object.assign({ from:'prejudice', to:'indiv', smooth:{ type:'cubicBezier', roundness:0.3 } }, LEAD),
+  Object.assign({ from:'prejudice', to:'systemic', smooth:{ type:'cubicBezier', roundness:0.3 } }, LEAD),
+  Object.assign({ from:'interrupt', to:'stereotype', smooth:{ type:'curvedCCW', roundness:0.35 } }, ADDR),
+  Object.assign({ from:'contact', to:'indiv', smooth:{ type:'curvedCW', roundness:0.2 } }, ADDR),
+  Object.assign({ from:'contact', to:'stereotype', smooth:{ type:'curvedCCW', roundness:0.5 } }, ADDR),
+  Object.assign({ from:'policies', to:'systemic', smooth:{ type:'curvedCW', roundness:0.2 } }, ADDR),
+  Object.assign({ from:'support', to:'indiv', smooth:{ type:'curvedCCW', roundness:0.3 } }, ADDR),
+  Object.assign({ from:'support', to:'systemic', smooth:{ type:'curvedCW', roundness:0.2 } }, ADDR)
+].map((e, i) => Object.assign({ id:'e'+i }, e));
+
+const container = document.getElementById('network');
+const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+const options = {
+  physics: false,
+  interaction: { hover:true, dragView:true, zoomView:true, navigationButtons:true, tooltipDelay:100000 },
+  edges: { arrows:{ to:{ enabled:true, scaleFactor:0.5 } } },
+  nodes: { shadow:true }
+};
+const network = new vis.Network(container, data, options);
+network.once('afterDrawing', () => network.fit());
+
+network.on('hoverNode', p => { const h = hoverInfo[p.node]; if (h) box.innerHTML = h; });
+network.on('click', p => {
+  if (p.nodes.length) {
+    const d = info[p.nodes[0]];
+    box.innerHTML = '<strong>' + d.title + '</strong><br>' + d.full;
+  } else {
+    box.innerHTML = INTRO;
+  }
+});
+</script>
+</body>
+</html>

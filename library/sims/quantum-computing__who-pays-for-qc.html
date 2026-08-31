@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scatter chart comparing quantum computing company valuations to revenue against industry norms.">
+    <title>QC Company Valuations vs. Revenue</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>QC Company Valuations vs. Revenue</h1>
+        <div class="chart-wrapper">
+            <canvas id="scatterChart"></canvas>
+        </div>
+        <div class="legend-bar">
+            <span class="legend-item"><span class="legend-swatch" style="background:rgba(76,175,80,0.15);border:1px solid #4caf50"></span> 5-15x (Healthy SaaS)</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:rgba(255,193,7,0.15);border:1px solid #ffc107"></span> 15-50x (Growth Premium)</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:rgba(244,67,54,0.15);border:1px solid #f44336"></span> 50x+ (Extreme Speculation)</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#d32f2f;border-radius:50%"></span> QC Companies</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#1976d2;border-radius:50%"></span> Reference Companies</span>
+        </div>
+    </div>
+    <script>
+// QC Company Valuations vs Revenue — Chart.js scatter chart
+(function () {
+    "use strict";
+
+    // --- Data -----------------------------------------------------------
+    const qcCompanies = [
+        { name: "IonQ",       revenue: 28,    valuation: 2800,  employees: 400, color: "#d32f2f" },
+        { name: "Rigetti",    revenue: 15,    valuation: 1500,  employees: 300, color: "#d32f2f" },
+        { name: "D-Wave",     revenue: 8,     valuation: 1600,  employees: 200, color: "#d32f2f" },
+        { name: "Quantinuum", revenue: 30,    valuation: 5000,  employees: 500, color: "#d32f2f" },
+        { name: "PsiQuantum", revenue: 0.5,   valuation: 3000,  employees: 250, color: "#d32f2f" }
+        // PsiQuantum revenue set to 0.5 (pre-revenue) so it plots on log scale
+    ];
+
+    const refCompanies = [
+        { name: "Intel (1971 IPO)",        revenue: 9,      valuation: 58,    color: "#1976d2" },
+        { name: "NVIDIA (1999 IPO)",       revenue: 158,    valuation: 600,   color: "#1976d2" },
+        { name: "AMD (2020)",              revenue: 9800,   valuation: 100000,color: "#1976d2" },
+        { name: "Snowflake (2020 IPO)",    revenue: 264,    valuation: 70000, color: "#1976d2" },
+        { name: "Tesla (2020)",            revenue: 31500,  valuation: 600000,color: "#1976d2" }
+    ];
+
+    function multiple(rev, val) {
+        return rev > 0 ? (val / rev).toFixed(0) : "N/A";
+    }
+
+    function makeDataset(items, label, shape, radius) {
+        return {
+            label: label,
+            data: items.map(c => ({
+                x: c.revenue,
+                y: c.valuation,
+                company: c.name,
+                rev: c.revenue,
+                val: c.valuation,
+                emp: c.employees || null
+            })),
+            backgroundColor: items.map(c => c.color + "cc"),
+            borderColor: items.map(c => c.color),
+            borderWidth: 1.5,
+            pointRadius: radius,
+            pointStyle: shape,
+            pointHoverRadius: radius + 3
+        };
+    }
+
+    // --- Reference zone lines (annotations) ----------------------------
+    // Each zone is a pair of diagonal lines: y = multiplier * x
+    // We draw them as line annotations from (xMin, xMin*mult) to (xMax, xMax*mult)
+    const xMin = 0.3;
+    const xMax = 100000;
+
+    function zoneLine(mult, color, label) {
+        return {
+            type: "line",
+            xMin: xMin,
+            yMin: xMin * mult,
+            xMax: xMax,
+            yMax: xMax * mult,
+            borderColor: color,
+            borderWidth: 1.5,
+            borderDash: [6, 4],
+            label: {
+                display: true,
+                content: label,
+                position: "end",
+                backgroundColor: "rgba(255,255,255,0.85)",
+                color: color,
+                font: { size: 10, weight: "bold" },
+                padding: 3
+            }
+        };
+    }
+
+    // Shaded zone boxes (approximate diagonal bands via box annotations)
+    // We use multiple narrow boxes to approximate the diagonal on a log-log chart
+    function diagonalZoneBoxes(multLow, multHigh, color) {
+        // Create a set of narrow vertical boxes that approximate the band
+        const boxes = [];
+        const steps = 20;
+        const logXMin = Math.log10(xMin);
+        const logXMax = Math.log10(xMax);
+        const stepSize = (logXMax - logXMin) / steps;
+        for (let i = 0; i < steps; i++) {
+            const x0 = Math.pow(10, logXMin + i * stepSize);
+            const x1 = Math.pow(10, logXMin + (i + 1) * stepSize);
+            boxes.push({
+                type: "box",
+                xMin: x0,
+                xMax: x1,
+                yMin: x0 * multLow,
+                yMax: x1 * multHigh,
+                backgroundColor: color,
+                borderWidth: 0
+            });
+        }
+        return boxes;
+    }
+
+    // Company label annotations
+    function companyLabels(items) {
+        return items.map(c => ({
+            type: "label",
+            xValue: c.revenue,
+            yValue: c.valuation,
+            content: c.name.split(" (")[0],
+            font: { size: 10, weight: "bold" },
+            color: c.color || "#333",
+            position: { x: "start", y: "end" },
+            xAdjust: 8,
+            yAdjust: -6
+        }));
+    }
+
+    // Ratio labels for QC companies
+    function ratioLabels(items) {
+        return items.map(c => {
+            const mult = c.revenue > 0 ? Math.round(c.valuation / c.revenue) : "∞";
+            return {
+                type: "label",
+                xValue: c.revenue,
+                yValue: c.valuation,
+                content: mult + "x",
+                font: { size: 9 },
+                color: "#b71c1c",
+                position: { x: "start", y: "start" },
+                xAdjust: 8,
+                yAdjust: 8
+            };
+        });
+    }
+
+    // --- Build annotations object --------------------------------------
+    const annotations = {};
+    let idx = 0;
+
+    // Zone shading
+    diagonalZoneBoxes(5, 15, "rgba(76,175,80,0.12)").forEach(b => { annotations["g" + idx++] = b; });
+    diagonalZoneBoxes(15, 50, "rgba(255,193,7,0.12)").forEach(b => { annotations["y" + idx++] = b; });
+    diagonalZoneBoxes(50, 500, "rgba(244,67,54,0.08)").forEach(b => { annotations["r" + idx++] = b; });
+
+    // Diagonal ratio lines
+    [
+        [10,  "#4caf50", "10x"],
+        [50,  "#ff9800", "50x"],
+        [100, "#f44336", "100x"],
+        [250, "#b71c1c", "250x"]
+    ].forEach(([mult, col, lbl]) => { annotations["line" + idx++] = zoneLine(mult, col, lbl); });
+
+    // Company labels
+    companyLabels(qcCompanies).forEach(l => { annotations["ql" + idx++] = l; });
+    companyLabels(refCompanies).forEach(l => { annotations["rl" + idx++] = l; });
+
+    // Ratio labels for QC companies
+    ratioLabels(qcCompanies).forEach(l => { annotations["rat" + idx++] = l; });
+
+    // --- Chart ----------------------------------------------------------
+    const ctx = document.getElementById("scatterChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "scatter",
+        data: {
+            datasets: [
+                makeDataset(qcCompanies, "QC Companies", "rectRot", 7),
+                makeDataset(refCompanies, "Reference Companies", "circle", 6)
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 8, right: 20, bottom: 4, left: 4 } },
+            scales: {
+                x: {
+                    type: "logarithmic",
+                    min: xMin,
+                    max: xMax,
+                    title: {
+                        display: true,
+                        text: "Annual Revenue ($M)",
+                        font: { size: 13, weight: "bold" }
+                    },
+                    ticks: {
+                        callback: function (val) {
+                            if ([0.5, 1, 5, 10, 50, 100, 500, 1000, 5000, 10000, 50000].includes(val))
+                                return "$" + (val >= 1000 ? (val / 1000) + "B" : val + "M");
+                            return null;
+                        },
+                        font: { size: 10 }
+                    },
+                    grid: { color: "rgba(0,0,0,0.06)" }
+                },
+                y: {
+                    type: "logarithmic",
+                    min: 10,
+                    max: 1000000,
+                    title: {
+                        display: true,
+                        text: "Enterprise Value ($M)",
+                        font: { size: 13, weight: "bold" }
+                    },
+                    ticks: {
+                        callback: function (val) {
+                            if ([10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000].includes(val))
+                                return val >= 1000 ? "$" + (val / 1000) + "B" : "$" + val + "M";
+                            return null;
+                        },
+                        font: { size: 10 }
+                    },
+                    grid: { color: "rgba(0,0,0,0.06)" }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: function (items) {
+                            return items[0].raw.company;
+                        },
+                        label: function (item) {
+                            const d = item.raw;
+                            const rev = d.rev >= 1 ? "$" + d.rev + "M" : "<$1M (pre-revenue)";
+                            const val = d.val >= 1000 ? "$" + (d.val / 1000) + "B" : "$" + d.val + "M";
+                            const mult = d.rev >= 1 ? (d.val / d.rev).toFixed(0) + "x revenue" : "Pre-revenue";
+                            const lines = [
+                                "Revenue: " + rev,
+                                "Valuation: " + val,
+                                "EV/Revenue: " + mult
+                            ];
+                            if (d.emp) lines.push("Employees: ~" + d.emp);
+                            return lines;
+                        }
+                    },
+                    backgroundColor: "rgba(30,30,30,0.92)",
+                    titleFont: { size: 13, weight: "bold" },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 6
+                },
+                annotation: {
+                    annotations: annotations
+                }
+            }
+        }
+    });
+})();
+
+</script>
+</body>
+</html>

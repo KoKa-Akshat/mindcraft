@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Habitat Fragmentation Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Habitat Fragmentation Simulator
+// CANVAS_HEIGHT: 575
+// Apply: Demonstrate how fragmentation reduces effective habitat
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 460;
+let controlHeight = 115;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let gridCols = 40;
+let gridRows = 40;
+let grid = [];
+let organisms = [];
+let cellSize;
+let showEdges = false;
+let showConnectivity = false;
+let speedSlider;
+let edgeToggle, connectToggle;
+let resetBtn, presetSelect;
+let populationHistory = [];
+let maxOrganisms = 60;
+let frameCounter = 0;
+let simSpeed = 1;
+let toolMode = 'develop'; // 'develop' or 'corridor'
+let corridorBtn;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  initGrid();
+  spawnOrganisms(maxOrganisms);
+
+  presetSelect = createSelect();
+  presetSelect.parent(document.querySelector('main'));
+  presetSelect.option('Free Draw');
+  presetSelect.option('Road Through Forest');
+  presetSelect.option('Suburban Sprawl');
+  presetSelect.option('Agricultural Mosaic');
+  presetSelect.changed(applyPreset);
+
+  speedSlider = createSlider(1, 5, 2, 1);
+  speedSlider.parent(document.querySelector('main'));
+  speedSlider.style('width', '100px');
+
+  edgeToggle = createCheckbox(' Edge Effects', false);
+  edgeToggle.parent(document.querySelector('main'));
+  edgeToggle.changed(() => showEdges = edgeToggle.checked());
+
+  connectToggle = createCheckbox(' Connectivity', false);
+  connectToggle.parent(document.querySelector('main'));
+  connectToggle.changed(() => showConnectivity = connectToggle.checked());
+
+  corridorBtn = createButton('Corridor Tool');
+  corridorBtn.parent(document.querySelector('main'));
+  corridorBtn.mousePressed(() => {
+    toolMode = toolMode === 'corridor' ? 'develop' : 'corridor';
+    corridorBtn.html(toolMode === 'corridor' ? 'Develop Tool' : 'Corridor Tool');
+  });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => {
+    initGrid();
+    organisms = [];
+    spawnOrganisms(maxOrganisms);
+    populationHistory = [];
+    toolMode = 'develop';
+    corridorBtn.html('Corridor Tool');
+  });
+
+  describe('Habitat Fragmentation Simulator: click to develop land, watch populations respond', LABEL);
+}
+
+function initGrid() {
+  grid = [];
+  for (let r = 0; r < gridRows; r++) {
+    grid[r] = [];
+    for (let c = 0; c < gridCols; c++) {
+      grid[r][c] = 1; // 1 = habitat
+    }
+  }
+}
+
+function spawnOrganisms(count) {
+  for (let i = 0; i < count; i++) {
+    let r = floor(random(gridRows));
+    let c = floor(random(gridCols));
+    if (grid[r][c] === 1) {
+      organisms.push({ r: r, c: c, age: 0 });
+    }
+  }
+}
+
+function isEdgeCell(r, c) {
+  if (grid[r][c] !== 1) return false;
+  for (let dr = -2; dr <= 2; dr++) {
+    for (let dc = -2; dc <= 2; dc++) {
+      let nr = r + dr;
+      let nc = c + dc;
+      if (nr < 0 || nr >= gridRows || nc < 0 || nc >= gridCols) return true;
+      if (grid[nr][nc] === 0) return true;
+    }
+  }
+  return false;
+}
+
+function getFragmentId(r, c, visited, id) {
+  // BFS flood fill
+  let queue = [{ r, c }];
+  visited[r][c] = id;
+  let size = 0;
+  while (queue.length > 0) {
+    let cur = queue.shift();
+    size++;
+    let dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    for (let d of dirs) {
+      let nr = cur.r + d[0];
+      let nc = cur.c + d[1];
+      if (nr >= 0 && nr < gridRows && nc >= 0 && nc < gridCols && grid[nr][nc] === 1 && visited[nr][nc] === -1) {
+        visited[nr][nc] = id;
+        queue.push({ r: nr, c: nc });
+      }
+    }
+  }
+  return size;
+}
+
+function draw() {
+  updateCanvasSize();
+  simSpeed = speedSlider.value();
+  cellSize = min((canvasWidth - 2 * margin) / gridCols, (drawHeight - 80) / gridRows);
+  let gridW = cellSize * gridCols;
+  let gridH = cellSize * gridRows;
+  let gridX = (canvasWidth - gridW) / 2;
+  let gridY = 30;
+
+  // Background
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  noStroke();
+  fill('#264653');
+  textSize(16);
+  textAlign(CENTER, TOP);
+  text('Habitat Fragmentation Simulator', canvasWidth / 2, 6);
+
+  // Compute connectivity if needed
+  let visited = [];
+  let fragments = {};
+  if (showConnectivity) {
+    for (let r = 0; r < gridRows; r++) {
+      visited[r] = [];
+      for (let c = 0; c < gridCols; c++) visited[r][c] = -1;
+    }
+    let fid = 0;
+    for (let r = 0; r < gridRows; r++) {
+      for (let c = 0; c < gridCols; c++) {
+        if (grid[r][c] === 1 && visited[r][c] === -1) {
+          let sz = getFragmentId(r, c, visited, fid);
+          fragments[fid] = sz;
+          fid++;
+        }
+      }
+    }
+  }
+
+  let fragColors = ['#2d6a4f', '#457b9d', '#e9c46a', '#e76f51', '#7b2cbf', '#f4a261', '#2a9d8f', '#a8dadc'];
+
+  // Draw grid
+  for (let r = 0; r < gridRows; r++) {
+    for (let c = 0; c < gridCols; c++) {
+      let x = gridX + c * cellSize;
+      let y = gridY + r * cellSize;
+      noStroke();
+
+      if (grid[r][c] === 0) {
+        fill('#adb5bd'); // developed
+      } else if (showConnectivity && visited[r] && visited[r][c] >= 0) {
+        let ci = visited[r][c] % fragColors.length;
+        fill(fragColors[ci]);
+      } else if (showEdges && isEdgeCell(r, c)) {
+        fill('#95d5b2'); // edge habitat
+      } else {
+        fill('#2d6a4f'); // intact habitat
+      }
+      rect(x, y, cellSize, cellSize);
+    }
+  }
+
+  // Draw organisms
+  for (let org of organisms) {
+    let x = gridX + org.c * cellSize + cellSize / 2;
+    let y = gridY + org.r * cellSize + cellSize / 2;
+    noStroke();
+    fill('#f4a261');
+    circle(x, y, max(3, cellSize * 0.6));
+  }
+
+  // Simulate organisms
+  frameCounter++;
+  if (frameCounter % max(1, 6 - simSpeed) === 0) {
+    // Move organisms
+    let newOrganisms = [];
+    for (let org of organisms) {
+      let dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+      let d = dirs[floor(random(4))];
+      let nr = org.r + d[0];
+      let nc = org.c + d[1];
+      if (nr >= 0 && nr < gridRows && nc >= 0 && nc < gridCols && grid[nr][nc] === 1) {
+        org.r = nr;
+        org.c = nc;
+      }
+      org.age++;
+
+      // Survival check - organisms in small fragments die faster
+      let survivalChance = 0.998;
+      if (showConnectivity && visited[org.r] && visited[org.r][org.c] >= 0) {
+        let fid = visited[org.r][org.c];
+        if (fragments[fid] < 20) survivalChance = 0.985;
+        else if (fragments[fid] < 50) survivalChance = 0.993;
+      }
+      if (grid[org.r][org.c] === 1 && random() < survivalChance) {
+        newOrganisms.push(org);
+      }
+    }
+
+    // Reproduction
+    if (newOrganisms.length < maxOrganisms && random() < 0.3) {
+      let parent = newOrganisms[floor(random(newOrganisms.length))];
+      if (parent && grid[parent.r][parent.c] === 1) {
+        newOrganisms.push({ r: parent.r, c: parent.c, age: 0 });
+      }
+    }
+    organisms = newOrganisms;
+
+    populationHistory.push(organisms.length);
+    if (populationHistory.length > 200) populationHistory.shift();
+  }
+
+  // Population graph
+  let graphX = gridX;
+  let graphY = drawHeight - 55;
+  let graphW = gridW;
+  let graphH = 45;
+
+  fill(255, 255, 255, 200);
+  stroke('silver');
+  strokeWeight(1);
+  rect(graphX, graphY, graphW, graphH, 4);
+
+  noStroke();
+  fill('#264653');
+  textSize(10);
+  textAlign(LEFT, TOP);
+  text('Population: ' + organisms.length, graphX + 5, graphY + 2);
+
+  // Draw population line
+  if (populationHistory.length > 1) {
+    stroke('#f4a261');
+    strokeWeight(1.5);
+    noFill();
+    beginShape();
+    for (let i = 0; i < populationHistory.length; i++) {
+      let px = map(i, 0, 200, graphX + 2, graphX + graphW - 2);
+      let py = map(populationHistory[i], 0, maxOrganisms * 1.2, graphY + graphH - 3, graphY + 12);
+      vertex(px, py);
+    }
+    endShape();
+  }
+
+  // Tool indicator
+  noStroke();
+  fill(toolMode === 'corridor' ? '#2a9d8f' : '#e63946');
+  textSize(11);
+  textAlign(RIGHT, TOP);
+  text('Tool: ' + (toolMode === 'corridor' ? 'Add Corridor' : 'Develop Land'), canvasWidth - margin, 6);
+
+  // Control area
+  fill('white');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  noStroke();
+  fill('#264653');
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Preset:', 10, drawHeight + 15);
+  text('Speed:', 10, drawHeight + 50);
+
+  positionControls();
+}
+
+function mouseDragged() {
+  applyTool();
+}
+
+function mousePressed() {
+  applyTool();
+}
+
+function applyTool() {
+  let gridW = cellSize * gridCols;
+  let gridH = cellSize * gridRows;
+  let gridX = (canvasWidth - gridW) / 2;
+  let gridY = 30;
+
+  let c = floor((mouseX - gridX) / cellSize);
+  let r = floor((mouseY - gridY) / cellSize);
+
+  if (r >= 0 && r < gridRows && c >= 0 && c < gridCols) {
+    let brushSize = 1;
+    for (let dr = -brushSize; dr <= brushSize; dr++) {
+      for (let dc = -brushSize; dc <= brushSize; dc++) {
+        let nr = r + dr;
+        let nc = c + dc;
+        if (nr >= 0 && nr < gridRows && nc >= 0 && nc < gridCols) {
+          grid[nr][nc] = toolMode === 'corridor' ? 1 : 0;
+        }
+      }
+    }
+    // Remove organisms on developed cells
+    if (toolMode === 'develop') {
+      organisms = organisms.filter(o => grid[o.r][o.c] === 1);
+    }
+  }
+}
+
+function applyPreset() {
+  initGrid();
+  organisms = [];
+  populationHistory = [];
+  let preset = presetSelect.value();
+
+  if (preset === 'Road Through Forest') {
+    let mid = floor(gridRows / 2);
+    for (let c = 0; c < gridCols; c++) {
+      for (let dr = -1; dr <= 1; dr++) {
+        if (mid + dr >= 0 && mid + dr < gridRows) grid[mid + dr][c] = 0;
+      }
+    }
+  } else if (preset === 'Suburban Sprawl') {
+    for (let i = 0; i < 150; i++) {
+      let r = floor(random(gridRows));
+      let c = floor(random(gridCols));
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          let nr = r + dr;
+          let nc = c + dc;
+          if (nr >= 0 && nr < gridRows && nc >= 0 && nc < gridCols) grid[nr][nc] = 0;
+        }
+      }
+    }
+  } else if (preset === 'Agricultural Mosaic') {
+    for (let r = 0; r < gridRows; r++) {
+      for (let c = 0; c < gridCols; c++) {
+        if (r % 8 < 2 || c % 8 < 2) grid[r][c] = 0;
+      }
+    }
+  }
+
+  spawnOrganisms(maxOrganisms);
+  organisms = organisms.filter(o => grid[o.r][o.c] === 1);
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: preset select + checkboxes
+  presetSelect.position(ox + 60, oy + drawHeight + 5);
+  edgeToggle.position(ox + canvasWidth * 0.5, oy + drawHeight + 5);
+  connectToggle.position(ox + canvasWidth * 0.7, oy + drawHeight + 5);
+  // Row 2: speed slider
+  speedSlider.position(ox + 60, oy + drawHeight + 40);
+  speedSlider.size(canvasWidth * 0.3);
+  // Row 3: buttons
+  corridorBtn.position(ox + 10, oy + drawHeight + 75);
+  resetBtn.position(ox + 140, oy + drawHeight + 75);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

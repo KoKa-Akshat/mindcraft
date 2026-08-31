@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Test Cross Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Test Cross Simulator
+// Students generate offspring one at a time to determine an unknown genotype
+// MicroSim template version 2026.02
+
+let containerWidth;
+let canvasWidth = 780;
+let drawHeight = 300;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+let sliderLeftMargin = 160;
+let defaultTextSize = 14;
+
+// Trait definitions
+const TRAITS = [
+    { name: 'Seed Shape', dominant: 'Round', recessive: 'Wrinkled', alleleD: 'R', alleleR: 'r', domColor: '#2ECC71', recColor: '#D4A574' },
+    { name: 'Flower Color', dominant: 'Purple', recessive: 'White', alleleD: 'P', alleleR: 'p', domColor: '#8E44AD', recColor: '#ECF0F1' },
+    { name: 'Plant Height', dominant: 'Tall', recessive: 'Short', alleleD: 'T', alleleR: 't', domColor: '#27AE60', recColor: '#F0B27A' }
+];
+
+let currentTraitIndex = 0;
+let mysteryIsHomozygous; // true = AA, false = Aa
+let offspring = []; // array of {isDominant: bool}
+let revealed = false;
+let traitSelector;
+let generateBtn, revealBtn, newMysteryBtn;
+
+// Animation for newest offspring
+let newOffspringTimer = 0;
+let showingGenotype = false;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(containerWidth, containerHeight);
+    var mainElement = document.querySelector('main');
+    canvas.parent(mainElement);
+
+    // Trait selector
+    traitSelector = createSelect();
+    traitSelector.position(10, drawHeight + 8);
+    traitSelector.parent(mainElement);
+    for (let i = 0; i < TRAITS.length; i++) {
+        traitSelector.option(TRAITS[i].name, i);
+    }
+    traitSelector.changed(() => {
+        currentTraitIndex = parseInt(traitSelector.value());
+        resetExperiment();
+    });
+
+    // Buttons
+    generateBtn = createButton('Generate Offspring');
+    generateBtn.position(170, drawHeight + 8);
+    generateBtn.mousePressed(generateOneOffspring);
+    generateBtn.parent(mainElement);
+
+    newMysteryBtn = createButton('New Mystery');
+    newMysteryBtn.position(320, drawHeight + 8);
+    newMysteryBtn.mousePressed(resetExperiment);
+    newMysteryBtn.parent(mainElement);
+
+    revealBtn = createButton('Reveal Genotype');
+    revealBtn.position(430, drawHeight + 8);
+    revealBtn.mousePressed(revealGenotype);
+    revealBtn.parent(mainElement);
+    revealBtn.hide();
+
+    // Style buttons
+    let btns = [generateBtn, newMysteryBtn, revealBtn];
+    for (let b of btns) {
+        b.style('padding', '5px 12px');
+        b.style('border-radius', '4px');
+        b.style('border', '1px solid #888');
+        b.style('cursor', 'pointer');
+        b.style('font-size', '13px');
+    }
+    generateBtn.style('background', '#3498DB');
+    generateBtn.style('color', 'white');
+    newMysteryBtn.style('background', '#E67E22');
+    newMysteryBtn.style('color', 'white');
+    revealBtn.style('background', '#E74C3C');
+    revealBtn.style('color', 'white');
+
+    traitSelector.style('padding', '4px');
+    traitSelector.style('font-size', '13px');
+    traitSelector.style('border-radius', '4px');
+
+    resetExperiment();
+}
+
+function resetExperiment() {
+    mysteryIsHomozygous = random() < 0.5; // 50% AA, 50% Aa
+    offspring = [];
+    revealed = false;
+    showingGenotype = false;
+    revealBtn.hide();
+}
+
+function generateOneOffspring() {
+    if (revealed) return;
+
+    let isDominant;
+    if (mysteryIsHomozygous) {
+        // AA x aa → all Aa (dominant)
+        isDominant = true;
+    } else {
+        // Aa x aa → 50% Aa (dominant), 50% aa (recessive)
+        isDominant = random() < 0.5;
+    }
+    offspring.push({ isDominant: isDominant });
+    newOffspringTimer = 30; // frames of highlight
+    showingGenotype = false;
+
+    // Show reveal button after 20 offspring
+    if (offspring.length >= 20) {
+        revealBtn.show();
+    }
+}
+
+function revealGenotype() {
+    revealed = true;
+    revealBtn.hide();
+}
+
+function draw() {
+    updateCanvasSize();
+
+    // Drawing region
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region
+    fill('white');
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    let trait = TRAITS[currentTraitIndex];
+
+    // Title
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(22);
+    text('Test Cross Simulator', canvasWidth / 2, 8);
+
+    // Layout: three panels
+    let panelW = canvasWidth / 3;
+    let topY = 42;
+
+    // === LEFT PANEL: Mystery Parent ===
+    drawMysteryParent(margin, topY, panelW - margin * 2, trait);
+
+    // === CENTER PANEL: Cross Diagram ===
+    drawCrossDiagram(panelW + margin, topY, panelW - margin * 2, trait);
+
+    // === RIGHT PANEL: Offspring Tally ===
+    drawOffspringTally(panelW * 2 + margin, topY, panelW - margin * 2, trait);
+
+    // Update animation timer
+    if (newOffspringTimer > 0) newOffspringTimer--;
+}
+
+function drawMysteryParent(x, y, w, trait) {
+    let cx = x + w / 2;
+
+    // Label
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(15);
+    text('Mystery Parent', cx, y);
+
+    // Purple box for mystery
+    let boxY = y + 24;
+    let boxSize = 90;
+    fill('#8E44AD');
+    stroke('#6C3483');
+    strokeWeight(2);
+    rectMode(CENTER);
+    rect(cx, boxY + boxSize / 2, boxSize, boxSize, 10);
+    rectMode(CORNER);
+
+    // Show dominant phenotype shape
+    fill(trait.domColor);
+    noStroke();
+    ellipse(cx, boxY + boxSize / 2 - 8, 40, 40);
+
+    // Question mark
+    fill('white');
+    textAlign(CENTER, CENTER);
+    textSize(28);
+    text('?', cx, boxY + boxSize / 2 + 22);
+
+    // Genotype label
+    textSize(16);
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    if (revealed) {
+        let gt = mysteryIsHomozygous
+            ? trait.alleleD + trait.alleleD
+            : trait.alleleD + trait.alleleR;
+        fill('#E74C3C');
+        textSize(20);
+        text(gt, cx, boxY + boxSize + 10);
+        textSize(13);
+        fill('#555');
+        text(mysteryIsHomozygous ? 'Homozygous Dominant' : 'Heterozygous', cx, boxY + boxSize + 34);
+    } else {
+        textSize(18);
+        text(trait.alleleD + '?', cx, boxY + boxSize + 10);
+        textSize(12);
+        fill('#888');
+        text('(shows ' + trait.dominant + ')', cx, boxY + boxSize + 32);
+    }
+
+    // Confidence meter
+    if (offspring.length > 0) {
+        let meterY = boxY + boxSize + 56;
+        drawConfidenceMeter(cx - w/2 + 5, meterY, w - 10, trait);
+    }
+}
+
+function drawConfidenceMeter(x, y, w, trait) {
+    let domCount = offspring.filter(o => o.isDominant).length;
+    let recCount = offspring.length - domCount;
+
+    // Calculate confidence
+    // If any recessive appear, 100% confident it's Aa
+    // If all dominant, confidence in AA grows with sample size
+    let confidence, prediction;
+    if (recCount > 0) {
+        confidence = 1.0;
+        prediction = 'Heterozygous (' + trait.alleleD + trait.alleleR + ')';
+    } else {
+        // Probability of all dominant from Aa parent = (0.5)^n
+        // Confidence in AA = 1 - (0.5)^n
+        confidence = 1 - Math.pow(0.5, offspring.length);
+        prediction = 'Homozygous (' + trait.alleleD + trait.alleleD + ')';
+    }
+
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(12);
+    text('Confidence Meter', x + w / 2, y);
+
+    // Bar background
+    let barY = y + 18;
+    let barH = 14;
+    fill('#ddd');
+    stroke('#aaa');
+    strokeWeight(1);
+    rect(x, barY, w, barH, 4);
+
+    // Filled portion
+    let barColor = confidence < 0.5 ? '#F39C12' : (confidence < 0.9 ? '#F1C40F' : '#2ECC71');
+    fill(barColor);
+    noStroke();
+    rect(x, barY, w * confidence, barH, 4);
+
+    // Percentage
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(11);
+    text((confidence * 100).toFixed(1) + '% — ' + prediction, x + w / 2, barY + barH + 4);
+}
+
+function drawCrossDiagram(x, y, w, trait) {
+    let cx = x + w / 2;
+
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(15);
+    text('Cross Diagram', cx, y);
+
+    let diagramY = y + 30;
+
+    // Mystery parent circle (left)
+    let leftX = cx - 50;
+    fill('#8E44AD');
+    stroke('#6C3483');
+    strokeWeight(2);
+    ellipse(leftX, diagramY + 20, 36, 36);
+    fill('white');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text(trait.alleleD + '?', leftX, diagramY + 20);
+
+    // X symbol
+    fill('#2C3E50');
+    textSize(20);
+    text('\u00D7', cx, diagramY + 18);
+
+    // Test parent circle (right) — homozygous recessive
+    let rightX = cx + 50;
+    fill(trait.recColor);
+    stroke('#aaa');
+    strokeWeight(2);
+    ellipse(rightX, diagramY + 20, 36, 36);
+    fill('#333');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text(trait.alleleR + trait.alleleR, rightX, diagramY + 20);
+
+    // Labels
+    textSize(11);
+    fill('#666');
+    textAlign(CENTER, TOP);
+    text('Mystery', leftX, diagramY + 42);
+    text('Tester (' + trait.recessive + ')', rightX, diagramY + 42);
+
+    // Arrow down
+    stroke('#2C3E50');
+    strokeWeight(2);
+    let arrowY = diagramY + 62;
+    line(cx, arrowY, cx, arrowY + 25);
+    line(cx - 6, arrowY + 19, cx, arrowY + 25);
+    line(cx + 6, arrowY + 19, cx, arrowY + 25);
+
+    // Offspring label
+    fill('#2C3E50');
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, TOP);
+    text('Offspring', cx, arrowY + 30);
+
+    // Show recent offspring as circles
+    let offspringY = arrowY + 50;
+    let startIdx = Math.max(0, offspring.length - 10);
+    let shown = offspring.slice(startIdx);
+    let spacing = Math.min(24, (w - 20) / Math.max(shown.length, 1));
+    let startX = cx - (shown.length - 1) * spacing / 2;
+
+    for (let i = 0; i < shown.length; i++) {
+        let ox = startX + i * spacing;
+        let isNewest = (i === shown.length - 1 && newOffspringTimer > 0);
+        let sz = isNewest ? 20 + sin(frameCount * 0.3) * 4 : 18;
+
+        if (shown[i].isDominant) {
+            fill(trait.domColor);
+            stroke(isNewest ? '#F1C40F' : '#1a8a4a');
+        } else {
+            fill(trait.recColor);
+            stroke(isNewest ? '#F1C40F' : '#8B7355');
+        }
+        strokeWeight(isNewest ? 3 : 1.5);
+        ellipse(ox, offspringY, sz, sz);
+    }
+
+    if (shown.length > 0) {
+        fill('#888');
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, TOP);
+        text('(last ' + shown.length + ' shown)', cx, offspringY + 14);
+    }
+
+    // If revealed, show explanation
+    if (revealed) {
+        let expY = offspringY + 30;
+        fill('#FDEBD0');
+        stroke('#E67E22');
+        strokeWeight(1);
+        rectMode(CORNER);
+        rect(x + 2, expY, w - 4, 68, 6);
+
+        fill('#2C3E50');
+        noStroke();
+        textAlign(CENTER, TOP);
+        textSize(11);
+        let domCount = offspring.filter(o => o.isDominant).length;
+        let recCount = offspring.length - domCount;
+        if (mysteryIsHomozygous) {
+            text('All ' + offspring.length + ' offspring show the', cx, expY + 5);
+            text('dominant phenotype. No recessive', cx, expY + 18);
+            text('offspring appeared, consistent with', cx, expY + 31);
+            text(trait.alleleD + trait.alleleD + ' (homozygous dominant).', cx, expY + 44);
+        } else {
+            let ratio = domCount + ' dom : ' + recCount + ' rec';
+            text('Ratio: ' + ratio + ' (expect ~1:1)', cx, expY + 5);
+            text('Recessive offspring appeared,', cx, expY + 20);
+            text('proving the mystery parent is', cx, expY + 35);
+            text(trait.alleleD + trait.alleleR + ' (heterozygous).', cx, expY + 50);
+        }
+    }
+}
+
+function drawOffspringTally(x, y, w, trait) {
+    let cx = x + w / 2;
+
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(15);
+    text('Offspring Tally', cx, y);
+
+    let domCount = offspring.filter(o => o.isDominant).length;
+    let recCount = offspring.length - domCount;
+
+    let tallyY = y + 28;
+
+    // Dominant count
+    fill(trait.domColor);
+    stroke('#1a8a4a');
+    strokeWeight(2);
+    rectMode(CORNER);
+    rect(x + 5, tallyY, w - 10, 40, 6);
+    fill('#fff');
+    noStroke();
+    textAlign(LEFT, CENTER);
+    textSize(14);
+    text(trait.dominant + ':', x + 14, tallyY + 20);
+    textAlign(RIGHT, CENTER);
+    textSize(22);
+    text(domCount, x + w - 14, tallyY + 20);
+
+    // Recessive count
+    tallyY += 50;
+    fill(trait.recColor);
+    stroke('#8B7355');
+    strokeWeight(2);
+    rect(x + 5, tallyY, w - 10, 40, 6);
+    fill('#333');
+    noStroke();
+    textAlign(LEFT, CENTER);
+    textSize(14);
+    text(trait.recessive + ':', x + 14, tallyY + 20);
+    textAlign(RIGHT, CENTER);
+    textSize(22);
+    text(recCount, x + w - 14, tallyY + 20);
+
+    // Total
+    tallyY += 50;
+    fill('#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(13);
+    text('Total: ' + offspring.length, cx, tallyY);
+
+    // Ratio
+    if (offspring.length > 0) {
+        tallyY += 22;
+        let ratioStr;
+        if (recCount === 0) {
+            ratioStr = domCount + ' : 0';
+        } else {
+            let g = gcd(domCount, recCount);
+            ratioStr = (domCount / g).toFixed(1) + ' : ' + (recCount / g).toFixed(1);
+        }
+        textSize(14);
+        text('Ratio: ' + ratioStr, cx, tallyY);
+
+        // Expected ratio note
+        tallyY += 22;
+        fill('#888');
+        textSize(11);
+        if (recCount > 0) {
+            text('If Aa: expect ~1:1', cx, tallyY);
+        } else {
+            text('If AA: all dominant', cx, tallyY);
+            tallyY += 14;
+            text('If Aa: expect ~1:1', cx, tallyY);
+        }
+    }
+
+    // Draw small offspring grid
+    if (offspring.length > 0) {
+        let gridY = tallyY + 30;
+        let cols = 10;
+        let dotSize = 10;
+        let spacing = 13;
+        let gridW = cols * spacing;
+        let startX = cx - gridW / 2 + spacing / 2;
+
+        fill('#2C3E50');
+        noStroke();
+        textAlign(CENTER, TOP);
+        textSize(11);
+        text('All offspring:', cx, gridY - 2);
+        gridY += 16;
+
+        for (let i = 0; i < offspring.length; i++) {
+            let col = i % cols;
+            let row = Math.floor(i / cols);
+            let dotX = startX + col * spacing;
+            let dotY = gridY + row * spacing;
+
+            if (dotY > drawHeight - 10) break; // don't overflow
+
+            if (offspring[i].isDominant) {
+                fill(trait.domColor);
+            } else {
+                fill(trait.recColor);
+            }
+            noStroke();
+            ellipse(dotX, dotY, dotSize, dotSize);
+        }
+    }
+}
+
+function gcd(a, b) {
+    if (b === 0) return a;
+    return gcd(b, a % b);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

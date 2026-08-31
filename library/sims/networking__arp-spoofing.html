@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>MITM via ARP Spoofing</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        fontSize: '15px',
+        actorBkg: '#1565c0',
+        actorBorder: '#0d3a73',
+        actorTextColor: '#ffffff',
+        actorLineColor: '#90a4ae',
+        signalColor: '#37474f',
+        signalTextColor: '#1a3a5c',
+        noteBkgColor: '#fff3e0',
+        noteBorderColor: '#ffa000',
+        noteTextColor: '#5d3d00',
+        sequenceNumberColor: '#ffffff'
+      },
+      sequence: { useMaxWidth: true, showSequenceNumbers: true, mirrorActors: false, wrap: true }
+    });
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f4f7fb; color: #263238; }
+    .wrap { padding: 8px 10px; }
+    h1 { font-size: 20px; text-align: center; color: #1565c0; margin: 4px 0 2px; }
+    .sub { text-align: center; font-size: 13px; color: #455a64; margin-bottom: 8px; }
+    .mermaid { width: 100%; display: flex; justify-content: center; background: #f4f7fb; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .note {
+      max-width: 820px; margin: 8px auto 0; background: #fff3e0; border: 2px solid #ffa000;
+      border-radius: 8px; padding: 9px 13px; font-size: 13px; color: #6d4c00; line-height: 1.4;
+    }
+    .note strong { color: #5d3d00; }
+  </style>
+  <script src="mitm-arp-spoofing.js" defer></script>
+</head>
+<body>
+  <main>
+    <div class="wrap">
+      <h1>Man-in-the-Middle via ARP Spoofing</h1>
+      <div class="sub">The attacker poisons the ARP caches of both the client and the gateway, then relays all traffic.</div>
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant C as Client<br/>10.0.0.5
+    participant A as Attacker
+    participant G as Gateway<br/>10.0.0.1
+    participant I as Internet
+
+    Note over C,I: Normal flow (before the attack)
+    C->>G: ARP request — who has 10.0.0.1?
+    G-->>C: ARP reply — 10.0.0.1 is at MAC AA:BB:CC
+    C->>G: HTTP request
+    G->>I: forwarded request
+
+    Note over A,G: Attack begins — attacker sends gratuitous ARP replies
+    A->>C: forged ARP — 10.0.0.1 is at MAC ATTACKER
+    A->>G: forged ARP — 10.0.0.5 is at MAC ATTACKER
+
+    Note over C,I: After ARP poisoning — attacker is on path
+    C->>A: HTTP request (thinks A is the gateway)
+    A->>G: relayed HTTP request (after reading or modifying)
+    G-->>A: HTTP response
+    A-->>C: relayed HTTP response
+      </div>
+      <div class="note">
+        <strong>The defense:</strong> if the client uses HTTPS with proper certificate
+        validation, the attacker cannot impersonate the server. The relayed traffic is
+        opaque ciphertext, and any certificate the attacker presents fails validation —
+        so the client sees a warning instead of a silent compromise. ARP spoofing still
+        lets the attacker see <em>that</em> you are talking to a server, but not
+        <em>what</em> you say.
+      </div>
+    </div>
+  </main>
+  <br/>
+  <a href=".">Back to Documentation</a>
+</body>
+</html>

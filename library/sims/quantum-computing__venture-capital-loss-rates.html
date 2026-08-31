@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>VC Portfolio Simulator: QC vs. Classical</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// VC Portfolio Simulator: QC vs. Classical
+// Monte Carlo simulation comparing quantum computing and classical tech VC portfolios
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 100;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 200;
+let defaultTextSize = 16;
+
+// Sliders and button
+let numInvestmentsSlider;
+let investmentSizeSlider;
+let qcSuccessProbSlider;
+let runButton;
+
+// Simulation state
+let isRunning = false;
+let hasResults = false;
+
+// Simulation results
+let qcReturns = [];
+let classicalReturns = [];
+let qcHistogram = [];
+let classicalHistogram = [];
+let numBins = 30;
+
+// QC parameters
+let qcSuccessMultiple = 50;  // 50x return on success
+// Classical parameters
+let classicalSuccessProb = 0.20; // 20% success rate
+let classicalSuccessMultiple = 10; // 10x return on success
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    // Create sliders
+    let sliderY = drawHeight + 15;
+    let sliderWidth = 140;
+    let col2Left = canvasWidth / 2 + 20;
+
+    numInvestmentsSlider = createSlider(1, 20, 10, 1);
+    numInvestmentsSlider.position(sliderLeftMargin, sliderY);
+    numInvestmentsSlider.size(sliderWidth);
+    numInvestmentsSlider.parent(document.querySelector('main'));
+
+    investmentSizeSlider = createSlider(1, 50, 10, 1);
+    investmentSizeSlider.position(sliderLeftMargin, sliderY + 30);
+    investmentSizeSlider.size(sliderWidth);
+    investmentSizeSlider.parent(document.querySelector('main'));
+
+    qcSuccessProbSlider = createSlider(0, 30, 5, 1);
+    qcSuccessProbSlider.position(sliderLeftMargin, sliderY + 60);
+    qcSuccessProbSlider.size(sliderWidth);
+    qcSuccessProbSlider.parent(document.querySelector('main'));
+
+    // Run Simulation button
+    runButton = createButton('Run Simulation');
+    runButton.position(sliderLeftMargin + sliderWidth + 180, sliderY + 15);
+    runButton.mousePressed(runSimulation);
+    runButton.parent(document.querySelector('main'));
+    runButton.style('padding', '8px 20px');
+    runButton.style('font-size', '14px');
+    runButton.style('background-color', '#3F51B5');
+    runButton.style('color', 'white');
+    runButton.style('border', 'none');
+    runButton.style('border-radius', '4px');
+    runButton.style('cursor', 'pointer');
+
+    noLoop();
+    redraw();
+}
+
+function runSimulation() {
+    let numInvestments = numInvestmentsSlider.value();
+    let investmentSize = investmentSizeSlider.value();
+    let qcSuccessProb = qcSuccessProbSlider.value() / 100;
+    let totalCapital = numInvestments * investmentSize;
+    let numTrials = 1000;
+
+    qcReturns = [];
+    classicalReturns = [];
+
+    for (let t = 0; t < numTrials; t++) {
+        // QC portfolio
+        let qcTotal = 0;
+        for (let i = 0; i < numInvestments; i++) {
+            if (random() < qcSuccessProb) {
+                qcTotal += investmentSize * qcSuccessMultiple;
+            }
+            // else 0x return (total loss)
+        }
+        qcReturns.push(qcTotal / totalCapital); // as multiple of invested capital
+
+        // Classical portfolio (same number of investments, same capital)
+        let classicalTotal = 0;
+        for (let i = 0; i < numInvestments; i++) {
+            if (random() < classicalSuccessProb) {
+                classicalTotal += investmentSize * classicalSuccessMultiple;
+            }
+            // else 0x return (total loss)
+        }
+        classicalReturns.push(classicalTotal / totalCapital);
+    }
+
+    // Build histograms
+    buildHistograms();
+    hasResults = true;
+    redraw();
+}
+
+function buildHistograms() {
+    // Find the range across both datasets
+    let allReturns = qcReturns.concat(classicalReturns);
+    let maxReturn = max(allReturns);
+    let minReturn = 0;
+    // Cap histogram at a reasonable max
+    let histMax = min(maxReturn * 1.05, max(maxReturn, 5));
+    if (histMax <= 0) histMax = 5;
+
+    let binWidth = histMax / numBins;
+
+    qcHistogram = new Array(numBins).fill(0);
+    classicalHistogram = new Array(numBins).fill(0);
+
+    for (let v of qcReturns) {
+        let bin = min(floor(v / binWidth), numBins - 1);
+        if (bin < 0) bin = 0;
+        qcHistogram[bin]++;
+    }
+    for (let v of classicalReturns) {
+        let bin = min(floor(v / binWidth), numBins - 1);
+        if (bin < 0) bin = 0;
+        classicalHistogram[bin]++;
+    }
+}
+
+function computeStats(returns) {
+    let sorted = returns.slice().sort((a, b) => a - b);
+    let n = sorted.length;
+    let meanVal = sorted.reduce((s, v) => s + v, 0) / n;
+    let medianVal = n % 2 === 0 ? (sorted[n/2 - 1] + sorted[n/2]) / 2 : sorted[floor(n/2)];
+    let positiveCount = sorted.filter(v => v > 1.0).length;
+    let tenXCount = sorted.filter(v => v >= 10.0).length;
+    return {
+        mean: meanVal,
+        median: medianVal,
+        probPositive: (positiveCount / n * 100),
+        probTenX: (tenXCount / n * 100)
+    };
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("VC Portfolio Simulator: QC vs. Classical", canvasWidth / 2, 8);
+
+    // Slider labels
+    fill('#333');
+    noStroke();
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+    let sliderY = drawHeight + 15;
+    text("QC Investments: " + numInvestmentsSlider.value(), sliderLeftMargin - 8, sliderY + 8);
+    text("Investment ($M): " + investmentSizeSlider.value(), sliderLeftMargin - 8, sliderY + 38);
+    text("P(QC success): " + qcSuccessProbSlider.value() + "%", sliderLeftMargin - 8, sliderY + 68);
+
+    if (!hasResults) {
+        // Show instructions
+        fill('#888');
+        textSize(16);
+        textAlign(CENTER, CENTER);
+        textStyle(ITALIC);
+        text("Adjust parameters and click 'Run Simulation' to generate 1,000 Monte Carlo trials", canvasWidth / 2, drawHeight / 2 - 20);
+
+        fill('#666');
+        textSize(13);
+        text("QC companies: fail (0x, P=" + (100 - qcSuccessProbSlider.value()) + "%) or succeed (" + qcSuccessMultiple + "x, P=" + qcSuccessProbSlider.value() + "%)", canvasWidth / 2, drawHeight / 2 + 15);
+        text("Classical companies: fail (0x, P=80%) or succeed (10x, P=20%)", canvasWidth / 2, drawHeight / 2 + 35);
+        return;
+    }
+
+    // Draw histogram and stats
+    drawHistogram();
+    drawStats();
+}
+
+function drawHistogram() {
+    let chartLeft = margin + 10;
+    let chartRight = canvasWidth * 0.58;
+    let chartWidth = chartRight - chartLeft;
+    let chartTop = 40;
+    let chartBottom = drawHeight - 40;
+    let chartHeight = chartBottom - chartTop;
+
+    // Find max bin count for scaling
+    let maxCount = 1;
+    for (let i = 0; i < numBins; i++) {
+        maxCount = max(maxCount, qcHistogram[i], classicalHistogram[i]);
+    }
+
+    let barWidth = chartWidth / numBins;
+
+    // Axis labels
+    fill('#555');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("Portfolio Return Multiple (x)", (chartLeft + chartRight) / 2, chartBottom + 18);
+
+    push();
+    translate(chartLeft - 30, (chartTop + chartBottom) / 2);
+    rotate(-HALF_PI);
+    textAlign(CENTER, CENTER);
+    text("Number of Trials", 0, 0);
+    pop();
+
+    // Draw bars - Classical (blue, semi-transparent)
+    for (let i = 0; i < numBins; i++) {
+        let barH = (classicalHistogram[i] / maxCount) * chartHeight;
+        let x = chartLeft + i * barWidth;
+        fill(66, 133, 244, 120);
+        stroke(66, 133, 244);
+        strokeWeight(0.5);
+        rect(x, chartBottom - barH, barWidth - 1, barH);
+    }
+
+    // Draw bars - QC (red/orange, semi-transparent)
+    for (let i = 0; i < numBins; i++) {
+        let barH = (qcHistogram[i] / maxCount) * chartHeight;
+        let x = chartLeft + i * barWidth;
+        fill(244, 67, 54, 120);
+        stroke(244, 67, 54);
+        strokeWeight(0.5);
+        rect(x, chartBottom - barH, barWidth - 1, barH);
+    }
+
+    // Break-even line at 1.0x
+    let allReturns = qcReturns.concat(classicalReturns);
+    let histMax = max(allReturns) * 1.05;
+    if (histMax <= 0) histMax = 5;
+    let breakEvenX = chartLeft + (1.0 / histMax) * numBins * barWidth;
+    if (breakEvenX > chartLeft && breakEvenX < chartRight) {
+        stroke('#333');
+        strokeWeight(2);
+        drawingContext.setLineDash([6, 4]);
+        line(breakEvenX, chartTop, breakEvenX, chartBottom);
+        drawingContext.setLineDash([]);
+        fill('#333');
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, BOTTOM);
+        textStyle(BOLD);
+        text("1x (break-even)", breakEvenX, chartTop - 2);
+    }
+
+    // X-axis tick labels
+    fill('#666');
+    noStroke();
+    textSize(9);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    let binWidth = histMax / numBins;
+    for (let i = 0; i <= numBins; i += 5) {
+        let val = (i * binWidth).toFixed(1);
+        let x = chartLeft + i * barWidth;
+        text(val + "x", x, chartBottom + 3);
+    }
+
+    // Y-axis ticks
+    textAlign(RIGHT, CENTER);
+    for (let i = 0; i <= 4; i++) {
+        let val = round(maxCount * i / 4);
+        let y = chartBottom - (i / 4) * chartHeight;
+        text(val, chartLeft - 5, y);
+        stroke('#ddd');
+        strokeWeight(0.5);
+        line(chartLeft, y, chartRight, y);
+    }
+
+    // Legend
+    let legX = chartLeft + 10;
+    let legY = chartTop + 10;
+    fill(244, 67, 54, 120);
+    stroke(244, 67, 54);
+    strokeWeight(1);
+    rect(legX, legY, 14, 10);
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("QC Portfolio", legX + 18, legY + 5);
+
+    fill(66, 133, 244, 120);
+    stroke(66, 133, 244);
+    strokeWeight(1);
+    rect(legX, legY + 16, 14, 10);
+    fill('#333');
+    noStroke();
+    text("Classical Portfolio", legX + 18, legY + 21);
+}
+
+function drawStats() {
+    let statsLeft = canvasWidth * 0.60;
+    let statsTop = 45;
+    let colWidth = (canvasWidth - statsLeft - margin) / 2;
+
+    let qcStats = computeStats(qcReturns);
+    let clStats = computeStats(classicalReturns);
+
+    let numInvestments = numInvestmentsSlider.value();
+    let investmentSize = investmentSizeSlider.value();
+    let totalCapital = numInvestments * investmentSize;
+
+    // Stats header
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("QC Portfolio", statsLeft + colWidth / 2, statsTop);
+    text("Classical Portfolio", statsLeft + colWidth + colWidth / 2, statsTop);
+
+    // Divider
+    stroke('#ccc');
+    strokeWeight(1);
+    line(statsLeft + colWidth, statsTop, statsLeft + colWidth, statsTop + 320);
+
+    // Stats rows
+    let labels = [
+        "Total Capital",
+        "Expected Return",
+        "Median Return",
+        "P(Positive Return)",
+        "P(10x Return)",
+        "Success Rate",
+        "Winner Multiple"
+    ];
+    let qcSuccessProb = qcSuccessProbSlider.value();
+    let qcVals = [
+        "$" + totalCapital + "M",
+        (qcStats.mean).toFixed(2) + "x ($" + (qcStats.mean * totalCapital).toFixed(0) + "M)",
+        (qcStats.median).toFixed(2) + "x ($" + (qcStats.median * totalCapital).toFixed(0) + "M)",
+        qcStats.probPositive.toFixed(1) + "%",
+        qcStats.probTenX.toFixed(1) + "%",
+        qcSuccessProb + "% per company",
+        qcSuccessMultiple + "x"
+    ];
+    let clVals = [
+        "$" + totalCapital + "M",
+        (clStats.mean).toFixed(2) + "x ($" + (clStats.mean * totalCapital).toFixed(0) + "M)",
+        (clStats.median).toFixed(2) + "x ($" + (clStats.median * totalCapital).toFixed(0) + "M)",
+        clStats.probPositive.toFixed(1) + "%",
+        clStats.probTenX.toFixed(1) + "%",
+        "20% per company",
+        classicalSuccessMultiple + "x"
+    ];
+
+    textSize(11);
+    let rowHeight = 38;
+    let startY = statsTop + 22;
+
+    for (let i = 0; i < labels.length; i++) {
+        let y = startY + i * rowHeight;
+
+        // Alternating row background
+        if (i % 2 === 0) {
+            fill(240, 240, 255, 80);
+            noStroke();
+            rect(statsLeft, y - 2, colWidth * 2, rowHeight - 2, 3);
+        }
+
+        // Label
+        fill('#666');
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, TOP);
+        textStyle(BOLD);
+        text(labels[i], statsLeft + colWidth / 2, y);
+        text(labels[i], statsLeft + colWidth + colWidth / 2, y);
+
+        // Values
+        textStyle(NORMAL);
+        textSize(11);
+
+        // Color code: green if better, red if worse
+        let qcColor = '#D32F2F';
+        let clColor = '#2E7D32';
+        if (i === 0 || i >= 5) { // neutral rows
+            qcColor = '#333';
+            clColor = '#333';
+        }
+
+        fill(qcColor);
+        text(qcVals[i], statsLeft + colWidth / 2, y + 14);
+        fill(clColor);
+        text(clVals[i], statsLeft + colWidth + colWidth / 2, y + 14);
+    }
+
+    // Bottom verdict
+    let verdictY = startY + labels.length * rowHeight + 10;
+    fill('#333');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    let qcEV = (qcSuccessProbSlider.value() / 100) * qcSuccessMultiple;
+    let clEV = classicalSuccessProb * classicalSuccessMultiple;
+    let verdict;
+    if (qcEV > clEV) {
+        verdict = "QC expected value (" + qcEV.toFixed(1) + "x) > Classical (" + clEV.toFixed(1) + "x)";
+    } else if (qcEV < clEV) {
+        verdict = "Classical EV (" + clEV.toFixed(1) + "x) > QC EV (" + qcEV.toFixed(1) + "x)";
+    } else {
+        verdict = "Both have equal expected value (" + qcEV.toFixed(1) + "x)";
+    }
+    fill('#3F51B5');
+    text(verdict, statsLeft + colWidth, verdictY);
+
+    // Variance note
+    fill('#888');
+    textSize(10);
+    textStyle(ITALIC);
+    text("Note: QC has higher variance (more extreme outcomes)", statsLeft + colWidth, verdictY + 18);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    // Reposition sliders
+    let sliderY = drawHeight + 15;
+    let sliderWidth = 140;
+    numInvestmentsSlider.position(sliderLeftMargin, sliderY);
+    investmentSizeSlider.position(sliderLeftMargin, sliderY + 30);
+    qcSuccessProbSlider.position(sliderLeftMargin, sliderY + 60);
+    runButton.position(sliderLeftMargin + sliderWidth + 180, sliderY + 15);
+
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

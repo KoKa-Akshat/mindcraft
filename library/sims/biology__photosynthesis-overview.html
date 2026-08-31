@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Photosynthesis and Cellular Respiration Cycle using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Photosynthesis and Cellular Respiration Cycle
+// CANVAS_HEIGHT: 580
+// Step-through animation showing complementary relationship
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 500;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+let defaultTextSize = 14;
+
+let currentStep = 0;
+let isRunning = false;
+let showCounts = true;
+let animSpeed = 1;
+let animTimer = 0;
+
+let nextBtn, prevBtn, playBtn, resetBtn;
+let speedSlider, countsCheck;
+
+let steps = [
+  {
+    title: "Step 1: Sunlight Energy",
+    desc: "The Sun provides light energy to the plant. This is the energy input that drives photosynthesis.",
+    highlights: ["sun"],
+    counters: { sunEnergy: 1, co2: 0, h2o: 0, glucose: 0, o2: 0, atp: 0, heat: 0 }
+  },
+  {
+    title: "Step 2: Plant Absorbs CO₂ and H₂O",
+    desc: "The plant takes in 6 molecules of CO₂ from the air and 6 molecules of H₂O from the soil.",
+    highlights: ["sun", "co2_in", "h2o_in"],
+    counters: { sunEnergy: 1, co2: 6, h2o: 6, glucose: 0, o2: 0, atp: 0, heat: 0 }
+  },
+  {
+    title: "Step 3: Photosynthesis Outputs",
+    desc: "Photosynthesis converts the inputs into 1 glucose molecule and releases 6 O₂ molecules.",
+    highlights: ["plant", "glucose_out", "o2_out"],
+    counters: { sunEnergy: 1, co2: 6, h2o: 6, glucose: 1, o2: 6, atp: 0, heat: 0 }
+  },
+  {
+    title: "Step 4: Consumer Takes In Glucose and O₂",
+    desc: "The deer eats plants to obtain glucose and breathes in O₂ from the air.",
+    highlights: ["deer", "glucose_in", "o2_in"],
+    counters: { sunEnergy: 1, co2: 6, h2o: 6, glucose: 1, o2: 6, atp: 0, heat: 0 }
+  },
+  {
+    title: "Step 5: Cellular Respiration Outputs",
+    desc: "Cellular respiration breaks down glucose, producing CO₂, H₂O, and ATP energy. Heat is released.",
+    highlights: ["deer", "co2_out", "h2o_out", "atp", "heat"],
+    counters: { sunEnergy: 1, co2: 6, h2o: 6, glucose: 1, o2: 6, atp: 36, heat: 1 }
+  },
+  {
+    title: "Step 6: The Complete Cycle",
+    desc: "CO₂ and H₂O return to the environment, completing the cycle. Energy flows from sun through organisms.",
+    highlights: ["all"],
+    counters: { sunEnergy: 1, co2: 6, h2o: 6, glucose: 1, o2: 6, atp: 36, heat: 1 }
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  prevBtn = createButton('◀ Previous');
+  prevBtn.parent(document.querySelector('main'));
+  prevBtn.mousePressed(() => { if (currentStep > 0) { currentStep--; isRunning = false; updatePlayBtn(); } });
+  styleButton(prevBtn, '#795548');
+
+  nextBtn = createButton('Next ▶');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.mousePressed(() => { if (currentStep < steps.length - 1) { currentStep++; isRunning = false; updatePlayBtn(); } });
+  styleButton(nextBtn, '#2e7d32');
+
+  playBtn = createButton('▶ Play Cycle');
+  playBtn.parent(document.querySelector('main'));
+  playBtn.mousePressed(togglePlay);
+  styleButton(playBtn, '#0277bd');
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => { currentStep = 0; isRunning = false; updatePlayBtn(); });
+  styleButton(resetBtn, '#795548');
+
+  speedSlider = createSlider(0.5, 3, 1, 0.5);
+  speedSlider.parent(document.querySelector('main'));
+  speedSlider.style('width', '100px');
+
+  describe('Animated cycle diagram showing photosynthesis and cellular respiration with traceable molecules', LABEL);
+}
+
+function styleButton(btn, bgColor) {
+  btn.style('font-size', '13px');
+  btn.style('padding', '5px 12px');
+  btn.style('margin', '3px');
+  btn.style('cursor', 'pointer');
+  btn.style('background', bgColor);
+  btn.style('color', 'white');
+  btn.style('border', 'none');
+  btn.style('border-radius', '4px');
+}
+
+function updatePlayBtn() {
+  playBtn.html(isRunning ? '⏸ Pause' : '▶ Play Cycle');
+}
+
+function togglePlay() {
+  isRunning = !isRunning;
+  updatePlayBtn();
+}
+
+function draw() {
+  updateCanvasSize();
+  animSpeed = speedSlider.value();
+
+  // Auto-advance
+  if (isRunning) {
+    animTimer += deltaTime * animSpeed * 0.001;
+    if (animTimer > 2.5) {
+      animTimer = 0;
+      currentStep = (currentStep + 1) % steps.length;
+    }
+  }
+
+  let step = steps[currentStep];
+  let hl = step.highlights;
+  let isAll = hl.includes("all");
+
+  // Background
+  fill('#f9f6f0');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  fill('#3e2723');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Photosynthesis & Cellular Respiration', canvasWidth / 2, 6);
+  textStyle(NORMAL);
+
+  let plantX = canvasWidth * 0.25;
+  let deerX = canvasWidth * 0.75;
+  let midY = drawHeight * 0.45;
+
+  // Sun
+  let sunActive = hl.includes("sun") || isAll;
+  drawSun(canvasWidth * 0.25, 65, sunActive);
+
+  // Plant
+  let plantActive = hl.includes("plant") || isAll;
+  drawPlant(plantX, midY, plantActive);
+
+  // Deer
+  let deerActive = hl.includes("deer") || isAll;
+  drawDeer(deerX, midY, deerActive);
+
+  // Arrows between plant and deer
+  let arrowY1 = midY - 40;
+  let arrowY2 = midY + 40;
+
+  // O2 arrow: plant -> deer (top)
+  let o2Active = hl.includes("o2_out") || hl.includes("o2_in") || isAll;
+  drawArrow(plantX + 50, arrowY1, deerX - 50, arrowY1, '#0277bd', 'O₂', o2Active, currentStep >= 3);
+
+  // CO2 arrow: deer -> plant (bottom)
+  let co2Active = hl.includes("co2_out") || hl.includes("co2_in") || isAll;
+  drawArrow(deerX - 50, arrowY2, plantX + 50, arrowY2, '#ff8f00', 'CO₂', co2Active, currentStep >= 5 || currentStep <= 1);
+
+  // Glucose arrow: plant -> deer (middle)
+  let glcActive = hl.includes("glucose_out") || hl.includes("glucose_in") || isAll;
+  drawArrow(plantX + 50, midY, deerX - 50, midY, '#4caf50', 'Glucose', glcActive, currentStep >= 3);
+
+  // H2O arrows
+  let h2oInActive = hl.includes("h2o_in") || isAll;
+  if (h2oInActive) {
+    noStroke();
+    fill('#0277bd');
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text('6 H₂O ↑', plantX, midY + 70);
+  }
+
+  let h2oOutActive = hl.includes("h2o_out") || isAll;
+  if (h2oOutActive) {
+    noStroke();
+    fill('#0277bd');
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text('6 H₂O ↓', deerX, midY + 70);
+  }
+
+  // ATP
+  let atpActive = hl.includes("atp") || isAll;
+  if (atpActive) {
+    noStroke();
+    fill('#ffc107');
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('⚡ 36 ATP', deerX, midY - 75);
+    textStyle(NORMAL);
+  }
+
+  // Heat
+  let heatActive = hl.includes("heat") || isAll;
+  if (heatActive) {
+    noStroke();
+    fill('#e53935');
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('🔥 Heat lost', deerX + 10, midY + 90);
+  }
+
+  // Labels
+  noStroke();
+  fill('#2e7d32');
+  textSize(13);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('PHOTOSYNTHESIS', plantX, midY + 100);
+  fill('#795548');
+  text('CELL RESPIRATION', deerX, midY + 100);
+  textStyle(NORMAL);
+
+  // Step info box at bottom
+  let infoY = drawHeight - 110;
+  let infoW = canvasWidth - 40;
+  fill('#ffffff');
+  stroke('#a1887f');
+  strokeWeight(1);
+  rect(20, infoY, infoW, 100, 6);
+
+  noStroke();
+  fill('#3e2723');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text(step.title, 30, infoY + 8, infoW - 20, 24);
+  textStyle(NORMAL);
+  textSize(12);
+  fill('#5d4037');
+  text(step.desc, 30, infoY + 28, infoW - 20, 68);
+
+  // Molecule counters
+  if (showCounts) {
+    let c = step.counters;
+    noStroke();
+    fill('#757575');
+    textSize(10);
+    textAlign(RIGHT, TOP);
+    let cx = canvasWidth - 25;
+    let cy = infoY + 8;
+    text('CO₂: ' + c.co2 + '  H₂O: ' + c.h2o + '  Glucose: ' + c.glucose + '  O₂: ' + c.o2 + '  ATP: ' + c.atp, cx, cy);
+  }
+
+  // Step indicator dots
+  noStroke();
+  textAlign(CENTER, CENTER);
+  for (let i = 0; i < steps.length; i++) {
+    fill(i === currentStep ? '#2e7d32' : '#ccc');
+    ellipse(canvasWidth / 2 - (steps.length * 10) / 2 + i * 15 + 5, drawHeight - 8, 8, 8);
+  }
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Speed: ' + nf(speedSlider.value(), 1, 1), 10, drawHeight + 50);
+
+  positionControls();
+}
+
+function drawSun(x, y, active) {
+  let alpha = active ? 255 : 80;
+  // Rays
+  stroke(255, 193, 7, alpha);
+  strokeWeight(2);
+  for (let a = 0; a < TWO_PI; a += PI / 6) {
+    let r1 = 22;
+    let r2 = 34;
+    line(x + cos(a) * r1, y + sin(a) * r1, x + cos(a) * r2, y + sin(a) * r2);
+  }
+  // Circle
+  fill(255, 235, 59, alpha);
+  noStroke();
+  ellipse(x, y, 40, 40);
+  fill(255, 193, 7, alpha);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  textStyle(BOLD);
+  text('SUN', x, y);
+  textStyle(NORMAL);
+}
+
+function drawPlant(x, y, active) {
+  let alpha = active ? 255 : 120;
+  // Stem
+  stroke(76, 175, 80, alpha);
+  strokeWeight(4);
+  line(x, y + 30, x, y - 20);
+  // Leaves
+  fill(76, 175, 80, alpha);
+  noStroke();
+  ellipse(x - 15, y - 15, 30, 18);
+  ellipse(x + 15, y - 15, 30, 18);
+  ellipse(x, y - 30, 24, 20);
+  // Pot
+  fill(139, 69, 19, alpha);
+  noStroke();
+  rect(x - 18, y + 30, 36, 20, 2);
+}
+
+function drawDeer(x, y, active) {
+  let alpha = active ? 255 : 120;
+  // Body
+  fill(161, 136, 127, alpha);
+  noStroke();
+  ellipse(x, y, 50, 35);
+  // Head
+  ellipse(x + 22, y - 18, 22, 20);
+  // Legs
+  stroke(121, 85, 72, alpha);
+  strokeWeight(3);
+  line(x - 12, y + 15, x - 12, y + 35);
+  line(x + 8, y + 15, x + 8, y + 35);
+  // Antler
+  line(x + 26, y - 28, x + 34, y - 42);
+  line(x + 30, y - 36, x + 38, y - 34);
+  // Eye
+  fill(0, 0, 0, alpha);
+  noStroke();
+  ellipse(x + 28, y - 19, 4, 4);
+}
+
+function drawArrow(x1, y1, x2, y2, col, label, active, showArrow) {
+  if (!showArrow && !active) return;
+  let alpha = active ? 255 : 60;
+  let c = color(col);
+  c.setAlpha(alpha);
+
+  stroke(c);
+  strokeWeight(active ? 3 : 1);
+  line(x1, y1, x2, y2);
+
+  // Arrowhead
+  let angle = atan2(y2 - y1, x2 - x1);
+  let sz = 8;
+  fill(c);
+  noStroke();
+  triangle(
+    x2, y2,
+    x2 - cos(angle - 0.4) * sz, y2 - sin(angle - 0.4) * sz,
+    x2 - cos(angle + 0.4) * sz, y2 - sin(angle + 0.4) * sz
+  );
+
+  // Label
+  noStroke();
+  fill(col);
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  textStyle(BOLD);
+  let mx = (x1 + x2) / 2;
+  let my = (y1 + y2) / 2 - 10;
+  text(label, mx, my);
+  textStyle(NORMAL);
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: buttons
+  prevBtn.position(ox + 10, oy + drawHeight + 5);
+  nextBtn.position(ox + 120, oy + drawHeight + 5);
+  playBtn.position(ox + 210, oy + drawHeight + 5);
+  resetBtn.position(ox + 330, oy + drawHeight + 5);
+  // Row 2: speed slider
+  speedSlider.position(ox + 80, oy + drawHeight + 40);
+  speedSlider.size(canvasWidth * 0.4);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

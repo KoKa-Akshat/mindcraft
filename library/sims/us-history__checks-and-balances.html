@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Checks and Balances Among the Three Branches</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Checks and Balances Among the Three Branches
+// CANVAS_HEIGHT: 660
+
+let containerWidth;
+let canvasWidth = 800;
+let drawHeight = 580;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+
+const COLORS = {
+    Congress:  [255, 152, 0],
+    President: [33, 150, 243],
+    Judiciary: [156, 39, 176]
+};
+
+// Branch nodes (positions are computed each draw based on canvasWidth)
+let nodes = {};
+
+// Checks: each is a directed arrow from one branch to another with a label and detail.
+const checks = [
+    // Congress → President
+    { from: 'Congress', to: 'President', short: 'Override veto',
+      label: 'Override veto (2/3)',
+      detail: 'Congress can override a presidential veto with a 2/3 vote in both chambers. Example: Congress overrode President Nixon\'s veto of the War Powers Resolution in 1973.' },
+    { from: 'Congress', to: 'President', short: 'Power of the purse',
+      label: 'Control appropriations',
+      detail: 'Congress controls all federal spending. Example: Congress can defund executive initiatives or attach conditions to appropriations.' },
+    { from: 'Congress', to: 'President', short: 'Impeachment',
+      label: 'Impeach & remove',
+      detail: 'House impeaches; Senate convicts by 2/3 vote. Example: Andrew Johnson, Bill Clinton, and Donald Trump (twice) were impeached; none were convicted.' },
+    { from: 'Congress', to: 'President', short: 'Declare war',
+      label: 'Declare war',
+      detail: 'Only Congress can formally declare war. The War Powers Resolution (1973) requires the President to notify Congress within 48 hours of military action.' },
+    // President → Congress
+    { from: 'President', to: 'Congress', short: 'Veto',
+      label: 'Veto legislation',
+      detail: 'President can veto bills passed by Congress. Example: presidents veto on average about a dozen bills per Congress; only ~7% have been overridden in U.S. history.' },
+    { from: 'President', to: 'Congress', short: 'Treaties (negotiate)',
+      label: 'Negotiate treaties',
+      detail: 'President negotiates treaties; Senate must ratify by 2/3 to make them binding. Example: the Treaty of Versailles failed Senate ratification in 1919-20.' },
+    // Congress → Judiciary
+    { from: 'Congress', to: 'Judiciary', short: 'Confirm judges',
+      label: 'Confirm federal judges',
+      detail: 'Senate confirms federal judges by majority vote. Example: Senate rejected Robert Bork in 1987; confirmed Elena Kagan in 2010.' },
+    { from: 'Congress', to: 'Judiciary', short: 'Set jurisdiction',
+      label: 'Set lower-court jurisdiction',
+      detail: 'Congress creates and abolishes lower federal courts and sets their jurisdiction (Article III). Congress can also pass constitutional amendments to override judicial rulings.' },
+    // Judiciary → Congress
+    { from: 'Judiciary', to: 'Congress', short: 'Strike statutes',
+      label: 'Judicial review of statutes',
+      detail: 'Courts can strike down statutes as unconstitutional. Example: United States v. Lopez (1995) struck the Gun-Free School Zones Act as exceeding the Commerce Clause.' },
+    // President → Judiciary
+    { from: 'President', to: 'Judiciary', short: 'Nominate judges',
+      label: 'Nominate federal judges',
+      detail: 'President nominates all federal judges including Supreme Court justices. Example: Trump appointed three Supreme Court justices (Gorsuch, Kavanaugh, Barrett).' },
+    // Judiciary → President
+    { from: 'Judiciary', to: 'President', short: 'Strike orders',
+      label: 'Judicial review of executive acts',
+      detail: 'Courts can strike down executive orders as unconstitutional. Example: Youngstown Sheet & Tube v. Sawyer (1952) struck Truman\'s seizure of the steel mills.' }
+];
+
+let selectedIdx = -1;
+let testYourselfBtn;
+let testMode = false;
+
+function setup() {
+    updateCanvasSize();
+    const c = createCanvas(containerWidth, containerHeight);
+    c.parent(document.querySelector('main'));
+    textSize(13);
+
+    testYourselfBtn = createButton('Test Yourself (hide labels)');
+    testYourselfBtn.position(10, drawHeight + 10);
+    testYourselfBtn.mousePressed(() => {
+        testMode = !testMode;
+        testYourselfBtn.html(testMode ? 'Reveal Labels' : 'Test Yourself (hide labels)');
+        selectedIdx = -1;
+    });
+}
+
+function draw() {
+    updateCanvasSize();
+    background(248, 249, 250);
+
+    // Title
+    noStroke();
+    fill(26, 58, 108);
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('Checks and Balances Among the Three Branches', canvasWidth / 2, 8);
+    textStyle(NORMAL);
+    textSize(11);
+    fill(73, 80, 87);
+    text('Click any arrow to read the check it represents and a real historical example.', canvasWidth / 2, 30);
+
+    // Triangle node positions
+    const cx = canvasWidth / 2;
+    const topY = 80;
+    const bottomY = drawHeight - 250;
+    const r = Math.min(canvasWidth * 0.35, 200);
+    nodes = {
+        Congress:  { x: cx - r, y: topY + 30,        w: 170, h: 70, lines: ['Congress', '(Article I)', 'Makes laws'] },
+        President: { x: cx + r, y: topY + 30,        w: 170, h: 70, lines: ['President', '(Article II)', 'Executes laws'] },
+        Judiciary: { x: cx,     y: bottomY,          w: 170, h: 70, lines: ['Judiciary', '(Article III)', 'Interprets laws'] }
+    };
+
+    // Draw edges (each pair has up to 4 checks). Group by branch pair to position arrows side-by-side.
+    const pairGroups = {};
+    checks.forEach((ch, i) => {
+        const key = ch.from + '→' + ch.to;
+        if (!pairGroups[key]) pairGroups[key] = [];
+        pairGroups[key].push({ check: ch, idx: i });
+    });
+
+    // Pairs that have a reverse direction get a bias so opposite arrows sit on
+    // opposite sides of the center line rather than all drawing on the same line.
+    const PAIR_BIAS = 22;
+    Object.keys(pairGroups).forEach(key => {
+        const sep = key.indexOf('→');
+        const from = key.substring(0, sep);
+        const to   = key.substring(sep + '→'.length);
+        pairGroups[key].bias = pairGroups[to + '→' + from] ? PAIR_BIAS : 0;
+    });
+
+    Object.values(pairGroups).forEach(group => {
+        drawArrowGroup(group);
+    });
+
+    // Draw nodes on top
+    Object.entries(nodes).forEach(([name, node]) => drawNode(name, node));
+
+    // Detail panel
+    const detY = drawHeight - 130;
+    fill(255);
+    stroke(180);
+    rect(10, detY, canvasWidth - 20, 115, 6);
+    noStroke();
+    if (selectedIdx >= 0) {
+        const ch = checks[selectedIdx];
+        const c1 = COLORS[ch.from], c2 = COLORS[ch.to];
+        fill(c1[0], c1[1], c1[2]);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        textSize(13);
+        text(ch.from, 18, detY + 8);
+        fill(80);
+        textStyle(NORMAL);
+        text('  →  ', 18 + textWidth(ch.from), detY + 8);
+        fill(c2[0], c2[1], c2[2]);
+        textStyle(BOLD);
+        text(ch.to, 18 + textWidth(ch.from + '  →  '), detY + 8);
+        textStyle(NORMAL);
+        fill(33, 37, 41);
+        textSize(13);
+        textStyle(BOLD);
+        text(ch.label, 18, detY + 30);
+        textStyle(NORMAL);
+        textSize(12);
+        text(ch.detail, 18, detY + 50, canvasWidth - 36, 60);
+    } else {
+        fill(108, 117, 125);
+        textAlign(CENTER, CENTER);
+        textSize(12);
+        text('Click any labeled arrow to see what check it represents and a real historical example.',
+             canvasWidth / 2, detY + 55);
+    }
+
+    // Control region
+    noStroke();
+    fill(233, 236, 239);
+    rect(0, drawHeight, canvasWidth, controlHeight);
+    fill(50);
+    textAlign(LEFT, TOP);
+    textSize(11);
+    text(testMode
+            ? 'Test Mode ON — labels hidden. Click an arrow to reveal what check it is.'
+            : 'Click any arrow to learn about that check.',
+         210, drawHeight + 18);
+}
+
+function drawNode(name, node) {
+    const c = COLORS[name];
+    fill(c[0], c[1], c[2]);
+    stroke(255);
+    strokeWeight(2);
+    rect(node.x - node.w / 2, node.y - node.h / 2, node.w, node.h, 10);
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+    textStyle(BOLD);
+    text(node.lines[0], node.x, node.y - 18);
+    textStyle(NORMAL);
+    textSize(10);
+    text(node.lines[1], node.x, node.y);
+    textSize(11);
+    text(node.lines[2], node.x, node.y + 16);
+    strokeWeight(1);
+}
+
+// For each pair of branches we may have up to 4 arrows; offset them perpendicular to the edge.
+function drawArrowGroup(group) {
+    const fromNode = nodes[group[0].check.from];
+    const toNode = nodes[group[0].check.to];
+    const dx = toNode.x - fromNode.x;
+    const dy = toNode.y - fromNode.y;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    const ux = dx / len, uy = dy / len;     // unit direction
+    const nx = -uy, ny = ux;                // perpendicular
+    const offsetStep = 14;
+    const bias = group.bias || 0;
+    const baseOffset = -(group.length - 1) * offsetStep / 2 + bias;
+
+    // Stagger label positions along the arrow to spread them apart when
+    // multiple arrows run parallel close together.
+    const labelFracs =
+        group.length === 4 ? [0.28, 0.42, 0.58, 0.72] :
+        group.length === 3 ? [0.33, 0.50, 0.67] :
+        group.length === 2 ? [0.38, 0.62] :
+        [0.50];
+
+    group.forEach((entry, k) => {
+        const off = baseOffset + k * offsetStep;
+        // Start and end points pulled in from node centers
+        const startGap = 90, endGap = 95;
+        const sx = fromNode.x + ux * startGap + nx * off;
+        const sy = fromNode.y + uy * startGap + ny * off;
+        const ex = toNode.x   - ux * endGap   + nx * off;
+        const ey = toNode.y   - uy * endGap   + ny * off;
+        drawArrow(sx, sy, ex, ey, COLORS[entry.check.from], entry, labelFracs[k]);
+    });
+}
+
+function drawArrow(sx, sy, ex, ey, col, entry, labelFrac) {
+    const isSelected = (selectedIdx === entry.idx);
+    const isHover = pointNearLine(mouseX, mouseY, sx, sy, ex, ey, 8);
+    stroke(col[0], col[1], col[2]);
+    strokeWeight(isSelected ? 4 : (isHover ? 3 : 2));
+    line(sx, sy, ex, ey);
+    // Arrowhead
+    const ang = Math.atan2(ey - sy, ex - sx);
+    const ah = 9;
+    push();
+    translate(ex, ey);
+    rotate(ang);
+    fill(col[0], col[1], col[2]);
+    noStroke();
+    triangle(0, 0, -ah, -ah / 2, -ah, ah / 2);
+    pop();
+    // Label — placed at labelFrac along the arrow to spread labels apart
+    if (!testMode || isSelected) {
+        const mx = sx + (ex - sx) * labelFrac;
+        const my = sy + (ey - sy) * labelFrac;
+        const txt = entry.check.short;
+        textSize(10);
+        textStyle(NORMAL);
+        const padX = 4, padY = 2;
+        const tw = textWidth(txt);
+        noStroke();
+        fill(255, 255, 255, 230);
+        rect(mx - tw / 2 - padX, my - 8 - padY, tw + 2 * padX, 14 + 2 * padY, 3);
+        fill(33, 37, 41);
+        textAlign(CENTER, CENTER);
+        text(txt, mx, my);
+    }
+    if (mouseIsPressed && _justClicked && isHover) {
+        selectedIdx = entry.idx;
+        _justClicked = false;
+    }
+}
+
+function pointNearLine(px, py, x1, y1, x2, y2, tol) {
+    const A = px - x1, B = py - y1, C = x2 - x1, D = y2 - y1;
+    const dot = A * C + B * D;
+    const lenSq = C * C + D * D;
+    let t = lenSq ? dot / lenSq : -1;
+    t = Math.max(0, Math.min(1, t));
+    const xx = x1 + t * C, yy = y1 + t * D;
+    return Math.hypot(px - xx, py - yy) < tol;
+}
+
+let _justClicked = false;
+function mousePressed() { _justClicked = true; }
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

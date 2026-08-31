@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Resource Partitioning in Warblers using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Resource Partitioning in Warblers
+// CANVAS_HEIGHT: 595
+// Interactive diagram showing foraging zones on a conifer tree
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 550;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+let showOverlap = false;
+let overlapBtn;
+let hoveredBird = -1;
+
+const warblers = [
+  { name: 'Cape May Warbler', zone: 'Top/outer crown', food: 'Spruce budworm, insects', behavior: 'Feeds at very tips of top branches', color: [220, 60, 60, 80], birdColor: [220, 60, 60], yMin: 0.05, yMax: 0.25 },
+  { name: 'Blackburnian Warbler', zone: 'Upper interior', food: 'Caterpillars, beetles', behavior: 'Forages along upper interior branches', color: [240, 150, 30, 80], birdColor: [240, 150, 30], yMin: 0.20, yMax: 0.40 },
+  { name: 'Bay-breasted Warbler', zone: 'Middle interior', food: 'Insects, spiders', behavior: 'Moves slowly through mid-level branches', color: [220, 200, 50, 80], birdColor: [180, 140, 30], yMin: 0.35, yMax: 0.55 },
+  { name: 'Black-throated Green', zone: 'Mid-outer branches', food: 'Insects, larvae', behavior: 'Actively forages on outer mid-branches', color: [50, 160, 50, 80], birdColor: [50, 140, 50], yMin: 0.50, yMax: 0.70 },
+  { name: 'Myrtle Warbler', zone: 'Lower branches/base', food: 'Insects, berries, sap', behavior: 'Forages near trunk base and ground', color: [60, 100, 200, 80], birdColor: [60, 100, 200], yMin: 0.65, yMax: 0.85 }
+];
+
+// Bird positions (animated)
+let birds = [];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Resource partitioning of five warbler species on a conifer tree', LABEL);
+
+  overlapBtn = createButton('Show Overlap');
+  overlapBtn.parent(document.querySelector('main'));
+  overlapBtn.position(10, drawHeight + 5);
+  overlapBtn.mousePressed(() => {
+    showOverlap = !showOverlap;
+    overlapBtn.html(showOverlap ? 'Hide Overlap' : 'Show Overlap');
+  });
+
+  initBirds();
+}
+
+function initBirds() {
+  birds = [];
+  for (let i = 0; i < warblers.length; i++) {
+    let w = warblers[i];
+    let treeCx = canvasWidth / 2;
+    let treeTop = drawHeight * 0.05;
+    let treeBot = drawHeight * 0.85;
+    let birdY = map(random(w.yMin, w.yMax), 0, 1, treeTop, treeBot);
+    let treeWidthAtY = getTreeWidth(birdY);
+    let birdX = treeCx + random(-treeWidthAtY * 0.35, treeWidthAtY * 0.35);
+    birds.push({ x: birdX, y: birdY, tx: birdX, ty: birdY, timer: random(30, 90) });
+  }
+}
+
+function getTreeWidth(y) {
+  let treeTop = drawHeight * 0.05;
+  let treeBot = drawHeight * 0.85;
+  let t = (y - treeTop) / (treeBot - treeTop);
+  return canvasWidth * 0.08 + t * canvasWidth * 0.35;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Sky
+  for (let y = 0; y < drawHeight; y++) {
+    let c = lerpColor(color(135, 200, 250), color(200, 230, 255), y / drawHeight);
+    stroke(c);
+    line(0, y, canvasWidth, y);
+  }
+
+  // Control area
+  noStroke();
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  let treeCx = canvasWidth / 2;
+  let treeTop = drawHeight * 0.05;
+  let treeBot = drawHeight * 0.85;
+
+  // Draw foraging zones
+  for (let i = 0; i < warblers.length; i++) {
+    let w = warblers[i];
+    let y1 = map(w.yMin, 0, 1, treeTop, treeBot);
+    let y2 = map(w.yMax, 0, 1, treeTop, treeBot);
+    fill(w.color[0], w.color[1], w.color[2], w.color[3]);
+    noStroke();
+    beginShape();
+    for (let y = y1; y <= y2; y += 2) {
+      let tw = getTreeWidth(y) * 0.45;
+      vertex(treeCx - tw, y);
+    }
+    for (let y = y2; y >= y1; y -= 2) {
+      let tw = getTreeWidth(y) * 0.45;
+      vertex(treeCx + tw, y);
+    }
+    endShape(CLOSE);
+  }
+
+  // Show overlap heat
+  if (showOverlap) {
+    for (let y = treeTop; y < treeBot; y += 3) {
+      let count = 0;
+      for (let w of warblers) {
+        let wy1 = map(w.yMin, 0, 1, treeTop, treeBot);
+        let wy2 = map(w.yMax, 0, 1, treeTop, treeBot);
+        if (y >= wy1 && y <= wy2) count++;
+      }
+      if (count >= 2) {
+        let tw = getTreeWidth(y) * 0.45;
+        let alpha = map(count, 2, 3, 60, 140);
+        fill(255, 50, 0, alpha);
+        noStroke();
+        rect(treeCx - tw, y, tw * 2, 3);
+      }
+    }
+  }
+
+  // Draw tree
+  drawTree(treeCx, treeTop, treeBot);
+
+  // Animate and draw birds
+  for (let i = 0; i < birds.length; i++) {
+    let b = birds[i];
+    let w = warblers[i];
+    b.timer--;
+    if (b.timer <= 0) {
+      let newY = map(random(w.yMin, w.yMax), 0, 1, treeTop, treeBot);
+      let tw = getTreeWidth(newY) * 0.35;
+      b.tx = treeCx + random(-tw, tw);
+      b.ty = newY;
+      b.timer = random(40, 100);
+    }
+    b.x = lerp(b.x, b.tx, 0.03);
+    b.y = lerp(b.y, b.ty, 0.03);
+
+    // Draw bird
+    fill(w.birdColor[0], w.birdColor[1], w.birdColor[2]);
+    noStroke();
+    ellipse(b.x, b.y, 12, 10);
+    // Wing
+    triangle(b.x - 3, b.y, b.x - 10, b.y - 4, b.x - 5, b.y + 2);
+    // Beak
+    fill(200, 180, 50);
+    triangle(b.x + 6, b.y, b.x + 11, b.y - 1, b.x + 6, b.y + 2);
+  }
+
+  // Check hover
+  hoveredBird = -1;
+  for (let i = 0; i < birds.length; i++) {
+    if (dist(mouseX, mouseY, birds[i].x, birds[i].y) < 20) {
+      hoveredBird = i;
+      break;
+    }
+  }
+
+  // Hover popup
+  if (hoveredBird >= 0) {
+    let w = warblers[hoveredBird];
+    let px = mouseX + 15;
+    let py = mouseY - 10;
+    let boxW = 220;
+    let boxH = 80;
+    if (px + boxW > canvasWidth) px = mouseX - boxW - 10;
+    if (py + boxH > drawHeight) py = drawHeight - boxH - 5;
+    fill(255, 255, 255, 230);
+    stroke(w.birdColor[0], w.birdColor[1], w.birdColor[2]);
+    strokeWeight(2);
+    rect(px, py, boxW, boxH, 6);
+    noStroke();
+    fill(40);
+    textSize(13);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text(w.name, px + 8, py + 6);
+    textStyle(NORMAL);
+    textSize(11);
+    text('Zone: ' + w.zone, px + 8, py + 24);
+    text('Food: ' + w.food, px + 8, py + 38);
+    text(w.behavior, px + 8, py + 52, boxW - 16, 30);
+  }
+
+  // Legend
+  noStroke();
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  let lx = 10;
+  let ly = drawHeight - 90;
+  for (let i = 0; i < warblers.length; i++) {
+    fill(warblers[i].birdColor[0], warblers[i].birdColor[1], warblers[i].birdColor[2]);
+    ellipse(lx + 6, ly + i * 17, 10, 10);
+    noStroke();
+    fill(255);
+    textSize(11);
+    text(warblers[i].name, lx + 16, ly + i * 17);
+  }
+
+  // Control area label
+  noStroke();
+  fill(40);
+  textSize(14);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  text('Resource Partitioning in Warblers', 140, drawHeight + 16);
+  textStyle(NORMAL);
+}
+
+function drawTree(cx, top, bot) {
+  // Trunk
+  fill(101, 67, 33);
+  noStroke();
+  let trunkW = canvasWidth * 0.04;
+  rect(cx - trunkW / 2, bot * 0.6, trunkW, bot * 0.4 + (drawHeight - bot));
+
+  // Canopy layers
+  let layers = 5;
+  for (let i = 0; i < layers; i++) {
+    let layerTop = map(i, 0, layers, top, bot * 0.75);
+    let layerBot = map(i + 1.3, 0, layers, top, bot * 0.85);
+    let layerW = getTreeWidth((layerTop + layerBot) / 2) * 0.5;
+    fill(30 + i * 8, 100 + i * 15, 30 + i * 5, 120);
+    noStroke();
+    triangle(cx, layerTop, cx - layerW, layerBot, cx + layerW, layerBot);
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  initBirds();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

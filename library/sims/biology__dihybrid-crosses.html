@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Dihybrid Cross Outcome Visualizer</title>
+    <style>body {
+    margin: 0;
+    padding: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: aliceblue;
+}
+
+h2 {
+    text-align: center;
+    margin: 4px 0 8px;
+    color: #1a1a1a;
+    font-size: 1.3rem;
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: #f0f4f8;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+#controls label {
+    font-weight: bold;
+}
+
+#controls select {
+    padding: 3px 6px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+}
+
+#toggle-btn {
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+}
+
+#toggle-btn:hover {
+    background: #e8e8e8;
+}
+
+#main-layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Punnett Square */
+#punnett-container {
+    min-width: 0;
+}
+
+#punnett-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#punnett-table th,
+#punnett-table td {
+    border: 1px solid #888;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.82rem;
+    height: 38px;
+    transition: background 0.3s;
+    min-width: 0;
+}
+
+#punnett-table th {
+    background: #e8eef4;
+    font-weight: bold;
+}
+
+#punnett-table td {
+    cursor: pointer;
+}
+
+#punnett-table td.highlighted {
+    outline: 3px solid #333;
+    outline-offset: -2px;
+    z-index: 1;
+    position: relative;
+}
+
+.corner-cell {
+    background: #d0d8e0 !important;
+}
+
+/* Chart */
+#chart-container {
+    min-width: 0;
+    position: relative;
+}
+
+#chart-container canvas {
+    width: 100% !important;
+}
+
+/* Summary */
+#summary {
+    text-align: center;
+    font-size: 0.88rem;
+    margin-top: 8px;
+    padding: 5px;
+    background: #f8f8f0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+#summary strong {
+    color: #2c3e50;
+}
+
+#return-link {
+    display: none;
+    padding: 8px 16px;
+}
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<h2>Dihybrid Cross Outcome Visualizer</h2>
+
+<div id="controls">
+    <label>Parent 1:</label>
+    <select id="p1-locus1"><option value="Rr">Rr</option><option value="RR">RR</option><option value="rr">rr</option></select>
+    <select id="p1-locus2"><option value="Yy">Yy</option><option value="YY">YY</option><option value="yy">yy</option></select>
+
+    <label>Parent 2:</label>
+    <select id="p2-locus1"><option value="Rr">Rr</option><option value="RR">RR</option><option value="rr">rr</option></select>
+    <select id="p2-locus2"><option value="Yy">Yy</option><option value="YY">YY</option><option value="yy">yy</option></select>
+
+    <button id="toggle-btn" onclick="toggleView()">Show Phenotypes</button>
+</div>
+
+<div id="main-layout">
+    <div id="punnett-container">
+        <table id="punnett-table"></table>
+    </div>
+    <div id="chart-container">
+        <canvas id="phenotype-chart"></canvas>
+    </div>
+</div>
+
+<div id="summary"></div>
+
+<div id="return-link">
+    <a href=".">← Return to Lesson Plan</a>
+</div>
+
+<script>// Dihybrid Cross Outcome Visualizer
+// Chart.js + HTML table for Punnett square with phenotype bar chart
+
+const PHENOTYPE_COLORS = {
+    'Round Yellow':    '#F4D03F',
+    'Round Green':     '#2ECC71',
+    'Wrinkled Yellow': '#E67E22',
+    'Wrinkled Green':  '#A04000'
+};
+
+const PHENOTYPE_ORDER = ['Round Yellow', 'Round Green', 'Wrinkled Yellow', 'Wrinkled Green'];
+
+let showGenotypes = true;
+let chart = null;
+let currentGrid = [];  // 4x4 array of {genotype, phenotype}
+
+// Determine gametes from a two-locus genotype pair
+function getGametes(locus1, locus2) {
+    const alleles1 = locus1.length === 2 ? [locus1[0], locus1[1]] : [locus1[0], locus1[0]];
+    const alleles2 = locus2.length === 2 ? [locus2[0], locus2[1]] : [locus2[0], locus2[0]];
+    const gametes = [];
+    for (const a1 of alleles1) {
+        for (const a2 of alleles2) {
+            gametes.push(a1 + a2);
+        }
+    }
+    return gametes;
+}
+
+// Combine two gametes into a genotype string, with dominant allele first per locus
+function combineGametes(g1, g2) {
+    let a1 = g1[0], a2 = g2[0]; // locus 1
+    let b1 = g1[1], b2 = g2[1]; // locus 2
+    // Sort each locus: uppercase (dominant) first
+    const locus1 = [a1, a2].sort((x, y) => x.toLowerCase().localeCompare(y.toLowerCase()) || x.localeCompare(y)).join('');
+    const locus2 = [b1, b2].sort((x, y) => x.toLowerCase().localeCompare(y.toLowerCase()) || x.localeCompare(y)).join('');
+    return locus1 + locus2;
+}
+
+// Sort alleles so dominant is first (uppercase before lowercase)
+function sortAlleles(a, b) {
+    if (a === a.toUpperCase() && b === b.toLowerCase()) return -1;
+    if (a === a.toLowerCase() && b === b.toUpperCase()) return 1;
+    return 0;
+}
+
+function formatGenotype(gt) {
+    // gt is 4 chars like "RrYy"
+    const l1a = gt[0], l1b = gt[1], l2a = gt[2], l2b = gt[3];
+    const loc1 = [l1a, l1b].sort(sortAlleles).join('');
+    const loc2 = [l2a, l2b].sort(sortAlleles).join('');
+    return loc1 + loc2;
+}
+
+function getPhenotype(genotype) {
+    const hasR = genotype[0] === 'R' || genotype[1] === 'R';
+    const hasY = genotype[2] === 'Y' || genotype[3] === 'Y';
+    const shape = hasR ? 'Round' : 'Wrinkled';
+    const color = hasY ? 'Yellow' : 'Green';
+    return shape + ' ' + color;
+}
+
+function buildCross() {
+    const p1l1 = document.getElementById('p1-locus1').value;
+    const p1l2 = document.getElementById('p1-locus2').value;
+    const p2l1 = document.getElementById('p2-locus1').value;
+    const p2l2 = document.getElementById('p2-locus2').value;
+
+    const gametes1 = getGametes(p1l1, p1l2);
+    const gametes2 = getGametes(p2l1, p2l2);
+
+    // Build 4x4 grid
+    currentGrid = [];
+    for (let r = 0; r < gametes1.length; r++) {
+        const row = [];
+        for (let c = 0; c < gametes2.length; c++) {
+            const gt = formatGenotype(combineGametes(gametes1[r], gametes2[c]));
+            row.push({ genotype: gt, phenotype: getPhenotype(gt) });
+        }
+        currentGrid.push(row);
+    }
+
+    renderPunnett(gametes1, gametes2);
+    updateChart();
+    updateSummary();
+}
+
+function renderPunnett(gametes1, gametes2) {
+    const table = document.getElementById('punnett-table');
+    let html = '<tr><th class="corner-cell">P1 \\ P2</th>';
+    for (const g of gametes2) {
+        html += `<th>${g}</th>`;
+    }
+    html += '</tr>';
+
+    for (let r = 0; r < gametes1.length; r++) {
+        html += `<tr><th>${gametes1[r]}</th>`;
+        for (let c = 0; c < gametes2.length; c++) {
+            const cell = currentGrid[r][c];
+            const bg = PHENOTYPE_COLORS[cell.phenotype];
+            const text = showGenotypes ? cell.genotype : cell.phenotype.split(' ').map(w => w[0]).join('');
+            const textColor = cell.phenotype === 'Wrinkled Green' ? '#fff' : '#222';
+            html += `<td style="background:${bg}; color:${textColor}"
+                         data-phenotype="${cell.phenotype}"
+                         title="${cell.genotype} → ${cell.phenotype}">${text}</td>`;
+        }
+        html += '</tr>';
+    }
+    table.innerHTML = html;
+}
+
+function updateChart() {
+    // Count phenotypes
+    const counts = {};
+    for (const p of PHENOTYPE_ORDER) counts[p] = 0;
+    for (const row of currentGrid) {
+        for (const cell of row) {
+            counts[cell.phenotype] = (counts[cell.phenotype] || 0) + 1;
+        }
+    }
+
+    const labels = PHENOTYPE_ORDER.filter(p => counts[p] > 0);
+    const data = labels.map(p => counts[p]);
+    const colors = labels.map(p => PHENOTYPE_COLORS[p]);
+
+    if (chart) {
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = data;
+        chart.data.datasets[0].backgroundColor = colors;
+        chart.data.datasets[0].borderColor = colors.map(c => darken(c, 0.2));
+        chart.update();
+    } else {
+        const ctx = document.getElementById('phenotype-chart').getContext('2d');
+        chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Count (out of 16)',
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: colors.map(c => darken(c, 0.2)),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 1.1,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 16,
+                        ticks: { stepSize: 1, font: { size: 11 } },
+                        title: { display: true, text: 'Count (out of 16)', font: { size: 12 } }
+                    },
+                    x: {
+                        ticks: { font: { size: 11 }, maxRotation: 30 },
+                        title: { display: true, text: 'Phenotype', font: { size: 12 } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) {
+                                const count = ctx.parsed.y;
+                                const pct = ((count / 16) * 100).toFixed(1);
+                                return `${count} / 16  (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                onClick: (event, elements) => {
+                    highlightPhenotype(elements.length > 0 ? chart.data.labels[elements[0].index] : null);
+                }
+            }
+        });
+    }
+}
+
+function highlightPhenotype(phenotype) {
+    const cells = document.querySelectorAll('#punnett-table td');
+    cells.forEach(td => {
+        if (phenotype && td.dataset.phenotype === phenotype) {
+            td.classList.add('highlighted');
+        } else {
+            td.classList.remove('highlighted');
+        }
+    });
+}
+
+function updateSummary() {
+    const counts = {};
+    for (const p of PHENOTYPE_ORDER) counts[p] = 0;
+    for (const row of currentGrid) {
+        for (const cell of row) {
+            counts[cell.phenotype] = (counts[cell.phenotype] || 0) + 1;
+        }
+    }
+
+    const present = PHENOTYPE_ORDER.filter(p => counts[p] > 0);
+    const ratio = present.map(p => counts[p]);
+    // Simplify ratio by GCD
+    const g = ratio.reduce((a, b) => gcd(a, b));
+    const simplified = ratio.map(r => r / g);
+    const ratioStr = simplified.join(' : ');
+
+    // Check if it's the classic 9:3:3:1
+    const isClassic = simplified.length === 4 && simplified[0] === 9 && simplified[1] === 3 && simplified[2] === 3 && simplified[3] === 1;
+    const expectedNote = isClassic ? ' <strong>(Classic 9:3:3:1 ratio!)</strong>' : '';
+
+    const countsStr = present.map(p => `${p}: ${counts[p]}`).join(' | ');
+    document.getElementById('summary').innerHTML =
+        `<strong>Observed ratio:</strong> ${ratioStr}${expectedNote}<br>` +
+        `${countsStr}  &mdash;  Click a bar to highlight cells in the Punnett square.`;
+}
+
+function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+
+function darken(hex, amount) {
+    hex = hex.replace('#', '');
+    const r = Math.max(0, parseInt(hex.substring(0, 2), 16) - Math.round(255 * amount));
+    const g = Math.max(0, parseInt(hex.substring(2, 4), 16) - Math.round(255 * amount));
+    const b = Math.max(0, parseInt(hex.substring(4, 6), 16) - Math.round(255 * amount));
+    return `rgb(${r},${g},${b})`;
+}
+
+function toggleView() {
+    showGenotypes = !showGenotypes;
+    document.getElementById('toggle-btn').textContent = showGenotypes ? 'Show Phenotypes' : 'Show Genotypes';
+    buildCross();
+}
+
+// Event listeners
+document.getElementById('p1-locus1').addEventListener('change', buildCross);
+document.getElementById('p1-locus2').addEventListener('change', buildCross);
+document.getElementById('p2-locus1').addEventListener('change', buildCross);
+document.getElementById('p2-locus2').addEventListener('change', buildCross);
+
+// Initial build
+buildCross();
+</script>
+<script>
+    if (window.self === window.top) {
+        document.getElementById('return-link').style.display = 'block';
+    }
+</script>
+</body>
+</html>

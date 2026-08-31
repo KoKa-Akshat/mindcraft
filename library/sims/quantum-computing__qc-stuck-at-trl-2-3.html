@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>TRL Assessment Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Technology Readiness Level Assessment Tool
+// A p5.js MicroSim showing where quantum computing stands on the TRL 1-9 scale
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// TRL data — each level with QC-specific assessment
+let trlLevels = [
+    {
+        level: 9,
+        name: "Proven in Operations",
+        phase: "Deployment",
+        qcStatus: "not-achieved",
+        statusIcon: "\u2717",
+        color: "#C62828",
+        evidence: "No quantum computer has been deployed in a production operational environment. Zero commercial revenue from quantum computation (as opposed to quantum consulting/access fees).",
+        needed: "Sustained, repeatable commercial advantage over classical systems on real-world problems with paying customers.",
+        timeEstimate: "25-50+ years (if ever)"
+    },
+    {
+        level: 8,
+        name: "System Qualified",
+        phase: "Deployment",
+        qcStatus: "not-achieved",
+        statusIcon: "\u2717",
+        color: "#D32F2F",
+        evidence: "No quantum computing system has completed qualification testing against operational requirements. No system meets reliability, availability, or maintainability standards for deployment.",
+        needed: "A complete fault-tolerant system passing acceptance tests against defined operational requirements.",
+        timeEstimate: "20-40+ years"
+    },
+    {
+        level: 7,
+        name: "Prototype in Operations",
+        phase: "Deployment",
+        qcStatus: "not-achieved",
+        statusIcon: "\u2717",
+        color: "#E53935",
+        evidence: "No quantum system prototype has demonstrated capability in an operational environment. Cloud-access systems (IBM, Google) are research tools, not operational prototypes solving real problems faster than classical alternatives.",
+        needed: "A prototype quantum system solving a real operational problem faster or cheaper than the best classical alternative.",
+        timeEstimate: "15-30+ years"
+    },
+    {
+        level: 6,
+        name: "Demo in Relevant Environment",
+        phase: "Development",
+        qcStatus: "not-achieved",
+        statusIcon: "\u2717",
+        color: "#FB8C00",
+        evidence: "No quantum advantage has been demonstrated on a commercially relevant problem. Google's 2019 'supremacy' experiment solved a problem with no practical application. Recent claims (e.g., random circuit sampling) remain academic.",
+        needed: "Demonstration of quantum advantage on a problem someone actually needs solved, in conditions resembling real use.",
+        timeEstimate: "10-25 years"
+    },
+    {
+        level: 5,
+        name: "Validated in Relevant Environment",
+        phase: "Development",
+        qcStatus: "not-achieved",
+        statusIcon: "\u2717",
+        color: "#FF9800",
+        evidence: "Component technologies have been tested but not integrated into a system validated in a relevant environment. Error rates remain 100-1000x too high for fault tolerance. No relevant environment validation exists.",
+        needed: "Integrated system with error-corrected logical qubits performing useful computations in realistic conditions.",
+        timeEstimate: "10-20 years"
+    },
+    {
+        level: 4,
+        name: "Validated in Lab",
+        phase: "Development",
+        qcStatus: "partial",
+        statusIcon: "\u2713",
+        color: "#FDD835",
+        evidence: "Individual components validated in lab: Google demonstrated distance-7 surface code (2024). Trapped ion systems show 99.9% gate fidelity. However, integrated system-level validation remains incomplete.",
+        needed: "Full integration of error correction, control systems, and algorithms at scale in laboratory conditions.",
+        timeEstimate: "Current — partially achieved"
+    },
+    {
+        level: 3,
+        name: "Proof of Concept",
+        phase: "Research",
+        qcStatus: "achieved",
+        statusIcon: "\u2713",
+        color: "#4CAF50",
+        evidence: "Multiple proof-of-concept demonstrations completed. Shor's algorithm factored 15 and 21. Variational quantum eigensolvers demonstrated on small molecules. Quantum error correction codes demonstrated at small scale.",
+        needed: "Achieved for basic operations. Proof of concept for fault-tolerant, commercially useful computation is NOT yet demonstrated.",
+        timeEstimate: "Achieved"
+    },
+    {
+        level: 2,
+        name: "Concept Formulated",
+        phase: "Research",
+        qcStatus: "achieved",
+        statusIcon: "\u2713",
+        color: "#388E3C",
+        evidence: "Well-established theoretical frameworks: gate model, measurement-based, adiabatic, and topological quantum computing all formulated with clear theoretical foundations.",
+        needed: "Achieved.",
+        timeEstimate: "Achieved"
+    },
+    {
+        level: 1,
+        name: "Basic Principles",
+        phase: "Research",
+        qcStatus: "achieved",
+        statusIcon: "\u2713",
+        color: "#2E7D32",
+        evidence: "Quantum mechanics is well-established physics. Superposition, entanglement, and interference are experimentally verified. Theoretical basis for quantum speedup (BQP complexity class) is sound.",
+        needed: "Achieved.",
+        timeEstimate: "Achieved"
+    }
+];
+
+// Comparison technologies
+let comparisons = [
+    { name: "Classical AI", trl: 8, color: "#1565C0", investment: "$40B+" },
+    { name: "Quantum Sensors", trl: 7, color: "#6A1B9A", investment: "$5B" },
+    { name: "Fusion Energy", trl: 4, color: "#00838F", investment: "$50B+" }
+];
+
+let selectedLevel = -1; // Index into trlLevels array
+let showComparisons = true;
+
+// Quantum computing's assessed TRL
+let qcTRL = 3.5; // Between 3 (fully achieved) and 4 (partial)
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Technology Readiness Level Assessment", canvasWidth / 2, 10);
+
+    // Subtitle
+    textSize(12);
+    textStyle(ITALIC);
+    fill('#666');
+    text("Quantum Computing \u2014 Assessed TRL: ~3-4 (Research/Early Development)", canvasWidth / 2, 32);
+
+    // Layout: thermometer on the left, detail panel on the right
+    let thermoLeft = margin + 10;
+    let thermoWidth = 60;
+    let thermoRight = thermoLeft + thermoWidth;
+    let labelLeft = thermoRight + 15;
+    let detailPanelLeft = canvasWidth * 0.52;
+    let detailPanelWidth = canvasWidth - detailPanelLeft - margin;
+
+    // Thermometer dimensions
+    let thermoTop = 60;
+    let thermoBottom = drawHeight - 30;
+    let thermoHeight = thermoBottom - thermoTop;
+    let levelHeight = thermoHeight / 9;
+
+    // Draw phase labels along left edge
+    noStroke();
+    textSize(10);
+    textAlign(RIGHT, CENTER);
+    textStyle(BOLD);
+
+    // Research phase (TRL 1-3)
+    fill('#2E7D32');
+    push();
+    translate(thermoLeft - 8, thermoBottom - levelHeight * 1.5);
+    rotate(-HALF_PI);
+    text("RESEARCH", 0, 0);
+    pop();
+
+    // Development phase (TRL 4-6)
+    fill('#FB8C00');
+    push();
+    translate(thermoLeft - 8, thermoBottom - levelHeight * 4.5);
+    rotate(-HALF_PI);
+    text("DEVELOPMENT", 0, 0);
+    pop();
+
+    // Deployment phase (TRL 7-9)
+    fill('#C62828');
+    push();
+    translate(thermoLeft - 8, thermoBottom - levelHeight * 7.5);
+    rotate(-HALF_PI);
+    text("DEPLOYMENT", 0, 0);
+    pop();
+
+    // Draw thermometer levels (bottom = TRL 1, top = TRL 9)
+    for (let i = 0; i < trlLevels.length; i++) {
+        let trl = trlLevels[i];
+        let levelIndex = trl.level - 1; // 0-based from bottom
+        let y = thermoBottom - (levelIndex + 1) * levelHeight;
+        let isSelected = (selectedLevel === i);
+
+        // Thermometer block
+        if (trl.qcStatus === "achieved") {
+            fill(trl.color);
+        } else if (trl.qcStatus === "partial") {
+            // Yellow with partial fill
+            fill(trl.color);
+        } else {
+            fill('#EEEEEE');
+        }
+
+        if (isSelected) {
+            stroke('#3F51B5');
+            strokeWeight(3);
+        } else {
+            stroke('white');
+            strokeWeight(1);
+        }
+        rect(thermoLeft, y, thermoWidth, levelHeight, 2);
+
+        // TRL number inside block
+        noStroke();
+        if (trl.qcStatus === "achieved" || trl.qcStatus === "partial") {
+            fill('white');
+        } else {
+            fill('#999');
+        }
+        textSize(16);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(trl.level, thermoLeft + thermoWidth / 2, y + levelHeight / 2);
+
+        // Status icon and level name to the right
+        noStroke();
+        let labelY = y + levelHeight / 2;
+
+        // Status icon
+        if (trl.qcStatus === "achieved") {
+            fill('#2E7D32');
+            textSize(14);
+            textAlign(LEFT, CENTER);
+            text(trl.statusIcon, labelLeft, labelY);
+        } else if (trl.qcStatus === "partial") {
+            fill('#F9A825');
+            textSize(14);
+            textAlign(LEFT, CENTER);
+            text(trl.statusIcon, labelLeft, labelY);
+        } else {
+            fill('#C62828');
+            textSize(14);
+            textAlign(LEFT, CENTER);
+            text(trl.statusIcon, labelLeft, labelY);
+        }
+
+        // Level name
+        if (isSelected) {
+            fill('#1A237E');
+            textStyle(BOLD);
+        } else {
+            fill('#333');
+            textStyle(NORMAL);
+        }
+        textSize(12);
+        textAlign(LEFT, CENTER);
+        let nameX = labelLeft + 18;
+        let availWidth = detailPanelLeft - nameX - 10;
+        let displayName = "TRL " + trl.level + ": " + trl.name;
+        // Truncate if needed
+        let maxChars = floor(availWidth / 6.5);
+        if (displayName.length > maxChars) {
+            displayName = displayName.substring(0, maxChars - 2) + "..";
+        }
+        text(displayName, nameX, labelY);
+    }
+
+    // Draw QC current level marker (arrow)
+    let qcArrowY = thermoBottom - qcTRL * levelHeight;
+    fill('#3F51B5');
+    noStroke();
+    // Arrow pointing right toward thermometer
+    let arrowX = thermoLeft - 2;
+    triangle(arrowX, qcArrowY, arrowX - 14, qcArrowY - 7, arrowX - 14, qcArrowY + 7);
+    // Label for arrow
+    textSize(9);
+    textAlign(RIGHT, CENTER);
+    textStyle(BOLD);
+    fill('#3F51B5');
+    text("QC", arrowX - 16, qcArrowY);
+
+    // Draw comparison markers if enabled
+    if (showComparisons) {
+        for (let c = 0; c < comparisons.length; c++) {
+            let comp = comparisons[c];
+            let compY = thermoBottom - comp.trl * levelHeight + levelHeight / 2;
+            let markerX = thermoRight + 2;
+
+            // Small arrow pointing left
+            fill(comp.color);
+            noStroke();
+            triangle(markerX, compY, markerX + 10, compY - 5, markerX + 10, compY + 5);
+
+            // Label
+            textSize(8);
+            textAlign(LEFT, CENTER);
+            textStyle(NORMAL);
+            fill(comp.color);
+            // Position to the right of the status icons area, avoiding overlap
+            // Use a staggered approach
+            let compLabelX = detailPanelLeft - 95;
+            let compLabelY = compY;
+            text(comp.name + " (TRL " + comp.trl + ")", compLabelX, compLabelY);
+        }
+    }
+
+    // Detail panel — shows when a level is selected
+    let panelTop = 55;
+    let panelHeight = drawHeight - panelTop - 15;
+
+    if (selectedLevel >= 0) {
+        let trl = trlLevels[selectedLevel];
+
+        // Panel background
+        fill(255, 255, 255, 240);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(detailPanelLeft, panelTop, detailPanelWidth, panelHeight, 6);
+
+        // Panel title
+        noStroke();
+        let px = detailPanelLeft + 14;
+        let py = panelTop + 16;
+        let lineH = 18;
+
+        // TRL level header with color bar
+        fill(trl.color);
+        noStroke();
+        rect(detailPanelLeft + 6, py - 4, 4, 22, 2);
+
+        fill('#333');
+        textSize(15);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text("TRL " + trl.level + ": " + trl.name, px + 6, py);
+        py += lineH + 8;
+
+        // Phase
+        fill('#666');
+        textSize(11);
+        textStyle(NORMAL);
+        text("Phase: " + trl.phase, px + 6, py);
+        py += lineH;
+
+        // Status
+        if (trl.qcStatus === "achieved") {
+            fill('#2E7D32');
+            textStyle(BOLD);
+            text("Status: ACHIEVED " + trl.statusIcon, px + 6, py);
+        } else if (trl.qcStatus === "partial") {
+            fill('#F9A825');
+            textStyle(BOLD);
+            text("Status: PARTIALLY ACHIEVED " + trl.statusIcon, px + 6, py);
+        } else {
+            fill('#C62828');
+            textStyle(BOLD);
+            text("Status: NOT ACHIEVED " + trl.statusIcon, px + 6, py);
+        }
+        py += lineH + 10;
+
+        // Evidence section
+        fill('#333');
+        textSize(12);
+        textStyle(BOLD);
+        text("Evidence:", px + 6, py);
+        py += lineH;
+
+        textStyle(NORMAL);
+        textSize(11);
+        fill('#444');
+        let evidenceLines = wrapText(trl.evidence, detailPanelWidth - 40);
+        for (let line of evidenceLines) {
+            text(line, px + 6, py);
+            py += 15;
+        }
+        py += 10;
+
+        // What's needed section
+        fill('#333');
+        textSize(12);
+        textStyle(BOLD);
+        text("What's Needed:", px + 6, py);
+        py += lineH;
+
+        textStyle(NORMAL);
+        textSize(11);
+        fill('#C62828');
+        let neededLines = wrapText(trl.needed, detailPanelWidth - 40);
+        for (let line of neededLines) {
+            text(line, px + 6, py);
+            py += 15;
+        }
+        py += 10;
+
+        // Time estimate
+        fill('#1565C0');
+        textSize(12);
+        textStyle(BOLD);
+        text("Time Estimate: " + trl.timeEstimate, px + 6, py);
+
+    } else {
+        // Default panel — summary view
+        fill(255, 255, 255, 220);
+        stroke('#BDBDBD');
+        strokeWeight(1);
+        rect(detailPanelLeft, panelTop, detailPanelWidth, panelHeight, 6);
+
+        let px = detailPanelLeft + 14;
+        let py = panelTop + 20;
+
+        noStroke();
+        fill('#333');
+        textSize(14);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text("Quantum Computing TRL Summary", px, py);
+        py += 28;
+
+        textSize(12);
+        textStyle(NORMAL);
+        fill('#444');
+
+        let summaryItems = [
+            "Assessed TRL: 3-4 (Research / Early Development)",
+            "",
+            "TRL 1-3: Basic principles and proof of concept",
+            "are well established. Quantum mechanics is",
+            "settled science and small demonstrations work.",
+            "",
+            "TRL 4: Partially achieved. Individual components",
+            "validated in lab (error correction codes, high-",
+            "fidelity gates) but not integrated at scale.",
+            "",
+            "TRL 5-9: Not achieved. No quantum advantage on",
+            "a commercially relevant problem. No operational",
+            "deployment. No commercial revenue from quantum",
+            "computation itself.",
+            "",
+            "Total investment to date: ~$40B+",
+            "Commercial revenue from QC: ~$0",
+        ];
+
+        for (let line of summaryItems) {
+            if (line === "") {
+                py += 8;
+            } else {
+                text(line, px, py);
+                py += 17;
+            }
+        }
+
+        py += 16;
+        fill('#333');
+        textStyle(BOLD);
+        textSize(12);
+        text("Technology Comparisons:", px, py);
+        py += 22;
+
+        textStyle(NORMAL);
+        textSize(11);
+        for (let c = 0; c < comparisons.length; c++) {
+            let comp = comparisons[c];
+            fill(comp.color);
+            text(comp.name + ": TRL " + comp.trl + " (Investment: " + comp.investment + ")", px + 8, py);
+            py += 18;
+        }
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Click a TRL level on the thermometer to see detailed criteria and evidence for quantum computing.", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+// Simple word-wrap utility
+function wrapText(txt, maxWidth) {
+    let words = txt.split(' ');
+    let lines = [];
+    let current = '';
+    let charWidth = 6.2; // Approximate for 11px Arial
+
+    for (let w of words) {
+        let test = current.length === 0 ? w : current + ' ' + w;
+        if (test.length * charWidth > maxWidth) {
+            if (current.length > 0) {
+                lines.push(current);
+            }
+            current = w;
+        } else {
+            current = test;
+        }
+    }
+    if (current.length > 0) {
+        lines.push(current);
+    }
+    return lines;
+}
+
+function mousePressed() {
+    // Check if a TRL level was clicked on the thermometer or labels
+    let thermoLeft = margin + 10;
+    let thermoWidth = 60;
+    let thermoRight = thermoLeft + thermoWidth;
+    let detailPanelLeft = canvasWidth * 0.52;
+    let thermoTop = 60;
+    let thermoBottom = drawHeight - 30;
+    let thermoHeight = thermoBottom - thermoTop;
+    let levelHeight = thermoHeight / 9;
+
+    let clickedLevel = -1;
+
+    for (let i = 0; i < trlLevels.length; i++) {
+        let trl = trlLevels[i];
+        let levelIndex = trl.level - 1;
+        let y = thermoBottom - (levelIndex + 1) * levelHeight;
+
+        // Allow clicking on thermometer block or label area
+        if (mouseX >= thermoLeft && mouseX <= detailPanelLeft - 10 &&
+            mouseY >= y && mouseY <= y + levelHeight) {
+            clickedLevel = i;
+        }
+    }
+
+    if (clickedLevel >= 0) {
+        if (selectedLevel === clickedLevel) {
+            selectedLevel = -1; // Toggle off
+        } else {
+            selectedLevel = clickedLevel;
+        }
+    }
+
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

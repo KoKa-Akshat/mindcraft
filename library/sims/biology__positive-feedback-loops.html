@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Feedback Loop Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Feedback Loop Simulator MicroSim (p5.js)
+// CANVAS_HEIGHT = 740
+// Simulates negative and positive biological feedback loops with a causal diagram and time-series graph.
+
+let containerWidth = 760;
+let canvasWidth = 760;
+const minDrawHeight = 540;
+let drawHeight = minDrawHeight;
+const controlHeight = 200;
+let canvasHeight = drawHeight + controlHeight;
+const margin = 20;
+const inIframe = (window.self !== window.top);
+const historyWindow = 36; // seconds kept in the plot
+
+let p5Canvas = null;
+let startButton;
+let resetButton;
+let perturbButton;
+let exampleLabel;
+let exampleSelect;
+const modeButtons = {};
+
+let isRunning = false;
+let activeMode = 'negative';
+let currentExample = null;
+let selectedExampleByMode = { negative: 'blood-glucose', positive: 'action-potential' };
+
+let layout = null;
+let graphHistory = [];
+let simulationTime = 0;
+let state = { level: 0, velocity: 0, externalForce: 0, triggered: false };
+let perturbationTime = null;
+let infoMessage = '';
+let hoverPoint = null;
+let loopNodes = [];
+let activeNodeId = null;
+
+const feedbackModes = {
+  negative: {
+    color: '#2563eb',
+    loopFill: '#dbeafe',
+    description: 'Negative feedback dampens change and restores a set point.',
+    centerLabel: 'B',
+    loopMessage: 'Dampens / Opposes change',
+    examples: [
+      {
+        id: 'blood-glucose',
+        label: 'Blood Glucose Regulation',
+        summary: 'Pancreatic beta cells release insulin to drop high blood glucose back toward ~90 mg/dL.',
+        restoreRate: 3.1,
+        damping: 1.2,
+        oscillationAmplitude: 6,
+        oscillationSpeed: 1.2,
+        perturbation: { magnitude: 48, direction: 1 },
+        range: { min: -90, max: 140 },
+        setPointLabel: 'Set point ≈ 90 mg/dL'
+      },
+      {
+        id: 'thermoregulation',
+        label: 'Thermoregulation (Sweat/Shiver)',
+        summary: 'Hypothalamus, sweat glands, and muscles counter drifts from 37°C.',
+        restoreRate: 2.1,
+        damping: 0.9,
+        oscillationAmplitude: 8,
+        oscillationSpeed: 0.9,
+        perturbation: { magnitude: 35, direction: -1 },
+        range: { min: -70, max: 110 },
+        setPointLabel: 'Set point ≈ 37 °C'
+      },
+      {
+        id: 'enzyme-inhibition',
+        label: 'Product Inhibition Loop',
+        summary: 'Excess product binds upstream enzymes, slowing the pathway.',
+        restoreRate: 2.6,
+        damping: 1.4,
+        oscillationAmplitude: 5,
+        oscillationSpeed: 1.4,
+        perturbation: { magnitude: 32, direction: 1 },
+        range: { min: -60, max: 120 },
+        setPointLabel: 'Set point = desired product level'
+      }
+    ]
+  },
+  positive: {
+    color: '#ea580c',
+    loopFill: '#fff3e0',
+    description: 'Positive feedback reinforces change until an external stop signal arrives.',
+    centerLabel: 'R',
+    loopMessage: 'Amplifies / Reinforces change',
+    examples: [
+      {
+        id: 'action-potential',
+        label: 'Action Potential Spike',
+        summary: 'Voltage-gated Na⁺ channels drive rapid depolarization once threshold is crossed.',
+        feedbackGain: 1.6,
+        surgeRate: 1.5,
+        relaxRate: 0.6,
+        saturation: 120,
+        threshold: 12,
+        perturbation: { magnitude: 20 },
+        range: { min: 0, max: 130 },
+        setPointLabel: 'Resting potential around -70 mV (shown as 0 on graph)'
+      },
+      {
+        id: 'blood-clotting',
+        label: 'Blood Clotting Cascade',
+        summary: 'Activated platelets trigger more activation until fibrin seals the break.',
+        feedbackGain: 1.3,
+        surgeRate: 1.1,
+        relaxRate: 0.4,
+        saturation: 100,
+        threshold: 8,
+        perturbation: { magnitude: 16 },
+        range: { min: 0, max: 110 },
+        setPointLabel: 'Quiet baseline; cascade races upward when triggered'
+      },
+      {
+        id: 'childbirth',
+        label: 'Childbirth (Oxytocin Loop)',
+        summary: 'Stretch receptors trigger oxytocin release, intensifying contractions.',
+        feedbackGain: 1.25,
+        surgeRate: 1.0,
+        relaxRate: 0.35,
+        saturation: 110,
+        threshold: 6,
+        perturbation: { magnitude: 14 },
+        range: { min: 0, max: 115 },
+        setPointLabel: 'Low baseline until the reinforcing loop activates'
+      }
+    ]
+  }
+};
+
+const nodeDescriptions = {
+  stimulus: 'Stimulus: external change or signal that initiates the loop.',
+  detector: 'Detector / Sensor: tissues that monitor the variable (receptors, endocrine cells).',
+  control: 'Control Center: integrates signals and decides how to respond.',
+  effector: 'Effector / Response: organs or molecules that act to change the stimulus.'
+};
+
+function setup() {
+  updateCanvasSize();
+  syncDrawHeightForCurrentWidth();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  p5Canvas = canvas;
+  const mainEl = document.querySelector('main');
+  if (mainEl) {
+    canvas.parent(mainEl);
+  }
+
+  startButton = createButton('Start Simulation');
+  startButton.mousePressed(toggleSimulation);
+
+  perturbButton = createButton('Apply Perturbation');
+  perturbButton.mousePressed(applyPerturbation);
+
+  resetButton = createButton('Reset System');
+  resetButton.mousePressed(resetSimulation);
+
+  modeButtons.negative = createButton('Negative Feedback Examples');
+  modeButtons.negative.mousePressed(() => setMode('negative'));
+  modeButtons.positive = createButton('Positive Feedback Examples');
+  modeButtons.positive.mousePressed(() => setMode('positive'));
+
+  exampleLabel = createSpan('Example:');
+  exampleLabel.addClass('control-label');
+
+  exampleSelect = createSelect();
+  exampleSelect.changed(handleExampleChange);
+
+  refreshExampleOptions();
+  currentExample = feedbackModes[activeMode].examples[0];
+  infoMessage = feedbackModes[activeMode].description;
+
+  describe('Interactive feedback loop simulator with causal loop diagram and responsive graph for positive and negative homeostasis examples.', LABEL);
+
+  resetSimulation();
+  updateControlPositions();
+}
+
+function draw() {
+  updateCanvasSize();
+  layout = computeLayout();
+
+  background(255);
+  drawBackgroundPanels();
+
+  if (isRunning) {
+    const dt = min(deltaTime / 1000, 0.05);
+    stepSystem(dt);
+    simulationTime += dt;
+    updateHistory();
+  }
+
+  drawTitleBar();
+  drawLoopDiagram();
+  drawGraph();
+  drawControlNotes();
+
+  updateControlPositions();
+}
+
+function drawBackgroundPanels() {
+  noStroke();
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+}
+
+function drawTitleBar() {
+  const area = layout.titleArea;
+  fill('#0f172a');
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(26);
+  text('Feedback Loop Simulator', area.x + area.width / 2, area.y + 11);
+  textSize(16);
+  fill('#475569');
+  text('Compare reinforcing and balancing loops. Apply a perturbation to see the system response.', area.x + area.width / 2, area.y + 39);
+}
+
+function drawLoopDiagram() {
+  const area = layout.diagramArea;
+  const modeData = feedbackModes[activeMode];
+  const centerX = area.x + area.width / 2;
+  const centerY = area.y + area.height / 2 - 10;
+  const radius = min(area.width, area.height) / 2 - 50;
+  const nodeRadius = 36;
+
+  // Panel background
+  stroke('#94a3b8');
+  strokeWeight(1.5);
+  fill(modeData.loopFill);
+  rect(area.x, area.y, area.width, area.height, 16);
+
+  // Loop arrows
+  const angles = [ -HALF_PI, 0, HALF_PI, PI ];
+  const labels = ['Stimulus', 'Detector', 'Control\nCenter', 'Effector'];
+  loopNodes = [];
+  noFill();
+  stroke(modeData.color);
+  strokeWeight(3);
+  for (let i = 0; i < angles.length; i++) {
+    let startAngle = angles[i];
+    let endAngle = angles[(i + 1) % angles.length];
+    if (endAngle <= startAngle) {
+      endAngle += TWO_PI;
+    }
+    arc(centerX, centerY, radius * 2, radius * 2, startAngle, endAngle);
+  }
+
+  // Node circles and labels
+  stroke('#1f2937');
+  strokeWeight(2);
+  fill('#ffffff');
+  for (let i = 0; i < angles.length; i++) {
+    const angle = angles[i];
+    const nodeX = centerX + cos(angle) * radius;
+    const nodeY = centerY + sin(angle) * radius;
+    const normalizedLabel = labels[i].replace(/\s+/g, ' ').trim();
+    const id = normalizedLabel.split(' ')[0].toLowerCase();
+    loopNodes.push({ id, x: nodeX, y: nodeY, r: 36, text: labels[i] });
+    fill(activeNodeId === id ? '#fde68a' : '#ffffff');
+    circle(nodeX, nodeY, nodeRadius * 2);
+    fill('#111827');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(15);
+    text(labels[i], nodeX, nodeY);
+    stroke('#1f2937');
+    noFill();
+  }
+
+  // Direction text
+  noStroke();
+  fill('#475569');
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text(modeData.loopMessage, centerX, area.y + 20);
+
+  // Center badge
+  fill(modeData.color);
+  stroke('#0f172a');
+  strokeWeight(2);
+  circle(centerX, centerY, 90);
+  fill('#ffffff');
+  noStroke();
+  textSize(32);
+  text(modeData.centerLabel, centerX, centerY + 4);
+
+  // Node info text
+  fill('#1f2937');
+  textSize(14);
+  textAlign(LEFT, TOP);
+  const info = activeNodeId ? nodeDescriptions[activeNodeId] : currentExample.summary;
+  text(info, area.x + 16, area.y + area.height - 45, area.width - 32, 60);
+
+  // Arrowheads showing flow direction
+  noStroke();
+  for (let i = 0; i < loopNodes.length; i++) {
+    const current = loopNodes[i];
+    const prev = loopNodes[(i - 1 + loopNodes.length) % loopNodes.length];
+    const currAngleRaw = angles[i];
+    const radial = createVector(cos(currAngleRaw), sin(currAngleRaw));
+    const tangentCW = createVector(radial.y, -radial.x).normalize();
+    const tangentCCW = createVector(-radial.y, radial.x).normalize();
+    let prevVec = createVector(current.x - prev.x, current.y - prev.y);
+    if (prevVec.magSq() === 0) {
+      prevVec = tangentCW.copy();
+    } else {
+      prevVec.normalize();
+    }
+    const tangent =
+      tangentCW.dot(prevVec) > tangentCCW.dot(prevVec) ? tangentCW : tangentCCW;
+    const rotated = rotateVector(tangent, radians(-10));
+    const tipX = current.x - rotated.x * nodeRadius;
+    const tipY = current.y - rotated.y * nodeRadius;
+    drawArrowHead(tipX, tipY, rotated.x, rotated.y, 14, modeData.color);
+  }
+}
+
+function drawGraph() {
+  const area = layout.graphArea;
+  stroke('#94a3b8');
+  strokeWeight(1.5);
+  fill('#f8fafc');
+  rect(area.x, area.y, area.width, area.height, 16);
+
+  const inner = layout.graphInner;
+  const modeData = feedbackModes[activeMode];
+  const range = currentExample.range;
+  const setPointY = mapValue(0, range.min, range.max, inner.bottom, inner.top);
+
+  stroke('#94a3b8');
+  strokeWeight(1);
+  drawDashedLine(inner.left, setPointY, inner.right, setPointY, 8);
+  noStroke();
+  fill('#475569');
+  textAlign(RIGHT, BOTTOM);
+  textSize(12);
+  text(currentExample.setPointLabel || 'Set point', inner.right, setPointY - 6);
+
+  // Axes
+  stroke('#0f172a');
+  strokeWeight(1.2);
+  line(inner.left, inner.top, inner.left, inner.bottom);
+  line(inner.left, inner.bottom, inner.right, inner.bottom);
+
+  // Plot history
+  const windowStart = max(0, simulationTime - historyWindow);
+  const windowEnd = windowStart + historyWindow;
+  const actualEnd = simulationTime;
+  noFill();
+  stroke(modeData.color);
+  strokeWeight(2.5);
+  beginShape();
+  graphHistory.forEach((point) => {
+    if (point.time >= windowStart) {
+      const ratio = (point.time - windowStart) / historyWindow;
+      const x = inner.left + constrain(ratio, 0, 1) * (inner.right - inner.left);
+      const y = mapValue(point.value, range.min, range.max, inner.bottom, inner.top);
+      vertex(x, y);
+    }
+  });
+  endShape();
+
+  // Perturbation marker
+  if (perturbationTime !== null && perturbationTime >= windowStart) {
+    const ratio = (perturbationTime - windowStart) / historyWindow;
+    const markerX = inner.left + constrain(ratio, 0, 1) * (inner.right - inner.left);
+    stroke('#dc2626');
+    strokeWeight(1.2);
+    drawDashedLine(markerX, inner.top, markerX, inner.bottom, 6);
+    noStroke();
+    fill('#dc2626');
+    textAlign(CENTER, TOP);
+    text('Perturbation', markerX, inner.top - 18);
+  }
+
+  drawGraphTicks(inner, range, windowStart, windowEnd);
+  drawHoverState(inner, range, windowStart, windowEnd, actualEnd);
+
+  noStroke();
+  fill('#1f2937');
+  textAlign(CENTER, TOP);
+  textSize(13);
+  text('time', (inner.left + inner.right) / 2, inner.bottom + 20);
+
+  // Example description card
+  noStroke();
+  fill('#0f172a');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text(currentExample.label, inner.left, inner.top - 51);
+  fill('#475569');
+  textSize(13);
+  text(currentExample.summary, inner.left, inner.top - 33, inner.width, 34);
+
+  push();
+  translate(inner.left - 26, (inner.top + inner.bottom) / 2);
+  rotate(-HALF_PI);
+  textAlign(CENTER, CENTER);
+  textSize(13);
+  fill('#1f2937');
+  text('response level', 0, 0);
+  pop();
+}
+
+function drawGraphTicks(inner, range, windowStart, windowEnd) {
+  stroke('#94a3b8');
+  strokeWeight(1);
+  textSize(11);
+  fill('#475569');
+  noFill();
+
+  // Y ticks
+  const steps = 4;
+  for (let i = 0; i <= steps; i++) {
+    const value = lerp(range.min, range.max, i / steps);
+    const y = mapValue(value, range.min, range.max, inner.bottom, inner.top);
+    line(inner.left - 6, y, inner.left, y);
+    noStroke();
+    textAlign(RIGHT, CENTER);
+    text(value.toFixed(0), inner.left - 10, y);
+    stroke('#94a3b8');
+  }
+
+  // X ticks
+  const tickCount = 6;
+  for (let i = 0; i <= tickCount; i++) {
+    const t = windowStart + (historyWindow * (i / tickCount));
+    const x = inner.left + (i / tickCount) * (inner.right - inner.left);
+    line(x, inner.bottom, x, inner.bottom + 6);
+    noStroke();
+    textAlign(CENTER, TOP);
+    text((t - windowStart).toFixed(0) + ' s', x, inner.bottom + 8);
+    stroke('#94a3b8');
+  }
+}
+
+function drawHoverState(inner, range, windowStart, windowEnd, actualEnd) {
+  hoverPoint = null;
+  if (
+    mouseX >= inner.left &&
+    mouseX <= inner.right &&
+    mouseY >= inner.top &&
+    mouseY <= inner.bottom
+  ) {
+    const ratio = constrain((mouseX - inner.left) / (inner.right - inner.left), 0, 1);
+    const timeAtCursor = windowStart + ratio * historyWindow;
+    let nearest = null;
+    let minDiff = Infinity;
+    graphHistory.forEach((point) => {
+      if (point.time >= windowStart && point.time <= actualEnd) {
+        const diff = abs(point.time - timeAtCursor);
+        if (diff < minDiff) {
+          minDiff = diff;
+          nearest = point;
+        }
+      }
+    });
+    if (nearest) {
+      const ratioNearest = (nearest.time - windowStart) / historyWindow;
+      const x = inner.left + constrain(ratioNearest, 0, 1) * (inner.right - inner.left);
+      const y = mapValue(nearest.value, range.min, range.max, inner.bottom, inner.top);
+      hoverPoint = { x, y, value: nearest.value, elapsed: nearest.time - windowStart };
+      fill('#ffffff');
+      stroke('#0f172a');
+      strokeWeight(1);
+      circle(x, y, 10);
+      noStroke();
+      fill('#111827');
+      textAlign(LEFT, BOTTOM);
+      const label = `t = ${hoverPoint.elapsed.toFixed(1)} s, Δ = ${hoverPoint.value.toFixed(1)}`;
+      text(label, x + 10, y - 6);
+    }
+  }
+}
+
+function drawControlNotes() {
+  const area = layout.controlArea;
+  noStroke();
+  fill('#1f2937');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('Instruction', area.x + 10, area.y + 6);
+  fill('#475569');
+  text(
+    infoMessage,
+    area.x + 10,
+    area.y + 26,
+    area.width - 20,
+    56
+  );
+
+  noStroke();
+  fill('#1f2937');
+  textAlign(RIGHT, TOP);
+  text('Hover over the graph for state details. Click nodes to read their role.', area.x + area.width - 10, area.y + 6);
+}
+
+function stepSystem(dt) {
+  if (activeMode === 'negative') {
+    stepNegative(dt);
+  } else {
+    stepPositive(dt);
+  }
+  state.externalForce = lerp(state.externalForce, 0, 0.15);
+  state.level += state.externalForce * dt * 60;
+  const range = currentExample.range;
+  state.level = constrain(state.level, range.min, range.max);
+}
+
+function stepNegative(dt) {
+  const example = currentExample;
+  const error = 0 - state.level;
+  const accel = example.restoreRate * error;
+  state.velocity += accel * dt;
+  state.velocity -= example.damping * state.velocity * dt;
+  const oscillation = sin(simulationTime * example.oscillationSpeed) * example.oscillationAmplitude * dt;
+  state.level += (state.velocity * dt * 60) + oscillation;
+}
+
+function stepPositive(dt) {
+  const example = currentExample;
+  const gain = example.feedbackGain;
+  const surge = example.surgeRate;
+  const reinforcement = max(0, state.level - example.threshold) * gain;
+  const basePush = state.triggered ? surge + reinforcement : -example.relaxRate * 8;
+  state.velocity += basePush * dt;
+  state.level += state.velocity * dt * 20;
+  if (!state.triggered) {
+    state.level = max(0, state.level);
+  }
+  if (state.level >= example.saturation) {
+    state.level = example.saturation - 2 + sin(simulationTime * 3) * 2;
+    state.velocity *= 0.35;
+  }
+}
+
+function updateHistory() {
+  graphHistory.push({ time: simulationTime, value: state.level });
+  const startTime = max(0, simulationTime - historyWindow);
+  while (graphHistory.length && graphHistory[0].time < startTime - 1) {
+    graphHistory.shift();
+  }
+}
+
+function applyPerturbation() {
+  if (!currentExample) return;
+  const example = currentExample;
+  if (activeMode === 'negative') {
+    const dir = example.perturbation.direction;
+    const magnitude = example.perturbation.magnitude;
+    state.level += dir * magnitude;
+    state.velocity += dir * magnitude * 0.05;
+    state.externalForce += dir * magnitude * 0.4;
+  } else {
+    const magnitude = example.perturbation.magnitude;
+    state.level += magnitude;
+    state.velocity += magnitude * 0.15;
+    state.triggered = true;
+  }
+  perturbationTime = simulationTime;
+  infoMessage = `Perturbation applied to ${example.label}. Observe the ${activeMode === 'negative' ? 'return toward set point.' : 'runaway reinforcement.'}`;
+  if (!isRunning) {
+    graphHistory.push({ time: simulationTime, value: state.level });
+  }
+}
+
+function resetSimulation() {
+  simulationTime = 0;
+  state = { level: 0, velocity: 0, externalForce: 0, triggered: false };
+  perturbationTime = null;
+  graphHistory = [{ time: 0, value: 0 }];
+  isRunning = false;
+  infoMessage = feedbackModes[activeMode].description;
+  activeNodeId = null;
+  updateStartButtonLabel();
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  updateStartButtonLabel();
+}
+
+function updateStartButtonLabel() {
+  if (!startButton) return;
+  startButton.html(isRunning ? 'Pause Simulation' : 'Start Simulation');
+}
+
+function setMode(mode) {
+  if (mode === activeMode) return;
+  activeMode = mode;
+  refreshExampleOptions();
+  currentExample = feedbackModes[activeMode].examples[0];
+  infoMessage = feedbackModes[activeMode].description;
+  resetSimulation();
+  updateModeButtonStyles();
+}
+
+function refreshExampleOptions() {
+  if (!exampleSelect) return;
+  exampleSelect.elt.innerHTML = '';
+  const examples = feedbackModes[activeMode].examples;
+  examples.forEach((example) => {
+    exampleSelect.option(example.label, example.id);
+  });
+  const savedId = selectedExampleByMode[activeMode] || examples[0].id;
+  exampleSelect.selected(savedId);
+  handleExampleChange();
+  updateModeButtonStyles();
+}
+
+function handleExampleChange() {
+  if (!exampleSelect) return;
+  const selectedId = exampleSelect.value();
+  selectedExampleByMode[activeMode] = selectedId;
+  currentExample =
+    feedbackModes[activeMode].examples.find((ex) => ex.id === selectedId) ||
+    feedbackModes[activeMode].examples[0];
+  infoMessage = currentExample.summary;
+  resetSimulation();
+}
+
+function updateModeButtonStyles() {
+  Object.entries(modeButtons).forEach(([key, btn]) => {
+    if (!btn) return;
+    btn.removeClass('active-mode');
+    btn.style('border', '1px solid #888');
+    btn.style('border-width', '1px');
+    if (key === activeMode) {
+      btn.addClass('active-mode');
+      btn.style('border', '3px solid #111');
+    }
+  });
+}
+
+function computeLayout() {
+  const titleArea = { x: margin, y: margin, width: canvasWidth - margin * 2, height: 70 };
+  const topY = margin + 70;
+  const controlArea = {
+    x: margin,
+    y: drawHeight + 10,
+    width: canvasWidth - margin * 2,
+    height: controlHeight - 20
+  };
+
+  const availableWidth = max(0, canvasWidth - margin * 2);
+  const squareSize = max(0, (availableWidth - margin) / 2);
+  const maxPanelHeight = inIframe ? (drawHeight - topY - margin) : squareSize + 70;
+  const squareHeight = min(squareSize + 70, maxPanelHeight);
+  enforceDrawHeight(topY + squareHeight + margin);
+  const usedWidth = squareSize * 2 + margin;
+  const horizontalPadding = max(0, (availableWidth - usedWidth) / 2);
+  const startX = margin + horizontalPadding;
+
+  const diagramArea = {
+    x: startX,
+    y: topY,
+    width: squareSize,
+    height: squareHeight
+  };
+  const graphArea = {
+    x: diagramArea.x + diagramArea.width + margin,
+    y: diagramArea.y,
+    width: squareSize,
+    height: squareHeight
+  };
+
+  const graphInner = buildGraphInner(graphArea);
+  return { titleArea, diagramArea, graphArea, controlArea, graphInner, layout: 'horizontal' };
+}
+
+function syncDrawHeightForCurrentWidth() {
+  const availableWidth = max(0, canvasWidth - margin * 2);
+  const squareSize = max(0, (availableWidth - margin) / 2);
+  const squareHeight = squareSize + 70;
+  const topY = margin + 70;
+  enforceDrawHeight(topY + squareHeight + margin);
+}
+
+function enforceDrawHeight(requiredDrawHeight) {
+  if (inIframe) return;  // fixed height inside iframe, responsive in fullscreen
+  const target = max(minDrawHeight, requiredDrawHeight);
+  if (abs(target - drawHeight) > 0.5) {
+    drawHeight = target;
+    canvasHeight = drawHeight + controlHeight;
+    if (p5Canvas) {
+      resizeCanvas(canvasWidth, canvasHeight);
+    }
+  }
+}
+
+function buildGraphInner(area) {
+  const paddingX = min(40, area.width * 0.2);
+  const paddingY = min(40, area.height * 0.2);
+  const graphInner = {
+    left: area.x + paddingX,
+    right: area.x + area.width - paddingX,
+    top: area.y + paddingY + 20,
+    bottom: area.y + area.height - paddingY
+  };
+  graphInner.width = graphInner.right - graphInner.left;
+  graphInner.height = graphInner.bottom - graphInner.top;
+  return graphInner;
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (!container) return;
+  const bounds = container.getBoundingClientRect();
+  const newWidth = Math.floor(bounds.width);
+  if (newWidth !== canvasWidth) {
+    canvasWidth = newWidth;
+    syncDrawHeightForCurrentWidth();
+    if (p5Canvas) {
+      resizeCanvas(canvasWidth, canvasHeight);
+    }
+  } else {
+    canvasWidth = newWidth;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  updateControlPositions();
+}
+
+// Positions controls responsively based on canvas size and layout.
+function updateControlPositions() {
+  if (!layout) return;
+  const controlArea = layout.controlArea;
+  const exampleRowY = controlArea.y + 100;
+  // the width of the "Example:" label
+  const labelWidth = 65;
+  const labelX = controlArea.x - 10;
+  // this is just the "Example:" label and is always in a fixed position to the left of the select dropdown
+  // Since the height is fixed - it is totally statically positions for all canvas widths.
+  exampleLabel.position(labelX, exampleRowY);
+  // Next we place the dropdown selection list to the right of the label.
+  // It also has a totally fixed width
+  const selectX = labelX + labelWidth + 10;
+  exampleSelect.position(selectX, exampleRowY - 4);
+  exampleSelect.size(220, 30);
+
+  // now we position the positive and negative radio-like buttons.
+  const toggleRowY = 62;
+  const toggleGap = 12;
+  // width of the toggle buttons - just large enough to fit the words
+  const toggleWidth = 200;
+
+  // side by side buttons for the feedback mode
+  // here 330 is the x position of the left edge of the first button
+  modeButtons.negative.position(10, drawHeight + toggleRowY);
+  modeButtons.positive.position(10 + toggleWidth + 20, drawHeight + toggleRowY);
+
+  modeButtons.negative.size(toggleWidth, 34);
+  modeButtons.positive.size(toggleWidth - 10, 34);
+
+  // place below the Example selector, with some gap, and aligned to the left edge of the graph.
+  const actionRowY = 150;
+
+  // the "Start Simulation", "Apply Perturbation", and "Reset System" buttons are all in a row below the mode toggles, aligned to the left edge of the graph.
+  startButton.position(10, drawHeight + actionRowY);
+  startButton.size(130, 34);
+
+  // Apply Perturbation button is to the right of the Start button, with a small gap
+  perturbButton.position(150, drawHeight + actionRowY);
+  perturbButton.size(140, 34);
+
+  resetButton.position(310, drawHeight + actionRowY);
+  resetButton.size(120, 34);
+
+
+}
+
+function mapValue(value, minValue, maxValue, minPixel, maxPixel) {
+  return map(value, minValue, maxValue, minPixel, maxPixel, true);
+}
+
+function drawDashedLine(x1, y1, x2, y2, dashLength) {
+  const segments = dist(x1, y1, x2, y2) / dashLength;
+  for (let i = 0; i < segments; i += 2) {
+    const start = lerpPoint(x1, y1, x2, y2, i / segments);
+    const end = lerpPoint(x1, y1, x2, y2, min((i + 1) / segments, 1));
+    line(start.x, start.y, end.x, end.y);
+  }
+}
+
+function lerpPoint(x1, y1, x2, y2, t) {
+  return { x: lerp(x1, x2, t), y: lerp(y1, y2, t) };
+}
+
+function drawArrowHead(tipX, tipY, dirX, dirY, size, colorValue) {
+  push();
+  translate(tipX, tipY);
+  const angle = atan2(dirY, dirX);
+  rotate(angle);
+  noStroke();
+  fill(colorValue);
+  triangle(0, 0, -size, size * 0.5, -size, -size * 0.5);
+  pop();
+}
+
+function rotateVector(vector, rotationAngle) {
+  const cosA = cos(rotationAngle);
+  const sinA = sin(rotationAngle);
+  return createVector(vector.x * cosA - vector.y * sinA, vector.x * sinA + vector.y * cosA);
+}
+
+function mousePressed() {
+  if (!loopNodes || mouseY > drawHeight) return;
+  for (const node of loopNodes) {
+    if (dist(mouseX, mouseY, node.x, node.y) <= node.r) {
+      activeNodeId = node.id;
+      infoMessage = nodeDescriptions[node.id];
+      break;
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

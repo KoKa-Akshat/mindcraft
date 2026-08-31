@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Calibration Measurement Sim</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f8f9fa; }
+        main { display: block; width: 100%; }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>// Calibration Measurement Sim — read a simulated caliper, calculate dimensional error
+// CANVAS_HEIGHT: 580
+// Bloom L3: apply caliper measurement to calculate error and correction factor
+
+let containerWidth;
+let canvasWidth  = 700;
+let canvasHeight = 580;
+
+let selectedFace = 0;    // 0=X, 1=Y, 2=Z
+let scenarioIdx  = 0;    // 0=Good, 1=Under-extrusion, 2=Z issue
+let userValues   = [null, null, null];
+let showCorrection = false;
+
+const DESIGNED = 20.00;
+const TOLERANCE = 0.30;
+
+const SCENARIOS = [
+  { name: 'Good Printer',      vals: [19.97, 20.01, 19.95], desc: 'All dimensions within tolerance — printer is well-calibrated.' },
+  { name: 'Under-Extrusion',   vals: [19.72, 19.74, 19.80], desc: 'Consistent undersizing on all axes — likely an E-step or flow-rate issue.' },
+  { name: 'Z-Axis Problem',    vals: [19.98, 19.97, 19.60], desc: 'X and Y are fine; Z is significantly undersized — Z-axis calibration or leadscrew issue.' },
+];
+
+const FACES   = ['X', 'Y', 'Z'];
+const FACE_COLS = [
+  [60, 140, 220],   // X: blue
+  [220, 130, 40],   // Y: amber
+  [50, 180, 90],    // Z: green
+];
+
+// Isometric cube geometry constants
+const ISO_SCALE = 0.7;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  describe('Calibration Measurement Sim — click a cube face, read the caliper, enter the value', LABEL);
+  textFont('sans-serif');
+}
+
+function draw() {
+  updateCanvasSize();
+  background(238, 244, 252);
+
+  noStroke(); fill(18, 48, 110);
+  textAlign(CENTER, TOP); textSize(17); textStyle(BOLD);
+  text('Calibration Cube Measurement Sim', canvasWidth / 2, 6);
+  textStyle(NORMAL);
+
+  drawScenarioButtons();
+  drawCubePanel();
+  drawCaliperPanel();
+  drawDataTable();
+  if (showCorrection) drawCorrectionPanel();
+}
+
+function drawScenarioButtons() {
+  let by = 34, bh = 22;
+  SCENARIOS.forEach((s, i) => {
+    let bw = min(150, (canvasWidth - 20) / 3) - 4;
+    let bx = 10 + i * (bw + 4);
+    let active = scenarioIdx === i;
+    fill(active ? color(30, 90, 210) : color(215, 225, 248));
+    stroke(active ? color(15, 60, 165) : color(155, 170, 210));
+    strokeWeight(1); rect(bx, by, bw, bh, 3);
+    noStroke(); fill(active ? 255 : 50); textAlign(CENTER, CENTER); textSize(10.5);
+    text(s.name, bx + bw / 2, by + bh / 2);
+  });
+}
+
+function getCubeArea() {
+  let pw = floor(canvasWidth * 0.34);
+  return { x: 4, y: 62, w: pw, h: canvasHeight - 68 };
+}
+
+function getCaliperArea() {
+  let cubeW = floor(canvasWidth * 0.34);
+  let tableW = floor(canvasWidth * 0.30);
+  let cw = canvasWidth - cubeW - tableW - 16;
+  return { x: cubeW + 10, y: 62, w: cw, h: canvasHeight - 68 };
+}
+
+function getTableArea() {
+  let tableW = floor(canvasWidth * 0.30);
+  return { x: canvasWidth - tableW - 4, y: 62, w: tableW, h: canvasHeight - 68 };
+}
+
+function drawCubePanel() {
+  let { x, y, w, h } = getCubeArea();
+  fill(252, 253, 255); stroke(195, 210, 230); strokeWeight(1);
+  rect(x, y, w, h, 5);
+
+  noStroke(); fill(50); textAlign(CENTER, TOP); textSize(11); textStyle(BOLD);
+  text('Calibration Cube', x + w / 2, y + 6);
+  textStyle(NORMAL); textSize(9.5); fill(80);
+  text('Click a face to measure', x + w / 2, y + 20);
+
+  let cx = x + w / 2, cy = y + h * 0.5 + 10;
+  let scale = min(w, h) * 0.28 * ISO_SCALE;
+  drawIsoCube(cx, cy, scale);
+}
+
+function drawIsoCube(cx, cy, s) {
+  // Isometric cube: 3 visible faces (top, right, left)
+  // Top face
+  let topPts = [
+    [cx, cy - s],
+    [cx + s * 0.866, cy - s * 0.5],
+    [cx, cy],
+    [cx - s * 0.866, cy - s * 0.5],
+  ];
+  // Right face (X)
+  let rightPts = [
+    [cx + s * 0.866, cy - s * 0.5],
+    [cx + s * 0.866, cy + s * 0.5],
+    [cx, cy + s],
+    [cx, cy],
+  ];
+  // Left face (Y)
+  let leftPts = [
+    [cx, cy],
+    [cx, cy + s],
+    [cx - s * 0.866, cy + s * 0.5],
+    [cx - s * 0.866, cy - s * 0.5],
+  ];
+
+  // Draw faces — highlight selected
+  let faces = [
+    { pts: rightPts, axis: 0, label: 'X', labelPos: [cx + s * 0.866 * 0.5 + s * 0.15, cy + s * 0.2] },
+    { pts: leftPts,  axis: 1, label: 'Y', labelPos: [cx - s * 0.866 * 0.5 - s * 0.15, cy + s * 0.2] },
+    { pts: topPts,   axis: 2, label: 'Z', labelPos: [cx, cy - s * 0.6] },
+  ];
+
+  faces.forEach(face => {
+    let isSel = selectedFace === face.axis;
+    let fc = FACE_COLS[face.axis];
+    fill(fc[0], fc[1], fc[2], isSel ? 200 : 100);
+    stroke(fc[0] * 0.7, fc[1] * 0.7, fc[2] * 0.7); strokeWeight(isSel ? 2.5 : 1.5);
+    beginShape();
+    face.pts.forEach(p => vertex(p[0], p[1]));
+    endShape(CLOSE);
+
+    noStroke(); fill(255, 255, 255, isSel ? 220 : 160);
+    textAlign(CENTER, CENTER); textSize(isSel ? 16 : 14); textStyle(BOLD);
+    text(face.label, face.labelPos[0], face.labelPos[1]);
+    textStyle(NORMAL);
+  });
+
+  // Dimension arrows
+  let dimVals = SCENARIOS[scenarioIdx].vals;
+  let arrowCol = [60, 60, 80];
+  drawDimArrow(cx + s * 0.866 + 8, cy - s * 0.5, cx + s * 0.866 + 8, cy + s * 0.5,
+    'X: ' + nf(dimVals[0], 2, 2) + ' mm', [90, 140, 220], selectedFace === 0);
+  drawDimArrow(cx - s * 0.866 - 8, cy - s * 0.5, cx - s * 0.866 - 8, cy + s * 0.5,
+    'Y: ' + nf(dimVals[1], 2, 2) + ' mm', [220, 140, 40], selectedFace === 1);
+  drawDimArrow(cx - s * 0.866 - 2, cy - s - 6, cx + s * 0.866 + 2, cy - s - 6,
+    'Z height', [50, 180, 90], selectedFace === 2);
+}
+
+function drawDimArrow(x1, y1, x2, y2, lbl, col, highlight) {
+  stroke(col[0], col[1], col[2], highlight ? 240 : 130); strokeWeight(highlight ? 1.5 : 1); noFill();
+  line(x1, y1, x2, y2);
+  // Arrowheads
+  let ang = atan2(y2 - y1, x2 - x1);
+  fill(col[0], col[1], col[2], highlight ? 240 : 130); noStroke();
+  triangle(x1, y1, x1 + cos(ang + 2.5) * 6, y1 + sin(ang + 2.5) * 6, x1 + cos(ang - 2.5) * 6, y1 + sin(ang - 2.5) * 6);
+  triangle(x2, y2, x2 - cos(ang + 2.5) * 6, y2 - sin(ang + 2.5) * 6, x2 - cos(ang - 2.5) * 6, y2 - sin(ang - 2.5) * 6);
+  fill(col[0], col[1], col[2], highlight ? 240 : 100);
+  textAlign(CENTER, CENTER); textSize(highlight ? 9 : 8); textStyle(highlight ? BOLD : NORMAL);
+  let mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+  text(lbl, mx + (y1 !== y2 ? -18 : 0), my + (y1 !== y2 ? 0 : -10));
+  textStyle(NORMAL);
+}
+
+function drawCaliperPanel() {
+  let { x, y, w, h } = getCaliperArea();
+  fill(248, 252, 255); stroke(195, 210, 230); strokeWeight(1);
+  rect(x, y, w, h, 5);
+
+  noStroke(); fill(50); textAlign(CENTER, TOP); textSize(11); textStyle(BOLD);
+  text('Digital Caliper', x + w / 2, y + 6);
+  textStyle(NORMAL);
+
+  let measVal = SCENARIOS[scenarioIdx].vals[selectedFace];
+  let fc = FACE_COLS[selectedFace];
+
+  // Caliper body
+  let csy = y + 32, csh = h - 44;
+  let caliperW = w - 16, caliperX = x + 8;
+
+  // Scale bar
+  fill(200, 205, 215); stroke(160, 165, 175); strokeWeight(1);
+  rect(caliperX, csy, caliperW, csh * 0.15, 2);
+  // Tick marks
+  let nTicks = 40;
+  stroke(80); strokeWeight(0.5);
+  for (let i = 0; i <= nTicks; i++) {
+    let tx = caliperX + (i / nTicks) * caliperW;
+    let tLen = (i % 5 === 0) ? csh * 0.05 : csh * 0.03;
+    line(tx, csy, tx, csy + tLen);
+  }
+
+  // Fixed jaw (left)
+  fill(160, 165, 175); noStroke();
+  rect(caliperX, csy, 14, csh * 0.52, 2);
+
+  // Moving jaw position (based on measured value: ~20mm → right side)
+  let jawFrac = (measVal - 15) / 10;   // 15–25 mm range
+  let jawX = caliperX + jawFrac * caliperW;
+  fill(150, 155, 165); noStroke();
+  rect(jawX, csy, 14, csh * 0.52, 2);
+
+  // Gap between jaws (the "part")
+  fill(fc[0], fc[1], fc[2], 80);
+  rect(caliperX + 14, csy + csh * 0.1, jawX - caliperX - 14, csh * 0.32, 1);
+
+  // LCD display
+  let lcdX = caliperX + caliperW * 0.1, lcdY = csy + csh * 0.56;
+  let lcdW = caliperW * 0.8, lcdH = csh * 0.22;
+  fill(140, 180, 140); stroke(80); strokeWeight(1);
+  rect(lcdX, lcdY, lcdW, lcdH, 4);
+  // Display text
+  noStroke(); fill(15, 50, 15); textAlign(CENTER, CENTER);
+  textSize(min(lcdH * 0.55, 24)); textStyle(BOLD);
+  text(nf(measVal, 2, 2) + ' mm', lcdX + lcdW / 2, lcdY + lcdH / 2);
+  textStyle(NORMAL);
+
+  // Zero/mm label
+  fill(80); textAlign(CENTER, TOP); textSize(9);
+  text('mm', lcdX + lcdW * 0.85, lcdY + lcdH + 3);
+
+  // Axis label
+  fill(fc[0], fc[1], fc[2]); textAlign(CENTER, BOTTOM); textSize(13); textStyle(BOLD);
+  text('Measuring: ' + FACES[selectedFace] + ' axis', x + w / 2, csy - 4);
+  textStyle(NORMAL);
+
+  // Dimension bracket
+  stroke(fc[0], fc[1], fc[2]); strokeWeight(1.5); noFill();
+  let bry = csy + csh * 0.52 + 4;
+  line(caliperX + 14, bry, jawX, bry);
+  line(caliperX + 14, bry - 4, caliperX + 14, bry + 4);
+  line(jawX, bry - 4, jawX, bry + 4);
+  noStroke(); fill(fc[0], fc[1], fc[2]); textAlign(CENTER, TOP); textSize(9.5);
+  text(nf(measVal, 2, 2) + ' mm', (caliperX + 14 + jawX) / 2, bry + 3);
+}
+
+function drawDataTable() {
+  let { x, y, w, h } = getTableArea();
+  fill(252, 252, 255); stroke(195, 210, 230); strokeWeight(1);
+  rect(x, y, w, h, 5);
+
+  noStroke(); fill(50); textAlign(CENTER, TOP); textSize(11); textStyle(BOLD);
+  text('Measurement Table', x + w / 2, y + 6);
+  textStyle(NORMAL);
+
+  let rowH = 26, startY = y + 28;
+  let headers = ['Axis', 'Designed', 'Measured', 'Error', 'Status'];
+  let colWidths = [w * 0.12, w * 0.20, w * 0.22, w * 0.22, w * 0.22];
+  let colXs = [x + 4];
+  for (let i = 1; i < colWidths.length; i++) colXs.push(colXs[i - 1] + colWidths[i - 1]);
+
+  // Header
+  fill(50, 80, 140); noStroke(); rect(x + 2, startY, w - 4, rowH, 3, 3, 0, 0);
+  fill(255); textAlign(CENTER, CENTER); textSize(9);
+  headers.forEach((h2, i) => text(h2, colXs[i] + colWidths[i] / 2, startY + rowH / 2));
+
+  FACES.forEach((face, fi) => {
+    let ry = startY + rowH + fi * rowH;
+    fill(fi % 2 === 0 ? color(245, 248, 255) : color(252, 252, 255)); noStroke();
+    rect(x + 2, ry, w - 4, rowH);
+
+    let measured = SCENARIOS[scenarioIdx].vals[fi];
+    let error    = measured - DESIGNED;
+    let pass     = abs(error) <= TOLERANCE;
+    let fc       = FACE_COLS[fi];
+    let isSel    = selectedFace === fi;
+
+    if (isSel) {
+      fill(fc[0], fc[1], fc[2], 30); noStroke();
+      rect(x + 2, ry, w - 4, rowH);
+      stroke(fc[0], fc[1], fc[2], 180); strokeWeight(1.5); noFill();
+      rect(x + 2, ry, w - 4, rowH);
+    }
+
+    noStroke();
+    let vals2 = [face, nf(DESIGNED, 2, 2), nf(measured, 2, 2), (error >= 0 ? '+' : '') + nf(error, 1, 2), pass ? '✓ Pass' : '✗ Fail'];
+    let textCols = [fc, [80, 80, 80], [40, 40, 40], error > 0 ? [40, 120, 40] : [160, 40, 40], pass ? [40, 160, 60] : [190, 40, 40]];
+
+    vals2.forEach((v, vi) => {
+      fill(textCols[vi][0], textCols[vi][1], textCols[vi][2]);
+      textAlign(CENTER, CENTER); textSize(vi === 0 ? 11 : 9.5);
+      textStyle(vi === 0 ? BOLD : (vi === 4 ? BOLD : NORMAL));
+      text(v, colXs[vi] + colWidths[vi] / 2, ry + rowH / 2);
+      textStyle(NORMAL);
+    });
+  });
+
+  // Summary row
+  let sy = startY + rowH * 4;
+  let scen = SCENARIOS[scenarioIdx];
+  noStroke(); fill(230, 236, 252);
+  rect(x + 2, sy, w - 4, 36, 0, 0, 3, 3);
+  fill(40); textAlign(LEFT, TOP); textSize(9); textStyle(ITALIC);
+  text(scen.desc, x + 6, sy + 3, w - 10);
+  textStyle(NORMAL);
+
+  // E-step correction button
+  let bby = sy + 42;
+  if (bby + 28 < y + h) {
+    let allUnder = SCENARIOS[scenarioIdx].vals.every(v => v < DESIGNED - 0.1);
+    fill(showCorrection ? color(20,80,200) : color(220,230,250));
+    stroke(showCorrection ? color(10,50,150) : color(155,170,210));
+    strokeWeight(1); rect(x + 6, bby, w - 12, 26, 3);
+    noStroke(); fill(showCorrection ? 255 : 50); textAlign(CENTER, CENTER); textSize(10);
+    text('⚙ E-Step Correction', x + w / 2, bby + 13);
+  }
+}
+
+function drawCorrectionPanel() {
+  let { x, y, w, h } = getCubeArea();
+  let scen = SCENARIOS[scenarioIdx];
+  let avgMeas = scen.vals.reduce((a, b) => a + b, 0) / 3;
+  let correction = DESIGNED / avgMeas;
+
+  let px = x + 4, py = y + h * 0.55, pw = canvasWidth - x - 12, ph = canvasHeight - py - 8;
+  fill(250, 255, 248); stroke(80, 160, 80); strokeWeight(1.5);
+  rect(px, py, pw, ph, 5);
+
+  noStroke(); fill(30, 100, 30); textAlign(LEFT, TOP); textSize(11); textStyle(BOLD);
+  text('E-Step Correction Formula', px + 8, py + 5);
+  textStyle(NORMAL);
+
+  fill(40); textSize(10); textAlign(LEFT, TOP);
+  text('New steps/mm = Current steps/mm × (Designed / Measured)', px + 8, py + 22, pw - 14);
+  text('= Current × (' + nf(DESIGNED, 2, 2) + ' / ' + nf(avgMeas, 2, 2) + ') = Current × ' + nf(correction, 1, 4), px + 8, py + 38, pw - 14);
+
+  if (abs(correction - 1.0) < 0.005) {
+    fill(40, 160, 60); textStyle(BOLD);
+    text('✓ Correction factor ≈ 1.0 — printer is well-calibrated', px + 8, py + 56);
+  } else {
+    fill(160, 80, 20); textStyle(BOLD);
+    text('Apply factor ' + nf(correction, 1, 4) + ' to extruder steps in firmware', px + 8, py + 56, pw - 14);
+  }
+  textStyle(NORMAL);
+}
+
+function mousePressed() {
+  // Scenario buttons
+  let by = 34, bh = 22;
+  SCENARIOS.forEach((s, i) => {
+    let bw = min(150, (canvasWidth - 20) / 3) - 4;
+    let bx = 10 + i * (bw + 4);
+    if (mouseX >= bx && mouseX <= bx + bw && mouseY >= by && mouseY <= by + bh) {
+      scenarioIdx = i; userValues = [null, null, null]; showCorrection = false;
+    }
+  });
+
+  // Cube face clicks
+  let { x, y, w, h } = getCubeArea();
+  let cx2 = x + w / 2, cy2 = y + h * 0.5 + 10;
+  let s2 = min(w, h) * 0.28 * ISO_SCALE;
+  let faceBounds = [
+    { axis: 0, check: (mx, my) => mx > cx2 && my > cy2 - s2 * 0.5 },  // X: right face
+    { axis: 1, check: (mx, my) => mx < cx2 && my > cy2 - s2 * 0.5 },  // Y: left face
+    { axis: 2, check: (mx, my) => my < cy2 - s2 * 0.2 },              // Z: top face
+  ];
+  if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h) {
+    faceBounds.forEach(fb => { if (fb.check(mouseX, mouseY)) selectedFace = fb.axis; });
+  }
+
+  // E-step correction button
+  let ta = getTableArea();
+  let sy2 = ta.y + 28 + 26 + FACES.length * 26 + 42;
+  if (mouseX >= ta.x + 6 && mouseX <= ta.x + ta.w - 6 && mouseY >= sy2 && mouseY <= sy2 + 26) {
+    showCorrection = !showCorrection;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth    = containerWidth;
+}
+</script>
+</body>
+</html>

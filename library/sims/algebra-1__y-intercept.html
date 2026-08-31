@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slope-Intercept Form Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Slope-Intercept Form Visualization
+// Two-panel diagram showing y = mx + b with positive and negative slope examples
+
+let canvasWidth = 1000;
+let drawHeight = 500;
+let canvasHeight = drawHeight;
+
+let hoveredPanel = -1;
+
+let examples = [
+  {
+    title: 'y = 2x + 1',
+    m: 2,
+    b: 1,
+    color: '#D32F2F',
+    points: [{ x: -1, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 3 }, { x: 2, y: 5 }]
+  },
+  {
+    title: 'y = -x + 4',
+    m: -1,
+    b: 4,
+    color: '#7B1FA2',
+    points: [{ x: -1, y: 5 }, { x: 0, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 2 }]
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  describe('Two-panel diagram showing slope-intercept form y = mx + b with positive and negative slope examples', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  background('#FFFDE7');
+
+  // Title
+  fill('#1565C0');
+  textSize(18);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text('Slope-Intercept Form: y = mx + b', canvasWidth / 2, 8);
+  textStyle(NORMAL);
+
+  fill('#757575');
+  textSize(11);
+  text('Hover over each panel to highlight', canvasWidth / 2, 32);
+
+  checkHover();
+  drawPanels();
+}
+
+function checkHover() {
+  hoveredPanel = -1;
+  let panelW = (canvasWidth - 45) / 2;
+  let startX = 15;
+  let startY = 50;
+  let panelH = drawHeight - 65;
+
+  for (let i = 0; i < 2; i++) {
+    let px = startX + i * (panelW + 15);
+    if (mouseX > px && mouseX < px + panelW && mouseY > startY && mouseY < startY + panelH) {
+      hoveredPanel = i;
+      return;
+    }
+  }
+}
+
+function drawPanels() {
+  let panelW = (canvasWidth - 45) / 2;
+  let startX = 15;
+  let startY = 50;
+  let panelH = drawHeight - 65;
+
+  let panelTitles = ['Positive Slope (m > 0)', 'Negative Slope (m < 0)'];
+
+  for (let i = 0; i < 2; i++) {
+    let px = startX + i * (panelW + 15);
+    let isHovered = (hoveredPanel === i);
+    let ex = examples[i];
+
+    // Panel shadow
+    if (isHovered) {
+      drawingContext.shadowBlur = 10;
+      drawingContext.shadowColor = ex.color;
+    }
+
+    fill('#FFFFFF');
+    stroke(ex.color);
+    strokeWeight(isHovered ? 3 : 1.5);
+    rect(px, startY, panelW, panelH, 8);
+    drawingContext.shadowBlur = 0;
+
+    // Panel header
+    fill(ex.color);
+    noStroke();
+    rect(px, startY, panelW, 30, 8, 8, 0, 0);
+
+    fill('#FFFFFF');
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text(panelTitles[i], px + panelW / 2, startY + 15);
+    textStyle(NORMAL);
+
+    // Draw panel content
+    drawPanelContent(i, px + panelW / 2, startY + panelH / 2 + 20, panelW - 30, panelH - 70);
+  }
+}
+
+function drawPanelContent(panelIndex, cx, cy, w, h) {
+  push();
+  translate(cx, cy);
+
+  let ex = examples[panelIndex];
+  let gridSize = 35;
+  let gridRange = 5;
+  let gridOffX = 0;
+  let gridOffY = 0;
+
+  // Draw grid
+  stroke('#E0E0E0');
+  strokeWeight(0.5);
+  for (let i = -gridRange; i <= gridRange; i++) {
+    line(i * gridSize, -gridRange * gridSize, i * gridSize, gridRange * gridSize);
+    line(-gridRange * gridSize, i * gridSize, gridRange * gridSize, i * gridSize);
+  }
+
+  // Axes
+  stroke('#9E9E9E');
+  strokeWeight(1.5);
+  line(-gridRange * gridSize, 0, gridRange * gridSize, 0);
+  line(0, -gridRange * gridSize, 0, gridRange * gridSize);
+
+  // Axis labels
+  fill('#9E9E9E');
+  textSize(9);
+  textAlign(CENTER, TOP);
+  noStroke();
+  for (let i = -gridRange; i <= gridRange; i++) {
+    if (i !== 0) {
+      text(i, i * gridSize, 5);
+    }
+  }
+  textAlign(RIGHT, CENTER);
+  for (let i = -gridRange; i <= gridRange; i++) {
+    if (i !== 0) {
+      text(-i, -5, i * gridSize);
+    }
+  }
+
+  // Draw line
+  stroke(ex.color);
+  strokeWeight(3);
+  let x1 = -gridRange;
+  let x2 = gridRange;
+  let y1 = ex.m * x1 + ex.b;
+  let y2 = ex.m * x2 + ex.b;
+  line(x1 * gridSize, -y1 * gridSize, x2 * gridSize, -y2 * gridSize);
+
+  // Draw slope triangle from y-intercept
+  let startPointX = 0;
+  let startPointY = ex.b;
+  let endPointX = 1;
+  let endPointY = ex.m * endPointX + ex.b;
+
+  // Run arrow (blue)
+  stroke('#1976D2');
+  strokeWeight(3);
+  line(startPointX * gridSize, -startPointY * gridSize, endPointX * gridSize, -startPointY * gridSize);
+  // Arrow head
+  line((endPointX - 0.2) * gridSize, (-startPointY + 0.15) * gridSize, endPointX * gridSize, -startPointY * gridSize);
+  line((endPointX - 0.2) * gridSize, (-startPointY - 0.15) * gridSize, endPointX * gridSize, -startPointY * gridSize);
+
+  // Rise arrow (green or orange)
+  let riseColor = ex.m > 0 ? '#4CAF50' : '#FF9800';
+  stroke(riseColor);
+  line(endPointX * gridSize, -startPointY * gridSize, endPointX * gridSize, -endPointY * gridSize);
+  // Arrow head
+  let riseDir = ex.m > 0 ? 1 : -1;
+  line((endPointX - 0.15) * gridSize, (-endPointY + riseDir * 0.2) * gridSize, endPointX * gridSize, -endPointY * gridSize);
+  line((endPointX + 0.15) * gridSize, (-endPointY + riseDir * 0.2) * gridSize, endPointX * gridSize, -endPointY * gridSize);
+
+  // Right angle symbol
+  stroke('#9E9E9E');
+  strokeWeight(1);
+  noFill();
+  let signY = ex.m > 0 ? 1 : -1;
+  rect(endPointX * gridSize - 8, -startPointY * gridSize - signY * 8, 8, signY * 8);
+
+  // Points on line
+  noStroke();
+  for (let pt of ex.points) {
+    // Point dot
+    fill(ex.color);
+    ellipse(pt.x * gridSize, -pt.y * gridSize, 10, 10);
+
+    // Label
+    fill('#424242');
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text(`(${pt.x}, ${pt.y})`, pt.x * gridSize + 8, -pt.y * gridSize);
+  }
+
+  // Y-intercept highlight
+  fill('#4CAF50');
+  ellipse(0, -ex.b * gridSize, 14, 14);
+  fill('#FFFFFF');
+  ellipse(0, -ex.b * gridSize, 8, 8);
+
+  // Labels
+  noStroke();
+  textSize(10);
+
+  // Y-intercept label
+  fill('#2E7D32');
+  textStyle(BOLD);
+  textAlign(RIGHT, CENTER);
+  text(`b = ${ex.b}`, -15, -ex.b * gridSize);
+  textStyle(NORMAL);
+
+  // Run label
+  fill('#1976D2');
+  textAlign(CENTER, TOP);
+  text('Run = 1', 0.5 * gridSize, -startPointY * gridSize + 8);
+
+  // Rise label
+  fill(riseColor);
+  textAlign(LEFT, CENTER);
+  text(`Rise = ${ex.m}`, endPointX * gridSize + 8, -(startPointY + endPointY) / 2 * gridSize);
+
+  // Slope label
+  fill(ex.color);
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text(`m = ${ex.m}`, 2 * gridSize, -gridRange * gridSize + 10);
+  textStyle(NORMAL);
+
+  // Equation box at bottom
+  let boxY = h / 2 - 25;
+  fill('#FFFFFF');
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  rect(-w / 2 + 10, boxY - 12, w - 20, 30, 5);
+
+  fill(ex.color);
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  noStroke();
+  text(ex.title, 0, boxY + 3);
+  textStyle(NORMAL);
+
+  pop();
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 1000);
+    canvasWidth = max(canvasWidth, 700);
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

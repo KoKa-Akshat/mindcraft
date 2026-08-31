@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Radioactive Decay Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Radioactive Decay Simulator
+// CANVAS_HEIGHT: 475
+// Visual representation of atoms decaying with exponential decay curve
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 420;
+let controlHeight = 55;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+let halfLifeSlider, speedSlider;
+let playBtn, resetBtn;
+let running = false;
+let timeStep = 0;
+let atoms = [];
+let decayHistory = [];
+let numAtoms = 200;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Radioactive decay simulator showing atoms decaying over time with exponential curve', LABEL);
+
+  let yPos = drawHeight + 5;
+  let el;
+
+  el = createSpan('Half-life:');
+  el.parent(document.querySelector('main'));
+  el.position(10, yPos + 4);
+  el.style('font-size', '13px');
+  halfLifeSlider = createSlider(1, 100, 20, 1);
+  halfLifeSlider.parent(document.querySelector('main'));
+  halfLifeSlider.position(70, yPos);
+  halfLifeSlider.size(80);
+
+  el = createSpan('Speed:');
+  el.parent(document.querySelector('main'));
+  el.position(160, yPos + 4);
+  el.style('font-size', '13px');
+  speedSlider = createSlider(1, 10, 3, 1);
+  speedSlider.parent(document.querySelector('main'));
+  speedSlider.position(205, yPos);
+  speedSlider.size(60);
+
+  yPos += 26;
+
+  playBtn = createButton('Play');
+  playBtn.parent(document.querySelector('main'));
+  playBtn.position(10, yPos);
+  playBtn.mousePressed(togglePlay);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.position(70, yPos);
+  resetBtn.mousePressed(resetSim);
+
+  resetSim();
+}
+
+function togglePlay() {
+  running = !running;
+  playBtn.html(running ? 'Pause' : 'Play');
+}
+
+function resetSim() {
+  running = false;
+  playBtn.html('Play');
+  timeStep = 0;
+  atoms = [];
+  decayHistory = [numAtoms];
+
+  // Place atoms in a grid-like arrangement in left panel
+  let atomArea = canvasWidth * 0.45;
+  let cols = ceil(sqrt(numAtoms * atomArea / (drawHeight - 60)));
+  let rows = ceil(numAtoms / cols);
+  let spacingX = (atomArea - 20) / cols;
+  let spacingY = (drawHeight - 80) / rows;
+
+  for (let i = 0; i < numAtoms; i++) {
+    let col = i % cols;
+    let row = floor(i / cols);
+    atoms.push({
+      x: 15 + col * spacingX + spacingX / 2,
+      y: 35 + row * spacingY + spacingY / 2,
+      alive: true,
+      decayTime: -1
+    });
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  let halfLife = halfLifeSlider.value();
+  // Probability of decay per timestep: p = 1 - 0.5^(1/halfLife)
+  let decayProb = 1 - pow(0.5, 1 / halfLife);
+
+  // Update simulation
+  if (running) {
+    let speed = speedSlider.value();
+    for (let s = 0; s < speed; s++) {
+      timeStep++;
+      for (let a of atoms) {
+        if (a.alive && random() < decayProb) {
+          a.alive = false;
+          a.decayTime = timeStep;
+        }
+      }
+      let alive = atoms.filter(a => a.alive).length;
+      decayHistory.push(alive);
+    }
+  }
+
+  // Title
+  noStroke();
+  fill(0);
+  textSize(14);
+  textAlign(CENTER, TOP);
+  text('Radioactive Decay Simulator', canvasWidth / 2, 4);
+
+  // Left panel: atom display
+  let atomAreaW = canvasWidth * 0.45;
+  let r = min(8, atomAreaW / (ceil(sqrt(numAtoms)) * 2.2));
+
+  for (let a of atoms) {
+    noStroke();
+    if (a.alive) {
+      fill(50, 220, 50); // bright green = undecayed
+    } else {
+      fill(180, 180, 180, 150); // gray = decayed
+    }
+    ellipse(a.x, a.y, r * 2, r * 2);
+  }
+
+  // Right panel: decay curve graph
+  let gLeft = atomAreaW + 25;
+  let gRight = canvasWidth - 15;
+  let gTop = 35;
+  let gBottom = drawHeight - 50;
+  let gWidth = gRight - gLeft;
+  let gHeight = gBottom - gTop;
+
+  // Graph background
+  fill(255, 255, 255, 180);
+  stroke(180);
+  strokeWeight(0.5);
+  rect(gLeft, gTop, gWidth, gHeight);
+
+  // Axes
+  stroke(0);
+  strokeWeight(1);
+  line(gLeft, gBottom, gRight, gBottom);
+  line(gLeft, gTop, gLeft, gBottom);
+
+  // Y-axis labels
+  noStroke();
+  fill(0);
+  textSize(9);
+  textAlign(RIGHT, CENTER);
+  for (let i = 0; i <= 4; i++) {
+    let val = (numAtoms / 4) * i;
+    let y = map(val, 0, numAtoms, gBottom, gTop);
+    text(int(val), gLeft - 3, y);
+    stroke(220);
+    strokeWeight(0.3);
+    line(gLeft, y, gRight, y);
+    noStroke();
+  }
+
+  // X-axis: time
+  let maxT = max(decayHistory.length, halfLife * 5);
+  textAlign(CENTER, TOP);
+  textSize(9);
+  for (let i = 0; i <= 4; i++) {
+    let t = (maxT / 4) * i;
+    let x = map(t, 0, maxT, gLeft, gRight);
+    fill(0);
+    text(int(t), x, gBottom + 3);
+  }
+
+  // Axis titles
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text('Time Steps', (gLeft + gRight) / 2, gBottom + 18);
+
+  push();
+  translate(gLeft - 22, (gTop + gBottom) / 2);
+  rotate(-HALF_PI);
+  text('Atoms', 0, 0);
+  pop();
+
+  // Theoretical curve (dashed)
+  stroke(50, 50, 220, 120);
+  strokeWeight(1);
+  drawingContext.setLineDash([4, 3]);
+  noFill();
+  beginShape();
+  for (let t = 0; t <= maxT; t += maxT / 100) {
+    let x = map(t, 0, maxT, gLeft, gRight);
+    let n = numAtoms * pow(0.5, t / halfLife);
+    let y = map(n, 0, numAtoms, gBottom, gTop);
+    vertex(x, y);
+  }
+  endShape();
+  drawingContext.setLineDash([]);
+
+  // Actual data curve
+  stroke(50, 220, 50);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let i = 0; i < decayHistory.length; i++) {
+    let x = map(i, 0, maxT, gLeft, gRight);
+    let y = map(decayHistory[i], 0, numAtoms, gBottom, gTop);
+    if (x <= gRight) vertex(x, y);
+  }
+  endShape();
+
+  // Half-life markers
+  noStroke();
+  fill(200, 50, 50, 150);
+  textSize(8);
+  textAlign(CENTER, BOTTOM);
+  for (let h = 1; h <= 5; h++) {
+    let t = halfLife * h;
+    let x = map(t, 0, maxT, gLeft, gRight);
+    if (x < gRight) {
+      stroke(200, 50, 50, 80);
+      strokeWeight(0.5);
+      drawingContext.setLineDash([2, 2]);
+      line(x, gTop, x, gBottom);
+      drawingContext.setLineDash([]);
+      noStroke();
+      fill(200, 50, 50);
+      text('t½×' + h, x, gTop - 1);
+    }
+  }
+
+  // Formula and stats
+  let aliveCount = atoms.filter(a => a.alive).length;
+  noStroke();
+  fill(0);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  let statsX = gLeft;
+  let statsY = gBottom + 30;
+  text('N(t) = N₀ × (½)^(t/t½)', statsX, statsY);
+  text('Remaining: ' + aliveCount + '/' + numAtoms, statsX, statsY + 15);
+  text('t½ = ' + halfLife + '  t = ' + timeStep, statsX, statsY + 30);
+
+  // Legend
+  let legX = gRight - 70;
+  let legY = gTop + 5;
+  fill(50, 220, 50);
+  noStroke();
+  rect(legX, legY, 10, 3);
+  fill(0);
+  textSize(8);
+  textAlign(LEFT, CENTER);
+  text('Actual', legX + 14, legY + 2);
+  stroke(50, 50, 220, 120);
+  strokeWeight(1);
+  drawingContext.setLineDash([3, 2]);
+  line(legX, legY + 12, legX + 10, legY + 12);
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill(0);
+  text('Theoretical', legX + 14, legY + 12);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

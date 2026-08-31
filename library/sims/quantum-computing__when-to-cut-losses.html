@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>QC Investment Expected Value Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// QC Investment Expected Value Calculator
+// A p5.js MicroSim for exploring expected value of quantum computing investments
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 400;
+let controlHeight = 180;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 200;
+let defaultTextSize = 16;
+
+// Sliders
+let probSlider, payoffSlider, costSlider, horizonSlider;
+
+// Preset buttons
+let presetOptimistic, presetModerate, presetSkeptical, resetBtn;
+
+// Classical alternative parameters (fixed comparison)
+let classicalProb = 0.70;
+let classicalPayoff = 2; // $2B
+let classicalCost = 1;   // $1B
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    let sliderWidth = canvasWidth - sliderLeftMargin - margin * 2;
+    let sliderY = drawHeight + 12;
+    let sliderSpacing = 30;
+
+    // P(success): 0-100%, default 5%
+    probSlider = createSlider(0, 100, 5, 1);
+    probSlider.parent(document.querySelector('main'));
+    probSlider.position(sliderLeftMargin, sliderY);
+    probSlider.size(sliderWidth);
+
+    // Potential Payoff: $0-$100B, default $10B
+    payoffSlider = createSlider(0, 100, 10, 1);
+    payoffSlider.parent(document.querySelector('main'));
+    payoffSlider.position(sliderLeftMargin, sliderY + sliderSpacing);
+    payoffSlider.size(sliderWidth);
+
+    // Investment Cost: $0-$50B, default $5B
+    costSlider = createSlider(0, 50, 5, 1);
+    costSlider.parent(document.querySelector('main'));
+    costSlider.position(sliderLeftMargin, sliderY + sliderSpacing * 2);
+    costSlider.size(sliderWidth);
+
+    // Time Horizon: 1-30 years, default 15
+    horizonSlider = createSlider(1, 30, 15, 1);
+    horizonSlider.parent(document.querySelector('main'));
+    horizonSlider.position(sliderLeftMargin, sliderY + sliderSpacing * 3);
+    horizonSlider.size(sliderWidth);
+
+    // Preset buttons
+    let btnY = sliderY + sliderSpacing * 4 + 5;
+    let btnWidth = 130;
+    let btnGap = 10;
+    let btnStartX = sliderLeftMargin;
+
+    presetOptimistic = createButton('Optimistic VC');
+    presetOptimistic.parent(document.querySelector('main'));
+    presetOptimistic.position(btnStartX, btnY);
+    presetOptimistic.size(btnWidth, 24);
+    presetOptimistic.mousePressed(() => { probSlider.value(25); payoffSlider.value(50); costSlider.value(10); horizonSlider.value(10); });
+
+    presetModerate = createButton('Moderate Analyst');
+    presetModerate.parent(document.querySelector('main'));
+    presetModerate.position(btnStartX + btnWidth + btnGap, btnY);
+    presetModerate.size(btnWidth, 24);
+    presetModerate.mousePressed(() => { probSlider.value(5); payoffSlider.value(10); costSlider.value(5); horizonSlider.value(15); });
+
+    presetSkeptical = createButton('Skeptical Physicist');
+    presetSkeptical.parent(document.querySelector('main'));
+    presetSkeptical.position(btnStartX + (btnWidth + btnGap) * 2, btnY);
+    presetSkeptical.size(btnWidth, 24);
+    presetSkeptical.mousePressed(() => { probSlider.value(1); payoffSlider.value(5); costSlider.value(8); horizonSlider.value(25); });
+
+    resetBtn = createButton('Reset');
+    resetBtn.parent(document.querySelector('main'));
+    resetBtn.position(btnStartX + (btnWidth + btnGap) * 3, btnY);
+    resetBtn.size(80, 24);
+    resetBtn.mousePressed(() => { probSlider.value(5); payoffSlider.value(10); costSlider.value(5); horizonSlider.value(15); });
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Read slider values
+    let prob = probSlider.value() / 100;
+    let payoff = payoffSlider.value();
+    let cost = costSlider.value();
+    let horizon = horizonSlider.value();
+
+    // Calculate expected value
+    let ev = prob * payoff - cost;
+
+    // Calculate breakeven probability
+    let breakevenProb = payoff > 0 ? cost / payoff : 1.0;
+
+    // Classical alternative EV
+    let classicalEV = classicalProb * classicalPayoff - classicalCost;
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("QC Investment Expected Value Calculator", canvasWidth / 2, 10);
+
+    // Formula display
+    textSize(13);
+    textStyle(NORMAL);
+    fill('#555');
+    text("E[V] = P(success) \u00D7 Payoff \u2212 Cost", canvasWidth / 2, 36);
+
+    // Calculation display
+    textSize(15);
+    textStyle(BOLD);
+    let probPct = (prob * 100).toFixed(0);
+    let evText = "E[V] = " + probPct + "% \u00D7 $" + payoff + "B \u2212 $" + cost + "B = ";
+    let evValueText = formatDollar(ev);
+    fill('#333');
+    text(evText + evValueText, canvasWidth / 2, 58);
+
+    // Main bar chart area
+    let chartLeft = margin + 100;
+    let chartRight = canvasWidth - margin * 2;
+    let chartWidth = chartRight - chartLeft;
+    let chartCenterX = chartLeft + chartWidth / 2;
+    let barTop = 95;
+    let barHeight = 50;
+
+    // Draw zero line
+    stroke('#333');
+    strokeWeight(2);
+    line(chartCenterX, barTop - 10, chartCenterX, barTop + barHeight + 10);
+    noStroke();
+    fill('#333');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("$0", chartCenterX, barTop + barHeight + 12);
+
+    // Scale: map the bar to a reasonable range
+    let maxVal = Math.max(Math.abs(ev), cost, payoff, 10);
+    let scale = (chartWidth / 2) / maxVal;
+
+    // QC Expected Value bar
+    let barWidth = Math.abs(ev) * scale;
+    barWidth = Math.min(barWidth, chartWidth / 2); // clamp
+
+    fill('#666');
+    textSize(13);
+    textAlign(RIGHT, CENTER);
+    textStyle(BOLD);
+    text("QC Investment", chartLeft - 8, barTop + barHeight / 2);
+
+    if (ev >= 0) {
+        fill(46, 125, 50); // green
+        noStroke();
+        rect(chartCenterX, barTop, barWidth, barHeight, 0, 6, 6, 0);
+        // Value label
+        fill(46, 125, 50);
+        textSize(14);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        text(formatDollar(ev), chartCenterX + barWidth + 8, barTop + barHeight / 2);
+    } else {
+        fill(211, 47, 47); // red
+        noStroke();
+        rect(chartCenterX - barWidth, barTop, barWidth, barHeight, 6, 0, 0, 6);
+        // Value label
+        fill(211, 47, 47);
+        textSize(14);
+        textAlign(RIGHT, CENTER);
+        textStyle(BOLD);
+        text(formatDollar(ev), chartCenterX - barWidth - 8, barTop + barHeight / 2);
+    }
+
+    // Classical R&D bar
+    let classBarTop = barTop + barHeight + 35;
+    let classBarHeight = 40;
+    let classBarWidth = Math.abs(classicalEV) * scale;
+    classBarWidth = Math.min(classBarWidth, chartWidth / 2);
+
+    // Extend zero line
+    stroke('#333');
+    strokeWeight(2);
+    line(chartCenterX, classBarTop - 5, chartCenterX, classBarTop + classBarHeight + 10);
+    noStroke();
+
+    fill('#666');
+    textSize(13);
+    textAlign(RIGHT, CENTER);
+    textStyle(BOLD);
+    text("Classical R&D", chartLeft - 8, classBarTop + classBarHeight / 2);
+
+    if (classicalEV >= 0) {
+        fill(46, 125, 50, 180);
+        noStroke();
+        rect(chartCenterX, classBarTop, classBarWidth, classBarHeight, 0, 6, 6, 0);
+        fill(46, 125, 50);
+        textSize(13);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        text(formatDollar(classicalEV), chartCenterX + classBarWidth + 8, classBarTop + classBarHeight / 2);
+    } else {
+        fill(211, 47, 47, 180);
+        noStroke();
+        rect(chartCenterX - classBarWidth, classBarTop, classBarWidth, classBarHeight, 6, 0, 0, 6);
+        fill(211, 47, 47);
+        textSize(13);
+        textAlign(RIGHT, CENTER);
+        textStyle(BOLD);
+        text(formatDollar(classicalEV), chartCenterX - classBarWidth - 8, classBarTop + classBarHeight / 2);
+    }
+
+    // Classical formula
+    fill('#777');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    let classPct = (classicalProb * 100).toFixed(0);
+    text("Classical: E[V] = " + classPct + "% \u00D7 $" + classicalPayoff + "B \u2212 $" + classicalCost + "B = " + formatDollar(classicalEV),
+        canvasWidth / 2, classBarTop + classBarHeight + 14);
+
+    // Breakeven section
+    let breakY = classBarTop + classBarHeight + 40;
+
+    fill('#3F51B5');
+    textSize(14);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Breakeven Analysis", canvasWidth / 2, breakY);
+
+    textSize(13);
+    textStyle(NORMAL);
+    fill('#333');
+    let breakPct = (breakevenProb * 100).toFixed(1);
+    if (payoff > 0) {
+        text("Breakeven P(success) = Cost / Payoff = $" + cost + "B / $" + payoff + "B = " + breakPct + "%",
+            canvasWidth / 2, breakY + 22);
+    } else {
+        text("Breakeven: undefined (payoff is $0)", canvasWidth / 2, breakY + 22);
+    }
+
+    // Breakeven gauge bar
+    let gaugeLeft = chartLeft;
+    let gaugeWidth = chartWidth;
+    let gaugeY = breakY + 45;
+    let gaugeH = 18;
+
+    // Background
+    fill(230);
+    noStroke();
+    rect(gaugeLeft, gaugeY, gaugeWidth, gaugeH, 4);
+
+    // Red zone (below breakeven)
+    let breakX = gaugeLeft + breakevenProb * gaugeWidth;
+    breakX = Math.min(breakX, gaugeLeft + gaugeWidth);
+    fill(211, 47, 47, 100);
+    rect(gaugeLeft, gaugeY, breakX - gaugeLeft, gaugeH, 4, 0, 0, 4);
+
+    // Green zone (above breakeven)
+    fill(46, 125, 50, 100);
+    rect(breakX, gaugeY, gaugeLeft + gaugeWidth - breakX, gaugeH, 0, 4, 4, 0);
+
+    // Breakeven marker
+    stroke('#3F51B5');
+    strokeWeight(2);
+    line(breakX, gaugeY - 4, breakX, gaugeY + gaugeH + 4);
+    noStroke();
+    fill('#3F51B5');
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text("Break: " + breakPct + "%", breakX, gaugeY + gaugeH + 6);
+
+    // Current probability marker
+    let currentX = gaugeLeft + prob * gaugeWidth;
+    currentX = Math.min(currentX, gaugeLeft + gaugeWidth);
+    stroke('#FF7043');
+    strokeWeight(3);
+    line(currentX, gaugeY - 6, currentX, gaugeY + gaugeH + 6);
+    noStroke();
+
+    // Triangle marker
+    fill('#FF7043');
+    triangle(currentX - 5, gaugeY - 6, currentX + 5, gaugeY - 6, currentX, gaugeY - 1);
+    textSize(10);
+    textAlign(CENTER, BOTTOM);
+    text("You: " + probPct + "%", currentX, gaugeY - 8);
+
+    // Gauge labels
+    fill('#999');
+    textSize(9);
+    textAlign(LEFT, TOP);
+    text("0%", gaugeLeft, gaugeY + gaugeH + 6);
+    textAlign(RIGHT, TOP);
+    text("100%", gaugeLeft + gaugeWidth, gaugeY + gaugeH + 6);
+
+    // Time horizon note
+    let noteY = gaugeY + gaugeH + 24;
+    fill('#888');
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(ITALIC);
+    text("Time horizon: " + horizon + " years \u2014 longer horizons increase uncertainty and reduce realistic probability estimates", canvasWidth / 2, noteY);
+
+    // Slider labels in control region
+    let sliderY = drawHeight + 12;
+    let sliderSpacing = 30;
+
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+
+    text("P(success): " + probPct + "%", sliderLeftMargin - 10, sliderY + 8);
+    text("Payoff: $" + payoff + "B", sliderLeftMargin - 10, sliderY + sliderSpacing + 8);
+    text("Cost: $" + cost + "B", sliderLeftMargin - 10, sliderY + sliderSpacing * 2 + 8);
+    text("Horizon: " + horizon + " yr", sliderLeftMargin - 10, sliderY + sliderSpacing * 3 + 8);
+}
+
+function formatDollar(val) {
+    let absVal = Math.abs(val);
+    let sign = val < 0 ? "-" : "+";
+    if (absVal >= 1) {
+        return sign + "$" + absVal.toFixed(1) + "B";
+    } else {
+        let millions = absVal * 1000;
+        return sign + "$" + millions.toFixed(0) + "M";
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    let sliderWidth = canvasWidth - sliderLeftMargin - margin * 2;
+    let sliderY = drawHeight + 12;
+    let sliderSpacing = 30;
+
+    probSlider.position(sliderLeftMargin, sliderY);
+    probSlider.size(sliderWidth);
+    payoffSlider.position(sliderLeftMargin, sliderY + sliderSpacing);
+    payoffSlider.size(sliderWidth);
+    costSlider.position(sliderLeftMargin, sliderY + sliderSpacing * 2);
+    costSlider.size(sliderWidth);
+    horizonSlider.position(sliderLeftMargin, sliderY + sliderSpacing * 3);
+    horizonSlider.size(sliderWidth);
+
+    let btnY = sliderY + sliderSpacing * 4 + 5;
+    let btnWidth = 130;
+    let btnGap = 10;
+    let btnStartX = sliderLeftMargin;
+
+    presetOptimistic.position(btnStartX, btnY);
+    presetModerate.position(btnStartX + btnWidth + btnGap, btnY);
+    presetSkeptical.position(btnStartX + (btnWidth + btnGap) * 2, btnY);
+    resetBtn.position(btnStartX + (btnWidth + btnGap) * 3, btnY);
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

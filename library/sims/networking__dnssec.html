@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>DNSSEC Chain of Trust</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f4f7fb; color: #263238; }
+    h1 { font-size: 19px; text-align: center; color: #1565c0; padding: 8px 8px 2px; }
+    .hint { text-align: center; font-size: 12px; color: #78909c; margin-bottom: 4px; }
+    .layout { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 10px 8px; align-items: flex-start; }
+    .diagram-panel { flex: 1 1 340px; min-width: 300px; background: aliceblue;
+      border: 1px solid #cfd8dc; border-radius: 8px; }
+    .mermaid { width: 100%; display: flex; justify-content: center; padding: 6px 0; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .info-panel { flex: 1 1 300px; min-width: 280px; }
+    .resolver { background: #fff; border: 1px solid #cfd8dc; border-radius: 8px; padding: 10px 12px; }
+    .resolver h2 { font-size: 15px; color: #1565c0; margin-bottom: 6px; }
+    .resolver ol { margin: 0 0 6px 18px; }
+    .resolver li { font-size: 13px; margin: 5px 0; color: #37474f; }
+    .reject { background: #ffebee; border-left: 4px solid #e53935; border-radius: 6px;
+      padding: 6px 8px; font-size: 13px; color: #b71c1c; margin-top: 6px; }
+    .reject b { color: #b71c1c; }
+    #panel { margin-top: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 8px 10px; font-size: 13px; color: #334155; min-height: 48px; }
+    .node { cursor: pointer; }
+  </style>
+  <script src="dnssec-chain-of-trust.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>DNSSEC Chain of Trust</h1>
+    <div class="hint">Hover a zone in the signature chain to see what it proves. Resolver validates bottom-up.</div>
+    <div class="layout">
+      <div class="diagram-panel">
+        <div class="mermaid">
+flowchart TD
+    Root["Root zone .<br/>Root KSK = trust anchor ✓<br/>(ships with every validator)"]:::anchor
+    TLD["TLD zone .example<br/>DS record in root points to TLD KSK"]:::link
+    Bank["bank.example zone<br/>DS record in TLD points to bank KSK"]:::link
+    Rec["www.bank.example A record<br/>returned to resolver: A record + RRSIG"]:::leaf
+
+    Root -->|signs| TLD
+    TLD -->|signs| Bank
+    Bank -->|signs| Rec
+
+    classDef anchor fill:#2e7d32,stroke:#1b5e20,stroke-width:3px,color:#ffffff,font-size:14px
+    classDef link fill:#1565c0,stroke:#0d3a73,stroke-width:2px,color:#ffffff,font-size:14px
+    classDef leaf fill:#90a4ae,stroke:#455a64,stroke-width:2px,color:#ffffff,font-size:14px
+
+    linkStyle default stroke:#1565c0,stroke-width:2.5px,font-size:14px
+        </div>
+      </div>
+      <div class="info-panel">
+        <div class="resolver">
+          <h2>What the resolver does on lookup</h2>
+          <ol>
+            <li>Receive A record + signature for www.bank.example</li>
+            <li>Verify ZSK signature using bank's KSK</li>
+            <li>Verify bank's KSK using the DS record in .example</li>
+            <li>Verify .example keys using the DS record in root</li>
+            <li>Compare root KSK to the trust anchor — if it matches, ACCEPT</li>
+          </ol>
+          <div class="reject"><b>Any failure → REJECT.</b> A broken or missing link returns SERVFAIL — the resolver refuses the answer rather than trusting it.</div>
+        </div>
+        <div id="panel">Hover a zone above for details.</div>
+      </div>
+    </div>
+  </main>
+  <br/>
+  <a href=".">Back to Documentation</a>
+</body>
+</html>

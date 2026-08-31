@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Blood Type Inheritance Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>(function (global) {
+  const Map = {
+    A: 'ᴬ',
+    B: 'ᴮ',
+    C: '꜀',
+    D: 'ᴅ',
+    E: 'ᴱ',
+    G: 'ᴳ',
+    H: 'ᴴ',
+    I: 'ᴵ',
+    J: 'ᴶ',
+    K: 'ᴷ',
+    L: 'ᴸ',
+    M: 'ᴹ',
+    N: 'ᴺ',
+    O: 'ᴼ',
+    P: 'ᴾ',
+    R: 'ᴿ',
+    S: 'ˢ',
+    T: 'ᵀ',
+    U: 'ᵁ',
+    V: 'ⱽ',
+    W: 'ʷ',
+    X: 'ˣ',
+    Y: 'ʸ',
+    Z: 'ᶻ',
+    a: 'ᵃ',
+    b: 'ᵇ',
+    d: 'ᵈ',
+    e: 'ᵉ',
+    g: 'ᵍ',
+    h: 'ʰ',
+    i: 'ᶦ',
+    j: 'ʲ',
+    k: 'ᵏ',
+    l: 'ˡ',
+    m: 'ᵐ',
+    n: 'ⁿ',
+    o: 'ᵒ',
+    p: 'ᵖ',
+    r: 'ʳ',
+    s: 'ˢ',
+    t: 'ᵗ',
+    u: 'ᵘ',
+    v: 'ᵛ',
+    w: 'ʷ',
+    x: 'ˣ',
+    y: 'ʸ',
+    z: 'ᶻ',
+    '+': '⁺',
+    '-': '⁻',
+    '0': '⁰',
+    '1': '¹',
+    '2': '²',
+    '3': '³',
+    '4': '⁴',
+    '5': '⁵',
+    '6': '⁶',
+    '7': '⁷',
+    '8': '⁸',
+    '9': '⁹'
+  };
+
+  function convertSuperscriptOption(str) {
+    return str.replace(/\^([A-Za-z0-9+\-])/g, (_, ch) => MAP[ch] || ch);
+  }
+
+  function buildSuperscriptTokens(str, baseSize) {
+    const tokens = [];
+    const size = baseSize || 16;
+    let totalWidth = 0;
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '^' && i + 1 < str.length) {
+        const supChar = str[i + 1];
+        textSize(size * 0.75);
+        const width = textWidth(supChar);
+        tokens.push({ text: supChar, isSup: true, width });
+        totalWidth += width;
+        i += 2;
+      } else {
+        textSize(size);
+        const width = textWidth(str[i]);
+        tokens.push({ text: str[i], isSup: false, width });
+        totalWidth += width;
+        i++;
+      }
+    }
+    textSize(size);
+    return { tokens, totalWidth };
+  }
+
+  function drawSuperscriptText(str, x, y, baseSize, align = 'left', metrics = null) {
+    const size = baseSize || 16;
+    const tokenData = metrics || buildSuperscriptTokens(str, size);
+    const tokens = tokenData.tokens;
+    const totalWidth = tokenData.totalWidth;
+
+    let cursor = x;
+    if (align === 'center') cursor -= totalWidth / 2;
+    else if (align === 'right') cursor -= totalWidth;
+
+    push();
+    textAlign(LEFT, CENTER);
+    noStroke();
+    for (const token of tokens) {
+      if (token.isSup) {
+        textSize(size * 0.75);
+        text(token.text, cursor, y - size * 0.45);
+      } else {
+        textSize(size);
+        text(token.text, cursor, y);
+      }
+      cursor += token.width;
+    }
+    pop();
+    textSize(size);
+  }
+
+  global.SuperscriptText = {
+    convertSuperscriptOption,
+    buildSuperscriptTokens,
+    drawSuperscriptText
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+    <script>// Blood Type Inheritance Explorer MicroSim (p5.js)
+// Follows microsim-generator standards: responsive layout, control area, accessible annotations
+
+let canvasWidth = 780;
+let drawHeight = 580;
+const controlHeight = 80; // (2 rows × 35) + 10
+let canvasHeight = drawHeight + controlHeight;
+const margin = 25;
+const sliderLeftMargin = 250; // used as second column x-position for controls
+const defaultTextSize = 16;
+
+let canvasReady = false;
+
+let parent1PhenotypeSelect;
+let parent1GenotypeSelect;
+let parent2PhenotypeSelect;
+let parent2GenotypeSelect;
+let randomParentsButton;
+
+// control areas label and selection list values
+const selectionListLeftMargin = 120;
+
+// should be wide enough selection value of "Type AB" without wrapping
+const selectWidth = 80;
+
+const Superscript = window.SuperscriptText || {};
+const convertSuperscriptOption = Superscript.convertSuperscriptOption;
+const buildSuperscriptTokens = Superscript.buildSuperscriptTokens;
+const drawSuperscriptText = Superscript.drawSuperscriptText;
+
+const parentStates = [
+  { phenotype: 'A', genotype: ['IA', 'i'] },
+  { phenotype: 'B', genotype: ['IB', 'i'] }
+];
+
+let hoveredCellInfo = null;
+
+const BLOOD_TYPES = [
+  {
+    key: 'A',
+    label: 'Type A',
+    color: '#E74C3C',
+    antigens: 'A antigens',
+    antibodies: 'Anti-B antibodies',
+    genotypes: [
+      ['IA', 'IA'],
+      ['IA', 'i']
+    ]
+  },
+  {
+    key: 'B',
+    label: 'Type B',
+    color: '#3498DB',
+    antigens: 'B antigens',
+    antibodies: 'Anti-A antibodies',
+    genotypes: [
+      ['IB', 'IB'],
+      ['IB', 'i']
+    ]
+  },
+  {
+    key: 'AB',
+    label: 'Type AB',
+    color: '#8E44AD',
+    antigens: 'A and B antigens',
+    antibodies: 'No antibodies',
+    genotypes: [
+      ['IA', 'IB']
+    ]
+  },
+  {
+    key: 'O',
+    label: 'Type O',
+    color: '#95A5A6',
+    antigens: 'No antigens',
+    antibodies: 'Anti-A and anti-B antibodies',
+    genotypes: [
+      ['i', 'i']
+    ]
+  }
+];
+
+const phenotypeOrder = ['A', 'B', 'AB', 'O'];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  canvasReady = true;
+
+  parent1PhenotypeSelect = createSelect();
+  parent2PhenotypeSelect = createSelect();
+  populatePhenotypeSelect(parent1PhenotypeSelect);
+  populatePhenotypeSelect(parent2PhenotypeSelect);
+
+  parent1GenotypeSelect = createSelect();
+  parent2GenotypeSelect = createSelect();
+
+  parent1PhenotypeSelect.changed(() => handlePhenotypeChange(0));
+  parent2PhenotypeSelect.changed(() => handlePhenotypeChange(1));
+  parent1GenotypeSelect.changed(() => handleGenotypeChange(0));
+  parent2GenotypeSelect.changed(() => handleGenotypeChange(1));
+
+  parent1PhenotypeSelect.value('A');
+  parent2PhenotypeSelect.value('B');
+  handlePhenotypeChange(0);
+  handlePhenotypeChange(1);
+
+  parent1PhenotypeSelect.size(selectWidth);
+  parent2PhenotypeSelect.size(selectWidth);
+  parent1GenotypeSelect.size(selectWidth);
+  parent2GenotypeSelect.size(selectWidth);
+
+  randomParentsButton = createButton('Random Parents');
+  randomParentsButton.mousePressed(randomizeParents);
+  randomParentsButton.size(150, 30);
+
+  positionControls();
+  describe('Interactive Punnett square for ABO blood type inheritance with parent selectors and phenotype probability bars.');
+}
+
+function draw() {
+  updateCanvasSize();
+
+  background('white');
+  stroke('silver');
+  strokeWeight(1);
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawTitleAndIntro();
+  drawParentSummaries();
+
+  const punnettData = computePunnettData();
+  drawPunnettSquare(punnettData);
+  drawInfoPanel();
+  drawProbabilityBars(punnettData.cells);
+
+  drawControlLabels();
+}
+
+function drawTitleAndIntro() {
+  fill('black');
+  noStroke();
+  textSize(24);
+  textAlign(CENTER, TOP);
+  text('Blood Type Inheritance Explorer', canvasWidth / 2, 12);
+  textSize(defaultTextSize);
+  textAlign(CENTER, TOP);
+  text(
+    'Select parental blood types to populate the Punnett square and view offspring probabilities.',
+    canvasWidth / 2,
+    44
+  );
+  textAlign(LEFT, CENTER);
+}
+
+function drawParentSummaries() {
+  const stacked = canvasWidth < 640;
+  const parent1X = margin;
+  const parent1Y = stacked ? 80 : 80;
+  const parent2X = stacked ? margin : canvasWidth / 2 + 20;
+  const parent2Y = stacked ? 160 : 80;
+
+  drawParentPanel(0, parent1X, parent1Y);
+  drawParentPanel(1, parent2X, parent2Y);
+}
+
+function drawParentPanel(index, x, y) {
+  const parentLabel = index === 0 ? 'Parent 1' : 'Parent 2';
+  const parent = parentStates[index];
+  const typeData = getBloodTypeData(parent.phenotype);
+
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  text(`${parentLabel}: ${typeData.label}`, x, y);
+  drawSuperscriptText('Selected genotype: ' + formatGenotype(parent.genotype), x, y + 20, defaultTextSize);
+  text(`Antigens: ${typeData.antigens}`, x, y + 40);
+  text(`Antibodies: ${typeData.antibodies}`, x, y + 60);
+
+  const chipY = y + 90;
+  drawGenotypeChips(index, x, chipY);
+}
+
+function drawGenotypeChips(index, startX, y) {
+  const parent = parentStates[index];
+  const typeData = getBloodTypeData(parent.phenotype);
+  const selectedKey = genotypeKey(parent.genotype);
+  let x = startX;
+  const chipHeight = 28;
+  const gap = 12;
+
+  textSize(defaultTextSize);
+  for (const alleles of typeData.genotypes) {
+    const label = formatGenotype(alleles);
+    const labelMetrics = buildSuperscriptTokens(label, defaultTextSize);
+    const chipWidth = labelMetrics.totalWidth + 24;
+    stroke('silver');
+    fill(selectedKey === genotypeKey(alleles) ? 255 : 245);
+    rect(x, y, chipWidth, chipHeight, 8);
+    noStroke();
+    fill('black');
+    textAlign(LEFT, CENTER);
+    drawSuperscriptText(label, x + 12, y + chipHeight / 2, defaultTextSize, 'left', labelMetrics);
+    x += chipWidth + gap;
+  }
+  textAlign(LEFT, CENTER);
+}
+
+function drawPunnettSquare(punnettData) {
+  const cellSize = 90;
+  const gridSize = cellSize * 2;
+  const gridLeft = Math.max(margin, canvasWidth / 2 - gridSize / 2) - 50;
+  const gridTop = 240;
+  hoveredCellInfo = null;
+
+  // Parent gamete labels
+  noStroke();
+  fill('black');
+  textAlign(CENTER, CENTER);
+  textSize(defaultTextSize);
+
+  for (let col = 0; col < 2; col++) {
+    const allele = punnettData.parent2Gametes[col];
+    drawSuperscriptText(
+      formatAllele(allele),
+      gridLeft + col * cellSize + cellSize / 2,
+      gridTop - 22,
+      defaultTextSize,
+      'center'
+    );
+  }
+
+  textAlign(LEFT, CENTER);
+  for (let row = 0; row < 2; row++) {
+    const allele = punnettData.parent1Gametes[row];
+    drawSuperscriptText(
+      formatAllele(allele),
+      gridLeft - 50,
+      gridTop + row * cellSize + cellSize / 2,
+      defaultTextSize
+    );
+  }
+
+  stroke('gray');
+  textAlign(LEFT, TOP);
+
+  for (let row = 0; row < 2; row++) {
+    for (let col = 0; col < 2; col++) {
+      const cellX = gridLeft + col * cellSize;
+      const cellY = gridTop + row * cellSize;
+      const cell = punnettData.cells[row * 2 + col];
+
+      const isHovered =
+        mouseX >= cellX &&
+        mouseX <= cellX + cellSize &&
+        mouseY >= cellY &&
+        mouseY <= cellY + cellSize &&
+        mouseY <= drawHeight;
+
+      fill(isHovered ? color(255, 252, 204) : color('white'));
+      rect(cellX, cellY, cellSize, cellSize);
+
+      if (isHovered) {
+        hoveredCellInfo = cell;
+      }
+
+      noStroke();
+      fill('black');
+      textSize(15);
+      drawSuperscriptText(formatGenotype(cell.genotype), cellX + 8, cellY + 24, defaultTextSize);
+
+      fill(cell.phenotype.color);
+      textSize(13);
+      text(cell.phenotype.label, cellX + 8, cellY + 52);
+
+      stroke('gray');
+    }
+  }
+
+  textAlign(LEFT, CENTER);
+}
+
+function drawInfoPanel() {
+  const infoWidth = 210;
+  const infoHeight = 130;
+  const panelX = canvasWidth - infoWidth - margin - 15;
+  const panelY = 215;
+
+  stroke(200);
+  fill(255, 255, 255, 235);
+  rect(panelX, panelY, infoWidth, infoHeight, 12);
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+
+  if (hoveredCellInfo) {
+    const phenotypeData = hoveredCellInfo.phenotype;
+    drawSuperscriptText(
+      'Genotype: ' + formatGenotype(hoveredCellInfo.genotype),
+      panelX + 12,
+      panelY + 24,
+      defaultTextSize
+    );
+    text(`Phenotype: ${phenotypeData.label}`, panelX + 12, panelY + 50);
+    text(`Antigens: ${phenotypeData.antigens}`, panelX + 12, panelY + 76, infoWidth - 24, 60);
+  } else {
+    text(
+      'Hover over a Punnett square cell to see genotype, phenotype, and antigen details.',
+      panelX + 12,
+      panelY + 20,
+      infoWidth - 24,
+      infoHeight - 40
+    );
+  }
+}
+
+function drawProbabilityBars(cells) {
+  const counts = { A: 0, B: 0, AB: 0, O: 0 };
+  cells.forEach((cell) => {
+    counts[cell.phenotype.key]++;
+  });
+  const total = cells.length;
+  const barX = margin;
+  const barY = drawHeight - 110;
+  const barWidth = canvasWidth - margin * 2;
+  const barHeight = 18;
+  const spacing = 26;
+
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  text('Offspring phenotype probabilities', barX, barY - 20);
+
+  for (let i = 0; i < phenotypeOrder.length; i++) {
+    const key = phenotypeOrder[i];
+    const data = getBloodTypeData(key);
+    const percent = (counts[key] / total) * 100;
+    const y = barY + i * spacing;
+    fill(data.color);
+    rect(barX, y, barWidth * (percent / 100), barHeight, 6);
+    noStroke();
+    fill('black');
+    text(`${data.label}: ${percent.toFixed(0)}%`, barX + 8, y + barHeight / 2);
+  }
+}
+
+function drawControlLabels() {
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+
+  leftLabelX = 10;
+  rightLabelX = leftLabelX + selectionListLeftMargin + selectWidth + 20;
+  const row1Y = drawHeight + 15;
+  const row2Y = drawHeight + 50;
+
+  // Left column labels
+  text('Parent 1 Type:', leftLabelX, row1Y);
+  text('Parent 2 Type:', leftLabelX, row2Y);
+
+  // Right column labels
+  text('Parent 1 Genotype:', rightLabelX, row1Y);
+  text('Parent 2 Genotype:', rightLabelX, row2Y);
+}
+
+function populatePhenotypeSelect(selectEl) {
+  BLOOD_TYPES.forEach((type) => {
+    selectEl.option(type.label, type.key);
+  });
+}
+
+function handlePhenotypeChange(index) {
+  const phenotypeKey = getPhenotypeSelect(index).value();
+  const genotypeSelect = getGenotypeSelect(index);
+  const typeData = getBloodTypeData(phenotypeKey);
+
+  genotypeSelect.elt.innerHTML = '';
+  typeData.genotypes.forEach((alleles) => {
+    const label = formatGenotype(alleles);
+    genotypeSelect.option(convertSuperscriptOption(label), genotypeKey(alleles));
+  });
+
+  if (typeData.genotypes.length === 1) {
+    genotypeSelect.attribute('disabled', true);
+  } else {
+    genotypeSelect.removeAttribute('disabled');
+  }
+
+  genotypeSelect.value(genotypeKey(typeData.genotypes[0]));
+  handleGenotypeChange(index);
+}
+
+function handleGenotypeChange(index) {
+  const phenotypeKey = getPhenotypeSelect(index).value();
+  const genotypeSelect = getGenotypeSelect(index);
+  const selectedKey = genotypeSelect.value();
+  const typeData = getBloodTypeData(phenotypeKey);
+  const match = typeData.genotypes.find((alleles) => genotypeKey(alleles) === selectedKey);
+  if (match) {
+    parentStates[index].phenotype = phenotypeKey;
+    parentStates[index].genotype = [...match];
+  }
+}
+
+function randomizeParents() {
+  parentStates.forEach((state, index) => {
+    const randomType = random(BLOOD_TYPES);
+    const genotypeOptions = randomType.genotypes;
+    const alleles = random(genotypeOptions);
+
+    const phenotypeSelect = getPhenotypeSelect(index);
+    const genotypeSelect = getGenotypeSelect(index);
+
+    phenotypeSelect.value(randomType.key);
+    handlePhenotypeChange(index);
+    genotypeSelect.value(genotypeKey(alleles));
+    handleGenotypeChange(index);
+  });
+}
+
+function computePunnettData() {
+  const parent1Gametes = getGametes(parentStates[0].genotype);
+  const parent2Gametes = getGametes(parentStates[1].genotype);
+  const cells = [];
+
+  for (let row = 0; row < 2; row++) {
+    for (let col = 0; col < 2; col++) {
+      const genotype = [parent1Gametes[row], parent2Gametes[col]];
+      const phenotypeKey = determinePhenotype(genotype);
+      const typeData = getBloodTypeData(phenotypeKey);
+      cells.push({
+        row,
+        col,
+        genotype,
+        phenotype: typeData
+      });
+    }
+  }
+
+  return {
+    parent1Gametes,
+    parent2Gametes,
+    cells
+  };
+}
+
+function determinePhenotype(genotype) {
+  const alleles = [...genotype].sort();
+  const hasIA = alleles.includes('IA');
+  const hasIB = alleles.includes('IB');
+  const hasI = alleles.includes('i');
+
+  if (hasIA && hasIB) return 'AB';
+  if (hasIA) return 'A';
+  if (hasIB) return 'B';
+  if (hasI) return 'O';
+  return 'O';
+}
+
+function getGametes(genotype) {
+  return [genotype[0], genotype[1]];
+}
+
+function formatGenotype(alleles) {
+  return `${formatAllele(alleles[0])} ${formatAllele(alleles[1])}`;
+}
+
+function formatAllele(allele) {
+  if (allele === 'IA') return 'I^A';
+  if (allele === 'IB') return 'I^B';
+  return 'i';
+}
+
+function genotypeKey(alleles) {
+  return alleles.join('_');
+}
+
+function getBloodTypeData(key) {
+  return BLOOD_TYPES.find((type) => type.key === key);
+}
+
+function getPhenotypeSelect(index) {
+  return index === 0 ? parent1PhenotypeSelect : parent2PhenotypeSelect;
+}
+
+function getGenotypeSelect(index) {
+  return index === 0 ? parent1GenotypeSelect : parent2GenotypeSelect;
+}
+
+// this is REALLY had do maintain - refactor to put it where the controls are created and use relative positioning instead of absolute? --- IGNORE ---
+function positionControls() {
+  if (!parent1PhenotypeSelect) return;
+  const row1Y = drawHeight + 5;
+  const row2Y = drawHeight + 40;
+  const labelSpacing = 135;
+  const col1SelectX = selectionListLeftMargin;
+  const col2SelectX = sliderLeftMargin + labelSpacing;
+
+  // Position phenotype selects in the first column and genotype selects in the second column
+  parent1PhenotypeSelect.position(col1SelectX, row1Y);
+  parent1GenotypeSelect.position(col2SelectX, row1Y);
+  parent2PhenotypeSelect.position(col1SelectX, row2Y);
+  parent2GenotypeSelect.position(col2SelectX, row2Y);
+
+  const buttonX = Math.min(canvasWidth - margin - 150, col2SelectX + selectWidth + 20);
+  randomParentsButton.position(buttonX, row2Y);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    const newWidth = container.offsetWidth;
+    if (newWidth > 0 && newWidth !== canvasWidth) {
+      canvasWidth = newWidth;
+      if (canvasReady) {
+        resizeCanvas(canvasWidth, canvasHeight);
+        positionControls();
+      }
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

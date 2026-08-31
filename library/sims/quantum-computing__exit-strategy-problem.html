@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>QC Investment Decision Tree</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// QC Investment Decision Tree
+// Interactive decision tree for evaluating quantum computing investments
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Tree structure
+let nodes = [];
+let selectedPath = []; // indices of nodes on selected path
+let hoveredNode = -1;
+let explanationNode = -1; // outcome node to show explanation for
+
+// Button
+let resetBtnX, resetBtnY, resetBtnW = 80, resetBtnH = 30;
+
+function buildTree() {
+    nodes = [];
+
+    // Node format: {id, type, question, x, y, w, h, parentId, branch, children, color, explanation, expectedValue, rationale}
+
+    // Root - Node 0: "Is revenue growing >20% YoY?"
+    nodes.push({
+        id: 0, type: 'decision',
+        question: "Is revenue growing\n>20% YoY?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: -1, branch: null,
+        childYes: 1, childNo: 2,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "Revenue growth is the most basic signal that a QC company has real customers paying for real value."
+    });
+
+    // Node 1 (Yes from 0): "Is there demonstrated quantum advantage?"
+    nodes.push({
+        id: 1, type: 'decision',
+        question: "Is there demonstrated\nquantum advantage?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 0, branch: 'yes',
+        childYes: 5, childNo: 6,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "Revenue without quantum advantage means customers may be buying classical services or consulting, not quantum value."
+    });
+
+    // Node 2 (No from 0): "Has any customer deployed for commercial advantage?"
+    nodes.push({
+        id: 2, type: 'decision',
+        question: "Has any customer deployed\nfor commercial advantage?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 0, branch: 'no',
+        childYes: 3, childNo: 4,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "Without revenue growth, look for at least one customer getting real commercial value from quantum computing."
+    });
+
+    // Node 3 (Yes from 2): Reduce - "Reduce position - seek partial exit"
+    nodes.push({
+        id: 3, type: 'outcome',
+        question: "Reduce position\nSeek partial exit",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 2, branch: 'yes',
+        color: '#FF9800',
+        expectedValue: "E[V] = Low positive",
+        explanation: "A customer deployment without revenue growth suggests early traction but unproven business model. Reduce exposure while monitoring for commercial scale-up.",
+        rationale: "Some commercial interest exists, but the business model hasn't proven itself yet."
+    });
+
+    // Node 4 (No from 2): leads to cash runway question
+    // "Is cash runway > 24 months?"
+    nodes.push({
+        id: 4, type: 'decision',
+        question: "Is cash runway\n> 24 months?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 2, branch: 'no',
+        childYes: 7, childNo: 8,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "No revenue growth AND no commercial deployments. The question now becomes: can the company survive long enough to pivot or find value?"
+    });
+
+    // Node 5 (Yes from 1): Hold - "Hold - monitor quarterly"
+    nodes.push({
+        id: 5, type: 'outcome',
+        question: "Hold\nMonitor quarterly",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 1, branch: 'yes',
+        color: '#4CAF50',
+        expectedValue: "E[V] = Moderate positive",
+        explanation: "Revenue growth plus demonstrated quantum advantage is the strongest signal. Hold position but verify advantage claims independently and monitor quarterly.",
+        rationale: "This is the only path that shows both commercial viability and genuine quantum value."
+    });
+
+    // Node 6 (No from 1): "Are key technical milestones on track?"
+    nodes.push({
+        id: 6, type: 'decision',
+        question: "Are key technical\nmilestones on track?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 1, branch: 'no',
+        childYes: 9, childNo: 10,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "Revenue is growing but no quantum advantage yet. Check if the core technology is progressing toward real quantum value."
+    });
+
+    // Node 7 (Yes from 4): Reduce - "Reduce position"
+    nodes.push({
+        id: 7, type: 'outcome',
+        question: "Reduce position\nWatch for pivot",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 4, branch: 'yes',
+        color: '#FF9800',
+        expectedValue: "E[V] = Near zero",
+        explanation: "No revenue growth, no commercial deployment, but enough cash to survive. The company has time but no evidence of value. Reduce position and watch for a credible pivot.",
+        rationale: "Cash runway buys time, but time without traction is a slow burn."
+    });
+
+    // Node 8 (No from 4): "Can the company raise at flat or up-round?"
+    nodes.push({
+        id: 8, type: 'decision',
+        question: "Can it raise at flat\nor up-round valuation?",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 4, branch: 'no',
+        childYes: 11, childNo: 12,
+        selected: null,
+        color: '#3F51B5',
+        rationale: "Short runway with no commercial traction. Can the company even raise more capital without a down round?"
+    });
+
+    // Node 9 (Yes from 6): Reduce - "Reduce - classical revenue risk"
+    nodes.push({
+        id: 9, type: 'outcome',
+        question: "Reduce position\nClassical revenue risk",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 6, branch: 'yes',
+        color: '#FF9800',
+        expectedValue: "E[V] = Low positive",
+        explanation: "Revenue may be from classical computing or consulting, not quantum. Technical milestones are on track but advantage is unproven. Reduce exposure until quantum advantage is demonstrated.",
+        rationale: "Milestones on track is encouraging, but revenue without quantum advantage may be a mirage."
+    });
+
+    // Node 10 (No from 6): Exit - "Exit - redeploy capital"
+    nodes.push({
+        id: 10, type: 'outcome',
+        question: "Exit\nRedeploy capital",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 6, branch: 'no',
+        color: '#F44336',
+        expectedValue: "E[V] = Negative",
+        explanation: "Revenue growth without quantum advantage AND missed technical milestones. The company is likely selling classical services while its quantum roadmap stalls. Exit and redeploy capital.",
+        rationale: "Revenue from non-quantum sources plus missed milestones is a red flag."
+    });
+
+    // Node 11 (Yes from 8): Reduce/Exit - "Exit - redeploy capital"
+    nodes.push({
+        id: 11, type: 'outcome',
+        question: "Exit\nRedeploy capital",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 8, branch: 'yes',
+        color: '#F44336',
+        expectedValue: "E[V] = Negative",
+        explanation: "No revenue, no deployments, short runway, but can still raise capital. The ability to fundraise may extend the company's life, but there is no evidence of value creation. Exit before the next dilutive round.",
+        rationale: "Raising capital without commercial signals means investors are funding hype, not value."
+    });
+
+    // Node 12 (No from 8): Exit immediately - "Exit immediately - distress risk"
+    nodes.push({
+        id: 12, type: 'outcome',
+        question: "Exit immediately\nDistress risk",
+        x: 0, y: 0, w: 0, h: 0,
+        parentId: 8, branch: 'no',
+        color: '#B71C1C',
+        expectedValue: "E[V] = Highly negative",
+        explanation: "No revenue growth, no commercial deployments, short cash runway, and cannot raise capital. This company faces existential risk. Exit immediately to preserve remaining capital.",
+        rationale: "Every negative signal is present. Capital is at severe risk of total loss."
+    });
+}
+
+function layoutTree() {
+    // Compute positions based on canvas width
+    // Left-to-right layout with 4 levels
+    let levelXs = [];
+    let numLevels = 5; // 0..4
+    let usableW = canvasWidth - margin * 2;
+    for (let i = 0; i < numLevels; i++) {
+        levelXs.push(margin + (usableW / (numLevels - 1)) * i);
+    }
+
+    let nodeW = Math.min(150, usableW / 5.5);
+    let nodeH = 52;
+    let diamondSize = nodeW * 0.72;
+
+    // Assign levels
+    let levels = [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4];
+
+    // Assign vertical positions within each level
+    let usableH = drawHeight - 80;
+    let topMargin = 55;
+
+    // Level 0: node 0 centered
+    nodes[0].x = levelXs[0];
+    nodes[0].y = topMargin + usableH / 2;
+
+    // Level 1: nodes 1 (top), 2 (bottom)
+    nodes[1].x = levelXs[1];
+    nodes[1].y = topMargin + usableH * 0.25;
+    nodes[2].x = levelXs[1];
+    nodes[2].y = topMargin + usableH * 0.75;
+
+    // Level 2: nodes 5,6 (from node 1), 3,4 (from node 2)
+    nodes[5].x = levelXs[2];
+    nodes[5].y = topMargin + usableH * 0.10;
+    nodes[6].x = levelXs[2];
+    nodes[6].y = topMargin + usableH * 0.35;
+    nodes[3].x = levelXs[2];
+    nodes[3].y = topMargin + usableH * 0.60;
+    nodes[4].x = levelXs[2];
+    nodes[4].y = topMargin + usableH * 0.85;
+
+    // Level 3: nodes 9,10 (from node 6), 7,8 (from node 4)
+    nodes[9].x = levelXs[3];
+    nodes[9].y = topMargin + usableH * 0.22;
+    nodes[10].x = levelXs[3];
+    nodes[10].y = topMargin + usableH * 0.42;
+    nodes[7].x = levelXs[3];
+    nodes[7].y = topMargin + usableH * 0.68;
+    nodes[8].x = levelXs[3];
+    nodes[8].y = topMargin + usableH * 0.90;
+
+    // Level 4: nodes 11,12 (from node 8)
+    nodes[11].x = levelXs[4];
+    nodes[11].y = topMargin + usableH * 0.80;
+    nodes[12].x = levelXs[4];
+    nodes[12].y = topMargin + usableH * 0.95;
+
+    // Set sizes
+    for (let n of nodes) {
+        n.w = nodeW;
+        n.h = nodeH;
+        n.diamondSize = diamondSize;
+    }
+}
+
+function getPathToNode(nodeId) {
+    // Trace back from nodeId to root
+    let path = [];
+    let current = nodeId;
+    while (current >= 0) {
+        path.unshift(current);
+        current = nodes[current].parentId;
+    }
+    return path;
+}
+
+function getActivePath() {
+    // Follow selected branches from root to find current active path
+    let path = [0];
+    let current = 0;
+    while (nodes[current].type === 'decision' && nodes[current].selected !== null) {
+        let next = nodes[current].selected === 'yes' ? nodes[current].childYes : nodes[current].childNo;
+        path.push(next);
+        current = next;
+    }
+    return path;
+}
+
+function isOnActivePath(nodeId) {
+    let path = getActivePath();
+    return path.indexOf(nodeId) >= 0;
+}
+
+function isReachable(nodeId) {
+    // A node is reachable if the path from root to its parent is fully selected,
+    // and the parent selected this node's branch
+    if (nodeId === 0) return true;
+    let n = nodes[nodeId];
+    let parent = nodes[n.parentId];
+    if (!isOnActivePath(n.parentId)) return false;
+    if (parent.selected === null) return false;
+    let expectedChild = parent.selected === 'yes' ? parent.childYes : parent.childNo;
+    return expectedChild === nodeId;
+}
+
+function isVisible(nodeId) {
+    // A node is visible if no selections have been made yet,
+    // or it is on or reachable from the active path
+    let path = getActivePath();
+    if (path.length === 1 && nodes[0].selected === null) return true; // nothing selected yet
+    return isOnActivePath(nodeId) || isChildOfActiveLeaf(nodeId);
+}
+
+function isChildOfActiveLeaf(nodeId) {
+    let path = getActivePath();
+    let leaf = path[path.length - 1];
+    let leafNode = nodes[leaf];
+    if (leafNode.type === 'decision' && leafNode.selected === null) {
+        // The leaf is an unselected decision - its children are visible
+        if (leafNode.childYes === nodeId || leafNode.childNo === nodeId) return true;
+    }
+    return false;
+}
+
+function drawArrow(x1, y1, x2, y2, col, weight) {
+    stroke(col);
+    strokeWeight(weight);
+    line(x1, y1, x2, y2);
+
+    // Arrowhead
+    let angle = atan2(y2 - y1, x2 - x1);
+    let arrowSize = 8;
+    fill(col);
+    noStroke();
+    push();
+    translate(x2, y2);
+    rotate(angle);
+    triangle(0, 0, -arrowSize, -arrowSize / 2.5, -arrowSize, arrowSize / 2.5);
+    pop();
+}
+
+function drawDiamond(n, isActive, isFaded) {
+    let cx = n.x;
+    let cy = n.y;
+    let s = n.diamondSize / 2;
+
+    let alpha = isFaded ? 60 : 255;
+    let fillColor = isActive ? color(63, 81, 181, alpha) : color(63, 81, 181, alpha);
+
+    push();
+    if (isActive && !isFaded) {
+        strokeWeight(3);
+        stroke('#1A237E');
+    } else {
+        strokeWeight(1.5);
+        stroke(isFaded ? color(150, 150, 150, 80) : color(63, 81, 181));
+    }
+    fill(isFaded ? color(200, 210, 230, 80) : fillColor);
+
+    beginShape();
+    vertex(cx, cy - s);
+    vertex(cx + s, cy);
+    vertex(cx, cy + s);
+    vertex(cx - s, cy);
+    endShape(CLOSE);
+
+    // Text
+    fill(isFaded ? color(150, 150, 150, 80) : 255);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(Math.min(11, canvasWidth / 80));
+    textStyle(BOLD);
+    let lines = n.question.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        text(lines[i], cx, cy + (i - (lines.length - 1) / 2) * 13);
+    }
+    pop();
+}
+
+function drawOutcomeRect(n, isActive, isFaded) {
+    let cx = n.x;
+    let cy = n.y;
+    let w = n.w;
+    let h = n.h;
+
+    let alpha = isFaded ? 60 : 255;
+    let c = color(n.color);
+    let fillC = isFaded ? color(red(c), green(c), blue(c), 60) : c;
+
+    push();
+    rectMode(CENTER);
+    if (isActive && !isFaded) {
+        strokeWeight(3);
+        stroke(0, 0, 0, 120);
+    } else {
+        strokeWeight(1.5);
+        stroke(isFaded ? color(180, 180, 180, 60) : color(red(c) * 0.7, green(c) * 0.7, blue(c) * 0.7));
+    }
+    fill(fillC);
+    rect(cx, cy, w, h, 8);
+
+    // Text
+    fill(isFaded ? color(100, 100, 100, 80) : 255);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(Math.min(11, canvasWidth / 80));
+    textStyle(BOLD);
+    let lines = n.question.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        text(lines[i], cx, cy + (i - (lines.length - 1) / 2) * 14);
+    }
+
+    // Expected value below the box
+    if (!isFaded) {
+        fill(isFaded ? color(150, 150, 150, 60) : '#333');
+        textSize(9);
+        textStyle(ITALIC);
+        text(n.expectedValue, cx, cy + h / 2 + 10);
+    }
+    pop();
+}
+
+function drawEdge(parentNode, childNode, branch, isActive, isFaded) {
+    let px = parentNode.x + parentNode.diamondSize / 2;
+    let py = parentNode.y;
+    let cx = childNode.x;
+    let cy = childNode.y;
+
+    // Offset target based on child type
+    if (childNode.type === 'decision') {
+        cx = childNode.x - childNode.diamondSize / 2;
+    } else {
+        cx = childNode.x - childNode.w / 2;
+    }
+
+    let alpha = isFaded ? 40 : 200;
+    let edgeColor = isActive ? color(63, 81, 181, alpha) : color(150, 150, 150, alpha);
+    let weight = isActive ? 2.5 : 1;
+
+    drawArrow(px, py, cx, cy, edgeColor, weight);
+
+    // Branch label
+    let midX = (px + cx) / 2;
+    let midY = (py + cy) / 2;
+    push();
+    fill(isFaded ? color(150, 150, 150, 60) : (branch === 'yes' ? '#2E7D32' : '#C62828'));
+    noStroke();
+    textSize(10);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    let label = branch === 'yes' ? 'Yes' : 'No';
+    // Offset label slightly away from line
+    let angle = atan2(cy - py, cx - px);
+    let offsetX = -sin(angle) * 10;
+    let offsetY = cos(angle) * 10;
+    text(label, midX + offsetX, midY + offsetY);
+    pop();
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    buildTree();
+    layoutTree();
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("QC Investment Decision Tree", canvasWidth / 2, 8);
+
+    let activePath = getActivePath();
+    let anySelected = nodes[0].selected !== null;
+
+    // Draw edges first
+    for (let n of nodes) {
+        if (n.type === 'decision') {
+            if (n.childYes !== undefined) {
+                let childYes = nodes[n.childYes];
+                let yesActive = activePath.indexOf(n.id) >= 0 && activePath.indexOf(n.childYes) >= 0;
+                let yesFaded = anySelected && !yesActive && !isChildOfActiveLeaf(n.childYes);
+                drawEdge(n, childYes, 'yes', yesActive || isChildOfActiveLeaf(n.childYes), yesFaded);
+            }
+            if (n.childNo !== undefined) {
+                let childNo = nodes[n.childNo];
+                let noActive = activePath.indexOf(n.id) >= 0 && activePath.indexOf(n.childNo) >= 0;
+                let noFaded = anySelected && !noActive && !isChildOfActiveLeaf(n.childNo);
+                drawEdge(n, childNo, 'no', noActive || isChildOfActiveLeaf(n.childNo), noFaded);
+            }
+        }
+    }
+
+    // Draw nodes
+    for (let n of nodes) {
+        let isActive = activePath.indexOf(n.id) >= 0 || isChildOfActiveLeaf(n.id);
+        let isFaded = anySelected && !isActive;
+
+        if (n.type === 'decision') {
+            drawDiamond(n, isActive, isFaded);
+        } else {
+            drawOutcomeRect(n, isActive, isFaded);
+        }
+    }
+
+    // Hover tooltip
+    if (hoveredNode >= 0) {
+        let n = nodes[hoveredNode];
+        let tooltipText = n.rationale || '';
+        if (n.type === 'outcome' && isReachable(n.id)) {
+            tooltipText = n.explanation;
+        }
+        if (tooltipText) {
+            drawTooltip(tooltipText, mouseX, mouseY);
+        }
+    }
+
+    // Explanation box for reached outcome
+    let activeLeaf = activePath[activePath.length - 1];
+    if (nodes[activeLeaf].type === 'outcome') {
+        drawExplanationBox(nodes[activeLeaf]);
+    }
+
+    // Reset button in control region
+    resetBtnX = canvasWidth / 2 - resetBtnW / 2;
+    resetBtnY = drawHeight + (controlHeight - resetBtnH) / 2;
+    fill('#3F51B5');
+    noStroke();
+    rect(resetBtnX, resetBtnY, resetBtnW, resetBtnH, 5);
+    fill(255);
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Reset", resetBtnX + resetBtnW / 2, resetBtnY + resetBtnH / 2);
+
+    // Instructions
+    fill('#888');
+    textSize(11);
+    textStyle(ITALIC);
+    textAlign(LEFT, CENTER);
+    text("Click decision nodes to explore paths", margin, drawHeight + controlHeight / 2);
+    textAlign(RIGHT, CENTER);
+    text("Hover for rationale", canvasWidth - margin, drawHeight + controlHeight / 2);
+}
+
+function drawTooltip(txt, mx, my) {
+    push();
+    textSize(11);
+    textStyle(NORMAL);
+    textAlign(LEFT, TOP);
+
+    let maxW = Math.min(280, canvasWidth * 0.4);
+    // Wrap text manually
+    let words = txt.split(' ');
+    let lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+        if (textWidth(currentLine + ' ' + words[i]) < maxW - 16) {
+            currentLine += ' ' + words[i];
+        } else {
+            lines.push(currentLine);
+            currentLine = words[i];
+        }
+    }
+    lines.push(currentLine);
+
+    let lineH = 15;
+    let tooltipW = maxW;
+    let tooltipH = lines.length * lineH + 16;
+
+    let tx = mx + 12;
+    let ty = my - tooltipH - 5;
+    if (tx + tooltipW > canvasWidth - 5) tx = mx - tooltipW - 12;
+    if (ty < 5) ty = my + 15;
+
+    fill(255, 255, 255, 245);
+    stroke('#3F51B5');
+    strokeWeight(1.5);
+    rect(tx, ty, tooltipW, tooltipH, 5);
+
+    fill('#333');
+    noStroke();
+    for (let i = 0; i < lines.length; i++) {
+        text(lines[i], tx + 8, ty + 8 + i * lineH);
+    }
+    pop();
+}
+
+function drawExplanationBox(n) {
+    push();
+    let boxW = Math.min(400, canvasWidth - 40);
+    let boxH = 60;
+    let boxX = canvasWidth / 2 - boxW / 2;
+    let boxY = drawHeight - boxH - 8;
+
+    fill(255, 255, 255, 240);
+    let c = color(n.color);
+    stroke(c);
+    strokeWeight(2);
+    rect(boxX, boxY, boxW, boxH, 6);
+
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textStyle(NORMAL);
+    textAlign(LEFT, TOP);
+
+    // Simple word wrap
+    let words = n.explanation.split(' ');
+    let maxW = boxW - 16;
+    let lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+        if (textWidth(currentLine + ' ' + words[i]) < maxW) {
+            currentLine += ' ' + words[i];
+        } else {
+            lines.push(currentLine);
+            currentLine = words[i];
+        }
+    }
+    lines.push(currentLine);
+
+    for (let i = 0; i < lines.length; i++) {
+        text(lines[i], boxX + 8, boxY + 8 + i * 14);
+    }
+    pop();
+}
+
+function hitTestNode(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+        let n = nodes[i];
+        if (n.type === 'decision') {
+            // Diamond hit test
+            let dx = abs(mx - n.x);
+            let dy = abs(my - n.y);
+            let s = n.diamondSize / 2;
+            if (dx / s + dy / s <= 1) return i;
+        } else {
+            // Rect hit test
+            if (mx >= n.x - n.w / 2 && mx <= n.x + n.w / 2 &&
+                my >= n.y - n.h / 2 && my <= n.y + n.h / 2) return i;
+        }
+    }
+    return -1;
+}
+
+function mousePressed() {
+    // Check reset button
+    if (mouseX >= resetBtnX && mouseX <= resetBtnX + resetBtnW &&
+        mouseY >= resetBtnY && mouseY <= resetBtnY + resetBtnH) {
+        for (let n of nodes) {
+            if (n.type === 'decision') n.selected = null;
+        }
+        explanationNode = -1;
+        redraw();
+        return;
+    }
+
+    let hit = hitTestNode(mouseX, mouseY);
+    if (hit < 0) return;
+
+    let n = nodes[hit];
+    if (n.type !== 'decision') return;
+
+    // Only allow clicking nodes that are on the active path's frontier
+    let activePath = getActivePath();
+    let activeLeaf = activePath[activePath.length - 1];
+
+    if (hit === activeLeaf && n.selected === null) {
+        // This is the current decision to make
+        // Determine if click was on yes (upper) or no (lower) side
+        if (mouseY < n.y) {
+            // For root node, yes goes up
+            n.selected = 'yes';
+        } else {
+            n.selected = 'no';
+        }
+        redraw();
+        return;
+    }
+
+    // Allow re-clicking a previously selected node to change selection
+    if (activePath.indexOf(hit) >= 0 && n.selected !== null) {
+        // Toggle selection
+        n.selected = n.selected === 'yes' ? 'no' : 'yes';
+        // Clear all downstream selections
+        clearDownstream(hit);
+        redraw();
+        return;
+    }
+}
+
+function clearDownstream(nodeId) {
+    let n = nodes[nodeId];
+    if (n.type !== 'decision') return;
+    if (n.childYes !== undefined) {
+        let child = nodes[n.childYes];
+        if (child.type === 'decision') {
+            child.selected = null;
+            clearDownstream(n.childYes);
+        }
+    }
+    if (n.childNo !== undefined) {
+        let child = nodes[n.childNo];
+        if (child.type === 'decision') {
+            child.selected = null;
+            clearDownstream(n.childNo);
+        }
+    }
+}
+
+function mouseMoved() {
+    let newHovered = hitTestNode(mouseX, mouseY);
+    if (newHovered !== hoveredNode) {
+        hoveredNode = newHovered;
+        redraw();
+    }
+}
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    layoutTree();
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

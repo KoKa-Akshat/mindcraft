@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Method - Interactive Workflow Diagram</title>
+    <style>/* Scientific Method Workflow Diagram Styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: aliceblue;
+}
+
+.container {
+    padding: 10px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.diagram-container {
+    flex: 1;
+    min-width: 350px;
+    background: aliceblue;
+    padding-bottom: 40px;
+    overflow: visible;
+}
+
+.mermaid {
+    display: block;
+    min-height: 650px;
+    margin-left: -70px;
+    margin-top: -60px;
+    overflow: visible;
+}
+
+.mermaid svg {
+    overflow: visible;
+}
+
+/* Ensure Mermaid diagram elements use proper font size */
+.mermaid .node text,
+.mermaid .edgeLabel {
+    font-size: 16px !important;
+}
+
+/* Make nodes interactive */
+.mermaid .node {
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.mermaid .node:hover {
+    filter: brightness(1.1);
+}
+
+.mermaid .node.highlighted {
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(0,0,0,0.3));
+}
+
+/* Infobox styles */
+.infobox {
+    flex: 0 0 250px;
+    width: 250px;
+    background: aliceblue;
+    border-radius: 8px;
+    padding: 15px;
+    border: 2px solid #e1e8ed;
+    height: fit-content;
+    font-size: 0.9em;
+    position: relative;
+    top: 0;
+    transition: top 0.3s ease;
+}
+
+.infobox h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.infobox p {
+    color: #34495e;
+    line-height: 1.6;
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.example-box {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 15px;
+}
+
+.example-box strong {
+    color: #667eea;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.example-box p {
+    margin: 0;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.color-legend {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #e1e8ed;
+    margin-bottom: 20px;
+}
+
+.color-legend h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.color-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.color-legend li {
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+}
+
+.color-box {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    border-radius: 4px;
+    border: 2px solid #333;
+}
+
+footer {
+    text-align: center;
+    padding-top: 15px;
+    border-top: 2px solid #e1e8ed;
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .diagram-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .infobox {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .color-legend ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="diagram-container" id="diagramContainer">
+                <div class="mermaid">
+flowchart TD
+    Start("Observe Phenomenon<br/>or Ask Question"):::observeNode
+    Research["Background Research"]:::researchNode
+    Hypothesis["Formulate Hypothesis"]:::hypothesisNode
+    Design["Design Experiment"]:::experimentNode
+    Conduct["Conduct Experiment &<br/>Collect Data"]:::experimentNode
+    Analyze["Analyze Data"]:::analysisNode
+    Decision1{"Does Data<br/>Support<br/>Hypothesis?"}:::decisionNode
+    Accept["Accept Hypothesis"]:::acceptNode
+    Revise["Revise or Reject<br/>Hypothesis"]:::reviseNode
+    Communicate["Communicate Results"]:::communicateNode
+    Decision2{"New Questions<br/>Raised?"}:::decisionNode
+    End("End"):::endNode
+
+    Start --> Research
+    Research --> Hypothesis
+    Hypothesis --> Design
+    Design --> Conduct
+    Conduct --> Analyze
+    Analyze --> Decision1
+    Decision1 -->|Yes| Accept
+    Decision1 -->|No| Revise
+    Accept --> Communicate
+    Revise --> Hypothesis
+    Communicate --> Decision2
+    Decision2 -->|Yes| Start
+    Decision2 -->|No| End
+
+    classDef observeNode fill:#4fc3f7,stroke:#0277bd,stroke-width:3px,color:#000,font-size:16px,font-weight:bold
+    classDef researchNode fill:#81d4fa,stroke:#0277bd,stroke-width:2px,color:#000,font-size:16px
+    classDef hypothesisNode fill:#fff59d,stroke:#f57f17,stroke-width:3px,color:#000,font-size:16px,font-weight:bold
+    classDef experimentNode fill:#81c784,stroke:#2e7d32,stroke-width:2px,color:#000,font-size:16px
+    classDef analysisNode fill:#ffb74d,stroke:#e65100,stroke-width:2px,color:#000,font-size:16px
+    classDef decisionNode fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000,font-size:16px,font-weight:bold
+    classDef acceptNode fill:#66bb6a,stroke:#2e7d32,stroke-width:2px,color:#fff,font-size:16px
+    classDef reviseNode fill:#ef5350,stroke:#c62828,stroke-width:2px,color:#fff,font-size:16px
+    classDef communicateNode fill:#ba68c8,stroke:#6a1b9a,stroke-width:2px,color:#fff,font-size:16px
+    classDef endNode fill:#9575cd,stroke:#4527a0,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+
+    linkStyle default stroke:#666,stroke-width:2px,font-size:14px
+                </div>
+            </div>
+
+            <div class="infobox" id="infobox">
+                <h3 id="infoTitle">Scientific Method</h3>
+                <p id="infoDescription">Hover over any step in the diagram to learn more about it and see a physics example.</p>
+                <div id="infoExample" class="example-box">
+                    <strong>Tip:</strong> Click on any node to keep its information displayed.
+                </div>
+            </div>
+        </div>
+
+        <div class="color-legend">
+            <h3>Color Coding</h3>
+            <ul>
+                <li><span class="color-box" style="background-color:#4fc3f7;"></span> Light blue: Observation and research phases</li>
+                <li><span class="color-box" style="background-color:#fff59d;"></span> Yellow: Hypothesis formulation</li>
+                <li><span class="color-box" style="background-color:#81c784;"></span> Green: Experimental phases</li>
+                <li><span class="color-box" style="background-color:#ff9800;"></span> Orange: Analysis and decision points</li>
+                <li><span class="color-box" style="background-color:#ba68c8;"></span> Purple: Communication and iteration</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Interactive workflow diagram for high school physics education</p>
+        </footer>
+    </div>
+
+    <script>// Scientific Method Diagram Interactivity
+
+// Node information with descriptions and biology examples
+const nodeInfo = {
+    'Start': {
+        title: 'Observe Phenomenon or Ask Question',
+        description: 'Science begins with curiosity. Scientists observe the natural world and ask questions about what they see. Good questions are specific and testable.',
+        example: 'A student notices that potato slices bubble vigorously when dropped into hydrogen peroxide, but boiled potato slices barely bubble at all, and asks: "How does temperature affect the activity of catalase?"'
+    },
+    'Research': {
+        title: 'Background Research',
+        description: 'Before designing an experiment, scientists review existing knowledge. This includes reading scientific papers, textbooks, and consulting experts to understand what is already known.',
+        example: 'The student researches enzyme structure and active site theory, discovering that high temperatures denature proteins by disrupting hydrogen bonds — permanently distorting the active site so substrate can no longer bind.'
+    },
+    'Hypothesis': {
+        title: 'Formulate Hypothesis',
+        description: 'A hypothesis is a testable prediction based on observations and research. It should be specific and include both the independent and dependent variables.',
+        example: '"If temperature increases beyond 40°C, then catalase activity will decrease because heat denatures the enzyme\'s active site, preventing H₂O₂ from binding and being broken down."'
+    },
+    'Design': {
+        title: 'Design Experiment',
+        description: 'Plan a controlled experiment that tests only one variable at a time. Identify controls, variables, materials needed, and the procedure to follow.',
+        example: 'Design: Incubate potato extract at 0°C, 25°C, 37°C, 60°C, and 80°C for 5 minutes. Add equal volumes of H₂O₂ to each tube. Measure O₂ bubble column height (mm) after 60 seconds. Three trials per temperature; same potato batch and H₂O₂ concentration throughout.'
+    },
+    'Conduct': {
+        title: 'Conduct Experiment & Collect Data',
+        description: 'Carefully follow the experimental procedure and record all observations and measurements. Use appropriate tools and units. Repeat trials for reliability.',
+        example: 'Mean bubble height (mm) ± SD: 0°C (11 ± 2), 25°C (37 ± 3), 37°C (54 ± 4), 60°C (19 ± 5), 80°C (3 ± 1). Each value is averaged from 3 independent trials.'
+    },
+    'Analyze': {
+        title: 'Analyze Data',
+        description: 'Organize data into tables and graphs. Look for patterns and relationships. Calculate averages, percentages, or other statistics. Identify any anomalies.',
+        example: 'Plot bubble height vs. temperature as a line graph with error bars (±1 SD). Activity peaks near 37°C — human body temperature — then drops sharply above 60°C, consistent with denaturation. Error bars at 37°C and 60°C do not overlap, suggesting a statistically significant difference.'
+    },
+    'Decision1': {
+        title: 'Does Data Support Hypothesis?',
+        description: 'Compare your results to your prediction. Did the data show what you expected? Consider whether your evidence is strong enough to draw conclusions.',
+        example: 'Activity peaked at 37°C and fell sharply above 60°C, matching the prediction. Non-overlapping error bars strengthen confidence that the decline is real, not due to chance. The data support the hypothesis.'
+    },
+    'Accept': {
+        title: 'Accept Hypothesis',
+        description: 'If the data consistently supports the hypothesis across multiple trials, the hypothesis is accepted. This doesn\'t mean it\'s proven—just supported by evidence.',
+        example: 'Conclusion: The hypothesis is supported. Catalase activity peaks near 37°C (optimal for human enzymes) and is nearly abolished at 80°C, consistent with heat-induced denaturation of the enzyme\'s active site.'
+    },
+    'Revise': {
+        title: 'Revise or Reject Hypothesis',
+        description: 'If the data doesn\'t support the hypothesis, this is not failure—it\'s valuable information! Analyze why and form a new, refined hypothesis.',
+        example: 'If activity at 0°C was unexpectedly high, revise: "Perhaps cold slows but does not eliminate enzyme activity. Revised hypothesis: activity follows a bell curve peaking at the optimal temperature, declining on both sides."'
+    },
+    'Communicate': {
+        title: 'Communicate Results',
+        description: 'Share findings through lab reports, presentations, or publications. Include methods, data, analysis, and conclusions so others can evaluate and replicate the work.',
+        example: 'Write a lab report: Introduction (enzyme structure, active site, denaturation), Hypothesis, Materials & Procedure, Data Table with standard deviations, Line graph with error bars, Statistical analysis, Conclusion linking results to protein structure. Present key findings to class; post data to school database for peer comparison.'
+    },
+    'Decision2': {
+        title: 'New Questions Raised?',
+        description: 'Good science leads to more questions. Each experiment reveals new aspects to explore. The scientific method is cyclical and ongoing.',
+        example: 'New questions emerge: "How does pH affect catalase activity?" "Does substrate concentration change the rate?" "Do enzymes from different organisms (liver vs. potato) have different optimal temperatures?" The investigation cycle continues!'
+    },
+    'End': {
+        title: 'End (Temporary)',
+        description: 'A particular investigation may end, but scientific inquiry never truly stops. Today\'s conclusions become tomorrow\'s starting points for new discoveries.',
+        example: 'The temperature experiment is complete, but the student is now curious whether pH affects catalase the same way. A new experiment is designed holding temperature constant at 37°C while varying pH from 2 to 12.'
+    }
+};
+
+// Default info to show
+const defaultInfo = {
+    title: 'Scientific Method',
+    description: 'Hover over any step in the diagram to learn more about it and see a biology example.',
+    example: '<strong>Tip:</strong> Click on any node to keep its information displayed.'
+};
+
+let lockedNode = null;
+
+// Initialize Mermaid
+mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis'
+    }
+});
+
+// Update infobox content
+function updateInfobox(info) {
+    document.getElementById('infoTitle').textContent = info.title;
+    document.getElementById('infoDescription').textContent = info.description;
+
+    const exampleBox = document.getElementById('infoExample');
+    if (info.example.startsWith('<')) {
+        exampleBox.innerHTML = info.example;
+    } else {
+        exampleBox.innerHTML = `<strong>Biology Example:</strong><p>${info.example}</p>`;
+    }
+}
+
+// Track current mouse Y position relative to container
+let lastMouseY = 0;
+
+// Move infobox to align with node or mouse position
+function moveInfoboxToNode(node) {
+    const infobox = document.getElementById('infobox');
+    const container = document.querySelector('.main-content');
+    const containerRect = container.getBoundingClientRect();
+    const infoboxHeight = infobox.offsetHeight;
+
+    // Maximum allowed top position to keep infobox visible
+    const maxAllowedTop = Math.max(0, containerRect.height - infoboxHeight - 20);
+
+    let offset;
+
+    if (!node) {
+        // Use last mouse position when no node is selected
+        offset = lastMouseY - 20;
+    } else {
+        const nodeRect = node.getBoundingClientRect();
+        // Calculate offset from top of container
+        offset = nodeRect.top - containerRect.top;
+
+        // Check if this is the End node - limit its position
+        const nodeText = node.textContent.trim();
+        if (nodeText.includes('End')) {
+            offset = offset - 100;
+        }
+    }
+
+    // Keep infobox within reasonable bounds (not below 0, not beyond container)
+    let finalOffset = Math.max(0, offset - 20);
+    finalOffset = Math.min(finalOffset, maxAllowedTop);
+
+    infobox.style.top = finalOffset + 'px';
+}
+
+// Track mouse movement over the diagram and update infobox when no node selected
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.main-content');
+    container.addEventListener('mousemove', (e) => {
+        const containerRect = container.getBoundingClientRect();
+        lastMouseY = e.clientY - containerRect.top;
+
+        // If no node is locked and mouse is not over a node, update infobox position
+        if (!lockedNode) {
+            // Check if mouse is over a mermaid node
+            const hoveredNode = e.target.closest('.mermaid .node');
+            if (!hoveredNode) {
+                moveInfoboxToNode(null);
+            }
+        }
+    });
+});
+
+// Get node key from node element
+function getNodeKey(node) {
+    const text = node.textContent.trim();
+
+    // Match node text to keys
+    if (text.includes('Observe') || text.includes('Ask Question')) return 'Start';
+    if (text.includes('Background Research')) return 'Research';
+    if (text.includes('Formulate Hypothesis')) return 'Hypothesis';
+    if (text.includes('Design Experiment')) return 'Design';
+    if (text.includes('Conduct Experiment') || text.includes('Collect Data')) return 'Conduct';
+    if (text.includes('Analyze Data')) return 'Analyze';
+    if (text.includes('Support') && text.includes('Hypothesis')) return 'Decision1';
+    if (text.includes('Accept Hypothesis')) return 'Accept';
+    if (text.includes('Revise') || text.includes('Reject')) return 'Revise';
+    if (text.includes('Communicate')) return 'Communicate';
+    if (text.includes('New Questions')) return 'Decision2';
+    if (text.includes('End')) return 'End';
+
+    return null;
+}
+
+// Remove highlight from all nodes
+function clearHighlights() {
+    document.querySelectorAll('.mermaid .node').forEach(n => {
+        n.classList.remove('highlighted');
+    });
+}
+
+// Node interaction
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const nodes = document.querySelectorAll('.mermaid .node');
+
+        nodes.forEach((node) => {
+            node.style.cursor = 'pointer';
+
+            // Hover events
+            node.addEventListener('mouseenter', () => {
+                if (lockedNode) return; // Don't update if a node is locked
+
+                const key = getNodeKey(node);
+                if (key && nodeInfo[key]) {
+                    updateInfobox(nodeInfo[key]);
+                    moveInfoboxToNode(node);
+                }
+            });
+
+            node.addEventListener('mouseleave', () => {
+                if (lockedNode) return; // Don't reset if a node is locked
+                updateInfobox(defaultInfo);
+                moveInfoboxToNode(null);
+            });
+
+            // Click to lock/unlock
+            node.addEventListener('click', () => {
+                const key = getNodeKey(node);
+
+                if (lockedNode === node) {
+                    // Unlock if clicking the same node
+                    lockedNode = null;
+                    clearHighlights();
+                    updateInfobox(defaultInfo);
+                    moveInfoboxToNode(null);
+                } else {
+                    // Lock to this node
+                    lockedNode = node;
+                    clearHighlights();
+                    node.classList.add('highlighted');
+
+                    if (key && nodeInfo[key]) {
+                        updateInfobox(nodeInfo[key]);
+                        moveInfoboxToNode(node);
+                    }
+                }
+            });
+        });
+    }, 1000); // Wait for Mermaid to render
+});
+
+// Click outside to unlock
+document.addEventListener('click', (e) => {
+    if (lockedNode && !e.target.closest('.mermaid .node')) {
+        lockedNode = null;
+        clearHighlights();
+        updateInfobox(defaultInfo);
+        moveInfoboxToNode(null);
+    }
+});
+</script>
+</body>
+</html>

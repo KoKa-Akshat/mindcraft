@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cell Cycle Checkpoint Control using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Cell Cycle Checkpoint Control MicroSim
+// Bloom Level: Understand (L2) / Apply (L3)
+// Explains cyclin-CDK regulation and checkpoint logic
+// Canvas: responsive width x 500 height
+
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 460;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 12;
+
+// State
+let activeCheckpoint = 'G1S'; // 'G1S' or 'G2M'
+let damageActive = false;
+let p53Mutated = false;
+let hoveredCyclin = null;
+let hoveredNode = null;
+let tooltipText = '';
+let tooltipX = 0;
+let tooltipY = 0;
+
+// Buttons
+let checkpointToggleBtn, damageBtn, p53Btn;
+
+// Layout
+let graphX, graphW, flowX, flowW;
+
+// Cyclin data
+const cyclins = [
+  {
+    name: 'Cyclin D',
+    partner: 'CDK4/6',
+    color: '#3498DB',
+    func: 'Drives G1 progression; responds to growth factor signals. CDK4/6-Cyclin D phosphorylates Rb, releasing E2F transcription factor.',
+    peakPhase: 'G1'
+  },
+  {
+    name: 'Cyclin E',
+    partner: 'CDK2',
+    color: '#27AE60',
+    func: 'Triggers G1/S transition and DNA replication origin licensing. CDK2-Cyclin E completes Rb phosphorylation and commits cell to S phase.',
+    peakPhase: 'G1/S'
+  },
+  {
+    name: 'Cyclin A',
+    partner: 'CDK2/CDK1',
+    color: '#E67E22',
+    func: 'Sustains S phase DNA replication and initiates G2/M transition. Prevents re-replication by phosphorylating replication factors.',
+    peakPhase: 'S/G2'
+  },
+  {
+    name: 'Cyclin B',
+    partner: 'CDK1 (MPF)',
+    color: '#E74C3C',
+    func: 'Forms MPF (maturation promoting factor) with CDK1. Drives entry into mitosis; destroyed by APC/C at anaphase onset.',
+    peakPhase: 'M'
+  }
+];
+
+// Checkpoint flowchart data
+const checkpoints = {
+  G1S: {
+    title: 'G1/S Checkpoint (Restriction Point)',
+    questions: [
+      { text: 'Cell large enough?', yesResult: 'Continue', noResult: 'Halt: cell grows' },
+      { text: 'Growth factors present?', yesResult: 'Continue', noResult: 'Halt: enter G0 quiescence' },
+      { text: 'DNA undamaged?', yesResult: 'Continue', noResult: 'Halt: repair or apoptosis' }
+    ],
+    outcome: 'CDK4/6-Cyclin D active\n-> Rb phosphorylated\n-> E2F released\n-> S phase entry',
+    haltOutcome: 'Cycle halted;\nrepair or apoptosis'
+  },
+  G2M: {
+    title: 'G2/M Checkpoint',
+    questions: [
+      { text: 'DNA fully replicated?', yesResult: 'Continue', noResult: 'Halt: complete replication' },
+      { text: 'DNA undamaged?', yesResult: 'Continue', noResult: 'Halt: repair or apoptosis' },
+      { text: 'Cell large enough?', yesResult: 'Continue', noResult: 'Halt: cell grows' }
+    ],
+    outcome: 'CDK1-Cyclin B (MPF) active\n-> Nuclear envelope breaks\n-> Chromosomes condense\n-> Mitosis begins',
+    haltOutcome: 'Cycle halted;\nrepair or apoptosis'
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  checkpointToggleBtn = createButton('Show G2/M Checkpoint');
+  checkpointToggleBtn.parent(mainElement);
+  checkpointToggleBtn.mousePressed(toggleCheckpoint);
+
+  damageBtn = createButton('DNA Damage Event');
+  damageBtn.parent(mainElement);
+  damageBtn.mousePressed(toggleDamage);
+
+  p53Btn = createButton('What if p53 is mutated?');
+  p53Btn.parent(mainElement);
+  p53Btn.mousePressed(toggleP53);
+
+  positionControls();
+  describe('Interactive cell cycle checkpoint control showing cyclin concentration graphs and checkpoint decision flowcharts');
+}
+
+function draw() {
+  updateCanvasSize();
+  updateLayout();
+  background('aliceblue');
+
+  // Drawing region
+  stroke('silver');
+  strokeWeight(1);
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Cell Cycle Checkpoint Control', canvasWidth / 2, 4);
+  textStyle(NORMAL);
+
+  hoveredCyclin = null;
+  hoveredNode = null;
+
+  drawCyclinGraph();
+  drawCheckpointFlowchart();
+
+  if (damageActive) {
+    drawDamageOverlay();
+  }
+
+  // Draw tooltip last (on top)
+  if (hoveredCyclin !== null) {
+    drawCyclinTooltip();
+  }
+  if (hoveredNode !== null) {
+    drawNodeTooltip();
+  }
+}
+
+// ---- LAYOUT ----
+function updateLayout() {
+  graphX = margin;
+  graphW = canvasWidth * 0.48 - margin;
+  flowX = canvasWidth * 0.50;
+  flowW = canvasWidth * 0.50 - margin;
+}
+
+// ---- CYCLIN CONCENTRATION GRAPH ----
+function drawCyclinGraph() {
+  let gx = graphX + 10;
+  let gy = 28;
+  let gw = graphW - 20;
+  let gh = drawHeight - 80;
+
+  // Graph background
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(gx, gy, gw, gh, 6);
+
+  // Graph title
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Cyclin Concentrations During Cell Cycle', gx + gw / 2, gy + 6);
+  textStyle(NORMAL);
+
+  // Graph area (inside padding)
+  let plotX = gx + 50;
+  let plotY = gy + 30;
+  let plotW = gw - 65;
+  let plotH = gh - 70;
+
+  // Y-axis label
+  push();
+  fill(80);
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  translate(gx + 14, plotY + plotH / 2);
+  rotate(-HALF_PI);
+  text('Relative Protein Level', 0, 0);
+  pop();
+
+  // Y-axis ticks
+  fill(150);
+  textSize(8);
+  textAlign(RIGHT, CENTER);
+  for (let i = 0; i <= 4; i++) {
+    let y = plotY + plotH - (i / 4) * plotH;
+    text((i * 25).toString(), plotX - 4, y);
+    stroke(230);
+    strokeWeight(0.5);
+    line(plotX, y, plotX + plotW, y);
+    noStroke();
+  }
+
+  // Phase boundaries and labels
+  let phases = [
+    { name: 'G1', frac: 0.28 },
+    { name: 'S', frac: 0.28 },
+    { name: 'G2', frac: 0.20 },
+    { name: 'M', frac: 0.24 }
+  ];
+  let phaseX = plotX;
+  let phaseColors = ['#EBF5FB', '#E8F8F5', '#FEF9E7', '#FDEDEC'];
+
+  for (let i = 0; i < phases.length; i++) {
+    let pw = plotW * phases[i].frac;
+    // Phase background
+    fill(phaseColors[i]);
+    noStroke();
+    rect(phaseX, plotY, pw, plotH);
+
+    // Phase label
+    fill(100);
+    textAlign(CENTER, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    text(phases[i].name, phaseX + pw / 2, plotY + plotH + 4);
+    textStyle(NORMAL);
+
+    // Vertical divider
+    if (i > 0) {
+      stroke(180);
+      strokeWeight(1);
+      setLineDash([3, 3]);
+      line(phaseX, plotY, phaseX, plotY + plotH);
+      setLineDash([]);
+    }
+
+    phaseX += pw;
+  }
+
+  // X-axis label
+  noStroke();
+  fill(80);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('Cell Cycle Phase', plotX + plotW / 2, plotY + plotH + 20);
+
+  // Draw cyclin curves
+  for (let c = 0; c < cyclins.length; c++) {
+    let cyc = cyclins[c];
+    let points = getCyclinCurve(c, plotX, plotY, plotW, plotH);
+
+    // CDK activity shaded region (subtle)
+    if (!damageActive || !p53Mutated) {
+      fill(color(cyc.color + '18'));
+      noStroke();
+      beginShape();
+      vertex(points[0].x, plotY + plotH);
+      for (let p of points) {
+        vertex(p.x, p.y);
+      }
+      vertex(points[points.length - 1].x, plotY + plotH);
+      endShape(CLOSE);
+    }
+
+    // Curve line
+    noFill();
+    stroke(cyc.color);
+    strokeWeight(2.5);
+    beginShape();
+    for (let p of points) {
+      curveVertex(p.x, p.y);
+    }
+    endShape();
+
+    // Check hover
+    let mx = mouseX;
+    let my = mouseY;
+    for (let p of points) {
+      if (dist(mx, my, p.x, p.y) < 8) {
+        hoveredCyclin = c;
+        tooltipX = mx;
+        tooltipY = my;
+        // Highlight the curve
+        stroke(cyc.color);
+        strokeWeight(4);
+        noFill();
+        beginShape();
+        for (let pt of points) {
+          curveVertex(pt.x, pt.y);
+        }
+        endShape();
+        break;
+      }
+    }
+  }
+
+  // Legend
+  let legendX = plotX + 4;
+  let legendY = plotY + 6;
+  for (let c = 0; c < cyclins.length; c++) {
+    noStroke();
+    fill(cyclins[c].color);
+    rect(legendX, legendY + c * 15, 10, 10, 2);
+    fill(50);
+    textAlign(LEFT, CENTER);
+    textSize(9);
+    text(cyclins[c].name, legendX + 14, legendY + c * 15 + 5);
+  }
+}
+
+function getCyclinCurve(index, plotX, plotY, plotW, plotH) {
+  // Generate points for each cyclin's concentration curve
+  let points = [];
+  let numPts = 60;
+
+  for (let i = 0; i <= numPts; i++) {
+    let t = i / numPts; // 0 to 1 across cell cycle
+    let val = 0;
+
+    switch (index) {
+      case 0: // Cyclin D - peaks in G1
+        val = gaussianCurve(t, 0.14, 0.12) * 0.75;
+        break;
+      case 1: // Cyclin E - peaks at G1/S boundary
+        val = gaussianCurve(t, 0.28, 0.08) * 0.85;
+        break;
+      case 2: // Cyclin A - peaks in S/G2
+        val = gaussianCurve(t, 0.55, 0.15) * 0.90;
+        break;
+      case 3: // Cyclin B - peaks in M, drops sharply
+        val = gaussianCurve(t, 0.82, 0.10) * 1.0;
+        // Sharp drop at anaphase
+        if (t > 0.88) {
+          val *= max(0, 1 - (t - 0.88) / 0.04);
+        }
+        break;
+    }
+
+    let x = plotX + t * plotW;
+    let y = plotY + plotH - val * plotH;
+    points.push({ x: x, y: y });
+  }
+  return points;
+}
+
+function gaussianCurve(x, mean, sd) {
+  return Math.exp(-0.5 * Math.pow((x - mean) / sd, 2));
+}
+
+// ---- CHECKPOINT FLOWCHART ----
+function drawCheckpointFlowchart() {
+  let cp = checkpoints[activeCheckpoint];
+  let fx = flowX + 10;
+  let fy = 28;
+  let fw = flowW - 20;
+  let fh = drawHeight - 80;
+
+  // Background
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(fx, fy, fw, fh, 6);
+
+  // Title
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text(cp.title, fx + fw / 2, fy + 6);
+  textStyle(NORMAL);
+
+  let cx = fx + fw / 2;
+  let startY = fy + 32;
+  let nodeH = 32;
+  let spacing = (fh - 60 - (cp.questions.length + 1) * nodeH) / (cp.questions.length + 1);
+  spacing = max(spacing, 20);
+
+  let mx = mouseX;
+  let my = mouseY;
+  let allYes = true;
+
+  for (let i = 0; i < cp.questions.length; i++) {
+    let q = cp.questions[i];
+    let ny = startY + i * (nodeH + spacing);
+
+    // Diamond node
+    let nodeWidth = fw * 0.7;
+    let isHovered = mx > cx - nodeWidth / 2 && mx < cx + nodeWidth / 2 &&
+                    my > ny && my < ny + nodeH;
+
+    // Draw diamond shape
+    fill(isHovered ? '#FFF9C4' : '#FFF3E0');
+    stroke(isHovered ? '#F57C00' : '#FFB74D');
+    strokeWeight(isHovered ? 2.5 : 1.5);
+    beginShape();
+    vertex(cx, ny);
+    vertex(cx + nodeWidth / 2, ny + nodeH / 2);
+    vertex(cx, ny + nodeH);
+    vertex(cx - nodeWidth / 2, ny + nodeH / 2);
+    endShape(CLOSE);
+
+    // Question text
+    noStroke();
+    fill(40);
+    textAlign(CENTER, CENTER);
+    textSize(10);
+    textStyle(BOLD);
+    text(q.text, cx, ny + nodeH / 2);
+    textStyle(NORMAL);
+
+    if (isHovered) {
+      hoveredNode = i;
+      tooltipX = mx;
+      tooltipY = my;
+    }
+
+    // YES arrow going down
+    let arrowStartY = ny + nodeH;
+    let arrowEndY = ny + nodeH + spacing - 2;
+
+    if (i < cp.questions.length - 1) {
+      stroke('#4CAF50');
+      strokeWeight(2);
+      drawFlowArrow(cx, arrowStartY, cx, arrowEndY);
+      noStroke();
+      fill('#4CAF50');
+      textSize(9);
+      textStyle(BOLD);
+      textAlign(LEFT, CENTER);
+      text('YES', cx + 6, arrowStartY + (arrowEndY - arrowStartY) / 2);
+      textStyle(NORMAL);
+    }
+
+    // NO arrow going right
+    let noX = cx + nodeWidth / 2;
+    let noEndX = fx + fw - 8;
+    stroke('#E74C3C');
+    strokeWeight(1.5);
+    line(noX, ny + nodeH / 2, noEndX, ny + nodeH / 2);
+    // Arrow head
+    noStroke();
+    fill('#E74C3C');
+    triangle(noEndX, ny + nodeH / 2, noEndX - 5, ny + nodeH / 2 - 3, noEndX - 5, ny + nodeH / 2 + 3);
+
+    // NO label and result
+    fill('#E74C3C');
+    textSize(8);
+    textAlign(LEFT, BOTTOM);
+    textStyle(BOLD);
+    text('NO', noX + 4, ny + nodeH / 2 - 2);
+    textStyle(NORMAL);
+    textSize(7);
+    fill(120);
+    textAlign(RIGHT, TOP);
+    text(q.noResult, noEndX - 2, ny + nodeH / 2 + 3);
+  }
+
+  // Final YES arrow to outcome
+  let lastQY = startY + (cp.questions.length - 1) * (nodeH + spacing);
+  let outcomeY = lastQY + nodeH + spacing;
+
+  stroke('#4CAF50');
+  strokeWeight(2);
+  drawFlowArrow(cx, lastQY + nodeH, cx, outcomeY);
+  noStroke();
+  fill('#4CAF50');
+  textSize(9);
+  textStyle(BOLD);
+  textAlign(LEFT, CENTER);
+  text('YES', cx + 6, lastQY + nodeH + spacing / 2);
+  textStyle(NORMAL);
+
+  // Outcome box
+  let outW = fw * 0.8;
+  let outH = 60;
+  let outColor = (damageActive && !p53Mutated) ? '#FFCDD2' : '#C8E6C9';
+  let outBorder = (damageActive && !p53Mutated) ? '#E74C3C' : '#4CAF50';
+  let outcomeText = (damageActive && !p53Mutated) ? cp.haltOutcome : cp.outcome;
+
+  if (p53Mutated && damageActive) {
+    outColor = '#FFECB3';
+    outBorder = '#FF9800';
+    outcomeText = 'p53 MUTATED!\nCheckpoint bypassed\nDamaged DNA replicated\n-> Cancer risk!';
+  }
+
+  fill(outColor);
+  stroke(outBorder);
+  strokeWeight(2);
+  rect(cx - outW / 2, outcomeY, outW, outH, 6);
+
+  noStroke();
+  fill(40);
+  textAlign(CENTER, CENTER);
+  textSize(9);
+  textStyle(BOLD);
+  text(outcomeText, cx, outcomeY + outH / 2);
+  textStyle(NORMAL);
+}
+
+// ---- DAMAGE OVERLAY ----
+function drawDamageOverlay() {
+  let fx = flowX + 10;
+  let fy = drawHeight - 48;
+  let fw = flowW - 20;
+
+  // Damage info box
+  let boxColor = p53Mutated ? '#FFF3E0' : '#FFEBEE';
+  let borderColor = p53Mutated ? '#FF9800' : '#F44336';
+  fill(boxColor);
+  stroke(borderColor);
+  strokeWeight(2);
+  rect(fx, fy - 60, fw, 55, 6);
+
+  noStroke();
+  textAlign(LEFT, TOP);
+
+  if (p53Mutated) {
+    fill('#E65100');
+    textSize(10);
+    textStyle(BOLD);
+    text('p53 MUTATED - Checkpoint Failure!', fx + 8, fy - 56);
+    textStyle(NORMAL);
+    fill(80);
+    textSize(9);
+    text('ATM/ATR detect damage but p53 is nonfunctional.\np21 is NOT induced. CDK activity continues.\nCell divides with damaged DNA -> cancer progression.', fx + 8, fy - 42, fw - 16);
+  } else {
+    fill('#C62828');
+    textSize(10);
+    textStyle(BOLD);
+    text('DNA Damage Detected!', fx + 8, fy - 56);
+    textStyle(NORMAL);
+    fill(80);
+    textSize(9);
+    text('ATM/ATR kinases activated -> p53 stabilized\n-> p21 (CDK inhibitor) induced -> CDK inhibited\n-> Cell cycle HALTED for repair or apoptosis', fx + 8, fy - 42, fw - 16);
+  }
+
+  // DNA damage indicator on graph side
+  let gx = graphX + 10;
+  let gw = graphW - 20;
+
+  fill('#F44336');
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(10);
+  textStyle(BOLD);
+
+  // Flash effect
+  let flashAlpha = 128 + 127 * sin(frameCount * 0.1);
+  let damageColor = color(244, 67, 54, flashAlpha);
+  fill(damageColor);
+  text('DNA DAMAGE', gx + gw / 2, drawHeight - 60);
+  textStyle(NORMAL);
+
+  // Lightning bolt symbol
+  stroke(damageColor);
+  strokeWeight(2);
+  let bx = gx + gw / 2;
+  let by = drawHeight - 80;
+  line(bx - 4, by, bx + 2, by + 8);
+  line(bx + 2, by + 8, bx - 2, by + 10);
+  line(bx - 2, by + 10, bx + 4, by + 18);
+}
+
+// ---- TOOLTIPS ----
+function drawCyclinTooltip() {
+  let c = cyclins[hoveredCyclin];
+  let tw = 220;
+  let th = 70;
+  let tx = constrain(tooltipX + 12, 0, canvasWidth - tw - 4);
+  let ty = constrain(tooltipY - th - 4, 4, drawHeight - th - 4);
+
+  fill(255, 255, 255, 245);
+  stroke(c.color);
+  strokeWeight(2);
+  rect(tx, ty, tw, th, 6);
+
+  noStroke();
+  fill(c.color);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  textStyle(BOLD);
+  text(c.name + ' + ' + c.partner, tx + 8, ty + 6);
+  textStyle(NORMAL);
+
+  fill(60);
+  textSize(9);
+  text('Peak: ' + c.peakPhase, tx + 8, ty + 22);
+  text(c.func, tx + 8, ty + 34, tw - 16);
+}
+
+function drawNodeTooltip() {
+  let cp = checkpoints[activeCheckpoint];
+  let q = cp.questions[hoveredNode];
+  let tw = 200;
+  let th = 46;
+  let tx = constrain(tooltipX + 12, 0, canvasWidth - tw - 4);
+  let ty = constrain(tooltipY - th - 4, 4, drawHeight - th - 4);
+
+  fill(255, 255, 240, 245);
+  stroke('#FFB74D');
+  strokeWeight(2);
+  rect(tx, ty, tw, th, 6);
+
+  noStroke();
+  fill(40);
+  textAlign(LEFT, TOP);
+  textSize(10);
+  textStyle(BOLD);
+  text('Checkpoint Question:', tx + 8, ty + 6);
+  textStyle(NORMAL);
+  textSize(9);
+  fill(80);
+  text('Yes -> ' + q.yesResult + '\nNo -> ' + q.noResult, tx + 8, ty + 20, tw - 16);
+}
+
+// ---- BUTTON HANDLERS ----
+function toggleCheckpoint() {
+  if (activeCheckpoint === 'G1S') {
+    activeCheckpoint = 'G2M';
+    checkpointToggleBtn.html('Show G1/S Checkpoint');
+  } else {
+    activeCheckpoint = 'G1S';
+    checkpointToggleBtn.html('Show G2/M Checkpoint');
+  }
+}
+
+function toggleDamage() {
+  damageActive = !damageActive;
+  damageBtn.html(damageActive ? 'Clear Damage' : 'DNA Damage Event');
+  damageBtn.style('background-color', damageActive ? '#FFCDD2' : '');
+  if (!damageActive) {
+    p53Mutated = false;
+    p53Btn.html('What if p53 is mutated?');
+    p53Btn.style('background-color', '');
+  }
+}
+
+function toggleP53() {
+  p53Mutated = !p53Mutated;
+  p53Btn.html(p53Mutated ? 'Restore p53' : 'What if p53 is mutated?');
+  p53Btn.style('background-color', p53Mutated ? '#FFECB3' : '');
+  if (p53Mutated && !damageActive) {
+    damageActive = true;
+    damageBtn.html('Clear Damage');
+    damageBtn.style('background-color', '#FFCDD2');
+  }
+}
+
+// ---- DRAWING HELPERS ----
+function drawFlowArrow(x1, y1, x2, y2) {
+  line(x1, y1, x2, y2);
+  let sz = 5;
+  noStroke();
+  let currentCol = drawingContext.strokeStyle;
+  fill(currentCol);
+  triangle(x2, y2, x2 - sz * 0.6, y2 - sz, x2 + sz * 0.6, y2 - sz);
+  stroke(currentCol);
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
+// ---- CONTROLS ----
+function positionControls() {
+  let y = drawHeight + 8;
+  let btnX = margin;
+  checkpointToggleBtn.position(btnX, y);
+  btnX += 160;
+  damageBtn.position(btnX, y);
+  btnX += 140;
+  p53Btn.position(btnX, y);
+}
+
+// ---- RESPONSIVE ----
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  updateLayout();
+  positionControls();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

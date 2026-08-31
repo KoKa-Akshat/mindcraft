@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Python Virtual Environment Sandbox Explorer MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Python Virtual Environment Sandbox Explorer MicroSim
+// CANVAS_HEIGHT: 460
+// Two project venvs sit under a shared system Python. Installing a package into
+// one sandbox never affects the other — showing how venvs isolate dependencies.
+
+let canvasWidth = 700;
+let drawHeight = 400;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let defaultTextSize = 16;
+
+let installABtn, installBBtn, resetBtn;
+let sandA = [], sandB = [];
+let drops = []; // {pkg, sand, t}
+let hoverPkg = null;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  installABtn = createButton('Install numpy 1.x → A'); installABtn.position(10, drawHeight + 10);
+  installABtn.mousePressed(() => drop({ name: 'numpy', version: '1.26' }, 'A'));
+  installBBtn = createButton('Install numpy 2.x → B'); installBBtn.position(180, drawHeight + 10);
+  installBBtn.mousePressed(() => drop({ name: 'numpy', version: '2.1' }, 'B'));
+  resetBtn = createButton('Reset Sandboxes'); resetBtn.position(360, drawHeight + 10);
+  resetBtn.mousePressed(() => { sandA = []; sandB = []; drops = []; });
+  describe('Two Python virtual environments under a shared system Python; installing a package in one venv does not affect the other.', LABEL);
+}
+
+function drop(pkg, sand) { drops.push({ pkg, sand, t: 0 }); }
+
+function boxes() {
+  let stacked = canvasWidth < 560;
+  let sysX = margin, sysY = 44, sysW = canvasWidth - 2 * margin, sysH = 60;
+  let bw = stacked ? sysW : (sysW - margin) / 2;
+  let bh = stacked ? 100 : 200;
+  let aY = sysY + sysH + 30;
+  let a = { x: sysX, y: aY, w: bw, h: bh };
+  let b = stacked ? { x: sysX, y: aY + bh + 16, w: bw, h: bh } : { x: sysX + bw + margin, y: aY, w: bw, h: bh };
+  return { sys: { x: sysX, y: sysY, w: sysW, h: sysH }, a, b };
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('aliceblue'); stroke('silver'); strokeWeight(1); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); noStroke(); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  fill('black'); noStroke(); textAlign(CENTER, TOP); textSize(20);
+  text('Python venv Sandbox Explorer', canvasWidth / 2, 8);
+
+  let B = boxes();
+  // system python
+  noStroke(); fill('#eceff1'); stroke('#607D8B'); strokeWeight(2); rect(B.sys.x, B.sys.y, B.sys.w, B.sys.h, 8);
+  noStroke(); fill('#455A64'); textAlign(CENTER, CENTER); textSize(14); textStyle(BOLD);
+  text('System Python (shared, unchanged)', B.sys.x + B.sys.w / 2, B.sys.y + B.sys.h / 2); textStyle(NORMAL);
+
+  hoverPkg = null;
+  drawSandbox(B.a, 'Project A: venv', '#3F51B5', sandA);
+  drawSandbox(B.b, 'Project B: venv', '#C2185B', sandB);
+
+  // drops animation
+  for (let d of drops) {
+    d.t += 0.05;
+    let box = d.sand === 'A' ? B.a : B.b;
+    let tx = box.x + box.w / 2, ty = box.y + 40;
+    let x = lerp(canvasWidth / 2, tx, d.t), y = lerp(B.sys.y + B.sys.h, ty, d.t);
+    noStroke(); fill(d.sand === 'A' ? '#3F51B5' : '#C2185B'); circle(x, y, 26);
+    fill('white'); textAlign(CENTER, CENTER); textSize(9); text(d.pkg.name, x, y);
+    if (d.t >= 1) { (d.sand === 'A' ? sandA : sandB).push(d.pkg); d.done = true; }
+  }
+  drops = drops.filter(d => !d.done);
+
+  // hover tooltip
+  if (hoverPkg) {
+    let msg = hoverPkg.name + ' ' + hoverPkg.version;
+    textSize(12); let tw = textWidth(msg) + 14;
+    fill(255, 255, 250, 248); stroke('gray'); strokeWeight(1); rect(mouseX + 8, mouseY - 22, tw, 20, 4);
+    noStroke(); fill('black'); textAlign(LEFT, CENTER); text(msg, mouseX + 15, mouseY - 12);
+  }
+}
+
+function drawSandbox(box, title, col, pkgs) {
+  noStroke(); fill('white'); stroke(col); strokeWeight(2); rect(box.x, box.y, box.w, box.h, 8);
+  noStroke(); fill(col); textAlign(LEFT, TOP); textStyle(BOLD); textSize(13); text(title, box.x + 8, box.y + 6); textStyle(NORMAL);
+  // packages grid
+  let cols = Math.max(1, Math.floor((box.w - 20) / 60));
+  for (let i = 0; i < pkgs.length; i++) {
+    let cx = box.x + 30 + (i % cols) * 60, cy = box.y + 50 + Math.floor(i / cols) * 44;
+    noStroke(); fill(col); circle(cx, cy, 34);
+    fill('white'); textAlign(CENTER, CENTER); textSize(9); text(pkgs[i].name, cx, cy - 3); text(pkgs[i].version, cx, cy + 8);
+    if (dist(mouseX, mouseY, cx, cy) < 17 && mouseY < drawHeight) hoverPkg = pkgs[i];
+  }
+  if (pkgs.length === 0) { noStroke(); fill('#bbb'); textAlign(CENTER, CENTER); textSize(12); text('(empty sandbox)', box.x + box.w / 2, box.y + box.h / 2); }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  canvasWidth = Math.floor(container.width);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

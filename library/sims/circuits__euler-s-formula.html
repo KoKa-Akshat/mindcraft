@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euler's Formula Explorer MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Euler's Formula Explorer MicroSim
+// Demonstrates e^(iθ) = cos(θ) + i·sin(θ)
+// Shows rotating point on unit circle synchronized with sine/cosine traces
+
+// Canvas dimensions
+let canvasWidth = 700;
+let drawHeight = 520;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let sliderLeftMargin = 230;  // Space for buttons and labels
+let defaultTextSize = 14;
+
+// Animation state
+let theta = 0;
+let isRunning = false;
+let speed = 1;
+let traceHistory = [];
+let maxHistoryLength = 400;
+
+// UI elements
+let playButton, resetButton;
+let angleSlider, speedSlider;
+
+// Layout dimensions (calculated in setup)
+let leftWidth, rightWidth;
+let circleRadius;
+let circleCenterX, circleCenterY;
+let plotWidth, plotHeight;
+let cosPlotY, sinPlotY;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Calculate layout
+  calculateLayout();
+
+  // Create Play/Pause button
+  playButton = createButton('Play');
+  playButton.mousePressed(togglePlay);
+
+  // Create Reset button
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetSimulation);
+
+  // Create angle slider (0 to 2π)
+  angleSlider = createSlider(0, TWO_PI, 0, 0.01);
+  angleSlider.input(onAngleChange);
+
+  // Create speed slider (0.1 to 5)
+  speedSlider = createSlider(0.1, 5, 1, 0.1);
+
+  // Position controls
+  positionControls();
+
+  describe('Interactive visualization of Euler\'s formula showing rotating point on unit circle with synchronized sine and cosine wave traces', LABEL);
+}
+
+function calculateLayout() {
+  leftWidth = canvasWidth * 0.45;
+  rightWidth = canvasWidth * 0.55;
+
+  // Unit circle parameters
+  circleRadius = min(leftWidth, drawHeight) * 0.35;
+  circleCenterX = leftWidth / 2;
+  circleCenterY = drawHeight / 2;
+
+  // Plot parameters
+  plotWidth = rightWidth - 60;
+  plotHeight = (drawHeight - 100) / 2 - 20;
+  cosPlotY = 70;
+  sinPlotY = cosPlotY + plotHeight + 60;
+}
+
+function positionControls() {
+  let buttonY = drawHeight + 25;
+  let sliderY1 = drawHeight + 15;
+  let sliderY2 = drawHeight + 50;
+
+  playButton.position(15, buttonY);
+  resetButton.position(75, buttonY);
+
+  // Angle slider
+  angleSlider.position(sliderLeftMargin, sliderY1);
+  angleSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  // Speed slider
+  speedSlider.position(sliderLeftMargin, sliderY2);
+  speedSlider.size(canvasWidth - sliderLeftMargin - margin);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Update theta if running
+  if (isRunning) {
+    speed = speedSlider.value();
+    theta += 0.02 * speed;
+    if (theta > TWO_PI * 4) {
+      theta = theta % TWO_PI;
+      traceHistory = [];
+    }
+    angleSlider.value(theta % TWO_PI);
+  } else {
+    theta = angleSlider.value();
+  }
+
+  // Store trace history
+  if (traceHistory.length === 0 ||
+      abs(theta - traceHistory[traceHistory.length - 1].theta) > 0.01) {
+    traceHistory.push({
+      theta: theta,
+      cos: cos(theta),
+      sin: sin(theta)
+    });
+    if (traceHistory.length > maxHistoryLength) {
+      traceHistory.shift();
+    }
+  }
+
+  // Drawing area background
+  fill('aliceblue');
+  stroke('silver');
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area background
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Draw title with proper superscript
+  drawTitle();
+
+  // Draw left side - Unit Circle
+  drawUnitCircle();
+
+  // Draw right side - Sine/Cosine plots
+  drawPlots();
+
+  // Draw equation display
+  drawEquationDisplay();
+
+  // Draw control labels
+  drawControlLabels();
+}
+
+function drawTitle() {
+  fill('black');
+  noStroke();
+  textAlign(LEFT, TOP);
+
+  // Calculate starting position to center the title
+  let titleY = 8;
+  let mainSize = 20;
+  let superSize = 14;
+
+  // Measure approximate total width to center
+  textSize(mainSize);
+  let totalWidth = textWidth("Euler's Formula: e") + textWidth("iθ") * 0.7 + textWidth(" = cos(θ) + i·sin(θ)");
+  let startX = (canvasWidth - totalWidth) / 2;
+
+  // Draw "Euler's Formula: e"
+  textSize(mainSize);
+  text("Euler's Formula: e", startX, titleY);
+  let xPos = startX + textWidth("Euler's Formula: e");
+
+  // Draw superscript "iθ" (smaller and raised)
+  textSize(superSize);
+  text("iθ", xPos, titleY - 2);
+  xPos += textWidth("iθ") + 2;
+
+  // Draw " = cos(θ) + i·sin(θ)"
+  textSize(mainSize);
+  text(" = cos(θ) + i·sin(θ)", xPos, titleY);
+}
+
+function drawUnitCircle() {
+  push();
+  translate(circleCenterX, circleCenterY);
+
+  // Draw grid
+  stroke(220);
+  strokeWeight(1);
+  let gridStep = circleRadius / 2;
+  for (let i = -2; i <= 2; i++) {
+    line(i * gridStep, -circleRadius - 20, i * gridStep, circleRadius + 20);
+    line(-circleRadius - 20, i * gridStep, circleRadius + 20, i * gridStep);
+  }
+
+  // Draw axes
+  strokeWeight(2);
+  // Real axis (blue)
+  stroke(0, 100, 200);
+  line(-circleRadius - 30, 0, circleRadius + 30, 0);
+  // Imaginary axis (red)
+  stroke(200, 50, 50);
+  line(0, -circleRadius - 30, 0, circleRadius + 30);
+
+  // Axis labels
+  noStroke();
+  textSize(14);
+  textAlign(CENTER, TOP);
+  fill(0, 100, 200);
+  text('Real', circleRadius + 15, 5);
+  fill(200, 50, 50);
+  textAlign(LEFT, CENTER);
+  text('Imag', 5, -circleRadius - 20);
+
+  // Draw unit circle
+  stroke(100);
+  strokeWeight(2);
+  noFill();
+  ellipse(0, 0, circleRadius * 2, circleRadius * 2);
+
+  // Current point position
+  let x = cos(theta) * circleRadius;
+  let y = -sin(theta) * circleRadius; // Negative because y is inverted
+
+  // Draw projection lines (dashed)
+  stroke(150);
+  strokeWeight(1);
+  drawingContext.setLineDash([5, 5]);
+  // Vertical projection to real axis
+  line(x, y, x, 0);
+  // Horizontal projection to imaginary axis
+  line(x, y, 0, y);
+  drawingContext.setLineDash([]);
+
+  // Draw angle arc
+  stroke(100, 180, 100);
+  strokeWeight(2);
+  noFill();
+  let arcRadius = circleRadius * 0.25;
+  arc(0, 0, arcRadius * 2, arcRadius * 2, -theta, 0);
+
+  // Theta label
+  fill(100, 180, 100);
+  noStroke();
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  let labelAngle = -theta / 2;
+  let labelR = arcRadius + 15;
+  text('θ', labelR * cos(labelAngle), labelR * sin(labelAngle));
+
+  // Draw rotating vector (green)
+  stroke(0, 160, 80);
+  strokeWeight(3);
+  line(0, 0, x, y);
+
+  // Draw arrowhead
+  let arrowLen = 10;
+  let angle = atan2(y, x);
+  line(x, y, x - arrowLen * cos(angle - 0.4), y - arrowLen * sin(angle - 0.4));
+  line(x, y, x - arrowLen * cos(angle + 0.4), y - arrowLen * sin(angle + 0.4));
+
+  // Draw point on circle
+  fill(0, 160, 80);
+  noStroke();
+  ellipse(x, y, 14, 14);
+
+  // Draw projections on axes
+  // Real projection (cos)
+  fill(0, 100, 200);
+  ellipse(x, 0, 10, 10);
+  // Imaginary projection (sin)
+  fill(200, 50, 50);
+  ellipse(0, y, 10, 10);
+
+  // Labels for projections
+  textSize(12);
+  textAlign(CENTER, TOP);
+  fill(0, 100, 200);
+  text('cos(θ)', x, 8);
+  textAlign(LEFT, CENTER);
+  fill(200, 50, 50);
+  text('sin(θ)', 8, y);
+
+  pop();
+}
+
+function drawPlots() {
+  let plotX = leftWidth + 30;
+
+  // Cosine plot
+  drawSinglePlot(plotX, cosPlotY, 'cos(θ)', 0, 100, 200, true);
+
+  // Sine plot
+  drawSinglePlot(plotX, sinPlotY, 'sin(θ)', 200, 50, 50, false);
+}
+
+function drawSinglePlot(x, y, label, r, g, b, isCos) {
+  push();
+  translate(x, y);
+
+  // Plot background
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(0, 0, plotWidth, plotHeight, 5);
+
+  // Plot title
+  fill(r, g, b);
+  noStroke();
+  textSize(14);
+  textAlign(LEFT, BOTTOM);
+  text(label, 5, -5);
+
+  // Draw axes
+  stroke(180);
+  strokeWeight(1);
+  let centerY = plotHeight / 2;
+
+  // Horizontal axis (zero line)
+  line(0, centerY, plotWidth, centerY);
+
+  // Y-axis labels
+  textSize(10);
+  textAlign(RIGHT, CENTER);
+  fill(100);
+  text('1', -5, 10);
+  text('0', -5, centerY);
+  text('-1', -5, plotHeight - 10);
+
+  // Draw grid lines
+  stroke(230);
+  for (let i = 1; i < 4; i++) {
+    let gridX = (i / 4) * plotWidth;
+    line(gridX, 0, gridX, plotHeight);
+  }
+
+  // X-axis labels (in terms of π)
+  textAlign(CENTER, TOP);
+  fill(100);
+  text('0', 0, plotHeight + 3);
+  text('π', plotWidth / 2, plotHeight + 3);
+  text('2π', plotWidth, plotHeight + 3);
+
+  // Draw trace
+  stroke(r, g, b);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let i = 0; i < traceHistory.length; i++) {
+    let t = traceHistory[i].theta;
+    let val = isCos ? traceHistory[i].cos : traceHistory[i].sin;
+    let px = map(t % TWO_PI, 0, TWO_PI, 0, plotWidth);
+    let py = map(val, 1, -1, 10, plotHeight - 10);
+    vertex(px, py);
+  }
+  endShape();
+
+  // Draw current point
+  let currentVal = isCos ? cos(theta) : sin(theta);
+  let currentX = map(theta % TWO_PI, 0, TWO_PI, 0, plotWidth);
+  let currentY = map(currentVal, 1, -1, 10, plotHeight - 10);
+  fill(r, g, b);
+  noStroke();
+  ellipse(currentX, currentY, 12, 12);
+
+  // Draw horizontal line connecting to unit circle
+  stroke(r, g, b, 100);
+  strokeWeight(1);
+  drawingContext.setLineDash([3, 3]);
+  line(0, currentY, -30 + (leftWidth - x), currentY);
+  drawingContext.setLineDash([]);
+
+  // Current value label
+  fill(r, g, b);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text(currentVal.toFixed(3), currentX + 8, currentY);
+
+  pop();
+}
+
+function drawEquationDisplay() {
+  // Display current values
+  let boxX = leftWidth / 2 - 80;
+  let boxY = drawHeight - 80;
+  let boxW = 160;
+  let boxH = 75;
+
+  fill(255, 255, 255, 240);
+  stroke(200);
+  strokeWeight(1);
+  rect(boxX, boxY, boxW, boxH, 8);
+
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, TOP);
+
+  let textX = boxX + 10;
+  let textY = boxY + 8;
+  let lineH = 18;
+
+  // Theta value
+  fill(100, 160, 100);
+  let thetaDeg = degrees(theta % TWO_PI);
+  text('θ = ' + (theta % TWO_PI).toFixed(2) + ' rad', textX, textY);
+  text('   (' + thetaDeg.toFixed(1) + '°)', textX, textY + lineH);
+
+  // Cos value
+  fill(0, 100, 200);
+  text('cos(θ) = ' + cos(theta).toFixed(4), textX, textY + lineH * 2);
+
+  // Sin value
+  fill(200, 50, 50);
+  text('sin(θ) = ' + sin(theta).toFixed(4), textX, textY + lineH * 3);
+}
+
+function drawControlLabels() {
+  fill('black');
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, CENTER);
+
+  // Labels positioned after buttons, before sliders
+  let labelX = 135;
+
+  // Angle slider label
+  let angleVal = (angleSlider.value() / PI).toFixed(2);
+  text('Angle: ' + angleVal + 'π', labelX, drawHeight + 27);
+
+  // Speed slider label
+  text('Speed: ' + speedSlider.value().toFixed(1) + 'x', labelX, drawHeight + 62);
+}
+
+function togglePlay() {
+  isRunning = !isRunning;
+  playButton.html(isRunning ? 'Pause' : 'Play');
+}
+
+function resetSimulation() {
+  theta = 0;
+  angleSlider.value(0);
+  traceHistory = [];
+  isRunning = false;
+  playButton.html('Play');
+}
+
+function onAngleChange() {
+  if (!isRunning) {
+    theta = angleSlider.value();
+    // Clear trace when manually adjusting
+    traceHistory = [];
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+    calculateLayout();
+
+    // Update slider sizes
+    if (typeof angleSlider !== 'undefined') {
+      angleSlider.size(canvasWidth - sliderLeftMargin - margin);
+    }
+    if (typeof speedSlider !== 'undefined') {
+      speedSlider.size(canvasWidth - sliderLeftMargin - margin);
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

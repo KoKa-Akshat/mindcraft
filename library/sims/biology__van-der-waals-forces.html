@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microscopic View of Surface Contact</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Microscopic View of Surface Contact MicroSim
+// Demonstrates how microscopic surface irregularities create friction
+
+let canvasWidth = 800;
+let drawHeight = 450;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+
+let roughnessSlider, zoomSlider, forceSlider;
+let contactPoints = [];
+let showMotionCheckbox;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Roughness slider
+    roughnessSlider = createSlider(1, 10, 5, 0.5);
+    roughnessSlider.position(sliderLeftMargin, drawHeight + 12);
+    roughnessSlider.size(180);
+    roughnessSlider.input(generateSurfaces);
+
+    // Zoom slider
+    zoomSlider = createSlider(1, 5, 3, 0.5);
+    zoomSlider.position(sliderLeftMargin, drawHeight + 42);
+    zoomSlider.size(180);
+
+    // Applied force slider
+    forceSlider = createSlider(0, 100, 30, 5);
+    forceSlider.position(sliderLeftMargin, drawHeight + 72);
+    forceSlider.size(180);
+
+    // Show motion checkbox
+    showMotionCheckbox = createCheckbox(' Show attempted motion', true);
+    showMotionCheckbox.position(350, drawHeight + 25);
+    showMotionCheckbox.style('font-size', '14px');
+
+    generateSurfaces();
+
+    describe('Microscopic view showing how surface irregularities create friction between two materials', LABEL);
+}
+
+let upperSurface = [];
+let lowerSurface = [];
+
+function generateSurfaces() {
+    let roughness = roughnessSlider.value();
+    upperSurface = [];
+    lowerSurface = [];
+    contactPoints = [];
+
+    // Generate irregular surfaces
+    let numPoints = 80;
+    for (let i = 0; i <= numPoints; i++) {
+        let x = i / numPoints;
+
+        // Lower surface (stationary)
+        let lowerY = 0;
+        for (let j = 1; j <= 5; j++) {
+            lowerY += (noise(i * 0.1 * j + 100) - 0.5) * roughness * 3 / j;
+        }
+        lowerSurface.push({x: x, y: lowerY});
+
+        // Upper surface (movable)
+        let upperY = 0;
+        for (let j = 1; j <= 5; j++) {
+            upperY += (noise(i * 0.1 * j + 500) - 0.5) * roughness * 3 / j;
+        }
+        upperSurface.push({x: x, y: upperY});
+    }
+
+    // Find contact points
+    for (let i = 0; i < upperSurface.length - 1; i++) {
+        let upperY = upperSurface[i].y;
+        let lowerY = lowerSurface[i].y;
+        // Contact where surfaces are close
+        if (abs(upperY - lowerY) < roughness * 0.5) {
+            contactPoints.push({x: upperSurface[i].x, y: (upperY + lowerY) / 2});
+        }
+    }
+}
+
+function draw() {
+    updateCanvasSize();
+
+    // Drawing area
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    noStroke();
+    textSize(20);
+    textAlign(CENTER, TOP);
+    text('Microscopic View of Surface Contact', canvasWidth / 2, 10);
+
+    let zoom = zoomSlider.value();
+    let appliedForce = forceSlider.value();
+
+    // Main macroscopic view (left side)
+    drawMacroscopicView(50, 80, 250, 150);
+
+    // Magnified microscopic view (right side)
+    drawMicroscopicView(380, 60, 380, 280, zoom);
+
+    // Info panel
+    drawInfoPanel(50, 280, 280, 150, appliedForce);
+
+    // Control labels
+    fill('black');
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text('Roughness: ' + roughnessSlider.value().toFixed(1), 10, drawHeight + 19);
+    text('Zoom: ' + zoom.toFixed(1) + 'x', 10, drawHeight + 49);
+    text('Applied Force: ' + appliedForce + ' N', 10, drawHeight + 79);
+}
+
+function drawMacroscopicView(x, y, w, h) {
+    push();
+    translate(x, y);
+
+    // Background
+    fill(240);
+    stroke(150);
+    strokeWeight(1);
+    rect(0, 0, w, h, 5);
+
+    // Label
+    fill(50);
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, TOP);
+    text('Macroscopic View', w/2, 5);
+    text('(Surfaces appear smooth)', w/2, 20);
+
+    // Upper surface (blue block)
+    fill('#87CEEB');
+    stroke('#4A90A4');
+    strokeWeight(2);
+    rect(30, 45, w - 60, 40, 3);
+
+    // Lower surface (gray)
+    fill('#A0A0A0');
+    stroke('#707070');
+    rect(20, 90, w - 40, 35, 3);
+
+    // Magnification indicator circle
+    stroke('#E74C3C');
+    strokeWeight(2);
+    noFill();
+    ellipse(w/2, 88, 60, 30);
+
+    // Dashed line to microscopic view
+    stroke('#E74C3C');
+    strokeWeight(1);
+    drawingContext.setLineDash([5, 5]);
+    line(w/2 + 30, 88, w + 80, 100);
+    line(w/2 + 30, 88, w + 80, 240);
+    drawingContext.setLineDash([]);
+
+    // Label
+    fill('#E74C3C');
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text('Magnified', w/2 + 35, 75);
+    text('region', w/2 + 35, 87);
+
+    pop();
+}
+
+function drawMicroscopicView(x, y, w, h, zoom) {
+    push();
+    translate(x, y);
+
+    // Background
+    fill(255);
+    stroke('#E74C3C');
+    strokeWeight(2);
+    rect(0, 0, w, h, 10);
+
+    // Label
+    fill('#E74C3C');
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, TOP);
+    text('Microscopic View (' + zoom.toFixed(1) + 'x magnification)', w/2, 8);
+
+    let surfaceY = h * 0.55;
+    let amplitude = 15 * zoom;
+    let showMotion = showMotionCheckbox.checked();
+    let appliedForce = forceSlider.value();
+
+    // Draw lower surface (gray)
+    fill('#C0C0C0');
+    stroke('#808080');
+    strokeWeight(1);
+    beginShape();
+    vertex(20, h - 30);
+    for (let i = 0; i < lowerSurface.length; i++) {
+        let px = 20 + lowerSurface[i].x * (w - 40);
+        let py = surfaceY + lowerSurface[i].y * amplitude + 20;
+        vertex(px, py);
+    }
+    vertex(w - 20, h - 30);
+    endShape(CLOSE);
+
+    // Draw upper surface (blue)
+    fill('#ADD8E6');
+    stroke('#4A90A4');
+    beginShape();
+    vertex(20, 50);
+    for (let i = 0; i < upperSurface.length; i++) {
+        let px = 20 + upperSurface[i].x * (w - 40);
+        let py = surfaceY + upperSurface[i].y * amplitude - 25;
+        vertex(px, py);
+    }
+    vertex(w - 20, 50);
+    endShape(CLOSE);
+
+    // Draw contact points
+    fill('#FF6B6B');
+    noStroke();
+    for (let cp of contactPoints) {
+        let px = 20 + cp.x * (w - 40);
+        let py = surfaceY + cp.y * amplitude - 2;
+        ellipse(px, py, 8, 8);
+
+        // Small friction arrows at contact points
+        if (showMotion && appliedForce > 0) {
+            drawSmallArrow(px, py, px - 15, py, '#E74C3C');
+        }
+    }
+
+    // Motion attempt arrow
+    if (showMotion && appliedForce > 0) {
+        let arrowLen = map(appliedForce, 0, 100, 20, 80);
+        stroke('#27AE60');
+        strokeWeight(3);
+        fill('#27AE60');
+        let arrowY = 70;
+        line(w - 30, arrowY, w - 30 - arrowLen, arrowY);
+        // Arrow head
+        triangle(w - 30 - arrowLen, arrowY,
+                 w - 30 - arrowLen + 10, arrowY - 6,
+                 w - 30 - arrowLen + 10, arrowY + 6);
+
+        noStroke();
+        textSize(11);
+        textAlign(RIGHT, CENTER);
+        text('Attempted motion', w - 35, arrowY - 15);
+    }
+
+    // Labels
+    fill('#4A90A4');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text('Upper surface', 25, 38);
+
+    fill('#707070');
+    text('Lower surface', 25, h - 18);
+
+    // Contact points legend
+    fill('#FF6B6B');
+    ellipse(w - 100, h - 50, 8, 8);
+    fill('#333');
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text('Contact points', w - 90, h - 50);
+    text('(where friction occurs)', w - 90, h - 38);
+
+    // Draw peaks and valleys labels
+    fill('#666');
+    textSize(9);
+    textAlign(CENTER, TOP);
+    text('Peaks', 60, surfaceY - 45);
+    text('Valleys', 120, surfaceY + 35);
+
+    pop();
+}
+
+function drawSmallArrow(x1, y1, x2, y2, col) {
+    stroke(col);
+    strokeWeight(2);
+    line(x1, y1, x2, y2);
+    fill(col);
+    noStroke();
+    let angle = atan2(y2 - y1, x2 - x1);
+    push();
+    translate(x2, y2);
+    rotate(angle);
+    triangle(0, 0, 6, -3, 6, 3);
+    pop();
+}
+
+function drawInfoPanel(x, y, w, h, force) {
+    push();
+    translate(x, y);
+
+    // Background
+    fill(255, 255, 255, 240);
+    stroke(200);
+    strokeWeight(1);
+    rect(0, 0, w, h, 10);
+
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, TOP);
+
+    let lineY = 10;
+    let lineSpacing = 20;
+
+    text('Key Insights:', 10, lineY);
+    lineY += lineSpacing + 5;
+
+    textSize(11);
+    fill('#555');
+
+    text('• Surfaces appear smooth macroscopically', 10, lineY);
+    lineY += lineSpacing;
+
+    text('• At microscopic level: peaks and valleys', 10, lineY);
+    lineY += lineSpacing;
+
+    text('• Contact only at peaks (small actual area)', 10, lineY);
+    lineY += lineSpacing;
+
+    text('• Friction forces resist motion at contacts', 10, lineY);
+    lineY += lineSpacing;
+
+    fill('#E74C3C');
+    textSize(11);
+    text('Contact points: ' + contactPoints.length, 10, lineY);
+
+    pop();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    if (roughnessSlider) roughnessSlider.size(180);
+    if (zoomSlider) zoomSlider.size(180);
+    if (forceSlider) forceSlider.size(180);
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = Math.min(container.offsetWidth, 800);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

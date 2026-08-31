@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Atomic Structure Explorer MicroSim using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Atomic Structure Explorer MicroSim
+// ap Biology — Chapter 1: Scientific Foundations and Atomic Chemistry
+// Bloom Level: Understand (L2) — Verb: explain
+// Students explain the relationship between atomic number, electron configuration,
+// valence electrons, and bonding behavior in biological molecules.
+//
+// Layout: left panel = Bohr atom diagram | right panel = element info
+// Controls: six element-selector buttons + two toggle buttons
+
+// ─── Canvas Dimensions ───────────────────────────────────────────────────────
+let containerWidth;
+let canvasWidth   = 700;
+let drawHeight    = 450;
+let controlHeight = 85;
+let canvasHeight  = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+
+// ─── Element Data ─────────────────────────────────────────────────────────────
+// The six biologically essential elements (CHONPS)
+const ELEM = [
+  {
+    symbol: 'H', name: 'Hydrogen',
+    atomicNumber: 1, massNumber: 1,
+    shells: [1],
+    valenceElectrons: 1, bondingCapacity: 1,
+    role: 'Hydrogen is the simplest and most abundant element in the universe. ' +
+          'In biology, it forms covalent bonds with carbon in organic molecules and ' +
+          'participates in hydrogen bonding, which is central to water\'s unique ' +
+          'properties and DNA base pairing.'
+  },
+  {
+    symbol: 'C', name: 'Carbon',
+    atomicNumber: 6, massNumber: 12,
+    shells: [2, 4],
+    valenceElectrons: 4, bondingCapacity: 4,
+    role: 'Carbon\'s four valence electrons allow it to form four stable covalent bonds, ' +
+          'making it the structural backbone of all organic molecules. Carbon can bond to ' +
+          'itself repeatedly, forming chains, rings, and branched structures of virtually ' +
+          'unlimited complexity.'
+  },
+  {
+    symbol: 'N', name: 'Nitrogen',
+    atomicNumber: 7, massNumber: 14,
+    shells: [2, 5],
+    valenceElectrons: 5, bondingCapacity: 3,
+    role: 'Nitrogen is found in every amino acid (as the amino group, \u2212NH\u2082) ' +
+          'and in every nucleotide base in DNA and RNA. Its five valence electrons, ' +
+          'with three available for bonding, contribute to the directionality of ' +
+          'nitrogen-containing functional groups.'
+  },
+  {
+    symbol: 'O', name: 'Oxygen',
+    atomicNumber: 8, massNumber: 16,
+    shells: [2, 6],
+    valenceElectrons: 6, bondingCapacity: 2,
+    role: 'Oxygen\'s high electronegativity makes it a strong electron-puller in covalent ' +
+          'bonds, generating the polarity that gives water its cohesive and solvent properties. ' +
+          'Oxygen is central to cellular respiration as the final electron acceptor in the ' +
+          'electron transport chain.'
+  },
+  {
+    symbol: 'P', name: 'Phosphorus',
+    atomicNumber: 15, massNumber: 31,
+    shells: [2, 8, 5],
+    valenceElectrons: 5, bondingCapacity: 5,
+    role: 'Phosphorus forms the phosphate backbone of DNA and RNA and is the central atom ' +
+          'of ATP, the cell\'s primary energy currency. The high-energy bonds in ATP store ' +
+          'and release energy to power cellular work.'
+  },
+  {
+    symbol: 'S', name: 'Sulfur',
+    atomicNumber: 16, massNumber: 32,
+    shells: [2, 8, 6],
+    valenceElectrons: 6, bondingCapacity: 2,
+    role: 'Sulfur appears in two amino acids \u2014 cysteine and methionine \u2014 and forms ' +
+          'disulfide bridges (S\u2013S bonds) between cysteine residues that stabilize the ' +
+          'three-dimensional structure of many proteins.'
+  }
+];
+
+// ─── Colors ───────────────────────────────────────────────────────────────────
+// Electron shell fills: light blue (1), medium blue (2), dark blue (3)
+const SHELL_FILL   = ['#87CEEB', '#4169E1', '#1A237E'];
+const SHELL_STROKE = ['#5BA8C4', '#2D4F9E', '#10175A'];
+const VALENCE_FILL   = '#FFD700'; // bright yellow for valence electrons
+const VALENCE_STROKE = '#B8860B';
+const NUCLEUS_COLOR  = '#FF8C00'; // warm orange nucleus
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let selectedIdx       = 1;     // Default: Carbon (index 1)
+let showValenceOnly   = false; // toggle: highlight valence shell only
+let showBondingCap    = false; // toggle: show bonding capacity badge
+
+// ─── UI Controls ─────────────────────────────────────────────────────────────
+let elemBtns   = []; // six element selector buttons
+let valenceBtn, bondingBtn;
+
+// ─── Setup ───────────────────────────────────────────────────────────────────
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Arial');
+
+  // Element selector buttons (H, C, N, O, P, S)
+  for (let i = 0; i < ELEM.length; i++) {
+    const btn = createButton(ELEM[i].symbol);
+    const capturedI = i;
+    btn.mousePressed(() => { selectedIdx = capturedI; applyBtnStyles(); });
+    elemBtns.push(btn);
+  }
+
+  // Toggle: highlight valence shell electrons
+  valenceBtn = createButton('Highlight Valence');
+  valenceBtn.mousePressed(() => { showValenceOnly = !showValenceOnly; applyBtnStyles(); });
+
+  // Toggle: show bonding capacity badge
+  bondingBtn = createButton('Show Bonding Capacity');
+  bondingBtn.mousePressed(() => { showBondingCap = !showBondingCap; applyBtnStyles(); });
+
+  positionControls();
+  applyBtnStyles();
+
+  describe(
+    'Atomic Structure Explorer: click H, C, N, O, P, or S to see the Bohr model ' +
+    'for each biological element. Toggle options highlight valence electrons or ' +
+    'display the bonding capacity.',
+    LABEL
+  );
+}
+
+// ─── Control Positioning ──────────────────────────────────────────────────────
+function positionControls() {
+  const btnW   = min(54, floor((canvasWidth - 80) / 6));
+  const btnH   = 32;
+  // The horizontal gap between the buttons
+  const gap    = 10;
+  const totalW = 6 * btnW + 5 * gap;
+  const ex     = floor((canvasWidth - totalW) / 2);
+  const ey     = drawHeight + 16;
+
+  for (let i = 0; i < 6; i++) {
+    elemBtns[i].position(ex + i * (btnW + gap), ey);
+    elemBtns[i].size(btnW, btnH);
+  }
+
+  const tW   = 170;
+  const tH   = 28;
+  const tGap = 12;
+  const tx   = floor((canvasWidth - (2 * tW + tGap)) / 2);
+  const ty   = drawHeight + 52;
+
+  valenceBtn.position(tx, ty);
+  valenceBtn.size(tW, tH);
+  bondingBtn.position(tx + tW + tGap, ty);
+  bondingBtn.size(tW, tH);
+}
+
+// ─── Button Styling ───────────────────────────────────────────────────────────
+function applyBtnStyles() {
+  for (let i = 0; i < elemBtns.length; i++) {
+    const active = (i === selectedIdx);
+    elemBtns[i].style('background-color', active ? '#2E7D32' : '#E8F5E9');
+    elemBtns[i].style('color',            active ? '#FFFFFF' : '#1B5E20');
+    elemBtns[i].style('font-weight',      active ? 'bold'    : 'normal');
+    elemBtns[i].style('font-size',        '16px');
+    elemBtns[i].style('border',           '1px solid #4CAF50');
+    elemBtns[i].style('border-radius',    '4px');
+    elemBtns[i].style('cursor',           'pointer');
+    elemBtns[i].style('font-family',      'Arial, sans-serif');
+  }
+  styleToggle(valenceBtn, showValenceOnly, '#1565C0', '#E3F2FD', '#0D47A1');
+  styleToggle(bondingBtn, showBondingCap,  '#6A1B9A', '#F3E5F5', '#4A148C');
+}
+
+function styleToggle(btn, active, activeBg, inactiveBg, inactiveFg) {
+  btn.style('background-color', active ? activeBg   : inactiveBg);
+  btn.style('color',            active ? '#FFFFFF'  : inactiveFg);
+  btn.style('border',           '1px solid ' + activeBg);
+  btn.style('border-radius',    '4px');
+  btn.style('cursor',           'pointer');
+  btn.style('font-size',        '13px');
+  btn.style('font-family',      'Arial, sans-serif');
+}
+
+// ─── Draw Loop ────────────────────────────────────────────────────────────────
+function draw() {
+  updateCanvasSize();
+  const el = ELEM[selectedIdx];
+
+  // Drawing region background
+  fill('aliceblue');
+  // Light silver border around both the drawing and control regions
+  stroke('silver');
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control region background
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+
+  // Panel divider line
+  const splitX = floor(canvasWidth * 0.58);
+  stroke('#DDDDDD');
+  strokeWeight(1);
+  line(splitX, margin * 2, splitX, drawHeight - margin);
+
+  renderAtom(el, splitX);
+  renderInfoPanel(el, splitX);
+
+  // Control area label
+  noStroke();
+  fill('#555555');
+  textAlign(CENTER, TOP);
+  textSize(12);
+  text('Select an element (CHONPS \u2014 the elements of life):', canvasWidth / 2, drawHeight + 2);
+}
+
+// ─── Atom Diagram ─────────────────────────────────────────────────────────────
+function renderAtom(el, splitX) {
+  // Atom center in left panel
+  const cx = floor(splitX * 0.47);
+  const cy = floor(drawHeight * 0.52);
+
+  const numShells = el.shells.length;
+  const maxShellR = min(splitX * 0.39, drawHeight * 0.39);
+  const nucR      = max(22, maxShellR * 0.14);
+
+  // Shell radii: evenly spaced from nucleus outward
+  const shellR = [];
+  for (let s = 0; s < numShells; s++) {
+    shellR.push(maxShellR * (s + 1) / numShells);
+  }
+
+  // --- Shell circles ---
+  for (let s = 0; s < numShells; s++) {
+    noFill();
+    stroke('#CCCCCC');
+    strokeWeight(1);
+    circle(cx, cy, shellR[s] * 2);
+  }
+
+  // --- Electrons ---
+  const eR = max(7, maxShellR * 0.055);
+
+  for (let s = 0; s < numShells; s++) {
+    const r = shellR[s];
+    const n = el.shells[s];
+    const isValence = (s === numShells - 1);
+
+    for (let e = 0; e < n; e++) {
+      // Place electrons evenly around shell, starting at top (−HALF_PI)
+      const angle = (TWO_PI * e / n) - HALF_PI;
+      const ex = cx + r * cos(angle);
+      const ey = cy + r * sin(angle);
+
+      if (showValenceOnly && !isValence) {
+        // Dim non-valence electrons
+        fill('#DDDDDD');
+        stroke('#BBBBBB');
+        strokeWeight(1);
+      } else if (isValence) {
+        // Valence glow when toggle is active
+        if (showValenceOnly) {
+          noStroke();
+          fill(255, 215, 0, 80);
+          circle(ex, ey, (eR + 6) * 2);
+        }
+        fill(VALENCE_FILL);
+        stroke(VALENCE_STROKE);
+        strokeWeight(1.5);
+      } else {
+        fill(SHELL_FILL[s]);
+        stroke(SHELL_STROKE[s]);
+        strokeWeight(1);
+      }
+      circle(ex, ey, eR * 2);
+    }
+  }
+
+  // --- Nucleus ---
+  fill(NUCLEUS_COLOR);
+  stroke('#B35C00');
+  strokeWeight(2);
+  circle(cx, cy, nucR * 2);
+
+  // Symbol inside nucleus
+  noStroke();
+  fill('white');
+  textAlign(CENTER, CENTER);
+  textSize(max(13, nucR * 0.80));
+  text(el.symbol, cx, cy);
+
+  // Mass number (A) above nucleus
+  fill('#444444');
+  noStroke();
+  textAlign(CENTER, BOTTOM);
+  textSize(11);
+  text('A = ' + el.massNumber, cx, cy - nucR - 4);
+
+  // Atomic number (Z) below nucleus
+  textAlign(CENTER, TOP);
+  textSize(11);
+  text('Z = ' + el.atomicNumber, cx, cy + nucR + 4);
+
+  // --- Shell capacity legend (bottom of left panel) ---
+  const capacities = [2, 8, 8];
+  const legendParts = [];
+  for (let s = 0; s < numShells; s++) {
+    legendParts.push('Shell ' + (s + 1) + ': max ' + capacities[s] + 'e\u207B');
+  }
+  fill('#999999');
+  noStroke();
+  textAlign(CENTER, BOTTOM);
+  textSize(11);
+  text(legendParts.join('   '), cx, drawHeight - 6);
+
+  // --- Bonding capacity badge (upper-right corner of left panel) ---
+  if (showBondingCap) {
+    const bw = 132;
+    const bh = 26;
+    const bx = splitX - 10 - bw; // right-align to just left of divider
+    const by = 10;
+    fill('#6A1B9A');
+    noStroke();
+    rect(bx, by, bw, bh, 5);
+    fill('white');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    const bondsLabel = el.bondingCapacity === 1
+      ? '1 covalent bond'
+      : el.bondingCapacity + ' covalent bonds';
+    text('Forms ' + bondsLabel, bx + bw / 2, by + bh / 2);
+  }
+
+  // --- Diagram title ---
+  noStroke();
+  fill('#1B5E20');
+  textAlign(CENTER, TOP);
+  textSize(15);
+  text(el.name + ' \u2014 Bohr Model', cx, margin);
+}
+
+// ─── Info Panel ───────────────────────────────────────────────────────────────
+function renderInfoPanel(el, splitX) {
+  const px = splitX + margin + 4;
+  const pw = canvasWidth - splitX - margin * 2 - 4;
+  let py   = margin;
+
+  // Heading
+  noStroke();
+  fill('#1B5E20');
+  textAlign(LEFT, TOP);
+  textSize(16);
+  text(el.name + ' (' + el.symbol + ')', px, py);
+  py += 24;
+
+  // Divider
+  stroke('#CCCCCC');
+  strokeWeight(1);
+  line(px, py, px + pw, py);
+  py += 8;
+
+  // Properties
+  noStroke();
+  textSize(12.5);
+  const shellStr = el.shells.map((n, i) => 'S' + (i + 1) + ':' + n).join(' | ') + ' e\u207B';
+  const props = [
+    ['Atomic number (Z):',  String(el.atomicNumber)],
+    ['Mass number (A):',    el.massNumber + ' amu'],
+    ['Electron shells:',    shellStr],
+    ['Valence electrons:',  String(el.valenceElectrons)],
+    ['Bonding capacity:',   el.bondingCapacity + (el.bondingCapacity === 1 ? ' bond' : ' bonds')]
+  ];
+
+  for (const [label, val] of props) {
+    fill('#666666');
+    textAlign(LEFT, TOP);
+    text(label, px, py);
+    fill('#111111');
+    textAlign(RIGHT, TOP);
+    text(val, px + pw, py);
+    py += 20;
+  }
+
+  py += 5;
+
+  // Color key
+  stroke('#CCCCCC');
+  strokeWeight(1);
+  line(px, py, px + pw, py);
+  py += 8;
+
+  noStroke();
+  fill('#1565C0');
+  textAlign(LEFT, TOP);
+  textSize(12);
+  text('Electron Color Key', px, py);
+  py += 16;
+
+  const colorKey = [
+    { label: 'Shell 1 electrons', fc: SHELL_FILL[0], sc: SHELL_STROKE[0] },
+    { label: 'Shell 2 electrons', fc: SHELL_FILL[1], sc: SHELL_STROKE[1] },
+    { label: 'Shell 3 electrons', fc: SHELL_FILL[2], sc: SHELL_STROKE[2] },
+    { label: 'Valence electrons', fc: VALENCE_FILL,  sc: VALENCE_STROKE }
+  ];
+  for (const k of colorKey) {
+    fill(k.fc);
+    stroke(k.sc);
+    strokeWeight(1);
+    circle(px + 6, py + 6, 11);
+    noStroke();
+    fill('#333333');
+    textAlign(LEFT, TOP);
+    textSize(12);
+    text(k.label, px + 17, py + 1);
+    py += 16;
+  }
+
+  py += 6;
+
+  // Biological role
+  stroke('#CCCCCC');
+  strokeWeight(1);
+  line(px, py, px + pw, py);
+  py += 8;
+
+  noStroke();
+  fill('#2E7D32');
+  textAlign(LEFT, TOP);
+  textSize(12);
+  text('Biological Role', px, py);
+  py += 16;
+
+  noStroke();
+  fill('#333333');
+  textSize(11.5);
+  textAlign(LEFT, TOP);
+  wrapText(el.role, px, py, pw, 16);
+}
+
+// ─── Utility: Word-wrap Text ──────────────────────────────────────────────────
+function wrapText(str, x, y, maxW, lineH) {
+  textAlign(LEFT, TOP);
+  const words = str.split(' ');
+  let line = '';
+  let curY = y;
+  for (let i = 0; i < words.length; i++) {
+    const test = line + words[i] + ' ';
+    if (textWidth(test) > maxW && line !== '') {
+      text(line.trim(), x, curY);
+      line = words[i] + ' ';
+      curY += lineH;
+    } else {
+      line = test;
+    }
+  }
+  if (line.trim()) text(line.trim(), x, curY);
+}
+
+// ─── Responsive Resize ───────────────────────────────────────────────────────
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth    = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

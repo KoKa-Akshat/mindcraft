@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="qubit-scaling-vs-crypto">
+    <title>Qubit Scaling vs. Cryptographic Requirements</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Qubit Scaling vs. Cryptographic Requirements</h1>
+        <div class="chart-wrapper">
+            <canvas id="qubitChart"></canvas>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label for="doublingSlider">Doubling time (years):</label>
+                <input type="range" id="doublingSlider" min="0.5" max="3" step="0.1" value="1.5">
+                <span class="value" id="doublingValue">1.5</span>
+            </div>
+            <div class="control-group">
+                <label for="errorSlider">Error improvement factor:</label>
+                <input type="range" id="errorSlider" min="1" max="100" step="1" value="1">
+                <span class="value" id="errorValue">1x</span>
+            </div>
+            <div class="toggle-group">
+                <input type="checkbox" id="pqcToggle">
+                <label for="pqcToggle">Show PQC migration timeline</label>
+            </div>
+        </div>
+        <div class="result-box" id="resultBox">
+            Years until RSA-2048 threatened: <span class="threat-year" id="threatResult">—</span>
+        </div>
+    </div>
+    <script>
+// Historical physical qubit data
+const historicalData = [
+    { year: 2019, qubits: 53 },      // Google Sycamore
+    { year: 2021, qubits: 127 },     // IBM Eagle
+    { year: 2022, qubits: 433 },     // IBM Osprey
+    { year: 2023, qubits: 1121 },    // IBM Condor
+    { year: 2025, qubits: 1200 }     // Various
+];
+
+const START_YEAR = 2015;
+const END_YEAR = 2060;
+const BASE_RSA_THRESHOLD = 20_000_000;  // ~20M qubits at current error rates
+const BASE_ECC_THRESHOLD = 10_000_000;  // ~10M qubits at current error rates
+const PQC_START = 2030;
+const PQC_END = 2035;
+
+const ctx = document.getElementById('qubitChart').getContext('2d');
+
+// Generate year labels
+function yearLabels() {
+    const labels = [];
+    for (let y = START_YEAR; y <= END_YEAR; y++) labels.push(y);
+    return labels;
+}
+
+// Build projection from last historical point
+function buildProjection(doublingYears) {
+    const lastPoint = historicalData[historicalData.length - 1];
+    const points = [];
+    for (let y = START_YEAR; y <= END_YEAR; y++) {
+        if (y < lastPoint.year) {
+            points.push(null);
+        } else if (y === lastPoint.year) {
+            points.push(lastPoint.qubits);
+        } else {
+            const elapsed = y - lastPoint.year;
+            const doublings = elapsed / doublingYears;
+            points.push(lastPoint.qubits * Math.pow(2, doublings));
+        }
+    }
+    return points;
+}
+
+// Build historical data series
+function buildHistorical() {
+    const points = [];
+    for (let y = START_YEAR; y <= END_YEAR; y++) {
+        const match = historicalData.find(d => d.year === y);
+        points.push(match ? match.qubits : null);
+    }
+    return points;
+}
+
+// Find year when projection crosses threshold
+function findCrossingYear(doublingYears, threshold) {
+    const lastPoint = historicalData[historicalData.length - 1];
+    if (lastPoint.qubits >= threshold) return lastPoint.year;
+    const yearsNeeded = doublingYears * Math.log2(threshold / lastPoint.qubits);
+    const crossYear = lastPoint.year + yearsNeeded;
+    return crossYear <= END_YEAR ? Math.round(crossYear * 10) / 10 : null;
+}
+
+// Threshold adjusted by error improvement
+function adjustedThreshold(base, errorFactor) {
+    // Better error rates reduce overhead, hence reduce needed physical qubits
+    return base / errorFactor;
+}
+
+function buildChart() {
+    const doublingYears = parseFloat(document.getElementById('doublingSlider').value);
+    const errorFactor = parseInt(document.getElementById('errorSlider').value);
+    const showPQC = document.getElementById('pqcToggle').checked;
+
+    const labels = yearLabels();
+    const historical = buildHistorical();
+    const projection = buildProjection(doublingYears);
+
+    const rsaThreshold = adjustedThreshold(BASE_RSA_THRESHOLD, errorFactor);
+    const eccThreshold = adjustedThreshold(BASE_ECC_THRESHOLD, errorFactor);
+
+    const rsaCrossYear = findCrossingYear(doublingYears, rsaThreshold);
+    const eccCrossYear = findCrossingYear(doublingYears, eccThreshold);
+
+    // Update result box
+    const resultEl = document.getElementById('threatResult');
+    if (rsaCrossYear) {
+        const yearsFromNow = Math.round((rsaCrossYear - 2026) * 10) / 10;
+        if (yearsFromNow <= 0) {
+            resultEl.textContent = 'Already reached (unlikely with real error rates)';
+            resultEl.className = 'threat-year';
+        } else {
+            resultEl.textContent = `~${yearsFromNow} years (around ${Math.round(rsaCrossYear)})`;
+            resultEl.className = rsaCrossYear > PQC_END ? 'safe' : 'threat-year';
+        }
+    } else {
+        resultEl.textContent = 'Beyond 2060 with these parameters';
+        resultEl.className = 'safe';
+    }
+
+    // Annotations
+    const annotations = {};
+
+    // RSA threshold line
+    annotations.rsaLine = {
+        type: 'line',
+        yMin: rsaThreshold,
+        yMax: rsaThreshold,
+        borderColor: '#d32f2f',
+        borderWidth: 2,
+        borderDash: [8, 4],
+        label: {
+            display: true,
+            content: `RSA-2048 threshold (${errorFactor}x error improvement): ${formatNumber(rsaThreshold)}`,
+            position: 'start',
+            backgroundColor: 'rgba(211,47,47,0.85)',
+            color: '#fff',
+            font: { size: 10 }
+        }
+    };
+
+    // ECC threshold line
+    annotations.eccLine = {
+        type: 'line',
+        yMin: eccThreshold,
+        yMax: eccThreshold,
+        borderColor: '#388e3c',
+        borderWidth: 2,
+        borderDash: [8, 4],
+        label: {
+            display: true,
+            content: `ECC-256 threshold (${errorFactor}x): ${formatNumber(eccThreshold)}`,
+            position: 'end',
+            backgroundColor: 'rgba(56,142,60,0.85)',
+            color: '#fff',
+            font: { size: 10 }
+        }
+    };
+
+    // RSA crossing annotation
+    if (rsaCrossYear && rsaCrossYear <= END_YEAR) {
+        annotations.rsaCross = {
+            type: 'line',
+            xMin: rsaCrossYear - START_YEAR,
+            xMax: rsaCrossYear - START_YEAR,
+            yMin: 100,
+            yMax: rsaThreshold,
+            borderColor: '#d32f2f',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            label: {
+                display: true,
+                content: `~${Math.round(rsaCrossYear)}`,
+                position: 'start',
+                backgroundColor: '#d32f2f',
+                color: '#fff',
+                font: { size: 10 }
+            }
+        };
+    }
+
+    // PQC migration bar
+    if (showPQC) {
+        annotations.pqcBox = {
+            type: 'box',
+            xMin: PQC_START - START_YEAR,
+            xMax: PQC_END - START_YEAR,
+            yMin: 100,
+            yMax: 1e8,
+            backgroundColor: 'rgba(63,81,181,0.08)',
+            borderColor: '#3F51B5',
+            borderWidth: 1,
+            borderDash: [4, 2],
+            label: {
+                display: true,
+                content: 'PQC Migration Window (2030-2035)',
+                position: { x: 'center', y: 'start' },
+                backgroundColor: 'rgba(63,81,181,0.8)',
+                color: '#fff',
+                font: { size: 10 }
+            }
+        };
+
+        // Defense vs threat message
+        if (rsaCrossYear && rsaCrossYear <= END_YEAR) {
+            const defenseFirst = rsaCrossYear > PQC_END;
+            annotations.defenseMsg = {
+                type: 'label',
+                xValue: END_YEAR - START_YEAR - 5,
+                yValue: 200,
+                backgroundColor: defenseFirst ? 'rgba(56,142,60,0.9)' : 'rgba(211,47,47,0.9)',
+                color: '#fff',
+                content: defenseFirst ? 'Defense arrives before threat' : 'Warning: Threat may arrive before PQC migration',
+                font: { size: 11, weight: 'bold' },
+                padding: 6
+            };
+        }
+    }
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Historical Physical Qubits',
+                data: historical,
+                borderColor: '#3F51B5',
+                backgroundColor: '#3F51B5',
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: '#3F51B5',
+                spanGaps: false,
+                order: 1
+            },
+            {
+                label: `Projection (doubling every ${doublingYears}y)`,
+                data: projection,
+                borderColor: '#FF7043',
+                backgroundColor: 'rgba(255,112,67,0.1)',
+                borderWidth: 2,
+                borderDash: [6, 4],
+                pointRadius: 0,
+                fill: false,
+                spanGaps: false,
+                order: 2
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Year',
+                        font: { size: 13 }
+                    },
+                    ticks: {
+                        callback: function(val, idx) {
+                            const year = labels[idx];
+                            return year % 5 === 0 ? year : '';
+                        },
+                        maxRotation: 0,
+                        font: { size: 11 }
+                    }
+                },
+                y: {
+                    type: 'logarithmic',
+                    title: {
+                        display: true,
+                        text: 'Physical Qubits',
+                        font: { size: 13 }
+                    },
+                    min: 10,
+                    max: 1e8,
+                    ticks: {
+                        callback: function(value) {
+                            const log = Math.log10(value);
+                            if (Number.isInteger(log)) return formatNumber(value);
+                            return '';
+                        },
+                        font: { size: 11 }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { font: { size: 11 } }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            if (context.raw === null) return null;
+                            return `${context.dataset.label}: ${formatNumber(Math.round(context.raw))}`;
+                        }
+                    }
+                },
+                annotation: {
+                    annotations: annotations
+                }
+            }
+        }
+    };
+
+    return config;
+}
+
+function formatNumber(n) {
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
+    if (n >= 1_000) return (n / 1_000).toFixed(0) + 'K';
+    return n.toString();
+}
+
+// Chart instance
+let chart = new Chart(ctx, buildChart());
+
+function updateChart() {
+    document.getElementById('doublingValue').textContent =
+        document.getElementById('doublingSlider').value;
+    document.getElementById('errorValue').textContent =
+        document.getElementById('errorSlider').value + 'x';
+
+    chart.destroy();
+    chart = new Chart(ctx, buildChart());
+}
+
+document.getElementById('doublingSlider').addEventListener('input', updateChart);
+document.getElementById('errorSlider').addEventListener('input', updateChart);
+document.getElementById('pqcToggle').addEventListener('change', updateChart);
+
+</script>
+</body>
+</html>

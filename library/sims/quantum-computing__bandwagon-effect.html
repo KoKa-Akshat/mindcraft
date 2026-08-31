@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Incentive Asymmetry Map</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Incentive Asymmetry Map
+// A p5.js MicroSim showing the tug-of-war between hype and honesty incentives
+// for different actors in the quantum computing ecosystem
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Actor data: hype and honesty scores on 0-100 scale
+let actors = [
+    {
+        name: "Startups",
+        hype: 95,
+        honesty: 15,
+        hypeLabel: "VERY HIGH",
+        honestyLabel: "LOW",
+        hypeDetail: "Hype: Must attract funding to survive; exaggerated claims are existential necessity",
+        honestyDetail: "Honesty: Credibility matters long-term, but short-term survival dominates"
+    },
+    {
+        name: "VCs / Investors",
+        hype: 85,
+        honesty: 20,
+        hypeLabel: "HIGH",
+        honestyLabel: "LOW",
+        hypeDetail: "Hype: Need to justify fund raises and portfolio valuations to LPs",
+        honestyDetail: "Honesty: Fiduciary duty exists but is rarely enforced for speculative tech"
+    },
+    {
+        name: "Researchers",
+        hype: 80,
+        honesty: 50,
+        hypeLabel: "HIGH",
+        honestyLabel: "MEDIUM",
+        hypeDetail: "Hype: Grants, tenure, fame all reward optimistic framing of results",
+        honestyDetail: "Honesty: Scientific reputation provides moderate counter-incentive"
+    },
+    {
+        name: "Media",
+        hype: 85,
+        honesty: 20,
+        hypeLabel: "HIGH",
+        honestyLabel: "LOW",
+        hypeDetail: "Hype: \"Quantum breakthrough\" headlines drive clicks and engagement",
+        honestyDetail: "Honesty: Journalism ethics exist but rarely override business incentives"
+    },
+    {
+        name: "Consultants",
+        hype: 75,
+        honesty: 40,
+        hypeLabel: "HIGH",
+        honestyLabel: "MEDIUM",
+        hypeDetail: "Hype: Sell more reports and advisory services when market seems large",
+        honestyDetail: "Honesty: Client trust requires some accuracy, but optimism sells"
+    },
+    {
+        name: "Government",
+        hype: 55,
+        honesty: 25,
+        hypeLabel: "MEDIUM",
+        honestyLabel: "LOW",
+        hypeDetail: "Hype: Strategic positioning in tech race; no politician penalized for funding science",
+        honestyDetail: "Honesty: Taxpayer accountability is diffuse and rarely enforced"
+    },
+    {
+        name: "Skeptics",
+        hype: 0,
+        honesty: 90,
+        hypeLabel: "ZERO",
+        honestyLabel: "HIGH",
+        hypeDetail: "Hype: No financial incentive to promote quantum computing",
+        honestyDetail: "Honesty: Motivated by truth-seeking; risk career penalties for speaking out"
+    }
+];
+
+let hoveredActor = -1;
+let hoveredSide = ""; // "hype" or "honesty"
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Incentive Asymmetry Map", canvasWidth / 2, margin / 2);
+
+    // Subtitle
+    textSize(12);
+    textStyle(ITALIC);
+    fill('#666');
+    text("Who benefits from hype vs. honesty in quantum computing?", canvasWidth / 2, margin / 2 + 22);
+
+    // Chart layout
+    let centerX = canvasWidth / 2;
+    let labelWidth = 100;
+    let maxBarWidth = (canvasWidth / 2) - labelWidth - margin * 2;
+    let chartTop = 70;
+    let rowHeight = 55;
+    let barHeight = 28;
+
+    // Column headers
+    textSize(13);
+    textStyle(BOLD);
+    noStroke();
+
+    // Hype header (left side)
+    fill('#D32F2F');
+    textAlign(CENTER, TOP);
+    text("← HYPE INCENTIVE", centerX - labelWidth / 2 - maxBarWidth / 2, chartTop - 18);
+
+    // Honesty header (right side)
+    fill('#2E7D32');
+    textAlign(CENTER, TOP);
+    text("HONESTY INCENTIVE →", centerX + labelWidth / 2 + maxBarWidth / 2, chartTop - 18);
+
+    // Center axis line
+    stroke('#999');
+    strokeWeight(1);
+    line(centerX, chartTop, centerX, chartTop + actors.length * rowHeight);
+
+    // Detect hover
+    hoveredActor = -1;
+    hoveredSide = "";
+    for (let i = 0; i < actors.length; i++) {
+        let rowY = chartTop + i * rowHeight;
+        if (mouseY >= rowY && mouseY < rowY + rowHeight &&
+            mouseX >= 0 && mouseX <= canvasWidth) {
+            hoveredActor = i;
+            if (mouseX < centerX) {
+                hoveredSide = "hype";
+            } else {
+                hoveredSide = "honesty";
+            }
+        }
+    }
+
+    // Draw rows
+    for (let i = 0; i < actors.length; i++) {
+        let a = actors[i];
+        let rowY = chartTop + i * rowHeight;
+        let barY = rowY + (rowHeight - barHeight) / 2;
+        let isHovered = (hoveredActor === i);
+
+        // Row highlight on hover
+        if (isHovered) {
+            fill(240, 240, 255, 120);
+            noStroke();
+            rect(0, rowY, canvasWidth, rowHeight);
+        }
+
+        // Row separator
+        stroke('#DDD');
+        strokeWeight(0.5);
+        line(margin, rowY + rowHeight, canvasWidth - margin, rowY + rowHeight);
+
+        // Actor name (centered)
+        fill(isHovered ? '#1A237E' : '#333');
+        noStroke();
+        textSize(isHovered ? 14 : 13);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(a.name, centerX, rowY + rowHeight / 2);
+
+        // Hype bar (red, extends LEFT from center)
+        let hypeWidth = (a.hype / 100) * maxBarWidth;
+        let hypeBarLeft = centerX - labelWidth / 2 - hypeWidth;
+        let hypeBarRight = centerX - labelWidth / 2;
+
+        if (a.hype > 0) {
+            fill(isHovered && hoveredSide === "hype" ? '#B71C1C' : '#E57373');
+            noStroke();
+            rect(hypeBarLeft, barY, hypeWidth, barHeight, 4, 0, 0, 4);
+
+            // Hype level label inside bar
+            if (hypeWidth > 50) {
+                fill('white');
+                textSize(10);
+                textAlign(CENTER, CENTER);
+                textStyle(BOLD);
+                text(a.hypeLabel, hypeBarLeft + hypeWidth / 2, barY + barHeight / 2);
+            }
+        }
+
+        // Honesty bar (green, extends RIGHT from center)
+        let honestyWidth = (a.honesty / 100) * maxBarWidth;
+        let honestyBarLeft = centerX + labelWidth / 2;
+
+        fill(isHovered && hoveredSide === "honesty" ? '#1B5E20' : '#81C784');
+        noStroke();
+        rect(honestyBarLeft, barY, honestyWidth, barHeight, 0, 4, 4, 0);
+
+        // Honesty level label inside bar
+        if (honestyWidth > 50) {
+            fill('white');
+            textSize(10);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text(a.honestyLabel, honestyBarLeft + honestyWidth / 2, barY + barHeight / 2);
+        } else {
+            // Label outside if bar is too small
+            fill('#2E7D32');
+            textSize(10);
+            textAlign(LEFT, CENTER);
+            textStyle(BOLD);
+            text(a.honestyLabel, honestyBarLeft + honestyWidth + 5, barY + barHeight / 2);
+        }
+
+        // Hype label outside bar if too small
+        if (a.hype > 0 && hypeWidth <= 50) {
+            fill('#D32F2F');
+            textSize(10);
+            textAlign(RIGHT, CENTER);
+            textStyle(BOLD);
+            text(a.hypeLabel, hypeBarLeft - 5, barY + barHeight / 2);
+        }
+    }
+
+    // Hover tooltip
+    if (hoveredActor >= 0) {
+        let a = actors[hoveredActor];
+        let tooltipW = min(480, canvasWidth - 40);
+        let tooltipH = 52;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = drawHeight - tooltipH - 12;
+
+        // Tooltip background
+        fill(255, 255, 255, 245);
+        stroke(hoveredSide === "hype" ? '#D32F2F' : '#2E7D32');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        // Tooltip text
+        fill('#333');
+        noStroke();
+        textSize(11);
+        textAlign(LEFT, TOP);
+        textStyle(NORMAL);
+
+        if (hoveredSide === "hype") {
+            text(a.hypeDetail, tooltipX + 10, tooltipY + 10);
+            fill('#666');
+            text(a.honestyDetail, tooltipX + 10, tooltipY + 30);
+        } else {
+            fill('#666');
+            text(a.hypeDetail, tooltipX + 10, tooltipY + 10);
+            fill('#333');
+            text(a.honestyDetail, tooltipX + 10, tooltipY + 30);
+        }
+    }
+
+    // Legend in control region
+    let legendY = drawHeight + controlHeight / 2;
+
+    // Hype legend
+    fill('#E57373');
+    noStroke();
+    rect(canvasWidth / 2 - 200, legendY - 6, 14, 12, 2);
+    fill('#666');
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("Incentive to Hype", canvasWidth / 2 - 182, legendY);
+
+    // Honesty legend
+    fill('#81C784');
+    noStroke();
+    rect(canvasWidth / 2 + 40, legendY - 6, 14, 12, 2);
+    fill('#666');
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text("Incentive for Honesty", canvasWidth / 2 + 58, legendY);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

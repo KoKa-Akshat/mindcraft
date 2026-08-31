@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Ocean Impacts Dashboard using Chart.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>// Ocean Impacts Dashboard - Chart.js
+// CANVAS_HEIGHT: 695
+document.addEventListener('DOMContentLoaded', function() {
+  const mainEl = document.querySelector('main');
+  mainEl.style.fontFamily = 'Arial, sans-serif';
+  mainEl.style.maxWidth = '900px';
+  mainEl.style.margin = '0 auto';
+  mainEl.style.padding = '10px';
+
+  // Title
+  const title = document.createElement('h2');
+  title.textContent = 'Ocean Impacts Dashboard';
+  title.style.cssText = 'text-align:center;color:#264653;margin:5px 0;';
+  mainEl.appendChild(title);
+
+  const subtitle = document.createElement('p');
+  subtitle.textContent = 'Hover over any chart to see synchronized values across all panels.';
+  subtitle.style.cssText = 'text-align:center;color:#6c757d;font-size:13px;margin:0 0 10px;';
+  mainEl.appendChild(subtitle);
+
+  // Buttons
+  const btnDiv = document.createElement('div');
+  btnDiv.style.cssText = 'text-align:center;margin-bottom:10px;';
+  const corrBtn = document.createElement('button');
+  corrBtn.textContent = 'Toggle Normalized Overlay';
+  corrBtn.style.cssText = 'padding:6px 16px;font-size:13px;cursor:pointer;margin-right:10px;border:1px solid #264653;border-radius:4px;background:#f0f4f8;';
+  btnDiv.appendChild(corrBtn);
+  mainEl.appendChild(btnDiv);
+
+  // Create 4 canvas containers
+  const chartIds = ['tempChart', 'phChart', 'seaLevelChart', 'bleachingChart'];
+  const canvases = {};
+
+  chartIds.forEach(function(id) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position:relative;height:150px;margin-bottom:8px;';
+    const cvs = document.createElement('canvas');
+    cvs.id = id;
+    wrapper.appendChild(cvs);
+    mainEl.appendChild(wrapper);
+    canvases[id] = cvs;
+  });
+
+  // Data: decades from 1880 to 2020
+  const years = [];
+  for (let y = 1880; y <= 2020; y += 10) years.push(y);
+
+  // Ocean surface temperature anomaly (°C)
+  const tempData = [-0.1, -0.05, -0.08, 0.0, 0.05, 0.02, -0.02, 0.05, 0.1, 0.2, 0.35, 0.5, 0.7, 0.85, 1.0];
+
+  // Ocean pH (historically ~8.2, declining)
+  const phData = [8.20, 8.19, 8.19, 8.18, 8.18, 8.17, 8.16, 8.15, 8.14, 8.12, 8.10, 8.08, 8.06, 8.04, 8.02];
+
+  // Global mean sea level anomaly (mm)
+  const seaLevelData = [0, 5, 10, 15, 20, 30, 40, 55, 70, 90, 120, 155, 195, 240, 290];
+
+  // Coral bleaching events per decade (estimated)
+  const bleachingData = [0, 0, 0, 0, 1, 1, 2, 3, 5, 8, 15, 25, 40, 55, 70];
+
+  // Annotation markers
+  const annotations = {
+    1883: 'Krakatoa', 1991: 'Pinatubo',
+    1982: 'El Niño', 1997: 'El Niño', 2015: 'El Niño'
+  };
+
+  let showNormalized = false;
+
+  // Normalize data to 0-1 range
+  function normalize(arr) {
+    const mn = Math.min(...arr), mx = Math.max(...arr);
+    const range = mx - mn || 1;
+    return arr.map(v => (v - mn) / range);
+  }
+
+  // Crosshair plugin
+  const crosshairPlugin = {
+    id: 'crosshair',
+    afterDraw: function(chart) {
+      if (chart.tooltip && chart.tooltip._active && chart.tooltip._active.length) {
+        const x = chart.tooltip._active[0].element.x;
+        const ctx = chart.ctx;
+        const yAxis = chart.scales.y;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, yAxis.top);
+        ctx.lineTo(x, yAxis.bottom);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  };
+
+  const commonOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 300 },
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      tooltip: { enabled: true },
+      legend: { display: true, position: 'top', labels: { font: { size: 11 } } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#e0e0e0' }, ticks: { font: { size: 10 } } }
+    }
+  };
+
+  // Chart 1: Temperature
+  const tempChart = new Chart(canvases.tempChart, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Temperature Anomaly (°C)',
+        data: tempData,
+        borderColor: '#e63946',
+        backgroundColor: 'rgba(230,57,70,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3
+      }]
+    },
+    options: Object.assign({}, commonOptions, {
+      plugins: Object.assign({}, commonOptions.plugins, {
+        title: { display: true, text: 'Ocean Surface Temperature Anomaly', font: { size: 13 } }
+      })
+    }),
+    plugins: [crosshairPlugin]
+  });
+
+  // Chart 2: pH
+  const phChart = new Chart(canvases.phChart, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Ocean pH',
+        data: phData,
+        borderColor: '#2a9d8f',
+        backgroundColor: 'rgba(42,157,143,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3
+      }]
+    },
+    options: Object.assign({}, commonOptions, {
+      plugins: Object.assign({}, commonOptions.plugins, {
+        title: { display: true, text: 'Ocean Acidification (pH)', font: { size: 13 } }
+      })
+    }),
+    plugins: [crosshairPlugin]
+  });
+
+  // Chart 3: Sea Level
+  const seaLevelChart = new Chart(canvases.seaLevelChart, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Sea Level Rise (mm)',
+        data: seaLevelData,
+        borderColor: '#264653',
+        backgroundColor: 'rgba(38,70,83,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3
+      }]
+    },
+    options: Object.assign({}, commonOptions, {
+      plugins: Object.assign({}, commonOptions.plugins, {
+        title: { display: true, text: 'Global Mean Sea Level Rise', font: { size: 13 } }
+      })
+    }),
+    plugins: [crosshairPlugin]
+  });
+
+  // Chart 4: Bleaching
+  const bleachingChart = new Chart(canvases.bleachingChart, {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Bleaching Events per Decade',
+        data: bleachingData,
+        backgroundColor: 'rgba(244,162,97,0.7)',
+        borderColor: '#f4a261',
+        borderWidth: 1
+      }]
+    },
+    options: Object.assign({}, commonOptions, {
+      plugins: Object.assign({}, commonOptions.plugins, {
+        title: { display: true, text: 'Coral Bleaching Events', font: { size: 13 } }
+      })
+    }),
+    plugins: [crosshairPlugin]
+  });
+
+  const allCharts = [tempChart, phChart, seaLevelChart, bleachingChart];
+
+  // Synchronized hover
+  chartIds.forEach(function(id, idx) {
+    canvases[id].addEventListener('mousemove', function(e) {
+      const chart = allCharts[idx];
+      const points = chart.getElementsAtEventForMode(e, 'index', { intersect: false });
+      if (points.length) {
+        const dataIndex = points[0].index;
+        allCharts.forEach(function(c, ci) {
+          if (ci !== idx) {
+            c.tooltip.setActiveElements([{ datasetIndex: 0, index: dataIndex }], { x: 0, y: 0 });
+            c.setActiveElements([{ datasetIndex: 0, index: dataIndex }]);
+            c.update('none');
+          }
+        });
+      }
+    });
+  });
+
+  // Normalized overlay toggle
+  corrBtn.addEventListener('click', function() {
+    showNormalized = !showNormalized;
+    corrBtn.textContent = showNormalized ? 'Show Individual Charts' : 'Toggle Normalized Overlay';
+
+    if (showNormalized) {
+      const normTemp = normalize(tempData);
+      const normPh = normalize(phData.map(v => -v)); // Invert pH so decline = increase
+      const normSea = normalize(seaLevelData);
+      const normBleach = normalize(bleachingData);
+
+      // Add normalized datasets to temp chart
+      tempChart.data.datasets = [
+        { label: 'Temperature', data: normTemp, borderColor: '#e63946', tension: 0.3, pointRadius: 2, fill: false },
+        { label: 'Acidification', data: normPh, borderColor: '#2a9d8f', tension: 0.3, pointRadius: 2, fill: false },
+        { label: 'Sea Level', data: normSea, borderColor: '#264653', tension: 0.3, pointRadius: 2, fill: false },
+        { label: 'Bleaching', data: normBleach, borderColor: '#f4a261', tension: 0.3, pointRadius: 2, fill: false }
+      ];
+      tempChart.options.plugins.title.text = 'Normalized Comparison (0-1 scale)';
+      tempChart.update();
+
+      // Hide other charts
+      canvases.phChart.parentElement.style.display = 'none';
+      canvases.seaLevelChart.parentElement.style.display = 'none';
+      canvases.bleachingChart.parentElement.style.display = 'none';
+      canvases.tempChart.parentElement.style.height = '350px';
+      tempChart.resize();
+    } else {
+      // Restore
+      tempChart.data.datasets = [{
+        label: 'Temperature Anomaly (°C)', data: tempData,
+        borderColor: '#e63946', backgroundColor: 'rgba(230,57,70,0.1)',
+        fill: true, tension: 0.3, pointRadius: 3
+      }];
+      tempChart.options.plugins.title.text = 'Ocean Surface Temperature Anomaly';
+      tempChart.update();
+
+      canvases.phChart.parentElement.style.display = '';
+      canvases.seaLevelChart.parentElement.style.display = '';
+      canvases.bleachingChart.parentElement.style.display = '';
+      canvases.tempChart.parentElement.style.height = '150px';
+      tempChart.resize();
+    }
+  });
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

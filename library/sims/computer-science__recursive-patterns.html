@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesaro Curve MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Cesaro Curve MicroSim
+// Demonstrates the Cesaro fractal curve (torn square fractal)
+// Starts with a square divided into 4 quadrants, then recursively bends each segment
+
+// Canvas dimensions - responsive width
+let canvasWidth = 400;
+let drawHeight = 600;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Sliders
+let recursionSlider;
+let sizeSlider;
+
+// Cesaro curve parameters
+let recursionLevel = 1;
+let curveSize = 0.5;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Recursion level slider (1-6, default 1)
+    recursionSlider = createSlider(1, 7, 1, 1);
+    recursionSlider.position(sliderLeftMargin, drawHeight + 12);
+    recursionSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+    // Size slider (30-70%, default 50%)
+    sizeSlider = createSlider(30, 100, 60, 1);
+    sizeSlider.position(sliderLeftMargin, drawHeight + 32);
+    sizeSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+    describe('Interactive Cesaro curve fractal with adjustable recursion depth and size', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+
+    // Get current slider values
+    recursionLevel = recursionSlider.value();
+    curveSize = sizeSlider.value() / 100;
+
+    // Drawing area background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Draw title
+    fill('black');
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, TOP);
+    text('Cesaro Curve', canvasWidth / 2, 10);
+
+    // Calculate curve size based on canvas dimensions
+    let availableSize = min(canvasWidth - 2 * margin, drawHeight - 80);
+    let sideLength = availableSize * curveSize;
+
+    // Center the square in the drawing area
+    let centerX = canvasWidth / 2;
+    let centerY = drawHeight / 2 + 20;
+
+    // Draw the Cesaro curve
+    stroke('blue');
+    strokeWeight(1);
+    noFill();
+
+    // Draw the initial shape: square with cross inside (8 line segments)
+    let half = sideLength / 2;
+
+    // The 8 segments that make up the initial pattern:
+    // Top side (left half and right half)
+    drawCesaroSegment(centerX - half, centerY - half, centerX, centerY - half, recursionLevel);
+    drawCesaroSegment(centerX, centerY - half, centerX + half, centerY - half, recursionLevel);
+
+    // Right side (top half and bottom half)
+    drawCesaroSegment(centerX + half, centerY - half, centerX + half, centerY, recursionLevel);
+    drawCesaroSegment(centerX + half, centerY, centerX + half, centerY + half, recursionLevel);
+
+    // Bottom side (right half and left half)
+    drawCesaroSegment(centerX + half, centerY + half, centerX, centerY + half, recursionLevel);
+    drawCesaroSegment(centerX, centerY + half, centerX - half, centerY + half, recursionLevel);
+
+    // Left side (bottom half and top half)
+    drawCesaroSegment(centerX - half, centerY + half, centerX - half, centerY, recursionLevel);
+    drawCesaroSegment(centerX - half, centerY, centerX - half, centerY - half, recursionLevel);
+
+    // Cross: horizontal line (left and right halves)
+    drawCesaroSegment(centerX - half, centerY, centerX, centerY, recursionLevel);
+    drawCesaroSegment(centerX, centerY, centerX + half, centerY, recursionLevel);
+
+    // Cross: vertical line (top and bottom halves)
+    drawCesaroSegment(centerX, centerY - half, centerX, centerY, recursionLevel);
+    drawCesaroSegment(centerX, centerY, centerX, centerY + half, recursionLevel);
+
+    // Draw control labels
+    fill('black');
+    noStroke();
+    textSize(defaultTextSize);
+    textAlign(LEFT, CENTER);
+    text('Recursion: ' + recursionLevel, 10, drawHeight + 20);
+    text('Size: ' + sizeSlider.value() + '%', 10, drawHeight + 40);
+}
+
+// Recursive function to draw a Cesaro curve segment
+// Each segment is replaced by two segments bent at an angle
+function drawCesaroSegment(x1, y1, x2, y2, level) {
+    if (level === 1) {
+        // Base case: draw a straight line
+        line(x1, y1, x2, y2);
+    } else {
+        // Calculate the midpoint
+        let midX = (x1 + x2) / 2;
+        let midY = (y1 + y2) / 2;
+
+        // Calculate the direction and length
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let len = sqrt(dx * dx + dy * dy);
+
+        // Normalize direction
+        let nx = dx / len;
+        let ny = dy / len;
+
+        // Perpendicular direction (rotate 90 degrees)
+        let px = -ny;
+        let py = nx;
+
+        // The bend amount - creates the characteristic Cesaro curve shape
+        // Using about 1/4 of the segment length for the perpendicular offset
+        let bendAmount = len * 0.25;
+
+        // New midpoint is offset perpendicular to the line
+        let newMidX = midX + px * bendAmount;
+        let newMidY = midY + py * bendAmount;
+
+        // Recursively draw the two segments
+        drawCesaroSegment(x1, y1, newMidX, newMidY, level - 1);
+        drawCesaroSegment(newMidX, newMidY, x2, y2, level - 1);
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = container.offsetWidth;
+        // Resize sliders when canvas width changes
+        if (typeof recursionSlider !== 'undefined') {
+            recursionSlider.size(canvasWidth - sliderLeftMargin - margin);
+        }
+        if (typeof sizeSlider !== 'undefined') {
+            sizeSlider.size(canvasWidth - sliderLeftMargin - margin);
+        }
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

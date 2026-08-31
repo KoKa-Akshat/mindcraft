@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Populist Policy Platform — Then and Now</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Populist Policy Platform — Then and Now
+// CANVAS_HEIGHT: 620
+// Chapter 11: Populism and the Closing of the Frontier (1880-1900)
+// Bloom Level: Analyze (L4) — examine which 1892 Omaha Platform demands
+// were eventually enacted, when, and why.
+
+let canvasWidth = 750;
+let drawHeight = 540;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+// Status colors
+const COLOR_ENACTED = { r: 46,  g: 139, b: 87  }; // sea green
+const COLOR_PARTIAL = { r: 218, g: 165, b: 32  }; // amber/goldenrod
+const COLOR_NONE    = { r: 178, g: 34,  b: 34  }; // firebrick
+
+const demands = [
+  {
+    id: 'railroads',
+    title: 'Government Ownership of Railroads',
+    short: 'Public control of rail, telegraph, and telephone networks.',
+    full: 'The People\'s Party demanded that the federal government own and operate the railroads (and telegraph/telephone systems) to end monopolistic rate-setting and discrimination against farmers.',
+    status: 'partial',
+    year: 1917,
+    yearLabel: '1906 / 1917',
+    law: 'Hepburn Act (1906); USRA federal control (1917-1920)',
+    note: 'The Hepburn Act let the ICC set maximum railroad rates, and Wilson briefly nationalized the railroads during WWI under the U.S. Railroad Administration; outright public ownership was never adopted because powerful railroad interests, courts, and free-market ideology blocked it.'
+  },
+  {
+    id: 'income-tax',
+    title: 'Graduated Income Tax',
+    short: 'A progressive federal income tax on wealth and high earners.',
+    full: 'Populists demanded a graduated income tax so the rich would pay a larger share, shifting the federal tax burden away from tariffs that hurt farmers and consumers.',
+    status: 'enacted',
+    year: 1913,
+    yearLabel: '1913',
+    law: '16th Amendment',
+    note: 'It took 21 years and required a constitutional amendment because the Supreme Court struck down an 1894 income tax in Pollock v. Farmers\' Loan & Trust (1895), forcing reformers to amend the Constitution.'
+  },
+  {
+    id: 'direct-senate',
+    title: 'Direct Election of Senators',
+    short: 'Let voters — not state legislatures — choose U.S. senators.',
+    full: 'Populists wanted U.S. senators elected directly by the people instead of being chosen by state legislatures, where corruption and corporate influence were widespread.',
+    status: 'enacted',
+    year: 1913,
+    yearLabel: '1913',
+    law: '17th Amendment',
+    note: 'It took 21 years because sitting senators (who had been chosen by legislatures) resisted; progressive-era scandals and state-level reforms finally built enough pressure to amend the Constitution.'
+  },
+  {
+    id: 'secret-ballot',
+    title: 'Secret Ballot',
+    short: 'The "Australian ballot" — a private, government-printed ballot.',
+    full: 'Populists called for a secret, government-printed ballot to end vote-buying and intimidation by employers, party bosses, and landlords.',
+    status: 'enacted',
+    year: 1910,
+    yearLabel: '1888-1910s',
+    law: 'Adopted state-by-state',
+    note: 'Adoption was relatively fast because states could act on their own; Massachusetts adopted it in 1888 and most states followed within two decades, although Southern states used new ballot laws partly to disenfranchise Black and poor voters.'
+  },
+  {
+    id: 'flexible-currency',
+    title: 'Flexible Currency (Free Silver)',
+    short: 'Expand the money supply with silver and paper money.',
+    full: 'Farmers in debt wanted a more elastic currency — coinage of silver at 16:1 with gold, plus more paper money — to break the deflation caused by the gold standard.',
+    status: 'partial',
+    year: 1913,
+    yearLabel: '1913 / 1933',
+    law: 'Federal Reserve Act (1913); end of gold standard (1933)',
+    note: 'Free silver itself lost when Bryan was defeated in 1896, but the Federal Reserve later gave the country an elastic currency and FDR took the U.S. off the domestic gold standard in 1933 during the Great Depression.'
+  },
+  {
+    id: 'subtreasury',
+    title: 'Subtreasury System for Farm Loans',
+    short: 'Federal warehouses and low-interest loans against stored crops.',
+    full: 'The subtreasury plan would have let farmers store crops in federal warehouses and borrow up to 80% of the market value at low interest, freeing them from crop-lien merchants and bankers.',
+    status: 'partial',
+    year: 1933,
+    yearLabel: '1916 / 1933',
+    law: 'Federal Farm Loan Act (1916); AAA & Farm Credit Act (1933)',
+    note: 'A full subtreasury was never adopted, but New Deal farm-credit and crop-loan programs gave farmers a functional equivalent — it took 40 years and a Depression-scale crisis to overcome banker and Bourbon-Democrat opposition.'
+  },
+  {
+    id: 'eight-hour-day',
+    title: 'Eight-Hour Workday',
+    short: 'A national eight-hour day for industrial labor.',
+    full: 'Populists allied with labor in demanding an eight-hour workday for industrial workers — a core labor reform of the late 19th century.',
+    status: 'enacted',
+    year: 1938,
+    yearLabel: '1938',
+    law: 'Fair Labor Standards Act',
+    note: 'It took 46 years and a sustained labor movement, plus the Great Depression and the New Deal, to overcome employer resistance and Supreme Court hostility (e.g., Lochner v. New York, 1905) to maximum-hours laws.'
+  },
+  {
+    id: 'postal-savings',
+    title: 'Postal Savings Banks',
+    short: 'Let post offices accept small deposits at safe interest.',
+    full: 'Populists wanted post offices to accept small deposits at modest interest, giving farmers and workers a safe alternative to fragile rural banks.',
+    status: 'enacted',
+    year: 1910,
+    yearLabel: '1910',
+    law: 'Postal Savings System (1910-1967)',
+    note: 'It took 18 years and the Panic of 1907 (which wiped out many small banks) to overcome banker opposition; the system operated until 1967, when FDIC-insured banks made it redundant.'
+  }
+];
+
+const filters = [
+  { id: 'all',      label: 'All' },
+  { id: 'enacted',  label: 'Enacted' },
+  { id: 'partial',  label: 'Partial' },
+  { id: 'none',     label: 'Not Enacted' },
+  { id: 'timeline', label: 'Timeline View' }
+];
+
+let activeFilter = 'all';
+let selectedDemand = null;
+let hoveredDemand = null;
+let filterButtons = [];
+let resetBtn;
+
+function statusColor(status) {
+  if (status === 'enacted') return COLOR_ENACTED;
+  if (status === 'partial') return COLOR_PARTIAL;
+  return COLOR_NONE;
+}
+
+function statusLabel(status) {
+  if (status === 'enacted') return 'Fully Enacted';
+  if (status === 'partial') return 'Partially Enacted';
+  return 'Not Enacted';
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  filters.forEach(f => {
+    let btn = createButton(f.label);
+    btn.mousePressed(() => {
+      activeFilter = f.id;
+      selectedDemand = null;
+    });
+    filterButtons.push({ id: f.id, btn: btn });
+  });
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    activeFilter = 'all';
+    selectedDemand = null;
+  });
+
+  positionControls();
+  describe('Interactive tracker of the 1892 Omaha Platform demands of the People\'s Party. Cards are color-coded by whether each demand was later enacted into law. Click a card to see details, or use the Timeline View filter to see when each demand became law.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  let x = 10;
+  filterButtons.forEach(fb => {
+    fb.btn.position(x, y);
+    x += fb.btn.elt.offsetWidth + 8;
+  });
+  let rx = canvasWidth - resetBtn.elt.offsetWidth - 10;
+  resetBtn.position(rx, y);
+}
+
+function filteredDemands() {
+  if (activeFilter === 'all' || activeFilter === 'timeline') return demands;
+  if (activeFilter === 'enacted') return demands.filter(d => d.status === 'enacted');
+  if (activeFilter === 'partial') return demands.filter(d => d.status === 'partial');
+  if (activeFilter === 'none')    return demands.filter(d => d.status === 'none');
+  return demands;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(252, 250, 240);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(245);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Header
+  noStroke();
+  fill(40);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(16);
+  text('The 1892 Omaha Platform — Then and Now', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+  textSize(11);
+  fill(90);
+  text('Click a demand to see when (or whether) it became law.', canvasWidth / 2, 32);
+
+  // Legend
+  drawLegend(margin, 52);
+
+  // Highlight active filter button
+  filterButtons.forEach(fb => {
+    if (fb.id === activeFilter) {
+      fb.btn.style('background-color', '#d9e8ff');
+      fb.btn.style('font-weight', 'bold');
+    } else {
+      fb.btn.style('background-color', '');
+      fb.btn.style('font-weight', 'normal');
+    }
+  });
+
+  hoveredDemand = null;
+
+  if (activeFilter === 'timeline') {
+    drawTimeline();
+  } else {
+    drawGrid();
+  }
+
+  if (selectedDemand) drawDetailPanel();
+
+  positionControls();
+}
+
+function drawLegend(x, y) {
+  let items = [
+    { c: COLOR_ENACTED, label: 'Fully enacted' },
+    { c: COLOR_PARTIAL, label: 'Partially enacted' },
+    { c: COLOR_NONE,    label: 'Not enacted' }
+  ];
+  let lx = x;
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  textStyle(NORMAL);
+  items.forEach(it => {
+    noStroke();
+    fill(it.c.r, it.c.g, it.c.b);
+    rect(lx, y, 14, 14, 3);
+    fill(60);
+    text(it.label, lx + 20, y + 7);
+    lx += 130;
+  });
+}
+
+function drawGrid() {
+  let list = filteredDemands();
+
+  // Always lay out as a 4x2 grid of 8 cells; hide non-matching cards
+  let cols = 4;
+  let rows = 2;
+  if (canvasWidth < 560) {
+    cols = 2;
+    rows = 4;
+  }
+
+  let gridTop = 80;
+  let gridBottom = drawHeight - 10;
+  let gridLeft = margin;
+  let gridRight = canvasWidth - margin;
+
+  // If a card is selected, shrink grid to the left half to make room for the panel
+  if (selectedDemand) {
+    gridRight = canvasWidth * 0.52;
+  }
+
+  let gridW = gridRight - gridLeft;
+  let gridH = gridBottom - gridTop;
+  let cellW = (gridW - (cols - 1) * 10) / cols;
+  let cellH = (gridH - (rows - 1) * 10) / rows;
+
+  for (let i = 0; i < demands.length; i++) {
+    let d = demands[i];
+    let col = i % cols;
+    let row = Math.floor(i / cols);
+    let cx = gridLeft + col * (cellW + 10);
+    let cy = gridTop + row * (cellH + 10);
+
+    let inFilter = list.indexOf(d) !== -1;
+    drawCard(d, cx, cy, cellW, cellH, inFilter);
+  }
+}
+
+function drawCard(d, x, y, w, h, inFilter) {
+  let sc = statusColor(d.status);
+  let isSelected = selectedDemand && selectedDemand.id === d.id;
+
+  let hovering = inFilter && mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h && mouseY < drawHeight;
+  if (hovering) hoveredDemand = d;
+
+  // Card body
+  let alpha = inFilter ? 255 : 60;
+  stroke(sc.r, sc.g, sc.b, alpha);
+  strokeWeight(isSelected ? 3 : 1.5);
+  fill(255, 255, 255, inFilter ? 250 : 120);
+  rect(x, y, w, h, 8);
+
+  // Status bar at top
+  noStroke();
+  fill(sc.r, sc.g, sc.b, alpha);
+  rect(x, y, w, 22, 8, 8, 0, 0);
+
+  // Status label
+  fill(255, 255, 255, alpha);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(10);
+  text(statusLabel(d.status).toUpperCase(), x + 8, y + 11);
+  textAlign(RIGHT, CENTER);
+  text(d.yearLabel, x + w - 8, y + 11);
+
+  // Title
+  fill(30, 30, 30, alpha);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text(d.title, x + 8, y + 28, w - 16, 40);
+
+  // Short description
+  fill(70, 70, 70, alpha);
+  textStyle(NORMAL);
+  textSize(10);
+  text(d.short, x + 8, y + 70, w - 16, h - 78);
+
+  // Hover hint
+  if (hovering && !isSelected) {
+    noStroke();
+    fill(sc.r, sc.g, sc.b, 30);
+    rect(x, y, w, h, 8);
+  }
+}
+
+function drawTimeline() {
+  let top = 90;
+  let bottom = drawHeight - 30;
+  let left = margin + 50;
+  let right = canvasWidth - margin - 20;
+
+  let startYear = 1892;
+  let endYear = 1950;
+
+  // Axis
+  let axisY = top + (bottom - top) / 2;
+  stroke(120);
+  strokeWeight(2);
+  line(left, axisY, right, axisY);
+
+  // Year ticks every 10 years
+  textAlign(CENTER, TOP);
+  textSize(10);
+  textStyle(NORMAL);
+  noStroke();
+  for (let y = startYear; y <= endYear; y += 10) {
+    let xp = map(y, startYear, endYear, left, right);
+    stroke(160);
+    strokeWeight(1);
+    line(xp, axisY - 6, xp, axisY + 6);
+    noStroke();
+    fill(80);
+    text(String(y), xp, axisY + 10);
+  }
+
+  // 1892 marker
+  let x1892 = map(1892, startYear, endYear, left, right);
+  stroke(120, 60, 60);
+  strokeWeight(2);
+  line(x1892, top, x1892, bottom);
+  noStroke();
+  fill(120, 60, 60);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(11);
+  text('1892 Omaha Platform', x1892 + 4, top);
+  textStyle(NORMAL);
+
+  // Plot each demand
+  let sorted = demands.slice().sort((a, b) => a.year - b.year);
+  let above = true;
+  for (let i = 0; i < sorted.length; i++) {
+    let d = sorted[i];
+    let yr = constrain(d.year, startYear, endYear);
+    let xp = map(yr, startYear, endYear, left, right);
+    let sc = statusColor(d.status);
+
+    let offset = above ? -1 : 1;
+    let connectorTop = axisY + offset * 18;
+    let labelY = axisY + offset * (40 + (i % 3) * 28);
+
+    // Connector
+    stroke(sc.r, sc.g, sc.b);
+    strokeWeight(1.5);
+    line(xp, axisY, xp, labelY);
+
+    // Dot on axis
+    noStroke();
+    fill(sc.r, sc.g, sc.b);
+    ellipse(xp, axisY, 12, 12);
+    fill(255);
+    ellipse(xp, axisY, 5, 5);
+
+    // Label box
+    let labelText = d.title + ' (' + d.year + ')';
+    textSize(10);
+    textStyle(BOLD);
+    let tw = textWidth(labelText) + 12;
+    let th = 18;
+    let lx = constrain(xp - tw / 2, left, right - tw);
+    let ly = above ? labelY - th : labelY;
+
+    let hovering = mouseX > lx && mouseX < lx + tw && mouseY > ly && mouseY < ly + th && mouseY < drawHeight;
+    if (hovering) hoveredDemand = d;
+
+    fill(sc.r, sc.g, sc.b);
+    stroke(sc.r, sc.g, sc.b);
+    strokeWeight(1);
+    rect(lx, ly, tw, th, 4);
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(10);
+    text(labelText, lx + tw / 2, ly + th / 2);
+    textStyle(NORMAL);
+
+    above = !above;
+  }
+
+  // Title
+  noStroke();
+  fill(40);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(13);
+  text('When Each Demand Became Law', (left + right) / 2, top - 18);
+  textStyle(NORMAL);
+}
+
+function drawDetailPanel() {
+  let d = selectedDemand;
+  let sc = statusColor(d.status);
+
+  let px, py, pw, ph;
+  if (activeFilter === 'timeline') {
+    pw = min(360, canvasWidth - 40);
+    ph = 220;
+    px = canvasWidth - pw - margin;
+    py = drawHeight - ph - 10;
+  } else {
+    px = canvasWidth * 0.54;
+    py = 80;
+    pw = canvasWidth - px - margin;
+    ph = drawHeight - 90;
+  }
+
+  // Panel background
+  fill(255);
+  stroke(sc.r, sc.g, sc.b);
+  strokeWeight(2);
+  rect(px, py, pw, ph, 8);
+
+  // Header bar
+  noStroke();
+  fill(sc.r, sc.g, sc.b);
+  rect(px, py, pw, 38, 8, 8, 0, 0);
+
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text(d.title, px + 10, py + 19, pw - 20);
+
+  let iy = py + 50;
+
+  // Status
+  fill(sc.r, sc.g, sc.b);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(11);
+  text('Status:', px + 10, iy);
+  fill(40);
+  textStyle(NORMAL);
+  text(statusLabel(d.status), px + 60, iy);
+
+  iy += 18;
+  fill(sc.r, sc.g, sc.b);
+  textStyle(BOLD);
+  text('Year:', px + 10, iy);
+  fill(40);
+  textStyle(NORMAL);
+  text(d.yearLabel, px + 60, iy);
+
+  iy += 18;
+  fill(sc.r, sc.g, sc.b);
+  textStyle(BOLD);
+  text('Law:', px + 10, iy);
+  fill(40);
+  textStyle(NORMAL);
+  text(d.law, px + 60, iy, pw - 70);
+
+  // Divider
+  iy += 36;
+  stroke(220);
+  line(px + 10, iy, px + pw - 10, iy);
+  noStroke();
+  iy += 8;
+
+  // Demand text
+  fill(sc.r, sc.g, sc.b);
+  textStyle(BOLD);
+  textSize(11);
+  text('The Demand', px + 10, iy);
+  fill(40);
+  textStyle(NORMAL);
+  textSize(11);
+  iy += 16;
+  text(d.full, px + 10, iy, pw - 20);
+  iy += textHeightApprox(d.full, pw - 20, 11) + 8;
+
+  // Note
+  fill(sc.r, sc.g, sc.b);
+  textStyle(BOLD);
+  textSize(11);
+  text('Why it took so long', px + 10, iy);
+  fill(40);
+  textStyle(NORMAL);
+  textSize(11);
+  iy += 16;
+  text(d.note, px + 10, iy, pw - 20, py + ph - iy - 22);
+
+  // Close hint
+  fill(140);
+  textAlign(RIGHT, BOTTOM);
+  textSize(10);
+  text('Click elsewhere to close', px + pw - 8, py + ph - 6);
+}
+
+// Rough text-height estimate for wrapped text given a width and text size.
+function textHeightApprox(str, w, ts) {
+  let charsPerLine = max(1, Math.floor(w / (ts * 0.55)));
+  let lines = Math.ceil(str.length / charsPerLine);
+  return lines * (ts + 4);
+}
+
+function mousePressed() {
+  if (mouseY > drawHeight) return; // ignore control area
+  if (hoveredDemand) {
+    selectedDemand = hoveredDemand;
+  } else {
+    selectedDemand = null;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+<!--
+Populist Policy Platform — Then and Now
+sim-id: populist-platform-tracker
+Library: p5.js
+Status: Built
+
+Purpose: Allow students to explore the 1892 People's Party (Omaha) platform
+demands and track which were eventually enacted into law, when, and under
+what political conditions — illustrating how "radical" reform ideas move
+from the margins to the mainstream.
+
+Bloom Level: Analyze (L4)
+Bloom Verb: Examine
+
+Learning Objective: Students examine how political demands that seem
+radical in one era become mainstream in another, and identify the political
+conditions that enabled or blocked the adoption of Populist demands.
+
+Interactivity:
+- Eight clickable platform cards arranged in a 4x2 grid (status color-coded)
+- Click a card to open a detail panel with full demand text, enactment
+  year, law/amendment name, and a 1-sentence note on why it took so long.
+- Filter buttons: All, Enacted, Partial, Not Enacted, Timeline view
+- Timeline view replaces grid with a horizontal 1892 -> today timeline.
+-->
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Shor's Algorithm: Resource Requirements</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Shor's Algorithm: Resource Requirements
+// Visualizes the hardware gap between current quantum computers
+// and what is needed to run Shor's algorithm for RSA key breaking.
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 190;
+let defaultTextSize = 16;
+
+// Slider
+let keySizeSlider;
+
+// Current best quantum computer specs
+let currentBestQubits = 1000;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // RSA key size slider: 16 to 4096, default 2048, step 16
+    keySizeSlider = createSlider(16, 4096, 2048, 16);
+    keySizeSlider.parent(document.querySelector('main'));
+    // 
+    keySizeSlider.position(sliderLeftMargin, drawHeight + 10);
+    keySizeSlider.size(canvasWidth - sliderLeftMargin - margin * 2 - 80);
+    keySizeSlider.input(function() { redraw(); });
+
+    noLoop();
+    textFont('Arial');
+}
+
+// Calculate resource requirements for a given RSA key size n
+function calcResources(n) {
+    let logicalQubits = 2 * n;
+    let physicalLow = logicalQubits * 1000;
+    let physicalHigh = logicalQubits * 10000;
+    let gateOps = Math.pow(n, 3);
+    // Gate speed: ~1 microsecond per gate for current hardware
+    let timeSeconds = gateOps * 1e-6;
+    // Coherence time required (assuming some parallelism, ~n^2 depth)
+    let circuitDepth = Math.pow(n, 2);
+    let coherenceSeconds = circuitDepth * 1e-6;
+    return {
+        logicalQubits: logicalQubits,
+        physicalLow: physicalLow,
+        physicalHigh: physicalHigh,
+        gateOps: gateOps,
+        timeSeconds: timeSeconds,
+        coherenceSeconds: coherenceSeconds
+    };
+}
+
+function formatNumber(num) {
+    if (num >= 1e15) return (num / 1e15).toFixed(1) + " quadrillion";
+    if (num >= 1e12) return (num / 1e12).toFixed(1) + " trillion";
+    if (num >= 1e9) return (num / 1e9).toFixed(1) + " billion";
+    if (num >= 1e6) return (num / 1e6).toFixed(1) + " million";
+    if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";
+    return num.toFixed(0);
+}
+
+function formatTime(seconds) {
+    if (seconds < 1) return (seconds * 1000).toFixed(1) + " ms";
+    if (seconds < 60) return seconds.toFixed(1) + " sec";
+    if (seconds < 3600) return (seconds / 60).toFixed(1) + " min";
+    if (seconds < 86400) return (seconds / 3600).toFixed(1) + " hours";
+    if (seconds < 365.25 * 86400) return (seconds / 86400).toFixed(1) + " days";
+    if (seconds < 365.25 * 86400 * 1000) return (seconds / (365.25 * 86400)).toFixed(1) + " years";
+    if (seconds < 365.25 * 86400 * 1e6) return (seconds / (365.25 * 86400 * 1000)).toFixed(1) + "K years";
+    return (seconds / (365.25 * 86400 * 1e6)).toFixed(1) + "M years";
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    let keySize = keySizeSlider.value();
+    let res = calcResources(keySize);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Shor's Algorithm: Resource Requirements", canvasWidth / 2, 8);
+
+    // Subtitle with key size
+    textSize(13);
+    textStyle(NORMAL);
+    fill('#666');
+    text("RSA-" + keySize + " key | Largest number factored by Shor's: 21 (2012)", canvasWidth / 2, 32);
+
+    // Layout: left side = bar chart, right side = stats panel
+    let chartLeft = margin + 10;
+    let chartRight = canvasWidth * 0.55;
+    let statsLeft = canvasWidth * 0.7;
+    let statsRight = canvasWidth - margin;
+
+    // --- Bar chart: Current vs Required ---
+    let chartTop = 70;
+    let chartBottom = drawHeight - 30;
+    let chartHeight = chartBottom - chartTop;
+
+    // We compare on log scale: current qubits vs required physical qubits
+    let logCurrent = Math.log10(currentBestQubits);
+    let logRequiredLow = Math.log10(res.physicalLow);
+    let logRequiredHigh = Math.log10(res.physicalHigh);
+
+    // Log scale range for chart
+    let logMin = 0;
+    let logMax = Math.max(logRequiredHigh + 0.5, 8.5);
+
+    let barWidth = (chartRight - chartLeft - 60) / 3;
+    let barGap = 20;
+
+    // Chart label
+    fill('#333');
+    textSize(13);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Physical Qubit Comparison (log scale)", (chartLeft + chartRight) / 2, chartTop - 5);
+
+    // Y-axis for log scale
+    let axisX = chartLeft + 40;
+    let barAreaLeft = axisX + 15;
+
+    stroke('#666');
+    strokeWeight(1);
+    line(axisX, chartTop + 15, axisX, chartBottom);
+
+    // Draw tick marks
+    textSize(10);
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+    fill('#666');
+    noStroke();
+
+    for (let exp = 0; exp <= Math.ceil(logMax); exp++) {
+        let y = map(exp, logMin, logMax, chartBottom, chartTop + 15);
+        stroke('#DDD');
+        strokeWeight(0.5);
+        line(axisX, y, chartRight - 10, y);
+        stroke('#666');
+        strokeWeight(1);
+        line(axisX - 4, y, axisX, y);
+        noStroke();
+        fill('#666');
+        text("10" + superscript(exp), axisX - 6, y);
+    }
+
+    // Bar 1: Current best QC
+    let bar1X = barAreaLeft + barGap;
+    let bar1Height = map(logCurrent, logMin, logMax, 0, chartHeight - 15);
+    fill('#3F51B5');
+    noStroke();
+    rect(bar1X, chartBottom - bar1Height, barWidth, bar1Height, 3, 3, 0, 0);
+
+    // Bar 1 label
+    fill('#3F51B5');
+    textSize(11);
+    textAlign(CENTER, BOTTOM);
+    textStyle(BOLD);
+    text(formatNumber(currentBestQubits), bar1X + barWidth / 2, chartBottom - bar1Height - 3);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("Current Best", bar1X + barWidth / 2, chartBottom + 4);
+    text("QC (~1,000)", bar1X + barWidth / 2, chartBottom + 16);
+
+    // Bar 2: Required low estimate
+    let bar2X = bar1X + barWidth + barGap;
+    let bar2Height = map(logRequiredLow, logMin, logMax, 0, chartHeight - 15);
+    fill('#FF7043');
+    noStroke();
+    rect(bar2X, chartBottom - bar2Height, barWidth, bar2Height, 3, 3, 0, 0);
+
+    fill('#E65100');
+    textSize(11);
+    textAlign(CENTER, BOTTOM);
+    textStyle(BOLD);
+    text(formatNumber(res.physicalLow), bar2X + barWidth / 2, chartBottom - bar2Height - 3);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("Required", bar2X + barWidth / 2, chartBottom + 4);
+    text("(1000:1 ratio)", bar2X + barWidth / 2, chartBottom + 16);
+
+    // Bar 3: Required high estimate
+    let bar3X = bar2X + barWidth + barGap;
+    let bar3Height = map(logRequiredHigh, logMin, logMax, 0, chartHeight - 15);
+    fill('#D32F2F');
+    noStroke();
+    rect(bar3X, chartBottom - bar3Height, barWidth, bar3Height, 3, 3, 0, 0);
+
+    fill('#D32F2F');
+    textSize(11);
+    textAlign(CENTER, BOTTOM);
+    textStyle(BOLD);
+    text(formatNumber(res.physicalHigh), bar3X + barWidth / 2, chartBottom - bar3Height - 3);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("Required", bar3X + barWidth / 2, chartBottom + 4);
+    text("(10000:1 ratio)", bar3X + barWidth / 2, chartBottom + 16);
+
+    // --- Gap ratio annotation ---
+    let ratioLow = Math.round(res.physicalLow / currentBestQubits);
+    let ratioHigh = Math.round(res.physicalHigh / currentBestQubits);
+    let gapText;
+    if (ratioLow < 1) {
+        gapText = "Within current capability";
+    } else {
+        gapText = "Need " + formatNumber(ratioLow) + "x - " + formatNumber(ratioHigh) + "x more qubits";
+    }
+
+    // Gap box between bars
+    let gapBoxY = chartTop + 20;
+    fill(255, 255, 255, 220);
+    stroke('#D32F2F');
+    strokeWeight(1.5);
+    let gapBoxW = chartRight - barAreaLeft - 60;
+    rect(barAreaLeft - 5, gapBoxY, gapBoxW, 28, 4);
+
+    noStroke();
+    fill('#D32F2F');
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(gapText, barAreaLeft - 5 + gapBoxW / 2, gapBoxY + 14);
+
+    // --- Stats panel on the right ---
+    let panelX = statsLeft;
+    let panelY = 65;
+    let panelW = statsRight - statsLeft;
+    let lineH = 32;
+
+    fill('#333');
+    noStroke();
+    textSize(14);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("Resource Breakdown", panelX, panelY);
+
+    panelY += 28;
+
+    // Stats entries
+    let stats = [
+        { label: "RSA Key Size", value: keySize + " bits", color: '#333' },
+        { label: "Logical Qubits", value: formatNumber(res.logicalQubits), color: '#3F51B5' },
+        { label: "Physical (1000:1)", value: formatNumber(res.physicalLow), color: '#FF7043' },
+        { label: "Physical (10000:1)", value: formatNumber(res.physicalHigh), color: '#D32F2F' },
+        { label: "Gate Operations", value: formatNumber(res.gateOps), color: '#7B1FA2' },
+        { label: "Execution Time", value: formatTime(res.timeSeconds), color: '#00695C' },
+        { label: "Coherence Required", value: formatTime(res.coherenceSeconds), color: '#00695C' }
+    ];
+
+    for (let i = 0; i < stats.length; i++) {
+        let y = panelY + i * lineH;
+
+        // Alternating row backgrounds
+        if (i % 2 === 0) {
+            fill(240, 240, 255, 100);
+            noStroke();
+            rect(panelX - 5, y - 2, panelW + 10, lineH - 2, 3);
+        }
+
+        // Label
+        fill('#555');
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(NORMAL);
+        text(stats[i].label + ":", panelX, y + 4);
+
+        // Value
+        fill(stats[i].color);
+        textSize(13);
+        textAlign(RIGHT, TOP);
+        textStyle(BOLD);
+        text(stats[i].value, statsRight, y + 4);
+    }
+
+    // Historical context box
+    let histY = panelY + stats.length * lineH + 15;
+    fill(255, 248, 225);
+    stroke('#DAA520');
+    strokeWeight(1);
+    rect(panelX - 5, histY, panelW + 10, 80, 5);
+
+    noStroke();
+    fill('#B8860B');
+    textSize(12);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("Historical Context", panelX + 5, histY + 8);
+
+    textStyle(NORMAL);
+    fill('#555');
+    textSize(11);
+    let histText1 = "Largest number factored by";
+    let histText2 = "Shor's algorithm: 21 (2012)";
+    let histText3 = "That's a 5-bit number.";
+    let histText4 = "RSA-2048 is a 2048-bit number.";
+    text(histText1, panelX + 5, histY + 26);
+    text(histText2, panelX + 5, histY + 39);
+    fill('#D32F2F');
+    textStyle(BOLD);
+    text(histText3, panelX + 5, histY + 55);
+    text(histText4, panelX + 5, histY + 68);
+
+    // --- Control region labels ---
+    // Slider label and value
+    fill('#333');
+    noStroke();
+    textSize(14);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("RSA Key Size (bits): " + keySize, 10, drawHeight + 20);
+
+    // Slider min/max labels
+    fill('#888');
+    textSize(10);
+    textStyle(NORMAL);
+    textAlign(LEFT, TOP);
+    text("16", sliderLeftMargin, drawHeight + 52);
+    textAlign(RIGHT, TOP);
+    text("4096", sliderLeftMargin + keySizeSlider.width, drawHeight + 52);
+}
+
+function superscript(num) {
+    let s = num.toString();
+    let result = "";
+    let superDigits = {
+        '0': '\u2070', '1': '\u00B9', '2': '\u00B2', '3': '\u00B3',
+        '4': '\u2074', '5': '\u2075', '6': '\u2076', '7': '\u2077',
+        '8': '\u2078', '9': '\u2079', '-': '\u207B'
+    };
+    for (let i = 0; i < s.length; i++) {
+        result += superDigits[s[i]] || s[i];
+    }
+    return result;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    keySizeSlider.size(canvasWidth - sliderLeftMargin - margin * 2 - 80);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

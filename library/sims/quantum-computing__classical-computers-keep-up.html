@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Classical vs. Quantum Improvement Trajectories</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Classical vs. Quantum Improvement Trajectories</h2>
+        <div class="chart-container"><canvas id="trajectoryChart"></canvas></div>
+        <div class="controls" id="controls"></div>
+        <p class="source">Data compiled from published hardware benchmarks, manufacturer announcements, and TOP500 records. Classical GPU data normalized to FLOPS per dollar.</p>
+    </div>
+    <script>
+// Classical vs. Quantum Improvement Trajectories
+// Chart.js line chart with dual logarithmic axes
+
+(function () {
+    'use strict';
+
+    // --- Data ---
+
+    // Classical GPU performance: FLOPS per dollar (approximate trend)
+    const classicalData = [
+        { x: 2015, y: 1e10,  label: 'NVIDIA Maxwell (~10 GFLOPS/$)' },
+        { x: 2017, y: 1e11,  label: 'NVIDIA Pascal (~100 GFLOPS/$)' },
+        { x: 2019, y: 5e11,  label: 'NVIDIA Turing (~500 GFLOPS/$)' },
+        { x: 2021, y: 1e12,  label: 'NVIDIA Ampere (~1 TFLOPS/$)' },
+        { x: 2023, y: 5e12,  label: 'NVIDIA Hopper (~5 TFLOPS/$)' },
+        { x: 2025, y: 1e13,  label: 'NVIDIA Blackwell (~10 TFLOPS/$)' }
+    ];
+
+    // Quantum "useful operations": qubit count x (1 - error rate)
+    const quantumUsefulData = [
+        { x: 2015, y: 5,     label: 'IBM 5-qubit (Tenerife), fidelity ~0.99' },
+        { x: 2017, y: 20,    label: 'IBM 20-qubit (Tokyo), fidelity ~0.995' },
+        { x: 2019, y: 53,    label: 'Google Sycamore 53 qubits, fidelity ~0.997' },
+        { x: 2021, y: 127,   label: 'IBM Eagle 127 qubits, fidelity ~0.998' },
+        { x: 2023, y: 1120,  label: 'IBM Condor 1,121 qubits, fidelity ~0.999' },
+        { x: 2025, y: 1199,  label: 'IBM Flamingo ~1,200 qubits, fidelity ~0.999' }
+    ];
+
+    // Quantum raw qubit count
+    const quantumQubitData = [
+        { x: 2015, y: 5,     label: 'IBM 5-qubit processor' },
+        { x: 2017, y: 20,    label: 'IBM 20-qubit processor' },
+        { x: 2019, y: 53,    label: 'Google Sycamore 53 qubits' },
+        { x: 2021, y: 127,   label: 'IBM Eagle 127 qubits' },
+        { x: 2023, y: 1121,  label: 'IBM Condor 1,121 qubits' },
+        { x: 2025, y: 1200,  label: 'IBM Flamingo ~1,200 qubits' }
+    ];
+
+    // Minimum threshold for commercially relevant quantum computation
+    // (~10^6 error-corrected logical operations needed)
+    const thresholdData = [
+        { x: 2015, y: 1e6 },
+        { x: 2025, y: 1e6 }
+    ];
+
+    // --- Helpers ---
+
+    function toSuperscript(n) {
+        const sup = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴',
+                      '5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+        return String(n).split('').map(function(c) { return sup[c] || c; }).join('');
+    }
+
+    function fmtPow10(value) {
+        const log = Math.log10(value);
+        if (Number.isInteger(log)) return '10' + toSuperscript(log);
+        return '';
+    }
+
+    // --- Chart config ---
+
+    const ctx = document.getElementById('trajectoryChart').getContext('2d');
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: 'Classical GPU (FLOPS/$)',
+                    data: classicalData,
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: '#4CAF50',
+                    fill: false,
+                    tension: 0.3,
+                    yAxisID: 'yLeft'
+                },
+                {
+                    label: 'Quantum Useful Ops (qubits x fidelity)',
+                    data: quantumUsefulData,
+                    borderColor: '#FF7043',
+                    backgroundColor: 'rgba(255, 112, 67, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: '#FF7043',
+                    fill: false,
+                    tension: 0.3,
+                    yAxisID: 'yRight'
+                },
+                {
+                    label: 'Quantum Raw Qubit Count',
+                    data: quantumQubitData,
+                    borderColor: '#FF9800',
+                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [6, 3],
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#FF9800',
+                    pointStyle: 'triangle',
+                    fill: false,
+                    tension: 0.3,
+                    hidden: true,
+                    yAxisID: 'yRight'
+                },
+                {
+                    label: 'Min. Threshold for Quantum Advantage',
+                    data: thresholdData,
+                    borderColor: '#999',
+                    borderWidth: 2,
+                    borderDash: [10, 5],
+                    pointRadius: 0,
+                    fill: false,
+                    tension: 0,
+                    yAxisID: 'yRight'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: {
+                mode: 'nearest',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 14,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function (items) {
+                            return 'Year: ' + items[0].raw.x;
+                        },
+                        label: function (context) {
+                            const point = context.raw;
+                            const val = point.y.toExponential(1);
+                            const info = point.label ? ' — ' + point.label : '';
+                            return context.dataset.label + ': ' + val + info;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    min: 2014,
+                    max: 2026,
+                    ticks: {
+                        stepSize: 2,
+                        callback: function (v) { return v; }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Year',
+                        font: { size: 13, weight: 'bold' }
+                    },
+                    grid: { color: 'rgba(0,0,0,0.06)' }
+                },
+                yLeft: {
+                    type: 'logarithmic',
+                    position: 'left',
+                    min: 1e9,
+                    max: 1e14,
+                    title: {
+                        display: true,
+                        text: 'Classical FLOPS per Dollar',
+                        color: '#4CAF50',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    ticks: {
+                        color: '#4CAF50',
+                        callback: function (value) { return fmtPow10(value); }
+                    },
+                    grid: { color: 'rgba(76, 175, 80, 0.08)' }
+                },
+                yRight: {
+                    type: 'logarithmic',
+                    position: 'right',
+                    min: 1,
+                    max: 1e7,
+                    title: {
+                        display: true,
+                        text: 'Quantum Performance Metric',
+                        color: '#FF7043',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    ticks: {
+                        color: '#FF7043',
+                        callback: function (value) { return fmtPow10(value); }
+                    },
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+
+    // --- Toggle buttons ---
+
+    const controlsDiv = document.getElementById('controls');
+    const toggleInfo = [
+        { index: 0, name: 'Classical GPU', color: '#4CAF50' },
+        { index: 1, name: 'Quantum Useful Ops', color: '#FF7043' },
+        { index: 2, name: 'Raw Qubit Count', color: '#FF9800' },
+        { index: 3, name: 'Advantage Threshold', color: '#999' }
+    ];
+
+    toggleInfo.forEach(function (info) {
+        const btn = document.createElement('button');
+        btn.textContent = info.name;
+        btn.style.borderColor = info.color;
+
+        // Set initial state
+        const isVisible = !chart.data.datasets[info.index].hidden;
+        if (isVisible) {
+            btn.classList.add('active');
+            btn.style.backgroundColor = info.color;
+            btn.style.color = 'white';
+        }
+
+        btn.addEventListener('click', function () {
+            const meta = chart.getDatasetMeta(info.index);
+            meta.hidden = !meta.hidden;
+            const nowVisible = !meta.hidden;
+            if (nowVisible) {
+                btn.classList.add('active');
+                btn.style.backgroundColor = info.color;
+                btn.style.color = 'white';
+            } else {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = 'white';
+                btn.style.color = info.color;
+            }
+            chart.update();
+        });
+
+        controlsDiv.appendChild(btn);
+    });
+})();
+
+</script>
+</body>
+</html>

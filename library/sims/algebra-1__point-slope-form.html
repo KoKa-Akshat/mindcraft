@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Point-Slope Form Builder</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        button {
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+        }
+        button:hover {
+            background: #f0f0f0;
+        }
+        input[type="range"] {
+            cursor: pointer;
+        }
+    </style>
+    <script>// Point-Slope Form Builder
+// Interactive tool for building line equations using point-slope form
+
+let canvasWidth = 850;
+let drawHeight = 650;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+
+let pointP = { x: 3, y: 4 };
+let m = 2;
+
+let dragging = false;
+let gridScale = 25;
+let originX, originY;
+let graphWidth = 550;
+
+let slopeSlider;
+let snapToGrid = true;
+let showSlopeTriangle = true;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  originX = graphWidth / 2;
+  originY = drawHeight / 2;
+
+  // Create slope slider
+  let sliderY = drawHeight + 15;
+
+  let slopeLabel = createSpan('Slope (m):');
+  slopeLabel.position(20, sliderY);
+  slopeLabel.style('font-family', 'Arial');
+  slopeLabel.style('font-size', '13px');
+  slopeLabel.parent(document.querySelector('main'));
+
+  slopeSlider = createSlider(-3, 3, 2, 0.5);
+  slopeSlider.position(100, sliderY + 3);
+  slopeSlider.style('width', '150px');
+  slopeSlider.parent(document.querySelector('main'));
+
+  // Random button
+  let randomBtn = createButton('Random');
+  randomBtn.position(280, sliderY);
+  randomBtn.mousePressed(randomSetup);
+  randomBtn.parent(document.querySelector('main'));
+
+  // Toggle buttons
+  let triangleBtn = createButton('Triangle: ON');
+  triangleBtn.position(360, sliderY);
+  triangleBtn.mousePressed(() => {
+    showSlopeTriangle = !showSlopeTriangle;
+    triangleBtn.html(showSlopeTriangle ? 'Triangle: ON' : 'Triangle: OFF');
+  });
+  triangleBtn.parent(document.querySelector('main'));
+
+  let snapBtn = createButton('Snap: ON');
+  snapBtn.position(470, sliderY);
+  snapBtn.mousePressed(() => {
+    snapToGrid = !snapToGrid;
+    snapBtn.html(snapToGrid ? 'Snap: ON' : 'Snap: OFF');
+  });
+  snapBtn.parent(document.querySelector('main'));
+
+  describe('Interactive point-slope form builder with draggable point and slope slider', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  m = slopeSlider.value();
+
+  // Draw area background
+  background('#FAFAFA');
+
+  // Graph area
+  fill('#FFFFFF');
+  noStroke();
+  rect(0, 0, graphWidth, drawHeight);
+
+  drawGrid();
+  drawLineAndPoint();
+  drawEquationPanel();
+  drawControlPanel();
+}
+
+function drawGrid() {
+  push();
+  translate(originX, originY);
+
+  // Grid lines
+  stroke('#E8E8E8');
+  strokeWeight(0.5);
+  for (let x = -10; x <= 10; x++) {
+    line(x * gridScale, -10 * gridScale, x * gridScale, 10 * gridScale);
+  }
+  for (let y = -10; y <= 10; y++) {
+    line(-10 * gridScale, y * gridScale, 10 * gridScale, y * gridScale);
+  }
+
+  // Axes
+  stroke('#9E9E9E');
+  strokeWeight(1.5);
+  line(-10 * gridScale, 0, 10 * gridScale, 0);
+  line(0, -10 * gridScale, 0, 10 * gridScale);
+
+  // Axis labels
+  fill('#757575');
+  textSize(10);
+  textAlign(CENTER, TOP);
+  for (let x = -10; x <= 10; x++) {
+    if (x !== 0 && x % 2 === 0) text(x, x * gridScale, 5);
+  }
+  textAlign(RIGHT, CENTER);
+  for (let y = -10; y <= 10; y++) {
+    if (y !== 0 && y % 2 === 0) text(-y, -5, y * gridScale);
+  }
+
+  pop();
+}
+
+function drawLineAndPoint() {
+  push();
+  translate(originX, originY);
+
+  let px = pointP.x * gridScale;
+  let py = -pointP.y * gridScale;
+
+  // Draw the line
+  stroke('#D32F2F');
+  strokeWeight(2.5);
+
+  let x1 = -10;
+  let x2 = 10;
+  let y1 = m * (x1 - pointP.x) + pointP.y;
+  let y2 = m * (x2 - pointP.x) + pointP.y;
+
+  line(x1 * gridScale, -y1 * gridScale, x2 * gridScale, -y2 * gridScale);
+
+  // Slope triangle
+  if (showSlopeTriangle && m !== 0) {
+    let startX = pointP.x;
+    let startY = pointP.y;
+    let endX = pointP.x + 1;
+    let endY = pointP.y + m;
+
+    // Run arrow (blue)
+    stroke('#1976D2');
+    strokeWeight(3);
+    line(startX * gridScale, -startY * gridScale, endX * gridScale, -startY * gridScale);
+    // Arrow head
+    line((endX - 0.15) * gridScale, (-startY + 0.1) * gridScale, endX * gridScale, -startY * gridScale);
+    line((endX - 0.15) * gridScale, (-startY - 0.1) * gridScale, endX * gridScale, -startY * gridScale);
+
+    // Rise arrow
+    let riseColor = m > 0 ? '#4CAF50' : '#FF9800';
+    stroke(riseColor);
+    line(endX * gridScale, -startY * gridScale, endX * gridScale, -endY * gridScale);
+    // Arrow head
+    let dir = m > 0 ? 1 : -1;
+    line((endX - 0.1) * gridScale, (-endY + dir * 0.15) * gridScale, endX * gridScale, -endY * gridScale);
+    line((endX + 0.1) * gridScale, (-endY + dir * 0.15) * gridScale, endX * gridScale, -endY * gridScale);
+
+    // Right angle
+    stroke('#9E9E9E');
+    strokeWeight(1);
+    noFill();
+    let signY = m > 0 ? 1 : -1;
+    rect(endX * gridScale - 6, -startY * gridScale - signY * 6, 6, signY * 6);
+
+    // Labels
+    noStroke();
+    textSize(10);
+    fill('#1976D2');
+    textAlign(CENTER, TOP);
+    text('1', (startX + 0.5) * gridScale, -startY * gridScale + 8);
+
+    fill(riseColor);
+    textAlign(LEFT, CENTER);
+    text(m.toString(), endX * gridScale + 6, -(startY + endY) / 2 * gridScale);
+  }
+
+  // Calculate y-intercept
+  let b = pointP.y - m * pointP.x;
+
+  // Y-intercept point
+  fill('#4CAF50');
+  noStroke();
+  ellipse(0, -b * gridScale, 10, 10);
+
+  // Y-intercept label
+  fill('#2E7D32');
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  text(`(0, ${b.toFixed(1)})`, 8, -b * gridScale);
+
+  // Point P (draggable)
+  fill('#1565C0');
+  noStroke();
+  ellipse(px, py, 18, 18);
+
+  // Point label
+  fill('#1565C0');
+  textSize(12);
+  textStyle(BOLD);
+  textAlign(LEFT, BOTTOM);
+  text(`P(${pointP.x}, ${pointP.y})`, px + 12, py - 5);
+  textStyle(NORMAL);
+
+  // Drag instruction
+  if (!dragging) {
+    fill('#9E9E9E');
+    textSize(9);
+    textAlign(CENTER, TOP);
+    text('Drag point P', px, py + 15);
+  }
+
+  pop();
+}
+
+function drawEquationPanel() {
+  let panelX = graphWidth + 10;
+  let panelY = 15;
+  let panelW = canvasWidth - graphWidth - 20;
+  let panelH = drawHeight - 30;
+
+  // Panel background
+  fill('#FFFFFF');
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  // Title
+  fill('#1565C0');
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Equation Forms', panelX + panelW / 2, panelY + 15);
+  textStyle(NORMAL);
+
+  let b = pointP.y - m * pointP.x;
+
+  // Point-Slope Form section
+  let sectionY = panelY + 50;
+
+  fill('#2E7D32');
+  textSize(12);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  text('Point-Slope Form', panelX + 15, sectionY);
+  textStyle(NORMAL);
+
+  // Formula
+  fill('#757575');
+  textSize(11);
+  text('y - y₁ = m(x - x₁)', panelX + 15, sectionY + 20);
+
+  // Substituted
+  fill('#424242');
+  textSize(12);
+  let signY = pointP.y >= 0 ? '+' : '';
+  let signX = pointP.x >= 0 ? '-' : '+';
+  let absX = abs(pointP.x);
+  text(`y - ${pointP.y} = ${m}(x ${signX} ${absX})`, panelX + 15, sectionY + 42);
+
+  // Box around point-slope
+  stroke('#4CAF50');
+  strokeWeight(2);
+  noFill();
+  rect(panelX + 10, sectionY + 35, panelW - 20, 28, 4);
+
+  // Conversion section
+  sectionY += 90;
+  fill('#E65100');
+  textSize(12);
+  textStyle(BOLD);
+  noStroke();
+  text('Conversion Steps', panelX + 15, sectionY);
+  textStyle(NORMAL);
+
+  textSize(11);
+  fill('#616161');
+
+  // Step 1: Distribute
+  let distributed = m * (-pointP.x);
+  let distSign = distributed >= 0 ? '+' : '';
+  text(`1. Distribute: y - ${pointP.y} = ${m}x ${distSign}${distributed}`, panelX + 15, sectionY + 22);
+
+  // Step 2: Add y1
+  let addSign = pointP.y >= 0 ? '+' : '';
+  text(`2. Add ${pointP.y}: y = ${m}x ${distSign}${distributed} ${addSign}${pointP.y}`, panelX + 15, sectionY + 42);
+
+  // Step 3: Simplify
+  let bSign = b >= 0 ? '+' : '';
+  text(`3. Simplify: y = ${m}x ${bSign}${b.toFixed(1)}`, panelX + 15, sectionY + 62);
+
+  // Slope-Intercept Form section
+  sectionY += 100;
+  fill('#1565C0');
+  textSize(12);
+  textStyle(BOLD);
+  text('Slope-Intercept Form', panelX + 15, sectionY);
+  textStyle(NORMAL);
+
+  fill('#424242');
+  textSize(14);
+  textStyle(BOLD);
+  let slopeIntEq = formatSlopeIntercept(m, b);
+  text(slopeIntEq, panelX + 15, sectionY + 25);
+  textStyle(NORMAL);
+
+  // Box around slope-intercept
+  stroke('#1976D2');
+  strokeWeight(2);
+  noFill();
+  rect(panelX + 10, sectionY + 18, panelW - 20, 30, 4);
+
+  // Info section
+  sectionY += 75;
+  fill('#9E9E9E');
+  textSize(10);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text(`Slope: m = ${m}`, panelX + 15, sectionY);
+  text(`Y-intercept: b = ${b.toFixed(1)}`, panelX + 15, sectionY + 16);
+  text(`Point: P(${pointP.x}, ${pointP.y})`, panelX + 15, sectionY + 32);
+
+  // Key insight
+  sectionY += 60;
+  fill('#7B1FA2');
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('Both forms describe', panelX + panelW / 2, sectionY);
+  text('the SAME line!', panelX + panelW / 2, sectionY + 14);
+}
+
+function formatSlopeIntercept(slope, yInt) {
+  let eq = 'y = ';
+
+  if (slope === 0) {
+    eq += yInt.toFixed(1);
+  } else if (slope === 1) {
+    eq += 'x';
+  } else if (slope === -1) {
+    eq += '-x';
+  } else {
+    eq += slope + 'x';
+  }
+
+  if (slope !== 0) {
+    if (yInt > 0) {
+      eq += ' + ' + yInt.toFixed(1);
+    } else if (yInt < 0) {
+      eq += ' - ' + abs(yInt).toFixed(1);
+    }
+  }
+
+  return eq;
+}
+
+function drawControlPanel() {
+  // Panel background
+  fill('#F5F5F5');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Divider
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  // Slope value display
+  fill('#424242');
+  textSize(12);
+  textStyle(BOLD);
+  textAlign(LEFT, CENTER);
+  noStroke();
+  text(`m = ${m}`, 260, drawHeight + 25);
+  textStyle(NORMAL);
+}
+
+function randomSetup() {
+  pointP.x = floor(random(-6, 6));
+  pointP.y = floor(random(-6, 6));
+  slopeSlider.value(random([-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2]));
+}
+
+function mousePressed() {
+  let mx = mouseX - originX;
+  let my = mouseY - originY;
+
+  let px = pointP.x * gridScale;
+  let py = -pointP.y * gridScale;
+
+  if (dist(mx, my, px, py) < 15 && mouseY < drawHeight) {
+    dragging = true;
+  }
+}
+
+function mouseDragged() {
+  if (!dragging) return;
+
+  let mx = (mouseX - originX) / gridScale;
+  let my = -(mouseY - originY) / gridScale;
+
+  if (snapToGrid) {
+    mx = round(mx);
+    my = round(my);
+  }
+
+  mx = constrain(mx, -9, 9);
+  my = constrain(my, -9, 9);
+
+  pointP.x = mx;
+  pointP.y = my;
+}
+
+function mouseReleased() {
+  dragging = false;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 850);
+    canvasWidth = max(canvasWidth, 700);
+    graphWidth = canvasWidth * 0.6;
+    gridScale = graphWidth / 22;
+    originX = graphWidth / 2;
+    originY = drawHeight / 2;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

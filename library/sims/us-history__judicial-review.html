@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Judicial Review — How It Works</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Judicial Review — How It Works
+// CANVAS_HEIGHT: 720
+// Chapter 6: The Jeffersonian Era and Early Expansion (1800–1828)
+// Bloom Level: Understand (L2) — Explain judicial review using Marbury v. Madison
+//
+// Layout: drawHeight (660) + controlHeight (60) = 720
+// Step-through walkthrough of Marbury v. Madison (6 steps), with a
+// "What if" / "Judicial review since" panel showing later applications
+// (Brown v. Board, Korematsu, Roe, Citizens United, Obergefell).
+
+let canvasWidth = 900;
+let drawHeight = 660;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+// State
+let mode = 'walkthrough'; // 'walkthrough' or 'since'
+let stepIdx = 0;          // 0..5 for walkthrough
+let sinceIdx = 0;         // 0..4 for "since" cases
+
+let prevBtn, nextBtn, modeBtn, resetBtn;
+
+// Color palette
+const COLOR_INDIGO = [57, 73, 171];
+const COLOR_GOLD   = [249, 168, 37];
+const COLOR_GREEN  = [46, 125, 50];
+const COLOR_RED    = [198, 40, 40];
+const COLOR_NAVY   = [20, 40, 90];
+const COLOR_BG     = [248, 250, 252];
+
+// The six steps of Marbury v. Madison
+const steps = [
+  {
+    title: '1. Adams\' Midnight Appointments',
+    year: '1801',
+    process: 'A law is passed and executive action is taken under it. Congress and the President set policy that may later be challenged.',
+    marbury: 'In his final hours in office, lame-duck Federalist President John Adams appointed dozens of "midnight judges," including William Marbury as a Justice of the Peace for the District of Columbia. Adams signed the commissions; Secretary of State John Marshall sealed them — but several were never delivered before Jefferson took office.',
+    color: COLOR_INDIGO
+  },
+  {
+    title: '2. The Commission Is Withheld',
+    year: '1801',
+    process: 'Someone is harmed by the action and claims the law — or the official\'s use of it — violates the Constitution.',
+    marbury: 'Incoming Republican President Thomas Jefferson ordered his new Secretary of State, James Madison, to withhold the undelivered commissions. Marbury never received his appointment papers and could not assume the office Adams had given him.',
+    color: COLOR_GOLD
+  },
+  {
+    title: '3. Marbury Sues Under the Judiciary Act',
+    year: '1801',
+    process: 'The injured party files suit. The case enters the federal court system — usually starting at the trial level and working its way up.',
+    marbury: 'Marbury filed suit directly in the U.S. Supreme Court, asking for a writ of mandamus to force Madison to deliver the commission. He invoked Section 13 of the Judiciary Act of 1789, which Congress had written to give the Supreme Court the power to issue such writs as a matter of original jurisdiction.',
+    color: COLOR_INDIGO
+  },
+  {
+    title: '4. Marshall\'s Dilemma',
+    year: '1803',
+    process: 'The Supreme Court accepts the case. The justices must weigh the law against the Constitution and decide whether the two conflict.',
+    marbury: 'Chief Justice John Marshall — the very man who had sealed Marbury\'s commission — now had to rule on it. If he ordered Madison to deliver, Jefferson would defy the Court and expose its weakness. If he refused, the Court would look subservient to the executive. Marshall found a third path.',
+    color: COLOR_GOLD
+  },
+  {
+    title: '5. Section 13 Is Unconstitutional',
+    year: '1803',
+    process: 'The Court rules. If the law conflicts with the Constitution, the Constitution wins — and the Court strikes the law down.',
+    marbury: 'Marshall ruled: Yes, Marbury was entitled to his commission. Yes, mandamus was the right remedy. BUT — Section 13 of the Judiciary Act unconstitutionally expanded the Court\'s original jurisdiction beyond what Article III allows. The statute giving the Court power to hear the case was itself void. Marbury lost on procedure; the Court gained the power of judicial review.',
+    color: COLOR_RED
+  },
+  {
+    title: '6. The Precedent: Judicial Review',
+    year: '1803 — present',
+    process: 'The ruling becomes precedent. Future courts cite it. The principle — that courts can void laws conflicting with the Constitution — is established.',
+    marbury: '"It is emphatically the province and duty of the judicial department to say what the law is." Marbury v. Madison established that the Supreme Court can strike down acts of Congress as unconstitutional. Cited in nearly every major constitutional case since, it made the judiciary a genuine third branch — co-equal to Congress and the President.',
+    color: COLOR_GREEN
+  }
+];
+
+// Examples of judicial review in action since 1803
+const sinceCases = [
+  {
+    year: '1954',
+    title: 'Brown v. Board of Education',
+    law: 'State laws requiring racial segregation in public schools.',
+    ruling: 'Unconstitutional',
+    rulingColor: COLOR_RED,
+    text: 'A unanimous Supreme Court struck down "separate but equal" public schooling, overturning Plessy v. Ferguson (1896). Chief Justice Earl Warren wrote that segregated schools are "inherently unequal" and violate the Fourteenth Amendment\'s Equal Protection Clause. Without judicial review, Congress and state legislatures alone could not have ended legal segregation.'
+  },
+  {
+    year: '1944',
+    title: 'Korematsu v. United States',
+    law: 'Executive Order 9066, ordering Japanese-American internment.',
+    ruling: 'Upheld (later repudiated)',
+    rulingColor: COLOR_GOLD,
+    text: 'The Court UPHELD the wartime internment of Japanese Americans, deferring to military judgment. Justice Murphy dissented, calling it a "legalization of racism." In 2018, Chief Justice Roberts in Trump v. Hawaii formally declared Korematsu "gravely wrong the day it was decided" — a reminder that judicial review can also FAIL to protect rights, and that Court rulings can be repudiated by later Courts.'
+  },
+  {
+    year: '1973',
+    title: 'Roe v. Wade',
+    law: 'State laws criminalizing abortion.',
+    ruling: 'Struck down (later overturned, 2022)',
+    rulingColor: COLOR_RED,
+    text: 'The Court struck down state abortion bans, finding a constitutional right to privacy that included the choice to terminate a pregnancy. In 2022, Dobbs v. Jackson Women\'s Health Organization OVERTURNED Roe — showing that judicial review is not a one-way ratchet. Precedents established by judicial review can be undone by later Courts using the same power.'
+  },
+  {
+    year: '2010',
+    title: 'Citizens United v. FEC',
+    law: 'Federal limits on independent corporate political spending.',
+    ruling: 'Struck down',
+    rulingColor: COLOR_RED,
+    text: 'A 5-4 Court ruled that the First Amendment protects corporations\' and unions\' rights to spend unlimited money on independent political communications. This decision, made possible only by judicial review, transformed American campaign finance and remains intensely contested. It illustrates how a single 5-4 ruling can override decades of legislative consensus.'
+  },
+  {
+    year: '2015',
+    title: 'Obergefell v. Hodges',
+    law: 'State bans on same-sex marriage.',
+    ruling: 'Struck down',
+    rulingColor: COLOR_RED,
+    text: 'The Court struck down state same-sex marriage bans, finding the right to marry protected by the Fourteenth Amendment. Justice Kennedy wrote for the 5-4 majority. Without judicial review, this change would have required either a constitutional amendment or 50 separate state legislative actions — a process that could have taken generations or never happened at all.'
+  }
+];
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  prevBtn = createButton('◀ Previous');
+  prevBtn.parent(document.querySelector('main'));
+  prevBtn.mousePressed(goPrev);
+
+  nextBtn = createButton('Next ▶');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.mousePressed(goNext);
+
+  modeBtn = createButton('See Judicial Review Since 1803 ▶');
+  modeBtn.parent(document.querySelector('main'));
+  modeBtn.mousePressed(toggleMode);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => {
+    mode = 'walkthrough';
+    stepIdx = 0;
+    sinceIdx = 0;
+    updateModeBtn();
+  });
+
+  positionControls();
+  describe('Step-by-step walkthrough of Marbury v. Madison (1803), the case that established judicial review. Use Next and Previous buttons to walk through six steps. A second mode shows examples of judicial review applied since: Brown v. Board, Korematsu, Roe, Citizens United, and Obergefell.', LABEL);
+}
+
+function updateModeBtn() {
+  if (modeBtn) {
+    modeBtn.html(mode === 'walkthrough'
+      ? 'See Judicial Review Since 1803 ▶'
+      : '◀ Back to Marbury Walkthrough');
+  }
+}
+
+function toggleMode() {
+  mode = (mode === 'walkthrough') ? 'since' : 'walkthrough';
+  updateModeBtn();
+}
+
+function goPrev() {
+  if (mode === 'walkthrough') {
+    stepIdx = (stepIdx - 1 + steps.length) % steps.length;
+  } else {
+    sinceIdx = (sinceIdx - 1 + sinceCases.length) % sinceCases.length;
+  }
+}
+
+function goNext() {
+  if (mode === 'walkthrough') {
+    stepIdx = (stepIdx + 1) % steps.length;
+  } else {
+    sinceIdx = (sinceIdx + 1) % sinceCases.length;
+  }
+}
+
+function positionControls() {
+  prevBtn.position(margin, drawHeight + 18);
+  nextBtn.position(margin + 100, drawHeight + 18);
+  modeBtn.position(margin + 190, drawHeight + 18);
+  resetBtn.position(canvasWidth - margin - 60, drawHeight + 18);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(COLOR_BG);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(200);
+  noFill();
+  rect(0, 0, canvasWidth - 1, canvasHeight - 1);
+
+  // Title bar
+  noStroke();
+  fill(COLOR_NAVY);
+  rect(0, 0, canvasWidth, 46);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(20);
+  text('Judicial Review — How It Works', canvasWidth / 2, 23);
+
+  if (mode === 'walkthrough') {
+    drawWalkthrough();
+  } else {
+    drawSinceMode();
+  }
+
+  positionControls();
+}
+
+// ----- Step list (left) + detail (right) layout for walkthrough ---------
+function drawWalkthrough() {
+  const headerY = 56;
+  noStroke();
+  fill(40);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(15);
+  text('Marbury v. Madison (1803): The Birth of Judicial Review',
+    canvasWidth / 2, headerY);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(90);
+  text('Use Previous / Next to step through. Step ' + (stepIdx + 1) + ' of ' + steps.length,
+    canvasWidth / 2, headerY + 22);
+
+  // Two-column layout
+  const topY = 100;
+  const bottomY = drawHeight - 16;
+  const colGap = 14;
+  const stepListW = min(280, canvasWidth * 0.34);
+  const leftX = margin;
+  const rightX = leftX + stepListW + colGap;
+  const rightW = canvasWidth - rightX - margin;
+
+  drawStepList(leftX, topY, stepListW, bottomY - topY);
+  drawStepDetail(rightX, topY, rightW, bottomY - topY);
+}
+
+function drawStepList(x, y, w, h) {
+  // Background
+  noStroke();
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(x, y, w, h, 8);
+
+  // Header
+  noStroke();
+  fill(COLOR_NAVY);
+  rect(x, y, w, 28, 8, 8, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(12);
+  text('THE SIX STEPS', x + 12, y + 14);
+
+  // Step items
+  const itemH = (h - 28 - 12) / steps.length;
+  for (let i = 0; i < steps.length; i++) {
+    const iy = y + 28 + 6 + i * itemH;
+    const isCurrent = (i === stepIdx);
+    const c = steps[i].color;
+
+    // Background of item
+    noStroke();
+    if (isCurrent) {
+      fill(c[0], c[1], c[2], 220);
+    } else {
+      fill(245, 247, 250);
+    }
+    rect(x + 6, iy, w - 12, itemH - 4, 6);
+
+    // Number badge
+    fill(isCurrent ? color(255) : color(c[0], c[1], c[2]));
+    noStroke();
+    ellipse(x + 22, iy + itemH / 2 - 2, 24, 24);
+    fill(isCurrent ? color(c[0], c[1], c[2]) : color(255));
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(13);
+    text(String(i + 1), x + 22, iy + itemH / 2 - 2);
+
+    // Title text
+    fill(isCurrent ? 255 : 40);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    textSize(11);
+    const titleNoNum = steps[i].title.replace(/^\d+\.\s*/, '');
+    text(titleNoNum, x + 40, iy + itemH / 2 - 2, w - 50);
+    textStyle(NORMAL);
+  }
+}
+
+function drawStepDetail(x, y, w, h) {
+  const s = steps[stepIdx];
+
+  // Background
+  noStroke();
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(x, y, w, h, 8);
+
+  // Header band in step color
+  noStroke();
+  fill(s.color);
+  rect(x, y, w, 44, 8, 8, 0, 0);
+  fill(255);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(15);
+  text(s.title, x + 14, y + 8, w - 28);
+  textSize(11);
+  textStyle(NORMAL);
+  text(s.year, x + 14, y + 28);
+
+  // Body
+  let cy = y + 58;
+  const bodyX = x + 14;
+  const bodyW = w - 28;
+
+  // Process column
+  fill(80);
+  textStyle(BOLD);
+  textSize(11);
+  text('THE GENERAL PROCESS', bodyX, cy);
+  cy += 16;
+  fill(40);
+  textStyle(NORMAL);
+  textSize(12);
+  text(s.process, bodyX, cy, bodyW);
+  cy += textHeightWrap(s.process, bodyW, 12) + 18;
+
+  // Divider
+  stroke(220);
+  line(bodyX, cy, bodyX + bodyW, cy);
+  noStroke();
+  cy += 10;
+
+  // Marbury column
+  fill(s.color[0], s.color[1], s.color[2]);
+  textStyle(BOLD);
+  textSize(11);
+  text('MARBURY V. MADISON', bodyX, cy);
+  cy += 16;
+  fill(30);
+  textStyle(NORMAL);
+  textSize(12);
+  const remaining = (y + h) - cy - 10;
+  text(s.marbury, bodyX, cy, bodyW, remaining);
+}
+
+// Rough estimate of wrapped text height in p5 (used for layout only).
+function textHeightWrap(str, w, sz) {
+  // p5 has no public textBounds; estimate using char count.
+  push();
+  textSize(sz);
+  const charsPerLine = max(20, w / (sz * 0.55));
+  const lines = max(1, ceil(str.length / charsPerLine));
+  pop();
+  return lines * (sz * 1.35);
+}
+
+// ----- "Judicial Review Since 1803" mode --------------------------------
+function drawSinceMode() {
+  const headerY = 56;
+  noStroke();
+  fill(40);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(15);
+  text('Judicial Review in Action Since 1803',
+    canvasWidth / 2, headerY);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(90);
+  text('Five later cases that show how judicial review reshaped American life. Case ' + (sinceIdx + 1) + ' of ' + sinceCases.length,
+    canvasWidth / 2, headerY + 22);
+
+  // Timeline strip
+  const stripY = 110;
+  const stripH = 70;
+  const stripX = margin + 40;
+  const stripW = canvasWidth - margin * 2 - 80;
+  drawTimelineStrip(stripX, stripY, stripW, stripH);
+
+  // Detail panel
+  const panelX = margin;
+  const panelY = stripY + stripH + 18;
+  const panelW = canvasWidth - margin * 2;
+  const panelH = drawHeight - panelY - 16;
+  drawSinceDetail(panelX, panelY, panelW, panelH);
+}
+
+function drawTimelineStrip(x, y, w, h) {
+  // Backbone line
+  stroke(180);
+  strokeWeight(3);
+  line(x, y + h / 2, x + w, y + h / 2);
+
+  // Markers
+  noStroke();
+  for (let i = 0; i < sinceCases.length; i++) {
+    const cx = x + (w * i) / (sinceCases.length - 1);
+    const cy = y + h / 2;
+    const isCurrent = (i === sinceIdx);
+    const c = sinceCases[i].rulingColor;
+
+    fill(c[0], c[1], c[2]);
+    if (isCurrent) {
+      stroke(20);
+      strokeWeight(3);
+    } else {
+      noStroke();
+    }
+    ellipse(cx, cy, isCurrent ? 26 : 18, isCurrent ? 26 : 18);
+
+    // Year label below
+    noStroke();
+    fill(isCurrent ? 20 : 90);
+    textAlign(CENTER, TOP);
+    textStyle(isCurrent ? BOLD : NORMAL);
+    textSize(11);
+    text(sinceCases[i].year, cx, cy + 16);
+
+    // Case short title above
+    fill(isCurrent ? color(c[0], c[1], c[2]) : color(120));
+    textAlign(CENTER, BOTTOM);
+    textStyle(isCurrent ? BOLD : NORMAL);
+    textSize(10);
+    const shortName = shortCaseName(sinceCases[i].title);
+    text(shortName, cx, cy - 14, 100);
+  }
+  textStyle(NORMAL);
+}
+
+function shortCaseName(t) {
+  const map = {
+    'Brown v. Board of Education': 'Brown',
+    'Korematsu v. United States': 'Korematsu',
+    'Roe v. Wade': 'Roe',
+    'Citizens United v. FEC': 'Citizens United',
+    'Obergefell v. Hodges': 'Obergefell'
+  };
+  return map[t] || t;
+}
+
+function drawSinceDetail(x, y, w, h) {
+  const c = sinceCases[sinceIdx];
+
+  // Background
+  noStroke();
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(x, y, w, h, 8);
+
+  // Header band
+  noStroke();
+  fill(c.rulingColor);
+  rect(x, y, w, 44, 8, 8, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(16);
+  text(c.year + ' — ' + c.title, x + 14, y + 22);
+
+  // Body
+  let cy = y + 60;
+  const bodyX = x + 14;
+  const bodyW = w - 28;
+
+  // Two-column: law challenged | ruling
+  const colW = (bodyW - 16) / 2;
+
+  fill(80);
+  textStyle(BOLD);
+  textSize(11);
+  text('LAW OR ACTION CHALLENGED', bodyX, cy);
+  text('THE COURT\'S RULING', bodyX + colW + 16, cy);
+  cy += 16;
+
+  fill(40);
+  textStyle(NORMAL);
+  textSize(12);
+  text(c.law, bodyX, cy, colW, 60);
+
+  fill(c.rulingColor);
+  textStyle(BOLD);
+  textSize(13);
+  text(c.ruling, bodyX + colW + 16, cy, colW);
+
+  cy += 64;
+
+  stroke(220);
+  line(bodyX, cy, bodyX + bodyW, cy);
+  noStroke();
+  cy += 12;
+
+  fill(80);
+  textStyle(BOLD);
+  textSize(11);
+  text('WHAT JUDICIAL REVIEW MADE POSSIBLE', bodyX, cy);
+  cy += 16;
+
+  fill(30);
+  textStyle(NORMAL);
+  textSize(12);
+  const remaining = (y + h) - cy - 12;
+  text(c.text, bodyX, cy, bodyW, remaining);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: infographic
+    sim-id: judicial-review-explainer
+    Library: p5.js
+    Status: Built
+
+    Purpose: Help students understand how judicial review works by tracing
+    Marbury v. Madison (1803) step-by-step, then showing later cases where
+    the Supreme Court used judicial review to strike down or uphold laws.
+
+    Bloom Level: Understand (L2)
+    Bloom Verb: Explain
+
+    Learning Objective: Students explain the process of judicial review
+    using Marbury v. Madison and describe why the power is significant for
+    the balance of power among branches.
+
+    Mode 1 — Marbury Walkthrough (6 steps):
+    1. Adams' midnight appointments
+    2. Madison withholds Marbury's commission
+    3. Marbury sues under the Judiciary Act of 1789
+    4. Marshall's dilemma
+    5. Section 13 ruled unconstitutional
+    6. Judicial review becomes precedent
+
+    Mode 2 — Judicial Review Since 1803:
+    Brown v. Board (1954), Korematsu (1944), Roe v. Wade (1973),
+    Citizens United (2010), Obergefell (2015).
+
+    Color scheme:
+    - Step nodes: alternating indigo and gold
+    - Constitutional outcome: green; Unconstitutional: red
+    -->
+</body>
+</html>

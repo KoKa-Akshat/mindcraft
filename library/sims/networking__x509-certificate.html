@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Anatomy of an X.509 Certificate</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #37474f; }
+    main { display: block; width: 100%; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 10px 12px; }
+    h1 { font-size: 20px; text-align: center; color: #1565c0; margin: 6px 0 2px; }
+    .sub { text-align: center; font-size: 13px; color: #607d8b; margin: 0 0 8px; }
+    svg.cert { display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto; }
+    .field { cursor: help; }
+    .field rect.bg { transition: fill .1s; }
+    .field:hover rect.bg { fill: #e3f2fd; }
+    .field:hover rect.tag { filter: brightness(1.08); }
+    .tooltip { position: fixed; pointer-events: none; z-index: 50; background: #263238; color: #fff;
+      font-size: 12px; line-height: 1.45; padding: 8px 11px; border-radius: 6px; max-width: 320px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3); opacity: 0; transition: opacity .08s; }
+    .tooltip b { color: #ffd54f; }
+  </style>
+  <script src="x509-anatomy.js" defer></script>
+</head>
+<body>
+  <main>
+    <div class="wrap">
+      <h1>Anatomy of an X.509 Certificate</h1>
+      <p class="sub">A TLS server certificate, read top to bottom like a credential. Hover any field for what it means and why it matters.</p>
+      <svg class="cert" viewBox="0 0 760 600" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="An X.509 version 3 TLS server certificate drawn as a credential document. A blue header band reads X.509 Certificate v3. Eight fields follow: Subject, Subject Alternative Names, Subject Public Key, Issuer, Validity, Serial Number, Key Usage, and Extended Key Usage, each with a hover tooltip. A key icon links the Subject Public Key field to a callout for the server's private key, kept on the server and never transmitted. A slate-steel footer band shows the issuer's ECDSA signature over all the fields above.">
+
+        <!-- credential frame -->
+        <rect x="10" y="10" width="560" height="560" rx="10" fill="#ffffff" stroke="#455a64" stroke-width="2"/>
+
+        <!-- header band -->
+        <rect x="10" y="10" width="560" height="46" rx="10" fill="#1565c0"/>
+        <rect x="10" y="36" width="560" height="20" fill="#1565c0"/>
+        <text x="290" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff">X.509 Certificate &#8212; v3</text>
+
+        <!-- 1 Subject -->
+        <g class="field" data-tip="<b>Subject</b><br>The identity this certificate authenticates. Browsers match the URL hostname against this field. CN = Common Name, O = Organization, C = Country.">
+          <rect class="bg" x="14" y="60" width="552" height="56" fill="#f7fafc"/>
+          <rect class="tag" x="14" y="60" width="6" height="56" fill="#1565c0"/>
+          <text x="30" y="80" font-size="12.5" font-weight="700" fill="#1565c0">Subject</text>
+          <text x="30" y="102" font-size="12.5" fill="#37474f" font-family="monospace">CN=www.example.com, O=Example Corp, C=US</text>
+        </g>
+        <line x1="14" y1="116" x2="566" y2="116" stroke="#eceff1"/>
+
+        <!-- 2 Subject Alternative Names -->
+        <g class="field" data-tip="<b>Subject Alternative Names (SAN)</b><br>Additional hostnames the certificate covers. Modern browsers require this; the Common Name alone is ignored.">
+          <rect class="bg" x="14" y="116" width="552" height="56" fill="#ffffff"/>
+          <rect class="tag" x="14" y="116" width="6" height="56" fill="#1565c0"/>
+          <text x="30" y="136" font-size="12.5" font-weight="700" fill="#1565c0">Subject Alternative Names</text>
+          <text x="30" y="158" font-size="12.5" fill="#37474f" font-family="monospace">DNS:www.example.com, DNS:example.com</text>
+        </g>
+        <line x1="14" y1="172" x2="566" y2="172" stroke="#eceff1"/>
+
+        <!-- 3 Subject Public Key -->
+        <g class="field" data-tip="<b>Subject Public Key</b><br>The public key being bound to the subject. The matching PRIVATE key lives only on the server and is never put in the certificate.">
+          <rect class="bg" x="14" y="172" width="552" height="56" fill="#f7fafc"/>
+          <rect class="tag" x="14" y="172" width="6" height="56" fill="#1565c0"/>
+          <text x="30" y="192" font-size="12.5" font-weight="700" fill="#1565c0">Subject Public Key</text>
+          <text x="30" y="214" font-size="12.5" fill="#37474f" font-family="monospace">ECDSA P-256 &#8212; 02:7f:a3:... (compressed)</text>
+        </g>
+        <line x1="14" y1="228" x2="566" y2="228" stroke="#eceff1"/>
+
+        <!-- 4 Issuer -->
+        <g class="field" data-tip="<b>Issuer</b><br>The CA that signed this certificate. To verify the chain, look up the issuer's own certificate and check its signature, repeating up to a trusted root.">
+          <rect class="bg" x="14" y="228" width="552" height="56" fill="#ffffff"/>
+          <rect class="tag" x="14" y="228" width="6" height="56" fill="#455a64"/>
+          <text x="30" y="248" font-size="12.5" font-weight="700" fill="#455a64">Issuer</text>
+          <text x="30" y="270" font-size="12.5" fill="#37474f" font-family="monospace">CN=Example Intermediate CA, O=Example Trust</text>
+        </g>
+        <line x1="14" y1="284" x2="566" y2="284" stroke="#eceff1"/>
+
+        <!-- 5 Validity -->
+        <g class="field" data-tip="<b>Validity</b><br>Certificates expire. A short validity window reduces the time during which a compromised certificate can be misused before it lapses.">
+          <rect class="bg" x="14" y="284" width="552" height="56" fill="#f7fafc"/>
+          <rect class="tag" x="14" y="284" width="6" height="56" fill="#455a64"/>
+          <text x="30" y="304" font-size="12.5" font-weight="700" fill="#455a64">Validity</text>
+          <text x="30" y="326" font-size="12.5" fill="#37474f" font-family="monospace">2026-04-25 to 2027-04-25 (one year)</text>
+        </g>
+        <line x1="14" y1="340" x2="566" y2="340" stroke="#eceff1"/>
+
+        <!-- 6 Serial Number -->
+        <g class="field" data-tip="<b>Serial Number</b><br>A unique identifier within the issuer. Revocation lists (CRL / OCSP) point at a specific certificate by its serial number.">
+          <rect class="bg" x="14" y="340" width="552" height="56" fill="#ffffff"/>
+          <rect class="tag" x="14" y="340" width="6" height="56" fill="#455a64"/>
+          <text x="30" y="360" font-size="12.5" font-weight="700" fill="#455a64">Serial Number</text>
+          <text x="30" y="382" font-size="12.5" fill="#37474f" font-family="monospace">0x4d3e:f2a1:88c0:1234</text>
+        </g>
+        <line x1="14" y1="396" x2="566" y2="396" stroke="#eceff1"/>
+
+        <!-- 7 Key Usage -->
+        <g class="field" data-tip="<b>Key Usage</b><br>Restricts what the key may be used for. A TLS server certificate marked Digital Signature + Key Encipherment cannot be used as a code-signing certificate.">
+          <rect class="bg" x="14" y="396" width="552" height="56" fill="#f7fafc"/>
+          <rect class="tag" x="14" y="396" width="6" height="56" fill="#ffa000"/>
+          <text x="30" y="416" font-size="12.5" font-weight="700" fill="#b26a00">Key Usage</text>
+          <text x="30" y="438" font-size="12.5" fill="#37474f" font-family="monospace">Digital Signature, Key Encipherment</text>
+        </g>
+        <line x1="14" y1="452" x2="566" y2="452" stroke="#eceff1"/>
+
+        <!-- 8 Extended Key Usage -->
+        <g class="field" data-tip="<b>Extended Key Usage (EKU)</b><br>Further narrows the role. Browsers reject a certificate for HTTPS unless its EKU includes TLS Server Authentication.">
+          <rect class="bg" x="14" y="452" width="552" height="56" fill="#ffffff"/>
+          <rect class="tag" x="14" y="452" width="6" height="56" fill="#ffa000"/>
+          <text x="30" y="472" font-size="12.5" font-weight="700" fill="#b26a00">Extended Key Usage</text>
+          <text x="30" y="494" font-size="12.5" fill="#37474f" font-family="monospace">TLS Server Authentication</text>
+        </g>
+
+        <!-- footer signature band -->
+        <g class="field" data-tip="<b>Issuer's signature</b><br>The issuing CA signs a hash of every field above with its own private key. Change one byte of the certificate and the signature no longer verifies.">
+          <rect x="10" y="514" width="560" height="56" rx="10" fill="#455a64"/>
+          <rect x="10" y="514" width="560" height="20" fill="#455a64"/>
+          <rect x="10" y="514" width="6" height="56" fill="#d84315"/>
+          <text x="30" y="538" font-size="12.5" font-weight="700" fill="#ffffff">Issuer's signature</text>
+          <text x="30" y="558" font-size="12" fill="#cfd8dc" font-family="monospace">30:45:02:21:00... (ECDSA over all fields above)</text>
+        </g>
+
+        <!-- key icon + private-key callout linking from the Subject Public Key row -->
+        <line x1="566" y1="200" x2="612" y2="200" stroke="#d84315" stroke-width="2"/>
+        <path d="M606,194 L612,200 L606,206" fill="none" stroke="#d84315" stroke-width="2"/>
+        <!-- key glyph -->
+        <g>
+          <circle cx="628" cy="200" r="10" fill="none" stroke="#d84315" stroke-width="3"/>
+          <line x1="636" y1="200" x2="656" y2="200" stroke="#d84315" stroke-width="3"/>
+          <line x1="650" y1="200" x2="650" y2="208" stroke="#d84315" stroke-width="3"/>
+          <line x1="656" y1="200" x2="656" y2="210" stroke="#d84315" stroke-width="3"/>
+        </g>
+        <g class="field" data-tip="<b>Server's private key</b><br>The other half of the key pair. It is generated on the server and NEVER leaves it — it is not in the certificate and is never transmitted. Possession of it is what proves the server is the real subject.">
+          <rect class="bg" x="600" y="222" width="150" height="120" rx="8" fill="#fbe9e7" stroke="#d84315" stroke-width="2"/>
+          <text x="675" y="246" text-anchor="middle" font-size="12.5" font-weight="700" fill="#bf360c">Server's</text>
+          <text x="675" y="263" text-anchor="middle" font-size="12.5" font-weight="700" fill="#bf360c">private key</text>
+          <text x="675" y="288" text-anchor="middle" font-size="10" fill="#5d4037">kept on the server,</text>
+          <text x="675" y="302" text-anchor="middle" font-size="10" fill="#5d4037">never transmitted,</text>
+          <text x="675" y="316" text-anchor="middle" font-size="10" fill="#5d4037">not in this</text>
+          <text x="675" y="330" text-anchor="middle" font-size="10" fill="#5d4037">certificate</text>
+        </g>
+        <text x="675" y="360" text-anchor="middle" font-size="9.5" fill="#bf360c" font-style="italic">paired with the</text>
+        <text x="675" y="373" text-anchor="middle" font-size="9.5" fill="#bf360c" font-style="italic">public key above</text>
+      </svg>
+    </div>
+  </main>
+  <div class="tooltip" id="tip"></div>
+</body>
+</html>

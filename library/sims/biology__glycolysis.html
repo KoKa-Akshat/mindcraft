@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Glycolysis Pathway Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Glycolysis Pathway Simulator
+// Visualizes all ten steps with investment/payoff highlighting, badges, and tooltips
+
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 800;
+let controlHeight = 104;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+
+const margin = 20;
+const contentTop = margin + 120;
+const columnGap = 90;
+const stepHeight = 58;
+const stepSpacing = 16;
+
+let highlightInvestment = true;
+let selectedStep = null;
+let togglePhaseButton;
+let resetButton;
+
+let stepLayouts = [];
+
+const badgeStyles = {
+  atpConsume: { color: '#E74C3C', label: '-ATP' },
+  atpProduce: { color: '#27AE60', label: '+ATP' },
+  nadhProduce: { color: '#2980B9', label: '+NADH' }
+};
+
+const steps = [
+  {
+    id: 'step1',
+    number: 1,
+    title: 'Glucose → Glucose-6-phosphate',
+    enzyme: 'Hexokinase',
+    detail: 'Glucose + ATP → Glucose-6-P + ADP',
+    cofactor: 'Consumes 1 ATP; Mg²⁺ required',
+    phase: 'investment',
+    badges: ['atpConsume']
+  },
+  {
+    id: 'step2',
+    number: 2,
+    title: 'Glucose-6-P → Fructose-6-P',
+    enzyme: 'Phosphoglucose isomerase',
+    detail: 'Isomerization between aldose and ketose forms',
+    cofactor: 'No direct energy change',
+    phase: 'investment',
+    badges: []
+  },
+  {
+    id: 'step3',
+    number: 3,
+    title: 'Fructose-6-P → Fructose-1,6-bisP',
+    enzyme: 'Phosphofructokinase-1',
+    detail: 'F6P + ATP → F1,6-BP + ADP',
+    cofactor: 'Rate-limiting step; consumes 1 ATP',
+    phase: 'investment',
+    badges: ['atpConsume']
+  },
+  {
+    id: 'step4',
+    number: 4,
+    title: 'Fructose-1,6-bisP → DHap + G3P',
+    enzyme: 'Aldolase',
+    detail: 'Six-carbon sugar split into two three-carbon molecules',
+    cofactor: 'ΔG°\' is positive but pulled forward in cells',
+    phase: 'investment',
+    badges: []
+  },
+  {
+    id: 'step5',
+    number: 5,
+    title: 'DHap ↔ G3P',
+    enzyme: 'Triose phosphate isomerase',
+    detail: 'DHap rapidly converted to second molecule of G3P',
+    cofactor: 'No energy change; ensures two G3P feed payoff phase',
+    phase: 'investment',
+    badges: []
+  },
+  {
+    id: 'step6',
+    number: 6,
+    title: 'G3P → 1,3-bisphosphoglycerate',
+    enzyme: 'G3P dehydrogenase',
+    detail: 'G3P + NAD⁺ + Pi → 1,3-BPG + NADH + H⁺',
+    cofactor: 'Produces 2 NADH (one per G3P)',
+    phase: 'payoff',
+    badges: ['nadhProduce']
+  },
+  {
+    id: 'step7',
+    number: 7,
+    title: '1,3-BPG → 3-phosphoglycerate',
+    enzyme: 'Phosphoglycerate kinase',
+    detail: '1,3-BPG + ADP → 3-PG + ATP',
+    cofactor: 'Substrate-level phosphorylation; 2 ATP formed',
+    phase: 'payoff',
+    badges: ['atpProduce']
+  },
+  {
+    id: 'step8',
+    number: 8,
+    title: '3-PG → 2-PG',
+    enzyme: 'Phosphoglycerate mutase',
+    detail: 'Relocates phosphate from C3 to C2 on glycerate',
+    cofactor: 'Requires phospho-histidine intermediate',
+    phase: 'payoff',
+    badges: []
+  },
+  {
+    id: 'step9',
+    number: 9,
+    title: '2-PG → Phosphoenolpyruvate',
+    enzyme: 'Enolase',
+    detail: 'Dehydration yields high-energy PEP',
+    cofactor: 'Fluoride inhibits this enzyme',
+    phase: 'payoff',
+    badges: []
+  },
+  {
+    id: 'step10',
+    number: 10,
+    title: 'PEP → Pyruvate',
+    enzyme: 'Pyruvate kinase',
+    detail: 'PEP + ADP → Pyruvate + ATP',
+    cofactor: 'Produces 2 ATP & requires K⁺/Mg²⁺',
+    phase: 'payoff',
+    badges: ['atpProduce']
+  }
+];
+
+const stepsPerColumn = steps.filter((step) => step.phase === 'investment').length;
+const columnHeight = stepsPerColumn * stepHeight + (stepsPerColumn - 1) * stepSpacing + 60;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+
+  textFont('Arial');
+
+  togglePhaseButton = createButton('Show Payoff Phase');
+  togglePhaseButton.position(10, drawHeight + 10);
+  togglePhaseButton.mousePressed(togglePhaseFocus);
+
+  resetButton = createButton('Reset');
+  resetButton.position(200, drawHeight + 10);
+  resetButton.mousePressed(resetSimulation);
+
+  describe(
+    'Diagram of glycolysis showing investment and payoff phases with badges for ATP use or production, clickable steps for reaction details, and buttons to focus on each phase.',
+    LABEL
+  );
+}
+
+function draw() {
+  updateCanvasSize();
+  drawBackground();
+  drawTitle();
+  drawPhaseBackgrounds();
+  drawDivider();
+  drawGlucoseIcon();
+  drawSteps();
+  drawNetPanel();
+  drawInfoPanel();
+  drawLegends();
+}
+
+function drawBackground() {
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+}
+
+function drawTitle() {
+  noStroke();
+  fill('#111');
+  textAlign(CENTER, TOP);
+  textSize(32);
+  text('Glycolysis Pathway Simulator', canvasWidth / 2, margin - 5);
+
+  textSize(16);
+  text('Track every reaction from glucose to pyruvate; click steps for details.', canvasWidth / 2, margin + 28);
+}
+
+function drawPhaseBackgrounds() {
+  const columnWidth = (canvasWidth - margin * 2 - columnGap) / 2;
+  const leftX = margin - 8;
+  const rightX = margin + columnWidth + columnGap - 8;
+
+  // Fill rectangles
+  noStroke();
+  fill(highlightInvestment ? '#FFCCCC' : '#FBEAEA');
+  rect(leftX, contentTop, columnWidth + 16, columnHeight, 16);
+
+  fill(highlightInvestment ? '#E9F7EF' : '#CCFFCC');
+  rect(rightX, contentTop, columnWidth + 16, columnHeight, 16);
+
+  // Border outlines
+  noFill();
+  stroke('#B0B0B0');
+  strokeWeight(1);
+  rect(leftX, contentTop, columnWidth + 16, columnHeight, 16);
+  rect(rightX, contentTop, columnWidth + 16, columnHeight, 16);
+
+  fill('#C0392B');
+  textSize(16);
+  textAlign(LEFT, CENTER);
+  text('Energy Investment (Steps 1–5)', margin, contentTop - 20);
+
+  fill('#1D8348');
+  textAlign(RIGHT, CENTER);
+  text('Energy Payoff (Steps 6–10)', canvasWidth - margin, contentTop - 20);
+}
+
+function drawDivider() {
+  const columnWidth = (canvasWidth - margin * 2 - columnGap) / 2;
+  const dividerX = margin + columnWidth + columnGap / 2;
+  stroke('#566573');
+  strokeWeight(3);
+  line(dividerX, contentTop + 10, dividerX, contentTop + columnHeight - 10);
+
+  noStroke();
+  fill('#566573');
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text('Cleavage\n2 × G3P', dividerX, contentTop + columnHeight / 2 - 20);
+}
+
+function drawGlucoseIcon() {
+  const centerX = canvasWidth * 0.4;
+  const centerY = contentTop - 35;
+  fill('#FAD7A0');
+  stroke('#B9770E');
+  strokeWeight(2);
+  beginShape();
+  const radius = 30;
+  for (let i = 0; i < 6; i++) {
+    const angle = (PI / 3) * i + PI / 6;
+    vertex(centerX + cos(angle) * radius, centerY + sin(angle) * radius);
+  }
+  endShape(CLOSE);
+  fill('#784212');
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text('Glucose', centerX, centerY);
+}
+
+function drawSteps() {
+  stepLayouts = [];
+  const columnWidth = (canvasWidth - margin * 2 - columnGap) / 2;
+  const baseX = {
+    investment: margin,
+    payoff: margin + columnWidth + columnGap
+  };
+  const yTracker = {
+    investment: contentTop + 20,
+    payoff: contentTop + 20
+  };
+
+  steps.forEach((step) => {
+    const x = baseX[step.phase];
+    const y = yTracker[step.phase];
+    yTracker[step.phase] += stepHeight + stepSpacing;
+
+    const isSelected = selectedStep && selectedStep.id === step.id;
+    drawStepBox(step, x, y, columnWidth, isSelected);
+    stepLayouts.push({ id: step.id, x, y, width: columnWidth, height: stepHeight });
+  });
+
+  drawConnectors(stepLayouts);
+}
+
+function drawStepBox(step, x, y, width, isSelected) {
+  stroke(isSelected ? '#1F618D' : '#BDC3C7');
+  strokeWeight(isSelected ? 3 : 1);
+  fill(255);
+  rect(x, y, width, stepHeight, 12);
+
+  // Step number circle
+  const circleX = x + 25;
+  const circleY = y + stepHeight / 2;
+  fill(isSelected ? '#1F618D' : '#5D6D7E');
+  noStroke();
+  circle(circleX, circleY, 32);
+  fill('white');
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text(step.number, circleX, circleY);
+
+  // Text block
+  const textX = x + 55;
+  fill('#111');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text(step.title, textX, y + 8, width - 70, 40);
+  textSize(12);
+  fill('#5D6D7E');
+  text(step.enzyme, textX, y + 32);
+
+  drawBadges(step, x + width - 70, y + 10);
+}
+
+function drawBadges(step, startX, startY) {
+  let badgeY = startY + 20;
+  step.badges.forEach((badgeKey) => {
+    const badge = badgeStyles[badgeKey];
+    if (!badge) return;
+    fill(badge.color);
+    noStroke();
+    rect(startX, badgeY, 55, 18, 6);
+    fill('white');
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(badge.label, startX + 27.5, badgeY + 9);
+    badgeY += 22;
+  });
+  // Add multiplier text for payoff events with two molecules
+  if (step.number >= 6 && step.badges.length > 0) {
+    fill('#111');
+    textSize(11);
+    textAlign(RIGHT, CENTER);
+    text('×2', startX - 6, startY + 10);
+  }
+}
+
+function drawConnectors(layouts) {
+  const stepMap = {};
+  layouts.forEach((layout) => {
+    stepMap[layout.id] = layout;
+  });
+
+  const investmentIds = steps.filter((s) => s.phase === 'investment').map((s) => s.id);
+  const payoffIds = steps.filter((s) => s.phase === 'payoff').map((s) => s.id);
+
+  stroke('#95A5A6');
+  strokeWeight(2);
+  investmentIds.forEach((id, idx) => {
+    if (idx === investmentIds.length - 1) return;
+    const current = stepMap[id];
+    const next = stepMap[investmentIds[idx + 1]];
+    if (!current || !next) return;
+    drawArrow(
+      current.x + current.width / 2,
+      current.y + current.height,
+      next.x + next.width / 2,
+      next.y
+    );
+  });
+
+  payoffIds.forEach((id, idx) => {
+    if (idx === payoffIds.length - 1) return;
+    const current = stepMap[id];
+    const next = stepMap[payoffIds[idx + 1]];
+    if (!current || !next) return;
+    drawArrow(
+      current.x + current.width / 2,
+      current.y + current.height,
+      next.x + next.width / 2,
+      next.y
+    );
+  });
+}
+
+function drawArrow(x1, y1, x2, y2) {
+  line(x1, y1, x2, y2 - 10);
+  noStroke();
+  fill('#95A5A6');
+  triangle(x2 - 6, y2 - 14, x2 + 6, y2 - 14, x2, y2 - 4);
+}
+
+function drawNetPanel() {
+  const summaryLabelY = contentTop + columnHeight + 30;
+  const panelY = summaryLabelY + 20;
+  const boxWidth = 180;
+  const values = [
+    { label: 'Net ATP', value: '+2', color: '#27AE60' },
+    { label: 'Net NADH', value: '+2', color: '#2980B9' },
+    { label: 'Pyruvate', value: '2', color: '#8E44AD' }
+  ];
+
+  push();
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  fill('#111');
+  text('Summary of Glycolysis Net Outputs', margin, summaryLabelY);
+
+  values.forEach((item, index) => {
+    const x = margin + index * (boxWidth + 20);
+    fill('white');
+    stroke(item.color);
+    strokeWeight(2);
+    rect(x, panelY, boxWidth, 36, 12);
+    fill('#111');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text(`${item.label}: ${item.value}`, x + boxWidth / 2, panelY + 18);
+  });
+  pop();
+}
+
+function drawInfoPanel() {
+  const panelMargin = 20;
+  const panelHeight = 110;
+  const panelY = drawHeight - panelHeight - 30;
+  const panelX = panelMargin;
+  const panelWidth = canvasWidth - panelMargin * 2;
+  fill('#F8F9F9');
+  stroke('#D5D8DC');
+  strokeWeight(1);
+  rect(panelX, panelY, panelWidth, panelHeight, 12);
+
+  fill('#111');
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(14);
+  const textWidth = panelWidth - 24;
+  if (selectedStep) {
+    text(`Step ${selectedStep.number}: ${selectedStep.title}`, panelX + 12, panelY + 10, textWidth, 20);
+    textSize(12);
+    fill('#34495E');
+    text(`Enzyme: ${selectedStep.enzyme}`, panelX + 12, panelY + 32, textWidth, 20);
+    fill('#2C3E50');
+    text(selectedStep.detail, panelX + 12, panelY + 50, textWidth, 40);
+    fill('#566573');
+    text(`Notes: ${selectedStep.cofactor}`, panelX + 12, panelY + 90, textWidth, 20);
+  } else {
+    text('Click any step to see the enzyme and reaction details here.', panelX + 12, panelY + 20, textWidth, 70);
+  }
+}
+
+function drawLegends() {
+  fill('#5D6D7E');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  const legendY = drawHeight + 55;
+  text('Investment phase uses ATP; payoff phase returns ATP + NADH. Click steps for reactions.', 10, legendY);
+
+  textSize(12);
+  const legendX = 10;
+  drawLegendBadge(legendX, legendY + 20, '#E74C3C', '-ATP');
+  drawLegendBadge(legendX + 70, legendY + 20, '#27AE60', '+ATP');
+  drawLegendBadge(legendX + 140, legendY + 20, '#2980B9', '+NADH');
+}
+
+function drawLegendBadge(x, y, colorValue, label) {
+  fill(colorValue);
+  rect(x, y, 50, 18, 6);
+  fill('white');
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  text(label, x + 25, y + 9);
+}
+
+function togglePhaseFocus() {
+  highlightInvestment = !highlightInvestment;
+  togglePhaseButton.html(highlightInvestment ? 'Show Payoff Phase' : 'Show Investment Phase');
+}
+
+function resetSimulation() {
+  highlightInvestment = true;
+  selectedStep = null;
+  togglePhaseButton.html('Show Payoff Phase');
+}
+
+function mousePressed() {
+  const hit = stepLayouts.find(
+    (layout) =>
+      mouseX >= layout.x &&
+      mouseX <= layout.x + layout.width &&
+      mouseY >= layout.y &&
+      mouseY <= layout.y + layout.height
+  );
+  if (hit) {
+    selectedStep = steps.find((step) => step.id === hit.id);
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

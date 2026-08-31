@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Arms Race Dynamics — The Security Dilemma Loop</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Arms Race Dynamics — The Security Dilemma Loop
+// CANVAS_HEIGHT: 620
+// Chapter 16: The Early Cold War (1945–1960)
+// Bloom Level: Analyze (L4) — model the security dilemma feedback loop
+//
+// Layout: drawHeight (520) + controlHeight (100) = 620
+// Two-nation arms-race simulator. A reinforcing loop drives both arsenals
+// upward whenever each side responds to the other's perceived threat.
+// Treaty button injects a balancing intervention (B2). MAD threshold
+// produces a self-limiting band (B1). Historical mode overlays real
+// 1945–1991 warhead counts.
+
+let canvasWidth = 900;
+let drawHeight = 520;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+// Simulation state
+let usArsenal = 2;       // starting US warheads (1945)
+let suArsenal = 0;       // starting USSR warheads (1945)
+let year = 1945;
+let simYears = [];       // array of {year, us, su}
+let yearAdvanceTimer = 0;
+
+// Controls
+let sensSlider;          // threat sensitivity 0..100  (security-dilemma gain)
+let yearSlider;          // historical year scrubber
+let modeSelect;          // "Security Dilemma" | "Rational Actor"
+let viewSelect;          // "Simulated" | "Historical"
+let treatyBtn;
+let runBtn;
+let resetBtn;
+let running = false;
+
+// Last treaty application (for visual flash)
+let treatyFlashUntil = 0;
+
+// Historical warhead counts (approximate, FAS / NRDC estimates)
+const historicalData = [
+  { year: 1945, us: 2,    su: 0 },
+  { year: 1946, us: 9,    su: 0 },
+  { year: 1947, us: 13,   su: 0 },
+  { year: 1948, us: 50,   su: 0 },
+  { year: 1949, us: 170,  su: 1 },
+  { year: 1950, us: 299,  su: 5 },
+  { year: 1951, us: 438,  su: 25 },
+  { year: 1952, us: 841,  su: 50 },
+  { year: 1953, us: 1169, su: 120 },
+  { year: 1954, us: 1703, su: 150 },
+  { year: 1955, us: 2422, su: 200 },
+  { year: 1956, us: 3692, su: 426 },
+  { year: 1957, us: 5543, su: 660 },
+  { year: 1958, us: 7345, su: 869 },
+  { year: 1959, us: 12298, su: 1060 },
+  { year: 1960, us: 18638, su: 1605 },
+  { year: 1961, us: 22229, su: 2471 },
+  { year: 1962, us: 25540, su: 3322 },
+  { year: 1963, us: 28133, su: 4238 },
+  { year: 1964, us: 29463, su: 5221 },
+  { year: 1965, us: 31139, su: 6129 },
+  { year: 1966, us: 31175, su: 7089 },
+  { year: 1967, us: 31255, su: 8339 },
+  { year: 1968, us: 29561, su: 9399 },
+  { year: 1969, us: 27552, su: 10538 },
+  { year: 1970, us: 26008, su: 11643 },
+  { year: 1971, us: 25830, su: 13092 },
+  { year: 1972, us: 26516, su: 14478 },
+  { year: 1973, us: 27835, su: 15915 },
+  { year: 1974, us: 28537, su: 17385 },
+  { year: 1975, us: 27519, su: 19055 },
+  { year: 1976, us: 25914, su: 21205 },
+  { year: 1977, us: 25542, su: 23044 },
+  { year: 1978, us: 24418, su: 25393 },
+  { year: 1979, us: 24138, su: 27935 },
+  { year: 1980, us: 23764, su: 30062 },
+  { year: 1981, us: 23031, su: 32049 },
+  { year: 1982, us: 22937, su: 33952 },
+  { year: 1983, us: 23154, su: 35804 },
+  { year: 1984, us: 23228, su: 37431 },
+  { year: 1985, us: 23135, su: 39197 },
+  { year: 1986, us: 23254, su: 40723 },
+  { year: 1987, us: 23490, su: 38859 },
+  { year: 1988, us: 23077, su: 37333 },
+  { year: 1989, us: 22217, su: 35805 },
+  { year: 1990, us: 21392, su: 33417 },
+  { year: 1991, us: 19008, su: 30062 }
+];
+
+// Key historical events (annotated on plot)
+const events = [
+  { year: 1949, label: 'USSR\nfirst test' },
+  { year: 1952, label: 'US H-bomb' },
+  { year: 1957, label: 'Sputnik' },
+  { year: 1962, label: 'Cuban\nMissile Crisis' },
+  { year: 1972, label: 'SALT I' },
+  { year: 1979, label: 'SALT II' },
+  { year: 1983, label: 'Reagan\nbuildup' },
+  { year: 1991, label: 'START I' }
+];
+
+const MAD_THRESHOLD = 400;     // simplified mutual-assured-destruction floor
+const MAX_ARSENAL = 45000;     // chart ceiling
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  viewSelect = createSelect();
+  viewSelect.parent(document.querySelector('main'));
+  viewSelect.option('Simulated');
+  viewSelect.option('Historical');
+  viewSelect.selected('Simulated');
+
+  modeSelect = createSelect();
+  modeSelect.parent(document.querySelector('main'));
+  modeSelect.option('Security Dilemma');
+  modeSelect.option('Rational Actor');
+  modeSelect.selected('Security Dilemma');
+
+  sensSlider = createSlider(0, 100, 35, 1);
+  sensSlider.parent(document.querySelector('main'));
+
+  yearSlider = createSlider(1945, 1991, 1962, 1);
+  yearSlider.parent(document.querySelector('main'));
+
+  runBtn = createButton('▶ Run');
+  runBtn.parent(document.querySelector('main'));
+  runBtn.mousePressed(() => {
+    running = !running;
+    runBtn.html(running ? '⏸ Pause' : '▶ Run');
+  });
+
+  treatyBtn = createButton('Sign Treaty');
+  treatyBtn.parent(document.querySelector('main'));
+  treatyBtn.mousePressed(applyTreaty);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(resetSim);
+
+  resetSim();
+  positionControls();
+  describe('Arms-race dynamics simulator showing the security dilemma feedback loop between the U.S. and Soviet Union from 1945 to 1991. Adjust threat sensitivity to see how reinforcing perception drives escalation, then sign a treaty to see arms control as a balancing force.', LABEL);
+}
+
+function resetSim() {
+  usArsenal = 2;
+  suArsenal = 0;
+  year = 1945;
+  simYears = [{ year, us: usArsenal, su: suArsenal }];
+  yearAdvanceTimer = 0;
+  running = false;
+  if (runBtn) runBtn.html('▶ Run');
+  treatyFlashUntil = 0;
+}
+
+function applyTreaty() {
+  // Treaty cuts both arsenals by ~25% and reduces effective threat sensitivity for a few years
+  usArsenal = usArsenal * 0.75;
+  suArsenal = suArsenal * 0.75;
+  simYears.push({ year, us: usArsenal, su: suArsenal, treaty: true });
+  treatyFlashUntil = millis() + 1200;
+}
+
+function positionControls() {
+  // Row 1 (drawHeight + 8): View select, Mode select, Threat sensitivity slider
+  const row1y = drawHeight + 8;
+  const row2y = drawHeight + 50;
+
+  viewSelect.position(margin, row1y + 18);
+  modeSelect.position(margin + 130, row1y + 18);
+
+  // sensitivity slider takes remaining space on row 1
+  const sensX = margin + 280;
+  sensSlider.position(sensX, row1y + 22);
+  sensSlider.size(max(120, canvasWidth - sensX - margin - 10));
+
+  // Row 2: year slider on left (only used in historical view), buttons on right
+  yearSlider.position(margin + 60, row2y + 6);
+  yearSlider.size(min(280, canvasWidth - margin*2 - 280));
+
+  const btnY = row2y;
+  runBtn.position(canvasWidth - margin - 240, btnY);
+  treatyBtn.position(canvasWidth - margin - 160, btnY);
+  resetBtn.position(canvasWidth - margin - 60, btnY);
+}
+
+// Simulation step — security-dilemma reinforcing loop
+function stepYear() {
+  if (year >= 1991) { running = false; runBtn.html('▶ Run'); return; }
+  year += 1;
+
+  const sens = sensSlider.value() / 100;   // 0..1
+  const mode = modeSelect.value();
+
+  // Each side perceives the other's arsenal as a threat and matches it,
+  // amplified by sensitivity. The reinforcing loop:
+  //   US ↑ → Soviet perceived threat ↑ → Soviet ↑ → US perceived threat ↑ → US ↑
+  let usGrowth, suGrowth;
+
+  if (mode === 'Security Dilemma') {
+    // Each side wants arsenal >= other's arsenal × (1 + sens).
+    const usTarget = suArsenal * (1 + sens) + 50;
+    const suTarget = usArsenal * (1 + sens) + 20;
+    usGrowth = (usTarget - usArsenal) * 0.45;
+    suGrowth = (suTarget - suArsenal) * 0.45;
+    // Both sides accelerate when they feel behind
+    if (usArsenal < suArsenal) usGrowth *= 1.3;
+    if (suArsenal < usArsenal) suGrowth *= 1.2;
+  } else {
+    // Rational actor: only build up to MAD threshold, then stop growing
+    const usTarget = max(MAD_THRESHOLD * 2, suArsenal * 1.05);
+    const suTarget = max(MAD_THRESHOLD * 2, usArsenal * 1.0);
+    usGrowth = usArsenal < usTarget ? (usTarget - usArsenal) * 0.25 : 0;
+    suGrowth = suArsenal < suTarget ? (suTarget - suArsenal) * 0.25 : 0;
+  }
+
+  usArsenal = constrain(usArsenal + usGrowth, 0, MAX_ARSENAL);
+  suArsenal = constrain(suArsenal + suGrowth, 0, MAX_ARSENAL);
+
+  simYears.push({ year, us: usArsenal, su: suArsenal });
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill('#f4f6f9');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Step simulation if running (advance ~3 years per second)
+  if (running && viewSelect.value() === 'Simulated') {
+    yearAdvanceTimer += deltaTime;
+    while (yearAdvanceTimer > 333 && running) {
+      yearAdvanceTimer -= 333;
+      stepYear();
+    }
+  }
+
+  drawHeader();
+  drawCausalLoopDiagram();
+  drawTimeSeriesPlot();
+  drawNationStatus();
+  drawControlLabels();
+  positionControls();
+}
+
+function drawHeader() {
+  noStroke();
+  fill(20, 40, 90);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('Arms Race Dynamics — The Security Dilemma Loop', canvasWidth/2, 10);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(80);
+  text('Increase Threat Sensitivity and press Run to see how mutual fear drives escalation. Sign a Treaty to break the loop.', canvasWidth/2, 32);
+}
+
+// Compact causal-loop diagram in upper-left strip
+function drawCausalLoopDiagram() {
+  const x = margin + 8;
+  const y = 56;
+  const w = 320;
+  const h = 130;
+
+  // Frame
+  stroke(200);
+  strokeWeight(1);
+  fill(255);
+  rect(x, y, w, h, 6);
+
+  noStroke();
+  fill(20, 40, 90);
+  textStyle(BOLD);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  text('Reinforcing loop R1 — security dilemma', x + 8, y + 6);
+  textStyle(NORMAL);
+
+  // Two nation circles
+  const usX = x + 60, usY = y + 75;
+  const suX = x + w - 60, suY = y + 75;
+  const r = 28;
+
+  // US node (blue)
+  noStroke();
+  fill(30, 80, 170);
+  ellipse(usX, usY, r*2, r*2);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text('U.S.', usX, usY - 6);
+  textSize(10);
+  textStyle(NORMAL);
+  text(formatArsenal(usArsenal), usX, usY + 9);
+
+  // USSR node (red)
+  noStroke();
+  fill(180, 40, 40);
+  ellipse(suX, suY, r*2, r*2);
+  fill(255);
+  textStyle(BOLD);
+  textSize(13);
+  text('USSR', suX, suY - 6);
+  textSize(10);
+  textStyle(NORMAL);
+  text(formatArsenal(suArsenal), suX, suY + 9);
+
+  // Arrows between nations — perceived threat (red, both directions)
+  drawCurvedArrow(usX + r, usY - 8, suX - r, suY - 8, color(200, 60, 60), '+ threat');
+  drawCurvedArrow(suX - r, suY + 8, usX + r, usY + 8, color(200, 60, 60), '+ threat');
+
+  // Loop label
+  noStroke();
+  fill(180, 40, 40);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(20);
+  text('R', (usX + suX) / 2, suY + 38);
+  textStyle(NORMAL);
+  textSize(9);
+  fill(120);
+  text('reinforcing', (usX + suX) / 2, suY + 52);
+}
+
+function drawCurvedArrow(x1, y1, x2, y2, col, label) {
+  stroke(col);
+  strokeWeight(2);
+  noFill();
+  const cx = (x1 + x2) / 2;
+  const cy = (y1 + y2) / 2 + (y1 < y2 ? -22 : 22);
+  bezier(x1, y1, cx, cy, cx, cy, x2, y2);
+
+  // Arrowhead at endpoint
+  const dx = x2 - cx, dy = y2 - cy;
+  const ang = atan2(dy, dx);
+  push();
+  translate(x2, y2);
+  rotate(ang);
+  fill(col);
+  noStroke();
+  triangle(0, 0, -8, -4, -8, 4);
+  pop();
+
+  // Label
+  noStroke();
+  fill(col);
+  textAlign(CENTER, CENTER);
+  textSize(10);
+  textStyle(BOLD);
+  text(label, cx, cy);
+  textStyle(NORMAL);
+}
+
+// Main time-series plot (right side, dominant region)
+function drawTimeSeriesPlot() {
+  const px = margin + 340;
+  const py = 56;
+  const pw = canvasWidth - px - margin;
+  const ph = drawHeight - py - margin;
+
+  // Plot background
+  stroke(200);
+  strokeWeight(1);
+  fill(255);
+  rect(px, py, pw, ph, 4);
+
+  // Data source: simulated or historical
+  const isHistorical = (viewSelect.value() === 'Historical');
+  const data = isHistorical ? historicalData : simYears;
+  if (data.length === 0) return;
+
+  // Year axis range always 1945–1991
+  const yMin = 1945, yMax = 1991;
+  const aMin = 0, aMax = MAX_ARSENAL;
+
+  // Axes
+  stroke(160);
+  strokeWeight(1);
+  line(px + 40, py + 10, px + 40, py + ph - 28);                  // y axis
+  line(px + 40, py + ph - 28, px + pw - 10, py + ph - 28);        // x axis
+
+  // Y-axis labels
+  noStroke();
+  fill(80);
+  textAlign(RIGHT, CENTER);
+  textSize(10);
+  for (let v = 0; v <= 4; v++) {
+    const yy = map(v * 10000, aMin, aMax, py + ph - 28, py + 10);
+    text((v * 10).toString() + 'k', px + 36, yy);
+    stroke(230);
+    line(px + 40, yy, px + pw - 10, yy);
+    noStroke();
+  }
+
+  // X-axis ticks every 5 years
+  textAlign(CENTER, TOP);
+  textSize(10);
+  fill(80);
+  for (let yr = 1945; yr <= 1990; yr += 5) {
+    const xx = map(yr, yMin, yMax, px + 40, px + pw - 10);
+    stroke(160);
+    line(xx, py + ph - 28, xx, py + ph - 24);
+    noStroke();
+    fill(80);
+    text(yr.toString(), xx, py + ph - 22);
+  }
+
+  // MAD threshold band
+  const madY = map(MAD_THRESHOLD, aMin, aMax, py + ph - 28, py + 10);
+  noStroke();
+  fill(220, 200, 80, 60);
+  rect(px + 40, madY, pw - 50, py + ph - 28 - madY);
+  fill(180, 130, 30);
+  textAlign(LEFT, CENTER);
+  textSize(10);
+  textStyle(BOLD);
+  text('MAD threshold (≥' + MAD_THRESHOLD + ')', px + 46, madY - 6);
+  textStyle(NORMAL);
+
+  // Treaty markers (vertical green lines at SALT I, SALT II, START)
+  const treatyYears = isHistorical ? [{y:1972,l:'SALT I'},{y:1979,l:'SALT II'},{y:1991,l:'START'}] : [];
+  for (const t of treatyYears) {
+    const xx = map(t.y, yMin, yMax, px + 40, px + pw - 10);
+    stroke(50, 140, 60, 180);
+    strokeWeight(1.5);
+    drawingContext.setLineDash([4, 3]);
+    line(xx, py + 10, xx, py + ph - 28);
+    drawingContext.setLineDash([]);
+    noStroke();
+    fill(50, 140, 60);
+    textAlign(CENTER, BOTTOM);
+    textSize(9);
+    textStyle(BOLD);
+    text(t.l, xx, py + 18);
+    textStyle(NORMAL);
+  }
+
+  // Plot the two series
+  drawSeries(data, 'us', color(30, 80, 170), px, py, pw, ph, yMin, yMax, aMin, aMax);
+  drawSeries(data, 'su', color(180, 40, 40), px, py, pw, ph, yMin, yMax, aMin, aMax);
+
+  // Treaty interventions in simulated mode (markers)
+  if (!isHistorical) {
+    for (const pt of simYears) {
+      if (pt.treaty) {
+        const xx = map(pt.year, yMin, yMax, px + 40, px + pw - 10);
+        stroke(50, 140, 60);
+        strokeWeight(2);
+        drawingContext.setLineDash([3, 3]);
+        line(xx, py + 10, xx, py + ph - 28);
+        drawingContext.setLineDash([]);
+        noStroke();
+        fill(50, 140, 60);
+        textAlign(CENTER, BOTTOM);
+        textSize(9);
+        text('treaty', xx, py + 14);
+      }
+    }
+  }
+
+  // Event annotations (historical mode only)
+  if (isHistorical) {
+    textAlign(CENTER, TOP);
+    textSize(9);
+    fill(60);
+    for (const e of events) {
+      const xx = map(e.year, yMin, yMax, px + 40, px + pw - 10);
+      stroke(120);
+      strokeWeight(1);
+      line(xx, py + 25, xx, py + 35);
+      noStroke();
+      fill(60);
+      text(e.label, xx, py + 36);
+    }
+  }
+
+  // Title strip
+  noStroke();
+  fill(20, 40, 90);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  const subtitle = isHistorical ? 'Historical warhead counts (1945–1991)' : 'Simulated arsenal trajectory';
+  text(subtitle, px + 10, py + 6);
+  textStyle(NORMAL);
+
+  // Legend (top-right of plot)
+  const legX = px + pw - 130;
+  const legY = py + 8;
+  noStroke();
+  fill(30, 80, 170);
+  rect(legX, legY, 12, 8);
+  fill(40);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  text('U.S.', legX + 16, legY - 1);
+  fill(180, 40, 40);
+  rect(legX + 60, legY, 12, 8);
+  fill(40);
+  text('USSR', legX + 76, legY - 1);
+
+  // Treaty flash overlay
+  if (millis() < treatyFlashUntil) {
+    const a = map(treatyFlashUntil - millis(), 0, 1200, 0, 80);
+    noStroke();
+    fill(80, 180, 100, a);
+    rect(px, py, pw, ph, 4);
+    fill(40, 120, 60);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(22);
+    text('Treaty signed — arsenals cut 25%', px + pw/2, py + ph/2);
+    textStyle(NORMAL);
+  }
+}
+
+function drawSeries(data, key, col, px, py, pw, ph, yMin, yMax, aMin, aMax) {
+  noFill();
+  stroke(col);
+  strokeWeight(2.5);
+  beginShape();
+  for (const d of data) {
+    const xx = map(d.year, yMin, yMax, px + 40, px + pw - 10);
+    const yy = map(d[key], aMin, aMax, py + ph - 28, py + 10);
+    vertex(xx, yy);
+  }
+  endShape();
+}
+
+function drawNationStatus() {
+  // Bottom strip showing current values, year, and a MAD indicator
+  const barY = drawHeight - 30;
+  noStroke();
+  fill(245, 248, 252);
+  rect(margin + 340, barY, canvasWidth - margin*2 - 340, 24, 4);
+
+  const isHistorical = (viewSelect.value() === 'Historical');
+  let yShown, usShown, suShown;
+  if (isHistorical) {
+    const yr = yearSlider.value();
+    const rec = historicalData.find(d => d.year === yr) || historicalData[historicalData.length - 1];
+    yShown = rec.year; usShown = rec.us; suShown = rec.su;
+  } else {
+    yShown = year; usShown = usArsenal; suShown = suArsenal;
+  }
+
+  fill(40);
+  textAlign(LEFT, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text('Year: ' + yShown, margin + 350, barY + 12);
+  fill(30, 80, 170);
+  text('U.S.: ' + formatArsenal(usShown), margin + 430, barY + 12);
+  fill(180, 40, 40);
+  text('USSR: ' + formatArsenal(suShown), margin + 560, barY + 12);
+  textStyle(NORMAL);
+
+  // MAD indicator
+  if (usShown >= MAD_THRESHOLD && suShown >= MAD_THRESHOLD) {
+    fill(180, 130, 30);
+    textStyle(BOLD);
+    text('⚠ MAD reached — both sides hold deterrent', margin + 690, barY + 12);
+    textStyle(NORMAL);
+  }
+}
+
+function drawControlLabels() {
+  noStroke();
+  fill(60);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  textStyle(BOLD);
+
+  const row1y = drawHeight + 8;
+  const row2y = drawHeight + 50;
+
+  text('View', margin, row1y);
+  text('Model', margin + 130, row1y);
+
+  const sens = sensSlider.value();
+  const sensX = margin + 280;
+  text('Threat sensitivity: ' + sens + '%', sensX, row1y);
+
+  const isHistorical = (viewSelect.value() === 'Historical');
+  if (isHistorical) {
+    text('Year: ' + yearSlider.value(), margin, row2y - 12);
+  } else {
+    fill(140);
+    text('(Year slider used in Historical view)', margin, row2y - 12);
+    fill(60);
+  }
+  textStyle(NORMAL);
+}
+
+function formatArsenal(n) {
+  n = round(n);
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+  return n.toString();
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: causal-loop
+    sim-id: arms-race-dynamics
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to visualize the security dilemma feedback loop that drives arms races, and to trace how the U.S.-Soviet nuclear arms race exemplified this dynamic from 1945 to 1991.
+
+    Bloom Level: Analyze (L4)
+    Bloom Verb: Model
+
+    Learning Objective: Students model the security dilemma feedback loop that drives arms races, identify the reinforcing loops at work, and evaluate what conditions could break the loop (arms control agreements, mutual vulnerability, transparency).
+
+    Canvas layout:
+    - Responsive width; height approximately 620px
+    - Compact two-nation causal loop diagram (U.S. left, USSR right) showing the R1 reinforcing loop
+    - Time-series plot of US and Soviet arsenals 1945-1991
+    - "Perceived threat" arrows in red between nations
+
+    Core loops:
+    - R1 (Security dilemma): US Arsenal up -> Soviet perceived threat up -> Soviet Arsenal up -> US perceived threat up -> US Arsenal up (reinforcing)
+    - B1 (MAD): When both arsenals exceed the destruction threshold, a MAD indicator appears
+    - B2 (Arms Control): "Sign Treaty" button injects a one-shot 25% cut to both arsenals
+
+    Modes:
+    - View: Simulated (run the model) or Historical (real warhead counts 1945-1991)
+    - Model: Security Dilemma (reinforcing loop) or Rational Actor (build only to MAD threshold)
+
+    Interactivity:
+    - Threat sensitivity slider (0-100%) controls security-dilemma gain
+    - Year slider (1945-1991) for historical mode scrubbing
+    - Run/Pause, Sign Treaty, Reset buttons
+
+    Color scheme: Blue for U.S., red for USSR; gold for MAD threshold band; green for arms control / treaty markers.
+    -->
+</body>
+</html>

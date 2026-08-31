@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinding Algorithms Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+    <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #f5f5f5; display: flex; justify-content: center; }
+.container { max-width: 900px; width: 100%; }
+canvas { display: block; border-radius: 8px; }
+</style>
+</head>
+<body>
+    <div class="container" id="canvas-container">
+        <script>// Pathfinding Algorithms Visualizer - p5.js MicroSim
+// Compare BFS shortest path vs Dijkstra weighted shortest path
+
+let canvasWidth = 900;
+const canvasHeight = 640;
+let nodes = [];
+let edges = [];
+let sourceNode = null;
+let targetNode = null;
+let bfsPath = null;
+let dijkstraPath = null;
+let bfsCost = 0;
+let dijkstraCost = 0;
+let hoveredNode = null;
+let draggedNode = null;
+let dragOffsetX = 0, dragOffsetY = 0;
+let statusMsg = 'Click a node to set source';
+
+const GRAPH_TOP = 55;
+const GRAPH_BOTTOM = 480;
+const INFO_TOP = 490;
+
+const INDIGO = [48, 63, 159];
+const AMBER = [212, 136, 15];
+const GOLD = [255, 215, 0];
+const BFS_COLOR = [48, 63, 159];     // indigo for BFS
+const DIJ_COLOR = [212, 136, 15];    // amber for Dijkstra
+
+const buttons = [
+    { label: 'BFS Path', action: 'bfs', x: 0, y: 10, w: 100, h: 32 },
+    { label: 'Dijkstra', action: 'dijkstra', x: 0, y: 10, w: 100, h: 32 },
+    { label: 'Both', action: 'both', x: 0, y: 10, w: 80, h: 32 },
+    { label: 'Reset', action: 'reset', x: 0, y: 10, w: 80, h: 32 }
+];
+
+function updateCanvasSize() {
+    let container = document.getElementById('canvas-container');
+    if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('canvas-container');
+    textFont('Arial');
+    layoutButtons();
+    buildGraph();
+}
+
+function layoutButtons() {
+    let totalW = 100 + 100 + 80 + 80 + 30;
+    let startX = (canvasWidth - totalW) / 2;
+    buttons[0].x = startX;
+    buttons[1].x = startX + 110;
+    buttons[2].x = startX + 220;
+    buttons[3].x = startX + 310;
+}
+
+function buildGraph() {
+    let cx = canvasWidth / 2;
+    let cy = (GRAPH_TOP + GRAPH_BOTTOM) / 2 + 10;
+
+    const empData = [
+        { name: 'Alice', x: cx - 280, y: cy - 80 },
+        { name: 'Bob', x: cx - 160, y: cy - 130 },
+        { name: 'Carlos', x: cx - 30, y: cy - 100 },
+        { name: 'Dana', x: cx + 120, y: cy - 130 },
+        { name: 'Elena', x: cx + 260, y: cy - 70 },
+        { name: 'Frank', x: cx - 200, y: cy + 50 },
+        { name: 'Grace', x: cx - 50, y: cy + 60 },
+        { name: 'Hiro', x: cx + 100, y: cy + 50 },
+        { name: 'Ines', x: cx + 250, y: cy + 80 },
+        { name: 'Jake', x: cx, y: cy + 160 }
+    ];
+
+    for (let i = 0; i < empData.length; i++) {
+        nodes.push({
+            id: i, name: empData[i].name,
+            x: empData[i].x, y: empData[i].y
+        });
+    }
+
+    // Edges with weights (cost = inverse of communication strength)
+    // Designed so BFS and Dijkstra find different paths for Alice->Elena
+    const edgeList = [
+        // Alice(0) - Bob(1): weight 2 (strong)
+        [0, 1, 2],
+        // Bob(1) - Carlos(2): weight 8 (weak)
+        [1, 2, 8],
+        // Carlos(2) - Dana(3): weight 2 (strong)
+        [2, 3, 2],
+        // Dana(3) - Elena(4): weight 2 (strong)
+        [3, 4, 2],
+        // Alice(0) - Frank(5): weight 1 (very strong)
+        [0, 5, 1],
+        // Frank(5) - Grace(6): weight 1 (very strong)
+        [5, 6, 1],
+        // Grace(6) - Hiro(7): weight 1 (very strong)
+        [6, 7, 1],
+        // Hiro(7) - Elena(4): weight 1 (very strong)
+        [7, 4, 1],
+        // Bob(1) - Frank(5): weight 5
+        [1, 5, 5],
+        // Carlos(2) - Grace(6): weight 4
+        [2, 6, 4],
+        // Dana(3) - Hiro(7): weight 3
+        [3, 7, 3],
+        // Hiro(7) - Ines(8): weight 2
+        [7, 8, 2],
+        // Elena(4) - Ines(8): weight 3
+        [4, 8, 3],
+        // Grace(6) - Jake(9): weight 2
+        [6, 9, 2],
+        // Jake(9) - Ines(8): weight 4
+        [9, 8, 4],
+        // Frank(5) - Jake(9): weight 6
+        [5, 9, 6]
+    ];
+
+    for (let e of edgeList) {
+        edges.push({ from: e[0], to: e[1], weight: e[2] });
+    }
+}
+
+function runBFS(src, tgt) {
+    let n = nodes.length;
+    let visited = new Array(n).fill(false);
+    let parent = new Array(n).fill(-1);
+    let queue = [src];
+    visited[src] = true;
+
+    // Build adjacency
+    let adj = [];
+    for (let i = 0; i < n; i++) adj[i] = [];
+    for (let e of edges) {
+        adj[e.from].push({ node: e.to, weight: e.weight });
+        adj[e.to].push({ node: e.from, weight: e.weight });
+    }
+
+    while (queue.length > 0) {
+        let v = queue.shift();
+        if (v === tgt) break;
+        for (let nb of adj[v]) {
+            if (!visited[nb.node]) {
+                visited[nb.node] = true;
+                parent[nb.node] = v;
+                queue.push(nb.node);
+            }
+        }
+    }
+
+    // Reconstruct path
+    if (!visited[tgt]) return null;
+    let path = [];
+    let cur = tgt;
+    while (cur !== -1) {
+        path.unshift(cur);
+        cur = parent[cur];
+    }
+    return path;
+}
+
+function runDijkstra(src, tgt) {
+    let n = nodes.length;
+    let distArr = new Array(n).fill(Infinity);
+    let parent = new Array(n).fill(-1);
+    let visited = new Array(n).fill(false);
+    distArr[src] = 0;
+
+    let adj = [];
+    for (let i = 0; i < n; i++) adj[i] = [];
+    for (let e of edges) {
+        adj[e.from].push({ node: e.to, weight: e.weight });
+        adj[e.to].push({ node: e.from, weight: e.weight });
+    }
+
+    for (let iter = 0; iter < n; iter++) {
+        // Find unvisited node with minimum distance
+        let u = -1;
+        let minD = Infinity;
+        for (let i = 0; i < n; i++) {
+            if (!visited[i] && distArr[i] < minD) {
+                minD = distArr[i];
+                u = i;
+            }
+        }
+        if (u === -1 || u === tgt) break;
+        visited[u] = true;
+
+        for (let nb of adj[u]) {
+            let alt = distArr[u] + nb.weight;
+            if (alt < distArr[nb.node]) {
+                distArr[nb.node] = alt;
+                parent[nb.node] = u;
+            }
+        }
+    }
+
+    if (distArr[tgt] === Infinity) return null;
+    let path = [];
+    let cur = tgt;
+    while (cur !== -1) {
+        path.unshift(cur);
+        cur = parent[cur];
+    }
+    return { path: path, cost: distArr[tgt] };
+}
+
+function pathCostBFS(path) {
+    if (!path) return 0;
+    let cost = 0;
+    for (let i = 0; i < path.length - 1; i++) {
+        let a = path[i], b = path[i + 1];
+        for (let e of edges) {
+            if ((e.from === a && e.to === b) || (e.from === b && e.to === a)) {
+                cost += e.weight;
+                break;
+            }
+        }
+    }
+    return cost;
+}
+
+function isOnPath(path, fromId, toId) {
+    if (!path) return false;
+    for (let i = 0; i < path.length - 1; i++) {
+        if ((path[i] === fromId && path[i + 1] === toId) ||
+            (path[i] === toId && path[i + 1] === fromId)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function draw() {
+    background(245);
+
+    // Title
+    fill(30);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(15);
+    text('Pathfinding Algorithms Visualizer', canvasWidth / 2, 25);
+
+    drawButtons();
+
+    // Draw edges
+    for (let e of edges) {
+        let onBFS = isOnPath(bfsPath, e.from, e.to);
+        let onDij = isOnPath(dijkstraPath, e.from, e.to);
+
+        if (onBFS && onDij) {
+            // Draw both colors side by side
+            let dx = nodes[e.to].x - nodes[e.from].x;
+            let dy = nodes[e.to].y - nodes[e.from].y;
+            let len = sqrt(dx * dx + dy * dy);
+            let nx = -dy / len * 3;
+            let ny = dx / len * 3;
+
+            stroke(...BFS_COLOR);
+            strokeWeight(3.5);
+            line(nodes[e.from].x + nx, nodes[e.from].y + ny, nodes[e.to].x + nx, nodes[e.to].y + ny);
+            stroke(...DIJ_COLOR);
+            line(nodes[e.from].x - nx, nodes[e.from].y - ny, nodes[e.to].x - nx, nodes[e.to].y - ny);
+        } else if (onBFS) {
+            stroke(...BFS_COLOR);
+            strokeWeight(3.5);
+            line(nodes[e.from].x, nodes[e.from].y, nodes[e.to].x, nodes[e.to].y);
+        } else if (onDij) {
+            stroke(...DIJ_COLOR);
+            strokeWeight(3.5);
+            line(nodes[e.from].x, nodes[e.from].y, nodes[e.to].x, nodes[e.to].y);
+        } else {
+            stroke(190);
+            strokeWeight(1.5);
+            line(nodes[e.from].x, nodes[e.from].y, nodes[e.to].x, nodes[e.to].y);
+        }
+
+        // Edge weight label
+        let mx = (nodes[e.from].x + nodes[e.to].x) / 2;
+        let my = (nodes[e.from].y + nodes[e.to].y) / 2;
+        fill(255, 252, 240);
+        noStroke();
+        ellipse(mx, my, 22, 18);
+        fill(100);
+        textAlign(CENTER, CENTER);
+        textSize(10);
+        text(e.weight, mx, my);
+    }
+
+    // Draw nodes
+    for (let n of nodes) {
+        let r = 24;
+        let isSource = (sourceNode === n);
+        let isTarget = (targetNode === n);
+        let isHov = (hoveredNode === n);
+
+        if (isHov) {
+            noStroke();
+            fill(...GOLD, 60);
+            ellipse(n.x, n.y, r * 2 + 16);
+        }
+
+        if (isSource) {
+            fill(...AMBER);
+            stroke(180, 100, 0);
+        } else if (isTarget) {
+            fill(...GOLD);
+            stroke(180, 160, 0);
+        } else {
+            fill(220, 225, 235);
+            stroke(120);
+        }
+        strokeWeight(isSource || isTarget ? 3 : 1.5);
+        ellipse(n.x, n.y, r * 2);
+
+        fill(isSource || isTarget ? 255 : 40);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(12);
+        text(n.name, n.x, n.y);
+    }
+
+    // Info panel
+    drawInfoPanel();
+
+    // Status message
+    fill(100);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(statusMsg, canvasWidth / 2, GRAPH_BOTTOM + 5);
+}
+
+function drawButtons() {
+    for (let b of buttons) {
+        let isHover = mouseX > b.x && mouseX < b.x + b.w && mouseY > b.y && mouseY < b.y + b.h;
+        let isDisabled = (b.action !== 'reset' && (!sourceNode || !targetNode));
+
+        if (isDisabled) {
+            fill(200);
+        } else if (b.action === 'bfs') {
+            fill(isHover ? [72, 87, 182] : BFS_COLOR);
+        } else if (b.action === 'dijkstra') {
+            fill(isHover ? [232, 156, 35] : DIJ_COLOR);
+        } else if (b.action === 'both') {
+            fill(isHover ? [100, 80, 160] : [80, 60, 140]);
+        } else {
+            fill(isHover ? [150] : [120]);
+        }
+        stroke(40);
+        strokeWeight(1);
+        rect(b.x, b.y, b.w, b.h, 6);
+
+        fill(255);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(13);
+        text(b.label, b.x + b.w / 2, b.y + b.h / 2);
+    }
+}
+
+function drawInfoPanel() {
+    fill(255);
+    stroke(200);
+    strokeWeight(1);
+    rect(10, INFO_TOP, canvasWidth - 20, canvasHeight - INFO_TOP - 10, 8);
+
+    let leftX = 30;
+    let rightX = canvasWidth / 2 + 20;
+    let y = INFO_TOP + 15;
+
+    // BFS result
+    fill(...BFS_COLOR);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(13);
+    text('BFS (unweighted shortest path):', leftX, y);
+    textSize(11);
+    fill(80);
+    if (bfsPath) {
+        let names = bfsPath.map(i => nodes[i].name).join(' -> ');
+        text('Path: ' + names, leftX, y + 20);
+        text('Hops: ' + (bfsPath.length - 1) + '    Total weight: ' + bfsCost, leftX, y + 36);
+    } else {
+        text('Select source & target, then click BFS Path', leftX, y + 20);
+    }
+
+    // Dijkstra result
+    fill(...DIJ_COLOR);
+    textSize(13);
+    text('Dijkstra (weighted shortest path):', rightX, y);
+    textSize(11);
+    fill(80);
+    if (dijkstraPath) {
+        let names = dijkstraPath.map(i => nodes[i].name).join(' -> ');
+        text('Path: ' + names, rightX, y + 20);
+        text('Hops: ' + (dijkstraPath.length - 1) + '    Total weight: ' + dijkstraCost, rightX, y + 36);
+    } else {
+        text('Select source & target, then click Dijkstra', rightX, y + 20);
+    }
+
+    // Legend
+    let ly = INFO_TOP + 75;
+    fill(...BFS_COLOR);
+    rect(leftX, ly, 30, 4);
+    fill(80);
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text('BFS path', leftX + 36, ly + 2);
+
+    fill(...DIJ_COLOR);
+    rect(leftX + 120, ly, 30, 4);
+    fill(80);
+    text('Dijkstra path', leftX + 156, ly + 2);
+}
+
+function mousePressed() {
+    // Check buttons
+    for (let b of buttons) {
+        if (mouseX > b.x && mouseX < b.x + b.w && mouseY > b.y && mouseY < b.y + b.h) {
+            handleButton(b.action);
+            return;
+        }
+    }
+
+    // Check nodes for source/target selection
+    for (let n of nodes) {
+        if (dist(mouseX, mouseY, n.x, n.y) < 24) {
+            if (!sourceNode) {
+                sourceNode = n;
+                statusMsg = 'Source: ' + n.name + '. Click another node for target.';
+            } else if (!targetNode && n !== sourceNode) {
+                targetNode = n;
+                statusMsg = 'Source: ' + sourceNode.name + ' -> Target: ' + n.name + '. Click an algorithm.';
+            }
+            return;
+        }
+    }
+
+    // Check drag
+    for (let n of nodes) {
+        if (dist(mouseX, mouseY, n.x, n.y) < 24) {
+            draggedNode = n;
+            dragOffsetX = n.x - mouseX;
+            dragOffsetY = n.y - mouseY;
+            return;
+        }
+    }
+}
+
+function handleButton(action) {
+    if (action === 'reset') {
+        sourceNode = null;
+        targetNode = null;
+        bfsPath = null;
+        dijkstraPath = null;
+        bfsCost = 0;
+        dijkstraCost = 0;
+        statusMsg = 'Click a node to set source';
+        return;
+    }
+
+    if (!sourceNode || !targetNode) return;
+
+    if (action === 'bfs' || action === 'both') {
+        bfsPath = runBFS(sourceNode.id, targetNode.id);
+        bfsCost = pathCostBFS(bfsPath);
+    }
+    if (action === 'dijkstra' || action === 'both') {
+        let result = runDijkstra(sourceNode.id, targetNode.id);
+        if (result) {
+            dijkstraPath = result.path;
+            dijkstraCost = result.cost;
+        }
+    }
+
+    if (action === 'both') {
+        statusMsg = 'Showing both paths. Compare hops vs total weight.';
+    } else if (action === 'bfs') {
+        statusMsg = 'BFS path: ' + (bfsPath ? (bfsPath.length - 1) + ' hops' : 'no path');
+    } else if (action === 'dijkstra') {
+        statusMsg = 'Dijkstra path: total weight ' + dijkstraCost;
+    }
+}
+
+function mouseDragged() {
+    if (draggedNode) {
+        draggedNode.x = mouseX + dragOffsetX;
+        draggedNode.y = mouseY + dragOffsetY;
+    }
+}
+
+function mouseReleased() { draggedNode = null; }
+
+function mouseMoved() {
+    hoveredNode = null;
+    for (let n of nodes) {
+        if (dist(mouseX, mouseY, n.x, n.y) < 24) {
+            hoveredNode = n;
+            break;
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    layoutButtons();
+}
+</script>
+    </div>
+</body>
+</html>

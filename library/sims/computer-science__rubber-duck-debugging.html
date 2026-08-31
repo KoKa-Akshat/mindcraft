@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Instruction Conflict Debugger using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Instruction Conflict Debugger
+// CANVAS_HEIGHT: 700
+// Instructional design notes (generated from the approved specification):
+// 01. Instruction Conflict Debugger
+// 02. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 03. Imperative text inside data is highlighted.
+// 04. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 05. The tool simulates likely failure if the conflict remains.
+// 06. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 07. Instruction Conflict Debugger
+// 08. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 09. Imperative text inside data is highlighted.
+// 10. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 11. The tool simulates likely failure if the conflict remains.
+// 12. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 13. Instruction Conflict Debugger
+// 14. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 15. Imperative text inside data is highlighted.
+// 16. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 17. The tool simulates likely failure if the conflict remains.
+// 18. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 19. Instruction Conflict Debugger
+// 20. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 21. Imperative text inside data is highlighted.
+// 22. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 23. The tool simulates likely failure if the conflict remains.
+// 24. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 25. Instruction Conflict Debugger
+// 26. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 27. Imperative text inside data is highlighted.
+// 28. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 29. The tool simulates likely failure if the conflict remains.
+// 30. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 31. Instruction Conflict Debugger
+// 32. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 33. Imperative text inside data is highlighted.
+// 34. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 35. The tool simulates likely failure if the conflict remains.
+// 36. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 37. Instruction Conflict Debugger
+// 38. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+// 39. Imperative text inside data is highlighted.
+// 40. Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.
+// 41. The tool simulates likely failure if the conflict remains.
+// 42. Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset.
+// 43. Instruction Conflict Debugger
+// 44. Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.
+let canvasWidth=400, drawHeight=610, controlHeight=90, canvasHeight=drawHeight+controlHeight;
+let margin=22, sliderLeftMargin=180, defaultTextSize=16;
+let previousButton, nextButton, revealButton, resetButton;
+let current=0, revealed=false;
+const simData={title:"Instruction Conflict Debugger", objective:"Deconstruct a prompt into instruction sources, identify ambiguity and conflict, apply hierarchy, and select refusal, clarification, or execution.", bloom:"Create", pattern:"Build and revise", points:["Instruction Conflict Debugger", "Show system rules, template rules, user task, persona data, asset text, and prior-stage output in separate labeled layers.", "Imperative text inside data is highlighted.", "Learners connect conflicting statements, assign authority, and rewrite the lower-priority instruction.", "The tool simulates likely failure if the conflict remains.", "Cases cover missing data versus required completeness, role fidelity versus expert advice, concise output versus required evidence, and prompt injection inside an asset."]};
+const palette=['steelblue','teal','darkorange','mediumpurple','seagreen','slateblue'];
+function setup(){
+  updateCanvasSize();
+  const canvas=createCanvas(canvasWidth,canvasHeight);
+  const main=document.querySelector('main'); main.style.position='relative'; main.style.height=canvasHeight+'px'; main.style.overflow='hidden';
+  document.body.style.margin='0'; document.body.style.overflow='hidden'; const back=document.querySelector('body > a'); if(back) back.style.display='none';
+  const style=document.createElement('style'); style.textContent='[id$="_Description"],.p5Label{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}'; document.head.appendChild(style);
+  canvas.parent(main); textSize(defaultTextSize);
+  previousButton=createButton('Previous'); previousButton.parent(main); previousButton.mousePressed(()=>{current=(current-1+simData.points.length)%simData.points.length;revealed=false;});
+  nextButton=createButton('Next'); nextButton.parent(main); nextButton.mousePressed(()=>{current=(current+1)%simData.points.length;revealed=false;});
+  revealButton=createButton('Reveal guidance'); revealButton.parent(main); revealButton.mousePressed(()=>revealed=!revealed);
+  resetButton=createButton('Reset'); resetButton.parent(main); resetButton.mousePressed(()=>{current=0;revealed=false;});
+  describe(simData.objective,LABEL);
+}
+function draw(){
+  updateCanvasSize(); fill('aliceblue');stroke('silver');rect(0,0,canvasWidth,drawHeight);fill('white');stroke('silver');rect(0,drawHeight,canvasWidth,controlHeight);
+  fill('midnightblue');noStroke();textAlign(CENTER,TOP);textSize(24);text(simData.title,24,12,canvasWidth-48,58);
+  fill('dimgray');noStroke();textSize(15);text(simData.bloom+' • '+simData.pattern,canvasWidth/2,68);
+  drawObjective();drawCards();drawDetail();drawControlLabels();positionControls();
+}
+function drawObjective(){fill('white');stroke('slategray');rect(24,98,canvasWidth-48,88,10);fill('black');noStroke();textAlign(LEFT,TOP);textSize(16);text(simData.objective,40,114,canvasWidth-80,60);}
+function drawCards(){
+  const shown=Math.min(4,simData.points.length),gap=12,gridW=canvasWidth-48,cellW=(gridW-gap)/2;
+  for(let i=0;i<shown;i++){const x=24+(i%2)*(cellW+gap),y=205+Math.floor(i/2)*94;fill(i===current?palette[i]:'white');stroke(palette[i]);strokeWeight(i===current?3:1);rect(x,y,cellW,78,9);fill(i===current?'white':'black');noStroke();textAlign(CENTER,CENTER);textSize(15);text((i+1)+'. '+shortText(simData.points[i],74),x+10,y+8,cellW-20,62);}strokeWeight(1);
+}
+function drawDetail(){
+  const p=simData.points[current];fill(revealed?'honeydew':'whitesmoke');stroke(revealed?'seagreen':'silver');rect(24,405,canvasWidth-48,168,10);
+  fill('midnightblue');noStroke();textAlign(LEFT,TOP);textSize(19);text('Focus '+(current+1)+' of '+simData.points.length,42,422);
+  fill('black');noStroke();textSize(16);text(p,42,454,canvasWidth-84,62);
+  fill(revealed?'darkgreen':'dimgray');noStroke();textSize(15);text(revealed?guidance():'Before revealing: state what evidence would support or challenge this element.',42,526,canvasWidth-84,38);
+}
+function guidance(){const lead={Remember:'Name the defining cue.',Understand:'Explain the relationship in your own words.',Apply:'Use this element in a new case.',Analyze:'Compare it with an alternative.',Evaluate:'Judge it against explicit evidence.',Create:'Revise it and explain the tradeoff.'};return lead[simData.bloom]+' Treat synthetic output as a hypothesis until external evidence validates it.';}
+function drawControlLabels(){fill('black');noStroke();textAlign(RIGHT,CENTER);textSize(15);text('Selected '+(current+1)+' / '+simData.points.length,canvasWidth-20,drawHeight+68);}
+function shortText(s,n){return s.length>n?s.slice(0,n-1)+'…':s;}
+function mousePressed(){if(mouseY<205||mouseY>377)return;const gap=12,gridW=canvasWidth-48,cellW=(gridW-gap)/2,col=mouseX>24+cellW+gap/2?1:0,row=mouseY>291?1:0,i=row*2+col;if(i<simData.points.length){current=i;revealed=false;}}
+function positionControls(){previousButton.position(12,drawHeight+10);nextButton.position(92,drawHeight+10);revealButton.position(150,drawHeight+10);resetButton.position(270,drawHeight+10);}
+function windowResized(){updateCanvasSize();resizeCanvas(canvasWidth,canvasHeight);positionControls();}
+function updateCanvasSize(){const c=document.querySelector('main');if(c)canvasWidth=Math.max(400,Math.floor(c.getBoundingClientRect().width));}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

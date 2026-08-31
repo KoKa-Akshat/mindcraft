@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Classical vs. Quantum Error Rate Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Classical vs. Quantum Error Rate Comparison</h2>
+        <div class="chart-container"><canvas id="errorChart"></canvas></div>
+        <div class="controls" id="controls"></div>
+        <p class="source">Data compiled from published hardware specifications, 2024</p>
+    </div>
+    <script>
+function toSuperscript(n) {
+    const sup = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴',
+                  '5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+    return String(n).split('').map(function(c) { return sup[c] || c; }).join('');
+}
+
+// Data for classical and quantum error rates
+const categories = [
+    "Classical CPU (bit flip)",
+    "Classical DRAM",
+    "Classical Hard Drive",
+    "Trapped Ion — Best (IonQ)",
+    "Superconducting — Best (Google)",
+    "Photonic — Best (Xanadu)",
+    "Topological (Microsoft, projected)"
+];
+
+const errorRates = [
+    1e-18,
+    1e-15,
+    1e-14,
+    1e-4,
+    1e-3,
+    1e-2,
+    1e-1
+];
+
+const isClassical = [true, true, true, false, false, false, false];
+const qecThreshold = 1e-4;
+
+// Color palette
+const classicalColor = "rgba(76, 175, 80, 0.8)";
+const classicalBorder = "rgba(56, 142, 60, 1)";
+const quantumColor = "rgba(255, 112, 67, 0.8)";
+const quantumBorder = "rgba(230, 74, 25, 1)";
+
+const barColors = isClassical.map(c => c ? classicalColor : quantumColor);
+const borderColors = isClassical.map(c => c ? classicalBorder : quantumBorder);
+
+// Tooltip source citations
+const sources = [
+    "Intel specifications, 2024",
+    "JEDEC industry standard, 2024",
+    "Manufacturer UBER specs, 2024",
+    "IonQ published benchmarks, 2024",
+    "Google Quantum AI, 2024",
+    "Xanadu published benchmarks, 2024",
+    "Microsoft roadmap (projected), 2024"
+];
+
+// Build chart
+const ctx = document.getElementById("errorChart").getContext("2d");
+
+const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: categories,
+        datasets: [{
+            label: "Error Rate per Operation",
+            data: errorRates,
+            backgroundColor: barColors,
+            borderColor: borderColors,
+            borderWidth: 1.5
+        }]
+    },
+    options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: { right: 20 }
+        },
+        scales: {
+            x: {
+                type: "logarithmic",
+                min: 1e-20,
+                max: 1,
+                title: {
+                    display: true,
+                    text: "Error Rate per Operation",
+                    font: { size: 13 }
+                },
+                ticks: {
+                    callback: function(value) {
+                        const log = Math.log10(value);
+                        if (Number.isInteger(log)) {
+                            return '10' + toSuperscript(log);
+                        }
+                        return null;
+                    },
+                    font: { size: 11 }
+                },
+                grid: {
+                    color: "rgba(0,0,0,0.08)"
+                }
+            },
+            y: {
+                ticks: {
+                    font: { size: 12 }
+                },
+                grid: {
+                    display: false
+                }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const idx = context.dataIndex;
+                        const exp = Math.round(Math.log10(errorRates[idx]));
+                        return [
+                            "Error rate: 10" + toSuperscript(exp),
+                            "Source: " + sources[idx]
+                        ];
+                    }
+                }
+            },
+            annotation: undefined
+        }
+    },
+    plugins: [{
+        id: "qecThresholdLine",
+        afterDraw: function(chart) {
+            const xScale = chart.scales.x;
+            const yScale = chart.scales.y;
+            const ctx = chart.ctx;
+
+            // Draw QEC threshold vertical dashed line
+            const xPos = xScale.getPixelForValue(qecThreshold);
+            ctx.save();
+            ctx.setLineDash([6, 4]);
+            ctx.strokeStyle = "rgba(211, 47, 47, 0.9)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(xPos, yScale.top);
+            ctx.lineTo(xPos, yScale.bottom);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label for threshold line
+            ctx.fillStyle = "rgba(211, 47, 47, 1)";
+            ctx.font = "bold 11px sans-serif";
+            ctx.textAlign = "left";
+            ctx.fillText("QEC Threshold (10⁻⁴)", xPos + 5, yScale.top + 14);
+            ctx.font = "10px sans-serif";
+            ctx.fillText("Below this: error correction", xPos + 5, yScale.top + 28);
+            ctx.fillText("becomes theoretically possible", xPos + 5, yScale.top + 40);
+
+            // Draw gap annotation arrow between classical and quantum
+            const classicalX = xScale.getPixelForValue(1e-14);
+            const quantumX = xScale.getPixelForValue(1e-4);
+            const arrowY = yScale.bottom + 0;
+
+            // Only draw if there is space below the chart
+            if (arrowY < chart.height - 10) {
+                // Horizontal double-headed arrow
+                ctx.strokeStyle = "#3F51B5";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(classicalX, arrowY);
+                ctx.lineTo(quantumX, arrowY);
+                ctx.stroke();
+
+                // Arrowheads
+                drawArrowhead(ctx, classicalX, arrowY, -1);
+                drawArrowhead(ctx, quantumX, arrowY, 1);
+
+                // Gap label
+                ctx.fillStyle = "#3F51B5";
+                ctx.font = "bold 12px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("~10-14 orders of magnitude gap",
+                    (classicalX + quantumX) / 2, arrowY - 6);
+            }
+
+            ctx.restore();
+        }
+    }]
+});
+
+function drawArrowhead(ctx, x, y, direction) {
+    const size = 6;
+    ctx.fillStyle = "#3F51B5";
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - direction * size, y - size);
+    ctx.lineTo(x - direction * size, y + size);
+    ctx.closePath();
+    ctx.fill();
+}
+
+// Scale toggle buttons
+const controls = document.getElementById("controls");
+
+const btnLog = document.createElement("button");
+btnLog.textContent = "Log Scale";
+btnLog.classList.add("active");
+
+const btnLinear = document.createElement("button");
+btnLinear.textContent = "Linear Scale";
+
+controls.appendChild(btnLog);
+controls.appendChild(btnLinear);
+
+btnLog.addEventListener("click", function() {
+    chart.options.scales.x.type = "logarithmic";
+    chart.options.scales.x.min = 1e-20;
+    chart.options.scales.x.max = 1;
+    btnLog.classList.add("active");
+    btnLinear.classList.remove("active");
+    chart.update();
+});
+
+btnLinear.addEventListener("click", function() {
+    chart.options.scales.x.type = "linear";
+    chart.options.scales.x.min = 0;
+    chart.options.scales.x.max = 0.15;
+    btnLinear.classList.add("active");
+    btnLog.classList.remove("active");
+    chart.update();
+});
+
+</script>
+</body>
+</html>

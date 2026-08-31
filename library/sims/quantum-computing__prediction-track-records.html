@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"timeline.json": "[\n  {\n    \"id\": 1,\n    \"year\": 2000,\n    \"content\": \"MIT: useful QC by 2010\",\n    \"start\": \"2000-01-01\",\n    \"category\": \"failed\",\n    \"source\": \"Academia\",\n    \"prediction\": \"MIT researchers predict that useful quantum computers will be available by 2010.\",\n    \"outcome\": \"No useful quantum computer existed by 2010. The most advanced systems had fewer than 15 qubits with error rates far too high for practical computation.\",\n    \"predictedBy\": \"MIT researchers\",\n    \"targetYear\": 2010\n  },\n  {\n    \"id\": 2,\n    \"year\": 2005,\n    \"content\": \"D-Wave: quantum speedup demonstrated\",\n    \"start\": \"2005-01-01\",\n    \"category\": \"disputed\",\n    \"source\": \"Company\",\n    \"prediction\": \"D-Wave Systems claims to have demonstrated quantum speedup with their quantum annealing processor.\",\n    \"outcome\": \"Independent benchmarks showed no consistent speedup over classical algorithms. The 'quantum' nature of the computation was disputed by multiple research groups.\",\n    \"predictedBy\": \"D-Wave Systems\",\n    \"targetYear\": 2005\n  },\n  {\n    \"id\": 3,\n    \"year\": 2010,\n    \"content\": \"Various: QC will break encryption by 2020\",\n    \"start\": \"2010-01-01\",\n    \"category\": \"failed\",\n    \"source\": \"Academia\",\n    \"prediction\": \"Multiple researchers and media outlets predict quantum computers will break RSA encryption by 2020.\",\n    \"outcome\": \"By 2020, the largest number factored by a quantum computer was 21 (3 x 7). RSA-2048 remains completely secure. Breaking it would require millions of error-corrected qubits.\",\n    \"predictedBy\": \"Various researchers and media\",\n    \"targetYear\": 2020\n  },\n  {\n    \"id\": 4,\n    \"year\": 2012,\n    \"content\": \"Preskill: NISQ era will show practical value\",\n    \"start\": \"2012-01-01\",\n    \"category\": \"failed\",\n    \"source\": \"Academia\",\n    \"prediction\": \"John Preskill coins 'NISQ' (Noisy Intermediate-Scale Quantum) and suggests these devices could demonstrate practical quantum advantage.\",\n    \"outcome\": \"Over a decade later, no NISQ device has demonstrated practical advantage on any commercially relevant problem. Preskill himself has acknowledged this disappointment.\",\n    \"predictedBy\": \"John Preskill (Caltech)\",\n    \"targetYear\": 2022\n  },\n  {\n    \"id\": 5,\n    \"year\": 2015,\n    \"content\": \"Google: quantum supremacy by 2017\",\n    \"start\": \"2015-01-01\",\n    \"category\": \"delayed\",\n    \"source\": \"Company\",\n    \"prediction\": \"Google announces plans to demonstrate quantum supremacy by 2017 with a 49-qubit processor.\",\n    \"outcome\": \"Delayed by two years. Google claimed supremacy in 2019 with a 53-qubit Sycamore processor on a contrived sampling problem. IBM disputed the claim, showing classical simulation could match it.\",\n    \"predictedBy\": \"Google Quantum AI\",\n    \"targetYear\": 2017\n  },\n  {\n    \"id\": 6,\n    \"year\": 2017,\n    \"content\": \"IBM: quantum advantage in 5 years\",\n    \"start\": \"2017-01-01\",\n    \"category\": \"failed\",\n    \"source\": \"Company\",\n    \"prediction\": \"IBM predicts practical quantum advantage within 5 years, suggesting commercial applications by 2022.\",\n    \"outcome\": \"By 2022, no practical quantum advantage had been demonstrated. IBM shifted its roadmap to focus on error correction, pushing useful applications further into the future.\",\n    \"predictedBy\": \"IBM Quantum\",\n    \"targetYear\": 2022\n  },\n  {\n    \"id\": 7,\n    \"year\": 2019,\n    \"content\": \"Google: quantum supremacy achieved\",\n    \"start\": \"2019-10-01\",\n    \"category\": \"disputed\",\n    \"source\": \"Company\",\n    \"prediction\": \"Google claims quantum supremacy \u2014 their Sycamore processor completed a random circuit sampling task in 200 seconds that would take a classical supercomputer 10,000 years.\",\n    \"outcome\": \"IBM immediately disputed the claim, arguing a classical computer could solve the problem in 2.5 days. Subsequent classical algorithms further closed the gap. The task had no practical application.\",\n    \"predictedBy\": \"Google Quantum AI\",\n    \"targetYear\": 2019\n  },\n  {\n    \"id\": 8,\n    \"year\": 2020,\n    \"content\": \"McKinsey: $700B QC market by 2035\",\n    \"start\": \"2020-01-01\",\n    \"category\": \"pending\",\n    \"source\": \"Consulting\",\n    \"prediction\": \"McKinsey projects quantum computing could create up to $700 billion in value by 2035 across pharmaceuticals, chemicals, automotive, and finance.\",\n    \"outcome\": \"Pending. As of 2026, the total QC market revenue is under $1 billion annually. Reaching $700B in 9 years would require unprecedented exponential growth with no precedent in the industry's trajectory.\",\n    \"predictedBy\": \"McKinsey & Company\",\n    \"targetYear\": 2035\n  },\n  {\n    \"id\": 9,\n    \"year\": 2021,\n    \"content\": \"BCG: QC will create $450-850B value\",\n    \"start\": \"2021-01-01\",\n    \"category\": \"pending\",\n    \"source\": \"Consulting\",\n    \"prediction\": \"Boston Consulting Group estimates quantum computing will create $450 to $850 billion in economic value by 2040.\",\n    \"outcome\": \"Pending. These projections assume breakthroughs in error correction and fault tolerance that have not yet been demonstrated at scale.\",\n    \"predictedBy\": \"Boston Consulting Group\",\n    \"targetYear\": 2040\n  },\n  {\n    \"id\": 10,\n    \"year\": 2023,\n    \"content\": \"IBM: 100K qubits by 2033\",\n    \"start\": \"2023-01-01\",\n    \"category\": \"pending\",\n    \"source\": \"Company\",\n    \"prediction\": \"IBM publishes an updated roadmap targeting 100,000 qubits by 2033, with error-corrected systems capable of useful computation.\",\n    \"outcome\": \"Pending. IBM's 2023 system had 1,121 qubits. Scaling to 100,000 while maintaining coherence and connectivity represents a 100x increase requiring fundamental engineering breakthroughs.\",\n    \"predictedBy\": \"IBM Quantum\",\n    \"targetYear\": 2033\n  },\n  {\n    \"id\": 11,\n    \"year\": 2024,\n    \"content\": \"Microsoft: practical QC by 2028\",\n    \"start\": \"2024-01-01\",\n    \"category\": \"pending\",\n    \"source\": \"Company\",\n    \"prediction\": \"Microsoft claims its topological qubit approach will enable practical quantum computing by 2028.\",\n    \"outcome\": \"Pending. Microsoft's topological qubit program has faced repeated delays and retractions. The company retracted a 2018 Nature paper claiming topological qubit evidence. A revised claim in 2025 remains unverified independently.\",\n    \"predictedBy\": \"Microsoft Azure Quantum\",\n    \"targetYear\": 2028\n  }\n]\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QC Prediction Track Record Timeline</title>
+    <style>body {
+    background: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 10px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    margin: 5px 0 10px 0;
+    font-size: 1.3rem;
+    color: #3F51B5;
+}
+
+/* Filter buttons container */
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.filter-btn {
+    padding: 5px 12px;
+    border: 2px solid #ccc;
+    border-radius: 16px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    transform: scale(1.05);
+}
+
+.filter-btn.active {
+    color: white;
+}
+
+.filter-btn[data-filter="all"] {
+    border-color: #3F51B5;
+    color: #3F51B5;
+}
+.filter-btn[data-filter="all"].active {
+    background: #3F51B5;
+    border-color: #3F51B5;
+    color: white;
+}
+
+.filter-btn[data-filter="failed"] {
+    border-color: #D32F2F;
+    color: #D32F2F;
+}
+.filter-btn[data-filter="failed"].active {
+    background: #D32F2F;
+    border-color: #D32F2F;
+    color: white;
+}
+
+.filter-btn[data-filter="disputed"] {
+    border-color: #F57C00;
+    color: #F57C00;
+}
+.filter-btn[data-filter="disputed"].active {
+    background: #F57C00;
+    border-color: #F57C00;
+    color: white;
+}
+
+.filter-btn[data-filter="delayed"] {
+    border-color: #FBC02D;
+    color: #9E8600;
+}
+.filter-btn[data-filter="delayed"].active {
+    background: #FBC02D;
+    border-color: #FBC02D;
+    color: #333;
+}
+
+.filter-btn[data-filter="pending"] {
+    border-color: #9E9E9E;
+    color: #616161;
+}
+.filter-btn[data-filter="pending"].active {
+    background: #9E9E9E;
+    border-color: #9E9E9E;
+    color: white;
+}
+
+/* Source filter buttons */
+.filter-btn[data-source="Academia"] {
+    border-color: #7B1FA2;
+    color: #7B1FA2;
+}
+.filter-btn[data-source="Academia"].active {
+    background: #7B1FA2;
+    border-color: #7B1FA2;
+    color: white;
+}
+
+.filter-btn[data-source="Company"] {
+    border-color: #1565C0;
+    color: #1565C0;
+}
+.filter-btn[data-source="Company"].active {
+    background: #1565C0;
+    border-color: #1565C0;
+    color: white;
+}
+
+.filter-btn[data-source="Consulting"] {
+    border-color: #2E7D32;
+    color: #2E7D32;
+}
+.filter-btn[data-source="Consulting"].active {
+    background: #2E7D32;
+    border-color: #2E7D32;
+    color: white;
+}
+
+/* Timeline container */
+#timeline {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    margin-bottom: 10px;
+}
+
+/* Event details panel */
+#event-details {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px 16px;
+    min-height: 60px;
+    transition: all 0.3s ease;
+}
+
+#event-details.empty {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+}
+
+#event-details h3 {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+}
+
+#event-details .detail-label {
+    font-weight: 600;
+    color: #555;
+    display: inline;
+}
+
+#event-details .detail-row {
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+#event-details .category-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 6px;
+}
+
+.category-failed { background: #D32F2F; }
+.category-disputed { background: #F57C00; }
+.category-delayed { background: #FBC02D; color: #333 !important; }
+.category-pending { background: #9E9E9E; }
+
+/* vis-timeline overrides */
+.vis-item {
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.vis-item.failed {
+    background-color: #FFCDD2;
+    border-color: #D32F2F;
+    color: #B71C1C;
+}
+
+.vis-item.disputed {
+    background-color: #FFE0B2;
+    border-color: #F57C00;
+    color: #E65100;
+}
+
+.vis-item.delayed {
+    background-color: #FFF9C4;
+    border-color: #FBC02D;
+    color: #9E8600;
+}
+
+.vis-item.pending {
+    background-color: #E0E0E0;
+    border-color: #9E9E9E;
+    color: #424242;
+}
+
+.vis-item.vis-selected {
+    box-shadow: 0 0 0 2px #3F51B5;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 8px;
+    font-size: 0.75rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legend-dot.failed { background: #D32F2F; }
+.legend-dot.disputed { background: #F57C00; }
+.legend-dot.delayed { background: #FBC02D; }
+.legend-dot.pending { background: #9E9E9E; }
+</style>
+    <link rel="stylesheet" href="https://unpkg.com/vis-timeline@7.7.3/styles/vis-timeline-graph2d.min.css">
+    <script src="https://unpkg.com/vis-timeline@7.7.3/standalone/umd/vis-timeline-graph2d.min.js"></script>
+</head>
+<body>
+    <h2>Quantum Computing Prediction Track Record</h2>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot failed"></div> Failed</div>
+        <div class="legend-item"><div class="legend-dot disputed"></div> Disputed</div>
+        <div class="legend-item"><div class="legend-dot delayed"></div> Delayed</div>
+        <div class="legend-item"><div class="legend-dot pending"></div> Pending</div>
+    </div>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="failed">Failed</button>
+        <button class="filter-btn" data-filter="disputed">Disputed</button>
+        <button class="filter-btn" data-filter="delayed">Delayed</button>
+        <button class="filter-btn" data-filter="pending">Pending</button>
+        <span style="border-left: 1px solid #ccc; margin: 0 4px;"></span>
+        <button class="filter-btn" data-source="Academia">Academia</button>
+        <button class="filter-btn" data-source="Company">Company</button>
+        <button class="filter-btn" data-source="Consulting">Consulting</button>
+    </div>
+
+    <div id="timeline"></div>
+
+    <div id="event-details" class="empty">
+        Click on any prediction to see details.
+    </div>
+
+    <script>// QC Prediction Tracker Timeline
+(function () {
+    let allEvents = [];
+    let timeline = null;
+    let dataSet = null;
+    let activeCategory = 'all';
+    let activeSource = null;
+
+    // Load timeline data and initialize
+    fetch('timeline.json')
+        .then(res => res.json())
+        .then(data => {
+            allEvents = data;
+            initTimeline();
+            initFilters();
+        })
+        .catch(err => {
+            document.getElementById('timeline').innerHTML =
+                '<p style="color:red;text-align:center;padding:20px;">Error loading timeline data.</p>';
+            console.error('Failed to load timeline.json:', err);
+        });
+
+    function buildItems(events) {
+        return events.map(e => ({
+            id: e.id,
+            content: e.content,
+            start: e.start,
+            className: e.category,
+            title: e.prediction
+        }));
+    }
+
+    function initTimeline() {
+        const container = document.getElementById('timeline');
+        dataSet = new vis.DataSet(buildItems(allEvents));
+
+        const options = {
+            height: '300px',
+            min: '1998-01-01',
+            max: '2036-01-01',
+            start: '1998-01-01',
+            end: '2036-01-01',
+            zoomMin: 1000 * 60 * 60 * 24 * 365 * 2,   // 2 years
+            zoomMax: 1000 * 60 * 60 * 24 * 365 * 40,   // 40 years
+            margin: { item: 12 },
+            orientation: 'top',
+            selectable: true,
+            tooltip: {
+                followMouse: true,
+                overflowMethod: 'cap'
+            }
+        };
+
+        timeline = new vis.Timeline(container, dataSet, options);
+
+        timeline.on('select', function (properties) {
+            if (properties.items.length > 0) {
+                const selectedId = properties.items[0];
+                const event = allEvents.find(e => e.id === selectedId);
+                if (event) showDetails(event);
+            } else {
+                clearDetails();
+            }
+        });
+    }
+
+    function showDetails(event) {
+        const panel = document.getElementById('event-details');
+        panel.classList.remove('empty');
+        panel.innerHTML = `
+            <h3>${event.content}
+                <span class="category-badge category-${event.category}">${event.category}</span>
+            </h3>
+            <div class="detail-row">
+                <span class="detail-label">Predicted by:</span> ${event.predictedBy} (${event.year})
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Target year:</span> ${event.targetYear}
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Prediction:</span> ${event.prediction}
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Outcome:</span> ${event.outcome}
+            </div>
+        `;
+    }
+
+    function clearDetails() {
+        const panel = document.getElementById('event-details');
+        panel.classList.add('empty');
+        panel.innerHTML = 'Click on any prediction to see details.';
+    }
+
+    function applyFilters() {
+        let filtered = allEvents;
+
+        if (activeCategory !== 'all') {
+            filtered = filtered.filter(e => e.category === activeCategory);
+        }
+
+        if (activeSource) {
+            filtered = filtered.filter(e => e.source === activeSource);
+        }
+
+        dataSet.clear();
+        dataSet.add(buildItems(filtered));
+        clearDetails();
+    }
+
+    function initFilters() {
+        const categoryBtns = document.querySelectorAll('.filter-btn[data-filter]');
+        const sourceBtns = document.querySelectorAll('.filter-btn[data-source]');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                activeCategory = this.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+
+        sourceBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    activeSource = null;
+                } else {
+                    sourceBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeSource = this.getAttribute('data-source');
+                }
+                applyFilters();
+            });
+        });
+    }
+})();
+</script>
+</body>
+</html>

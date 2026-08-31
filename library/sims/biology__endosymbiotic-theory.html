@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Endosymbiosis Model using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Endosymbiosis Model
+// Step-through visualization of endosymbiotic theory
+// showing engulfment events and evidence at each stage
+
+let canvasWidth = 780;
+let drawHeight = 380;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+
+let currentStep = 0;
+const totalSteps = 6;
+let showEvidence = false;
+let showDoubleMembrane = false;
+
+const steps = [
+    {
+        title: 'Step 1: Ancestral Cells',
+        desc: 'An ancestral archaeal host cell (with a nucleus-like endomembrane system from membrane infolding) coexists with free-living aerobic bacteria and photosynthetic cyanobacteria in the ancient ocean.',
+        evidence: [],
+        phase: 'origin'
+    },
+    {
+        title: 'Step 2: Engulfment of Aerobic Bacterium',
+        desc: 'The host cell engulfs an aerobic bacterium via endocytosis. Instead of being digested, the bacterium survives inside the host within a double membrane — the inner membrane from the bacterium, the outer from the host\'s vesicle.',
+        evidence: [
+            'Double membrane (inner = bacterium, outer = host vesicle)',
+            'Endosymbiont is protected inside host cytoplasm'
+        ],
+        phase: 'mito'
+    },
+    {
+        title: 'Step 3: Endosymbiont Becomes Mitochondrion',
+        desc: 'Over millions of years, the endosymbiont loses independence. Many of its genes transfer to the host nucleus (endosymbiotic gene transfer). It retains its own circular DNA and ribosomes but depends on the host for most proteins. It becomes the mitochondrion.',
+        evidence: [
+            'Own circular DNA (like bacteria)',
+            'Own ribosomes (70S, bacterial size)',
+            'Divides by binary fission (like bacteria)',
+            'Double membrane retained',
+            'Size similar to bacteria (~1-2 μm)'
+        ],
+        phase: 'mito'
+    },
+    {
+        title: 'Step 4: Evidence Summary for Mitochondria',
+        desc: 'Five key pieces of molecular and structural evidence support the endosymbiotic origin of mitochondria. Each piece independently points to a bacterial ancestor.',
+        evidence: [
+            '✓ Own circular DNA (no histones, like bacteria)',
+            '✓ 70S ribosomes (bacterial size, not 80S eukaryotic)',
+            '✓ Binary fission (divide independently of cell cycle)',
+            '✓ Double membrane (inner = original bacterium)',
+            '✓ Phylogenetic analysis: mitochondrial DNA sequences cluster with α-proteobacteria'
+        ],
+        phase: 'evidence'
+    },
+    {
+        title: 'Step 5: Second Engulfment — Cyanobacterium',
+        desc: 'A mitochondria-containing host cell later engulfs a photosynthetic cyanobacterium. Again, the cyanobacterium is not digested but becomes an endosymbiont, eventually evolving into the chloroplast. This event only occurred in the lineage leading to plants and algae.',
+        evidence: [
+            'Chloroplasts also have double membranes',
+            'Chloroplast DNA clusters with cyanobacteria',
+            'Thylakoid membranes resemble cyanobacterial photosynthetic membranes'
+        ],
+        phase: 'chloro'
+    },
+    {
+        title: 'Step 6: Modern Eukaryotic Cell',
+        desc: 'The modern eukaryotic cell contains both mitochondria (from the first engulfment) and, in plant/algal cells, chloroplasts (from the second engulfment). Both organelles retain vestiges of their bacterial origins: circular DNA, 70S ribosomes, double membranes, and independent division.',
+        evidence: [
+            '✓ Mitochondria in ALL eukaryotes',
+            '✓ Chloroplasts in plants and algae only',
+            '✓ Both retain bacterial-type DNA and ribosomes',
+            '✓ Both divide independently by binary fission',
+            '✓ Gene transfer to nucleus occurred over ~1.5 billion years'
+        ],
+        phase: 'modern'
+    }
+];
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    let step = steps[currentStep];
+
+    // Draw the cell diagram for this step
+    drawCellDiagram(step);
+
+    // Draw description panel
+    drawDescPanel(step);
+
+    // Draw evidence panel if toggled
+    if (showEvidence && step.evidence.length > 0) {
+        drawEvidencePanel(step);
+    }
+
+    // Controls
+    drawControls();
+}
+
+function drawCellDiagram(step) {
+    let cx = canvasWidth * 0.35;
+    let cy = drawHeight * 0.32;
+    let cellR = min(canvasWidth * 0.18, 120);
+
+    switch (currentStep) {
+        case 0: drawStep0(cx, cy, cellR); break;
+        case 1: drawStep1(cx, cy, cellR); break;
+        case 2: drawStep2(cx, cy, cellR); break;
+        case 3: drawStep3(cx, cy, cellR); break;
+        case 4: drawStep4(cx, cy, cellR); break;
+        case 5: drawStep5(cx, cy, cellR); break;
+    }
+}
+
+function drawStep0(cx, cy, r) {
+    // Host cell (large, light blue)
+    drawHostCell(cx - r * 0.3, cy, r, false, false);
+
+    // Free aerobic bacterium (small, orange, separate)
+    drawBacterium(cx + r * 1.8, cy - r * 0.4, r * 0.25, [230, 126, 34], 'Aerobic\nbacterium');
+
+    // Free cyanobacterium (small, green, separate)
+    drawBacterium(cx + r * 1.8, cy + r * 0.6, r * 0.25, [46, 204, 113], 'Cyano-\nbacterium');
+
+    // Labels
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text('Host cell\n(archaeal ancestor)', cx - r * 0.3, cy + r + 8);
+}
+
+function drawStep1(cx, cy, r) {
+    // Host cell engulfing bacterium
+    drawHostCell(cx, cy, r, false, false);
+
+    // Bacterium inside with double membrane
+    let bx = cx + r * 0.3;
+    let by = cy + r * 0.1;
+    let br = r * 0.25;
+
+    // Outer membrane (host vesicle) - dashed if toggle on
+    if (showDoubleMembrane) {
+        stroke(200, 100, 50);
+        strokeWeight(2);
+        drawingContext.setLineDash([4, 4]);
+        ellipse(bx, by, br * 2.6, br * 2.6);
+        drawingContext.setLineDash([]);
+
+        // Label
+        fill(200, 100, 50);
+        noStroke();
+        textSize(8);
+        textAlign(LEFT, CENTER);
+        text('← outer membrane\n   (from host)', bx + br * 1.5, by - 8);
+    }
+
+    // Inner membrane (bacterium's own)
+    drawBacterium(bx, by, br, [230, 126, 34], '');
+
+    if (showDoubleMembrane) {
+        fill(180, 100, 30);
+        noStroke();
+        textSize(8);
+        textAlign(LEFT, CENTER);
+        text('← inner membrane\n   (bacterium\'s)', bx + br * 1.5, by + 14);
+    }
+
+    // Engulfment arrow
+    stroke(200, 100, 50);
+    strokeWeight(2);
+    noFill();
+    arc(cx + r * 0.8, cy, r * 0.5, r * 0.8, -PI * 0.3, PI * 0.3);
+
+    // Free cyanobacterium still outside
+    drawBacterium(cx + r * 2, cy + r * 0.5, r * 0.2, [46, 204, 113], '');
+
+    fill(60);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('Endocytosis', cx + r * 0.8, cy - r * 0.6);
+}
+
+function drawStep2(cx, cy, r) {
+    // Host cell with proto-mitochondrion inside
+    drawHostCell(cx, cy, r, true, false);
+
+    // Gene transfer arrows (dashed lines to nucleus)
+    stroke(200, 100, 50, 150);
+    strokeWeight(1);
+    drawingContext.setLineDash([3, 3]);
+    line(cx + r * 0.3, cy + r * 0.1, cx - r * 0.2, cy - r * 0.2);
+    drawingContext.setLineDash([]);
+
+    fill(180, 100, 30);
+    noStroke();
+    textSize(8);
+    textAlign(LEFT, CENTER);
+    text('Gene transfer\nto nucleus', cx + r * 0.5, cy - r * 0.3);
+
+    // Circular DNA inside mitochondrion
+    let mx = cx + r * 0.3;
+    let my = cy + r * 0.15;
+    noFill();
+    stroke(200, 50, 50);
+    strokeWeight(1);
+    ellipse(mx, my, 10, 8);
+    fill(200, 50, 50);
+    noStroke();
+    textSize(6);
+    textAlign(CENTER, CENTER);
+    text('DNA', mx, my);
+}
+
+function drawStep3(cx, cy, r) {
+    // Evidence summary - show cell with labeled evidence
+    drawHostCell(cx - r * 0.5, cy, r * 0.8, true, false);
+
+    // Evidence callouts on right side
+    let evX = cx + r * 0.8;
+    let evY = cy - r * 0.8;
+    let lineH = 22;
+
+    fill(60);
+    noStroke();
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Evidence for Endosymbiosis:', evX, evY);
+    textStyle(NORMAL);
+
+    for (let i = 0; i < steps[3].evidence.length; i++) {
+        let ey = evY + 22 + i * lineH;
+        fill(46, 125, 50);
+        textSize(10);
+        textAlign(LEFT, TOP);
+        text(steps[3].evidence[i], evX, ey);
+    }
+}
+
+function drawStep4(cx, cy, r) {
+    // Host cell with mitochondrion, now engulfing cyanobacterium
+    drawHostCell(cx - r * 0.2, cy, r, true, false);
+
+    // Cyanobacterium being engulfed
+    let cbx = cx + r * 0.5;
+    let cby = cy + r * 0.3;
+    let cbr = r * 0.22;
+
+    if (showDoubleMembrane) {
+        stroke(20, 140, 60);
+        strokeWeight(2);
+        drawingContext.setLineDash([4, 4]);
+        ellipse(cbx, cby, cbr * 2.6, cbr * 2.6);
+        drawingContext.setLineDash([]);
+    }
+
+    drawBacterium(cbx, cby, cbr, [46, 204, 113], '');
+
+    // Engulfment arrow
+    stroke(46, 204, 113);
+    strokeWeight(2);
+    noFill();
+    arc(cx + r * 0.9, cy + r * 0.1, r * 0.4, r * 0.6, -PI * 0.2, PI * 0.4);
+
+    fill(30, 130, 50);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('Second\nengulfment', cx + r * 1.2, cy - r * 0.3);
+}
+
+function drawStep5(cx, cy, r) {
+    // Modern eukaryotic cell with both organelles
+    drawHostCell(cx, cy, r * 1.1, true, true);
+
+    // Labels
+    fill(60);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('Modern Eukaryotic Cell', cx, cy + r * 1.2);
+    textStyle(NORMAL);
+    textSize(9);
+    text('(plant / algal cell shown)', cx, cy + r * 1.2 + 16);
+
+    // Timeline note
+    fill(100);
+    textSize(9);
+    textAlign(LEFT, TOP);
+    text('~2 billion years ago: first engulfment (mitochondria)', canvasWidth * 0.55, drawHeight * 0.05);
+    text('~1.5 billion years ago: second engulfment (chloroplasts)', canvasWidth * 0.55, drawHeight * 0.05 + 14);
+}
+
+function drawHostCell(cx, cy, r, hasMito, hasChloroplast) {
+    // Cell membrane
+    fill(180, 210, 240, 120);
+    stroke(100, 140, 180);
+    strokeWeight(2);
+    ellipse(cx, cy, r * 2, r * 1.8);
+
+    // Nucleus
+    fill(200, 200, 230, 150);
+    stroke(120, 120, 170);
+    strokeWeight(1.5);
+    let nR = r * 0.35;
+    ellipse(cx - r * 0.2, cy - r * 0.15, nR * 2, nR * 1.6);
+
+    // Nuclear DNA
+    fill(80, 80, 140);
+    noStroke();
+    textSize(8);
+    textAlign(CENTER, CENTER);
+    text('Nucleus', cx - r * 0.2, cy - r * 0.15);
+
+    // Mitochondrion
+    if (hasMito) {
+        let mx = cx + r * 0.35;
+        let my = cy + r * 0.2;
+        let mr = r * 0.18;
+
+        // Double membrane
+        if (showDoubleMembrane) {
+            noFill();
+            stroke(200, 100, 50);
+            strokeWeight(1.5);
+            drawingContext.setLineDash([3, 3]);
+            ellipse(mx, my, mr * 2.4, mr * 1.6);
+            drawingContext.setLineDash([]);
+        }
+
+        fill(230, 150, 80, 200);
+        stroke(200, 100, 50);
+        strokeWeight(1.5);
+        ellipse(mx, my, mr * 2, mr * 1.3);
+
+        // Cristae lines
+        stroke(200, 100, 50, 150);
+        strokeWeight(1);
+        for (let i = -2; i <= 2; i++) {
+            let lx = mx + i * mr * 0.3;
+            line(lx, my - mr * 0.3, lx, my + mr * 0.3);
+        }
+
+        fill(160, 80, 20);
+        noStroke();
+        textSize(7);
+        textAlign(CENTER, CENTER);
+        text('Mito', mx, my + mr * 0.8);
+    }
+
+    // Chloroplast
+    if (hasChloroplast) {
+        let clx = cx - r * 0.45;
+        let cly = cy + r * 0.35;
+        let clr = r * 0.2;
+
+        if (showDoubleMembrane) {
+            noFill();
+            stroke(20, 140, 60);
+            strokeWeight(1.5);
+            drawingContext.setLineDash([3, 3]);
+            ellipse(clx, cly, clr * 2.4, clr * 1.6);
+            drawingContext.setLineDash([]);
+        }
+
+        fill(100, 200, 100, 200);
+        stroke(46, 160, 60);
+        strokeWeight(1.5);
+        ellipse(clx, cly, clr * 2, clr * 1.3);
+
+        // Thylakoid stacks
+        stroke(30, 120, 40, 150);
+        strokeWeight(1);
+        for (let i = -1; i <= 1; i++) {
+            let ly = cly + i * clr * 0.3;
+            line(clx - clr * 0.5, ly, clx + clr * 0.5, ly);
+        }
+
+        fill(20, 100, 30);
+        noStroke();
+        textSize(7);
+        textAlign(CENTER, CENTER);
+        text('Chloro', clx, cly + clr * 0.8);
+    }
+}
+
+function drawBacterium(bx, by, br, col, label) {
+    fill(col[0], col[1], col[2], 200);
+    stroke(col[0] * 0.7, col[1] * 0.7, col[2] * 0.7);
+    strokeWeight(1.5);
+    ellipse(bx, by, br * 2, br * 1.3);
+
+    if (label) {
+        fill(40);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, CENTER);
+        let lines = label.split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            text(lines[i], bx, by + br + 10 + i * 10);
+        }
+    }
+}
+
+function drawDescPanel(step) {
+    let panelX = 10;
+    let panelY = drawHeight * 0.7;
+    let panelW = canvasWidth - 20;
+    let panelH = drawHeight * 0.28;
+
+    fill(255, 250, 240);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    // Title badge
+    let phaseColor;
+    if (step.phase === 'origin') phaseColor = [100, 140, 180];
+    else if (step.phase === 'mito') phaseColor = [230, 126, 34];
+    else if (step.phase === 'chloro') phaseColor = [46, 204, 113];
+    else if (step.phase === 'evidence') phaseColor = [155, 89, 182];
+    else phaseColor = [52, 152, 219];
+
+    // Step title
+    fill(phaseColor[0], phaseColor[1], phaseColor[2]);
+    noStroke();
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text(step.title, panelX + 10, panelY + 8);
+    textStyle(NORMAL);
+
+    // Description (word wrap)
+    fill(60);
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textLeading(15);
+    let descX = panelX + 10;
+    let descY = panelY + 28;
+    let descW = panelW - 20;
+
+    let words = step.desc.split(' ');
+    let line = '';
+    let ly = descY;
+    for (let w of words) {
+        let test = line + w + ' ';
+        if (textWidth(test) > descW) {
+            text(line, descX, ly);
+            line = w + ' ';
+            ly += 15;
+        } else {
+            line = test;
+        }
+    }
+    text(line, descX, ly);
+}
+
+function drawEvidencePanel(step) {
+    let panelW = min(canvasWidth * 0.4, 280);
+    let panelX = canvasWidth - panelW - 15;
+    let panelY = 10;
+    let lineH = 18;
+    let panelH = 30 + step.evidence.length * lineH;
+
+    fill(255, 248, 230);
+    stroke(200, 180, 100);
+    strokeWeight(1.5);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    fill(180, 140, 20);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Evidence', panelX + 8, panelY + 6);
+    textStyle(NORMAL);
+
+    fill(80);
+    textSize(10);
+    for (let i = 0; i < step.evidence.length; i++) {
+        text(step.evidence[i], panelX + 8, panelY + 24 + i * lineH);
+    }
+}
+
+function drawControls() {
+    let cy = drawHeight + 8;
+
+    // Step counter
+    fill(60);
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text(`Step ${currentStep + 1} of ${totalSteps}`, 15, cy + 15);
+
+    let btnW = 80;
+    let btnH = 30;
+
+    // Previous button
+    let prevX = canvasWidth * 0.25;
+    fill(currentStep > 0 ? [100, 150, 220] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(prevX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('◀ Previous', prevX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Next button
+    let nextX = prevX + btnW + 12;
+    fill(currentStep < totalSteps - 1 ? [46, 204, 113] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(nextX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Next ▶', nextX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Evidence toggle
+    let evX = nextX + btnW + 15;
+    let evW = 90;
+    fill(showEvidence ? [241, 196, 15] : [200, 200, 200]);
+    stroke(80);
+    strokeWeight(1);
+    rect(evX, cy + 2, evW, btnH, 6);
+    fill(showEvidence ? 40 : 80);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text(showEvidence ? '✓ Evidence' : 'Evidence', evX + evW / 2, cy + 2 + btnH / 2);
+
+    // Double membrane toggle
+    let dmX = evX + evW + 10;
+    let dmW = 120;
+    fill(showDoubleMembrane ? [155, 89, 182] : [200, 200, 200]);
+    stroke(80);
+    strokeWeight(1);
+    rect(dmX, cy + 2, dmW, btnH, 6);
+    fill(showDoubleMembrane ? 255 : 80);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text(showDoubleMembrane ? '✓ Double Membrane' : 'Double Membrane', dmX + dmW / 2, cy + 2 + btnH / 2);
+
+    // Progress dots
+    let dotY = cy + 50;
+    let dotSpacing = 20;
+    let dotsStartX = canvasWidth / 2 - (totalSteps - 1) * dotSpacing / 2;
+
+    for (let i = 0; i < totalSteps; i++) {
+        let dx = dotsStartX + i * dotSpacing;
+        if (i === currentStep) {
+            fill(52, 152, 219);
+            noStroke();
+            ellipse(dx, dotY, 12, 12);
+            fill(255);
+            textSize(8);
+            textAlign(CENTER, CENTER);
+            text(i + 1, dx, dotY);
+        } else if (i < currentStep) {
+            fill(46, 204, 113);
+            noStroke();
+            ellipse(dx, dotY, 10, 10);
+        } else {
+            fill(200);
+            noStroke();
+            ellipse(dx, dotY, 10, 10);
+        }
+    }
+
+    // Phase labels
+    fill(100);
+    textSize(9);
+    textAlign(CENTER, TOP);
+    text('Origin', dotsStartX, dotY + 10);
+    text('Mitochondria', dotsStartX + dotSpacing * 2, dotY + 10);
+    text('Chloroplasts', dotsStartX + dotSpacing * 4.5, dotY + 10);
+}
+
+function mousePressed() {
+    let cy = drawHeight + 8;
+    let btnH = 30;
+    let btnW = 80;
+
+    let prevX = canvasWidth * 0.25;
+    let nextX = prevX + btnW + 12;
+    let evX = nextX + btnW + 15;
+    let evW = 90;
+    let dmX = evX + evW + 10;
+    let dmW = 120;
+
+    // Previous
+    if (mouseX >= prevX && mouseX <= prevX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep > 0) currentStep--;
+    }
+
+    // Next
+    if (mouseX >= nextX && mouseX <= nextX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep < totalSteps - 1) currentStep++;
+    }
+
+    // Evidence toggle
+    if (mouseX >= evX && mouseX <= evX + evW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        showEvidence = !showEvidence;
+    }
+
+    // Double membrane toggle
+    if (mouseX >= dmX && mouseX <= dmX + dmW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        showDoubleMembrane = !showDoubleMembrane;
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

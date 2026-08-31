@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Peptide Bond Formation — Step-by-Step Animator</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Peptide Bond Formation — Step-by-Step Animator (Food Science MicroSim)
+// CANVAS_HEIGHT: 620
+// Bloom L2/L3: learner-controlled step-through (Next button), not continuous animation.
+
+// ----- Layout -----
+let canvasWidth = 760;
+let drawHeight  = 380;     // diagram region
+let controlH    = 140;     // controls + explanation panel
+let canvasHeight = drawHeight + controlH;
+let margin = 15;
+
+// Step state: 1..4, plus extended flag for tripeptide replay (steps 5..7 reuse 2..4 visuals)
+let currentStep = 1;
+let totalSteps  = 4;
+let chainExtended = false;   // true after Extend the Chain pressed and replay finished
+let extending = false;       // true while replay 2..4 is in progress on 3rd AA
+
+// Smooth tween 0..1 between displayed step transitions
+let tween = 1;
+let tweenSpeed = 0.06;
+
+// UI elements
+let btnStep, btnReset, btnExtend, selPair;
+
+// Amino acid presets — name + R group color + R label
+const PAIRS = {
+  'Glycine–Alanine': [
+    { name: 'Glycine',   rLabel: 'H',     rColor: [200, 200, 200] },
+    { name: 'Alanine',   rLabel: 'CH₃',   rColor: [255, 213, 79] }
+  ],
+  'Lysine–Glutamate': [
+    { name: 'Lysine',    rLabel: '(CH₂)₄NH₂', rColor: [129, 199, 132] },
+    { name: 'Glutamate', rLabel: '(CH₂)₂COOH', rColor: [239, 154, 154] }
+  ],
+  'Serine–Valine': [
+    { name: 'Serine',    rLabel: 'CH₂OH', rColor: [144, 202, 249] },
+    { name: 'Valine',    rLabel: 'CH(CH₃)₂', rColor: [206, 147, 216] }
+  ],
+  'Cysteine–Methionine': [
+    { name: 'Cysteine',   rLabel: 'CH₂SH',     rColor: [255, 183, 77] },
+    { name: 'Methionine', rLabel: '(CH₂)₂SCH₃', rColor: [188, 170, 164] }
+  ]
+};
+let currentPairName = 'Glycine–Alanine';
+
+// Third amino acid for extension (cycled)
+const THIRD_OPTIONS = [
+  { name: 'Leucine',  rLabel: 'CH₂CH(CH₃)₂', rColor: [174, 213, 129] },
+  { name: 'Threonine', rLabel: 'CH(OH)CH₃',  rColor: [129, 212, 250] },
+  { name: 'Proline',  rLabel: '(ring)',     rColor: [240, 98, 146] }
+];
+let thirdAA = THIRD_OPTIONS[0];
+
+// Colors
+const COL_BG       = [241, 248, 233];
+const COL_NH2      = [30, 136, 229];
+const COL_COOH     = [245, 124, 0];
+const COL_C        = [120, 120, 120];
+const COL_WATER    = [144, 202, 249];
+const COL_BOND     = [211, 47, 47];
+const COL_TEXT     = [33, 33, 33];
+const COL_PANEL    = [255, 255, 255];
+const COL_PANEL_BD = [200, 200, 200];
+
+// Step explanation text (exact from spec)
+const STEP_TEXT = {
+  1: 'Meet two amino acids. Each has an amino group (blue) and a carboxyl group (orange).',
+  2: 'The amino group of one amino acid approaches the carboxyl group of the other.',
+  3: 'One water molecule is released — this is called a condensation reaction.',
+  4: 'The peptide bond (–CO–NH–) links the two amino acids into a dipeptide.'
+};
+
+// Extension replay state
+// During extension we re-run conceptual steps 2..4 with the 3rd AA approaching the dipeptide.
+let extStep = 0; // 0 inactive; 2,3,4 active
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI, Arial, sans-serif');
+
+  // Dropdown — amino acid pair
+  selPair = createSelect();
+  Object.keys(PAIRS).forEach(k => selPair.option(k));
+  selPair.selected(currentPairName);
+  selPair.changed(onPairChanged);
+  styleSelect(selPair);
+
+  // Step button
+  btnStep = createButton('Next Step ▶');
+  styleButton(btnStep, '#2e7d32');
+  btnStep.mousePressed(onNextStep);
+
+  // Reset
+  btnReset = createButton('Reset');
+  styleButton(btnReset, '#757575');
+  btnReset.mousePressed(onReset);
+
+  // Extend (hidden until step 4)
+  btnExtend = createButton('Extend the Chain →');
+  styleButton(btnExtend, '#f57c00');
+  btnExtend.mousePressed(onExtend);
+  btnExtend.hide();
+
+  layoutControls();
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  layoutControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').parentElement;
+  const w = container ? container.clientWidth : 760;
+  canvasWidth = Math.max(520, Math.min(900, w - 4));
+  canvasHeight = drawHeight + controlH;
+}
+
+function layoutControls() {
+  // Controls row 1: dropdown label + dropdown + step button + reset
+  let y1 = drawHeight + 12;
+  selPair.position(margin + 110, y1 + 2);
+  btnStep.position(margin + 320, y1);
+  btnReset.position(margin + 430, y1);
+  btnExtend.position(margin + 510, y1);
+}
+
+function styleButton(b, bg) {
+  b.style('background', bg);
+  b.style('color', '#fff');
+  b.style('border', 'none');
+  b.style('padding', '8px 14px');
+  b.style('border-radius', '6px');
+  b.style('font-size', '14px');
+  b.style('cursor', 'pointer');
+  b.style('font-family', 'Segoe UI, Arial, sans-serif');
+}
+
+function styleSelect(s) {
+  s.style('padding', '6px 8px');
+  s.style('border-radius', '6px');
+  s.style('border', '1px solid #aaa');
+  s.style('font-size', '14px');
+  s.style('background', '#fff');
+  s.style('font-family', 'Segoe UI, Arial, sans-serif');
+}
+
+// ----- Event handlers -----
+function onNextStep() {
+  if (extending) {
+    if (extStep < 4) {
+      extStep++;
+      tween = 0;
+    }
+    return;
+  }
+  if (chainExtended) return; // tripeptide complete; only reset works
+  if (currentStep < totalSteps) {
+    currentStep++;
+    tween = 0;
+    if (currentStep === 4) btnExtend.show();
+  }
+}
+
+function onReset() {
+  currentStep = 1;
+  tween = 1;
+  chainExtended = false;
+  extending = false;
+  extStep = 0;
+  btnExtend.hide();
+}
+
+function onExtend() {
+  // pick a random new third AA
+  thirdAA = random(THIRD_OPTIONS);
+  extending = true;
+  extStep = 2; // start replay at step 2
+  tween = 0;
+  btnExtend.hide();
+}
+
+function onPairChanged() {
+  currentPairName = selPair.value();
+  onReset();
+}
+
+// ----- Drawing -----
+function draw() {
+  background(COL_BG);
+
+  // Title
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(LEFT, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Peptide Bond Formation', margin, 10);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(80);
+  text('Watch how amino acids link into a dipeptide — then extend to a tripeptide.', margin, 30);
+
+  // Advance tween
+  if (tween < 1) tween = Math.min(1, tween + tweenSpeed);
+
+  // Draw molecules region
+  drawScene();
+
+  // Controls panel background
+  noStroke();
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlH);
+  stroke(220);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  // Labels for dropdown
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text('Amino acid pair:', margin, drawHeight + 22);
+
+  // Step counter
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  textStyle(BOLD);
+  let stepLabel;
+  if (extending) {
+    stepLabel = 'Extending: Step ' + (extStep - 1) + ' of 3';
+  } else if (chainExtended) {
+    stepLabel = 'Tripeptide complete!';
+  } else {
+    stepLabel = 'Step ' + currentStep + ' of ' + totalSteps;
+  }
+  fill(46, 125, 50);
+  text(stepLabel, margin, drawHeight + 60);
+  textStyle(NORMAL);
+
+  // Explanation box
+  fill(COL_PANEL);
+  stroke(COL_PANEL_BD);
+  strokeWeight(1);
+  rect(margin, drawHeight + 78, canvasWidth - 2 * margin, controlH - 88, 6);
+
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(LEFT, TOP);
+  textSize(13);
+  let explainText = getExplanationText();
+  text(explainText, margin + 10, drawHeight + 86, canvasWidth - 2 * margin - 20, controlH - 96);
+}
+
+function getExplanationText() {
+  if (extending) {
+    if (extStep === 2) return 'A third amino acid (' + thirdAA.name + ') approaches the dipeptide. Its –NH₂ group reaches toward the –COOH at the end of the chain.';
+    if (extStep === 3) return 'Another water molecule is released as the new amino acid joins.';
+    if (extStep === 4) return 'A second peptide bond forms — you now have a tripeptide! Proteins are long chains made by repeating this same reaction many times.';
+  }
+  if (chainExtended) return 'Three amino acids linked by two peptide bonds form a tripeptide. Real proteins contain hundreds of amino acids joined this same way.';
+  return STEP_TEXT[currentStep];
+}
+
+// ----- Scene drawing -----
+function drawScene() {
+  // Layout of two amino acids horizontally centered
+  let centerY = drawHeight * 0.45;
+  let pair = PAIRS[currentPairName];
+  let aa1 = pair[0];
+  let aa2 = pair[1];
+
+  // Compute molecule centers based on step (step 2 brings them together)
+  let baseGap = Math.min(360, canvasWidth * 0.42);
+  let closedGap = baseGap * 0.62;
+
+  // Determine effective step for visual logic
+  let visStep = currentStep;
+  if (extending) visStep = extStep; // 2..4
+
+  // When extending we show dipeptide (already joined) on the left and 3rd AA approaches.
+  if (extending || chainExtended) {
+    drawExtensionScene(centerY, baseGap, closedGap, aa1, aa2, thirdAA, visStep);
+  } else {
+    drawDipeptideScene(centerY, baseGap, closedGap, aa1, aa2, visStep);
+  }
+}
+
+function drawDipeptideScene(centerY, baseGap, closedGap, aa1, aa2, visStep) {
+  // Approach factor: 0 = far apart, 1 = together
+  let approach = 0;
+  if (visStep >= 2) approach = (visStep === 2) ? tween : 1;
+  let gap = lerp(baseGap, closedGap, approach);
+
+  let cx1 = canvasWidth / 2 - gap / 2;
+  let cx2 = canvasWidth / 2 + gap / 2;
+
+  // Draw approach arrows on step 2 (before fully approached)
+  if (visStep === 2 && approach < 1) {
+    drawApproachArrow(cx1 + 80, centerY, cx2 - 80, centerY);
+  }
+
+  // Water release on step 3
+  let waterAlpha = 0;
+  let waterX = (cx1 + cx2) / 2;
+  let waterY = centerY - 70;
+  if (visStep === 3) {
+    waterAlpha = 255;
+    waterY = lerp(centerY - 30, 60, tween);
+    waterX = lerp((cx1 + cx2) / 2, canvasWidth - 70, tween);
+  } else if (visStep >= 4) {
+    waterAlpha = 200;
+    waterY = 60;
+    waterX = canvasWidth - 70;
+  }
+
+  // Bond on step 4
+  let bondAlpha = 0;
+  if (visStep === 4) bondAlpha = 255 * tween;
+
+  // Draw amino acid 1 (left): NH2 - C(R) - COOH ... if step>=3 it has lost the OH from COOH (becomes C=O)
+  drawAminoAcid(cx1, centerY, aa1, /*loseOH*/ visStep >= 3, /*loseH*/ false, /*bonded*/ visStep >= 4);
+  // Draw amino acid 2 (right): if step>=3 it has lost one H from NH2 (becomes NH)
+  drawAminoAcid(cx2, centerY, aa2, /*loseOH*/ false, /*loseH*/ visStep >= 3, /*bonded*/ visStep >= 4);
+
+  // Peptide bond line between COOH end of aa1 and NH2 end of aa2
+  if (bondAlpha > 0) {
+    drawPeptideBond(cx1 + 60, centerY, cx2 - 60, centerY, bondAlpha);
+  }
+
+  // Water molecule
+  if (waterAlpha > 0) {
+    drawWater(waterX, waterY, waterAlpha);
+  }
+}
+
+function drawExtensionScene(centerY, baseGap, closedGap, aa1, aa2, aa3, visStep) {
+  // Dipeptide stays on the left; 3rd AA approaches from the right.
+  // Layout: aa1 - aa2 - (gap) - aa3
+  let unit = 130;
+  let groupLeftX = canvasWidth / 2 - unit;
+  let cx1 = groupLeftX - unit / 2;
+  let cx2 = groupLeftX + unit / 2;
+
+  let approach = 0;
+  if (visStep === 2) approach = tween;
+  else if (visStep >= 3) approach = 1;
+
+  let farGap = Math.min(300, canvasWidth * 0.35);
+  let closeGap = 130;
+  let gap = lerp(farGap, closeGap, approach);
+  let cx3 = cx2 + gap;
+
+  // Approach arrow
+  if (visStep === 2 && approach < 1) {
+    drawApproachArrow(cx2 + 80, centerY, cx3 - 80, centerY);
+  }
+
+  // Draw dipeptide (aa1 + aa2 always bonded)
+  drawAminoAcid(cx1, centerY, aa1, /*loseOH*/ true, /*loseH*/ false, /*bonded*/ true);
+  // For aa2, if visStep >= 3 it loses OH from its COOH (joins aa3)
+  drawAminoAcid(cx2, centerY, aa2, /*loseOH*/ visStep >= 3, /*loseH*/ true, /*bonded*/ true);
+  // bond between aa1 and aa2
+  drawPeptideBond(cx1 + 60, centerY, cx2 - 60, centerY, 255);
+
+  // aa3
+  drawAminoAcid(cx3, centerY, aa3, /*loseOH*/ false, /*loseH*/ visStep >= 3, /*bonded*/ visStep >= 4);
+
+  // Bond between aa2 and aa3
+  if (visStep >= 4) {
+    let alpha = (visStep === 4) ? 255 * tween : 255;
+    drawPeptideBond(cx2 + 60, centerY, cx3 - 60, centerY, alpha);
+    if (tween >= 1 && visStep === 4 && !chainExtended) {
+      chainExtended = true;
+      extending = false;
+    }
+  }
+
+  // Second water release on step 3
+  if (visStep === 3) {
+    let wx = lerp((cx2 + cx3) / 2, canvasWidth - 70, tween);
+    let wy = lerp(centerY - 30, 60, tween);
+    drawWater(wx, wy, 255);
+  } else if (visStep >= 4) {
+    drawWater(canvasWidth - 70, 60, 200);
+  }
+  // First water still in corner
+  drawWater(canvasWidth - 70, 110, 160);
+}
+
+function drawAminoAcid(cx, cy, aa, loseOH, loseH, bonded) {
+  // Layout: NH2 box at left, central C with R below, COOH box at right
+  let nh2x = cx - 60;
+  let coohx = cx + 60;
+  let boxW = 46;
+  let boxH = 28;
+
+  // Side chain (R) below central C
+  let rx = cx;
+  let ry = cy + 50;
+
+  // Bond lines (single bonds drawn as gray lines)
+  stroke(120);
+  strokeWeight(2);
+  // NH2 — C
+  line(nh2x + boxW / 2, cy, cx - 16, cy);
+  // C — COOH
+  line(cx + 16, cy, coohx - boxW / 2, cy);
+  // C — R
+  line(cx, cy + 16, rx, ry - 14);
+
+  // Central carbon
+  noStroke();
+  fill(COL_C[0], COL_C[1], COL_C[2]);
+  ellipse(cx, cy, 32, 32);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  textStyle(BOLD);
+  text('Cα', cx, cy);
+  textStyle(NORMAL);
+
+  // NH2 / NH box
+  drawGroupBox(nh2x, cy, boxW, boxH, COL_NH2, loseH ? '–NH–' : '–NH₂');
+
+  // COOH / CO box
+  drawGroupBox(coohx, cy, boxW, boxH, COL_COOH, loseOH ? '–C(O)–' : '–COOH');
+
+  // R group oval
+  noStroke();
+  fill(aa.rColor[0], aa.rColor[1], aa.rColor[2]);
+  ellipse(rx, ry, 56, 28);
+  stroke(80);
+  strokeWeight(1);
+  noFill();
+  ellipse(rx, ry, 56, 28);
+
+  noStroke();
+  fill(40);
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  let rLabel = aa.rLabel;
+  if (rLabel.length > 8) {
+    textSize(9);
+  }
+  text('R = ' + rLabel, rx, ry);
+
+  // Name label above molecule
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(CENTER, BOTTOM);
+  textSize(13);
+  textStyle(BOLD);
+  text(aa.name, cx, cy - 50);
+  textStyle(NORMAL);
+}
+
+function drawGroupBox(cx, cy, w, h, col, label) {
+  noStroke();
+  fill(col[0], col[1], col[2]);
+  rectMode(CENTER);
+  rect(cx, cy, w, h, 4);
+  rectMode(CORNER);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text(label, cx, cy);
+  textStyle(NORMAL);
+}
+
+function drawApproachArrow(x1, y1, x2, y2) {
+  stroke(46, 125, 50);
+  strokeWeight(2);
+  let midX = (x1 + x2) / 2;
+  let midY = (y1 + y2) / 2;
+  drawArrow(x1 + 8, y1, midX - 6, midY);
+  drawArrow(x2 - 8, y2, midX + 6, midY);
+}
+
+function drawArrow(x1, y1, x2, y2) {
+  line(x1, y1, x2, y2);
+  push();
+  translate(x2, y2);
+  let ang = Math.atan2(y2 - y1, x2 - x1);
+  rotate(ang);
+  noStroke();
+  fill(46, 125, 50);
+  triangle(0, 0, -8, -4, -8, 4);
+  pop();
+}
+
+function drawPeptideBond(x1, y1, x2, y2, alpha) {
+  if (alpha === undefined) alpha = 255;
+  let c = color(COL_BOND[0], COL_BOND[1], COL_BOND[2]);
+  c.setAlpha(alpha);
+  stroke(c);
+  strokeWeight(4);
+  line(x1, y1, x2, y2);
+  // Label
+  noStroke();
+  let tc = color(COL_BOND[0], COL_BOND[1], COL_BOND[2]);
+  tc.setAlpha(alpha);
+  fill(tc);
+  textAlign(CENTER, BOTTOM);
+  textSize(12);
+  textStyle(BOLD);
+  text('Peptide Bond', (x1 + x2) / 2, y1 - 8);
+  textStyle(NORMAL);
+}
+
+function drawWater(x, y, alpha) {
+  // H2O molecule: central O with 2 H
+  let c = color(COL_WATER[0], COL_WATER[1], COL_WATER[2]);
+  c.setAlpha(alpha);
+  noStroke();
+  fill(c);
+  ellipse(x, y, 24, 24);
+  // hydrogens
+  let hc = color(180, 220, 250);
+  hc.setAlpha(alpha);
+  fill(hc);
+  ellipse(x - 12, y - 10, 12, 12);
+  ellipse(x + 12, y - 10, 12, 12);
+  // label
+  let tc = color(20, 70, 130);
+  tc.setAlpha(alpha);
+  fill(tc);
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  textStyle(BOLD);
+  text('H₂O', x, y + 22);
+  textStyle(NORMAL);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

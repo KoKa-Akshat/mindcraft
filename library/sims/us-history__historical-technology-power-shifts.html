@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Technology Power Shifts — Historical Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Technology Power Shifts — Historical Comparison
+// CANVAS_HEIGHT: 640
+// Chapter 21: The Age of AI and Technology Power (2010-Present)
+// Bloom Level: Evaluate (L5) — Predict political responses to AI from historical patterns
+//
+// Layout: drawHeight (580) + controlHeight (60) = 640
+// Five colored era bands on a horizontal timeline (1800-2040), each split into three
+// sub-layers: Technology Change, Power Shift, Political Response. Click a band to open
+// a detail panel. "Pattern match" dropdown spotlights the closest historical analogy
+// to a selected AI challenge. "Response lag" toggle overlays years-of-lag bars.
+
+let canvasWidth = 900;
+let drawHeight = 580;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+let yearStart = 1800;
+let yearEnd = 2040;
+let projectionYear = 2026; // dashed line begins here
+
+let patternSelect;
+let lagCheckbox;
+let resetBtn;
+
+let selectedEra = null;
+let hoveredEra = null;
+
+// Era color palette (distinct hues per spec)
+const ERAS = [
+  {
+    id: 'steam',
+    name: 'Steam / Industrial',
+    start: 1800, end: 1860,
+    color: { r: 140, g:  35, b:  35 },     // dark red
+    technology: 'Steam engines, mechanized textile mills, and early railroads. Diffusion was slow by modern standards — decades from invention to widespread adoption.',
+    powerShift: 'Factory owners and merchant capitalists gained enormous wealth. Skilled artisans (weavers, cobblers, wheelwrights) were displaced by unskilled factory labor. Regional power shifted from agrarian South to industrial Northeast.',
+    laborImpact: 'Created: factory operatives, mill girls, mechanics. Destroyed: handloom weaving, cottage industry, many artisan crafts. Children and immigrants filled the lowest-paid jobs.',
+    politicalResponse: 'Protective tariffs (1816, 1828) shielded industry. First labor unions formed in the 1830s-40s. Early factory laws (Massachusetts 10-hour day, 1874) came late. Antebellum reform movements — abolition, temperance, women\'s rights — channeled the social disruption.',
+    lagYears: 40,
+    analogy: 'Workforce displacement. Like AI today, steam-era mechanization destroyed established skilled trades faster than new institutions could retrain or protect workers.',
+    challenges: ['job-displacement']
+  },
+  {
+    id: 'railroad',
+    name: 'Railroad / Capital',
+    start: 1860, end: 1900,
+    color: { r:  95, g:  55, b:  30 },     // dark brown
+    technology: 'Transcontinental rail (1869), the telegraph, and modern corporate finance. The first nationally integrated infrastructure — and the first true "platform" economy.',
+    powerShift: 'Railroad barons (Vanderbilt, Gould, Stanford) and finance capital (J.P. Morgan) concentrated wealth on a scale never before seen. Small farmers, local merchants, and independent shippers were squeezed by freight rates and monopoly pricing.',
+    laborImpact: 'Created: rail workers, telegraph operators, factory labor at industrial scale. Destroyed: independent craftsmen, small-town merchants undercut by national distribution.',
+    politicalResponse: 'Interstate Commerce Act (1887), Sherman Antitrust Act (1890), Populist movement (1890s), Progressive Era reforms (1900s-1910s). About 20-30 years from peak concentration to durable political response.',
+    lagYears: 25,
+    analogy: 'Platform monopolies. Railroads were the original network-effect monopoly — control the platform, control the economy. Mirrors today\'s concerns about AI infrastructure providers and data platforms.',
+    challenges: ['power-concentration']
+  },
+  {
+    id: 'electricity',
+    name: 'Electricity / Mass Production',
+    start: 1900, end: 1940,
+    color: { r: 205, g: 155, b:  35 },     // gold
+    technology: 'Electrification, the assembly line, automobiles, radio, and modern chemicals. The second industrial revolution restructured both production and daily life.',
+    powerShift: 'Corporate consolidation (U.S. Steel, GM, GE, Standard Oil) and mass-production firms dominated. A new managerial and engineering class emerged. Mass labor gained organizing power once industries concentrated in giant factories.',
+    laborImpact: 'Created: assembly-line workers, electricians, automobile mechanics, mass-media professionals. Destroyed: craft production, small-shop manufacturing, much agricultural labor (mechanization).',
+    politicalResponse: 'Progressive reforms (1900s-1910s), New Deal labor protections (1933-1938), Wagner Act (1935) enabling collective bargaining, Social Security (1935), Fair Labor Standards Act (1938).',
+    lagYears: 35,
+    analogy: 'Reorganization of work. Like AI, electricity didn\'t just replace workers — it restructured how work itself was organized (assembly line, then "knowledge work").',
+    challenges: ['job-displacement']
+  },
+  {
+    id: 'computing',
+    name: 'Computing / Internet',
+    start: 1970, end: 2010,
+    color: { r:  35, g: 130, b: 140 },     // teal
+    technology: 'Personal computers, the internet, mobile phones, and cloud computing. Diffusion was the fastest of any prior era — software scales at zero marginal cost.',
+    powerShift: 'Tech industry (Microsoft, Apple, Google, Amazon, Meta), finance, and knowledge workers gained enormous value. Manufacturing workers and routine clerical workers lost ground. Globalization amplified inequality.',
+    laborImpact: 'Created: software engineers, data analysts, knowledge workers, gig economy. Destroyed: factory jobs (offshored), travel agents, video rental, much retail, middle-skill clerical work.',
+    politicalResponse: 'Comparatively weak. Antitrust enforcement mostly dormant from 1980s-2010s. No major labor framework update. Income inequality grew sharply. Section 230 (1996) protected platforms; later regulatory effort lagged platform power.',
+    lagYears: 45,
+    analogy: 'Information asymmetry. Platforms accumulated data and attention without commensurate political response — the cautionary tale most directly relevant to AI governance today.',
+    challenges: ['power-concentration', 'disinformation']
+  },
+  {
+    id: 'ai',
+    name: 'Artificial Intelligence',
+    start: 2015, end: 2040,
+    color: { r:  70, g:  55, b: 145 },     // indigo
+    technology: 'Deep learning, large language models, generative AI, and autonomous systems. Diffusion is faster than any prior era — capable models reach hundreds of millions of users in months.',
+    powerShift: 'AI companies (OpenAI, Anthropic, Google DeepMind), large data owners, and compute/cloud infrastructure providers (NVIDIA, hyperscalers) are concentrating power. Knowledge workers face the same disruption manual workers faced in 1900.',
+    laborImpact: 'Created: AI researchers, prompt and product specialists, AI-augmented professionals. Threatened: routine knowledge work — paralegal, customer support, basic coding, drafting, translation, design.',
+    politicalResponse: 'Emerging but unsettled: EU AI Act (2024), U.S. executive orders, renewed antitrust suits against Big Tech, state-level laws on disinformation and deepfakes. The historical pattern suggests durable response is still 10-20 years away.',
+    lagYears: 15,
+    analogy: 'This is the era under study. The historical record predicts: expect 20-30 years of lag, expect concentration to continue, expect political response to come — and to depend on whether existing democratic institutions remain strong enough to deliver it.',
+    challenges: ['job-displacement', 'power-concentration', 'disinformation'],
+    isAI: true
+  }
+];
+
+// Pattern-match challenges
+const CHALLENGES = {
+  'none':              { label: 'Select an AI challenge...',     match: null },
+  'job-displacement':  { label: 'Job displacement',              match: 'steam' },
+  'power-concentration': { label: 'Power concentration',         match: 'railroad' },
+  'disinformation':    { label: 'Disinformation / attention',    match: 'computing' }
+};
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  patternSelect = createSelect();
+  for (const key in CHALLENGES) {
+    patternSelect.option(CHALLENGES[key].label, key);
+  }
+  patternSelect.selected('none');
+  patternSelect.changed(() => { /* no-op; draw reads value each frame */ });
+
+  lagCheckbox = createCheckbox(' Response lag', false);
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    patternSelect.selected('none');
+    lagCheckbox.checked(false);
+    selectedEra = null;
+  });
+
+  positionControls();
+  describe('Comparison timeline of five U.S. technology eras from 1800 to 2040 (Steam, Railroad, Electricity, Computing, AI). Each era is a colored band with three sub-layers (technology, power shift, political response). Click a band for a detail panel. Pattern-match dropdown highlights the historical era closest to a chosen AI challenge. Response-lag toggle overlays years-of-political-lag bars.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 14;
+  patternSelect.position(margin + 110, y);
+  patternSelect.style('font-size', '13px');
+  lagCheckbox.position(margin + 330, y + 2);
+  lagCheckbox.style('font-size', '13px');
+  resetBtn.position(canvasWidth - 70, y);
+}
+
+function eraX(year) {
+  let leftPad = margin + 60;
+  let rightPad = margin + 20;
+  let usableW = canvasWidth - leftPad - rightPad;
+  return leftPad + ((year - yearStart) / (yearEnd - yearStart)) * usableW;
+}
+
+// Sub-layer geometry
+function layerTop() { return 90; }
+function layerHeight() { return 36; } // each of the 3 sub-layers
+function bandTop()   { return layerTop(); }
+function bandHeight(){ return layerHeight() * 3; }
+function bandBottom(){ return bandTop() + bandHeight(); }
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(248, 249, 251);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(220);
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+
+  // Title
+  fill(20, 50, 110);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('Technology Power Shifts in U.S. History (1800-2040)', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+  fill(90);
+  textSize(12);
+  text('Click any era band for details. Each band has three sub-layers: technology, power shift, political response.', canvasWidth / 2, 34);
+
+  // Sub-layer row labels (left side)
+  drawSubLayerLabels();
+
+  // Pattern-match highlight: pick the matched era
+  const challenge = patternSelect ? patternSelect.value() : 'none';
+  const matchId = CHALLENGES[challenge] ? CHALLENGES[challenge].match : null;
+
+  // Draw projection background (dashed shade beyond projectionYear)
+  drawProjectionShade();
+
+  // Draw eras
+  hoveredEra = null;
+  for (let era of ERAS) {
+    drawEraBand(era, matchId);
+  }
+
+  // Year axis
+  drawYearAxis();
+
+  // Response-lag overlay
+  if (lagCheckbox && lagCheckbox.checked()) {
+    drawLagOverlay();
+  }
+
+  // Detail / hover / legend
+  if (selectedEra) {
+    drawDetailPanel(selectedEra);
+  } else if (hoveredEra) {
+    drawHoverTooltip(hoveredEra);
+    drawLegend();
+  } else {
+    drawLegend();
+  }
+
+  // Pattern-match callout
+  if (matchId) {
+    drawPatternCallout(matchId, challenge);
+  }
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text('Pattern match:', margin + 8, drawHeight + controlHeight / 2 + 2);
+
+  positionControls();
+}
+
+function drawSubLayerLabels() {
+  noStroke();
+  fill(80);
+  textAlign(RIGHT, CENTER);
+  textSize(10.5);
+  let labels = ['Technology', 'Power shift', 'Pol. response'];
+  for (let i = 0; i < 3; i++) {
+    let y = layerTop() + layerHeight() * (i + 0.5);
+    text(labels[i], margin + 56, y);
+  }
+}
+
+function drawProjectionShade() {
+  let x1 = eraX(projectionYear);
+  let x2 = eraX(yearEnd);
+  if (x2 <= x1) return;
+  noStroke();
+  fill(0, 0, 0, 10);
+  rect(x1, bandTop(), x2 - x1, bandHeight());
+  // Vertical "today" line
+  stroke(60, 60, 60, 120);
+  strokeWeight(1);
+  drawingContext.setLineDash([4, 4]);
+  line(x1, bandTop() - 4, x1, bandBottom() + 14);
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill(60);
+  textAlign(CENTER, TOP);
+  textSize(10);
+  text('~today', x1, bandBottom() + 16);
+}
+
+function drawEraBand(era, matchId) {
+  let x1 = eraX(era.start);
+  let x2 = eraX(era.end);
+  let w = x2 - x1;
+  let y = bandTop();
+  let h = bandHeight();
+
+  // Highlight state
+  let isSelected = selectedEra && selectedEra.id === era.id;
+  let isMatched = matchId && matchId === era.id;
+  let isHover = mouseX >= x1 && mouseX <= x2 && mouseY >= y && mouseY <= y + h;
+  if (isHover) hoveredEra = era;
+
+  let alpha = 235;
+  let dim = matchId && !isMatched && !isSelected;
+  if (dim) alpha = 90;
+
+  // Three sub-layer bars within the band
+  // Layer 0: technology change (era color)
+  // Layer 1: power shift (era color, slightly darker)
+  // Layer 2: political response (greenish tint blended with era color)
+  for (let i = 0; i < 3; i++) {
+    let ly = y + i * layerHeight();
+    if (i === 0) {
+      fill(era.color.r, era.color.g, era.color.b, alpha);
+    } else if (i === 1) {
+      fill(era.color.r * 0.75, era.color.g * 0.75, era.color.b * 0.75, alpha);
+    } else {
+      // Political response: blend era color with green
+      let gr = lerp(era.color.r, 46,  0.55);
+      let gg = lerp(era.color.g, 125, 0.55);
+      let gb = lerp(era.color.b, 50,  0.55);
+      fill(gr, gg, gb, alpha);
+    }
+    noStroke();
+    rect(x1, ly, w, layerHeight() - 2);
+  }
+
+  // Dashed extension for AI era beyond projection year
+  if (era.isAI && era.end > projectionYear) {
+    let px = eraX(projectionYear);
+    if (px > x1 && px < x2) {
+      // Draw a hatched overlay on the projection portion
+      noFill();
+      stroke(255, 255, 255, 140);
+      strokeWeight(1);
+      drawingContext.setLineDash([3, 3]);
+      for (let i = 0; i < 3; i++) {
+        let ly = y + i * layerHeight() + (layerHeight() - 2) / 2;
+        line(px, ly, x2, ly);
+      }
+      drawingContext.setLineDash([]);
+      noStroke();
+    }
+  }
+
+  // Era outline (highlighted)
+  if (isMatched || isSelected) {
+    noFill();
+    stroke(255, 215, 0);
+    strokeWeight(3);
+    rect(x1 - 1, y - 1, w + 2, h + 2, 4);
+    noStroke();
+  } else if (isHover) {
+    noFill();
+    stroke(255, 255, 255, 220);
+    strokeWeight(2);
+    rect(x1, y, w, h, 3);
+    noStroke();
+  }
+
+  // Era name label inside band (top layer)
+  fill(255, dim ? 150 : 245);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(min(13, max(9, w / 12)));
+  let labelMaxW = w - 8;
+  text(era.name, x1 + w / 2, y + layerHeight() / 2, labelMaxW, layerHeight());
+  textStyle(NORMAL);
+
+  // Year range below band
+  fill(60, dim ? 90 : 200);
+  textAlign(CENTER, TOP);
+  textSize(10);
+  let endLabel = (era.isAI) ? (projectionYear + '+') : era.end;
+  text(era.start + '-' + endLabel, x1 + w / 2, y + h + 2);
+}
+
+function drawYearAxis() {
+  let y = bandBottom() + 30;
+  stroke(150);
+  strokeWeight(1);
+  line(eraX(yearStart), y, eraX(yearEnd), y);
+  noStroke();
+  fill(80);
+  textAlign(CENTER, TOP);
+  textSize(11);
+  let step = 20;
+  for (let yr = yearStart; yr <= yearEnd; yr += step) {
+    let x = eraX(yr);
+    stroke(180);
+    line(x, y - 3, x, y + 3);
+    noStroke();
+    fill(80);
+    text(yr, x, y + 5);
+  }
+  // Arrowhead at end of axis
+  let endX = eraX(yearEnd);
+  fill(150);
+  triangle(endX, y, endX - 8, y - 4, endX - 8, y + 4);
+}
+
+function drawLagOverlay() {
+  // Bar chart of response-lag years per era, drawn under the timeline axis
+  let chartTop = bandBottom() + 64;
+  let chartH = 70;
+  let leftPad = margin + 60;
+  let rightPad = margin + 20;
+  let chartW = canvasWidth - leftPad - rightPad;
+
+  // Background
+  noStroke();
+  fill(255, 255, 255, 240);
+  stroke(220);
+  strokeWeight(1);
+  rect(leftPad, chartTop, chartW, chartH, 6);
+  noStroke();
+
+  // Title
+  fill(40);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(11.5);
+  text('Years from peak disruption to durable political response', leftPad + 8, chartTop + 6);
+  textStyle(NORMAL);
+
+  // Bars (one per era)
+  let maxLag = 50;
+  let barAreaTop = chartTop + 24;
+  let barAreaH = chartH - 32;
+  let barW = (chartW - 24) / ERAS.length - 8;
+
+  for (let i = 0; i < ERAS.length; i++) {
+    let era = ERAS[i];
+    let bx = leftPad + 12 + i * ((chartW - 24) / ERAS.length);
+    let bh = (era.lagYears / maxLag) * barAreaH;
+    let by = barAreaTop + barAreaH - bh;
+
+    fill(era.color.r, era.color.g, era.color.b, 220);
+    rect(bx, by, barW, bh, 3);
+
+    // Value label
+    fill(40);
+    textAlign(CENTER, BOTTOM);
+    textSize(10);
+    textStyle(BOLD);
+    text(era.lagYears + ' yr' + (era.isAI ? '*' : ''), bx + barW / 2, by - 2);
+    textStyle(NORMAL);
+
+    // Era short label
+    fill(60);
+    textSize(9.5);
+    textAlign(CENTER, TOP);
+    let shortName = era.name.split(' ')[0];
+    text(shortName, bx + barW / 2, barAreaTop + barAreaH + 1);
+  }
+
+  // Footnote
+  fill(110);
+  textAlign(RIGHT, BOTTOM);
+  textSize(9.5);
+  text('* AI = projection based on emerging response', leftPad + chartW - 8, chartTop + chartH - 2);
+}
+
+function drawHoverTooltip(era) {
+  let x1 = eraX(era.start);
+  let x2 = eraX(era.end);
+  let cx = (x1 + x2) / 2;
+  let txt = era.name + ' (' + era.start + '-' + (era.isAI ? (projectionYear + '+') : era.end) + ') - click for details';
+  textSize(12);
+  let tw = min(textWidth(txt) + 16, canvasWidth - 40);
+  let th = 24;
+  let tx = constrain(cx - tw / 2, margin, canvasWidth - tw - margin);
+  let ty = bandTop() - th - 6;
+  noStroke();
+  fill(30, 40, 60, 235);
+  rect(tx, ty, tw, th, 5);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(txt, tx + tw / 2, ty + th / 2);
+}
+
+function drawPatternCallout(matchedId, challengeKey) {
+  let era = ERAS.find(e => e.id === matchedId);
+  if (!era) return;
+  let x1 = eraX(era.start);
+  let x2 = eraX(era.end);
+  let cx = (x1 + x2) / 2;
+  let label = 'Closest historical analogy to "' + CHALLENGES[challengeKey].label + '"';
+  textSize(11);
+  let tw = textWidth(label) + 18;
+  let th = 22;
+  let tx = constrain(cx - tw / 2, margin, canvasWidth - tw - margin);
+  let ty = bandTop() - th - 8;
+
+  noStroke();
+  fill(255, 215, 0, 240);
+  stroke(180, 130, 0);
+  strokeWeight(1.5);
+  rect(tx, ty, tw, th, 5);
+  noStroke();
+  fill(40);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  text(label, tx + tw / 2, ty + th / 2);
+  textStyle(NORMAL);
+
+  // Small connector to band
+  stroke(180, 130, 0);
+  strokeWeight(1.5);
+  line(cx, ty + th, cx, bandTop() - 1);
+  noStroke();
+}
+
+function drawDetailPanel(era) {
+  let panelY = lagCheckbox && lagCheckbox.checked() ? bandBottom() + 145 : bandBottom() + 60;
+  let panelH = drawHeight - panelY - 8;
+  let panelW = canvasWidth - margin * 2;
+
+  // Background
+  noStroke();
+  fill(255);
+  stroke(era.color.r, era.color.g, era.color.b);
+  strokeWeight(2);
+  rect(margin, panelY, panelW, panelH, 8);
+  noStroke();
+
+  // Title
+  fill(era.color.r, era.color.g, era.color.b);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(14);
+  let endLabel = era.isAI ? (projectionYear + '+') : era.end;
+  text(era.name + ' (' + era.start + '-' + endLabel + ')', margin + 10, panelY + 8);
+
+  // Close hint
+  fill(120);
+  textAlign(RIGHT, TOP);
+  textStyle(NORMAL);
+  textSize(11);
+  text('(click era again or Reset to close)', canvasWidth - margin - 10, panelY + 10);
+
+  // Two-column body
+  let colW = (panelW - 30) / 2;
+  let leftX = margin + 10;
+  let rightX = margin + 20 + colW;
+  let bodyY = panelY + 32;
+  let lineH = 14;
+
+  textAlign(LEFT, TOP);
+  textSize(11.5);
+
+  // Left column
+  let yL = bodyY;
+  yL = drawField(leftX, yL, colW, 'Technology change:', era.technology, era.color, lineH);
+  yL = drawField(leftX, yL + 4, colW, 'Power shift:', era.powerShift, era.color, lineH);
+  yL = drawField(leftX, yL + 4, colW, 'Labor impact:', era.laborImpact, era.color, lineH);
+
+  // Right column
+  let yR = bodyY;
+  yR = drawField(rightX, yR, colW, 'Political response (lag ~' + era.lagYears + ' yrs):', era.politicalResponse, era.color, lineH);
+  yR = drawField(rightX, yR + 4, colW, 'Analogy to AI:', era.analogy, era.color, lineH);
+
+  textStyle(NORMAL);
+}
+
+function drawField(x, y, w, label, body, color, lineH) {
+  noStroke();
+  fill(color.r, color.g, color.b);
+  textStyle(BOLD);
+  textSize(11);
+  text(label, x, y);
+  fill(35);
+  textStyle(NORMAL);
+  textSize(11.5);
+  let bodyH = textHeightWrap(body, w, lineH);
+  text(body, x, y + 13, w, bodyH + 4);
+  return y + 13 + bodyH + 2;
+}
+
+function textHeightWrap(str, w, lineH) {
+  textSize(11.5);
+  let words = str.split(' ');
+  let line = '';
+  let lines = 1;
+  for (let word of words) {
+    let test = line + word + ' ';
+    if (textWidth(test) > w) {
+      lines++;
+      line = word + ' ';
+    } else {
+      line = test;
+    }
+  }
+  return lines * lineH;
+}
+
+function drawLegend() {
+  let panelY = lagCheckbox && lagCheckbox.checked() ? bandBottom() + 145 : bandBottom() + 60;
+  let panelH = drawHeight - panelY - 8;
+  let panelW = canvasWidth - margin * 2;
+
+  noStroke();
+  fill(252);
+  stroke(220);
+  strokeWeight(1);
+  rect(margin, panelY, panelW, panelH, 8);
+  noStroke();
+
+  fill(60);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Pattern: each technology era brings disruption -> power concentration -> (eventually) political response', margin + 10, panelY + 8);
+  textStyle(NORMAL);
+
+  textSize(11);
+  fill(60);
+  text('Top sub-bar: technology change. Middle: who gained / who lost. Bottom (green-tinted): political response.', margin + 10, panelY + 26);
+  text('Use the "Pattern match" dropdown to highlight the historical era closest to a chosen AI challenge.', margin + 10, panelY + 42);
+  text('Toggle "Response lag" to compare how long political response took in each era.', margin + 10, panelY + 58);
+
+  // Inline color legend
+  let legendY = panelY + 80;
+  let cx = margin + 14;
+  textSize(10.5);
+  for (let i = 0; i < ERAS.length; i++) {
+    let era = ERAS[i];
+    fill(era.color.r, era.color.g, era.color.b);
+    noStroke();
+    rect(cx, legendY, 14, 12, 2);
+    fill(40);
+    textAlign(LEFT, CENTER);
+    text(era.name, cx + 20, legendY + 6);
+    cx += textWidth(era.name) + 38;
+    if (cx > canvasWidth - 140 && i < ERAS.length - 1) {
+      cx = margin + 14;
+      legendY += 18;
+    }
+  }
+}
+
+function mousePressed() {
+  // Era band click
+  let y = bandTop();
+  let h = bandHeight();
+  if (mouseY < y || mouseY > y + h) return;
+  for (let era of ERAS) {
+    let x1 = eraX(era.start);
+    let x2 = eraX(era.end);
+    if (mouseX >= x1 && mouseX <= x2) {
+      if (selectedEra && selectedEra.id === era.id) {
+        selectedEra = null;
+      } else {
+        selectedEra = era;
+      }
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: comparison-timeline
+    sim-id: tech-power-shifts
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to compare the major technology power shifts across American history,
+    identifying the consistent patterns (disruption -> concentration -> political response) and
+    applying this framework to evaluate the AI era.
+
+    Bloom Level: Evaluate (L5)
+    Bloom Verb: Predict
+
+    Learning Objective: Students evaluate the historical pattern of technology-driven power shifts,
+    identify the structural similarities between AI and previous technology transformations, and
+    predict - based on historical evidence - what political and economic responses to AI are most
+    likely to emerge.
+
+    Canvas layout:
+    - Responsive width; height approximately 640px
+    - Horizontal timeline from 1800 to ~2040 (with dashed projection beyond 2025)
+    - Five technology eras shown as colored bands: Steam/Industrial, Railroad/Capital,
+      Electricity/Mass Production, Computing/Internet, AI
+    - Each band split into three sub-layers: Technology Change, Power Shift, Political Response
+
+    Interactivity:
+    - Click any era band to open a detail panel with five fields
+    - "Pattern match" dropdown highlights the historical era closest to a selected AI challenge
+    - "Response lag" toggle overlays a comparison of years between technology and political response
+
+    Color scheme: Each era has a distinct color band; political response sub-layer tinted green.
+    -->
+</body>
+</html>

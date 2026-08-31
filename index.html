@@ -176,6 +176,7 @@
     color:var(--chalk-dim); animation:rise .9s .16s var(--ease) both;
   }
   .hero .lead .serif{color:var(--chalk);}
+  .hero-cta{justify-content:center; animation:rise .9s .22s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
   /* ---------- the question ticker ---------- */
@@ -258,9 +259,122 @@
 
   /* ---------- frontier graph (dark) ---------- */
   .frontier{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .frontier-frame{margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden; background:#070f0a; border:1px solid var(--edge); box-shadow:var(--shadow);}
-  .frontier-frame iframe{display:block; width:100%; height:min(70vh,600px); border:0;}
   .frontier-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
+
+  /* ---------- native ZPD explorer ----------
+     Replaces the p5 iframe that used to sit here. That embed carried its own
+     dark toolbar and its own type, so it read as somebody else's widget
+     dropped into the page. This is the same pedagogy (comfort zone /
+     proximal zone / frustration zone around where a learner stands) drawn in
+     the page's own CARD language, off the page's own tokens, over real
+     prerequisite edges out of library/zpd.json. Plain SVG, no library: the
+     whole page still loads zero JS frameworks. */
+  .zpd{
+    margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden;
+    background:#070f0a; border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .zpd-head{
+    display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap;
+    padding:13px 18px; border-bottom:1px solid var(--edge); background:var(--field-2);
+  }
+  .zpd-head b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--chalk);}
+  .zpd-head .zpd-hint{font-size:12px; color:var(--chalk-faint);}
+  .zpd-seeds{display:flex; gap:6px; flex-wrap:wrap; margin-left:auto;}
+  .zpd-seed{
+    border:1px solid var(--edge); border-radius:999px; padding:6px 13px; background:transparent;
+    color:var(--chalk-dim); font-family:var(--mono); font-size:10.5px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:color .2s, border-color .2s, background .2s;
+  }
+  .zpd-seed:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+  .zpd-seed[aria-pressed="true"]{background:var(--lime); border-color:var(--lime); color:var(--lime-ink);}
+  .zpd-body{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
+  .zpd-stage{position:relative; background:radial-gradient(ellipse 62% 62% at 50% 46%, rgba(36,122,77,.16), transparent 70%); touch-action:none;}
+  .zpd-stage svg{display:block; width:100%; height:min(62vh,540px); cursor:grab;}
+  .zpd-stage svg.dragging{cursor:grabbing;}
+  .zpd-ring{fill:none; stroke-width:1;}
+  .zpd-ring.r1{stroke:rgba(95,183,121,.34);}
+  .zpd-ring.r2{stroke:rgba(196,245,71,.42); stroke-dasharray:5 6;}
+  .zpd-ring.r3{stroke:rgba(224,57,74,.3); stroke-dasharray:2 7;}
+  .zpd-ring-label{
+    font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.16em;
+    text-transform:uppercase; fill:var(--chalk-faint);
+  }
+  .zpd-link{stroke:rgba(245,245,244,.14); stroke-width:1;}
+  .zpd-link.to-r2{stroke:rgba(196,245,71,.3);}
+  .zpd-node{cursor:pointer;}
+  .zpd-node[data-open="false"]{cursor:not-allowed;}
+  .zpd-node circle{transition:r .25s var(--ease), fill .25s, stroke .25s;}
+  .zpd-node text{
+    font-family:var(--sans); font-size:10.5px; font-weight:500; fill:var(--chalk-dim);
+    text-anchor:middle; pointer-events:none;
+  }
+  /* The svg scales to its container, so on a phone a 10.5 unit label renders
+     at about 5 real pixels. `narrow` is set in JS from the measured width, and
+     the label text is shortened to match, so the type grows without the rings
+     turning into overlapping mush. */
+  .zpd-stage svg.narrow .zpd-node text{font-size:17px;}
+  .zpd-stage svg.narrow .zpd-node.z0 text{font-size:19px;}
+  .zpd-stage svg.narrow .zpd-ring-label{font-size:14px;}
+  .zpd-stage svg.narrow .zpd-you{font-size:13px;}
+  .zpd-node.z0 circle{fill:var(--lime); stroke:rgba(196,245,71,.4); stroke-width:8;}
+  .zpd-node.z0 text{fill:var(--chalk); font-weight:700; font-size:12px;}
+  .zpd-node.z1 circle{fill:#5fb779; stroke:rgba(95,183,121,.25); stroke-width:5;}
+  .zpd-node.z2 circle{fill:#c4f547; stroke:rgba(196,245,71,.22); stroke-width:5;}
+  .zpd-node.z2 text{fill:var(--chalk);}
+  .zpd-node.z3 circle{fill:rgba(224,57,74,.55); stroke:rgba(224,57,74,.14); stroke-width:4;}
+  .zpd-node.z3 text{fill:rgba(245,245,244,.34);}
+  /* A rect, not a circle, so none of the per-zone `circle` rules above (or
+     the :hover and .is-picked ones below) can paint the invisible hit target
+     by accident. */
+  .zpd-hit{fill:transparent; stroke:none;}
+  .zpd-node:hover circle, .zpd-node:focus-visible circle{stroke-width:12;}
+  .zpd-node:focus{outline:none;}
+  .zpd-node:focus-visible circle{stroke:rgba(196,245,71,.75);}
+  .zpd-node.is-picked circle{stroke:var(--chalk); stroke-width:3;}
+  .zpd-you{
+    font-family:var(--mono); font-size:9px; font-weight:600; letter-spacing:.18em;
+    text-transform:uppercase; fill:var(--lime-ink); text-anchor:middle; pointer-events:none;
+  }
+  .zpd-side{
+    padding:20px 22px 22px; border-left:1px solid var(--edge); background:var(--field-1);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .zpd-zone{
+    display:inline-flex; align-items:center; gap:8px; width:fit-content;
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--chalk-faint);
+  }
+  .zpd-zone i{width:9px; height:9px; border-radius:50%; background:currentColor; flex:none; font-style:normal;}
+  .zpd-zone.z0{color:var(--lime);} .zpd-zone.z1{color:var(--leaf2);}
+  .zpd-zone.z2{color:var(--lime);} .zpd-zone.z3{color:var(--stakes-soft);}
+  .zpd-side h3{font-size:clamp(18px,2vw,22px); color:var(--chalk);}
+  .zpd-side .zpd-sub{font-family:var(--mono); font-size:11px; color:var(--chalk-faint); letter-spacing:.04em;}
+  .zpd-side p{font-size:13.5px; line-height:1.6; color:var(--chalk-dim);}
+  .zpd-side p em{font-style:normal; color:var(--chalk);}
+  .zpd-stats{margin-top:6px; display:grid; gap:1px; background:var(--edge); border:1px solid var(--edge); border-radius:14px; overflow:hidden;}
+  .zpd-stats div{display:flex; align-items:baseline; gap:12px; padding:11px 14px; background:var(--field-1);}
+  .zpd-stats dt{
+    font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--chalk-faint); width:88px; flex:none;
+  }
+  .zpd-stats dd{font-size:13px; color:var(--chalk-dim);}
+  .zpd-stats dd b{font-family:var(--disp); font-size:15px; color:var(--chalk); margin-right:6px;}
+  .zpd-stats div.z1 dt{color:var(--leaf2);} .zpd-stats div.z2 dt{color:var(--lime);} .zpd-stats div.z3 dt{color:var(--stakes-soft);}
+  .zpd-act{
+    margin-top:auto; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:0; border-radius:999px; padding:11px 18px; cursor:pointer; width:100%;
+    background:var(--lime); color:var(--lime-ink); font-size:12.5px; font-weight:700;
+    transition:transform .2s var(--ease), opacity .2s;
+  }
+  .zpd-act:hover{transform:translateY(-1px);}
+  .zpd-act[disabled]{background:rgba(245,245,244,.06); color:var(--chalk-faint); cursor:default; transform:none;}
+  .zpd-legend{display:flex; flex-wrap:wrap; gap:8px 16px; padding:12px 18px; border-top:1px solid var(--edge); background:var(--field-2);}
+  .zpd-foot{padding:0 18px 14px; background:var(--field-2); font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
+  @media (max-width:860px){
+    .zpd-body{grid-template-columns:1fr;}
+    .zpd-side{border-left:0; border-top:1px solid var(--edge);}
+    .zpd-stage svg{height:min(56vh,420px);}
+  }
 
   /* ---------- concept map (dark), the third slide, same iframe-embed
      pattern as the frontier graph above but showing the whole library's
@@ -547,6 +661,97 @@
     .form-grid{grid-template-columns:1fr;}
   }
 
+  /* ---------- concept search (dark, sits above the concept map) ---------- */
+  .cs{margin-top:clamp(26px,4vh,38px);}
+  .cs-form{display:flex; gap:10px; flex-wrap:wrap;}
+  .cs-input{
+    flex:1 1 320px; min-width:0; font:inherit; font-size:15.5px; padding:15px 18px;
+    border-radius:14px; border:1px solid var(--edge); background:rgba(245,245,244,.04); color:var(--chalk);
+  }
+  .cs-input::placeholder{color:var(--chalk-faint);}
+  .cs-input:focus{outline:2px solid rgba(196,245,71,.5); border-color:rgba(196,245,71,.5);}
+  .cs-go{flex:none; min-height:52px; padding:0 26px; border:0; border-radius:14px; cursor:pointer;
+    background:var(--lime); color:var(--lime-ink); font-size:13.5px; font-weight:700;}
+  .cs-go[disabled]{opacity:.55; cursor:default;}
+  .cs-examples{display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; align-items:center;}
+  .cs-examples span{font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--chalk-faint);}
+  .cs-eg{
+    border:1px solid var(--edge); border-radius:999px; padding:6px 13px; background:transparent;
+    color:var(--chalk-dim); font-size:12px; cursor:pointer; font-family:var(--serif); font-style:italic;
+  }
+  .cs-eg:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+  .cs-status{margin-top:12px; font-family:var(--mono); font-size:11.5px; line-height:1.6; color:var(--chalk-faint); letter-spacing:.02em;}
+  .cs-status.err{color:var(--stakes-soft);}
+  .cs-bar{margin-top:8px; height:3px; border-radius:2px; background:rgba(245,245,244,.08); overflow:hidden;}
+  .cs-bar i{display:block; height:100%; width:0; background:var(--lime); transition:width .2s linear;}
+  .cs-alts{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px;}
+  .cs-alt{
+    border:1px solid var(--edge); border-radius:999px; padding:7px 14px; background:transparent;
+    color:var(--chalk-dim); font-size:12px; cursor:pointer;
+  }
+  .cs-alt:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+  .cs-alt b{font-weight:600; color:var(--chalk);}
+  .cs-alt i{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--chalk-faint); margin-left:7px;}
+  .cs-alt[aria-pressed="true"]{background:rgba(196,245,71,.14); border-color:rgba(196,245,71,.4);}
+  .cs-result{
+    margin-top:18px; border-radius:18px; border:1px solid var(--edge); background:var(--field-1);
+    overflow:hidden; box-shadow:var(--shadow);
+  }
+  .cs-result[hidden]{display:none;}
+  .cs-res-head{padding:22px 24px 0;}
+  .cs-res-head .zpd-sub{font-family:var(--mono); font-size:11px; color:var(--chalk-faint); letter-spacing:.04em;}
+  .cs-res-head h3{font-size:clamp(20px,2.4vw,27px); margin-top:8px; color:var(--chalk);}
+  .cs-summary{margin-top:12px; font-family:var(--serif); font-style:italic; font-size:clamp(15px,1.7vw,18px); line-height:1.55; color:var(--chalk);}
+  .cs-lesson{padding:16px 24px 4px; max-height:340px; overflow-y:auto;}
+  .cs-lesson p{font-size:14.5px; line-height:1.72; color:var(--chalk-dim); margin-bottom:14px;}
+  .cs-more{
+    margin:0 24px 18px; border:1px solid var(--edge); border-radius:999px; padding:8px 16px; cursor:pointer;
+    background:transparent; color:var(--chalk-dim); font-family:var(--mono); font-size:10.5px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .cs-more:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+  .cs-chips{display:flex; flex-wrap:wrap; gap:7px; padding:0 24px 18px;}
+  .cs-chip{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    border-radius:999px; padding:5px 11px; color:var(--leaf2); background:rgba(36,122,77,.16);
+  }
+  .cs-chip.up{color:var(--lime); background:rgba(196,245,71,.12);}
+  .cs-sim{border-top:1px solid var(--edge); background:#0a1210;}
+  .cs-sim-head{display:flex; align-items:center; gap:10px 14px; flex-wrap:wrap; padding:13px 24px;}
+  .cs-sim-head b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--chalk);}
+  .cs-sim-head span{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-faint);}
+  .cs-sim-head a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--lime);}
+  .cs-sim-head a:hover{text-decoration:underline;}
+  .cs-sim iframe{display:block; width:100%; height:min(58vh,480px); border:0; background:#fff;}
+  .cs-nosim{
+    display:flex; align-items:flex-start; gap:12px; padding:16px 24px 20px; border-top:1px solid var(--edge);
+    font-size:13.5px; line-height:1.55; color:var(--chalk-dim);
+  }
+  .cs-nosim i{
+    font-style:normal; flex:none; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--chalk-faint); border:1px dashed var(--edge); border-radius:8px; padding:5px 9px;
+  }
+  .cs-nosim b{color:var(--chalk); font-weight:600;}
+
+  /* ---------- claim your desk (cream) ---------- */
+  .claim{background:var(--cream); color:var(--ink); border-top:1px solid var(--edge); scroll-margin-top:80px;}
+  .claim-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:clamp(28px,4.5vw,64px); align-items:start;}
+  @media (max-width:860px){.claim-grid{grid-template-columns:1fr;}}
+  .claim-points{margin-top:26px; display:grid; gap:13px;}
+  .claim-points div{display:flex; gap:12px; align-items:baseline; font-size:14.5px; line-height:1.55; color:var(--chalk-dim);}
+  .claim-points i{font-style:normal; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf); flex:none; letter-spacing:.08em;}
+  .claim-points b{color:var(--chalk); font-weight:600;}
+  .claim-card{border-radius:24px; background:var(--field-2); border:1px solid var(--edge); padding:clamp(22px,3vw,32px); box-shadow:0 18px 44px rgba(20,58,46,.09);}
+  .claim-card h3{font-size:21px; margin-bottom:6px;}
+  .claim-card > p{font-size:13.5px; line-height:1.55; color:var(--chalk-dim); margin-bottom:18px;}
+  .claim-note{margin-top:12px; font-size:11.5px; line-height:1.5; color:var(--chalk-faint); text-align:center;}
+  .claim-msg{margin-top:14px; padding:13px 16px; border-radius:14px; font-size:13.5px; line-height:1.5;}
+  .claim-msg[hidden]{display:none;}
+  .claim-msg.ok{background:rgba(36,122,77,.12); color:var(--leaf); border:1px solid rgba(36,122,77,.28);}
+  .claim-msg.ok b{display:block; font-size:15px; color:var(--ink); margin-bottom:4px;}
+  .claim-msg.bad{background:rgba(193,18,31,.08); color:#a30f1a; border:1px solid rgba(193,18,31,.24);}
+  .claim-msg.bad b{display:block; font-size:15px; margin-bottom:4px;}
+
   footer{background:var(--field); border-top:1px solid var(--edge); padding:44px 0 56px; color:var(--chalk-faint); font-size:13px;}
   .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
   .foot-links{display:flex; gap:18px; margin-left:auto; flex-wrap:wrap;}
@@ -567,7 +772,7 @@
   <div class="nav-links">
     <a href="#desk">The Desk</a>
     <a href="#conceptmap">The Concept Map</a>
-    <a class="join" href="https://mindcraft-93858.web.app">Claim Your Desk</a>
+    <a class="join" href="#claim">Claim Your Desk</a>
   </div>
 </nav>
 
@@ -579,6 +784,9 @@
     <span class="hero-tag"><i>Early access</i> free right now &middot; a few seats each round</span>
     <h1>Interact With the <em>World.</em></h1>
     <p class="sub">Hands-on simulations that build the instincts 2028's workforce will actually need.</p>
+    <div class="cta-row hero-cta">
+      <a class="btn primary" href="#claim">Claim your desk</a>
+    </div>
   </div>
 </section>
 
@@ -699,8 +907,37 @@
   <div class="wrap">
     <div class="kicker reveal">The frontier graph</div>
     <h2 class="h2 reveal">Learning works in mysterious ways. Not really.</h2>
-    <div class="frontier-frame reveal">
-      <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
+    <div class="zpd reveal" id="zpd">
+      <div class="zpd-head">
+        <b>Where you stand</b>
+        <span class="zpd-hint">Drag to move the graph. Click a lime concept to step onto it.</span>
+        <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
+      </div>
+      <div class="zpd-body">
+        <div class="zpd-stage">
+          <svg id="zpdSvg" viewBox="0 0 760 620" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
+            <g id="zpdPan">
+              <g id="zpdRings"></g>
+              <g id="zpdLinks"></g>
+              <g id="zpdNodes"></g>
+            </g>
+          </svg>
+        </div>
+        <div class="zpd-side">
+          <span class="zpd-zone" id="zpdZone"><i></i><em id="zpdZoneName">You are here</em></span>
+          <h3 id="zpdName">Loading the graph</h3>
+          <div class="zpd-sub" id="zpdSub"></div>
+          <p id="zpdSay">Reading real prerequisite edges out of the concept library.</p>
+          <dl class="zpd-stats" id="zpdStats"></dl>
+          <button class="zpd-act" id="zpdAct" type="button" disabled>Step onto this concept</button>
+        </div>
+      </div>
+      <div class="zpd-legend">
+        <span class="zpd-zone z1"><i></i>Comfort zone, already yours</span>
+        <span class="zpd-zone z2"><i></i>Proximal zone, reachable now</span>
+        <span class="zpd-zone z3"><i></i>Frustration zone, gated</span>
+      </div>
+      <p class="zpd-foot">Every concept, every edge and every count here is real data from the MindCraft library, not a mock. The zones are computed live from prerequisite edges: what you have already passed, what those unlock next, and what is still two steps out.</p>
     </div>
   </div>
 </section>
@@ -709,8 +946,93 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <h2 class="h2 reveal">Every concept has a place.</h2>
+
+    <div class="cs reveal">
+      <form class="cs-form" id="csForm" role="search">
+        <input class="cs-input" id="csInput" type="search" autocomplete="off"
+               placeholder="Ask it the way you would say it. How do cells split?"
+               aria-label="Search the concept library">
+        <button class="cs-go" id="csGo" type="submit">Find it</button>
+      </form>
+      <div class="cs-examples">
+        <span>Try</span>
+        <button class="cs-eg" type="button">why does ice float</button>
+        <button class="cs-eg" type="button">how do packets get to the right program</button>
+        <button class="cs-eg" type="button">what makes a species change over time</button>
+        <button class="cs-eg" type="button">the fundamental theorem of calculus</button>
+      </div>
+      <p class="cs-status" id="csStatus">Free and private. The search model runs in your browser, not on our servers, so this costs nothing and needs no account.</p>
+      <div class="cs-bar" id="csBar" hidden><i></i></div>
+      <div class="cs-alts" id="csAlts"></div>
+
+      <article class="cs-result" id="csResult" hidden>
+        <div class="cs-res-head">
+          <div class="zpd-sub" id="csSubject"></div>
+          <h3 id="csTitle"></h3>
+          <p class="cs-summary" id="csSummary"></p>
+        </div>
+        <div class="cs-lesson" id="csLesson"></div>
+        <button class="cs-more" id="csMore" type="button" hidden>Read the whole chapter</button>
+        <div class="cs-chips" id="csChips"></div>
+        <div id="csSimSlot"></div>
+      </article>
+    </div>
+
     <div class="conceptmap-frame reveal">
       <iframe src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLAIM YOUR DESK ================= -->
+<section class="claim stage-desk" id="claim">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="claim-grid">
+      <div class="reveal">
+        <div class="kicker">Early access</div>
+        <h2 class="h2">Claim your desk.</h2>
+        <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
+        <div class="claim-points">
+          <div><i>01</i><p>The whole library, <b>4118 concepts across 13 subjects</b>, with 3746 written chapters and 722 built simulations.</p></div>
+          <div><i>02</i><p>Search that <b>knows where a concept sits</b>, so you get the ramp into it, not just the page.</p></div>
+          <div><i>03</i><p>Jesse, the voice tutor, and a desk that <b>tracks what actually stuck</b> instead of assigning homework.</p></div>
+        </div>
+      </div>
+      <div class="claim-card reveal">
+        <h3>Get your seat</h3>
+        <p>One email. No card, no trial timer.</p>
+        <form id="claimForm" novalidate>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="claimEmail">Email</label>
+              <input id="claimEmail" name="email" type="email" required autocomplete="email" placeholder="you@school.edu">
+            </div>
+            <div class="field">
+              <label for="claimName">Name</label>
+              <input id="claimName" name="name" type="text" autocomplete="name" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="claimRole">You are a</label>
+              <select id="claimRole" name="role">
+                <option value="student">Student</option>
+                <option value="parent">Parent</option>
+                <option value="teacher">Teacher</option>
+                <option value="tutor">Tutor</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="claimNote">What are you trying to learn</label>
+              <textarea id="claimNote" name="note" placeholder="Optional. A subject, a test, a thing that never made sense."></textarea>
+            </div>
+          </div>
+          <input class="honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn primary apply-submit" id="claimSubmit" type="submit">Claim your desk</button>
+          <p class="claim-note">Goes straight to the founders. No list, no reselling.</p>
+        </form>
+        <div class="claim-msg" id="claimMsg" hidden role="status" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -887,6 +1209,779 @@
       var done = document.getElementById('applyDone');
       if(done) done.hidden = false;
     }
+  })();
+
+  // ---------------------------------------------------------------------
+  // Shared: concept id to static filename. Must stay identical to slugFor()
+  // in scripts/export_public_library.mjs, which named the files on disk. The
+  // ids are subject-prefixed ("biology::natural-selection") and a double colon
+  // is a bad idea in a path, so it became a double underscore.
+  // ---------------------------------------------------------------------
+  function conceptSlug(id){ return String(id).replace(/::/g, '__'); }
+
+  // Fetch a static JSON file, and refuse anything that is not really JSON.
+  // serve-landing.mjs answers a missing path with index.html and a 200, and
+  // Firebase Hosting can do the same through a rewrite, so res.ok is not
+  // evidence that the file exists. Parsing is.
+  function getJson(url){
+    return fetch(url).then(function(r){
+      if(!r.ok) throw new Error(url + ' returned ' + r.status);
+      return r.text();
+    }).then(function(t){
+      try { return JSON.parse(t); }
+      catch(e){ throw new Error(url + ' is not there (the server answered with a page, not JSON)'); }
+    });
+  }
+
+  // Run work the first time an element is close to the viewport. The ZPD
+  // graph and the search index are both dead weight for a visitor who never
+  // scrolls this far.
+  function whenNear(el, fn){
+    if(!el) return;
+    if(!('IntersectionObserver' in window)){ fn(); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ io.disconnect(); fn(); } });
+    }, {rootMargin:'300px 0px'});
+    io.observe(el);
+  }
+
+  // ---------------------------------------------------------------------
+  // The frontier: a native Zone of Proximal Development explorer.
+  //
+  // This used to be an iframe around sims/zpd/index.html, an open p5 sketch
+  // from the Learning Graphs textbook. It taught the right idea but arrived
+  // with its own toolbar, its own type and its own dark chrome, so it read as
+  // somebody else's widget parked in the middle of the page. This draws the
+  // same idea in the page's own language, in plain SVG, over REAL prerequisite
+  // edges exported from the live library into library/zpd.json.
+  //
+  // The three rings are computed, never authored:
+  //   ring 1, comfort      the center concept's real prerequisites. Behind you.
+  //   ring 2, proximal     what the center really unlocks. One step out, and
+  //                        the only ring you are allowed to step onto.
+  //   ring 3, frustration  what those unlock in turn. Two steps out, gated
+  //                        behind a ring-2 concept you have not taken.
+  //
+  // Stepping onto a ring-2 concept re-centers the whole diagram on it, which
+  // is the actual point: the zone is not a fixed place, it moves with you.
+  // ---------------------------------------------------------------------
+  (function(){
+    var svg = document.getElementById('zpdSvg');
+    if(!svg) return;
+    var ringsG = document.getElementById('zpdRings');
+    var linksG = document.getElementById('zpdLinks');
+    var nodesG = document.getElementById('zpdNodes');
+    var panG   = document.getElementById('zpdPan');
+    var seedsBox = document.getElementById('zpdSeeds');
+    var elZone = document.getElementById('zpdZone');
+    var elZoneName = document.getElementById('zpdZoneName');
+    var elName = document.getElementById('zpdName');
+    var elSub  = document.getElementById('zpdSub');
+    var elSay  = document.getElementById('zpdSay');
+    var elAct  = document.getElementById('zpdAct');
+    var elStats = document.getElementById('zpdStats');
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var CX = 380, CY = 310;
+    // Ring radii. Chosen so ring 3 plus its label still clears the 620-unit
+    // viewBox, and so the gaps between rings read as three distinct bands
+    // rather than a gradient.
+    var R = [0, 105, 190, 262];
+    var MAX = [1, 6, 8, 10];
+    var ZONE_NAME = ['You are here', 'Comfort zone', 'Proximal zone', 'Frustration zone'];
+
+    var data = null, centerId = null, layout = [], pickedId = null, gates = {};
+    var tx = 0, ty = 0;
+
+    function el(tag, attrs){
+      var n = document.createElementNS(NS, tag);
+      for(var k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+      return n;
+    }
+    function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+    function clip(s, n){ return s.length > n ? s.slice(0, n - 1).replace(/\s+$/, '') + '…' : s; }
+    function node(id){ return data && data.nodes[id]; }
+
+    function drawRings(){
+      clear(ringsG);
+      for(var z = 1; z <= 3; z++){
+        ringsG.appendChild(el('circle', {cx:CX, cy:CY, r:R[z], class:'zpd-ring r' + z}));
+        ringsG.appendChild(el('text', {
+          x:CX, y:CY - R[z] - 9, class:'zpd-ring-label', 'text-anchor':'middle'
+        })).textContent = ZONE_NAME[z];
+      }
+    }
+
+    // Places one ring's concepts around its circle. The per-ring angular
+    // offset keeps ring 2 and ring 3 from lining up radially and reading as
+    // one thick spoke.
+    function place(ids, zone){
+      var out = [], n = ids.length;
+      var offset = [-Math.PI/2, -Math.PI/2 + 0.35, -Math.PI/2, -Math.PI/2 + 0.28][zone];
+      for(var i = 0; i < n; i++){
+        var a = offset + (i / n) * Math.PI * 2;
+        out.push({id:ids[i], zone:zone, x:CX + Math.cos(a) * R[zone], y:CY + Math.sin(a) * R[zone]});
+      }
+      return out;
+    }
+
+    function rebuild(id){
+      var c = node(id);
+      if(!c) return;
+      centerId = id;
+      pickedId = id;
+      gates = {};
+
+      var ring1 = c.prereqs.filter(node).slice(0, MAX[1]);
+      var ring2 = c.unlocks.filter(node).slice(0, MAX[2]);
+      var taken = {};
+      taken[id] = 1;
+      ring1.concat(ring2).forEach(function(x){ taken[x] = 1; });
+
+      // Ring 3 is genuinely derived: whatever the proximal concepts unlock,
+      // minus anything already on screen. `gates` records WHICH proximal
+      // concept stands in front of each one, so the side panel can name the
+      // real gate instead of saying a vague "not yet".
+      var ring3 = [];
+      ring2.forEach(function(mid){
+        (node(mid).unlocks || []).forEach(function(far){
+          if(taken[far] || !node(far) || ring3.length >= MAX[3]) return;
+          taken[far] = 1;
+          gates[far] = mid;
+          ring3.push(far);
+        });
+      });
+
+      layout = [{id:id, zone:0, x:CX, y:CY}]
+        .concat(place(ring1, 1), place(ring2, 2), place(ring3, 3));
+
+      // The roster, straight off the rings that were just built. The counts on
+      // the right are the ones the picture is actually drawing, so the two can
+      // never disagree.
+      elStats.innerHTML = '';
+      [[1, ring1.length, 'you already passed'],
+       [2, ring2.length, 'you can take right now'],
+       [3, ring3.length, 'still gated behind those']].forEach(function(row){
+        var d = document.createElement('div');
+        d.className = 'z' + row[0];
+        var dt = document.createElement('dt');
+        dt.textContent = ZONE_NAME[row[0]].replace(' zone', '');
+        var dd = document.createElement('dd');
+        dd.innerHTML = '<b></b>';
+        dd.querySelector('b').textContent = row[1];
+        dd.appendChild(document.createTextNode('concept' + (row[1] === 1 ? ' ' : 's ') + row[2]));
+        d.appendChild(dt); d.appendChild(dd);
+        elStats.appendChild(d);
+      });
+
+      render();
+      select(id);
+    }
+
+    function render(){
+      // Below about 560 real pixels the viewBox is scaled down hard enough
+      // that a 10.5 unit label is unreadable, so the type goes up and the
+      // labels get shorter to keep the rings from colliding.
+      var narrow = svg.getBoundingClientRect().width < 560;
+      svg.classList.toggle('narrow', narrow);
+      var CLIP = narrow ? 13 : 22;
+      clear(linksG); clear(nodesG);
+      var pos = {};
+      layout.forEach(function(p){ pos[p.id] = p; });
+
+      // Real edges only: an edge is drawn when the library actually has one
+      // between two concepts that both landed on screen.
+      layout.forEach(function(p){
+        var n = node(p.id);
+        (n.unlocks || []).forEach(function(u){
+          var q = pos[u];
+          if(!q) return;
+          linksG.appendChild(el('line', {
+            x1:p.x, y1:p.y, x2:q.x, y2:q.y,
+            class:'zpd-link' + (q.zone === 2 ? ' to-r2' : '')
+          }));
+        });
+      });
+
+      layout.forEach(function(p){
+        var n = node(p.id);
+        var open = p.zone === 0 || (p.zone < 3 && n.full);
+        var g = el('g', {
+          class:'zpd-node z' + p.zone, transform:'translate(' + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ')',
+          tabindex:'0', role:'button', 'data-id':p.id, 'data-open':open ? 'true' : 'false'
+        });
+        // Invisible hit target first. A frustration-zone dot is 12 units
+        // across, which is an unfair thing to ask anyone to hit, and an SVG
+        // <g> has no surface of its own so a near miss falls straight through
+        // to the background. Concepts are at least 149 units apart at the
+        // tightest ring, so a 44-unit target cannot steal a neighbour's click.
+        g.appendChild(el('rect', {x:-22, y:-22, width:44, height:44, class:'zpd-hit'}));
+        g.appendChild(el('circle', {r: p.zone === 0 ? 15 : p.zone === 3 ? 6 : 9}));
+        if(p.zone === 0) g.appendChild(el('text', {class:'zpd-you', y:4})).textContent = 'YOU';
+        var label = el('text', {y: p.zone === 0 ? 40 : 24});
+        label.textContent = clip(n.name, p.zone === 0 ? (narrow ? 20 : 30) : CLIP);
+        g.appendChild(label);
+        var t = el('title');
+        t.textContent = n.name + ' (' + (data.subjects[n.subject] || n.subject) + ')';
+        g.appendChild(t);
+        nodesG.appendChild(g);
+      });
+      mark();
+    }
+
+    function mark(){
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        g.classList.toggle('is-picked', g.getAttribute('data-id') === pickedId);
+      });
+    }
+
+    function select(id){
+      var n = node(id);
+      if(!n) return;
+      pickedId = id;
+      mark();
+      var entry = null;
+      layout.forEach(function(p){ if(p.id === id) entry = p; });
+      var zone = entry ? entry.zone : 0;
+      var c = node(centerId);
+
+      elZone.className = 'zpd-zone z' + zone;
+      elZoneName.textContent = ZONE_NAME[zone];
+      elName.textContent = n.name;
+      elSub.textContent = (data.subjects[n.subject] || n.subject) + '  ·  ' +
+        n.prereqCount + ' prerequisite' + (n.prereqCount === 1 ? '' : 's') + ', unlocks ' + n.unlockCount;
+
+      if(zone === 0){
+        elSay.innerHTML = 'Everything inside the first ring is behind you. Everything on the dashed ring is <em>one real prerequisite edge away</em>, which is the only place learning actually happens.';
+        elAct.disabled = true;
+        elAct.textContent = 'You are standing here';
+      } else if(zone === 1){
+        elSay.innerHTML = '<em>' + esc(n.name) + '</em> is a prerequisite of ' + esc(c.name) + '. It is already behind you, which is exactly why the next step felt possible.';
+        elAct.disabled = !n.full;
+        elAct.textContent = n.full ? 'Go back to this one' : 'Beyond this slice of the graph';
+      } else if(zone === 2){
+        elSay.innerHTML = '<em>' + esc(c.name) + '</em> is the only thing this needs, and you have it. This is the next real step, not a guess.';
+        elAct.disabled = !n.full;
+        elAct.textContent = n.full ? 'Step onto this concept' : 'Beyond this slice of the graph';
+      } else {
+        var gate = node(gates[id]);
+        elSay.innerHTML = 'Two steps out. This sits behind <em>' + esc(gate ? gate.name : 'a concept you have not taken') + '</em>, so reaching for it now is the part that makes people quit.';
+        elAct.disabled = true;
+        elAct.textContent = gate ? 'Locked behind ' + clip(gate.name, 24) : 'Out of reach';
+      }
+    }
+
+    function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+    function step(){
+      var n = node(pickedId);
+      if(!n || !n.full || pickedId === centerId) return;
+      tx = 0; ty = 0; panG.setAttribute('transform', 'translate(0,0)');
+      rebuild(pickedId);
+      seedsBox.querySelectorAll('.zpd-seed').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === pickedId));
+      });
+    }
+
+    nodesG.addEventListener('click', function(e){
+      var g = e.target.closest ? e.target.closest('.zpd-node') : null;
+      if(!g) return;
+      var id = g.getAttribute('data-id');
+      if(id === pickedId) step(); else select(id);
+    });
+    nodesG.addEventListener('keydown', function(e){
+      var g = e.target.closest ? e.target.closest('.zpd-node') : null;
+      if(!g || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var id = g.getAttribute('data-id');
+      if(id === pickedId) step(); else select(id);
+    });
+    elAct.addEventListener('click', step);
+
+    // A rotation or a window resize can cross the narrow threshold, and the
+    // label lengths are baked in at render time, so re-render on the far side
+    // of a debounce rather than leaving phone-length labels on a desktop.
+    var resizeTimer = null;
+    window.addEventListener('resize', function(){
+      if(!layout.length) return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){ render(); select(pickedId); }, 180);
+    });
+
+    // Drag to pan. Deliberately NOT using setPointerCapture: capturing on the
+    // svg retargets the whole gesture, including the click, to the svg, so
+    // every click on a concept would land on the background instead. Tracking
+    // on window gets the same "keep dragging outside the box" behaviour with
+    // the click left alone.
+    (function(){
+      var down = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
+      var SLOP = 3;   // px of travel before this counts as a drag, not a click
+      function move(e){
+        if(!down) return;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if(!moved && Math.abs(dx) + Math.abs(dy) < SLOP) return;
+        moved = true;
+        svg.classList.add('dragging');
+        var k = 760 / svg.getBoundingClientRect().width;   // client px to viewBox units
+        tx = ox + dx * k;
+        ty = oy + dy * k;
+        panG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ',' + ty.toFixed(1) + ')');
+        e.preventDefault();
+      }
+      function up(){
+        if(!down) return;
+        down = false;
+        svg.classList.remove('dragging');
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+      }
+      svg.addEventListener('pointerdown', function(e){
+        down = true; moved = false;
+        sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+      // A drag that happens to end on a concept must not also select it.
+      svg.addEventListener('click', function(e){ if(moved){ e.stopPropagation(); moved = false; } }, true);
+    })();
+
+    whenNear(document.getElementById('zpd'), function(){
+      getJson('library/zpd.json').then(function(d){
+        data = d;
+        drawRings();
+        d.seeds.forEach(function(id, i){
+          var b = document.createElement('button');
+          b.className = 'zpd-seed';
+          b.type = 'button';
+          b.setAttribute('data-id', id);
+          b.setAttribute('aria-pressed', String(i === 0));
+          b.textContent = clip(d.nodes[id].name, 22);
+          b.addEventListener('click', function(){
+            tx = 0; ty = 0; panG.setAttribute('transform', 'translate(0,0)');
+            rebuild(id);
+            seedsBox.querySelectorAll('.zpd-seed').forEach(function(o){
+              o.setAttribute('aria-pressed', String(o === b));
+            });
+          });
+          seedsBox.appendChild(b);
+        });
+        rebuild(d.seeds[0]);
+      }).catch(function(err){
+        // An honest failure. A silent empty diagram would read as "the library
+        // has nothing here", which is a different and untrue statement.
+        elName.textContent = 'The graph could not load';
+        elSay.textContent = String(err.message || err) + ' Re-run scripts/export_public_library.mjs --write.';
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // Concept search: free, client side, zero API calls.
+  //
+  // Same technique the signed-in app uses (app/src/lib/queryEmbedder.ts), and
+  // deliberately the same VECTORS: library/concept-index.bin is a byte copy of
+  // the int8 corpus that webhook/scripts/migrate-concept-library.ts wrote into
+  // Firestore, so a query embedded here lands in exactly the space the real
+  // product scores against. What is NOT reused is the server half: the app
+  // posts its query vector to /api/concept-resolve, which needs a verified
+  // Firebase ID token. A stranger on a marketing page has none, so the scoring
+  // that handler does happens right here instead, over a static file.
+  //
+  // Nothing on this path costs money or needs an account:
+  //   - the model is fetched once from a public CDN and HTTP-cached after that
+  //   - inference is local, in the visitor's own browser, never an LLM call
+  //   - the corpus, the lessons and the sims are plain static files
+  //
+  // No sim is ever generated here. Live generation is an authenticated,
+  // budget-gated part of the real product and has no business on a public
+  // page, so a concept with no built sim says so.
+  // ---------------------------------------------------------------------
+  (function(){
+    var form = document.getElementById('csForm');
+    if(!form) return;
+    var input = document.getElementById('csInput');
+    var go = document.getElementById('csGo');
+    var status = document.getElementById('csStatus');
+    var bar = document.getElementById('csBar');
+    var barFill = bar.querySelector('i');
+    var alts = document.getElementById('csAlts');
+    var result = document.getElementById('csResult');
+    var elSubject = document.getElementById('csSubject');
+    var elTitle = document.getElementById('csTitle');
+    var elSummary = document.getElementById('csSummary');
+    var elLesson = document.getElementById('csLesson');
+    var elMore = document.getElementById('csMore');
+    var elChips = document.getElementById('csChips');
+    var simSlot = document.getElementById('csSimSlot');
+
+    // The contract with app/src/lib/queryEmbedder.ts and
+    // webhook/lib/conceptLibrary.ts. If library/concept-index.json ever
+    // reports a different model or dtype, the corpus was rebuilt with
+    // something else and scoring this query against it would return
+    // plausible-looking nonsense, which is the worst failure mode there is.
+    // So it is checked, and a mismatch falls back rather than pretending.
+    var MODEL_ID = 'Xenova/all-MiniLM-L6-v2';
+    var DTYPE = 'q8';
+    // Pinned to the exact version webhook/package.json resolves, so the
+    // marketing page and the app cannot drift onto different runtimes.
+    // jsDelivr is already the CDN this repo uses for p5 in sims/.
+    var CDN = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1';
+    var TOP_K = 5;
+
+    var indexPromise = null, extractorPromise = null, lexicalOnly = false, lexicalWhy = '', busy = false;
+
+    function say(text, isErr){
+      status.textContent = text;
+      status.classList.toggle('err', !!isErr);
+    }
+    function progress(pct){
+      bar.hidden = pct === null;
+      if(pct !== null) barFill.style.width = Math.max(0, Math.min(100, pct)).toFixed(0) + '%';
+    }
+
+    // Byte-for-byte the same unpacking as unpackInt8() in
+    // webhook/lib/conceptLibrary.ts: int8 times the one global scale, then L2
+    // renormalized per vector so a dot product against a normalized query IS
+    // the cosine and no per-row division is needed at scoring time.
+    function unpack(buffer, scale, dim, count){
+      var i8 = new Int8Array(buffer);
+      var out = new Float32Array(i8.length);
+      for(var v = 0; v < count; v++){
+        var base = v * dim, norm = 0, i, val;
+        for(i = 0; i < dim; i++){ val = i8[base + i] * scale; out[base + i] = val; norm += val * val; }
+        norm = Math.sqrt(norm) || 1;
+        for(i = 0; i < dim; i++) out[base + i] /= norm;
+      }
+      return out;
+    }
+
+    function loadIndex(){
+      if(!indexPromise){
+        indexPromise = Promise.all([
+          getJson('library/concept-index.json'),
+          fetch('library/concept-index.bin').then(function(r){
+            if(!r.ok) throw new Error('library/concept-index.bin returned ' + r.status);
+            return r.arrayBuffer();
+          })
+        ]).then(function(parts){
+          var meta = parts[0], buf = parts[1];
+          if(buf.byteLength !== meta.count * meta.dim){
+            throw new Error('the vector file is ' + buf.byteLength + ' bytes, expected ' + (meta.count * meta.dim));
+          }
+          meta.vectors = unpack(buf, meta.scale, meta.dim, meta.count);
+          return meta;
+        }).catch(function(e){ indexPromise = null; throw e; });
+      }
+      return indexPromise;
+    }
+
+    function getExtractor(){
+      if(!extractorPromise){
+        extractorPromise = import(CDN).then(function(mod){
+          mod.env.allowLocalModels = false;   // never look for a model on this origin
+          return mod.pipeline('feature-extraction', MODEL_ID, {
+            dtype: DTYPE,
+            progress_callback: function(p){
+              if(p && p.status === 'progress' && typeof p.progress === 'number') progress(p.progress);
+            }
+          });
+        }).catch(function(e){
+          extractorPromise = null;  // a failed load must not poison the tab
+          throw e;
+        });
+      }
+      return extractorPromise;
+    }
+
+    /**
+     * The documented fallback. It is genuinely worse than the embedding path,
+     * so it is only ever reached when the model could not load at all (an
+     * offline visitor, a blocked CDN, a browser with no WebAssembly), and the
+     * status line says so out loud rather than quietly serving weaker results
+     * as if they were the real thing.
+     *
+     * It scores the query's words against the concept NAME and its subject
+     * title, which is all the catalog carries. That means it can find
+     * "photosynthesis" and it cannot find "how plants eat", which is exactly
+     * the gap the embeddings exist to close.
+     */
+    function lexical(query, meta){
+      var q = query.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(function(w){ return w.length > 2; });
+      if(!q.length) return [];
+      var scored = [];
+      for(var i = 0; i < meta.concepts.length; i++){
+        var c = meta.concepts[i];
+        var hay = (c.name + ' ' + c.subjectTitle).toLowerCase();
+        var hit = 0;
+        for(var j = 0; j < q.length; j++) if(hay.indexOf(q[j]) >= 0) hit++;
+        if(!hit) continue;
+        // Shorter names win on a tie: a query that matches every word of a
+        // three-word concept is a better answer than one buried in a
+        // twelve-word one.
+        scored.push({i:i, score: hit / q.length - c.name.length / 4000});
+      }
+      scored.sort(function(a, b){ return b.score - a.score; });
+      return scored.slice(0, TOP_K);
+    }
+
+    function semantic(vector, meta){
+      var dim = meta.dim, vecs = meta.vectors, best = [];
+      for(var i = 0; i < meta.count; i++){
+        var dot = 0, base = i * dim;
+        for(var j = 0; j < dim; j++) dot += vecs[base + j] * vector[j];
+        if(best.length < TOP_K){
+          best.push({i:i, score:dot});
+          if(best.length === TOP_K) best.sort(function(a, b){ return b.score - a.score; });
+        } else if(dot > best[TOP_K - 1].score){
+          best[TOP_K - 1] = {i:i, score:dot};
+          best.sort(function(a, b){ return b.score - a.score; });
+        }
+      }
+      best.sort(function(a, b){ return b.score - a.score; });
+      return best;
+    }
+
+    function showAlts(hits, meta, mode){
+      alts.innerHTML = '';
+      hits.forEach(function(h, k){
+        var c = meta.concepts[h.i];
+        var b = document.createElement('button');
+        b.className = 'cs-alt';
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(k === 0));
+        b.innerHTML = '<b></b><i></i>';
+        b.querySelector('b').textContent = c.name;
+        b.querySelector('i').textContent = mode === 'semantic'
+          ? h.score.toFixed(2)
+          : Math.round(h.score * 100) + '%';
+        b.addEventListener('click', function(){
+          alts.querySelectorAll('.cs-alt').forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+          openConcept(c);
+        });
+        alts.appendChild(b);
+      });
+    }
+
+    function openConcept(cat){
+      say('Loading "' + cat.name + '"...');
+      return getJson('library/concepts/' + conceptSlug(cat.id) + '.json').then(function(c){
+        elSubject.textContent = c.subjectTitle + '  ·  ' + c.level.replace(/_/g, ' ') + '  ·  ' + c.id;
+        elTitle.textContent = c.lesson.title;
+        elSummary.textContent = c.lesson.summary;
+
+        var paras = String(c.lesson.body || '').split(/\n{2,}/).filter(function(p){ return p.trim(); });
+        var shown = 2;
+        function paint(n){
+          elLesson.innerHTML = '';
+          paras.slice(0, n).forEach(function(t){
+            var p = document.createElement('p');
+            p.textContent = t.trim();
+            elLesson.appendChild(p);
+          });
+          elMore.hidden = n >= paras.length;
+          elMore.textContent = 'Read the rest of the chapter (' + (paras.length - n) + ' more)';
+        }
+        paint(shown);
+        elMore.onclick = function(){ paint(paras.length); };
+
+        elChips.innerHTML = '';
+        c.prereqs.forEach(function(p){
+          var s = document.createElement('span');
+          s.className = 'cs-chip';
+          s.textContent = 'builds on ' + p.label;
+          elChips.appendChild(s);
+        });
+        c.unlocks.slice(0, 4).forEach(function(u){
+          var s = document.createElement('span');
+          s.className = 'cs-chip up';
+          s.textContent = 'unlocks ' + u.label;
+          elChips.appendChild(s);
+        });
+
+        simSlot.innerHTML = '';
+        if(c.hasSim && c.sim){
+          var wrap = document.createElement('div');
+          wrap.className = 'cs-sim';
+          var head = document.createElement('div');
+          head.className = 'cs-sim-head';
+          var b = document.createElement('b');
+          b.textContent = c.sim.title;
+          var meta2 = document.createElement('span');
+          meta2.textContent = 'MicroSim' + (c.sim.sourceRepo ? '  ·  ' + c.sim.sourceRepo + '  ·  CC BY-NC-SA' : '');
+          var open = document.createElement('a');
+          open.href = 'library/' + c.sim.file;
+          open.target = '_blank';
+          open.rel = 'noopener';
+          open.textContent = 'Open full screen ↗';
+          head.appendChild(b); head.appendChild(meta2); head.appendChild(open);
+          var frame = document.createElement('iframe');
+          frame.src = 'library/' + c.sim.file;
+          frame.title = c.sim.title;
+          frame.loading = 'lazy';
+          wrap.appendChild(head); wrap.appendChild(frame);
+          simSlot.appendChild(wrap);
+        } else {
+          // The honest empty state. 652 of the 3746 searchable concepts have a
+          // built sim (722 sims exist in all, 70 of them on concepts with no
+          // written lesson, which are not searchable). The rest genuinely have
+          // none, and this page will not generate one to cover the gap:
+          // generation is authenticated and budget gated, and belongs to the
+          // real product, not to a public page.
+          var no = document.createElement('div');
+          no.className = 'cs-nosim';
+          var tag = document.createElement('i');
+          tag.textContent = 'No sim yet';
+          var txt = document.createElement('p');
+          txt.innerHTML = 'There is no simulation built for <b></b> yet. 652 of the 3746 searchable concepts have one so far, and this page shows what exists rather than inventing something. Building new ones is what the signed-in Desk does.';
+          txt.querySelector('b').textContent = c.name;
+          no.appendChild(tag); no.appendChild(txt);
+          simSlot.appendChild(no);
+        }
+
+        result.hidden = false;
+        return c;
+      });
+    }
+
+    function run(query){
+      if(busy || !query.trim()) return;
+      busy = true; go.disabled = true;
+      say('Loading the concept index...');
+      progress(null);
+
+      loadIndex().then(function(meta){
+        if(lexicalOnly) return {meta:meta, hits:null};
+        if(meta.model !== MODEL_ID || meta.dtype !== DTYPE){
+          lexicalOnly = true;
+          throw new Error('the index was built with ' + meta.model + ' ' + meta.dtype + ', not ' + MODEL_ID + ' ' + DTYPE);
+        }
+        say('Loading the search model. About 22 MB, once per browser, then it is cached.');
+        return getExtractor().then(function(extract){
+          progress(null);
+          say('Scoring ' + meta.count + ' concepts in your browser...');
+          return extract([query], {pooling:'mean', normalize:true}).then(function(out){
+            return {meta:meta, hits: semantic(out.data, meta), mode:'semantic'};
+          });
+        });
+      }).catch(function(e){
+        // Fall back rather than fail, but never silently.
+        lexicalOnly = true;
+        lexicalWhy = String(e && e.message || e);
+        progress(null);
+        return loadIndex().then(function(meta){ return {meta:meta, hits:null}; });
+      }).then(function(r){
+        var meta = r.meta;
+        var mode = r.hits ? 'semantic' : 'lexical';
+        var hits = r.hits || lexical(query, meta);
+        if(!hits.length){
+          result.hidden = true;
+          alts.innerHTML = '';
+          say('Nothing in the ' + meta.count + '-concept library matched "' + query + '". That is a real answer, not an error.', true);
+          busy = false; go.disabled = false;
+          return;
+        }
+        showAlts(hits, meta, mode);
+        return openConcept(meta.concepts[hits[0].i]).then(function(){
+          if(mode === 'semantic'){
+            say('Matched against ' + meta.count + ' concepts with ' + meta.model + ' running in your browser. No API call, no account, nothing billed.');
+          } else {
+            say('Word matching only: the in-browser search model could not load (' + (lexicalWhy || 'unknown reason') + '), so these results are weaker than the real semantic search.', true);
+          }
+        });
+      }).catch(function(e){
+        say(String(e && e.message || e), true);
+      }).then(function(){
+        busy = false; go.disabled = false;
+        progress(null);
+      });
+    }
+
+    form.addEventListener('submit', function(e){ e.preventDefault(); run(input.value); });
+    document.querySelectorAll('.cs-eg').forEach(function(b){
+      b.addEventListener('click', function(){ input.value = b.textContent; run(b.textContent); });
+    });
+    // Warm the index (not the model) the moment someone puts a cursor in the
+    // box, so the first search pays for the model download and not also for
+    // 1.4 MB of vectors. Deliberately NOT on scroll: a visitor who reads past
+    // this section without typing should download none of it.
+    input.addEventListener('focus', function(){ loadIndex().catch(function(){}); }, {once:true});
+  })();
+
+  // ---------------------------------------------------------------------
+  // Claim your desk: posts to the real, already-live, unauthenticated lead
+  // endpoint (webhook/lib/handlers/marketing-lead.ts), which stores the lead
+  // in Firestore, emails the founders and schedules a follow-up. No new
+  // backend, and no "thanks!" that fires regardless of what happened: the
+  // message shown is decided by the actual response.
+  // ---------------------------------------------------------------------
+  (function(){
+    var form = document.getElementById('claimForm');
+    if(!form) return;
+    var btn = document.getElementById('claimSubmit');
+    var msg = document.getElementById('claimMsg');
+    var ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/marketing-lead';
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   // same shape the handler enforces
+
+    function show(kind, title, body){
+      msg.className = 'claim-msg ' + kind;
+      msg.innerHTML = '<b></b><span></span>';
+      msg.querySelector('b').textContent = title;
+      msg.querySelector('span').textContent = body;
+      msg.hidden = false;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var f = form.elements;   // form.name would be the FORM's name, not the field
+      var email = f['email'].value.trim();
+      if(!EMAIL_RE.test(email)){
+        show('bad', 'That email does not look right', 'Check it and try again. Nothing was sent.');
+        f['email'].focus();
+        return;
+      }
+      btn.disabled = true;
+      var label = btn.textContent;
+      btn.textContent = 'Sending...';
+      msg.hidden = true;
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: email,
+          name: f['name'].value.trim(),
+          role: f['role'].value,
+          source: 'joinmindcraft_claim_section',
+          note: f['note'].value.trim(),
+          page: location.pathname + '#claim',
+          _honey: f['_honey'].value
+        })
+      }).then(function(res){
+        return res.json().catch(function(){ return {}; }).then(function(data){
+          return {ok: res.ok, status: res.status, data: data};
+        });
+      }).then(function(r){
+        if(r.ok && r.data && r.data.ok){
+          show('ok',
+            r.data.returning ? 'You are already on the list' : 'Your seat is claimed',
+            r.data.returning
+              ? 'We had this email already, so we bumped it back to the top. The founders just got pinged again.'
+              : 'The founders were emailed the moment you hit send. Expect a real reply, not an autoresponder.');
+          form.reset();
+        } else {
+          // The real reason, verbatim where the endpoint gave one.
+          show('bad', 'That did not go through',
+            (r.data && r.data.error ? r.data.error : 'The signup service answered with ' + r.status + '.') +
+            ' Nothing was saved. You can email founders@joinmindcraft.com directly.');
+        }
+      }).catch(function(err){
+        show('bad', 'Could not reach the signup service',
+          String(err && err.message || err) + '. Nothing was saved. founders@joinmindcraft.com works too.');
+      }).then(function(){
+        btn.disabled = false;
+        btn.textContent = label;
+      });
+    });
   })();
 </script>
 </body>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Confidence Interval Visualizer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Confidence Interval Visualizer - p5.js
+// CANVAS_HEIGHT: 540
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 450;
+let controlHeight = 90;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let trueMean = 4.2; // true mercury level in ppm
+let safetyThreshold = 5.0;
+let samples = [];
+let maxSamples = 30;
+
+let sampleSizeSlider, confLevelSlider;
+let sampleBtn, resetBtn;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Confidence interval visualizer showing sample means and intervals', LABEL);
+
+  sampleSizeSlider = createSlider(10, 500, 30, 10);
+  sampleSizeSlider.parent(document.querySelector('main'));
+  sampleSizeSlider.style('width', '150px');
+
+  confLevelSlider = createSlider(80, 99, 95, 1);
+  confLevelSlider.parent(document.querySelector('main'));
+  confLevelSlider.style('width', '150px');
+
+  sampleBtn = createButton('Draw Sample');
+  sampleBtn.parent(document.querySelector('main'));
+  sampleBtn.mousePressed(drawOneSample);
+  sampleBtn.style('font-size','13px');
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(function() { samples = []; });
+  resetBtn.style('font-size','13px');
+}
+
+function draw() {
+  updateCanvasSize();
+  background(255);
+
+  fill('aliceblue'); stroke('silver'); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  noStroke(); fill('#264653'); textSize(15); textAlign(CENTER, TOP);
+  text('Confidence Interval Visualizer: Fish Mercury Levels', canvasWidth/2, 8);
+
+  // Plot area for CI bars
+  let plotL = 80, plotR = canvasWidth - 40;
+  let plotT = 40, plotB = drawHeight - 50;
+  let plotW = plotR - plotL, plotH = plotB - plotT;
+
+  // X-axis: mercury level (ppm) range
+  let xMin = 2.0, xMax = 7.0;
+  function xToScreen(val) { return plotL + ((val - xMin)/(xMax - xMin)) * plotW; }
+
+  // Grid and axis
+  stroke('#e0e0e0'); strokeWeight(0.5);
+  for (let v = xMin; v <= xMax; v += 0.5) {
+    let sx = xToScreen(v);
+    line(sx, plotT, sx, plotB);
+  }
+
+  // True mean line
+  stroke('#2a9d8f'); strokeWeight(2); setLineDash([5,5]);
+  let tmx = xToScreen(trueMean);
+  line(tmx, plotT, tmx, plotB);
+  setLineDash([]);
+  noStroke(); fill('#2a9d8f'); textSize(11); textAlign(CENTER, TOP);
+  text('True Mean: ' + trueMean + ' ppm', tmx, plotB + 2);
+
+  // Safety threshold
+  stroke('#e63946'); strokeWeight(2); setLineDash([8,4]);
+  let stx = xToScreen(safetyThreshold);
+  line(stx, plotT, stx, plotB);
+  setLineDash([]);
+  noStroke(); fill('#e63946'); textSize(11); textAlign(CENTER, TOP);
+  text('Safety: ' + safetyThreshold + ' ppm', stx, plotB + 14);
+
+  // X axis labels
+  noStroke(); fill('#264653'); textSize(10); textAlign(CENTER, TOP);
+  for (let v = xMin; v <= xMax; v += 0.5) {
+    text(nf(v,1,1), xToScreen(v), plotB + 28);
+  }
+
+  // Draw CI bars
+  let barH = Math.min(12, (plotH - 10) / maxSamples);
+  let containsTrue = 0;
+
+  for (let i = 0; i < samples.length; i++) {
+    let s = samples[i];
+    let y = plotT + 5 + i * (barH + 2);
+    if (y + barH > plotB) break;
+
+    let lo = xToScreen(s.lo);
+    let hi = xToScreen(s.hi);
+    let mx = xToScreen(s.mean);
+    let contains = (s.lo <= trueMean && trueMean <= s.hi);
+    if (contains) containsTrue++;
+
+    // CI bar
+    stroke(contains ? '#457b9d' : '#e76f51');
+    strokeWeight(2);
+    line(lo, y + barH/2, hi, y + barH/2);
+    // End caps
+    line(lo, y + 2, lo, y + barH - 2);
+    line(hi, y + 2, hi, y + barH - 2);
+    // Mean dot
+    noStroke();
+    fill(contains ? '#457b9d' : '#e76f51');
+    ellipse(mx, y + barH/2, 6, 6);
+  }
+
+  // Stats panel
+  noStroke(); fill('#264653'); textSize(12); textAlign(LEFT, TOP);
+  let pct = samples.length > 0 ? nf(100*containsTrue/samples.length, 1, 1) : '—';
+  text('Samples drawn: ' + samples.length, 10, plotT);
+  text('Contain true mean: ' + containsTrue + '/' + samples.length + ' (' + pct + '%)', 10, plotT + 16);
+
+  // Control labels
+  noStroke(); fill('#264653'); textSize(12); textAlign(LEFT, CENTER);
+  text('Sample size: ' + sampleSizeSlider.value(), 10, drawHeight + 15);
+  text('Confidence: ' + confLevelSlider.value() + '%', 10, drawHeight + 40);
+
+  // Position controls
+  sampleSizeSlider.position(canvasOffsetX() + 130, canvasOffsetY() + drawHeight + 7);
+  confLevelSlider.position(canvasOffsetX() + 130, canvasOffsetY() + drawHeight + 32);
+  sampleBtn.position(canvasOffsetX() + 310, canvasOffsetY() + drawHeight + 7);
+  resetBtn.position(canvasOffsetX() + 310, canvasOffsetY() + drawHeight + 35);
+}
+
+function drawOneSample() {
+  if (samples.length >= maxSamples) samples.shift();
+
+  let n = sampleSizeSlider.value();
+  let confLevel = confLevelSlider.value() / 100;
+  let sigma = 1.5; // population std dev
+
+  // Generate sample
+  let sum = 0;
+  for (let i = 0; i < n; i++) {
+    sum += randomGaussian(trueMean, sigma);
+  }
+  let sampleMean = sum / n;
+  let se = sigma / Math.sqrt(n);
+
+  // z-score for confidence level
+  let z = getZ(confLevel);
+  let lo = sampleMean - z * se;
+  let hi = sampleMean + z * se;
+
+  samples.push({ mean: sampleMean, lo: lo, hi: hi });
+}
+
+function getZ(confLevel) {
+  // Approximate z-scores for common confidence levels
+  if (confLevel >= 0.99) return 2.576;
+  if (confLevel >= 0.98) return 2.326;
+  if (confLevel >= 0.95) return 1.960;
+  if (confLevel >= 0.90) return 1.645;
+  if (confLevel >= 0.85) return 1.440;
+  return 1.282; // 80%
+}
+
+function setLineDash(pattern) {
+  drawingContext.setLineDash(pattern);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Scientific Notation Converter and Calculator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Scientific Notation Converter and Calculator — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "scientific-notation-converter-and-calculator",
+  "title": "Scientific Notation Converter and Calculator",
+  "kind": "scientific",
+  "objective": "Practice converting between standard form and scientific notation, and perform operations with numbers in scientific notation",
+  "actionLabel": "Check / Explain",
+  "aMin": 1,
+  "aMax": 9.9,
+  "aDefault": 3.2,
+  "aStep": 0.1,
+  "bMin": -8,
+  "bMax": 8,
+  "bDefault": 4,
+  "bStep": 1,
+  "aLabel": "Coefficient",
+  "bLabel": "Power of ten",
+  "choices": [
+    "Convert",
+    "Compare",
+    "Calculate"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Practice converting between standard form and scientific notation, and perform operations with numbers in scientific notation
+//
+//     Canvas layout (900x650px):
+//     - Top area (900x250): Conversion tool
+//     - Middle area (900x250): Calculator for operations
+//     - Bottom area (900x150): Reference and examples
+//
+//     Visual elements (Conversion section):
+//     - Input field: "Enter number in standard form"
+//     - Display: Number shown in scientific notation
+//     - Input fields: "a =" and "n =" for scientific notation
+//     - Display: Number shown in standard form
+//     - Visual number line showing powers of 10
+//     - Animation showing decimal point movement
+//
+//     Visual elements (Calculator section):
+//     - Two input rows for scientific notation: "(a₁ × 10^n₁)" and "(a₂ × 10^n₂)"
+//     - Operation selector: multiply or divide
+//     - Step-by-step solution display
+//     - Final answer in scientific notation
+//
+//     Interactive controls (Conversion):
+//     - Input: Standard form number
+//     - Button: "Convert to Scientific Notation"
+//     - Input: a value (1-9.99)
+//     - Input: n value (integer)
+//     - Button: "Convert to Standard Form"
+//     - Button: "Generate random example"
+//
+//     Interactive controls (Calculator):
+//     - Input: a₁ and n₁ for first number
+//     - Input: a₂ and n₂ for second number
+//     - Radio buttons: Multiply / Divide
+//     - Button: "Calculate"
+//     - Button: "Show steps"
+//
+//     Default parameters:
+//     - Standard form: 45000
+//     - Scientific notation: 4.5 × 10⁴
+//
+//     Behavior (Conversion):
+//     - When standard form entered:
+//       - Animate decimal point moving
+//       - Count and display number of places moved
+//       - Show resulting scientific notation
+//       - Highlight on power-of-10 number line
+//     - When scientific notation entered:
+//       - Animate decimal point moving
+//       - Show resulting standard form
+//       - Validate that 1 ≤ |a| < 10
+//
+//     Behavior (Calculator):
+//     - When "Calculate" clicked:
+//       - Show step 1: Identify parts
+//       - Show step 2: Apply operation to 'a' values
+//       - Show step 3: Apply exponent rule to powers of 10
+//       - Show step 4: Combine results
+//       - Show step 5: Adjust to proper scientific notation if needed
+//     - Real-time validation that inputs create valid scientific notation
+//
+//     Visual features:
+//     - Power-of-10 number line (10^-6 to 10^6)
+//     - Decimal point movement animation with arrows
+//     - Color coding: coefficient (blue), exponent (red)
+//     - Step-by-step solution with highlights
+//
+//     Reference section:
+//     - Quick reference card showing:
+//       - "Large numbers → positive exponent"
+//       - "Small numbers → negative exponent"
+//       - "Move left → positive exponent"
+//       - "Move right → negative exponent"
+//
+//     Examples displayed:
+//     - Distance to Sun: 9.3 × 10⁷ miles
+//     - Size of atom: 1 × 10⁻¹⁰ meters
+//     - Avogadro's number: 6.02 × 10²³
+//
+//     Implementation: p5.js with input validation, animation sequences, and clear typography
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

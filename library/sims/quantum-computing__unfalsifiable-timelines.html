@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Perpetual 5-10 Years Away Pattern</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// The Perpetual "5-10 Years Away" Pattern
+// A p5.js MicroSim showing the recurring pattern of quantum computing predictions
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Timeline configuration
+let timelineStartYear = 1995;
+let timelineEndYear = 2040;
+
+// Prediction data: [yearMade, yearPredicted, source, claim]
+let predictions = [
+    { made: 2000, predicted: 2010, source: "Early QC researchers", claim: "Useful quantum computers within a decade" },
+    { made: 2005, predicted: 2015, source: "QC startup founders", claim: "Commercial quantum advantage by 2015" },
+    { made: 2010, predicted: 2020, source: "Industry leaders", claim: "Quantum supremacy and useful applications by 2020" },
+    { made: 2015, predicted: 2025, source: "Major tech companies", claim: "Fault-tolerant quantum computing by 2025" },
+    { made: 2020, predicted: 2030, source: "Quantum hardware vendors", claim: "Commercially relevant quantum advantage by 2030" },
+    { made: 2025, predicted: 2035, source: "Revised industry roadmaps", claim: "Practical quantum computing by 2035" }
+];
+
+let hoveredPrediction = -1;
+let currentYear = 2026;
+
+// Arrow colors
+let arrowColors;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+
+    arrowColors = [
+        color(231, 76, 60),    // red
+        color(230, 126, 34),   // orange
+        color(241, 196, 15),   // yellow
+        color(46, 204, 113),   // green
+        color(52, 152, 219),   // blue
+        color(155, 89, 182)    // purple
+    ];
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("The Perpetual \"5-10 Years Away\" Pattern", canvasWidth / 2, 10);
+
+    // Subtitle
+    fill('#666');
+    textSize(12);
+    textStyle(ITALIC);
+    text("Each arrow shows when \"useful quantum computing\" was predicted to arrive", canvasWidth / 2, 34);
+
+    // Chart area
+    let chartLeft = 80;
+    let chartRight = canvasWidth - 40;
+    let chartWidth = chartRight - chartLeft;
+    let chartTop = 70;
+    let chartBottom = drawHeight - 120;
+    let chartHeight = chartBottom - chartTop;
+
+    // Number of arrow lanes
+    let laneHeight = chartHeight / (predictions.length + 1);
+
+    // Helper: map year to x position
+    function yearToX(year) {
+        return chartLeft + ((year - timelineStartYear) / (timelineEndYear - timelineStartYear)) * chartWidth;
+    }
+
+    // Draw grid lines for decades
+    stroke('#E0E0E0');
+    strokeWeight(1);
+    for (let yr = 2000; yr <= 2035; yr += 5) {
+        let x = yearToX(yr);
+        drawingContext.setLineDash([3, 3]);
+        line(x, chartTop - 5, x, chartBottom + 5);
+        drawingContext.setLineDash([]);
+    }
+
+    // Draw "reality line" - vertical dashed line at current year
+    let realityX = yearToX(currentYear);
+    stroke('#CC0000');
+    strokeWeight(2);
+    drawingContext.setLineDash([8, 6]);
+    line(realityX, chartTop - 15, realityX, chartBottom + 25);
+    drawingContext.setLineDash([]);
+
+    // Reality line label
+    fill('#CC0000');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("TODAY (" + currentYear + ")", realityX, chartTop - 28);
+    textStyle(NORMAL);
+    textSize(10);
+    text("No useful QC yet", realityX, chartBottom + 28);
+
+    // Draw x-axis
+    stroke('#333');
+    strokeWeight(1.5);
+    line(chartLeft, chartBottom + 5, chartRight, chartBottom + 5);
+
+    // X-axis labels
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    for (let yr = 2000; yr <= 2035; yr += 5) {
+        let x = yearToX(yr);
+        text(yr, x, chartBottom + 10);
+        // Tick marks
+        stroke('#333');
+        strokeWeight(1);
+        line(x, chartBottom + 3, x, chartBottom + 8);
+        noStroke();
+    }
+
+    // X-axis title
+    fill('#666');
+    textSize(12);
+    textAlign(CENTER, TOP);
+    text("Year", chartLeft + chartWidth / 2, chartBottom + 48);
+
+    // Detect hover
+    hoveredPrediction = -1;
+    for (let i = 0; i < predictions.length; i++) {
+        let p = predictions[i];
+        let laneY = chartTop + (i + 0.5) * laneHeight;
+        let x1 = yearToX(p.made);
+        let x2 = yearToX(p.predicted);
+
+        // Check if mouse is near this arrow
+        if (mouseY >= laneY - laneHeight * 0.4 && mouseY <= laneY + laneHeight * 0.4 &&
+            mouseX >= x1 - 10 && mouseX <= x2 + 10) {
+            hoveredPrediction = i;
+        }
+    }
+
+    // Draw prediction arrows
+    for (let i = 0; i < predictions.length; i++) {
+        let p = predictions[i];
+        let laneY = chartTop + (i + 0.5) * laneHeight;
+        let x1 = yearToX(p.made);
+        let x2 = yearToX(p.predicted);
+        let isHovered = (hoveredPrediction === i);
+        let isFalsified = (p.predicted <= currentYear);
+
+        // Arrow shaft
+        let c = arrowColors[i % arrowColors.length];
+        let alpha = isHovered ? 255 : 180;
+        let sw = isHovered ? 4 : 3;
+
+        stroke(red(c), green(c), blue(c), alpha);
+        strokeWeight(sw);
+        line(x1, laneY, x2, laneY);
+
+        // Arrowhead
+        fill(red(c), green(c), blue(c), alpha);
+        noStroke();
+        let arrowSize = isHovered ? 12 : 9;
+        triangle(
+            x2, laneY,
+            x2 - arrowSize, laneY - arrowSize / 2,
+            x2 - arrowSize, laneY + arrowSize / 2
+        );
+
+        // Start dot (when prediction was made)
+        fill(red(c), green(c), blue(c), alpha);
+        noStroke();
+        let dotSize = isHovered ? 10 : 7;
+        ellipse(x1, laneY, dotSize, dotSize);
+
+        // Label on arrow: prediction year range
+        fill(red(c), green(c), blue(c));
+        noStroke();
+        textSize(isHovered ? 11 : 10);
+        textAlign(CENTER, BOTTOM);
+        textStyle(isHovered ? BOLD : NORMAL);
+        text(p.made + " → " + p.predicted, (x1 + x2) / 2, laneY - 6);
+
+        // Status marker
+        if (isFalsified) {
+            // Red X for falsified predictions
+            let markX = x2 + 16;
+            fill('#CC0000');
+            textSize(isHovered ? 16 : 14);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text("✗", markX, laneY);
+        } else {
+            // Yellow ? for pending predictions
+            let markX = x2 + 16;
+            fill('#E6A800');
+            textSize(isHovered ? 16 : 14);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text("?", markX, laneY);
+        }
+    }
+
+    // Pattern highlight box
+    let patternBoxX = canvasWidth - 250;
+    let patternBoxY = chartTop + 5;
+    let patternBoxW = 220;
+    let patternBoxH = 80;
+
+    fill(255, 255, 255, 230);
+    stroke('#3F51B5');
+    strokeWeight(2);
+    rect(patternBoxX, patternBoxY, patternBoxW, patternBoxH, 6);
+
+    fill('#3F51B5');
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("The Pattern", patternBoxX + 10, patternBoxY + 8);
+
+    fill('#333');
+    textSize(11);
+    textStyle(NORMAL);
+    text("Every ~5 years, the goalpost", patternBoxX + 10, patternBoxY + 26);
+    text("moves forward by ~5 years.", patternBoxX + 10, patternBoxY + 40);
+
+    fill('#CC0000');
+    textStyle(BOLD);
+    text("Predictions fulfilled: 0 / " + predictions.length, patternBoxX + 10, patternBoxY + 58);
+
+    // Legend
+    let legendY = chartBottom + 60;
+    let legendX = chartLeft;
+
+    fill('#CC0000');
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text("✗", legendX, legendY);
+    fill('#333');
+    textStyle(NORMAL);
+    text("= Falsified prediction", legendX + 14, legendY);
+
+    fill('#E6A800');
+    textStyle(BOLD);
+    text("?", legendX + 170, legendY);
+    fill('#333');
+    textStyle(NORMAL);
+    text("= Pending (not yet falsified)", legendX + 184, legendY);
+
+    // Hover detail tooltip
+    if (hoveredPrediction >= 0) {
+        let p = predictions[hoveredPrediction];
+        let isFalsified = (p.predicted <= currentYear);
+        let tooltipW = 420;
+        let tooltipH = 68;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = drawHeight - tooltipH - 10;
+
+        // Keep tooltip in bounds
+        if (tooltipX < 5) tooltipX = 5;
+        if (tooltipX + tooltipW > canvasWidth - 5) tooltipX = canvasWidth - tooltipW - 5;
+
+        fill(255, 255, 255, 245);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        fill('#333');
+        noStroke();
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text(p.source + " (" + p.made + ")", tooltipX + 10, tooltipY + 8);
+
+        fill('#555');
+        textStyle(NORMAL);
+        textSize(11);
+        text("\"" + p.claim + "\"", tooltipX + 10, tooltipY + 26);
+
+        fill(isFalsified ? '#CC0000' : '#E6A800');
+        textStyle(BOLD);
+        textSize(11);
+        let statusText = isFalsified
+            ? "Status: FALSIFIED — predicted year " + p.predicted + " has passed with no useful QC"
+            : "Status: PENDING — predicted year " + p.predicted + " has not yet arrived";
+        text(statusText, tooltipX + 10, tooltipY + 46);
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Hover over an arrow to see the prediction details", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

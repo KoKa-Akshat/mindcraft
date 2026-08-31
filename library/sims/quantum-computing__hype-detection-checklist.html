@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Hype Detection Checklist</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Hype Detection Checklist
+// An interactive checklist tool for detecting hype in quantum computing announcements
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Checklist items - 10 red flags for hype detection
+let checkItems = [
+    { question: "Uses 'quantum supremacy' or 'quantum advantage' without defining it", checked: false },
+    { question: "No comparison to classical baseline", checked: false },
+    { question: "Vague timeline ('in the coming years')", checked: false },
+    { question: "Claims broad applicability without specific use cases", checked: false },
+    { question: "Cites qubit count without error rates", checked: false },
+    { question: "Uses 'exponential speedup' without specifying the problem", checked: false },
+    { question: "Press release but no peer-reviewed paper", checked: false },
+    { question: "Company has financial interest in the claim", checked: false },
+    { question: "No mention of error correction overhead", checked: false },
+    { question: "Conflates gate-model and annealing approaches", checked: false }
+];
+
+let resetButton;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    resetButton = createButton('Reset');
+    resetButton.parent(document.querySelector('main'));
+    resetButton.position(canvasWidth / 2 - 40, drawHeight + 10);
+    resetButton.size(80, 30);
+    resetButton.style('font-size', '14px');
+    resetButton.style('cursor', 'pointer');
+    resetButton.style('border', '1px solid #999');
+    resetButton.style('border-radius', '4px');
+    resetButton.style('background', '#f0f0f0');
+    resetButton.mousePressed(resetChecklist);
+
+    noLoop();
+}
+
+function resetChecklist() {
+    for (let i = 0; i < checkItems.length; i++) {
+        checkItems[i].checked = false;
+    }
+    redraw();
+}
+
+function getHypeScore() {
+    let score = 0;
+    for (let i = 0; i < checkItems.length; i++) {
+        if (checkItems[i].checked) score++;
+    }
+    return score;
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 4);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Hype Detection Checklist", canvasWidth / 2, margin / 2);
+
+    // Subtitle
+    fill('#666');
+    textSize(12);
+    textStyle(ITALIC);
+    textAlign(CENTER, TOP);
+    text("Click each red flag present in a quantum computing announcement", canvasWidth / 2, margin / 2 + 24);
+
+    // Layout calculations
+    let checklistLeft = margin;
+    let checklistTop = 60;
+    let itemHeight = 44;
+    let checkboxSize = 20;
+    let meterLeft = canvasWidth - 180;
+    let meterWidth = 40;
+    let meterTop = checklistTop + 20;
+    let meterHeight = checkItems.length * itemHeight - 80;
+    let checklistRight = meterLeft - 20;
+
+    // Draw checklist items
+    for (let i = 0; i < checkItems.length; i++) {
+        let item = checkItems[i];
+        let y = checklistTop + i * itemHeight;
+
+        // Checkbox
+        let cbX = checklistLeft + 10;
+        let cbY = y + 6;
+
+        stroke('#666');
+        strokeWeight(1.5);
+        if (item.checked) {
+            fill('#FF7043'); // Orange for checked red flags
+        } else {
+            fill('white');
+        }
+        rect(cbX, cbY, checkboxSize, checkboxSize, 3);
+
+        // Checkmark
+        if (item.checked) {
+            stroke('white');
+            strokeWeight(2.5);
+            noFill();
+            line(cbX + 4, cbY + 10, cbX + 8, cbY + 15);
+            line(cbX + 8, cbY + 15, cbX + 16, cbY + 5);
+        }
+
+        // Item number
+        fill('#999');
+        noStroke();
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text((i + 1) + ".", cbX + checkboxSize + 8, cbY + 3);
+
+        // Question text
+        fill('#333');
+        textSize(13);
+        textStyle(NORMAL);
+        let numWidth = 22;
+        let maxTextW = checklistRight - (cbX + checkboxSize + 12 + numWidth);
+        text(item.question, cbX + checkboxSize + 8 + numWidth, cbY + 3, maxTextW, itemHeight - 6);
+
+        // Separator line
+        if (i < checkItems.length - 1) {
+            stroke('#ddd');
+            strokeWeight(0.5);
+            line(checklistLeft + 10, y + itemHeight - 2, checklistRight, y + itemHeight - 2);
+        }
+    }
+
+    // Hype Score meter
+    let score = getHypeScore();
+    let scoreRatio = score / checkItems.length;
+
+    // Meter label
+    fill('#333');
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Hype", meterLeft + meterWidth / 2 + 30, meterTop - 18);
+    text("Score", meterLeft + meterWidth / 2 + 30, meterTop - 4);
+
+    // Meter background with gradient zones
+    let meterX = meterLeft + 30;
+    stroke('#ccc');
+    strokeWeight(1);
+    fill('#eee');
+    rect(meterX, meterTop + 20, meterWidth, meterHeight, 4);
+
+    // Draw zone indicators on meter background
+    noStroke();
+    let redZoneH = meterHeight * 0.4;   // 7-10
+    let yellowZoneH = meterHeight * 0.3; // 4-6
+    let greenZoneH = meterHeight * 0.3;  // 0-3
+
+    // Red zone (top)
+    fill(255, 205, 210);
+    rect(meterX + 2, meterTop + 22, meterWidth - 4, redZoneH - 4, 3, 3, 0, 0);
+    // Yellow zone (middle)
+    fill(255, 249, 196);
+    rect(meterX + 2, meterTop + 20 + redZoneH, meterWidth - 4, yellowZoneH);
+    // Green zone (bottom)
+    fill(200, 230, 201);
+    rect(meterX + 2, meterTop + 20 + redZoneH + yellowZoneH, meterWidth - 4, greenZoneH - 4, 0, 0, 3, 3);
+
+    // Meter fill overlay
+    let fillHeight = scoreRatio * meterHeight;
+    let meterColor;
+    if (score <= 3) {
+        meterColor = color('#4CAF50'); // Green - Credible
+    } else if (score <= 6) {
+        meterColor = color('#FFC107'); // Yellow - Suspicious
+    } else {
+        meterColor = color('#F44336'); // Red - Likely Hype
+    }
+
+    if (fillHeight > 0) {
+        noStroke();
+        fill(meterColor);
+        let fillY = meterTop + 20 + meterHeight - fillHeight;
+        // Clip to meter bounds
+        let rTop = (fillHeight >= meterHeight - 4) ? 3 : 0;
+        rect(meterX + 2, fillY, meterWidth - 4, fillHeight, rTop, rTop, 3, 3);
+    }
+
+    // Score number
+    fill('#333');
+    noStroke();
+    textSize(28);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(score, meterX + meterWidth / 2, meterTop + 20 + meterHeight + 30);
+
+    textSize(12);
+    textStyle(NORMAL);
+    fill('#666');
+    text("out of " + checkItems.length, meterX + meterWidth / 2, meterTop + 20 + meterHeight + 50);
+
+    // Risk level label and interpretation
+    let riskLabel, riskColor;
+    if (score <= 3) {
+        riskLabel = "Credible";
+        riskColor = '#4CAF50';
+    } else if (score <= 6) {
+        riskLabel = "Suspicious";
+        riskColor = '#FF9800';
+    } else {
+        riskLabel = "Likely Hype";
+        riskColor = '#F44336';
+    }
+
+    fill(riskColor);
+    textSize(16);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text(riskLabel, meterX + meterWidth / 2, meterTop + 20 + meterHeight + 72);
+
+    // Scale labels on meter
+    fill('#999');
+    textSize(9);
+    textStyle(NORMAL);
+    textAlign(LEFT, CENTER);
+    text("0", meterX + meterWidth + 6, meterTop + 20 + meterHeight);
+    text("10", meterX + meterWidth + 6, meterTop + 20);
+
+    // Legend at bottom of draw area
+    let legendY = drawHeight - 30;
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    noStroke();
+
+    fill('#4CAF50');
+    rect(canvasWidth / 2 - 220, legendY - 6, 12, 12, 2);
+    fill('#666');
+    textStyle(NORMAL);
+    textAlign(LEFT, CENTER);
+    text("0-3: Credible", canvasWidth / 2 - 204, legendY);
+
+    fill('#FFC107');
+    rect(canvasWidth / 2 - 80, legendY - 6, 12, 12, 2);
+    fill('#666');
+    text("4-6: Suspicious", canvasWidth / 2 - 64, legendY);
+
+    fill('#F44336');
+    rect(canvasWidth / 2 + 70, legendY - 6, 12, 12, 2);
+    fill('#666');
+    text("7-10: Likely Hype", canvasWidth / 2 + 86, legendY);
+
+    // Position reset button
+    resetButton.position(canvasWidth / 2 - 40, drawHeight + 10);
+}
+
+function mousePressed() {
+    let checklistLeft = margin;
+    let checklistTop = 60;
+    let itemHeight = 44;
+    let checkboxSize = 20;
+    let meterLeft = canvasWidth - 180;
+    let checklistRight = meterLeft - 20;
+
+    for (let i = 0; i < checkItems.length; i++) {
+        let y = checklistTop + i * itemHeight;
+        let cbX = checklistLeft + 10;
+        let cbY = y + 6;
+
+        // Check if click is on the checkbox or its text row
+        if (mouseX >= cbX && mouseX <= checklistRight &&
+            mouseY >= cbY - 2 && mouseY <= cbY + itemHeight - 6) {
+            checkItems[i].checked = !checkItems[i].checked;
+            redraw();
+            return;
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

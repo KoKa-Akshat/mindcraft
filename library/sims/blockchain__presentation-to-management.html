@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Presentation Effectiveness Rubric using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Presentation Effectiveness Rubric - p5.js
+// CANVAS_HEIGHT: 596
+// A 7-criterion x 4-level scoring rubric for capstone project presentations. Hover any
+// cell to read its full performance descriptor in the panel below.
+
+let containerWidth, canvasWidth = 1000;
+let drawHeight = 510;
+let controlHeight = 30;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+
+const LEVELS = [
+  { name: 'Exemplary', pts: 4, color: '#1c7a30' },
+  { name: 'Proficient', pts: 3, color: '#7bbf5a' },
+  { name: 'Developing', pts: 2, color: '#e3c044' },
+  { name: 'Beginning', pts: 1, color: '#e8821a' }
+];
+const CRITERIA = [
+  { c: 'Problem Definition', d: ['Compelling problem with quantified impact and measurable success criteria', 'Problem identified with some quantification and defined success criteria', 'Problem stated but unquantified, vague success criteria', 'Problem unclear or too broad, no success criteria'] },
+  { c: 'Technical Architecture', d: ['Comprehensive diagram, justified tech choices, data model with 10+ node types', 'Complete architecture, explained choices, 6-9 node types', 'Basic architecture, few node types, limited justification', 'Architecture missing or unclear'] },
+  { c: 'Implementation Quality', d: ['Robust, well-tested, clean code; handles edge cases', 'Working implementation with reasonable code quality', 'Partial implementation, limited testing', 'Prototype only or non-functional'] },
+  { c: 'Live Demonstration', d: ['Smooth, compelling demo of real functionality on real data', 'Demo works and shows core features', 'Demo partially works or uses canned data', 'Demo fails or is absent'] },
+  { c: 'Results & Evidence', d: ['Quantified results with validation against a baseline', 'Results shown with some evidence', 'Limited or anecdotal results', 'No results presented'] },
+  { c: 'Presentation Skills', d: ['Polished, well-paced, engaging; excellent visuals', 'Clear and organized delivery', 'Disorganized or hard to follow in places', 'Unclear, unprepared'] },
+  { c: 'Q&A Handling', d: ['Answers confidently with depth, acknowledges limits', 'Answers most questions adequately', 'Struggles with some questions', 'Cannot address questions'] }
+];
+let hoverR = -1, hoverC = -1;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Presentation effectiveness rubric: a grid of seven evaluation criteria scored across four performance levels (Exemplary, Proficient, Developing, Beginning), with full descriptors shown on hover.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('white'); stroke('silver'); strokeWeight(1); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight); noStroke();
+  fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('Capstone Presentation Rubric', canvasWidth / 2, 8);
+
+  const labelW = 180, gridX = margin + labelW, gridW = canvasWidth - margin - gridX, top = 42;
+  const cellW = gridW / 4, headH = 30, rowH = (drawHeight - top - headH - 86) / CRITERIA.length;
+  // header
+  noStroke();
+  LEVELS.forEach((L, i) => { fill(L.color); rect(gridX + i * cellW, top, cellW - 2, headH, 4);
+    fill('white'); textAlign(CENTER, CENTER); textStyle(BOLD); textSize(12); text(L.name + ' (' + L.pts + ')', gridX + i * cellW + cellW / 2, top + headH / 2); textStyle(NORMAL); });
+
+  hoverR = -1; hoverC = -1;
+  CRITERIA.forEach((cr, r) => {
+    const y = top + headH + r * rowH;
+    fill('#eef2f6'); stroke('#dde3e8'); rect(margin, y, labelW - 2, rowH - 2, 3);
+    noStroke(); fill('#1a2733'); textAlign(LEFT, CENTER); textStyle(BOLD); textSize(12); text(cr.c, margin + 8, y + rowH / 2, labelW - 16); textStyle(NORMAL);
+    LEVELS.forEach((L, c) => {
+      const x = gridX + c * cellW;
+      const on = (mouseX > x && mouseX < x + cellW && mouseY > y && mouseY < y + rowH);
+      if (on) { hoverR = r; hoverC = c; }
+      stroke('white'); strokeWeight(on ? 2.5 : 1); fill(lerpColor(color(L.color), color('white'), on ? 0.55 : 0.78));
+      rect(x, y, cellW - 2, rowH - 2, 3);
+      noStroke(); fill('#333'); textAlign(LEFT, TOP); textSize(9.5); text(cr.d[c], x + 6, y + 5, cellW - 12, rowH - 10);
+    });
+  });
+
+  // detail panel
+  const py = top + headH + CRITERIA.length * rowH + 8, ph = drawHeight - py - 8;
+  stroke('#cdd7e0'); fill('#f6f9fb'); strokeWeight(1); rect(margin, py, canvasWidth - 2 * margin, ph, 6); noStroke();
+  if (hoverR >= 0) {
+    fill(LEVELS[hoverC].color); textAlign(LEFT, TOP); textStyle(BOLD); textSize(13);
+    text(CRITERIA[hoverR].c + ' — ' + LEVELS[hoverC].name + ' (' + LEVELS[hoverC].pts + ' pts)', margin + 12, py + 8); textStyle(NORMAL);
+    fill('#333'); textSize(13); text(CRITERIA[hoverR].d[hoverC], margin + 12, py + 30, canvasWidth - 2 * margin - 24);
+  } else {
+    fill('#667'); textAlign(LEFT, TOP); textSize(12.5); text('Hover any cell to read its full descriptor. Max score: ' + (CRITERIA.length * 4) + ' points (' + CRITERIA.length + ' criteria × 4).', margin + 12, py + 14);
+  }
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

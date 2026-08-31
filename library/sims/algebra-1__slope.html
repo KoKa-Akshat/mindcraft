@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slope Explorer and Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+        }
+        button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+    <script>// Slope Explorer and Calculator
+// Interactive slope visualization with draggable points
+
+let canvasWidth = 850;
+let drawHeight = 600;
+let controlHeight = 150;
+let canvasHeight = drawHeight + controlHeight;
+
+let pointA = { x: 1, y: 2 };
+let pointB = { x: 5, y: 6 };
+
+let dragging = null;
+let gridScale = 25;
+let originX, originY;
+
+let showRiseRun = true;
+let extendLine = true;
+let snapToGrid = true;
+
+let randomBtn, riseRunBtn, extendBtn, snapBtn;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  originX = canvasWidth / 2;
+  originY = drawHeight / 2;
+
+  // Create buttons
+  let btnY = drawHeight + 20;
+  randomBtn = createButton('Random Line');
+  randomBtn.position(20, btnY);
+  randomBtn.mousePressed(randomizeLine);
+  randomBtn.parent(document.querySelector('main'));
+
+  riseRunBtn = createButton('Hide Rise/Run');
+  riseRunBtn.position(130, btnY);
+  riseRunBtn.mousePressed(toggleRiseRun);
+  riseRunBtn.parent(document.querySelector('main'));
+
+  extendBtn = createButton('Hide Extension');
+  extendBtn.position(250, btnY);
+  extendBtn.mousePressed(toggleExtend);
+  extendBtn.parent(document.querySelector('main'));
+
+  snapBtn = createButton('Snap: ON');
+  snapBtn.position(375, btnY);
+  snapBtn.mousePressed(toggleSnap);
+  snapBtn.parent(document.querySelector('main'));
+
+  describe('Interactive slope explorer with draggable points and real-time slope calculation', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  originX = canvasWidth / 2;
+
+  // Draw area background
+  background('#FAFAFA');
+  fill('#FFFFFF');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  drawGrid();
+  drawLineAndPoints();
+  drawControlPanel();
+}
+
+function drawGrid() {
+  push();
+  translate(originX, originY);
+
+  // Grid lines
+  stroke('#E0E0E0');
+  strokeWeight(0.5);
+  for (let x = -10; x <= 10; x++) {
+    line(x * gridScale, -10 * gridScale, x * gridScale, 10 * gridScale);
+  }
+  for (let y = -10; y <= 10; y++) {
+    line(-10 * gridScale, y * gridScale, 10 * gridScale, y * gridScale);
+  }
+
+  // Axes
+  stroke('#9E9E9E');
+  strokeWeight(1.5);
+  line(-10 * gridScale, 0, 10 * gridScale, 0);
+  line(0, -10 * gridScale, 0, 10 * gridScale);
+
+  // Axis labels
+  fill('#757575');
+  textSize(10);
+  textAlign(CENTER, TOP);
+  for (let x = -10; x <= 10; x++) {
+    if (x !== 0) text(x, x * gridScale, 5);
+  }
+  textAlign(RIGHT, CENTER);
+  for (let y = -10; y <= 10; y++) {
+    if (y !== 0) text(-y, -5, y * gridScale);
+  }
+  textAlign(CENTER, TOP);
+  text('0', -8, 5);
+
+  pop();
+}
+
+function drawLineAndPoints() {
+  push();
+  translate(originX, originY);
+
+  let ax = pointA.x * gridScale;
+  let ay = -pointA.y * gridScale;
+  let bx = pointB.x * gridScale;
+  let by = -pointB.y * gridScale;
+
+  let rise = pointB.y - pointA.y;
+  let run = pointB.x - pointA.x;
+  let slope = run !== 0 ? rise / run : null;
+
+  // Determine line color based on slope type
+  let lineColor;
+  if (slope === null) {
+    lineColor = '#E65100'; // Undefined - orange
+  } else if (slope === 0) {
+    lineColor = '#2E7D32'; // Zero - green
+  } else if (slope > 0) {
+    lineColor = '#D32F2F'; // Positive - red
+  } else {
+    lineColor = '#7B1FA2'; // Negative - purple
+  }
+
+  // Draw extended line
+  if (extendLine) {
+    stroke(lineColor);
+    strokeWeight(2);
+    if (run === 0) {
+      // Vertical line
+      line(ax, -10 * gridScale, ax, 10 * gridScale);
+    } else {
+      // Calculate line extension
+      let x1 = -10 * gridScale;
+      let x2 = 10 * gridScale;
+      let y1 = ay + (slope * gridScale) * ((-10) - pointA.x);
+      let y2 = ay + (slope * gridScale) * (10 - pointA.x);
+      line(x1, y1, x2, y2);
+    }
+  }
+
+  // Draw segment between points
+  stroke(lineColor);
+  strokeWeight(3);
+  line(ax, ay, bx, by);
+
+  // Draw rise/run indicators
+  if (showRiseRun && run !== 0) {
+    // Run arrow (blue, horizontal)
+    stroke('#1976D2');
+    strokeWeight(3);
+    line(ax, ay, bx, ay);
+    // Arrow head
+    let dir = run > 0 ? 1 : -1;
+    line(bx - dir * 10, ay - 7, bx, ay);
+    line(bx - dir * 10, ay + 7, bx, ay);
+
+    // Rise arrow (green or orange)
+    let riseColor = rise >= 0 ? '#4CAF50' : '#FF9800';
+    stroke(riseColor);
+    line(bx, ay, bx, by);
+    // Arrow head
+    let risedir = rise > 0 ? -1 : 1;
+    if (rise !== 0) {
+      line(bx - 7, by + risedir * 10, bx, by);
+      line(bx + 7, by + risedir * 10, bx, by);
+    }
+
+    // Right angle symbol
+    stroke('#9E9E9E');
+    strokeWeight(1);
+    noFill();
+    let signX = run > 0 ? -1 : 1;
+    let signY = rise > 0 ? 1 : -1;
+    rect(bx + signX * 8, ay + signY * 8, -signX * 8, -signY * 8);
+
+    // Labels
+    noStroke();
+    textSize(11);
+    fill('#1976D2');
+    textAlign(CENTER, TOP);
+    text(`Run = ${run}`, (ax + bx) / 2, ay + 10);
+
+    fill(rise >= 0 ? '#4CAF50' : '#FF9800');
+    textAlign(LEFT, CENTER);
+    text(`Rise = ${rise}`, bx + 10, (ay + by) / 2);
+  }
+
+  // Draw points
+  noStroke();
+  fill('#1565C0');
+  ellipse(ax, ay, 16, 16);
+  fill('#D32F2F');
+  ellipse(bx, by, 16, 16);
+
+  // Point labels
+  textSize(11);
+  textStyle(BOLD);
+  fill('#1565C0');
+  textAlign(LEFT, CENTER);
+  text(`A(${pointA.x}, ${pointA.y})`, ax + 12, ay - 8);
+  fill('#D32F2F');
+  text(`B(${pointB.x}, ${pointB.y})`, bx + 12, by - 8);
+  textStyle(NORMAL);
+
+  pop();
+}
+
+function drawControlPanel() {
+  // Panel background
+  fill('#F5F5F5');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Divider
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  let rise = pointB.y - pointA.y;
+  let run = pointB.x - pointA.x;
+  let slope = run !== 0 ? rise / run : null;
+
+  // Slope Calculation section
+  fill('#424242');
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text('Slope Calculation', 20, drawHeight + 55);
+  textStyle(NORMAL);
+
+  textSize(12);
+  fill('#616161');
+  let calcX = 20;
+  let calcY = drawHeight + 75;
+
+  text(`m = (y₂ - y₁) / (x₂ - x₁)`, calcX, calcY);
+  text(`m = (${pointB.y} - ${pointA.y}) / (${pointB.x} - ${pointA.x})`, calcX, calcY + 16);
+  text(`m = ${rise} / ${run}`, calcX, calcY + 32);
+
+  if (slope !== null) {
+    fill('#1565C0');
+    textStyle(BOLD);
+    text(`m = ${slope.toFixed(3)}`, calcX, calcY + 50);
+  } else {
+    fill('#E65100');
+    textStyle(BOLD);
+    text(`m = undefined (division by zero)`, calcX, calcY + 50);
+  }
+  textStyle(NORMAL);
+
+  // Interpretation section
+  let interpX = canvasWidth - 280;
+  let interpY = drawHeight + 55;
+
+  fill('#424242');
+  textSize(14);
+  textStyle(BOLD);
+  text('Interpretation', interpX, interpY);
+  textStyle(NORMAL);
+
+  textSize(12);
+  let icon, typeText, descText, typeColor;
+
+  if (slope === null) {
+    icon = '↑';
+    typeText = 'Undefined Slope';
+    descText = 'Vertical line (x = constant)';
+    typeColor = '#E65100';
+  } else if (slope === 0) {
+    icon = '→';
+    typeText = 'Zero Slope';
+    descText = 'Horizontal line (y = constant)';
+    typeColor = '#2E7D32';
+  } else if (slope > 0) {
+    icon = '↗';
+    typeText = 'Positive Slope';
+    descText = 'Line rises from left to right';
+    typeColor = '#D32F2F';
+  } else {
+    icon = '↘';
+    typeText = 'Negative Slope';
+    descText = 'Line falls from left to right';
+    typeColor = '#7B1FA2';
+  }
+
+  fill(typeColor);
+  textSize(24);
+  text(icon, interpX, interpY + 22);
+
+  textSize(13);
+  textStyle(BOLD);
+  text(typeText, interpX + 30, interpY + 25);
+  textStyle(NORMAL);
+
+  fill('#616161');
+  textSize(11);
+  text(descText, interpX + 30, interpY + 45);
+
+  // Steepness indicator
+  if (slope !== null && slope !== 0) {
+    let steepness = abs(slope) > 1 ? 'Steep' : 'Gentle';
+    text(`${steepness} slope (|m| = ${abs(slope).toFixed(2)})`, interpX + 30, interpY + 62);
+  }
+
+  // Instructions
+  fill('#9E9E9E');
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  text('Drag points A (blue) or B (red) to explore different slopes', canvasWidth / 2, drawHeight + controlHeight - 5);
+}
+
+function randomizeLine() {
+  pointA.x = floor(random(-7, 7));
+  pointA.y = floor(random(-7, 7));
+  pointB.x = floor(random(-7, 7));
+  pointB.y = floor(random(-7, 7));
+  // Ensure different points
+  while (pointA.x === pointB.x && pointA.y === pointB.y) {
+    pointB.x = floor(random(-7, 7));
+    pointB.y = floor(random(-7, 7));
+  }
+}
+
+function toggleRiseRun() {
+  showRiseRun = !showRiseRun;
+  riseRunBtn.html(showRiseRun ? 'Hide Rise/Run' : 'Show Rise/Run');
+}
+
+function toggleExtend() {
+  extendLine = !extendLine;
+  extendBtn.html(extendLine ? 'Hide Extension' : 'Show Extension');
+}
+
+function toggleSnap() {
+  snapToGrid = !snapToGrid;
+  snapBtn.html(snapToGrid ? 'Snap: ON' : 'Snap: OFF');
+}
+
+function mousePressed() {
+  let mx = mouseX - originX;
+  let my = mouseY - originY;
+
+  let ax = pointA.x * gridScale;
+  let ay = -pointA.y * gridScale;
+  let bx = pointB.x * gridScale;
+  let by = -pointB.y * gridScale;
+
+  if (dist(mx, my, ax, ay) < 15) {
+    dragging = 'A';
+  } else if (dist(mx, my, bx, by) < 15) {
+    dragging = 'B';
+  }
+}
+
+function mouseDragged() {
+  if (!dragging) return;
+
+  let mx = (mouseX - originX) / gridScale;
+  let my = -(mouseY - originY) / gridScale;
+
+  if (snapToGrid) {
+    mx = round(mx);
+    my = round(my);
+  }
+
+  mx = constrain(mx, -9, 9);
+  my = constrain(my, -9, 9);
+
+  if (dragging === 'A') {
+    pointA.x = mx;
+    pointA.y = my;
+  } else if (dragging === 'B') {
+    pointB.x = mx;
+    pointB.y = my;
+  }
+}
+
+function mouseReleased() {
+  dragging = null;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  originX = canvasWidth / 2;
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 850);
+    canvasWidth = max(canvasWidth, 600);
+    gridScale = canvasWidth / 34;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

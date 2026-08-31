@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>TCP and UDP Socket Lifecycle using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// TCP and UDP Socket Lifecycle
+// CANVAS_HEIGHT: 640
+// Side-by-side system-call sequences for a TCP server, TCP client, and UDP
+// peer, with synchronization arrows and a clickable detail panel.
+// Bloom: Understand.
+
+let containerWidth;
+let canvasWidth = 960;
+let drawHeight = 600;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+
+const AMBER = '#F5A623', SLATE = '#546e7a';
+let nonBlocking = false, showStates = false;
+let nbBtn, stateBtn;
+let selected = null;
+
+// lanes: each call {name, c, py, blocks, err, state}
+const lanes = [
+  { title: 'TCP Server', color: SLATE, calls: [
+    { name: 'socket()', c: 'int s = socket(AF_INET, SOCK_STREAM, 0);', py: 's = socket(AF_INET, SOCK_STREAM)', blocks: 'no', err: 'EMFILE, ENFILE', state: 'CLOSED' },
+    { name: 'bind()', c: 'bind(s, &addr, len);', py: 's.bind((host, port))', blocks: 'no', err: 'EADDRINUSE', state: 'CLOSED' },
+    { name: 'listen()', c: 'listen(s, backlog);', py: 's.listen(backlog)', blocks: 'no', err: 'EADDRINUSE', state: 'LISTEN' },
+    { name: 'accept()', c: 'int c = accept(s, &cli, &len);', py: 'conn, addr = s.accept()', blocks: 'until a client completes the handshake', err: 'EAGAIN (non-blocking)', state: 'SYN_RCVD → ESTABLISHED' },
+    { name: 'recv()/send()', c: 'recv(c, buf, n, 0);', py: 'data = conn.recv(n)', blocks: 'recv blocks until data arrives', err: 'ECONNRESET', state: 'ESTABLISHED' },
+    { name: 'close()', c: 'close(c);', py: 'conn.close()', blocks: 'no', err: '-', state: 'CLOSE_WAIT → CLOSED' }
+  ] },
+  { title: 'TCP Client', color: AMBER, calls: [
+    { name: 'socket()', c: 'int s = socket(AF_INET, SOCK_STREAM, 0);', py: 's = socket(AF_INET, SOCK_STREAM)', blocks: 'no', err: 'EMFILE' },
+    { name: 'connect()', c: 'connect(s, &srv, len);', py: 's.connect((host, port))', blocks: 'until the 3-way handshake completes', err: 'ECONNREFUSED, ETIMEDOUT' },
+    { name: 'send()/recv()', c: 'send(s, buf, n, 0);', py: 's.send(data)', blocks: 'recv blocks until data arrives', err: 'EPIPE' },
+    { name: 'close()', c: 'close(s);', py: 's.close()', blocks: 'no', err: '-' }
+  ] },
+  { title: 'UDP (peer)', color: '#00897b', calls: [
+    { name: 'socket()', c: 'int s = socket(AF_INET, SOCK_DGRAM, 0);', py: 's = socket(AF_INET, SOCK_DGRAM)', blocks: 'no', err: 'EMFILE' },
+    { name: 'bind() (optional)', c: 'bind(s, &addr, len);', py: 's.bind((host, port))', blocks: 'no', err: 'EADDRINUSE' },
+    { name: 'sendto()/recvfrom()', c: 'recvfrom(s, buf, n, 0, &from, &len);', py: 'data, addr = s.recvfrom(n)', blocks: 'recvfrom blocks until a datagram arrives', err: '-' },
+    { name: 'close()', c: 'close(s);', py: 's.close()', blocks: 'no', err: '-' }
+  ] }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  nbBtn = createButton('Show non-blocking variants'); nbBtn.position(10, drawHeight + 8); nbBtn.mousePressed(() => { nonBlocking = !nonBlocking; nbBtn.html(nonBlocking ? 'Hide non-blocking variants' : 'Show non-blocking variants'); });
+  stateBtn = createButton('Show kernel state machine'); stateBtn.position(230, drawHeight + 8); stateBtn.mousePressed(() => { showStates = !showStates; stateBtn.html(showStates ? 'Hide kernel state machine' : 'Show kernel state machine'); });
+  describe('Three lanes of socket system calls for a TCP server, TCP client, ' +
+    'and UDP peer, with synchronization arrows between connect/accept and ' +
+    'send/recv, and a clickable detail panel for each call.', LABEL);
+}
+
+function laneGeom() { const pw = selected ? min(300, canvasWidth * 0.32) : 0; const aw = canvasWidth - pw - (selected ? 3 * margin : 2 * margin); return { aw, pw, px: canvasWidth - pw - margin }; }
+function laneX(li, aw) { return margin + (li + 0.5) * (aw / 3); }
+function callY(ci) { return 90 + ci * 74; }
+
+function draw() {
+  updateCanvasSize();
+  stroke('silver'); strokeWeight(1);
+  fill('aliceblue'); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  const g = laneGeom();
+  noStroke(); fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('TCP & UDP Socket Lifecycle', g.aw / 2 + margin, 6);
+
+  // sync arrows first (under boxes): connect(client c1) -> accept(server c3)
+  const sx = laneX(0, g.aw), cx = laneX(1, g.aw);
+  stroke(AMBER); strokeWeight(2);
+  drawDashed(cx - 60, callY(1) + 12, sx + 60, callY(3) + 12);
+  noStroke(); fill('#c77f12'); textAlign(CENTER, CENTER); textSize(10); text('3-way handshake', (cx + sx) / 2, (callY(1) + callY(3)) / 2 - 6);
+  // data: client send (c2) <-> server recv (c4)
+  stroke('#bdbdbd'); strokeWeight(1.5); drawDashed(cx - 60, callY(2) + 12, sx + 60, callY(4) + 12);
+
+  for (let li = 0; li < lanes.length; li++) drawLane(li, g.aw);
+
+  if (selected) drawPanel(g);
+
+  noStroke(); fill('#455a64'); textAlign(LEFT, CENTER); textSize(12);
+  if (!selected) text('Click a system call to see its signature, blocking behavior, and errors.', 470, drawHeight + 20);
+}
+
+function drawLane(li, aw) {
+  const lane = lanes[li]; const x = laneX(li, aw);
+  noStroke(); fill(lane.color); textAlign(CENTER, TOP); textSize(14); textStyle(BOLD); text(lane.title, x, 50); textStyle(NORMAL);
+  // vertical connector
+  stroke('#cfd8dc'); strokeWeight(1.5); line(x, callY(0), x, callY(lane.calls.length - 1) + 24);
+  for (let ci = 0; ci < lane.calls.length; ci++) {
+    const call = lane.calls[ci]; const y = callY(ci);
+    const sel = selected && selected.li === li && selected.ci === ci;
+    noStroke(); fill(sel ? '#4a148c' : 'white'); stroke(sel ? '#4a148c' : lane.color); strokeWeight(sel ? 3 : 2);
+    rectMode(CENTER); rect(x, y, 150, 30, 6); rectMode(CORNER);
+    noStroke(); fill(sel ? 'white' : '#263238'); textAlign(CENTER, CENTER); textSize(12); text(call.name, x, y);
+    call._box = { x: x - 75, y: y - 15, w: 150, h: 30 };
+    if (nonBlocking && call.blocks !== 'no') { noStroke(); fill('#c62828'); textAlign(LEFT, CENTER); textSize(9); text('O_NONBLOCK → EAGAIN', x + 80, y); }
+    if (showStates && li === 0 && call.state) { noStroke(); fill('#1565c0'); textAlign(RIGHT, CENTER); textSize(9); text(call.state, x - 80, y); }
+  }
+}
+
+function drawPanel(g) {
+  const call = lanes[selected.li].calls[selected.ci];
+  const px = g.px, py = 50, pw = g.pw, ph = drawHeight - 70;
+  stroke('#b0bec5'); strokeWeight(1); fill(255, 255, 255, 248); rect(px, py, pw, ph, 8);
+  let y = py + 12; const x = px + 12;
+  noStroke(); fill('#4a148c'); textAlign(LEFT, TOP); textSize(15); text(lanes[selected.li].title + ': ' + call.name, x, y, pw - 24, 22); y += 30;
+  fill('#607d8b'); textSize(11); text('C', x, y); y += 13;
+  fill('#263238'); textFont('monospace'); textSize(11); y = wrapText(call.c, x, y, pw - 24, 14) + 6;
+  fill('#607d8b'); textFont('Arial'); textSize(11); text('PYTHON', x, y); y += 13;
+  fill('#263238'); textFont('monospace'); textSize(11); y = wrapText(call.py, x, y, pw - 24, 14) + 8; textFont('Arial');
+  fill('#607d8b'); textSize(11); text('BLOCKS ON', x, y); y += 13; fill('#263238'); textSize(12); y = wrapText(call.blocks, x, y, pw - 24, 15) + 8;
+  fill('#607d8b'); textSize(11); text('ERRORS TO HANDLE', x, y); y += 13; fill('#c62828'); textSize(12); y = wrapText(call.err, x, y, pw - 24, 15);
+  if (nonBlocking && call.blocks !== 'no') { y += 8; fill('#c62828'); textSize(11); wrapText('Non-blocking: returns immediately with EAGAIN/EWOULDBLOCK if not ready.', x, y, pw - 24, 14); }
+}
+
+function wrapText(s, x, y, w, lh) { const words = s.split(' '); let line = ''; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (textWidth(t) > w && line) { text(line, x, y); y += lh; line = wd; } else line = t; } if (line) { text(line, x, y); y += lh; } return y; }
+function drawDashed(x1, y1, x2, y2) { const d = dist(x1, y1, x2, y2), steps = floor(d / 8); for (let i = 0; i < steps; i += 2) { const t1 = i / steps, t2 = min(1, (i + 1) / steps); line(lerp(x1, x2, t1), lerp(y1, y2, t1), lerp(x1, x2, t2), lerp(y1, y2, t2)); } }
+
+function mousePressed() {
+  if (mouseY > drawHeight) return;
+  const g = laneGeom();
+  for (let li = 0; li < lanes.length; li++) for (let ci = 0; ci < lanes[li].calls.length; ci++) {
+    const b = lanes[li].calls[ci]._box;
+    if (b && mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h) { selected = (selected && selected.li === li && selected.ci === ci) ? null : { li, ci }; return; }
+  }
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); redraw(); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

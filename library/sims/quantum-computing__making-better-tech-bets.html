@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Ethical Decision Framework for QC Claims</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Ethical Decision Framework for QC Claims
+// A p5.js MicroSim for evaluating the ethics of quantum computing investment claims
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Sliders
+let truthfulnessSlider;
+let transparencySlider;
+let responsibilitySlider;
+let fairnessSlider;
+let resetButton;
+
+// Dimension definitions
+let dimensions = [
+    {
+        name: "Truthfulness",
+        question: "Is the claim accurate and supported by evidence?",
+        lowLabel: "Misleading",
+        highLabel: "Verified",
+        slider: null
+    },
+    {
+        name: "Transparency",
+        question: "Are limitations and uncertainties disclosed?",
+        lowLabel: "Opaque",
+        highLabel: "Full Disclosure",
+        slider: null
+    },
+    {
+        name: "Responsibility",
+        question: "Are risks to investors and stakeholders acknowledged?",
+        lowLabel: "Risk Hidden",
+        highLabel: "Risk Disclosed",
+        slider: null
+    },
+    {
+        name: "Fairness",
+        question: "Are alternative uses of funds considered?",
+        lowLabel: "Ignored",
+        highLabel: "Considered",
+        slider: null
+    }
+];
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function getScoreColor(val) {
+    if (val <= 2) return color(220, 53, 69);       // Red
+    if (val <= 3) return color(255, 193, 7);        // Yellow
+    return color(40, 167, 69);                       // Green
+}
+
+function getScoreColorAlpha(val, a) {
+    if (val <= 2) return color(220, 53, 69, a);
+    if (val <= 3) return color(255, 193, 7, a);
+    return color(40, 167, 69, a);
+}
+
+function getVerdict(score) {
+    if (score < 2) return { text: "Ethically Concerning", color: color(220, 53, 69), detail: "This claim shows significant ethical deficiencies. Investors and stakeholders should exercise extreme caution." };
+    if (score < 3) return { text: "Needs Improvement", color: color(255, 140, 0), detail: "This claim has notable ethical gaps. Additional disclosure and evidence are required before proceeding." };
+    if (score < 4) return { text: "Acceptable", color: color(100, 149, 237), detail: "This claim meets basic ethical standards but could benefit from greater transparency and rigor." };
+    return { text: "Exemplary", color: color(40, 167, 69), detail: "This claim demonstrates strong ethical standards with verified evidence and full disclosure." };
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+
+    // Create sliders
+    let sliderWidth = 200;
+    let sliderX = sliderLeftMargin + 10;
+
+    for (let i = 0; i < dimensions.length; i++) {
+        let s = createSlider(1, 5, 3, 1);
+        s.parent(document.querySelector('main'));
+        s.style('width', sliderWidth + 'px');
+        s.style('position', 'absolute');
+        s.input(function() { redraw(); });
+        dimensions[i].slider = s;
+    }
+
+    // Create reset button
+    resetButton = createButton('Reset');
+    resetButton.parent(document.querySelector('main'));
+    resetButton.style('position', 'absolute');
+    resetButton.style('font-size', '14px');
+    resetButton.style('padding', '4px 16px');
+    resetButton.style('cursor', 'pointer');
+    resetButton.mousePressed(function() {
+        for (let i = 0; i < dimensions.length; i++) {
+            dimensions[i].slider.value(3);
+        }
+        redraw();
+    });
+
+    positionControls();
+    redraw();
+}
+
+function positionControls() {
+    let sliderWidth = min(200, canvasWidth - sliderLeftMargin - margin - 200);
+    let sliderX = sliderLeftMargin + 10;
+    let startY = 105;
+    let rowHeight = 95;
+
+    for (let i = 0; i < dimensions.length; i++) {
+        dimensions[i].slider.style('width', sliderWidth + 'px');
+        dimensions[i].slider.position(
+            document.querySelector('main').offsetLeft + sliderX,
+            document.querySelector('main').offsetTop + startY + i * rowHeight + 42
+        );
+    }
+
+    resetButton.position(
+        document.querySelector('main').offsetLeft + canvasWidth / 2 - 30,
+        document.querySelector('main').offsetTop + drawHeight + 12
+    );
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Ethical Decision Framework for QC Claims", canvasWidth / 2, 12);
+
+    // Subtitle
+    fill('#666');
+    textSize(12);
+    textStyle(ITALIC);
+    textAlign(CENTER, TOP);
+    text("Rate each ethical dimension from 1 (poor) to 5 (excellent)", canvasWidth / 2, 38);
+
+    // Draw dimension rows
+    let startY = 65;
+    let rowHeight = 95;
+    let sliderWidth = min(200, canvasWidth - sliderLeftMargin - margin - 200);
+    let barLeft = sliderLeftMargin + sliderWidth + 40;
+    let barMaxWidth = canvasWidth - barLeft - margin - 10;
+
+    for (let i = 0; i < dimensions.length; i++) {
+        let d = dimensions[i];
+        let val = d.slider.value();
+        let y = startY + i * rowHeight;
+
+        // Dimension name
+        fill('#1A237E');
+        noStroke();
+        textSize(15);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text(d.name, margin, y + 5);
+
+        // Question
+        fill('#555');
+        textSize(11);
+        textStyle(NORMAL);
+        text(d.question, margin, y + 24);
+
+        // Slider labels
+        fill('#999');
+        textSize(10);
+        textAlign(LEFT, TOP);
+        text(d.lowLabel, sliderLeftMargin + 10, y + 58);
+        textAlign(RIGHT, TOP);
+        text(d.highLabel, sliderLeftMargin + sliderWidth + 10, y + 58);
+
+        // Value display next to slider
+        let scoreCol = getScoreColor(val);
+        fill(scoreCol);
+        textSize(22);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        text(val, sliderLeftMargin + sliderWidth + 18, y + 48);
+
+        // Horizontal bar
+        let barWidth = (val / 5) * barMaxWidth;
+        let barY = y + 12;
+        let barH = 28;
+
+        // Bar background
+        fill(230);
+        noStroke();
+        rect(barLeft, barY, barMaxWidth, barH, 4);
+
+        // Bar fill
+        fill(getScoreColorAlpha(val, 200));
+        rect(barLeft, barY, barWidth, barH, 4, val >= 5 ? 4 : 0, val >= 5 ? 4 : 0, 4);
+
+        // Bar scale markers
+        fill('#BBB');
+        textSize(9);
+        textAlign(CENTER, TOP);
+        textStyle(NORMAL);
+        for (let v = 1; v <= 5; v++) {
+            let markerX = barLeft + ((v) / 5) * barMaxWidth;
+            stroke('#CCC');
+            strokeWeight(1);
+            line(markerX, barY + barH, markerX, barY + barH + 4);
+            noStroke();
+            text(v, markerX, barY + barH + 5);
+        }
+
+        // Separator line
+        if (i < dimensions.length - 1) {
+            stroke('#DDD');
+            strokeWeight(1);
+            line(margin, y + rowHeight - 5, canvasWidth - margin, y + rowHeight - 5);
+        }
+    }
+
+    // Calculate overall score
+    let totalScore = 0;
+    for (let i = 0; i < dimensions.length; i++) {
+        totalScore += dimensions[i].slider.value();
+    }
+    let avgScore = totalScore / dimensions.length;
+    let verdict = getVerdict(avgScore);
+
+    // Verdict panel
+    let panelY = startY + dimensions.length * rowHeight + 5;
+    let panelH = drawHeight - panelY - 10;
+    let panelX = margin;
+    let panelW = canvasWidth - margin * 2;
+
+    // Panel background
+    fill(255, 255, 255, 220);
+    stroke(verdict.color);
+    strokeWeight(2);
+    rect(panelX, panelY, panelW, panelH, 8);
+
+    // Overall score
+    fill('#333');
+    noStroke();
+    textSize(14);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text("Overall Ethical Score:", panelX + 15, panelY + panelH / 2 - 12);
+
+    // Score number
+    fill(verdict.color);
+    textSize(28);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    let scoreText = avgScore.toFixed(1) + " / 5.0";
+    text(scoreText, panelX + 185, panelY + panelH / 2 - 12);
+
+    // Verdict label
+    let verdictX = panelX + 330;
+    fill(255);
+    noStroke();
+    let verdictLabelW = textWidth(verdict.text) + 24;
+    fill(verdict.color);
+    rect(verdictX, panelY + panelH / 2 - 28, verdictLabelW, 30, 15);
+    fill(255);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(verdict.text, verdictX + verdictLabelW / 2, panelY + panelH / 2 - 13);
+
+    // Verdict detail
+    fill('#555');
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    let detailMaxW = panelW - 30;
+    text(verdict.detail, panelX + 15, panelY + panelH / 2 + 18, detailMaxW);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    positionControls();
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

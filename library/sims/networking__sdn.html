@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>SDN Architecture: Control vs. Data Plane using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// SDN Architecture: Control vs. Data Plane
+// CANVAS_HEIGHT: 600
+// Interactive infographic of the three SDN planes (application, control, data)
+// and the northbound/southbound APIs between them. Bloom: Understand.
+
+let containerWidth;
+let canvasWidth = 940;
+let drawHeight = 560;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 16;
+let defaultTextSize = 16;
+
+const YELLOW = '#FFF59D', AMBER = '#F5A623', SLATE = '#546e7a', RED = '#e53935';
+let ctrlDown = false, loadBalance = false;
+let failBtn, lbBtn;
+let selected = null;   // {kind:'plane'|'switch', id}
+
+const apps = ['Traffic engineering', 'Security policy', 'Network monitoring'];
+const planeInfo = {
+  app: { title: 'Application Plane', desc: 'Network applications express intent: what the network should do. They call the controller through the northbound API.', ex: 'Traffic engineering, firewalls/policy, monitoring & analytics' },
+  control: { title: 'Control Plane (SDN Controller)', desc: 'The logically-centralized brain. Builds a global topology view, computes routes/policy, and pushes flow rules down to switches.', ex: 'ONOS, OpenDaylight, Ryu' },
+  data: { title: 'Data Plane', desc: 'Dumb-but-fast forwarding devices. They just match packets against installed flow rules and apply actions — no local routing decisions.', ex: 'OpenFlow/P4 switches, programmable ASICs' }
+};
+const switches = ['S1', 'S2', 'S3', 'S4', 'S5'];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  failBtn = createButton('Failure: controller unreachable'); failBtn.position(10, drawHeight + 8); failBtn.mousePressed(() => { ctrlDown = !ctrlDown; failBtn.html(ctrlDown ? 'Restore controller' : 'Failure: controller unreachable'); });
+  lbBtn = createButton('Inject app: load balance'); lbBtn.position(260, drawHeight + 8); lbBtn.mousePressed(() => { loadBalance = !loadBalance; lbBtn.html(loadBalance ? 'Remove load-balance app' : 'Inject app: load balance'); });
+  describe('An SDN architecture infographic with the application plane on top, ' +
+    'the SDN controller in the middle, and forwarding switches at the bottom, ' +
+    'connected by northbound (REST/gRPC) and southbound (OpenFlow/P4) APIs.', LABEL);
+}
+
+function panelW() { return selected ? min(280, canvasWidth * 0.30) : 0; }
+function areaW() { return canvasWidth - panelW() - (selected ? margin : 0); }
+
+function draw() {
+  updateCanvasSize();
+  stroke('silver'); strokeWeight(1);
+  fill('aliceblue'); rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  noStroke(); fill('black'); textAlign(CENTER, TOP); textSize(20);
+  text('SDN Architecture: Control vs. Data Plane', areaW() / 2, 6);
+
+  const aw = areaW();
+  const appY = 44, appH = 90, ctrlY = 200, ctrlH = 110, dataY = 360, dataH = 170;
+
+  // Application plane
+  drawPlaneBand('app', margin, appY, aw - 2 * margin, appH, YELLOW, 'Application Plane');
+  for (let i = 0; i < apps.length; i++) {
+    const bw = (aw - 2 * margin - 40) / 3, x = margin + 20 + i * (bw + 0) + i * 0;
+    const bx = margin + 20 + i * ((aw - 2 * margin - 40) / 3);
+    noStroke(); fill('white'); stroke('#c9b037'); rect(bx, appY + 30, (aw - 2 * margin - 40) / 3 - 10, 44, 6);
+    noStroke(); fill('#5d4037'); textAlign(CENTER, CENTER); textSize(12); text(apps[i] + (loadBalance && i === 0 ? ' + LB' : ''), bx + ((aw - 2 * margin - 40) / 3 - 10) / 2, appY + 52, (aw - 2 * margin - 40) / 3 - 14, 40);
+  }
+
+  // Control plane
+  drawPlaneBand('control', margin, ctrlY, aw - 2 * margin, ctrlH, AMBER, 'Control Plane');
+  const cw = min(360, aw - 80), cx = margin + (aw - 2 * margin) / 2 - cw / 2;
+  noStroke(); fill(ctrlDown ? '#ffcdd2' : 'white'); stroke(ctrlDown ? RED : '#c77f12'); strokeWeight(2); rect(cx, ctrlY + 28, cw, 64, 8);
+  noStroke(); fill('#3e2723'); textAlign(CENTER, TOP); textSize(13); text('SDN Controller (ONOS / OpenDaylight)' + (ctrlDown ? '  — DOWN' : ''), cx + cw / 2, ctrlY + 32);
+  ['Topology', 'Routing', 'Policy'].forEach((t, i) => { const iw = cw / 3 - 12; const ix = cx + 8 + i * (cw / 3); noStroke(); fill('#fff3e0'); stroke('#e0b070'); rect(ix, ctrlY + 56, iw, 28, 4); noStroke(); fill('#5d4037'); textAlign(CENTER, CENTER); textSize(11); text(t, ix + iw / 2, ctrlY + 70); });
+
+  // Data plane
+  drawPlaneBand('data', margin, dataY, aw - 2 * margin, dataH, SLATE, 'Data Plane');
+  const swY = dataY + 80;
+  for (let i = 0; i < switches.length; i++) {
+    const sx = margin + 60 + i * ((aw - 2 * margin - 120) / 4);
+    // mesh links
+    if (i < switches.length - 1) { stroke('#90a4ae'); strokeWeight(1.5); line(sx, swY, margin + 60 + (i + 1) * ((aw - 2 * margin - 120) / 4), swY); }
+    drawSwitch(switches[i], sx, swY);
+  }
+
+  // Northbound API (apps -> controller)
+  drawApi((margin + (aw) / 2), appY + appH, (margin + (aw) / 2), ctrlY, 'REST / gRPC (northbound)', '#1565c0', false);
+  // Southbound API (controller -> switches)
+  drawApi((margin + (aw) / 2), ctrlY + ctrlH, (margin + (aw) / 2), dataY, 'OpenFlow / P4 / gNMI (southbound)', '#6a1b9a', ctrlDown);
+
+  if (selected) drawPanel(aw);
+
+  noStroke(); fill('#455a64'); textAlign(LEFT, CENTER); textSize(12);
+  if (!selected) text('Click a plane or a switch for details.', 470, drawHeight + 20);
+}
+
+function drawPlaneBand(id, x, y, w, h, col, label) {
+  const sel = selected && selected.kind === 'plane' && selected.id === id;
+  noStroke(); fill(col); stroke(sel ? '#4a148c' : '#bdbdbd'); strokeWeight(sel ? 3 : 1); rect(x, y, w, h, 8);
+  noStroke(); fill('#37474f'); textAlign(LEFT, TOP); textSize(13); text(label, x + 8, y + 6);
+}
+
+function drawSwitch(id, x, y) {
+  const sel = selected && selected.kind === 'switch' && selected.id === id;
+  noStroke(); fill(ctrlDown ? '#78909c' : '#455a64'); stroke(sel ? '#4a148c' : '#263238'); strokeWeight(sel ? 3 : 1.5); rectMode(CENTER); rect(x, y, 56, 32, 5); rectMode(CORNER);
+  noStroke(); fill('white'); textAlign(CENTER, CENTER); textSize(12); text(id, x, y);
+  if (ctrlDown) { noStroke(); fill('#ffcc80'); textAlign(CENTER, TOP); textSize(8); text('local fallback', x, y + 18); }
+}
+
+function drawApi(x1, y1, x2, y2, label, col, broken) {
+  stroke(broken ? RED : col); strokeWeight(2);
+  drawDashed(x1, y1, x2, y2 - 8);
+  noStroke(); fill(broken ? RED : col); triangle(x2, y2, x2 - 5, y2 - 9, x2 + 5, y2 - 9);
+  // upward arrowhead too (bidirectional intent)
+  fill(broken ? RED : col); triangle(x1, y1, x1 - 5, y1 + 9, x1 + 5, y1 + 9);
+  noStroke(); fill(broken ? RED : col); textAlign(LEFT, CENTER); textSize(11);
+  text(label + (broken ? '  ✗ severed' : ''), x1 + 12, (y1 + y2) / 2);
+}
+
+function drawPanel(aw) {
+  const px = aw + margin - margin, pxx = canvasWidth - panelW() - margin, py = 44, pw = panelW(), ph = drawHeight - 70;
+  stroke('#b0bec5'); strokeWeight(1); fill(255, 255, 255, 248); rect(pxx, py, pw, ph, 8);
+  let y = py + 12; const x = pxx + 12;
+  noStroke(); textAlign(LEFT, TOP);
+  if (selected.kind === 'plane') {
+    const inf = planeInfo[selected.id];
+    fill('#4a148c'); textSize(15); y = wrapText(inf.title, x, y, pw - 24, 20) + 6;
+    fill('#263238'); textSize(12); y = wrapText(inf.desc, x, y, pw - 24, 16) + 8;
+    fill('#607d8b'); textSize(11); text('EXAMPLES', x, y); y += 14;
+    fill('#263238'); textSize(12); wrapText(inf.ex, x, y, pw - 24, 16);
+  } else {
+    fill('#4a148c'); textSize(15); text('Switch ' + selected.id + ' flow table', x, y); y += 24;
+    fill('#607d8b'); textFont('monospace'); textSize(11);
+    const rules = ctrlDown
+      ? ['(controller down)', 'default: flood to all ports', 'no new rules installable']
+      : (loadBalance
+        ? ['match ip_dst=10.0.0.9 → group LB', 'group LB: hash(src,dst)%2', '  → port 2 (backend A)', '  → port 3 (backend B)', 'match * → controller']
+        : ['match in_port=1 → output:2', 'match dl_type=arp → controller', 'match ip_dst=10.0.0.5 → output:3', 'match * → controller']);
+    for (let i = 0; i < rules.length; i++) { text(rules[i], x, y, pw - 24, 14); y += 16; }
+    textFont('Arial');
+  }
+}
+
+function wrapText(s, x, y, w, lh) { const words = s.split(' '); let line = ''; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (textWidth(t) > w && line) { text(line, x, y); y += lh; line = wd; } else line = t; } if (line) { text(line, x, y); y += lh; } return y; }
+function drawDashed(x1, y1, x2, y2) { const d = dist(x1, y1, x2, y2), steps = floor(d / 8); for (let i = 0; i < steps; i += 2) { const t1 = i / steps, t2 = min(1, (i + 1) / steps); line(lerp(x1, x2, t1), lerp(y1, y2, t1), lerp(x1, x2, t2), lerp(y1, y2, t2)); } }
+
+function mousePressed() {
+  if (mouseY > drawHeight) return;
+  const aw = areaW();
+  // switches first
+  const swY = 360 + 80;
+  for (let i = 0; i < switches.length; i++) { const sx = margin + 60 + i * ((aw - 2 * margin - 120) / 4); if (abs(mouseX - sx) < 30 && abs(mouseY - swY) < 18) { selected = (selected && selected.kind === 'switch' && selected.id === switches[i]) ? null : { kind: 'switch', id: switches[i] }; return; } }
+  // planes
+  const bands = [['app', 44, 90], ['control', 200, 110], ['data', 360, 170]];
+  for (const [id, y, h] of bands) { if (mouseX >= margin && mouseX <= aw - margin && mouseY >= y && mouseY <= y + h) { selected = (selected && selected.kind === 'plane' && selected.id === id) ? null : { kind: 'plane', id }; return; } }
+  selected = null;
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(containerWidth, containerHeight); redraw(); }
+function updateCanvasSize() { const c = document.querySelector('main').getBoundingClientRect(); containerWidth = Math.floor(c.width); canvasWidth = containerWidth; }
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

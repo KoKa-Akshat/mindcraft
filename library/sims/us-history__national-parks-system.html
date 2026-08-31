@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Parks Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>/* National Parks Stylesheet */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: aliceblue;
+}
+
+h2 {
+    text-align: center;
+    margin: 8px 0 4px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+}
+
+.info {
+    padding: 10px 14px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    max-width: 280px;
+}
+
+.info h4 {
+    margin: 0 0 8px;
+    color: #2E7D32;
+    font-size: 16px;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 4px;
+}
+
+.info p {
+    color: #555;
+    font-size: 12px;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+.info .stat { font-weight: bold; color: #333; }
+
+.controls-container {
+    background: white;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.control-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    border: 2px solid #2E7D32;
+    background: white;
+    color: #2E7D32;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.control-btn:hover, .control-btn.active {
+    background: #2E7D32;
+    color: white;
+}
+
+.quiz-panel {
+    background: #E8F5E9;
+    padding: 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.quiz-panel.hidden { display: none; }
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.quiz-progress { font-size: 12px; font-weight: bold; color: #2E7D32; }
+.stars-display { display: flex; gap: 4px; }
+
+.gold-star {
+    font-size: 18px;
+    color: gold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s;
+}
+
+.gold-star.animated { opacity: 1; transform: scale(1); }
+
+.quiz-question { font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+
+.quiz-options {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.quiz-option {
+    padding: 8px 16px;
+    font-size: 12px;
+    border: 2px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-option:hover { border-color: #2E7D32; }
+.quiz-option.correct { border-color: forestgreen; background: #e8f5e9; }
+.quiz-option.incorrect { border-color: crimson; background: #ffebee; }
+
+.quiz-feedback { margin-top: 10px; font-size: 13px; font-weight: bold; }
+.quiz-feedback.correct { color: forestgreen; }
+.quiz-feedback.incorrect { color: crimson; }
+
+.legend-container {
+    background: white;
+    padding: 8px 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.legend-title { font-size: 12px; font-weight: bold; margin-bottom: 6px; }
+
+.legend-items {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+
+.park-icon {
+    margin-right: 3px;
+    font-size: 14px;
+}
+
+.hover-instruction {
+    text-align: center;
+    font-size: 11px;
+    color: #888;
+    padding: 4px;
+    font-style: italic;
+}
+
+.celebration-container {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 9999;
+}
+
+.exploding-star {
+    position: absolute;
+    animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(0.5) translateY(-100px); opacity: 0; }
+}
+</style>
+</head>
+<body>
+    <h2>US National Parks</h2>
+    <div class="subtitle">Explore America's natural treasures</div>
+
+    <div id="map"></div>
+
+    <div class="controls-container">
+        <button id="quizBtn" class="control-btn">Quiz Me!</button>
+        <button id="resetBtn" class="control-btn">Reset View</button>
+    </div>
+
+    <div id="quizPanel" class="quiz-panel hidden">
+        <div class="quiz-header">
+            <div class="quiz-progress" id="quizProgress">Question 1 of 6</div>
+            <div class="stars-display" id="starsDisplay"></div>
+        </div>
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+
+    <div class="legend-container">
+        <div class="legend-title">Park Types</div>
+        <div class="legend-items">
+            <div class="legend-item"><span class="park-icon">🏔️</span> Mountains</div>
+            <div class="legend-item"><span class="park-icon">🏜️</span> Canyons/Desert</div>
+            <div class="legend-item"><span class="park-icon">🌲</span> Forests</div>
+            <div class="legend-item"><span class="park-icon">🌊</span> Coastal</div>
+            <div class="legend-item"><span class="park-icon">🌋</span> Volcanic</div>
+        </div>
+    </div>
+
+    <div class="hover-instruction">Click on a park to learn about it</div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>/* National Parks MicroSim */
+
+const nationalParks = [
+    {
+        name: 'Great Smoky Mountains',
+        state: 'Tennessee/North Carolina',
+        lat: 35.6,
+        lng: -83.5,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '12+ million',
+        famousFor: 'Misty mountains, diverse wildlife, wildflowers',
+        established: 1934,
+        funFact: 'Most visited national park in America!'
+    },
+    {
+        name: 'Grand Canyon',
+        state: 'Arizona',
+        lat: 36.1,
+        lng: -112.1,
+        type: 'canyon',
+        icon: '🏜️',
+        visitors: '6+ million',
+        famousFor: 'Deep colorful canyon carved by Colorado River',
+        established: 1919,
+        funFact: 'The canyon is over a mile deep and 277 miles long!'
+    },
+    {
+        name: 'Zion',
+        state: 'Utah',
+        lat: 37.3,
+        lng: -113.0,
+        type: 'canyon',
+        icon: '🏜️',
+        visitors: '4+ million',
+        famousFor: 'Towering red rock cliffs, narrow canyons',
+        established: 1919,
+        funFact: 'The Narrows hiking trail goes through a river!'
+    },
+    {
+        name: 'Yellowstone',
+        state: 'Wyoming/Montana/Idaho',
+        lat: 44.4,
+        lng: -110.5,
+        type: 'volcanic',
+        icon: '🌋',
+        visitors: '4+ million',
+        famousFor: 'Old Faithful geyser, hot springs, wildlife',
+        established: 1872,
+        funFact: 'First national park in the world!'
+    },
+    {
+        name: 'Yosemite',
+        state: 'California',
+        lat: 37.8,
+        lng: -119.5,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '4+ million',
+        famousFor: 'Granite cliffs, waterfalls, giant sequoias',
+        established: 1890,
+        funFact: 'El Capitan is one of the tallest granite monoliths in the world!'
+    },
+    {
+        name: 'Rocky Mountain',
+        state: 'Colorado',
+        lat: 40.3,
+        lng: -105.7,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '4+ million',
+        famousFor: 'High peaks, alpine lakes, elk herds',
+        established: 1915,
+        funFact: 'Trail Ridge Road reaches over 12,000 feet elevation!'
+    },
+    {
+        name: 'Acadia',
+        state: 'Maine',
+        lat: 44.3,
+        lng: -68.2,
+        type: 'coastal',
+        icon: '🌊',
+        visitors: '3+ million',
+        famousFor: 'Rocky coastline, Cadillac Mountain',
+        established: 1919,
+        funFact: 'First place to see sunrise in the United States!'
+    },
+    {
+        name: 'Grand Teton',
+        state: 'Wyoming',
+        lat: 43.8,
+        lng: -110.7,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '3+ million',
+        famousFor: 'Jagged mountain peaks, Jackson Hole',
+        established: 1929,
+        funFact: 'The Teton Range is one of the youngest mountain ranges in North America!'
+    },
+    {
+        name: 'Glacier',
+        state: 'Montana',
+        lat: 48.7,
+        lng: -113.8,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '3+ million',
+        famousFor: 'Glaciers, Going-to-the-Sun Road, wildlife',
+        established: 1910,
+        funFact: 'Called the "Crown of the Continent" for its beauty!'
+    },
+    {
+        name: 'Olympic',
+        state: 'Washington',
+        lat: 47.8,
+        lng: -123.6,
+        type: 'forest',
+        icon: '🌲',
+        visitors: '3+ million',
+        famousFor: 'Rainforests, mountains, and beaches',
+        established: 1938,
+        funFact: 'One of the wettest places in the continental US!'
+    },
+    {
+        name: 'Joshua Tree',
+        state: 'California',
+        lat: 33.9,
+        lng: -115.9,
+        type: 'desert',
+        icon: '🏜️',
+        visitors: '3+ million',
+        famousFor: 'Unique Joshua trees, rock formations',
+        established: 1994,
+        funFact: 'Named after the unusual Joshua trees that look like people praying!'
+    },
+    {
+        name: 'Bryce Canyon',
+        state: 'Utah',
+        lat: 37.6,
+        lng: -112.2,
+        type: 'canyon',
+        icon: '🏜️',
+        visitors: '2+ million',
+        famousFor: 'Colorful hoodoo rock formations',
+        established: 1928,
+        funFact: 'Hoodoos are tall rock spires formed by erosion!'
+    },
+    {
+        name: 'Arches',
+        state: 'Utah',
+        lat: 38.7,
+        lng: -109.6,
+        type: 'canyon',
+        icon: '🏜️',
+        visitors: '1.5+ million',
+        famousFor: 'Over 2,000 natural stone arches',
+        established: 1971,
+        funFact: 'Delicate Arch is on Utah license plates!'
+    },
+    {
+        name: 'Hawaii Volcanoes',
+        state: 'Hawaii',
+        lat: 19.4,
+        lng: -155.2,
+        type: 'volcanic',
+        icon: '🌋',
+        visitors: '1.3+ million',
+        famousFor: 'Active volcanoes, lava flows',
+        established: 1916,
+        funFact: 'One of the only places to see active lava in the US!'
+    },
+    {
+        name: 'Denali',
+        state: 'Alaska',
+        lat: 63.1,
+        lng: -151.0,
+        type: 'mountains',
+        icon: '🏔️',
+        visitors: '600,000',
+        famousFor: 'Highest peak in North America (20,310 ft)',
+        established: 1917,
+        funFact: 'Denali means "The High One" in the native Athabascan language!'
+    }
+];
+
+const quizQuestions = [
+    { q: 'Which is the most visited national park?', a: 'Great Smoky Mountains' },
+    { q: 'Which park has Old Faithful geyser?', a: 'Yellowstone' },
+    { q: 'Which was the first national park in the world?', a: 'Yellowstone' },
+    { q: 'Which park is home to the Grand Canyon?', a: 'Grand Canyon' },
+    { q: 'Which park has El Capitan granite cliff?', a: 'Yosemite' },
+    { q: 'Which park has the highest peak in North America?', a: 'Denali' },
+    { q: 'Which park is in Maine?', a: 'Acadia' },
+    { q: 'Which park has over 2,000 natural arches?', a: 'Arches' },
+    { q: 'Which park has active volcanoes?', a: 'Hawaii Volcanoes' },
+    { q: 'Which park is called "Crown of the Continent"?', a: 'Glacier' }
+];
+
+let map;
+let markers = [];
+let info;
+let quizMode = false;
+let currentQuestion = 0;
+let score = 0;
+let shuffledQuestions = [];
+const TOTAL_QUESTIONS = 6;
+
+function init() {
+    map = L.map('map', {
+        center: [39, -98],
+        zoom: 3,
+        minZoom: 2,
+        maxZoom: 10
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO'
+    }).addTo(map);
+
+    // Add info control
+    info = L.control({ position: 'topright' });
+    info.onAdd = function() {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
+    info.update = function(park) {
+        if (park) {
+            this._div.innerHTML = `
+                <h4>${park.icon} ${park.name}</h4>
+                <p><span class="stat">State:</span> ${park.state}</p>
+                <p><span class="stat">Established:</span> ${park.established}</p>
+                <p><span class="stat">Visitors/Year:</span> ${park.visitors}</p>
+                <p><span class="stat">Famous for:</span> ${park.famousFor}</p>
+                <p><span class="stat">Fun Fact:</span> ${park.funFact}</p>
+            `;
+        } else {
+            this._div.innerHTML = '<p style="color: #888; font-style: italic;">Click a park marker to see details</p>';
+        }
+    };
+    info.addTo(map);
+
+    // Add park markers
+    addParkMarkers();
+
+    // Setup controls
+    document.getElementById('quizBtn').addEventListener('click', startQuiz);
+    document.getElementById('resetBtn').addEventListener('click', resetView);
+}
+
+function addParkMarkers() {
+    nationalParks.forEach(park => {
+        const icon = L.divIcon({
+            className: 'park-marker',
+            html: `<span style="font-size: 22px; text-shadow: 1px 1px 2px white;">${park.icon}</span>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+
+        const marker = L.marker([park.lat, park.lng], { icon })
+            .addTo(map)
+            .on('click', () => {
+                if (!quizMode) {
+                    info.update(park);
+                    highlightPark(park.name);
+                } else {
+                    handleQuizClick(park.name);
+                }
+            });
+
+        marker.bindTooltip(park.name, { permanent: false, direction: 'top', offset: [0, -10] });
+
+        markers.push({ marker, park });
+    });
+}
+
+function highlightPark(name) {
+    markers.forEach(({ marker, park }) => {
+        if (park.name === name) {
+            const origIcon = marker.getIcon();
+            const highlightIcon = L.divIcon({
+                className: 'park-marker-highlight',
+                html: `<span style="font-size: 30px; text-shadow: 2px 2px 4px gold;">${park.icon}</span>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+            marker.setIcon(highlightIcon);
+            setTimeout(() => marker.setIcon(origIcon), 800);
+        }
+    });
+}
+
+function startQuiz() {
+    quizMode = true;
+    currentQuestion = 0;
+    score = 0;
+    shuffledQuestions = [...quizQuestions].sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS);
+
+    document.getElementById('quizBtn').classList.add('active');
+    document.getElementById('quizPanel').classList.remove('hidden');
+    document.getElementById('starsDisplay').innerHTML = '';
+    info.update(null);
+
+    showQuestion();
+}
+
+function showQuestion() {
+    if (currentQuestion >= TOTAL_QUESTIONS) {
+        showResults();
+        return;
+    }
+
+    const q = shuffledQuestions[currentQuestion];
+    document.getElementById('quizProgress').textContent = `Question ${currentQuestion + 1} of ${TOTAL_QUESTIONS}`;
+    document.getElementById('quizQuestion').textContent = q.q;
+    document.getElementById('quizFeedback').textContent = '';
+    document.getElementById('quizFeedback').className = 'quiz-feedback';
+
+    // Generate options
+    const options = [q.a];
+    const otherParks = nationalParks.map(p => p.name).filter(n => n !== q.a);
+    while (options.length < 4) {
+        const random = otherParks[Math.floor(Math.random() * otherParks.length)];
+        if (!options.includes(random)) options.push(random);
+    }
+    options.sort(() => Math.random() - 0.5);
+
+    const optionsDiv = document.getElementById('quizOptions');
+    optionsDiv.innerHTML = options.map(opt =>
+        `<button class="quiz-option" data-answer="${opt}">${opt}</button>`
+    ).join('');
+
+    optionsDiv.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.addEventListener('click', () => checkAnswer(btn, q.a));
+    });
+}
+
+function handleQuizClick(parkName) {
+    // Optional: Allow clicking on map markers as alternative
+    if (!quizMode || currentQuestion >= TOTAL_QUESTIONS) return;
+
+    const q = shuffledQuestions[currentQuestion];
+    const isCorrect = parkName === q.a;
+
+    highlightPark(parkName);
+    if (!isCorrect) highlightPark(q.a);
+
+    if (isCorrect) {
+        score++;
+        document.getElementById('quizFeedback').textContent = 'Correct!';
+        document.getElementById('quizFeedback').classList.add('correct');
+        addStar();
+    } else {
+        document.getElementById('quizFeedback').textContent = `The answer is: ${q.a}`;
+        document.getElementById('quizFeedback').classList.add('incorrect');
+    }
+
+    // Disable buttons
+    document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+    }, 1500);
+}
+
+function checkAnswer(btn, correct) {
+    const selected = btn.dataset.answer;
+    const isCorrect = selected === correct;
+
+    document.querySelectorAll('.quiz-option').forEach(b => {
+        b.disabled = true;
+        if (b.dataset.answer === correct) {
+            b.classList.add('correct');
+        } else if (b === btn && !isCorrect) {
+            b.classList.add('incorrect');
+        }
+    });
+
+    highlightPark(correct);
+
+    if (isCorrect) {
+        score++;
+        document.getElementById('quizFeedback').textContent = 'Correct!';
+        document.getElementById('quizFeedback').classList.add('correct');
+        addStar();
+    } else {
+        document.getElementById('quizFeedback').textContent = `The answer is: ${correct}`;
+        document.getElementById('quizFeedback').classList.add('incorrect');
+    }
+
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+    }, 1500);
+}
+
+function addStar() {
+    const display = document.getElementById('starsDisplay');
+    const star = document.createElement('span');
+    star.className = 'gold-star';
+    star.textContent = '⭐';
+    display.appendChild(star);
+    setTimeout(() => star.classList.add('animated'), 50);
+}
+
+function showResults() {
+    document.getElementById('quizQuestion').textContent =
+        score === TOTAL_QUESTIONS ? 'Perfect Score!' : 'Quiz Complete!';
+    document.getElementById('quizOptions').innerHTML =
+        `<p>You got ${score} of ${TOTAL_QUESTIONS} correct!</p>
+         <button class="quiz-option" onclick="startQuiz()">Try Again</button>`;
+    document.getElementById('quizFeedback').textContent = '';
+
+    if (score === TOTAL_QUESTIONS) celebrate();
+}
+
+function resetView() {
+    quizMode = false;
+    document.getElementById('quizBtn').classList.remove('active');
+    document.getElementById('quizPanel').classList.add('hidden');
+    map.setView([39, -98], 3);
+    info.update(null);
+}
+
+function celebrate() {
+    const container = document.createElement('div');
+    container.className = 'celebration-container';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const star = document.createElement('div');
+            star.className = 'exploding-star';
+            star.textContent = '⭐';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            container.appendChild(star);
+        }, i * 100);
+    }
+
+    setTimeout(() => container.remove(), 3000);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

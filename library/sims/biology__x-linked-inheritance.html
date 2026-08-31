@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>X-Linked Inheritance Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// X-Linked Inheritance Simulator
+// Students select parental genotypes and see the Punnett square,
+// chromosome diagram, and offspring phenotype tally for X-linked traits.
+
+// Canvas dimensions
+let containerWidth;
+let canvasWidth = 780;
+let drawHeight = 460;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+let sliderLeftMargin = 160;
+let defaultTextSize = 14;
+
+// UI controls
+let motherSelect, fatherSelect, traitSelect;
+
+// Trait data
+const traits = {
+    'Color Blindness': { alleleNormal: 'C', alleleAffected: 'c', normalDesc: 'Normal vision', affectedDesc: 'Color blind' },
+    'Hemophilia': { alleleNormal: 'H', alleleAffected: 'h', normalDesc: 'Normal clotting', affectedDesc: 'Hemophilia' },
+    'Duchenne MD': { alleleNormal: 'D', alleleAffected: 'd', normalDesc: 'Normal muscle', affectedDesc: 'Duchenne MD' }
+};
+
+// Colors
+const COL_NORMAL = [72, 191, 132];       // green
+const COL_AFFECTED = [231, 111, 81];     // red-orange
+const COL_CARRIER = [72, 191, 132];      // green (with orange border)
+const COL_CARRIER_BORDER = [231, 152, 81];
+const COL_PINK = [255, 182, 193];
+const COL_BLUE = [135, 175, 220];
+const COL_Y = [200, 200, 140];
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(containerWidth, containerHeight);
+    const mainEl = document.querySelector('main');
+    canvas.parent(mainEl);
+
+    // Mother genotype selector
+    motherSelect = createSelect();
+    motherSelect.option('X\u1D2EX\u1D2E (Homozygous Normal)');
+    motherSelect.option('X\u1D2EX\u1D47 (Carrier)');
+    motherSelect.option('X\u1D47X\u1D47 (Affected)');
+    motherSelect.selected('X\u1D2EX\u1D47 (Carrier)');
+    motherSelect.parent(mainEl);
+
+    // Father genotype selector
+    fatherSelect = createSelect();
+    fatherSelect.option('X\u1D2EY (Normal)');
+    fatherSelect.option('X\u1D47Y (Affected)');
+    fatherSelect.parent(mainEl);
+
+    // Trait selector
+    traitSelect = createSelect();
+    traitSelect.option('Color Blindness');
+    traitSelect.option('Hemophilia');
+    traitSelect.option('Duchenne MD');
+    traitSelect.parent(mainEl);
+
+    positionControls();
+    textFont('Arial');
+    describe('X-linked inheritance simulator showing Punnett square and offspring phenotypes');
+}
+
+function positionControls() {
+    let y = drawHeight + 12;
+    motherSelect.position(90, y);
+    motherSelect.size(200);
+    fatherSelect.position(380, y);
+    fatherSelect.size(170);
+    traitSelect.position(canvasWidth - 165, y);
+    traitSelect.size(150);
+}
+
+function draw() {
+    updateCanvasSize();
+    background('aliceblue');
+
+    // Draw border
+    stroke('silver');
+    strokeWeight(1);
+    fill('aliceblue');
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Control labels
+    fill(80);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text('Mother:', 10, drawHeight + 22);
+    text('Father:', 310, drawHeight + 22);
+    text('Trait:', canvasWidth - 210, drawHeight + 22);
+
+    // Parse selections
+    let motherIdx = getMotherIndex();
+    let fatherIdx = getFatherIndex();
+    let traitName = traitSelect.value();
+    let trait = traits[traitName];
+
+    // Title
+    fill(30);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(20);
+    text('X-Linked Inheritance: ' + traitName, canvasWidth / 2, 8);
+
+    // Layout regions
+    let leftX = margin;
+    let centerX = canvasWidth * 0.38;
+    let rightX = canvasWidth * 0.62;
+
+    // Draw parent chromosomes
+    drawParentChromosomes(leftX, 45, motherIdx, fatherIdx, trait);
+
+    // Draw Punnett square
+    drawPunnettSquare(centerX, 50, motherIdx, fatherIdx, trait);
+
+    // Draw offspring tally
+    drawOffspringTally(rightX + 40, 50, motherIdx, fatherIdx, trait);
+}
+
+function getMotherIndex() {
+    let v = motherSelect.value();
+    if (v.includes('\u1D2EX\u1D2E')) return 0; // BB
+    if (v.includes('\u1D2EX\u1D47')) return 1; // Bb
+    return 2; // bb
+}
+
+function getFatherIndex() {
+    let v = fatherSelect.value();
+    if (v.includes('\u1D2EY')) return 0; // B
+    return 1; // b
+}
+
+// Mother alleles: [X1, X2], Father alleles: [X_or_nothing, Y]
+function getMotherAlleles(motherIdx) {
+    // 0: BB, 1: Bb, 2: bb
+    if (motherIdx === 0) return ['B', 'B'];
+    if (motherIdx === 1) return ['B', 'b'];
+    return ['b', 'b'];
+}
+
+function getFatherAllele(fatherIdx) {
+    // 0: B, 1: b
+    return fatherIdx === 0 ? 'B' : 'b';
+}
+
+function drawParentChromosomes(x, y, motherIdx, fatherIdx, trait) {
+    let mAlleles = getMotherAlleles(motherIdx);
+    let fAllele = getFatherAllele(fatherIdx);
+
+    // Section label
+    fill(60);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(14);
+    text('Parent Chromosomes', x + 120, y);
+
+    let chromY = y + 25;
+    let chromW = 22;
+    let chromH = 80;
+    let gap = 8;
+
+    // Mother
+    fill(80);
+    textSize(13);
+    textAlign(CENTER, TOP);
+    text('Mother', x + 55, chromY);
+
+    let mStartY = chromY + 20;
+
+    // X chromosome 1
+    drawXChromosome(x + 30, mStartY, chromW, chromH, mAlleles[0], trait);
+    // X chromosome 2
+    drawXChromosome(x + 30 + chromW + gap, mStartY, chromW, chromH, mAlleles[1], trait);
+
+    // Father
+    text('Father', x + 170, chromY);
+    let fStartY = chromY + 20;
+
+    // X chromosome
+    drawXChromosome(x + 148, fStartY, chromW, chromH, fAllele, trait);
+    // Y chromosome (shorter)
+    drawYChromosome(x + 148 + chromW + gap, fStartY, chromW, chromH * 0.6);
+
+    // Gamete arrows
+    let arrowY = mStartY + chromH + 15;
+    fill(100);
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text('Gametes:', x + 120, arrowY);
+
+    let gamY = arrowY + 18;
+    let smallH = 35;
+    let smallW = 12;
+
+    // Mother gametes
+    drawXChromosome(x + 20, gamY, smallW, smallH, mAlleles[0], trait);
+    fill(100);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('or', x + 48, gamY + smallH / 2);
+    drawXChromosome(x + 60, gamY, smallW, smallH, mAlleles[1], trait);
+
+    // Father gametes
+    drawXChromosome(x + 135, gamY, smallW, smallH, fAllele, trait);
+    fill(100);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('or', x + 163, gamY + smallH / 2);
+    drawYChromosome(x + 175, gamY, smallW, smallH * 0.7);
+
+    // Phenotype key
+    let keyY = gamY + smallH + 25;
+    fill(60);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text('Phenotype Key:', x + 5, keyY);
+    keyY += 18;
+
+    // Normal
+    fill(COL_NORMAL);
+    noStroke();
+    rect(x + 5, keyY, 14, 14, 3);
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text(trait.normalDesc, x + 24, keyY + 7);
+
+    // Affected
+    keyY += 20;
+    fill(COL_AFFECTED);
+    noStroke();
+    rect(x + 5, keyY, 14, 14, 3);
+    fill(60);
+    text(trait.affectedDesc, x + 24, keyY + 7);
+
+    // Carrier
+    keyY += 20;
+    fill(COL_CARRIER);
+    stroke(COL_CARRIER_BORDER);
+    strokeWeight(2);
+    rect(x + 5, keyY, 14, 14, 3);
+    fill(60);
+    noStroke();
+    text('Carrier female', x + 24, keyY + 7);
+}
+
+function drawXChromosome(x, y, w, h, allele, trait) {
+    let isAffected = (allele === 'b');
+    fill(COL_PINK);
+    stroke(isAffected ? COL_AFFECTED : [180, 120, 150]);
+    strokeWeight(2);
+    rect(x, y, w, h, 4);
+
+    // Allele label
+    fill(isAffected ? COL_AFFECTED : [40, 120, 70]);
+    noStroke();
+    textSize(min(w * 0.6, 13));
+    textAlign(CENTER, CENTER);
+    let label = 'X' + (isAffected ? trait.alleleAffected : trait.alleleNormal);
+    text(label, x + w / 2, y + h / 2);
+}
+
+function drawYChromosome(x, y, w, h) {
+    fill(COL_Y);
+    stroke(150, 150, 100);
+    strokeWeight(2);
+    rect(x, y, w, h, 4);
+
+    fill(120, 120, 80);
+    noStroke();
+    textSize(min(w * 0.6, 13));
+    textAlign(CENTER, CENTER);
+    text('Y', x + w / 2, y + h / 2);
+}
+
+function drawPunnettSquare(x, y, motherIdx, fatherIdx, trait) {
+    let mAlleles = getMotherAlleles(motherIdx);
+    let fAllele = getFatherAllele(fatherIdx);
+
+    fill(60);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(14);
+    text('Punnett Square', x + 80, y);
+
+    let sqY = y + 22;
+    let cellW = 70;
+    let cellH = 55;
+    let headerH = 30;
+    let headerW = 50;
+
+    // Column headers (mother's gametes)
+    for (let i = 0; i < 2; i++) {
+        let cx = x + headerW + i * cellW;
+        fill(COL_PINK[0], COL_PINK[1], COL_PINK[2], 80);
+        stroke(180);
+        strokeWeight(1);
+        rect(cx, sqY, cellW, headerH, 2);
+        fill(60);
+        noStroke();
+        textSize(12);
+        textAlign(CENTER, CENTER);
+        let aLabel = mAlleles[i] === 'b' ? trait.alleleAffected : trait.alleleNormal;
+        text('X' + aLabel, cx + cellW / 2, sqY + headerH / 2);
+    }
+
+    // Row headers (father's gametes)
+    let fatherGametes = [{ label: 'X' + (fAllele === 'b' ? trait.alleleAffected : trait.alleleNormal), type: 'X' }, { label: 'Y', type: 'Y' }];
+    for (let j = 0; j < 2; j++) {
+        let ry = sqY + headerH + j * cellH;
+        fill(j === 0 ? [COL_PINK[0], COL_PINK[1], COL_PINK[2], 80] : [COL_Y[0], COL_Y[1], COL_Y[2], 80]);
+        stroke(180);
+        strokeWeight(1);
+        rect(x, ry, headerW, cellH, 2);
+        fill(60);
+        noStroke();
+        textSize(12);
+        textAlign(CENTER, CENTER);
+        text(fatherGametes[j].label, x + headerW / 2, ry + cellH / 2);
+    }
+
+    // Offspring cells
+    for (let i = 0; i < 2; i++) {       // mother gamete (column)
+        for (let j = 0; j < 2; j++) {   // father gamete (row)
+            let cx = x + headerW + i * cellW;
+            let cy = sqY + headerH + j * cellH;
+
+            let mA = mAlleles[i];
+            let offspring = getOffspringData(mA, j === 0 ? fAllele : null, j === 1, trait);
+
+            // Cell background
+            let bgCol = getOffspringColor(offspring);
+            fill(bgCol[0], bgCol[1], bgCol[2], 50);
+            if (offspring.carrier) {
+                stroke(COL_CARRIER_BORDER);
+                strokeWeight(2);
+            } else {
+                stroke(180);
+                strokeWeight(1);
+            }
+            rect(cx, cy, cellW, cellH, 2);
+
+            // Genotype text
+            fill(40);
+            noStroke();
+            textSize(13);
+            textAlign(CENTER, TOP);
+            text(offspring.genotype, cx + cellW / 2, cy + 6);
+
+            // Sex symbol
+            textSize(16);
+            text(offspring.sex === 'F' ? '\u2640' : '\u2642', cx + cellW / 2, cy + 22);
+
+            // Phenotype
+            fill(getOffspringColor(offspring));
+            noStroke();
+            textSize(10);
+            text(offspring.phenotype, cx + cellW / 2, cy + 40);
+        }
+    }
+}
+
+function getOffspringData(motherAllele, fatherAllele, isY, trait) {
+    let result = {};
+    if (isY) {
+        // Son: gets X from mother, Y from father
+        result.sex = 'M';
+        let a = motherAllele;
+        result.genotype = 'X' + (a === 'b' ? trait.alleleAffected : trait.alleleNormal) + 'Y';
+        result.affected = (a === 'b');
+        result.carrier = false;
+        result.phenotype = result.affected ? trait.affectedDesc : trait.normalDesc;
+    } else {
+        // Daughter: gets X from mother, X from father
+        result.sex = 'F';
+        let mA = motherAllele;
+        let fA = fatherAllele;
+        let mLabel = (mA === 'b') ? trait.alleleAffected : trait.alleleNormal;
+        let fLabel = (fA === 'b') ? trait.alleleAffected : trait.alleleNormal;
+        result.genotype = 'X' + mLabel + 'X' + fLabel;
+        result.affected = (mA === 'b' && fA === 'b');
+        result.carrier = (!result.affected && (mA === 'b' || fA === 'b'));
+        if (result.affected) {
+            result.phenotype = trait.affectedDesc;
+        } else if (result.carrier) {
+            result.phenotype = 'Carrier';
+        } else {
+            result.phenotype = trait.normalDesc;
+        }
+    }
+    return result;
+}
+
+function getOffspringColor(offspring) {
+    if (offspring.affected) return COL_AFFECTED;
+    if (offspring.carrier) return COL_CARRIER;
+    return COL_NORMAL;
+}
+
+function drawOffspringTally(x, y, motherIdx, fatherIdx, trait) {
+    let mAlleles = getMotherAlleles(motherIdx);
+    let fAllele = getFatherAllele(fatherIdx);
+
+    fill(60);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(14);
+    text('Offspring Summary', x + 55, y);
+
+    // Calculate all 4 offspring
+    let offspring = [];
+    for (let i = 0; i < 2; i++) {
+        // Daughter (X from father)
+        offspring.push(getOffspringData(mAlleles[i], fAllele, false, trait));
+        // Son (Y from father)
+        offspring.push(getOffspringData(mAlleles[i], null, true, trait));
+    }
+
+    // Tally categories
+    let categories = {};
+    offspring.forEach(o => {
+        let key = o.sex + '_' + o.phenotype;
+        if (!categories[key]) {
+            categories[key] = { sex: o.sex, phenotype: o.phenotype, count: 0, affected: o.affected, carrier: o.carrier };
+        }
+        categories[key].count++;
+    });
+
+    let tallyY = y + 25;
+    let rowH = 28;
+
+    // Headers
+    fill(100);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    text('Genotype Class', x - 5, tallyY);
+    textAlign(RIGHT, TOP);
+    text('Count', x + 120, tallyY);
+    tallyY += 18;
+
+    // Draw line
+    stroke(180);
+    strokeWeight(1);
+    line(x - 5, tallyY, x + 130, tallyY);
+    tallyY += 5;
+
+    // Daughters header
+    fill(40);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text('\u2640 Daughters:', x - 5, tallyY);
+    tallyY += 20;
+
+    let daughterEntries = Object.values(categories).filter(c => c.sex === 'F');
+    daughterEntries.forEach(entry => {
+        let col = entry.affected ? COL_AFFECTED : (entry.carrier ? COL_CARRIER : COL_NORMAL);
+        fill(col);
+        noStroke();
+        ellipse(x + 5, tallyY + 6, 10, 10);
+        if (entry.carrier) {
+            noFill();
+            stroke(COL_CARRIER_BORDER);
+            strokeWeight(2);
+            ellipse(x + 5, tallyY + 6, 10, 10);
+        }
+
+        fill(60);
+        noStroke();
+        textSize(11);
+        textAlign(LEFT, TOP);
+        text(entry.phenotype, x + 15, tallyY);
+        textAlign(RIGHT, TOP);
+        let frac = entry.count + '/4';
+        let pct = ' (' + (entry.count / 4 * 100) + '%)';
+        text(frac + pct, x + 130, tallyY);
+        tallyY += rowH;
+    });
+
+    tallyY += 5;
+
+    // Sons header
+    fill(40);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text('\u2642 Sons:', x - 5, tallyY);
+    tallyY += 20;
+
+    let sonEntries = Object.values(categories).filter(c => c.sex === 'M');
+    sonEntries.forEach(entry => {
+        let col = entry.affected ? COL_AFFECTED : COL_NORMAL;
+        fill(col);
+        noStroke();
+        rect(x, tallyY + 1, 10, 10, 2);
+
+        fill(60);
+        noStroke();
+        textSize(11);
+        textAlign(LEFT, TOP);
+        text(entry.phenotype, x + 15, tallyY);
+        textAlign(RIGHT, TOP);
+        let frac = entry.count + '/4';
+        let pct = ' (' + (entry.count / 4 * 100) + '%)';
+        text(frac + pct, x + 130, tallyY);
+        tallyY += rowH;
+    });
+
+    // Key insight box
+    tallyY += 10;
+    let insightY = tallyY;
+    let insightH = 70;
+    fill(255, 248, 220);
+    stroke(220, 190, 100);
+    strokeWeight(1);
+    rect(x - 10, insightY, 150, insightH, 5);
+
+    fill(80);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textLeading(15);
+
+    let insight = getInsight(motherIdx, fatherIdx, trait);
+    text(insight, x - 4, insightY + 6, 138, insightH - 10);
+}
+
+function getInsight(motherIdx, fatherIdx, trait) {
+    // Carrier mother x Normal father
+    if (motherIdx === 1 && fatherIdx === 0) {
+        return 'Key: Only sons can be affected. Daughters receive a normal X from dad, masking the recessive allele.';
+    }
+    // Carrier mother x Affected father
+    if (motherIdx === 1 && fatherIdx === 1) {
+        return 'Key: Both sons AND daughters can be affected. Daughters can receive recessive X from both parents.';
+    }
+    // Normal mother x Affected father
+    if (motherIdx === 0 && fatherIdx === 1) {
+        return 'Key: No affected offspring, but ALL daughters are carriers. Sons get their X from mom (normal).';
+    }
+    // Normal mother x Normal father
+    if (motherIdx === 0 && fatherIdx === 0) {
+        return 'Key: No affected offspring and no carriers. Both parents contribute normal alleles.';
+    }
+    // Affected mother x Normal father
+    if (motherIdx === 2 && fatherIdx === 0) {
+        return 'Key: ALL sons affected (get X\u1D47 from mom). ALL daughters are carriers (normal X from dad).';
+    }
+    // Affected mother x Affected father
+    if (motherIdx === 2 && fatherIdx === 1) {
+        return 'Key: ALL offspring are affected. There is no normal X allele in either parent.';
+    }
+    return '';
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    positionControls();
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>TCO Comparison Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; background: aliceblue; }
+    </style>
+    <script>
+// Total Cost of Ownership: Classical vs. Quantum Computing
+// A p5.js MicroSim comparing TCO across multiple cost categories
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 100;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 200;
+let defaultTextSize = 16;
+
+// Sliders
+let problemSizeSlider;
+let timeHorizonSlider;
+
+// Cost data (in millions)
+// Classical HPC costs
+const classicalHardware = 2;       // $2M one-time
+const classicalElectricity = 0.5;  // $500K/year
+const classicalStaff = 0.3;        // $300K/year
+const classicalMaintenance = 0.2;  // $200K/year
+
+// Quantum computer costs
+const quantumHardware = 15;        // $15M one-time
+const quantumCryogenics = 1;       // $1M/year
+const quantumElectricity = 0.8;    // $800K/year
+const quantumStaff = 1;            // $1M/year (specialized)
+const quantumErrorOverhead = 2;    // $2M/year (wasted capacity)
+const quantumMaintenance = 0.5;    // $500K/year
+
+// Colors
+const indigoColors = ['#1A237E', '#283593', '#3F51B5', '#5C6BC0', '#7986CB', '#9FA8DA'];
+const orangeColors = ['#BF360C', '#E65100', '#FF7043', '#FF8A65'];
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    // Problem Size slider (1=small, 2=medium, 3=large)
+    problemSizeSlider = createSlider(1, 3, 2, 1);
+    problemSizeSlider.parent(document.querySelector('main'));
+    problemSizeSlider.style('width', '140px');
+
+    // Time Horizon slider (1-10 years, default 5)
+    timeHorizonSlider = createSlider(1, 10, 5, 1);
+    timeHorizonSlider.parent(document.querySelector('main'));
+    timeHorizonSlider.style('width', '140px');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Get slider values
+    let problemSize = problemSizeSlider.value();
+    let years = timeHorizonSlider.value();
+
+    // Problem size multiplier
+    let sizeMultiplier = problemSize; // 1x, 2x, 3x
+    let sizeLabel = ['Small', 'Medium', 'Large'][problemSize - 1];
+
+    // Calculate costs (in millions)
+    let cHardware = classicalHardware * sizeMultiplier;
+    let cElectricity = classicalElectricity * sizeMultiplier * years;
+    let cStaff = classicalStaff * sizeMultiplier * years;
+    let cMaintenance = classicalMaintenance * sizeMultiplier * years;
+    let classicalTotal = cHardware + cElectricity + cStaff + cMaintenance;
+
+    let qHardware = quantumHardware * sizeMultiplier;
+    let qCryogenics = quantumCryogenics * sizeMultiplier * years;
+    let qElectricity = quantumElectricity * sizeMultiplier * years;
+    let qStaff = quantumStaff * sizeMultiplier * years;
+    let qErrorOverhead = quantumErrorOverhead * sizeMultiplier * years;
+    let qMaintenance = quantumMaintenance * sizeMultiplier * years;
+    let quantumTotal = qHardware + qCryogenics + qElectricity + qStaff + qErrorOverhead + qMaintenance;
+
+    let costRatio = quantumTotal / classicalTotal;
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Total Cost of Ownership: Classical vs. Quantum", canvasWidth / 2, 8);
+
+    // Subtitle with parameters
+    textSize(12);
+    textStyle(NORMAL);
+    fill('#666');
+    text("Problem Size: " + sizeLabel + "  |  Time Horizon: " + years + " year" + (years > 1 ? "s" : ""), canvasWidth / 2, 30);
+
+    // Chart area
+    let chartTop = 52;
+    let chartBottom = drawHeight - 60;
+    let chartHeight = chartBottom - chartTop;
+    let chartLeft = margin + 10;
+    let chartRight = canvasWidth - margin - 10;
+    let chartMid = (chartLeft + chartRight) / 2;
+    let barWidth = min(160, (chartRight - chartLeft) / 2 - 80);
+
+    // Determine max value for scale
+    let maxVal = max(classicalTotal, quantumTotal);
+
+    // Y-axis scale
+    let yScale = chartHeight / maxVal;
+
+    // Draw gridlines
+    stroke('#E0E0E0');
+    strokeWeight(0.5);
+    textSize(10);
+    fill('#999');
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+    let gridSteps = 5;
+    let gridStep = maxVal / gridSteps;
+    // Round grid step to nice number
+    let magnitude = pow(10, floor(log(gridStep) / log(10)));
+    gridStep = ceil(gridStep / magnitude) * magnitude;
+
+    for (let v = 0; v <= maxVal + gridStep; v += gridStep) {
+        let y = chartBottom - v * yScale;
+        if (y < chartTop - 5) break;
+        stroke('#E0E0E0');
+        strokeWeight(0.5);
+        line(chartLeft, y, chartRight, y);
+        fill('#999');
+        noStroke();
+        textAlign(RIGHT, CENTER);
+        text("$" + formatMoney(v), chartLeft - 4, y);
+    }
+
+    // Classical stacked bar
+    let classicalX = chartMid - barWidth - 30;
+    let classicalCosts = [
+        { label: "Hardware", value: cHardware, color: orangeColors[0] },
+        { label: "Electricity", value: cElectricity, color: orangeColors[1] },
+        { label: "Staff", value: cStaff, color: orangeColors[2] },
+        { label: "Maintenance", value: cMaintenance, color: orangeColors[3] }
+    ];
+    drawStackedBar(classicalX, chartBottom, barWidth, yScale, classicalCosts);
+
+    // Classical label
+    fill('#BF360C');
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Classical HPC", classicalX + barWidth / 2, chartBottom + 6);
+    textSize(13);
+    textStyle(NORMAL);
+    fill('#333');
+    text("$" + formatMoney(classicalTotal), classicalX + barWidth / 2, chartBottom + 24);
+
+    // Quantum stacked bar
+    let quantumX = chartMid + 30;
+    let quantumCosts = [
+        { label: "Hardware", value: qHardware, color: indigoColors[0] },
+        { label: "Cryogenics", value: qCryogenics, color: indigoColors[1] },
+        { label: "Electricity", value: qElectricity, color: indigoColors[2] },
+        { label: "Specialized Staff", value: qStaff, color: indigoColors[3] },
+        { label: "Error Correction", value: qErrorOverhead, color: indigoColors[4] },
+        { label: "Maintenance", value: qMaintenance, color: indigoColors[5] }
+    ];
+    drawStackedBar(quantumX, chartBottom, barWidth, yScale, quantumCosts);
+
+    // Quantum label
+    fill('#1A237E');
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Quantum Computer", quantumX + barWidth / 2, chartBottom + 6);
+    textSize(13);
+    textStyle(NORMAL);
+    fill('#333');
+    text("$" + formatMoney(quantumTotal), quantumX + barWidth / 2, chartBottom + 24);
+
+    // Cost ratio display
+    fill('#CC0000');
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("QC costs " + costRatio.toFixed(1) + "x more than classical", canvasWidth / 2, chartBottom + 42);
+
+    // Draw legends on left and right sides
+    drawLegend(classicalCosts, chartLeft + 5, chartTop + 5, "Classical HPC");
+    drawLegend(quantumCosts, chartRight - 145, chartTop + 5, "Quantum");
+
+    // Position sliders in control area
+    let sliderY = drawHeight + 15;
+    let col1X = canvasWidth / 2 - 250;
+    let col2X = canvasWidth / 2 + 30;
+
+    // Problem Size label and slider
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("Problem Size: " + sizeLabel, col1X, sliderY + 10);
+    problemSizeSlider.position(col1X + 150, sliderY + 3);
+
+    // Time Horizon label and slider
+    text("Time Horizon: " + years + " yr" + (years > 1 ? "s" : ""), col2X, sliderY + 10);
+    timeHorizonSlider.position(col2X + 150, sliderY + 3);
+
+    // Hover detection for bar segments
+    drawHoverTooltip(classicalX, chartBottom, barWidth, yScale, classicalCosts, "Classical");
+    drawHoverTooltip(quantumX, chartBottom, barWidth, yScale, quantumCosts, "Quantum");
+}
+
+function drawStackedBar(x, bottom, w, yScale, costs) {
+    let currentY = bottom;
+    for (let i = 0; i < costs.length; i++) {
+        let h = costs[i].value * yScale;
+        fill(costs[i].color);
+        noStroke();
+        rect(x, currentY - h, w, h);
+        // Draw segment label if tall enough
+        if (h > 16) {
+            fill(255, 255, 255, 220);
+            textSize(10);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text("$" + formatMoney(costs[i].value), x + w / 2, currentY - h / 2);
+        }
+        currentY -= h;
+    }
+}
+
+function drawLegend(costs, x, y, title) {
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text(title, x, y);
+    textStyle(NORMAL);
+    for (let i = 0; i < costs.length; i++) {
+        let ly = y + 16 + i * 16;
+        fill(costs[i].color);
+        noStroke();
+        rect(x, ly + 1, 10, 10, 2);
+        fill('#333');
+        textSize(10);
+        textAlign(LEFT, TOP);
+        text(costs[i].label, x + 14, ly);
+    }
+}
+
+function drawHoverTooltip(barX, bottom, w, yScale, costs, systemName) {
+    if (mouseX < barX || mouseX > barX + w) return;
+
+    let currentY = bottom;
+    for (let i = 0; i < costs.length; i++) {
+        let h = costs[i].value * yScale;
+        let segTop = currentY - h;
+        if (mouseY >= segTop && mouseY <= currentY) {
+            // Draw tooltip
+            let tooltipW = 200;
+            let tooltipH = 36;
+            let tx = mouseX + 15;
+            let ty = mouseY - 18;
+            if (tx + tooltipW > canvasWidth) tx = mouseX - tooltipW - 15;
+            if (ty < 0) ty = 5;
+
+            fill(255, 255, 255, 240);
+            stroke('#3F51B5');
+            strokeWeight(1.5);
+            rect(tx, ty, tooltipW, tooltipH, 4);
+
+            fill('#333');
+            noStroke();
+            textSize(11);
+            textAlign(LEFT, TOP);
+            textStyle(BOLD);
+            text(systemName + ": " + costs[i].label, tx + 8, ty + 5);
+            textStyle(NORMAL);
+            text("$" + formatMoney(costs[i].value), tx + 8, ty + 20);
+            break;
+        }
+        currentY -= h;
+    }
+}
+
+function formatMoney(millions) {
+    if (millions >= 1) {
+        return millions.toFixed(1) + "M";
+    } else {
+        return (millions * 1000).toFixed(0) + "K";
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

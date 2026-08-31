@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="supremacy-gap-timeline">
+    <title>The Shrinking 'Supremacy' Gap</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="supremacyChart"></canvas>
+    </div>
+    <div class="controls">
+        <label><input type="checkbox" id="toggleClassical" checked> Classical computation time</label>
+        <label><input type="checkbox" id="toggleQuantum" checked> Sycamore quantum execution time (200s)</label>
+    </div>
+    <script>
+function toSuperscript(n) {
+    const sup = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴',
+                  '5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+    return String(n).split('').map(function(c) { return sup[c] || c; }).join('');
+}
+
+const ctx = document.getElementById('supremacyChart').getContext('2d');
+
+// Data points: classical computation time estimates over time
+const dataPoints = [
+    {
+        x: 2019.75,
+        y: 3.15e11,
+        label: "Google's claim",
+        detail: "Google Nature paper: Sycamore completes task in 200s that would take Summit 10,000 years",
+        hardware: "Summit supercomputer (baseline)",
+        source: "Arute et al., Nature 574, 2019"
+    },
+    {
+        x: 2019.9,
+        y: 2.16e5,
+        label: "IBM's rebuttal",
+        detail: "IBM showed Summit could do it in 2.5 days with sufficient disk storage",
+        hardware: "Summit supercomputer (optimized)",
+        source: "Pednault et al., arXiv:1910.09534"
+    },
+    {
+        x: 2021,
+        y: 1e4,
+        label: "Tensor network methods",
+        detail: "Tensor network contraction algorithms reduced estimated classical time to hours",
+        hardware: "Large compute clusters",
+        source: "Pan & Zhang, Phys. Rev. Lett. 2022"
+    },
+    {
+        x: 2022,
+        y: 1e3,
+        label: "Improved tensor networks",
+        detail: "Further algorithmic improvements brought classical time to ~20 minutes",
+        hardware: "Optimized tensor network algorithms",
+        source: "Liu et al., Phys. Rev. Lett. 2021"
+    },
+    {
+        x: 2023,
+        y: 15,
+        label: "GPU cluster simulation",
+        detail: "Full simulation in ~15 seconds on a GPU cluster — faster than Sycamore's 200 seconds",
+        hardware: "GPU cluster (multiple A100s)",
+        source: "Various groups, 2023"
+    }
+];
+
+// Quantum execution time (constant)
+const quantumTime = 200; // seconds
+
+// Build x values spanning the range
+const years = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        datasets: [
+            {
+                label: 'Classical computation time (seconds)',
+                data: dataPoints.map(p => ({ x: p.x, y: p.y })),
+                borderColor: '#2196F3',
+                backgroundColor: '#2196F3',
+                pointBackgroundColor: dataPoints.map(p => p.y > quantumTime ? '#FF7043' : '#4CAF50'),
+                pointBorderColor: dataPoints.map(p => p.y > quantumTime ? '#FF7043' : '#4CAF50'),
+                pointRadius: 8,
+                pointHoverRadius: 12,
+                borderWidth: 3,
+                tension: 0.3,
+                fill: false
+            },
+            {
+                label: 'Sycamore quantum execution time (200s)',
+                data: years.map(y => ({ x: y, y: quantumTime })),
+                borderColor: '#FF7043',
+                backgroundColor: 'rgba(255, 112, 67, 0.1)',
+                borderWidth: 2,
+                borderDash: [10, 5],
+                pointRadius: 0,
+                fill: false
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+            mode: 'nearest',
+            intersect: true
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: "The Shrinking 'Supremacy' Gap",
+                font: { size: 18, weight: 'bold' },
+                color: '#333',
+                padding: { bottom: 4 }
+            },
+            subtitle: {
+                display: true,
+                text: 'Classical algorithm improvements vs. Google Sycamore quantum execution time',
+                font: { size: 13 },
+                color: '#666',
+                padding: { bottom: 16 }
+            },
+            tooltip: {
+                callbacks: {
+                    title: function(items) {
+                        const idx = items[0].dataIndex;
+                        const dsIdx = items[0].datasetIndex;
+                        if (dsIdx === 0) {
+                            return dataPoints[idx].label;
+                        }
+                        return 'Quantum execution time';
+                    },
+                    label: function(item) {
+                        if (item.datasetIndex === 0) {
+                            const p = dataPoints[item.dataIndex];
+                            const time = p.y;
+                            let timeStr;
+                            if (time >= 3.15e7) {
+                                timeStr = (time / 3.15e7).toFixed(0) + ' years';
+                            } else if (time >= 86400) {
+                                timeStr = (time / 86400).toFixed(1) + ' days';
+                            } else if (time >= 3600) {
+                                timeStr = (time / 3600).toFixed(1) + ' hours';
+                            } else if (time >= 60) {
+                                timeStr = (time / 60).toFixed(0) + ' minutes';
+                            } else {
+                                timeStr = time + ' seconds';
+                            }
+                            return [
+                                'Time: ' + timeStr + ' (' + time.toExponential(1) + 's)',
+                                'Hardware: ' + p.hardware,
+                                'Source: ' + p.source
+                            ];
+                        }
+                        return '200 seconds';
+                    },
+                    afterLabel: function(item) {
+                        if (item.datasetIndex === 0) {
+                            const p = dataPoints[item.dataIndex];
+                            return p.detail;
+                        }
+                        return '';
+                    }
+                },
+                bodyFont: { size: 12 },
+                titleFont: { size: 14, weight: 'bold' },
+                maxWidth: 400,
+                bodySpacing: 4
+            },
+            legend: {
+                display: false
+            },
+            annotation: {
+                annotations: {
+                    parityLine: {
+                        type: 'line',
+                        yMin: quantumTime,
+                        yMax: quantumTime,
+                        borderColor: 'rgba(255, 112, 67, 0.4)',
+                        borderWidth: 0
+                    },
+                    googleLabel: {
+                        type: 'label',
+                        xValue: 2019.75,
+                        yValue: 3.15e11,
+                        content: ['10,000 years', '(Google, 2019)'],
+                        font: { size: 11, weight: 'bold' },
+                        color: '#FF7043',
+                        position: 'end',
+                        xAdjust: 60,
+                        yAdjust: -10
+                    },
+                    gpuLabel: {
+                        type: 'label',
+                        xValue: 2023,
+                        yValue: 15,
+                        content: ['15 seconds (GPU cluster, 2023)'],
+                        font: { size: 11, weight: 'bold' },
+                        color: '#4CAF50',
+                        xAdjust: -105,
+                        yAdjust: -0
+                    },
+                    crossoverNote: {
+                        type: 'label',
+                        xValue: 2022.5,
+                        yValue: 3e6,
+                        content: ['Supremacy claim was based on comparing', 'optimized quantum vs. unoptimized classical'],
+                        font: { size: 11, style: 'italic' },
+                        color: '#666',
+                        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                        borderRadius: 4,
+                        padding: 8
+                    },
+                    classicalWinsLabel: {
+                        type: 'label',
+                        xValue: 2023.3,
+                        yValue: 80,
+                        content: ['Classical matches quantum'],
+                        font: { size: 11, weight: 'bold' },
+                        color: '#4CAF50',
+                        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                        borderRadius: 4,
+                        padding: 6
+                    },
+                    supremacyRegion: {
+                        type: 'box',
+                        xMin: 2019,
+                        xMax: 2025,
+                        yMin: quantumTime,
+                        yMax: 1e12,
+                        backgroundColor: 'rgba(255, 112, 67, 0.04)',
+                        borderWidth: 0
+                    },
+                    classicalRegion: {
+                        type: 'box',
+                        xMin: 2019,
+                        xMax: 2025,
+                        yMin: 1,
+                        yMax: quantumTime,
+                        backgroundColor: 'rgba(76, 175, 80, 0.04)',
+                        borderWidth: 0
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                type: 'linear',
+                min: 2019,
+                max: 2025,
+                title: {
+                    display: true,
+                    text: 'Year',
+                    font: { size: 14, weight: 'bold' },
+                    color: '#555'
+                },
+                ticks: {
+                    stepSize: 1,
+                    callback: function(value) {
+                        return value.toString();
+                    },
+                    font: { size: 12 }
+                },
+                grid: {
+                    color: 'rgba(0,0,0,0.06)'
+                }
+            },
+            y: {
+                type: 'logarithmic',
+                min: 1,
+                max: 1e12,
+                title: {
+                    display: true,
+                    text: 'Classical computation time (seconds)',
+                    font: { size: 14, weight: 'bold' },
+                    color: '#555'
+                },
+                ticks: {
+                    callback: function(value) {
+                        const log = Math.log10(value);
+                        if (Number.isInteger(log)) {
+                            if (value === 1) return '1s';
+                            if (value === 1e3) return '~17 min';
+                            if (value === 1e5) return '~1 day';
+                            if (value === 1e7) return '~4 months';
+                            if (value === 1e9) return '~32 years';
+                            if (value === 1e11) return '~3,200 years';
+                            return '10' + toSuperscript(log) + 's';
+                        }
+                        return '';
+                    },
+                    font: { size: 11 },
+                    maxTicksLimit: 12
+                },
+                grid: {
+                    color: 'rgba(0,0,0,0.06)'
+                }
+            }
+        }
+    }
+});
+
+document.getElementById('toggleClassical').addEventListener('change', function() {
+    chart.data.datasets[0].hidden = !this.checked;
+    chart.update();
+});
+
+document.getElementById('toggleQuantum').addEventListener('change', function() {
+    chart.data.datasets[1].hidden = !this.checked;
+    chart.update();
+});
+
+</script>
+</body>
+</html>

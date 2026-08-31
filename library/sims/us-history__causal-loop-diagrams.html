@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Climate Feedback Loops using vis-network</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script>// Climate Feedback Loops - vis-network
+// CANVAS_HEIGHT: 560
+document.addEventListener('DOMContentLoaded', function() {
+  const mainEl = document.querySelector('main');
+
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'max-width:900px;margin:0 auto;font-family:Arial,sans-serif;';
+
+  // Title
+  const title = document.createElement('h2');
+  title.textContent = 'Climate Feedback Loops';
+  title.style.cssText = 'text-align:center;color:#264653;margin:10px 0 5px;';
+  wrapper.appendChild(title);
+
+  // Button bar
+  const btnBar = document.createElement('div');
+  btnBar.style.cssText = 'text-align:center;margin:5px 0 10px;';
+
+  const loopNames = ['Ice-Albedo', 'Permafrost', 'Water Vapor', 'All Loops'];
+  const loopColors = ['#457b9d', '#8B6914', '#adb5bd', '#e63946'];
+  const loopBtns = [];
+
+  loopNames.forEach(function(name, i) {
+    const btn = document.createElement('button');
+    btn.textContent = name;
+    btn.style.cssText = 'padding:5px 14px;margin:0 4px;font-size:12px;cursor:pointer;border:2px solid ' + loopColors[i] + ';border-radius:4px;background:#fff;color:' + loopColors[i] + ';';
+    btn.addEventListener('click', function() { highlightLoop(i); });
+    btnBar.appendChild(btn);
+    loopBtns.push(btn);
+  });
+
+  const triggerBtn = document.createElement('button');
+  triggerBtn.textContent = 'Trigger Warming';
+  triggerBtn.style.cssText = 'padding:5px 14px;margin:0 4px;font-size:12px;cursor:pointer;border:2px solid #e63946;border-radius:4px;background:#e63946;color:#fff;font-weight:bold;';
+  triggerBtn.addEventListener('click', animateWarming);
+  btnBar.appendChild(triggerBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Reset';
+  resetBtn.style.cssText = 'padding:5px 14px;margin:0 4px;font-size:12px;cursor:pointer;border:1px solid #adb5bd;border-radius:4px;background:#f0f4f8;';
+  resetBtn.addEventListener('click', resetHighlights);
+  btnBar.appendChild(resetBtn);
+
+  wrapper.appendChild(btnBar);
+
+  // Network container
+  const networkDiv = document.createElement('div');
+  networkDiv.id = 'network';
+  networkDiv.style.cssText = 'width:100%;height:420px;border:1px solid #ccc;border-radius:8px;background:#fafafa;';
+  wrapper.appendChild(networkDiv);
+
+  // Info panel
+  const infoPanel = document.createElement('div');
+  infoPanel.id = 'info-panel';
+  infoPanel.style.cssText = 'margin:10px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #264653;min-height:40px;font-size:13px;line-height:1.5;';
+  infoPanel.innerHTML = '<em>Click a loop button above or hover over nodes to explore feedback mechanisms.</em>';
+  wrapper.appendChild(infoPanel);
+
+  mainEl.appendChild(wrapper);
+
+  // Node definitions
+  var nodeData = {
+    1:  { label:'Global\nTemperature', color:'#e63946', group:'all',
+          info:'As global temperature rises, it triggers cascading effects through multiple feedback loops.' },
+    2:  { label:'Arctic\nIce Cover', color:'#457b9d', group:'ice',
+          info:'Arctic sea ice reflects sunlight. As it melts, it reveals dark ocean water that absorbs more heat.' },
+    3:  { label:'Albedo\n(Reflectivity)', color:'#457b9d', group:'ice',
+          info:'Albedo measures surface reflectivity. Ice/snow has high albedo (~0.8), ocean water has low albedo (~0.06).' },
+    4:  { label:'Solar\nAbsorption', color:'#457b9d', group:'ice',
+          info:'With less reflective surface, Earth absorbs more incoming solar radiation, adding energy to the system.' },
+    5:  { label:'Permafrost\nExtent', color:'#8B6914', group:'perm',
+          info:'Permafrost stores ~1,500 Gt of carbon — twice the atmosphere. As it thaws, organic matter decomposes.' },
+    6:  { label:'Methane\nRelease', color:'#8B6914', group:'perm',
+          info:'Thawing permafrost releases CH₄, a greenhouse gas 80x more potent than CO₂ over 20 years.' },
+    7:  { label:'CO₂\nRelease', color:'#8B6914', group:'perm',
+          info:'Decomposing organic matter in thawed permafrost also releases CO₂, further increasing greenhouse effect.' },
+    8:  { label:'Water\nVapor', color:'#adb5bd', group:'vapor',
+          info:'Warmer air holds more water vapor (~7% per °C). Water vapor is the most abundant greenhouse gas.' },
+    9:  { label:'Cloud\nCover', color:'#adb5bd', group:'vapor',
+          info:'More water vapor can form more clouds. Clouds both trap heat (warming) and reflect sunlight (cooling).' },
+    10: { label:'Ocean\nHeat', color:'#e63946', group:'all',
+          info:'Oceans absorb ~90% of excess heat. Warm oceans release CO₂ and affect weather patterns globally.' }
+  };
+
+  var nodes = new vis.DataSet(Object.keys(nodeData).map(function(id) {
+    var d = nodeData[id];
+    return {
+      id: Number(id), label: d.label,
+      color: { background: d.color, border: '#264653',
+               highlight: { background: '#ffd166', border: '#264653' }},
+      font: { size: 11, face: 'Arial', color: '#fff', multi: true },
+      shape: 'box', borderWidth: 2, margin: 8,
+      x: getNodeX(Number(id)), y: getNodeY(Number(id))
+    };
+  }));
+
+  function getNodeX(id) {
+    var pos = {1:0, 2:-300, 3:-200, 4:-100, 5:100, 6:200, 7:300, 8:-150, 9:0, 10:150};
+    return pos[id] || 0;
+  }
+  function getNodeY(id) {
+    // Note: node 1 at y=490 (slight offset) for edge label rendering
+    var pos = {1:-170, 2:-50, 3:50, 4:130, 5:-50, 6:50, 7:130, 8:130, 9:210, 10:210};
+    return pos[id] || 0;
+  }
+
+  // Edge definitions with +/- labels
+  var edgeList = [
+    // Ice-albedo loop
+    {from:1, to:2, label:'- (melts)', loop:'ice', sign:'-'},
+    {from:2, to:3, label:'+ (less ice=less reflection)', loop:'ice', sign:'+'},
+    {from:3, to:4, label:'- (low albedo=more absorption)', loop:'ice', sign:'-'},
+    {from:4, to:1, label:'+ (more heat)', loop:'ice', sign:'+'},
+
+    // Permafrost loop
+    {from:1, to:5, label:'- (thaws)', loop:'perm', sign:'-'},
+    {from:5, to:6, label:'- (less frost=more CH₄)', loop:'perm', sign:'-'},
+    {from:5, to:7, label:'- (less frost=more CO₂)', loop:'perm', sign:'-'},
+    {from:6, to:1, label:'+ (GHG warming)', loop:'perm', sign:'+'},
+    {from:7, to:1, label:'+ (GHG warming)', loop:'perm', sign:'+'},
+
+    // Water vapor loop
+    {from:1, to:8, label:'+ (more evaporation)', loop:'vapor', sign:'+'},
+    {from:8, to:1, label:'+ (GHG effect)', loop:'vapor', sign:'+'},
+    {from:8, to:9, label:'+ (more clouds)', loop:'vapor', sign:'+'},
+    {from:9, to:1, label:'+/- (complex)', loop:'vapor', sign:'?'},
+
+    // Ocean connection
+    {from:1, to:10, label:'+ (absorbs heat)', loop:'all', sign:'+'},
+    {from:10, to:8, label:'+ (evaporation)', loop:'all', sign:'+'}
+  ];
+
+  var edges = new vis.DataSet(edgeList.map(function(e, i) {
+    var isAmp = e.sign === '+';
+    return {
+      id: i, from: e.from, to: e.to, label: e.label,
+      arrows: 'to',
+      color: { color: isAmp ? '#e6394688' : '#457b9d88', highlight: isAmp ? '#e63946' : '#457b9d' },
+      font: { size: 9, face: 'Arial', color: '#264653', strokeWidth: 2, strokeColor: '#ffffff' },
+      width: 2, smooth: { type: 'curvedCW', roundness: 0.15 },
+      _loop: e.loop
+    };
+  }));
+
+  var options = {
+    physics: false,
+    interaction: { zoomView: false, dragView: false, navigationButtons: true, hover: true },
+    edges: { smooth: { type: 'curvedCW', roundness: 0.15 } }
+  };
+
+  var network = new vis.Network(networkDiv, { nodes: nodes, edges: edges }, options);
+
+  // Hover info
+  network.on('hoverNode', function(params) {
+    var d = nodeData[params.node];
+    if (d) infoPanel.innerHTML = '<strong>' + d.label.replace('\n',' ') + ':</strong> ' + d.info;
+  });
+
+  network.on('blurNode', function() {
+    infoPanel.innerHTML = '<em>Click a loop button above or hover over nodes to explore feedback mechanisms.</em>';
+  });
+
+  network.fit({ animation: { duration: 500 }});
+
+  // Loop highlighting
+  function highlightLoop(loopIdx) {
+    var loopKeys = ['ice', 'perm', 'vapor', 'all'];
+    var targetLoop = loopKeys[loopIdx];
+
+    // Update edges
+    var updatedEdges = [];
+    edgeList.forEach(function(e, i) {
+      var match = (targetLoop === 'all') || (e.loop === targetLoop) || (e.loop === 'all');
+      updatedEdges.push({
+        id: i,
+        width: match ? 4 : 1,
+        color: { color: match ? (e.sign === '+' ? '#e63946' : '#457b9d') : '#ddd' },
+        font: { size: match ? 10 : 0, color: match ? '#264653' : 'transparent' }
+      });
+    });
+    edges.update(updatedEdges);
+
+    // Update nodes
+    var loopGroups = { ice: ['ice','all'], perm: ['perm','all'], vapor: ['vapor','all'], all: ['all','ice','perm','vapor'] };
+    var activeGroups = loopGroups[targetLoop];
+    Object.keys(nodeData).forEach(function(id) {
+      var d = nodeData[id];
+      var active = activeGroups.indexOf(d.group) >= 0;
+      nodes.update({
+        id: Number(id),
+        color: { background: active ? d.color : '#ddd', border: active ? '#264653' : '#ccc' },
+        font: { color: active ? '#fff' : '#999' }
+      });
+    });
+
+    var descriptions = [
+      'ICE-ALBEDO FEEDBACK: Warming melts ice, reducing reflectivity, causing more solar absorption, which causes more warming. This is the strongest positive feedback loop in the Arctic.',
+      'PERMAFROST FEEDBACK: Warming thaws permafrost, releasing stored methane and CO₂, which increases greenhouse warming. Contains enough carbon to significantly amplify warming.',
+      'WATER VAPOR FEEDBACK: Warming increases evaporation, adding water vapor (a greenhouse gas) to the atmosphere, causing more warming. This roughly doubles the effect of CO₂ alone.',
+      'ALL FEEDBACK LOOPS interact and amplify each other. Ocean heat drives evaporation, which connects to water vapor feedback. All loops feed back to global temperature.'
+    ];
+    infoPanel.innerHTML = '<strong>' + loopNames[loopIdx] + ' Loop:</strong> ' + descriptions[loopIdx];
+  }
+
+  function resetHighlights() {
+    Object.keys(nodeData).forEach(function(id) {
+      var d = nodeData[id];
+      nodes.update({
+        id: Number(id),
+        color: { background: d.color, border: '#264653' },
+        font: { color: '#fff' }
+      });
+    });
+    edgeList.forEach(function(e, i) {
+      var isAmp = e.sign === '+';
+      edges.update({
+        id: i, width: 2,
+        color: { color: isAmp ? '#e6394688' : '#457b9d88' },
+        font: { size: 9, color: '#264653' }
+      });
+    });
+    infoPanel.innerHTML = '<em>Click a loop button above or hover over nodes to explore feedback mechanisms.</em>';
+  }
+
+  var warmingTimer = null;
+  function animateWarming() {
+    if (warmingTimer) return;
+    resetHighlights();
+    var sequence = [
+      function() { highlightLoop(0); },
+      function() { highlightLoop(1); },
+      function() { highlightLoop(2); },
+      function() { highlightLoop(3); }
+    ];
+    var step = 0;
+    warmingTimer = setInterval(function() {
+      if (step < sequence.length) {
+        sequence[step]();
+        step++;
+      } else {
+        clearInterval(warmingTimer);
+        warmingTimer = null;
+      }
+    }, 2000);
+  }
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

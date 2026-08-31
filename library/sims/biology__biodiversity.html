@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Biodiversity Levels Pyramid using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Biodiversity Levels Pyramid
+// CANVAS_HEIGHT: 510
+// Interactive three-tier pyramid showing genetic, species, and ecosystem diversity
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 500;
+let controlHeight = 10;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+let selectedTier = -1; // 0=genetic, 1=species, 2=ecosystem
+let animProgress = 0;
+
+const tiers = [
+  {
+    label: 'Genetic Diversity',
+    color: [76, 153, 76],
+    icon: 'dna',
+    examples: [
+      { title: 'Wolf Pack Gene Variants', desc: 'Different coat colors, size, and disease resistance genes within a single wolf pack.' },
+      { title: 'Crop Varieties', desc: 'Thousands of rice varieties with different drought, pest, and flood tolerances.' },
+      { title: 'Coral Genotypes', desc: 'Genetic variation in coral lets some colonies survive warmer ocean temperatures.' }
+    ]
+  },
+  {
+    label: 'Species Diversity',
+    color: [60, 130, 60],
+    icon: 'species',
+    examples: [
+      { title: 'Tropical Rainforest', desc: 'A single hectare may contain 300+ tree species and thousands of insect species.' },
+      { title: 'Coral Reef Fish', desc: 'Over 1,500 fish species inhabit the Great Barrier Reef ecosystem.' },
+      { title: 'Prairie Grassland', desc: '50-300 plant species per acre support diverse animal communities.' }
+    ]
+  },
+  {
+    label: 'Ecosystem Diversity',
+    color: [100, 80, 50],
+    icon: 'landscape',
+    examples: [
+      { title: 'Forest Types', desc: 'Boreal, temperate, and tropical forests each harbor unique communities.' },
+      { title: 'Aquatic Systems', desc: 'Rivers, lakes, estuaries, and deep ocean each support different life.' },
+      { title: 'Transitional Zones', desc: 'Wetlands, mangroves, and tidal pools exist where ecosystems meet.' }
+    ]
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Three-tier biodiversity pyramid showing genetic, species, and ecosystem diversity', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background gradient
+  for (let y = 0; y < canvasHeight; y++) {
+    let c = lerpColor(color(220, 235, 220), color(245, 248, 245), y / canvasHeight);
+    stroke(c);
+    line(0, y, canvasWidth, y);
+  }
+
+  // Title
+  noStroke();
+  fill(40);
+  textSize(18);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text('Levels of Biodiversity', canvasWidth / 2, 15);
+  textStyle(NORMAL);
+
+  let pyrTop = 50;
+  let pyrBot = 320;
+  let pyrH = pyrBot - pyrTop;
+  let cx = canvasWidth / 2;
+  let maxW = canvasWidth * 0.7;
+
+  // Draw pyramid tiers (bottom to top: 0=genetic, 1=species, 2=ecosystem)
+  for (let i = 0; i < 3; i++) {
+    let tierIdx = 2 - i; // draw from top (ecosystem) to bottom (genetic)
+    let t = tiers[tierIdx];
+    let y1 = pyrTop + (i / 3) * pyrH;
+    let y2 = pyrTop + ((i + 1) / 3) * pyrH;
+    let w1 = maxW * (0.3 + i * 0.23);
+    let w2 = maxW * (0.3 + (i + 1) * 0.23);
+
+    let isHovered = selectedTier === tierIdx;
+    let alpha = isHovered ? 230 : 180;
+
+    fill(t.color[0], t.color[1], t.color[2], alpha);
+    stroke(255, 255, 255, 100);
+    strokeWeight(2);
+    beginShape();
+    vertex(cx - w1 / 2, y1);
+    vertex(cx + w1 / 2, y1);
+    vertex(cx + w2 / 2, y2);
+    vertex(cx - w2 / 2, y2);
+    endShape(CLOSE);
+
+    // Tier label
+    noStroke();
+    fill(255);
+    textSize(15);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(t.label, cx, (y1 + y2) / 2 - 8);
+    textStyle(NORMAL);
+    textSize(11);
+    fill(230);
+    text('Click to explore', cx, (y1 + y2) / 2 + 12);
+
+    // Draw icon
+    drawTierIcon(t.icon, cx, (y1 + y2) / 2, tierIdx);
+  }
+
+  // Instruction
+  noStroke();
+  fill(120);
+  textSize(12);
+  textAlign(CENTER, TOP);
+  text('Click a tier to see real-world examples', cx, pyrBot + 10);
+
+  // Draw examples panel if tier selected
+  if (selectedTier >= 0) {
+    drawExamplesPanel(selectedTier, pyrBot + 30);
+  }
+}
+
+function drawTierIcon(iconType, cx, cy, tierIdx) {
+  // Small decorative icons on the sides
+  let offset = canvasWidth * 0.22;
+  noStroke();
+  if (iconType === 'dna') {
+    // DNA double helix hint
+    for (let i = 0; i < 5; i++) {
+      let y = cy - 15 + i * 7;
+      fill(200, 230, 200, 180);
+      ellipse(cx - offset, y, 4, 4);
+      ellipse(cx - offset + 10, y + 3, 4, 4);
+      stroke(200, 230, 200, 120);
+      strokeWeight(1);
+      line(cx - offset, y, cx - offset + 10, y + 3);
+      noStroke();
+    }
+  } else if (iconType === 'species') {
+    // Multiple creature silhouettes
+    fill(200, 230, 200, 180);
+    ellipse(cx - offset, cy - 5, 8, 6); // bird
+    ellipse(cx - offset + 15, cy, 7, 7); // mammal
+    ellipse(cx - offset + 7, cy + 8, 6, 8); // fish
+  } else if (iconType === 'landscape') {
+    // Mountain/forest hint
+    fill(200, 230, 200, 150);
+    triangle(cx - offset, cy + 10, cx - offset + 8, cy - 8, cx - offset + 16, cy + 10);
+    triangle(cx - offset + 10, cy + 10, cx - offset + 20, cy - 5, cx - offset + 28, cy + 10);
+  }
+}
+
+function drawExamplesPanel(tierIdx, startY) {
+  let t = tiers[tierIdx];
+  let panelX = canvasWidth * 0.08;
+  let panelW = canvasWidth * 0.84;
+  let panelH = 150;
+
+  fill(255, 255, 255, 240);
+  stroke(t.color[0], t.color[1], t.color[2]);
+  strokeWeight(2);
+  rect(panelX, startY, panelW, panelH, 10);
+
+  noStroke();
+  fill(t.color[0], t.color[1], t.color[2]);
+  textSize(14);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  text(t.label + ' Examples:', panelX + 12, startY + 10);
+  textStyle(NORMAL);
+
+  textSize(12);
+  fill(50);
+  for (let i = 0; i < t.examples.length; i++) {
+    let ex = t.examples[i];
+    let ey = startY + 32 + i * 38;
+    fill(t.color[0], t.color[1], t.color[2]);
+    textStyle(BOLD);
+    text(ex.title, panelX + 16, ey);
+    textStyle(NORMAL);
+    fill(80);
+    text(ex.desc, panelX + 16, ey + 15, panelW - 32, 30);
+  }
+}
+
+function mousePressed() {
+  let pyrTop = 50;
+  let pyrBot = 320;
+  let pyrH = pyrBot - pyrTop;
+
+  for (let i = 0; i < 3; i++) {
+    let tierIdx = 2 - i;
+    let y1 = pyrTop + (i / 3) * pyrH;
+    let y2 = pyrTop + ((i + 1) / 3) * pyrH;
+    if (mouseY >= y1 && mouseY <= y2 && mouseX > canvasWidth * 0.15 && mouseX < canvasWidth * 0.85) {
+      selectedTier = (selectedTier === tierIdx) ? -1 : tierIdx;
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Political Polarization — A Historical and Contemporary Index</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Political Polarization — Historical and Contemporary Index
+// CANVAS_HEIGHT: 640
+// Chapter 20: Contemporary America and the Digital Age (2001–Present)
+// Bloom Level: Analyze (L4) — Interpret long-run polarization data
+//
+// Layout: drawHeight (560) + controlHeight (80) = 640
+// Line/area chart of U.S. political polarization 1879→2024 using a
+// DW-NOMINATE-style party-position distance for House and Senate.
+// Toggle to overlay competing explanations (gerrymandering, primary
+// system, social media, residential sorting, partisan media).
+// Click a period band for a context paragraph.
+
+let canvasWidth = 900;
+let drawHeight = 560;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+// Color palette
+const COLOR_HOUSE   = { r:  30, g:  90, b: 200 }; // blue
+const COLOR_SENATE  = { r: 200, g:  40, b:  50 }; // red
+const COLOR_BG      = { r: 248, g: 249, b: 250 };
+const COLOR_PANEL   = { r: 252, g: 252, b: 254 };
+const COLOR_BORDER  = { r: 215, g: 220, b: 228 };
+
+// DW-NOMINATE-style polarization data: distance between party medians on the
+// first dimension. Values are calibrated to published Voteview series.
+// Range 0.4 (low polarization) to ~1.1 (record high). Each datum is
+// (year, house_distance, senate_distance).
+const polarizationData = [
+  { y: 1879, h: 0.79, s: 0.74 }, // post-Reconstruction high
+  { y: 1889, h: 0.81, s: 0.76 },
+  { y: 1899, h: 0.85, s: 0.80 }, // Gilded Age peak
+  { y: 1909, h: 0.82, s: 0.78 },
+  { y: 1919, h: 0.74, s: 0.70 },
+  { y: 1929, h: 0.69, s: 0.66 },
+  { y: 1939, h: 0.62, s: 0.60 }, // New Deal era cross-cutting coalitions
+  { y: 1949, h: 0.55, s: 0.54 },
+  { y: 1959, h: 0.50, s: 0.49 }, // Eisenhower-Kennedy mid-century low
+  { y: 1969, h: 0.49, s: 0.48 },
+  { y: 1979, h: 0.55, s: 0.54 },
+  { y: 1989, h: 0.66, s: 0.62 }, // post-1980s rise
+  { y: 1999, h: 0.78, s: 0.72 },
+  { y: 2009, h: 0.92, s: 0.84 }, // 2000s acceleration
+  { y: 2019, h: 1.04, s: 0.92 },
+  { y: 2024, h: 1.08, s: 0.95 }  // record high
+];
+
+// Historical periods with click-for-context paragraphs
+const periods = [
+  {
+    yStart: 1879, yEnd: 1898,
+    label: 'Post-Reconstruction',
+    title: 'Post-Reconstruction (1879–1898)',
+    body: 'After Reconstruction collapsed in 1877, parties polarized along sectional lines. Republicans were the party of the North, Black voters (where they could still vote), tariffs, and the Civil War legacy; Democrats were the party of the white South and currency populism. Roll-call votes rarely crossed party lines on tariffs, the gold standard, or civil rights enforcement.'
+  },
+  {
+    yStart: 1899, yEnd: 1928,
+    label: 'Gilded → Progressive',
+    title: 'Gilded Age & Progressive Era (1899–1928)',
+    body: 'Polarization stayed high through the Gilded Age but began drifting down during the Progressive Era as both parties absorbed reform wings. Republicans (Roosevelt, La Follette) and Democrats (Bryan, Wilson) each contained a progressive faction that voted across party lines on antitrust and labor regulation.'
+  },
+  {
+    yStart: 1929, yEnd: 1952,
+    label: 'New Deal Era',
+    title: 'New Deal Era (1929–1952)',
+    body: 'The New Deal coalition combined northern liberals, southern conservative Democrats, urban Catholics, and Black voters. Cross-cutting coalitions on civil rights and labor produced lower party-median distances. Conservative Southern Democrats often voted with Republicans on race; northern Republicans often voted with Democrats on labor.'
+  },
+  {
+    yStart: 1953, yEnd: 1978,
+    label: 'Mid-Century Low',
+    title: 'Mid-Century Low (1953–1978)',
+    body: 'The Eisenhower–Kennedy–Johnson era is the lowest-polarization period in modern U.S. history. Republicans accepted the New Deal; conservative Democrats accepted the welfare state. Civil-rights legislation (1964, 1965) passed with bipartisan majorities — a coalition unimaginable today. Political scientists in 1950 actually called for MORE polarization to give voters clearer choices.'
+  },
+  {
+    yStart: 1979, yEnd: 2000,
+    label: 'Post-1980s Rise',
+    title: 'Post-1980s Rise (1979–2000)',
+    body: 'Reagan, Newt Gingrich\'s 1994 Contract with America, and the realignment of Southern whites to the GOP eliminated the conservative-Democrat caucus. Liberal Republicans disappeared too. Each party became more internally homogeneous, so the median Democrat and Republican drifted apart even when individual voters did not.'
+  },
+  {
+    yStart: 2001, yEnd: 2024,
+    label: '2000s Acceleration',
+    title: '2000s Acceleration (2001–2024)',
+    body: 'Polarization in the 2000s and 2010s reached the highest level since the 1890s. The Tea Party (2010), social-media-driven primary challenges, residential sorting, partisan cable and online media, and Trump\'s 2016 election all coincide with the steepest part of the curve. House polarization is now slightly higher than the 1879 post-Reconstruction peak.'
+  }
+];
+
+// Competing explanations (overlays)
+const explanations = [
+  {
+    id: 'none',
+    label: 'No overlay',
+    note: 'Use the dropdown to overlay a competing explanation for the post-1980s rise.'
+  },
+  {
+    id: 'gerrymandering',
+    label: 'Partisan gerrymandering',
+    yStart: 1990, yEnd: 2024,
+    note: 'Gerrymandering: redistricting after each census (especially 2010 with REDMAP) packs voters into safe districts. Members fear primaries more than general elections, so they move toward extremes. Critics: Senate is also polarizing, and senators are not gerrymandered.'
+  },
+  {
+    id: 'primaries',
+    label: 'Primary election system',
+    yStart: 1972, yEnd: 2024,
+    note: 'Primary system: post-1972 reforms shifted nominations from party bosses to primary voters, who skew ideological. "Primary me" becomes the threat that pulls members toward party extremes. Strongest evidence: members vote more extreme than their districts demand.'
+  },
+  {
+    id: 'social-media',
+    label: 'Social media (post-2008)',
+    yStart: 2008, yEnd: 2024,
+    note: 'Social media: Facebook (2004), Twitter (2006), and algorithmic feeds amplify outrage and reward partisan content after ~2008. Note that polarization was already rising before social media, so this is an accelerant rather than a root cause.'
+  },
+  {
+    id: 'residential',
+    label: 'Residential sorting',
+    yStart: 1976, yEnd: 2024,
+    note: 'Residential sorting (Bishop, "The Big Sort"): Americans increasingly live near politically similar neighbors. Counties decided by 20+ points in the presidential vote rose from 27% (1976) to 60% (2020). Voters rarely encounter the other side in daily life, weakening cross-cutting ties.'
+  },
+  {
+    id: 'partisan-media',
+    label: 'Partisan media',
+    yStart: 1987, yEnd: 2024,
+    note: 'Partisan media: 1987 FCC Fairness Doctrine repeal opened talk radio (Rush Limbaugh 1988); Fox News (1996) and MSNBC partisan turn (2007) gave each party its own media ecosystem. Voters get filtered facts, making compromise feel like betrayal.'
+  }
+];
+
+// UI state
+let chamberSelect;
+let explanationSelect;
+let resetBtn;
+let inflectionsCheckbox;
+let selectedPeriodIdx = -1; // index in periods, -1 = none
+let hoveredPeriodIdx = -1;
+let hoveredYearIdx = -1;
+
+const minYear = 1879;
+const maxYear = 2024;
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  chamberSelect = createSelect();
+  chamberSelect.option('House + Senate', 'both');
+  chamberSelect.option('House only', 'house');
+  chamberSelect.option('Senate only', 'senate');
+  chamberSelect.selected('both');
+
+  explanationSelect = createSelect();
+  for (let e of explanations) {
+    explanationSelect.option(e.label, e.id);
+  }
+  explanationSelect.selected('none');
+
+  inflectionsCheckbox = createCheckbox(' Inflection points', true);
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    chamberSelect.selected('both');
+    explanationSelect.selected('none');
+    inflectionsCheckbox.checked(true);
+    selectedPeriodIdx = -1;
+  });
+
+  positionControls();
+  describe('Line chart of U.S. political polarization (DW-NOMINATE-style party-median distance) for the House and Senate from 1879 to 2024. Toggle between chambers and overlay competing explanations. Click a period band for context.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  chamberSelect.position(margin + 70, y);
+  chamberSelect.style('font-size', '13px');
+  explanationSelect.position(margin + 290, y);
+  explanationSelect.style('font-size', '13px');
+  inflectionsCheckbox.position(margin + 70, y + 30);
+  inflectionsCheckbox.style('font-size', '13px');
+  resetBtn.position(canvasWidth - margin - 60, y);
+}
+
+// ---- Layout helpers ------------------------------------------------------
+
+function chartArea() {
+  let leftPad = 56;
+  let rightPad = 16;
+  let topPad = 64;
+  let bottomPad = 130; // leave room for period bands + axis label
+  let panelW = (selectedPeriodIdx >= 0) ? min(330, canvasWidth * 0.36) : 0;
+  return {
+    x: margin + leftPad,
+    y: topPad,
+    w: canvasWidth - margin * 2 - leftPad - rightPad - panelW - (panelW > 0 ? 14 : 0),
+    h: drawHeight - topPad - bottomPad,
+    panelW: panelW
+  };
+}
+
+function yearToX(year, area) {
+  return map(year, minYear, maxYear, area.x, area.x + area.w);
+}
+
+function valueToY(v, area) {
+  // y-axis 0.3 → 1.2 for readability
+  return map(v, 0.3, 1.2, area.y + area.h, area.y);
+}
+
+// ---- Draw ----------------------------------------------------------------
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(COLOR_BG.r, COLOR_BG.g, COLOR_BG.b);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(COLOR_BORDER.r, COLOR_BORDER.g, COLOR_BORDER.b);
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+
+  // Title
+  fill(20, 50, 110);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('U.S. Political Polarization, 1879–2024', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+  fill(90);
+  textSize(11.5);
+  text('Distance between party medians (DW-NOMINATE-style). Click any era band for context.',
+       canvasWidth / 2, 36);
+
+  let area = chartArea();
+
+  drawPeriodBands(area);
+  drawAxes(area);
+  drawExplanationOverlay(area);
+  drawSeries(area);
+  if (inflectionsCheckbox.checked()) {
+    drawInflections(area);
+  }
+  drawLegend(area);
+  drawPeriodLabels(area);
+
+  // Hover detection on data points (closest year)
+  hoveredYearIdx = -1;
+  if (mouseY > area.y && mouseY < area.y + area.h &&
+      mouseX > area.x && mouseX < area.x + area.w) {
+    let bestD = 30;
+    for (let i = 0; i < polarizationData.length; i++) {
+      let dx = abs(yearToX(polarizationData[i].y, area) - mouseX);
+      if (dx < bestD) { bestD = dx; hoveredYearIdx = i; }
+    }
+  }
+  if (hoveredYearIdx >= 0) drawHoverTooltip(area);
+
+  if (selectedPeriodIdx >= 0) drawContextPanel(area);
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text('Chamber:', margin + 6, drawHeight + 22);
+  text('Overlay:', margin + 230, drawHeight + 22);
+
+  positionControls();
+}
+
+function drawAxes(area) {
+  // Y axis
+  stroke(180);
+  strokeWeight(1);
+  line(area.x, area.y, area.x, area.y + area.h);
+  line(area.x, area.y + area.h, area.x + area.w, area.y + area.h);
+
+  noStroke();
+  fill(80);
+  textAlign(RIGHT, CENTER);
+  textSize(10.5);
+  for (let v = 0.3; v <= 1.2; v += 0.1) {
+    let yy = valueToY(v, area);
+    stroke(225);
+    line(area.x, yy, area.x + area.w, yy);
+    noStroke();
+    fill(80);
+    text(nf(v, 1, 1), area.x - 6, yy);
+  }
+
+  // Y axis title
+  push();
+  translate(margin + 12, area.y + area.h / 2);
+  rotate(-HALF_PI);
+  fill(60);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text('Party-median distance (0 = none, 1 = max)', 0, 0);
+  textStyle(NORMAL);
+  pop();
+
+  // X axis ticks
+  noStroke();
+  fill(80);
+  textAlign(CENTER, TOP);
+  textSize(10.5);
+  for (let yr = 1880; yr <= 2024; yr += 20) {
+    let xx = yearToX(yr, area);
+    stroke(190);
+    line(xx, area.y + area.h, xx, area.y + area.h + 4);
+    noStroke();
+    fill(80);
+    text(yr, xx, area.y + area.h + 6);
+  }
+}
+
+function drawPeriodBands(area) {
+  // Faint alternating bands for the six periods
+  for (let i = 0; i < periods.length; i++) {
+    let p = periods[i];
+    let x0 = yearToX(p.yStart, area);
+    let x1 = yearToX(min(p.yEnd, maxYear), area);
+    let isSel = selectedPeriodIdx === i;
+    let isHov = hoveredPeriodIdx === i;
+
+    noStroke();
+    if (isSel)      fill(255, 230, 150, 200);
+    else if (isHov) fill(230, 240, 255, 220);
+    else            fill(i % 2 === 0 ? 245 : 252, i % 2 === 0 ? 247 : 252, 250);
+    rect(x0, area.y, x1 - x0, area.h);
+  }
+}
+
+function drawSeries(area) {
+  let mode = chamberSelect.value();
+
+  // House line
+  if (mode === 'both' || mode === 'house') {
+    noFill();
+    stroke(COLOR_HOUSE.r, COLOR_HOUSE.g, COLOR_HOUSE.b, 230);
+    strokeWeight(2.4);
+    beginShape();
+    for (let d of polarizationData) {
+      vertex(yearToX(d.y, area), valueToY(d.h, area));
+    }
+    endShape();
+
+    // Dots
+    noStroke();
+    fill(COLOR_HOUSE.r, COLOR_HOUSE.g, COLOR_HOUSE.b);
+    for (let d of polarizationData) {
+      circle(yearToX(d.y, area), valueToY(d.h, area), 5.5);
+    }
+  }
+
+  // Senate line
+  if (mode === 'both' || mode === 'senate') {
+    noFill();
+    stroke(COLOR_SENATE.r, COLOR_SENATE.g, COLOR_SENATE.b, 230);
+    strokeWeight(2.4);
+    beginShape();
+    for (let d of polarizationData) {
+      vertex(yearToX(d.y, area), valueToY(d.s, area));
+    }
+    endShape();
+
+    noStroke();
+    fill(COLOR_SENATE.r, COLOR_SENATE.g, COLOR_SENATE.b);
+    for (let d of polarizationData) {
+      circle(yearToX(d.y, area), valueToY(d.s, area), 5.5);
+    }
+  }
+}
+
+function drawInflections(area) {
+  let mode = chamberSelect.value();
+  let useHouse = mode !== 'senate';
+  let pts = polarizationData.map(d => ({
+    y: d.y, v: useHouse ? d.h : d.s
+  }));
+
+  // Find local min and selected key markers: 1879 high, 1969 low, 2024 high
+  let markers = [
+    { year: 1879, label: 'Post-Reconstruction', side: 'top' },
+    { year: 1969, label: 'Mid-century low', side: 'bottom' },
+    { year: 2009, label: 'Acceleration', side: 'top' },
+    { year: 2024, label: 'Record high', side: 'top' }
+  ];
+
+  textSize(10);
+  for (let m of markers) {
+    let p = pts.find(pp => pp.y === m.year);
+    if (!p) continue;
+    let xx = yearToX(p.y, area);
+    let yy = valueToY(p.v, area);
+
+    // Marker dot ring
+    noFill();
+    stroke(60);
+    strokeWeight(1.4);
+    circle(xx, yy, 11);
+    noStroke();
+
+    // Label with leader line
+    let labelY = m.side === 'top' ? yy - 18 : yy + 22;
+    stroke(60, 60, 60, 160);
+    strokeWeight(1);
+    line(xx, yy + (m.side === 'top' ? -6 : 6), xx, labelY + (m.side === 'top' ? 4 : -4));
+    noStroke();
+
+    fill(255, 245, 200, 240);
+    stroke(180, 140, 40);
+    strokeWeight(1);
+    let tw = textWidth(m.label) + 10;
+    rectMode(CENTER);
+    rect(xx, labelY, tw, 14, 4);
+    rectMode(CORNER);
+    noStroke();
+    fill(60, 40, 0);
+    textAlign(CENTER, CENTER);
+    text(m.label, xx, labelY);
+  }
+}
+
+function drawExplanationOverlay(area) {
+  let id = explanationSelect.value();
+  if (id === 'none') return;
+  let ex = explanations.find(e => e.id === id);
+  if (!ex || !ex.yStart) return;
+
+  let x0 = yearToX(ex.yStart, area);
+  let x1 = yearToX(min(ex.yEnd, maxYear), area);
+
+  noStroke();
+  fill(255, 200, 80, 70);
+  rect(x0, area.y, x1 - x0, area.h);
+
+  // Top bar with label
+  fill(220, 160, 30);
+  rect(x0, area.y, x1 - x0, 4);
+
+  // Note box at top
+  noStroke();
+  fill(255, 248, 220);
+  stroke(200, 150, 30);
+  strokeWeight(1);
+  let noteW = min(canvasWidth - margin * 2 - 20, 540);
+  let noteX = margin + 10;
+  let noteY = area.y - 24;
+  // Compute text height
+  textSize(11);
+  let lines = wrapLines(ex.note, noteW - 20);
+  let noteH = lines.length * 14 + 10;
+  // Reposition note box just above chart, after title
+  rect(noteX, 50, noteW, noteH, 6);
+  noStroke();
+  fill(80, 50, 0);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  for (let i = 0; i < lines.length; i++) {
+    text(lines[i], noteX + 8, 50 + 5 + i * 14);
+  }
+}
+
+function drawLegend(area) {
+  let mode = chamberSelect.value();
+  let lx = area.x + area.w - 180;
+  let ly = area.y + 6;
+
+  noStroke();
+  fill(255, 220);
+  stroke(COLOR_BORDER.r, COLOR_BORDER.g, COLOR_BORDER.b);
+  strokeWeight(1);
+  rect(lx, ly, 170, 44, 5);
+  noStroke();
+
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  if (mode === 'both' || mode === 'house') {
+    fill(COLOR_HOUSE.r, COLOR_HOUSE.g, COLOR_HOUSE.b);
+    rect(lx + 8, ly + 11, 16, 3);
+    circle(lx + 16, ly + 12, 5);
+    fill(40);
+    text('House', lx + 32, ly + 12);
+  }
+  if (mode === 'both' || mode === 'senate') {
+    fill(COLOR_SENATE.r, COLOR_SENATE.g, COLOR_SENATE.b);
+    rect(lx + 8, ly + 30, 16, 3);
+    circle(lx + 16, ly + 31, 5);
+    fill(40);
+    text('Senate', lx + 32, ly + 31);
+  }
+}
+
+function drawPeriodLabels(area) {
+  // Period band labels along the bottom under the chart
+  let yBase = area.y + area.h + 22;
+  hoveredPeriodIdx = -1;
+
+  textSize(10.5);
+  textStyle(BOLD);
+  for (let i = 0; i < periods.length; i++) {
+    let p = periods[i];
+    let x0 = yearToX(p.yStart, area);
+    let x1 = yearToX(min(p.yEnd, maxYear), area);
+    let bw = x1 - x0;
+    let by = yBase;
+    let bh = 22;
+
+    let isHov = mouseX >= x0 && mouseX <= x1 && mouseY >= by && mouseY <= by + bh;
+    let isSel = selectedPeriodIdx === i;
+    if (isHov) hoveredPeriodIdx = i;
+
+    noStroke();
+    if (isSel)      fill(255, 220, 130);
+    else if (isHov) fill(220, 232, 250);
+    else            fill(240, 244, 250);
+    stroke(180, 190, 205);
+    strokeWeight(1);
+    rect(x0 + 1, by, bw - 2, bh, 4);
+
+    noStroke();
+    fill(40);
+    textAlign(CENTER, CENTER);
+    text(p.label, x0 + bw / 2, by + bh / 2, bw - 4, bh);
+  }
+  textStyle(NORMAL);
+
+  // Hint
+  fill(110);
+  textAlign(CENTER, TOP);
+  textSize(10.5);
+  textStyle(ITALIC);
+  text('Click a period band for the historical context.',
+       canvasWidth / 2, yBase + 28);
+  textStyle(NORMAL);
+}
+
+function drawHoverTooltip(area) {
+  let d = polarizationData[hoveredYearIdx];
+  let mode = chamberSelect.value();
+  let lines = [d.y + ''];
+  if (mode === 'both' || mode === 'house')  lines.push('House:  ' + nf(d.h, 1, 2));
+  if (mode === 'both' || mode === 'senate') lines.push('Senate: ' + nf(d.s, 1, 2));
+
+  textSize(11);
+  let tw = 0;
+  for (let l of lines) tw = max(tw, textWidth(l));
+  tw += 16;
+  let th = lines.length * 14 + 8;
+
+  let xx = yearToX(d.y, area);
+  let yy = valueToY(mode === 'senate' ? d.s : d.h, area);
+  let tx = constrain(xx + 10, margin, canvasWidth - tw - margin);
+  let ty = constrain(yy - th - 8, area.y, area.y + area.h - th);
+
+  noStroke();
+  fill(30, 40, 60, 235);
+  rect(tx, ty, tw, th, 6);
+  fill(255);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  text(lines[0], tx + 8, ty + 6);
+  textStyle(NORMAL);
+  for (let i = 1; i < lines.length; i++) {
+    text(lines[i], tx + 8, ty + 6 + i * 14);
+  }
+}
+
+function drawContextPanel(area) {
+  let p = periods[selectedPeriodIdx];
+  let panelW = area.panelW;
+  if (panelW <= 0) return;
+  let panelX = canvasWidth - margin - panelW;
+  let panelY = area.y;
+  let panelH = area.h + 40;
+
+  noStroke();
+  fill(255);
+  stroke(COLOR_HOUSE.r, COLOR_HOUSE.g, COLOR_HOUSE.b);
+  strokeWeight(2);
+  rect(panelX, panelY, panelW, panelH, 8);
+  noStroke();
+
+  fill(20, 50, 110);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(13);
+  text(p.title, panelX + 10, panelY + 8, panelW - 20, 40);
+  textStyle(NORMAL);
+
+  fill(120);
+  textAlign(RIGHT, TOP);
+  textSize(10);
+  text('(click again to close)', panelX + panelW - 10, panelY + 10);
+
+  fill(35);
+  textAlign(LEFT, TOP);
+  textSize(11.5);
+  text(p.body, panelX + 10, panelY + 50, panelW - 20, panelH - 60);
+
+  // Show data range for the period
+  let ds = polarizationData.filter(d => d.y >= p.yStart && d.y <= p.yEnd);
+  if (ds.length > 0) {
+    let avgH = ds.reduce((a, b) => a + b.h, 0) / ds.length;
+    let avgS = ds.reduce((a, b) => a + b.s, 0) / ds.length;
+    fill(80);
+    textSize(11);
+    textStyle(BOLD);
+    text('Average distance this period:', panelX + 10, panelY + panelH - 50);
+    textStyle(NORMAL);
+    fill(COLOR_HOUSE.r, COLOR_HOUSE.g, COLOR_HOUSE.b);
+    text('House:  ' + nf(avgH, 1, 2), panelX + 10, panelY + panelH - 34);
+    fill(COLOR_SENATE.r, COLOR_SENATE.g, COLOR_SENATE.b);
+    text('Senate: ' + nf(avgS, 1, 2), panelX + 10, panelY + panelH - 18);
+  }
+}
+
+function wrapLines(str, maxW) {
+  textSize(11);
+  let words = str.split(' ');
+  let lines = [];
+  let line = '';
+  for (let w of words) {
+    let test = line.length === 0 ? w : line + ' ' + w;
+    if (textWidth(test) > maxW) {
+      if (line.length > 0) lines.push(line);
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line.length > 0) lines.push(line);
+  return lines;
+}
+
+function mousePressed() {
+  // Period band hit-testing
+  let area = chartArea();
+  let yBase = area.y + area.h + 22;
+  for (let i = 0; i < periods.length; i++) {
+    let p = periods[i];
+    let x0 = yearToX(p.yStart, area);
+    let x1 = yearToX(min(p.yEnd, maxYear), area);
+    if (mouseX >= x0 && mouseX <= x1 &&
+        mouseY >= yBase && mouseY <= yBase + 22) {
+      selectedPeriodIdx = (selectedPeriodIdx === i) ? -1 : i;
+      return;
+    }
+    // Also allow clicking the band area inside the chart
+    if (mouseX >= x0 && mouseX <= x1 &&
+        mouseY >= area.y && mouseY <= area.y + area.h) {
+      selectedPeriodIdx = (selectedPeriodIdx === i) ? -1 : i;
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: data-visualization
+    sim-id: polarization-index
+    Library: p5.js
+    Status: Built
+
+    Purpose: Visualize the long-run trajectory of U.S. political polarization
+    using a DW-NOMINATE-style party-median distance series for the House and
+    Senate from 1879 to 2024. Students identify periods of greatest change
+    (post-Reconstruction high, mid-century low, post-1980s rise, 2000s
+    acceleration) and evaluate competing explanations for the modern rise.
+
+    Bloom Level: Analyze (L4)
+    Bloom Verb: Interpret
+
+    Learning Objective: Students interpret data on American political
+    polarization over time, identify the periods of greatest change, and
+    evaluate competing explanations for increasing polarization
+    (gerrymandering, primary system, social media, residential sorting,
+    partisan media).
+
+    Interactivity:
+    - "Chamber" dropdown toggles House, Senate, or both.
+    - "Overlay" dropdown highlights the period each competing explanation
+      claims to drive, with a note describing the strongest evidence for
+      and against it.
+    - "Inflection points" checkbox annotates the four key turning points.
+    - Click any period band (Post-Reconstruction, Gilded → Progressive,
+      New Deal Era, Mid-Century Low, Post-1980s Rise, 2000s Acceleration)
+      for a context paragraph.
+
+    Color scheme: Blue for House, red for Senate; gold for the active
+    explanation overlay band; muted alternating bands for the six periods.
+    -->
+</body>
+</html>

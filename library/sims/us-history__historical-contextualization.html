@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Foundational Documents Timeline</title>
+<!-- CANVAS_HEIGHT: 560 -->
+<script src="https://unpkg.com/vis-timeline@7.7.3/standalone/umd/vis-timeline-graph2d.min.js"></script>
+<link href="https://unpkg.com/vis-timeline@7.7.3/styles/vis-timeline-graph2d.min.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: aliceblue; }
+.header { background: #1A237E; color: white; padding: 10px 16px; }
+.header h1 { font-size: 17px; }
+.header p  { font-size: 12px; color: #c5cae9; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; background: #e8eaf6; }
+.filter-btn { padding: 5px 12px; border: none; border-radius: 14px; cursor: pointer; font-size: 12px; font-weight: bold; color: white; }
+.filter-btn.all       { background: #546e7a; }
+.filter-btn.political { background: #1A237E; }
+.filter-btn.literary  { background: #B71C1C; }
+.filter-btn.social    { background: #1B5E20; }
+.filter-btn.speech    { background: #E65100; }
+.nav-controls { display: flex; gap: 6px; padding: 6px 12px; background: #e8eaf6; border-bottom: 1px solid #c5cae9; }
+.nav-btn { padding: 4px 10px; border: 1px solid #9fa8da; border-radius: 5px; background: white; cursor: pointer; font-size: 12px; }
+.nav-btn:hover { background: #e8eaf6; }
+#timeline { padding: 10px 30px; background: white; height: 220px; }
+.vis-item { border-radius: 4px !important; font-size: 11px !important; }
+.vis-item.vis-selected { box-shadow: 0 0 0 3px #fbc02d !important; }
+.vis-tooltip { background: #1e293b !important; color: white !important; padding: 8px 12px !important;
+  border-radius: 6px !important; font-size: 12px !important; max-width: 280px !important;
+  white-space: normal !important; word-wrap: break-word !important; }
+.info-panel { display: grid; grid-template-columns: 180px 1fr; gap: 10px; padding: 10px 12px; background: #e8eaf6; }
+.legend { background: white; border-radius: 8px; padding: 10px; }
+.legend h3 { font-size: 13px; color: #1A237E; margin-bottom: 6px; }
+.leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; margin-bottom: 4px; }
+.leg-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.details { background: white; border-radius: 8px; padding: 10px; }
+.details h3 { font-size: 13px; color: #1A237E; margin-bottom: 6px; }
+#event-details { font-size: 12px; line-height: 1.55; color: #444; }
+.ev-title { font-size: 14px; font-weight: bold; color: #111; margin-bottom: 4px; }
+.ev-date  { font-size: 11px; color: #1565C0; margin-bottom: 6px; }
+.ev-desc  { margin-bottom: 6px; }
+.ev-ctx   { font-style: italic; padding: 6px 8px; background: #f5f5f5; border-left: 3px solid #1565C0; border-radius: 0 4px 4px 0; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Foundational Documents Timeline</h1>
+  <p>Key American documents and texts, 1750–1970 — click an event for details</p>
+</div>
+
+<div class="controls">
+  <button class="filter-btn all"       onclick="filterCat('all')">All</button>
+  <button class="filter-btn political" onclick="filterCat('Political-Constitutional')">Political-Constitutional</button>
+  <button class="filter-btn literary"  onclick="filterCat('Literary-Rhetorical')">Literary-Rhetorical</button>
+  <button class="filter-btn social"    onclick="filterCat('Social Justice')">Social Justice</button>
+  <button class="filter-btn speech"    onclick="filterCat('Speeches')">Speeches</button>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="panLeft()">◀ Earlier</button>
+  <button class="nav-btn" onclick="zoomIn()">+ Zoom</button>
+  <button class="nav-btn" onclick="zoomOut()">− Zoom</button>
+  <button class="nav-btn" onclick="fitAll()">Fit All</button>
+  <button class="nav-btn" onclick="panRight()">Later ▶</button>
+</div>
+
+<div id="timeline"></div>
+
+<div class="info-panel">
+  <div class="legend">
+    <h3>Legend</h3>
+    <div class="leg-item"><div class="leg-dot" style="background:#1A237E"></div>Political-Constitutional</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#B71C1C"></div>Literary-Rhetorical</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#1B5E20"></div>Social Justice</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#E65100"></div>Speeches</div>
+  </div>
+  <div class="details">
+    <h3>Document Details</h3>
+    <div id="event-details">Click any event on the timeline to see its significance and connections to other documents.</div>
+  </div>
+</div>
+
+<script>
+const CAT_COLORS = {
+  'Political-Constitutional': '#1A237E',
+  'Literary-Rhetorical':      '#B71C1C',
+  'Social Justice':           '#1B5E20',
+  'Speeches':                 '#E65100'
+};
+
+const EVENTS = [
+  { year:1776, month:1,  cat:'Literary-Rhetorical',      title:"Common Sense — Thomas Paine",
+    desc:"Paine's pamphlet argued for American independence in plain, accessible language, reaching a mass audience for the first time.",
+    ctx:"Influenced: Declaration of Independence, later populist writing traditions." },
+  { year:1776, month:7,  cat:'Political-Constitutional',  title:"Declaration of Independence",
+    desc:"Jefferson's declaration articulated natural rights (life, liberty, pursuit of happiness) as the basis for legitimate government.",
+    ctx:"Influenced: French Revolution, abolitionist writing, Seneca Falls Declaration." },
+  { year:1787, month:9,  cat:'Political-Constitutional',  title:"U.S. Constitution",
+    desc:"The framework of the federal government, establishing checks and balances and the rule of law.",
+    ctx:"Influenced: Bill of Rights (1791), Reconstruction Amendments." },
+  { year:1791, month:12, cat:'Political-Constitutional',  title:"Bill of Rights",
+    desc:"The first ten amendments guaranteed individual liberties including free speech, press, religion, and due process.",
+    ctx:"Built on: Constitution. Later invoked in civil rights arguments." },
+  { year:1848, month:7,  cat:'Social Justice',            title:"Seneca Falls Declaration — Elizabeth Cady Stanton",
+    desc:"Modeled deliberately on the Declaration of Independence, this document demanded equal rights for women, launching the suffrage movement.",
+    ctx:"Built directly on: Declaration of Independence. Led to: 19th Amendment (1920)." },
+  { year:1849, month:1,  cat:'Literary-Rhetorical',       title:"Civil Disobedience — Henry David Thoreau",
+    desc:"Thoreau argued that individuals have a moral duty to resist unjust laws, even at personal cost.",
+    ctx:"Influenced: Gandhi's nonviolent resistance, MLK's Letter from Birmingham Jail." },
+  { year:1863, month:1,  cat:'Political-Constitutional',  title:"Emancipation Proclamation — Lincoln",
+    desc:"Executive order declaring enslaved people in Confederate states to be free; changed the Civil War's moral purpose.",
+    ctx:"Led to: 13th Amendment (1865)." },
+  { year:1863, month:11, cat:'Speeches',                  title:"Gettysburg Address — Abraham Lincoln",
+    desc:"In 272 words, Lincoln redefined the Civil War as a struggle for equality and democratic government, honoring those who died.",
+    ctx:"Echoes: Declaration of Independence. Influenced all subsequent American political rhetoric." },
+  { year:1865, month:3,  cat:'Speeches',                  title:"Second Inaugural Address — Lincoln",
+    desc:"Lincoln called for reconciliation 'with malice toward none, with charity for all' — a speech of extraordinary moral complexity at war's end.",
+    ctx:"Influenced: post-war rhetoric of healing; studied alongside Gettysburg Address." },
+  { year:1865, month:12, cat:'Social Justice',            title:"13th Amendment — Abolition of Slavery",
+    desc:"Constitutional amendment formally abolishing slavery and involuntary servitude throughout the United States.",
+    ctx:"Built on: Emancipation Proclamation. Part of Reconstruction Amendments (13th, 14th, 15th)." },
+  { year:1920, month:8,  cat:'Social Justice',            title:"19th Amendment — Women's Suffrage",
+    desc:"Granted women the right to vote after 72 years of organized advocacy beginning at Seneca Falls.",
+    ctx:"Built on: Seneca Falls Declaration (1848)." },
+  { year:1941, month:1,  cat:'Speeches',                  title:"Four Freedoms Speech — FDR",
+    desc:"Roosevelt articulated four fundamental freedoms as goals of democracy: freedom of speech, worship, from want, and from fear.",
+    ctx:"Influenced: Universal Declaration of Human Rights (1948)." },
+  { year:1963, month:4,  cat:'Literary-Rhetorical',       title:"Letter from Birmingham Jail — MLK",
+    desc:"King's masterwork of persuasive writing argues the moral necessity of nonviolent direct action against segregation, addressing moderate white clergy.",
+    ctx:"Built on: Thoreau's Civil Disobedience, Aquinas, Augustine. Influenced: Vietnam War protest writing." },
+  { year:1963, month:8,  cat:'Speeches',                  title:"\"I Have a Dream\" — Martin Luther King Jr.",
+    desc:"King's address at the March on Washington fused prophetic Biblical rhetoric with the American founding ideals to demand racial equality.",
+    ctx:"Echoes: Declaration of Independence, Gettysburg Address, spirituals tradition." },
+  { year:1964, month:7,  cat:'Social Justice',            title:"Civil Rights Act of 1964",
+    desc:"Landmark federal legislation prohibiting discrimination based on race, color, religion, sex, or national origin.",
+    ctx:"Built on: 14th Amendment, MLK's advocacy. Led to: Voting Rights Act (1965)." }
+];
+
+const categoryColors = CAT_COLORS;
+let timeline, allItems = [], ds;
+
+function buildItems(evts) {
+  return evts.map((e, i) => ({
+    id: i,
+    content: e.title.length > 35 ? e.title.slice(0, 33) + "…" : e.title,
+    start: new Date(e.year, (e.month || 1) - 1, 1),
+    title: e.desc,
+    category: e.cat,
+    _full: e,
+    style: `background-color:${CAT_COLORS[e.cat]};color:white;border-color:${CAT_COLORS[e.cat]};`
+  }));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  allItems = buildItems(EVENTS);
+  ds = new vis.DataSet(allItems);
+  const container = document.getElementById('timeline');
+  timeline = new vis.Timeline(container, ds, {
+    width: '100%', height: '200px',
+    margin: { item: { horizontal: 6, vertical: 5 }, axis: 30 },
+    orientation: 'top', stack: true, selectable: true, showCurrentTime: false,
+    moveable: true, zoomable: true,
+    min: new Date(1750, 0, 1), max: new Date(1975, 0, 1),
+    zoomMin: 1000*60*60*24*365*5, zoomMax: 1000*60*60*24*365*300,
+    tooltip: { followMouse: true }
+  });
+  timeline.setWindow(new Date(1770, 0, 1), new Date(1970, 0, 1), { animation: false });
+  timeline.on('select', p => { if (p.items.length) showDetails(p.items[0]); });
+});
+
+function showDetails(id) {
+  const item = allItems[id];
+  if (!item) return;
+  const e = item._full;
+  document.getElementById('event-details').innerHTML =
+    `<div class="ev-title">${e.title}</div>
+     <div class="ev-date">${e.year}</div>
+     <div class="ev-desc">${e.desc}</div>
+     <div class="ev-ctx">${e.ctx}</div>`;
+}
+
+function filterCat(cat) {
+  const filtered = cat === 'all' ? allItems : allItems.filter(i => i.category === cat);
+  ds.clear(); ds.add(filtered);
+  const dates = filtered.map(i => i.start.getTime());
+  if (dates.length) {
+    const pad = 3*365*24*60*60*1000;
+    timeline.setWindow(new Date(Math.min(...dates) - pad), new Date(Math.max(...dates) + pad));
+  }
+}
+
+function panLeft()  { const r = timeline.getWindow(), d = (r.end-r.start)*0.3; timeline.setWindow(r.start-d, r.end-d); }
+function panRight() { const r = timeline.getWindow(), d = (r.end-r.start)*0.3; timeline.setWindow(r.start+d, r.end+d); }
+function zoomIn()   { const r = timeline.getWindow(), c=(r.start.getTime()+r.end.getTime())/2, n=(r.end-r.start)*0.5; timeline.setWindow(c-n/2,c+n/2); }
+function zoomOut()  { const r = timeline.getWindow(), c=(r.start.getTime()+r.end.getTime())/2, n=(r.end-r.start)*2; timeline.setWindow(c-n/2,c+n/2); }
+function fitAll()   { const d=ds.get().map(i=>i.start.getTime()); if(d.length){const p=3*365*24*60*60*1000;timeline.setWindow(new Date(Math.min(...d)-p),new Date(Math.max(...d)+p));} }
+</script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Genetic Linkage and Recombination Mapper using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Genetic Linkage and Recombination Mapper
+// Students enter test cross data for three genes, calculate RF,
+// and construct a genetic linkage map.
+
+let containerWidth;
+let canvasWidth = 780;
+let drawHeight = 440;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+
+// Input data
+let inputs = {
+    ab: { recomb: 17, total: 100 },
+    bc: { recomb: 9.5, total: 100 },
+    ac: { recomb: 26.5, total: 100 }
+};
+
+// Gene labels
+let geneNames = ['A', 'B', 'C'];
+let geneColors = ['#E74C3C', '#3498DB', '#27AE60'];
+
+// Preset examples
+const presets = [
+    {
+        name: 'Drosophila (body/wing/eye)',
+        genes: ['Body Color', 'Wing Shape', 'Eye Color'],
+        ab: { recomb: 17, total: 100 },
+        bc: { recomb: 9.5, total: 100 },
+        ac: { recomb: 26.5, total: 100 }
+    },
+    {
+        name: 'Corn (color/starch/height)',
+        genes: ['Kernel Color', 'Starch Type', 'Plant Height'],
+        ab: { recomb: 3.5, total: 100 },
+        bc: { recomb: 12, total: 100 },
+        ac: { recomb: 15.5, total: 100 }
+    },
+    {
+        name: 'Custom (enter your data)',
+        genes: ['Gene A', 'Gene B', 'Gene C'],
+        ab: { recomb: 0, total: 100 },
+        bc: { recomb: 0, total: 100 },
+        ac: { recomb: 0, total: 100 }
+    }
+];
+
+let presetSelect;
+let loadBtn;
+let currentPresetIdx = 0;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(containerWidth, containerHeight);
+    const mainEl = document.querySelector('main');
+    canvas.parent(mainEl);
+
+    // Preset selector
+    presetSelect = createSelect();
+    presets.forEach((p, i) => presetSelect.option(p.name, i));
+    presetSelect.parent(mainEl);
+
+    loadBtn = createButton('Load Example');
+    loadBtn.parent(mainEl);
+    loadBtn.mousePressed(loadPreset);
+
+    positionControls();
+    textFont('Arial');
+    describe('Genetic linkage mapper where students enter recombination data and see a chromosome map');
+}
+
+function positionControls() {
+    let y = drawHeight + 10;
+    presetSelect.position(10, y);
+    presetSelect.size(280);
+    loadBtn.position(300, y);
+}
+
+function loadPreset() {
+    let idx = parseInt(presetSelect.value());
+    let p = presets[idx];
+    geneNames = [...p.genes];
+    inputs.ab = { ...p.ab };
+    inputs.bc = { ...p.bc };
+    inputs.ac = { ...p.ac };
+    currentPresetIdx = idx;
+}
+
+function draw() {
+    updateCanvasSize();
+    background('aliceblue');
+
+    stroke('silver');
+    strokeWeight(1);
+    fill('aliceblue');
+    rect(0, 0, canvasWidth, drawHeight);
+
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill(30);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(18);
+    text('Genetic Linkage & Recombination Mapper', canvasWidth / 2, 8);
+
+    // Calculate RFs
+    let rfAB = inputs.ab.total > 0 ? (inputs.ab.recomb / inputs.ab.total) * 100 : 0;
+    let rfBC = inputs.bc.total > 0 ? (inputs.bc.recomb / inputs.bc.total) * 100 : 0;
+    let rfAC = inputs.ac.total > 0 ? (inputs.ac.recomb / inputs.ac.total) * 100 : 0;
+
+    // Determine gene order: largest RF = outside genes
+    let order, distances;
+    if (rfAC >= rfAB && rfAC >= rfBC) {
+        order = [0, 1, 2]; // A-B-C
+        distances = [rfAB, rfBC];
+    } else if (rfAB >= rfAC && rfAB >= rfBC) {
+        order = [0, 2, 1]; // A-C-B
+        distances = [rfAC, rfBC];
+    } else {
+        order = [1, 0, 2]; // B-A-C
+        distances = [rfAB, rfAC];
+    }
+
+    let totalDist = distances[0] + distances[1];
+
+    // Draw data entry panel (left)
+    drawDataPanel(15, 35, rfAB, rfBC, rfAC);
+
+    // Draw results table (center)
+    drawResultsTable(canvasWidth * 0.38 + 50, 35, rfAB, rfBC, rfAC, order, distances);
+
+    // Draw chromosome map (right side and bottom)
+    drawChromosomeMap(margin + 10, 290, canvasWidth - 2 * margin - 20, order, distances, totalDist);
+
+    // Consistency check
+    drawConsistencyCheck(canvasWidth * 0.38, 230, rfAB, rfBC, rfAC, order, distances);
+}
+
+function drawDataPanel(x, y, rfAB, rfBC, rfAC) {
+    fill(60);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(14);
+    text('Test Cross Data', x, y);
+
+    let tY = y + 22;
+    let rowH = 42;
+
+    // Headers
+    textSize(11);
+    fill(100);
+    text('Gene Pair', x, tY);
+    text('Recombinants', x + 100, tY);
+    text('Total', x + 195, tY);
+    text('RF (%)', x + 240, tY);
+    tY += 18;
+
+    stroke(180);
+    line(x, tY, x + 280, tY);
+    tY += 5;
+
+    // Pair A-B
+    drawDataRow(x, tY, geneNames[0] + ' - ' + geneNames[1], inputs.ab, rfAB, geneColors[0]);
+    tY += rowH;
+
+    // Pair B-C
+    drawDataRow(x, tY, geneNames[1] + ' - ' + geneNames[2], inputs.bc, rfBC, geneColors[1]);
+    tY += rowH;
+
+    // Pair A-C
+    drawDataRow(x, tY, geneNames[0] + ' - ' + geneNames[2], inputs.ac, rfAC, geneColors[2]);
+    tY += rowH + 10;
+
+    // Instruction
+    fill(120);
+    textSize(10);
+    text('Use "Load Example" to try preset data', x, tY);
+}
+
+function drawDataRow(x, y, label, data, rf, col) {
+    fill(col);
+    noStroke();
+    rect(x, y, 4, 30, 2);
+
+    fill(50);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text(label, x + 10, y + 15);
+
+    // Recombinant count
+    fill(40);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x + 105, y + 2, 60, 26, 4);
+    fill(40);
+    noStroke();
+    text(data.recomb.toFixed(1), x + 135, y + 15);
+
+    // Total
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x + 185, y + 2, 45, 26, 4);
+    fill(40);
+    noStroke();
+    text(data.total, x + 207, y + 15);
+
+    // RF
+    fill(40);
+    textAlign(RIGHT, CENTER);
+    textSize(13);
+    text(rf.toFixed(1) + '%', x + 285, y + 15);
+}
+
+function drawResultsTable(x, y, rfAB, rfBC, rfAC, order, distances) {
+    fill(60);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(14);
+    text('Map Distances', x, y);
+
+    let tY = y + 25;
+
+    // Gene order determination
+    fill(40);
+    textSize(12);
+    let orderedNames = order.map(i => geneNames[i]);
+    text('Gene Order: ', x, tY);
+
+    fill('#2C3E50');
+    textSize(13);
+    textStyle(BOLD);
+    text(orderedNames.join(' \u2014 '), x + 80, tY);
+    textStyle(NORMAL);
+
+    tY += 25;
+
+    // Distance 1
+    fill(geneColors[order[0]]);
+    noStroke();
+    ellipse(x + 8, tY + 7, 10, 10);
+    fill(40);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text(orderedNames[0] + ' \u2194 ' + orderedNames[1] + ':', x + 18, tY + 7);
+    fill('#2C3E50');
+    textStyle(BOLD);
+    text(distances[0].toFixed(1) + ' cM', x + 170, tY + 7);
+    textStyle(NORMAL);
+
+    tY += 25;
+
+    // Distance 2
+    fill(geneColors[order[1]]);
+    noStroke();
+    ellipse(x + 8, tY + 7, 10, 10);
+    fill(40);
+    textSize(12);
+    text(orderedNames[1] + ' \u2194 ' + orderedNames[2] + ':', x + 18, tY + 7);
+    fill('#2C3E50');
+    textStyle(BOLD);
+    text(distances[1].toFixed(1) + ' cM', x + 170, tY + 7);
+    textStyle(NORMAL);
+
+    tY += 25;
+
+    // Total
+    stroke(180);
+    line(x, tY, x + 230, tY);
+    tY += 8;
+    fill(40);
+    noStroke();
+    textSize(12);
+    text('Total map length:', x + 18, tY + 4);
+    fill('#2C3E50');
+    textStyle(BOLD);
+    text((distances[0] + distances[1]).toFixed(1) + ' cM', x + 170, tY + 4);
+    textStyle(NORMAL);
+}
+
+function drawConsistencyCheck(x, y, rfAB, rfBC, rfAC, order, distances) {
+    let sumDist = distances[0] + distances[1];
+
+    // The largest RF should equal the sum of the other two (if no double crossovers)
+    let maxRF = Math.max(rfAB, rfBC, rfAC);
+    let diff = Math.abs(sumDist - maxRF);
+    let consistent = diff < 2; // within 2% is consistent
+
+    fill(consistent ? '#EAFAF1' : '#FDEDEC');
+    stroke(consistent ? '#27AE60' : '#E74C3C');
+    strokeWeight(1);
+    rect(x, y, 250, 45, 6);
+
+    fill(consistent ? '#27AE60' : '#E74C3C');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text(consistent ? '\u2713 Consistency Check Passed' : '\u2717 Consistency Check', x + 10, y + 6);
+    textStyle(NORMAL);
+
+    fill(60);
+    textSize(10);
+    let checkText = `Sum of segments: ${sumDist.toFixed(1)} cM  |  Largest RF: ${maxRF.toFixed(1)}%`;
+    if (!consistent) {
+        checkText += `  |  Difference: ${diff.toFixed(1)}% (double crossovers?)`;
+    }
+    text(checkText, x + 10, y + 24);
+}
+
+function drawChromosomeMap(x, y, mapWidth, order, distances, totalDist) {
+    fill(60);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(14);
+    text('Chromosome Map', x + mapWidth / 2, y);
+
+    let barY = y + 35;
+    let barH = 20;
+
+    // Draw chromosome bar
+    fill(200);
+    stroke(150);
+    strokeWeight(2);
+    rect(x, barY, mapWidth, barH, 10);
+
+    if (totalDist <= 0) {
+        fill(120);
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        text('Enter data or load an example to see the map', x + mapWidth / 2, barY + barH / 2);
+        return;
+    }
+
+    // Position genes proportionally
+    let orderedNames = order.map(i => geneNames[i]);
+    let orderedColors = order.map(i => geneColors[i]);
+
+    let genePositions = [0, distances[0], distances[0] + distances[1]];
+
+    for (let g = 0; g < 3; g++) {
+        let gx = x + (genePositions[g] / totalDist) * mapWidth;
+        let gy = barY + barH / 2;
+
+        // Gene marker
+        fill(orderedColors[g]);
+        stroke(255);
+        strokeWeight(2);
+        ellipse(gx, gy, 18, 18);
+
+        // Gene label above
+        fill(orderedColors[g]);
+        noStroke();
+        textSize(13);
+        textStyle(BOLD);
+        textAlign(CENTER, BOTTOM);
+        text(orderedNames[g], gx, barY - 4);
+        textStyle(NORMAL);
+    }
+
+    // Distance labels between genes
+    let midX1 = x + (genePositions[0] / totalDist) * mapWidth;
+    let midX2 = x + (genePositions[1] / totalDist) * mapWidth;
+    let midX3 = x + (genePositions[2] / totalDist) * mapWidth;
+
+    fill(60);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+
+    // Distance 1
+    let d1mid = (midX1 + midX2) / 2;
+    stroke(100);
+    strokeWeight(1);
+    line(midX1, barY + barH + 8, midX2, barY + barH + 8);
+    line(midX1, barY + barH + 4, midX1, barY + barH + 12);
+    line(midX2, barY + barH + 4, midX2, barY + barH + 12);
+    fill(60);
+    noStroke();
+    text(distances[0].toFixed(1) + ' cM', d1mid, barY + barH + 14);
+
+    // Distance 2
+    let d2mid = (midX2 + midX3) / 2;
+    stroke(100);
+    strokeWeight(1);
+    line(midX2, barY + barH + 8, midX3, barY + barH + 8);
+    line(midX2, barY + barH + 4, midX2, barY + barH + 12);
+    line(midX3, barY + barH + 4, midX3, barY + barH + 12);
+    fill(60);
+    noStroke();
+    text(distances[1].toFixed(1) + ' cM', d2mid, barY + barH + 14);
+
+    // Total distance bracket
+    let bracketY = barY + barH + 34;
+    stroke(80);
+    strokeWeight(1);
+    line(midX1, bracketY, midX3, bracketY);
+    line(midX1, bracketY - 4, midX1, bracketY + 4);
+    line(midX3, bracketY - 4, midX3, bracketY + 4);
+    fill(40);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    text(totalDist.toFixed(1) + ' cM total', (midX1 + midX3) / 2, bracketY + 6);
+    textStyle(NORMAL);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    positionControls();
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

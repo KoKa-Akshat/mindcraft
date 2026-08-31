@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"data.json": "{\n  \"nodes\": [\n    {\n      \"id\": 1,\n      \"label\": \"Anchoring\\nBias\",\n      \"title\": \"First number sticks \u2014 early QC projections set expectations that persist despite contrary evidence\",\n      \"category\": \"perception\",\n      \"x\": -200,\n      \"y\": -150,\n      \"example\": \"When a company announces '1,000 qubits by 2025,' that number anchors expectations even when later data shows those qubits lack error correction.\"\n    },\n    {\n      \"id\": 2,\n      \"label\": \"Authority\\nBias\",\n      \"title\": \"Experts must be right \u2014 prestigious names lend credibility to unproven claims\",\n      \"category\": \"social\",\n      \"x\": 200,\n      \"y\": -150,\n      \"example\": \"Nobel laureates endorsing QC timelines carry outsized weight, even when their expertise is in theory, not engineering.\"\n    },\n    {\n      \"id\": 3,\n      \"label\": \"Bandwagon\\nEffect\",\n      \"title\": \"Everyone's investing \u2014 herd behavior drives investment independent of evidence\",\n      \"category\": \"social\",\n      \"x\": 300,\n      \"y\": 0,\n      \"example\": \"When Google, IBM, and Microsoft all invest billions, other firms follow regardless of independent technical assessment.\"\n    },\n    {\n      \"id\": 4,\n      \"label\": \"Confirmation\\nBias\",\n      \"title\": \"See only supporting evidence \u2014 investors notice QC successes, ignore failures\",\n      \"category\": \"cognitive\",\n      \"x\": 200,\n      \"y\": 150,\n      \"example\": \"Investors highlight quantum supremacy announcements but overlook that those demonstrations solved no commercially useful problem.\"\n    },\n    {\n      \"id\": 5,\n      \"label\": \"Sunk Cost\\nFallacy\",\n      \"title\": \"Can't stop now \u2014 past investment justifies continued spending despite poor outlook\",\n      \"category\": \"economic\",\n      \"x\": -200,\n      \"y\": 150,\n      \"example\": \"'We've spent $2 billion already \u2014 we can't walk away now.' But past spending says nothing about future probability of success.\"\n    },\n    {\n      \"id\": 6,\n      \"label\": \"Optimism\\nBias\",\n      \"title\": \"It'll work out \u2014 systematic overestimation of positive outcomes\",\n      \"category\": \"cognitive\",\n      \"x\": -300,\n      \"y\": 0,\n      \"example\": \"QC roadmaps consistently predict breakthroughs 5-10 years out. The timeline never gets shorter.\"\n    },\n    {\n      \"id\": 7,\n      \"label\": \"Dunning-\\nKruger\",\n      \"title\": \"Overestimate understanding \u2014 non-physicists underestimate QC's technical barriers\",\n      \"category\": \"cognitive\",\n      \"x\": 0,\n      \"y\": -200,\n      \"example\": \"Tech executives who can't explain decoherence confidently predict when fault-tolerant QC will arrive.\"\n    },\n    {\n      \"id\": 8,\n      \"label\": \"Availability\\nHeuristic\",\n      \"title\": \"Vivid examples dominate \u2014 dramatic QC demos overshadow mundane failures\",\n      \"category\": \"perception\",\n      \"x\": 0,\n      \"y\": 200,\n      \"example\": \"A single 'quantum advantage' headline is more memorable than hundreds of quiet lab failures, skewing risk perception.\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"from\": 1,\n      \"to\": 4,\n      \"label\": \"anchors filter\\nevidence\",\n      \"title\": \"Anchored expectations cause investors to seek confirming evidence for the initial projection\"\n    },\n    {\n      \"from\": 2,\n      \"to\": 3,\n      \"label\": \"prestige drives\\nadoption\",\n      \"title\": \"When authorities endorse QC, others follow their lead, creating bandwagon momentum\"\n    },\n    {\n      \"from\": 3,\n      \"to\": 5,\n      \"label\": \"herd creates\\nsunk costs\",\n      \"title\": \"Bandwagon-driven investments create sunk costs that trap investors\"\n    },\n    {\n      \"from\": 4,\n      \"to\": 6,\n      \"label\": \"filtered evidence\\nfeeds optimism\",\n      \"title\": \"Seeing only confirming evidence sustains unrealistic optimism about QC timelines\"\n    },\n    {\n      \"from\": 5,\n      \"to\": 4,\n      \"label\": \"sunk costs\\nfilter evidence\",\n      \"title\": \"Having invested heavily motivates seeking evidence that validates the investment\"\n    },\n    {\n      \"from\": 6,\n      \"to\": 1,\n      \"label\": \"optimism\\nsets anchors\",\n      \"title\": \"Optimistic projections become the anchoring numbers that persist in decision-making\"\n    },\n    {\n      \"from\": 7,\n      \"to\": 2,\n      \"label\": \"overconfidence\\ndefers to authority\",\n      \"title\": \"Those who overestimate their own understanding paradoxically defer to the wrong authorities\"\n    },\n    {\n      \"from\": 8,\n      \"to\": 6,\n      \"label\": \"vivid successes\\nfuel optimism\",\n      \"title\": \"Memorable QC demonstrations create an illusion that breakthroughs are frequent and imminent\"\n    },\n    {\n      \"from\": 8,\n      \"to\": 3,\n      \"label\": \"dramatic demos\\ndrive bandwagon\",\n      \"title\": \"Vivid, widely-shared QC announcements attract more followers to the bandwagon\"\n    },\n    {\n      \"from\": 6,\n      \"to\": 4,\n      \"label\": \"optimists seek\\nconfirmation\",\n      \"title\": \"Optimistic expectations drive selective attention to supporting evidence\"\n    },\n    {\n      \"from\": 3,\n      \"to\": 2,\n      \"label\": \"consensus\\nvalidates experts\",\n      \"title\": \"When everyone is investing, the authorities who endorsed QC appear vindicated\"\n    },\n    {\n      \"from\": 7,\n      \"to\": 6,\n      \"label\": \"ignorance breeds\\noptimism\",\n      \"title\": \"Not understanding the physics makes the engineering challenges seem more tractable\"\n    },\n    {\n      \"from\": 1,\n      \"to\": 5,\n      \"label\": \"anchored targets\\ntrap investment\",\n      \"title\": \"Anchored milestones create benchmarks that justify continued spending to reach them\"\n    }\n  ],\n  \"categories\": {\n    \"perception\": {\n      \"color\": \"#4285F4\",\n      \"label\": \"Perception Biases\"\n    },\n    \"social\": {\n      \"color\": \"#34A853\",\n      \"label\": \"Social Biases\"\n    },\n    \"cognitive\": {\n      \"color\": \"#FF7043\",\n      \"label\": \"Cognitive Biases\"\n    },\n    \"economic\": {\n      \"color\": \"#EA4335\",\n      \"label\": \"Economic Biases\"\n    }\n  }\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Bias Network in QC Investment</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+#network {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background: rgba(240, 248, 255, 0.9);
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+#legend {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    min-width: 140px;
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-instructions {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
+    line-height: 1.4;
+}
+
+#right-panel {
+    position: absolute;
+    top: 55px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 12px 16px;
+    width: 240px;
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+#panel-title {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+#panel-body {
+    color: #555;
+}
+
+#panel-body .connection-list {
+    margin-top: 8px;
+    padding-left: 0;
+    list-style: none;
+}
+
+#panel-body .connection-list li {
+    padding: 3px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+#panel-body .connection-list li:last-child {
+    border-bottom: none;
+}
+
+.connection-arrow {
+    color: #999;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <div id="title">Cognitive Bias Network in QC Investment</div>
+
+    <div id="legend">
+        <div class="legend-title">Categories</div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #4285F4;"></span> Perception
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #34A853;"></span> Social
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #FF7043;"></span> Cognitive
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #EA4335;"></span> Economic
+        </div>
+        <div class="legend-instructions">Click a node to highlight its connections.<br>Click empty space to reset.</div>
+    </div>
+
+    <div id="right-panel">
+        <div id="panel-title">Select a Bias</div>
+        <div id="panel-body">Click on any bias node to see a QC-specific example and its reinforcement connections.</div>
+    </div>
+
+    <div id="network"></div>
+
+    <script>// Cognitive Bias Network in QC Investment
+// vis-network interactive graph
+
+let network = null;
+let graphData = null;
+let allNodes = null;
+let allEdges = null;
+
+fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        graphData = data;
+        initNetwork(data);
+    })
+    .catch(err => console.error('Failed to load data.json:', err));
+
+function initNetwork(data) {
+    const container = document.getElementById('network');
+    const categoryColors = data.categories;
+
+    // Build vis-network nodes
+    const nodeArray = data.nodes.map(n => {
+        const cat = categoryColors[n.category];
+        return {
+            id: n.id,
+            label: n.label,
+            title: n.title,
+            x: n.x * 1.8,
+            y: n.y * 1.4,
+            fixed: { x: true, y: true },
+            color: {
+                background: cat.color,
+                border: darkenColor(cat.color, 0.3),
+                highlight: {
+                    background: lightenColor(cat.color, 0.2),
+                    border: darkenColor(cat.color, 0.4)
+                },
+                hover: {
+                    background: lightenColor(cat.color, 0.15),
+                    border: darkenColor(cat.color, 0.35)
+                }
+            },
+            font: {
+                color: '#fff',
+                size: 13,
+                face: 'Arial',
+                strokeWidth: 2,
+                strokeColor: 'rgba(0,0,0,0.5)',
+                multi: true
+            },
+            shape: 'ellipse',
+            size: 30,
+            borderWidth: 2,
+            shadow: {
+                enabled: true,
+                color: 'rgba(0,0,0,0.15)',
+                size: 6,
+                x: 2,
+                y: 2
+            },
+            // Store custom data
+            category: n.category,
+            example: n.example
+        };
+    });
+
+    // Build vis-network edges
+    const edgeArray = data.edges.map((e, i) => ({
+        id: i,
+        from: e.from,
+        to: e.to,
+        label: '',
+        title: e.title,
+        arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+        color: {
+            color: '#999',
+            highlight: '#3F51B5',
+            hover: '#666'
+        },
+        width: 1.5,
+        hoverWidth: 0.5,
+        selectionWidth: 1,
+        smooth: {
+            type: 'curvedCW',
+            roundness: 0.15
+        },
+        font: {
+            size: 10,
+            color: '#555',
+            strokeWidth: 2,
+            strokeColor: '#fff',
+            align: 'middle',
+            multi: true
+        },
+        edgeLabel: e.label
+    }));
+
+    allNodes = new vis.DataSet(nodeArray);
+    allEdges = new vis.DataSet(edgeArray);
+
+    const options = {
+        interaction: {
+            zoomView: false,
+            dragView: false,
+            dragNodes: false,
+            hover: true,
+            tooltipDelay: 200
+        },
+        physics: {
+            enabled: false
+        },
+        nodes: {
+            chosen: true
+        },
+        edges: {
+            chosen: true
+        }
+    };
+
+    network = new vis.Network(container, { nodes: allNodes, edges: allEdges }, options);
+
+    // Click handler: highlight connected nodes
+    network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+            highlightNode(params.nodes[0]);
+        } else {
+            resetHighlight();
+            resetPanel();
+        }
+    });
+
+    // Hover handler: show edge labels on hover
+    network.on('hoverEdge', function(params) {
+        const edge = allEdges.get(params.edge);
+        if (edge && edge.edgeLabel) {
+            allEdges.update({ id: edge.id, label: edge.edgeLabel });
+        }
+    });
+
+    network.on('blurEdge', function(params) {
+        allEdges.update({ id: params.edge, label: '' });
+    });
+}
+
+function highlightNode(nodeId) {
+    const node = allNodes.get(nodeId);
+    if (!node) return;
+
+    // Find connected edges and nodes
+    const connectedEdges = allEdges.get().filter(e => e.from === nodeId || e.to === nodeId);
+    const connectedNodeIds = new Set([nodeId]);
+    connectedEdges.forEach(e => {
+        connectedNodeIds.add(e.from);
+        connectedNodeIds.add(e.to);
+    });
+
+    // Dim unconnected nodes
+    const nodeUpdates = allNodes.get().map(n => {
+        if (connectedNodeIds.has(n.id)) {
+            return { id: n.id, opacity: 1.0 };
+        } else {
+            return { id: n.id, opacity: 0.15 };
+        }
+    });
+    allNodes.update(nodeUpdates);
+
+    // Highlight connected edges, dim others, show labels on connected
+    const edgeUpdates = allEdges.get().map(e => {
+        const isConnected = e.from === nodeId || e.to === nodeId;
+        return {
+            id: e.id,
+            color: isConnected
+                ? { color: '#3F51B5', highlight: '#3F51B5' }
+                : { color: 'rgba(153,153,153,0.15)', highlight: '#3F51B5' },
+            width: isConnected ? 3 : 0.5,
+            label: isConnected ? e.edgeLabel : ''
+        };
+    });
+    allEdges.update(edgeUpdates);
+
+    // Update right panel
+    updatePanel(nodeId, connectedEdges);
+}
+
+function resetHighlight() {
+    const nodeUpdates = allNodes.get().map(n => ({
+        id: n.id,
+        opacity: 1.0
+    }));
+    allNodes.update(nodeUpdates);
+
+    const edgeUpdates = allEdges.get().map(e => ({
+        id: e.id,
+        color: { color: '#999', highlight: '#3F51B5', hover: '#666' },
+        width: 1.5,
+        label: ''
+    }));
+    allEdges.update(edgeUpdates);
+}
+
+function updatePanel(nodeId, connectedEdges) {
+    const node = allNodes.get(nodeId);
+    const panelTitle = document.getElementById('panel-title');
+    const panelBody = document.getElementById('panel-body');
+
+    const catLabel = graphData.categories[node.category].label;
+
+    let connectionsHtml = '<ul class="connection-list">';
+    connectedEdges.forEach(e => {
+        const otherNodeId = e.from === nodeId ? e.to : e.from;
+        const otherNode = allNodes.get(otherNodeId);
+        const direction = e.from === nodeId ? '\u2192' : '\u2190';
+        connectionsHtml += `<li><span class="connection-arrow">${direction}</span> ${otherNode.label.replace('\n', ' ')}: ${e.title}</li>`;
+    });
+    connectionsHtml += '</ul>';
+
+    panelTitle.textContent = node.label.replace('\n', ' ');
+    panelBody.innerHTML = `
+        <p><strong>Category:</strong> ${catLabel}</p>
+        <p style="margin-top:6px;">${node.title}</p>
+        <p style="margin-top:8px;font-style:italic;color:#444;">"${node.example}"</p>
+        <p style="margin-top:10px;font-weight:bold;font-size:12px;">Connections (${connectedEdges.length}):</p>
+        ${connectionsHtml}
+    `;
+}
+
+function resetPanel() {
+    document.getElementById('panel-title').textContent = 'Select a Bias';
+    document.getElementById('panel-body').textContent = 'Click on any bias node to see a QC-specific example and its reinforcement connections.';
+}
+
+// Color utility functions
+function darkenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.round(rgb.r * (1 - amount))}, ${Math.round(rgb.g * (1 - amount))}, ${Math.round(rgb.b * (1 - amount))})`;
+}
+
+function lightenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.min(255, Math.round(rgb.r + (255 - rgb.r) * amount))}, ${Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount))}, ${Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount))})`;
+}
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+}
+</script>
+</body>
+</html>

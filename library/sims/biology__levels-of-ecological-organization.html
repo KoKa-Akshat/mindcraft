@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Levels of Ecological Organization using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Levels of Ecological Organization
+// CANVAS_HEIGHT: 545
+// Step-through nested diagram from Individual to Biosphere
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 500;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+let defaultTextSize = 14;
+
+let currentLevel = 0;
+let zoomInBtn, zoomOutBtn, resetBtn;
+
+let levels = [
+  {
+    name: "Individual",
+    color: "#4caf50",
+    ringColor: "#66bb6a",
+    definition: "A single organism of one species.",
+    example: "One white-tailed deer",
+    whatsNew: "The basic unit of ecology -- one living organism with its own traits and behaviors.",
+    emoji: "🦌"
+  },
+  {
+    name: "Population",
+    color: "#388e3c",
+    ringColor: "#43a047",
+    definition: "A group of individuals of the same species living in the same area.",
+    example: "A herd of 40 white-tailed deer in a forest",
+    whatsNew: "Birth rates, death rates, population size, age structure, and growth patterns.",
+    emoji: "🦌🦌🦌"
+  },
+  {
+    name: "Community",
+    color: "#2e7d32",
+    ringColor: "#388e3c",
+    definition: "All the populations of different species living in the same area.",
+    example: "Deer + wolves + oak trees + songbirds in the forest",
+    whatsNew: "Species interactions like predation, competition, mutualism, and parasitism.",
+    emoji: "🦌🐺🌳🐦"
+  },
+  {
+    name: "Ecosystem",
+    color: "#1b5e20",
+    ringColor: "#2e7d32",
+    definition: "A community plus all the abiotic factors in the environment.",
+    example: "The forest community + sunlight + rain + soil + temperature",
+    whatsNew: "Energy flow through food webs and nutrient cycling between living and nonliving.",
+    emoji: "🌳☀️🌧️"
+  },
+  {
+    name: "Biome",
+    color: "#0277bd",
+    ringColor: "#0288d1",
+    definition: "A large region characterized by a specific climate and community of organisms.",
+    example: "The entire temperate deciduous forest biome across eastern North America",
+    whatsNew: "Climate patterns (temperature + precipitation) shape which species can survive.",
+    emoji: "🌲🌳🍂🏔️"
+  },
+  {
+    name: "Biosphere",
+    color: "#01579b",
+    ringColor: "#0277bd",
+    definition: "All the ecosystems on Earth combined -- everywhere life exists.",
+    example: "The entire Earth: land, oceans, and atmosphere where life is found",
+    whatsNew: "Global biogeochemical cycles (carbon, nitrogen, water) connect all ecosystems.",
+    emoji: "🌍"
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  zoomOutBtn = createButton('Zoom Out ➡');
+  zoomOutBtn.parent(document.querySelector('main'));
+  zoomOutBtn.mousePressed(() => { if (currentLevel < levels.length - 1) currentLevel++; });
+  styleButton(zoomOutBtn, '#2e7d32');
+
+  zoomInBtn = createButton('⬅ Zoom In');
+  zoomInBtn.parent(document.querySelector('main'));
+  zoomInBtn.mousePressed(() => { if (currentLevel > 0) currentLevel--; });
+  styleButton(zoomInBtn, '#0277bd');
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => { currentLevel = 0; });
+  styleButton(resetBtn, '#795548');
+
+  describe('Interactive diagram showing six levels of ecological organization from individual to biosphere', LABEL);
+}
+
+function styleButton(btn, bgColor) {
+  btn.style('font-size', '14px');
+  btn.style('padding', '6px 14px');
+  btn.style('margin', '4px');
+  btn.style('cursor', 'pointer');
+  btn.style('background', bgColor);
+  btn.style('color', 'white');
+  btn.style('border', 'none');
+  btn.style('border-radius', '4px');
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Drawing region
+  fill('#f5f5f0');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  fill('#3e2723');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('Levels of Ecological Organization', canvasWidth / 2, 8);
+  textStyle(NORMAL);
+
+  // Draw concentric rings
+  let centerX = canvasWidth * 0.38;
+  let centerY = drawHeight * 0.52;
+  let maxRadius = min(canvasWidth * 0.34, drawHeight * 0.4);
+  let ringStep = maxRadius / levels.length;
+
+  // Draw all rings from outer to inner
+  for (let i = levels.length - 1; i >= 0; i--) {
+    let radius = ringStep * (i + 1);
+    let lvl = levels[i];
+    let isActive = (i === currentLevel);
+
+    if (i <= currentLevel) {
+      fill(lvl.ringColor + (isActive ? 'ff' : '44'));
+      stroke(isActive ? lvl.color : '#bdbdbd');
+      strokeWeight(isActive ? 3 : 1);
+    } else {
+      fill('#eeeeee55');
+      stroke('#cccccc');
+      strokeWeight(1);
+    }
+    ellipse(centerX, centerY, radius * 2, radius * 2);
+
+    // Label on ring
+    noStroke();
+    fill(i <= currentLevel ? '#3e2723' : '#9e9e9e');
+    textAlign(CENTER, CENTER);
+    textSize(max(10, min(12, ringStep * 0.5)));
+    textStyle(i === currentLevel ? BOLD : NORMAL);
+    let labelY = centerY - radius + ringStep * 0.4;
+    text(lvl.name, centerX, labelY);
+  }
+
+  // Draw emoji in center
+  textSize(min(28, ringStep * 0.8));
+  textStyle(NORMAL);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  text(levels[currentLevel].emoji, centerX, centerY);
+
+  // Info panel on the right
+  let panelX = canvasWidth * 0.64;
+  let panelW = canvasWidth * 0.34;
+  let panelY = 40;
+  let panelH = drawHeight - 60;
+
+  fill('#ffffff');
+  stroke('#a1887f');
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  let lvl = levels[currentLevel];
+  noStroke();
+  textAlign(LEFT, TOP);
+  let tx = panelX + 10;
+  let ty = panelY + 12;
+
+  // Level indicator
+  fill('#9e9e9e');
+  textSize(11);
+  text('Level ' + (currentLevel + 1) + ' of ' + levels.length, tx, ty);
+  ty += 20;
+
+  // Level name
+  fill(lvl.color);
+  textSize(18);
+  textStyle(BOLD);
+  text(lvl.name, tx, ty);
+  textStyle(NORMAL);
+  ty += 28;
+
+  // Definition
+  fill('#3e2723');
+  textSize(12);
+  textStyle(BOLD);
+  text('Definition:', tx, ty);
+  textStyle(NORMAL);
+  ty += 16;
+  textSize(11);
+  text(lvl.definition, tx, ty, panelW - 20, 60);
+  ty += 50;
+
+  // Example
+  fill('#5d4037');
+  textSize(12);
+  textStyle(BOLD);
+  text('Example:', tx, ty);
+  textStyle(NORMAL);
+  ty += 16;
+  textSize(11);
+  fill('#3e2723');
+  text(lvl.example, tx, ty, panelW - 20, 60);
+  ty += 50;
+
+  // What's new
+  fill('#0277bd');
+  textSize(12);
+  textStyle(BOLD);
+  text("What's new here?", tx, ty);
+  textStyle(NORMAL);
+  ty += 16;
+  textSize(11);
+  fill('#3e2723');
+  text(lvl.whatsNew, tx, ty, panelW - 20, 80);
+
+  // Navigation hint
+  fill('#9e9e9e');
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  noStroke();
+  text('Use buttons to zoom in/out through levels', canvasWidth / 2, drawHeight - 4);
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  positionControls();
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: buttons
+  zoomInBtn.position(ox + 10, oy + drawHeight + 5);
+  zoomOutBtn.position(ox + 120, oy + drawHeight + 5);
+  resetBtn.position(ox + 250, oy + drawHeight + 5);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

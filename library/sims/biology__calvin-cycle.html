@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Calvin Cycle Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Calvin Cycle Simulator MicroSim (p5.js)
+// Visualizes Calvin cycle phases, molecule flow, and energy accounting per turn
+
+let canvasWidth = 700;
+const drawHeight = 645;
+const controlHeight = 80; // (2 rows × 35) + 10 per guidelines
+const canvasHeight = drawHeight + controlHeight;
+const margin = 25;
+const sliderLeftMargin = 200;
+const defaultTextSize = 16;
+
+let canvasReady = false;
+let runOneButton;
+let runSixButton;
+let resetButton;
+let speedSlider;
+
+const phases = [
+  {
+    name: 'Carbon Fixation',
+    color: '#4CAF50',
+    startDeg: 330,
+    endDeg: 390,
+    hoverRange: { min: 330, max: 30, wrap: true },
+    description: 'CO₂ combines with RuBP via RuBisCO to form 3-PGA.',
+    details: 'Inputs: CO₂, RuBP, RuBisCO\nOutputs: 3-PGA (3C) molecules'
+  },
+  {
+    name: 'Reduction',
+    color: '#F39C12',
+    startDeg: 30,
+    endDeg: 150,
+    hoverRange: { min: 30, max: 150, wrap: false },
+    description: 'ATP and NADPH reduce 3-PGA to G3P, releasing one G3P.',
+    details: 'Consumes: 3 ATP + 2 NADPH per CO₂\nProduces: G3P (1 exits, rest continue)'
+  },
+  {
+    name: 'RuBP Regeneration',
+    color: '#2980B9',
+    startDeg: 150,
+    endDeg: 330,
+    hoverRange: { min: 150, max: 330, wrap: false },
+    description: 'Most G3P molecules regenerate RuBP using ATP.',
+    details: 'Consumes: ATP\nPurpose: regenerate RuBP to accept new CO₂'
+  }
+];
+
+const ring = {
+  cx: 0,
+  cy: 0,
+  innerR: 95,
+  outerR: 150
+};
+
+const animationState = {
+  active: false,
+  phaseIndex: 0,
+  timer: 0,
+  duration: 1.2,
+  queue: 0
+};
+
+let currentPhaseIndex = -1;
+let turnsCompleted = 0;
+let co2Fixed = 0;
+let atpUsed = 0;
+let nadphUsed = 0;
+let g3pProduced = 0;
+let g3pPool = 0;
+let glucoseCount = 0;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  canvasReady = true;
+
+  runOneButton = createButton('Run One Turn');
+  runOneButton.mousePressed(() => queueTurns(1));
+
+  runSixButton = createButton('Run 6 Turns (→ 1 glucose)');
+  runSixButton.mousePressed(() => queueTurns(6));
+
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetSimulation);
+
+  speedSlider = createSlider(50, 200, 100, 5);
+
+  positionControls();
+  describe('Interactive Calvin cycle diagram highlighting three phases with molecule counts, totals, and controls to run turns.');
+}
+
+function draw() {
+  updateCanvasSize();
+  background('white');
+  stroke('silver');
+  strokeWeight(1);
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  ring.cx = canvasWidth * 0.35;
+  ring.cy = drawHeight / 2;
+
+  updateAnimation();
+  drawTitle();
+  drawCycle();
+  drawCO2Arrow();
+  drawExitArrow();
+  drawTotalsPanel();
+  drawInfoPanel();
+  drawControlsLabels();
+}
+
+function drawTitle() {
+  noStroke();
+  fill('black');
+  textSize(24);
+  textAlign(CENTER, TOP);
+  text('Calvin Cycle Simulator', canvasWidth / 2, 10);
+  textSize(defaultTextSize);
+  text(
+    'Trace CO₂ through Carbon Fixation, Reduction, and RuBP Regeneration.',
+    canvasWidth / 2,
+    40
+  );
+  textAlign(LEFT, CENTER);
+}
+
+function drawCycle() {
+  strokeWeight(20);
+  noFill();
+  const outerDiameter = ring.outerR * 2;
+
+  for (let i = 0; i < phases.length; i++) {
+    const phase = phases[i];
+    const highlight = i === currentPhaseIndex;
+    stroke(phase.color);
+    strokeWeight(highlight ? 24 : 16);
+    const startRad = radians(phase.startDeg);
+    const endRad = radians(phase.endDeg);
+    arc(ring.cx, ring.cy, outerDiameter, outerDiameter, startRad, endRad);
+  }
+
+  drawPhaseLabels();
+  drawMoleculeIcons();
+  drawPhaseIndicator();
+}
+
+function drawPhaseLabels() {
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  textAlign(CENTER, CENTER);
+  phases.forEach((phase) => {
+    const midDeg = (phase.startDeg + phase.endDeg) / 2;
+    const angle = radians(midDeg % 360);
+    const labelRadius = ring.outerR + 30;
+    let x = ring.cx + cos(angle) * labelRadius;
+    let y = ring.cy + sin(angle) * labelRadius;
+    if (phase.name === 'Carbon Fixation') {
+      x += 40;
+      y -= 30;
+    } else if (phase.name === 'RuBP Regeneration') {
+      y -= 15;
+    }
+    text(phase.name, x, y);
+  });
+  textAlign(LEFT, CENTER);
+}
+
+function drawMoleculeIcons() {
+  // RuBP at left
+  drawPentagon(ring.cx - 70, ring.cy + 30, 18, '#F1C40F', 'RuBP (5C)');
+  // 3-PGA near top
+  drawTriangle(ring.cx, ring.cy - 90, 22, '#E67E22', '3-PGA (3C)');
+  // G3P near right
+  drawTriangle(ring.cx + 100, ring.cy, 10, '#C0392B', 'G3P (3C)');
+}
+
+function drawPhaseIndicator() {
+  if (currentPhaseIndex < 0 || !animationState.active) return;
+  const phase = phases[currentPhaseIndex];
+  const progress = constrain(animationState.timer / animationState.duration, 0, 1);
+  const start = radians(phase.startDeg);
+  const end = radians(phase.endDeg);
+  const angle = lerpAngle(start, end, progress);
+  const radius = (ring.innerR + ring.outerR) / 2 + 27;
+  const x = ring.cx + cos(angle) * radius;
+  const y = ring.cy + sin(angle) * radius;
+  fill('white');
+  stroke('#444');
+  strokeWeight(2);
+  circle(x, y, 18);
+  noStroke();
+}
+
+function drawCO2Arrow() {
+  stroke('#7F8C8D');
+  strokeWeight(2);
+  const entryX = ring.cx;
+  const entryY = ring.cy - ring.outerR - 40;
+  arrow(entryX, entryY - 30, entryX, entryY);
+  noStroke();
+  fill('#7F8C8D');
+  textAlign(CENTER, CENTER);
+  text('CO₂ enters via RuBisCO', entryX, entryY - 40);
+  textAlign(LEFT, CENTER);
+}
+
+function drawExitArrow() {
+  const exitX = ring.cx + ring.outerR + 40;
+  const exitY = ring.cy;
+  stroke('#C0392B');
+  strokeWeight(2);
+  arrow(exitX - 20, exitY, exitX + 40, exitY);
+  noStroke();
+  fill('#C0392B');
+  text('G3P exits → Glucose pool', exitX + 55, exitY);
+
+  // G3P pool box
+  const poolX = canvasWidth - margin - 160;
+  const poolY = 100;
+  stroke('#C0392B');
+  noFill();
+  rect(poolX, poolY, 150, 70, 10);
+  noStroke();
+  fill('black');
+  text(`G3P pool: ${g3pPool}/6`, poolX + 10, poolY + 20);
+  text(`Glucose built: ${glucoseCount}`, poolX + 10, poolY + 45);
+}
+
+function drawTotalsPanel() {
+  const panelX = margin;
+  const h = 120;
+  const panelY = drawHeight - h - 10;
+  const w = 260;
+  stroke(200);
+  fill(255, 255, 255, 240);
+  rect(panelX, panelY, w, h, 12);
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  text(`Turns: ${turnsCompleted}`, panelX + 12, panelY + 20);
+  text(`CO₂ fixed: ${co2Fixed}`, panelX + 12, panelY + 40);
+  text(`ATP used: ${atpUsed}`, panelX + 12, panelY + 60);
+  text(`NADPH used: ${nadphUsed}`, panelX + 12, panelY + 80);
+  text(`G3P produced: ${g3pProduced}`, panelX + 12, panelY + 100);
+}
+
+function drawInfoPanel() {
+  const panelX = canvasWidth * 0.65;
+  const panelW = canvasWidth - panelX - margin;
+  const panelH = drawHeight * 0.25 + 60;
+  const panelY = drawHeight - panelH - 10;
+
+  stroke(200);
+  fill(255, 255, 255, 240);
+  rect(panelX, panelY, panelW, panelH, 12);
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  textAlign(LEFT, TOP);
+
+  const hoveredPhase = detectHoveredPhase();
+  const targetIndex = hoveredPhase !== null ? hoveredPhase : currentPhaseIndex;
+  if (targetIndex !== null && targetIndex >= 0) {
+    const phase = phases[targetIndex];
+    text(phase.name, panelX + 12, panelY + 12);
+    text(phase.description, panelX + 12, panelY + 40, panelW - 24, 80);
+    text(phase.details, panelX + 12, panelY + 120, panelW - 24, 100);
+  } else {
+    text('Hover over a phase or run the cycle to explore how carbon moves and where ATP/NADPH are consumed.', panelX + 12, panelY + 12, panelW - 24, panelH - 24);
+  }
+  textAlign(LEFT, CENTER);
+}
+
+function drawControlsLabels() {
+  noStroke();
+  fill('black');
+  textSize(defaultTextSize);
+  const row2Y = drawHeight + 50;
+  const speedMultiplier = speedSlider.value() / 100;
+  text(`Animation Speed: ${speedMultiplier.toFixed(1)}×`, margin, row2Y);
+}
+
+function positionControls() {
+  const row1Y = drawHeight + 5;
+  runOneButton.position(margin, row1Y);
+  runSixButton.position(margin + 165, row1Y);
+  resetButton.position(margin + 380, row1Y);
+
+  const row2Y = drawHeight + 40;
+  speedSlider.position(sliderLeftMargin, row2Y);
+  speedSlider.size(canvasWidth - sliderLeftMargin - margin);
+}
+
+function queueTurns(count) {
+  animationState.queue += count;
+  if (!animationState.active) startNextTurn();
+}
+
+function startNextTurn() {
+  if (animationState.queue <= 0) {
+    animationState.active = false;
+    currentPhaseIndex = -1;
+    return;
+  }
+  animationState.queue--;
+  animationState.active = true;
+  animationState.phaseIndex = 0;
+  animationState.timer = 0;
+  currentPhaseIndex = 0;
+}
+
+function updateAnimation() {
+  if (!animationState.active) return;
+  const dt = deltaTime / 1000;
+  const speedMultiplier = speedSlider.value() / 100;
+  animationState.timer += dt * speedMultiplier;
+  if (animationState.timer >= animationState.duration) {
+    animationState.timer = 0;
+    animationState.phaseIndex++;
+    if (animationState.phaseIndex >= phases.length) {
+      animationState.active = false;
+      currentPhaseIndex = -1;
+      completeTurn();
+      startNextTurn();
+    } else {
+      currentPhaseIndex = animationState.phaseIndex;
+    }
+  }
+}
+
+function completeTurn() {
+  turnsCompleted++;
+  co2Fixed++;
+  atpUsed += 3;
+  nadphUsed += 2;
+  g3pProduced++;
+  g3pPool++;
+  if (g3pPool >= 6) {
+    g3pPool -= 6;
+    glucoseCount++;
+  }
+}
+
+function resetSimulation() {
+  animationState.active = false;
+  animationState.queue = 0;
+  animationState.phaseIndex = 0;
+  animationState.timer = 0;
+  currentPhaseIndex = -1;
+  turnsCompleted = 0;
+  co2Fixed = 0;
+  atpUsed = 0;
+  nadphUsed = 0;
+  g3pProduced = 0;
+  g3pPool = 0;
+  glucoseCount = 0;
+}
+
+function detectHoveredPhase() {
+  const dx = mouseX - ring.cx;
+  const dy = mouseY - ring.cy;
+  const dist = sqrt(dx * dx + dy * dy);
+  if (dist < ring.innerR || dist > ring.outerR) return null;
+  let angle = degrees(atan2(dy, dx));
+  if (angle < 0) angle += 360;
+  for (let i = 0; i < phases.length; i++) {
+    const range = phases[i].hoverRange;
+    if (range.wrap) {
+      if (angle >= range.min || angle <= range.max) return i;
+    } else if (angle >= range.min && angle <= range.max) {
+      return i;
+    }
+  }
+  return null;
+}
+
+function drawPentagon(x, y, size, colorHex, label) {
+  stroke(colorHex);
+  fill(colorHex + '33');
+  beginShape();
+  for (let i = 0; i < 5; i++) {
+    const angle = -HALF_PI + (TWO_PI * i) / 5;
+    vertex(x + cos(angle) * size, y + sin(angle) * size);
+  }
+  endShape(CLOSE);
+  noStroke();
+  fill('black');
+  textAlign(CENTER, TOP);
+  text(label, x, y + size + 8);
+  textAlign(LEFT, CENTER);
+}
+
+function drawTriangle(x, y, size, colorHex, label) {
+  stroke(colorHex);
+  fill(colorHex + '33');
+  beginShape();
+  for (let i = 0; i < 3; i++) {
+    const angle = -HALF_PI + (TWO_PI * i) / 3;
+    vertex(x + cos(angle) * size, y + sin(angle) * size);
+  }
+  endShape(CLOSE);
+  noStroke();
+  fill('black');
+  textAlign(CENTER, TOP);
+  text(label, x, y + size + 8);
+  textAlign(LEFT, CENTER);
+}
+
+function arrow(x1, y1, x2, y2) {
+  line(x1, y1, x2, y2);
+  const angle = atan2(y2 - y1, x2 - x1);
+  push();
+  translate(x2, y2);
+  rotate(angle);
+  triangle(-8, -4, -8, 4, 0, 0);
+  pop();
+}
+
+function lerpAngle(start, end, t) {
+  const span = end - start;
+  return start + span * t;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    const newWidth = container.offsetWidth;
+    if (newWidth > 0 && newWidth !== canvasWidth) {
+      canvasWidth = newWidth;
+      if (canvasReady) {
+        resizeCanvas(canvasWidth, canvasHeight);
+        positionControls();
+      }
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

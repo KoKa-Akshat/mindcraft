@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Interactive pH Food Scale MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Interactive pH Food Scale - Food Science MicroSim
+// CANVAS_HEIGHT: 760
+// Vertical pH gradient with 14 food icons, hover/click info, drag-to-test
+// pH slider, and Danger Zone overlay.
+
+// ----- Layout constants -----
+let canvasWidth = 820;
+let drawHeight = 680;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let defaultTextSize = 14;
+
+// Title / region
+let titleY = 24;
+let subtitleY = 46;
+
+// Vertical pH bar geometry (centered horizontally)
+let barW = 60;
+let barX;          // computed in setup
+let barTopY = 84;
+let barBottomY;    // computed in setup (drawHeight - 110)
+let barH;          // computed in setup
+
+// Slider handle for the "test pH" slider sits on the FAR LEFT of the bar
+// (beyond the left-side food icons), so it never collides with food icons.
+let sliderX;       // computed in setup
+let sliderHandleH = 18;
+let sliderHandleW = 30;
+let sliderGap = 28;  // (legacy, unused now)
+let leftIconColWidth = 200;  // reserve this much space on the left of bar
+let rightIconColWidth = 200; // reserve this much space on the right of bar
+let testPh = 7.0;
+let draggingSlider = false;
+
+// ----- Food data -----
+// side: 'L' or 'R' - which side of the bar to place the icon/label
+// xTier: 0 = inner ring (closest to bar), 1 = outer ring (pushed further).
+// Use tier 1 for any food whose pH is within ~0.4 of another food on the same side.
+let foods = [
+  { name: 'Battery Acid',       ph: 0.0,  side: 'L', xTier: 0, emoji: 'BAT',
+    why: 'Sulfuric acid releases huge numbers of H+ ions.',
+    impl: 'Never near food - a reference for the most acidic end of the scale.' },
+  { name: 'Lemon Juice',        ph: 2.2,  side: 'L', xTier: 1, emoji: 'LEM',
+    why: 'Citric acid gives lemons their sharp sour taste.',
+    impl: 'Acidic enough to activate baking soda and brighten flavors.' },
+  { name: 'Vinegar',            ph: 2.4,  side: 'R', xTier: 1, emoji: 'VIN',
+    why: 'Acetic acid (~5%) from fermentation lowers the pH.',
+    impl: 'Pickling brines below pH 4.6 stop most spoilage bacteria.' },
+  { name: 'Cola',               ph: 2.5,  side: 'R', xTier: 0, emoji: 'COL',
+    why: 'Phosphoric and carbonic acids make soda very acidic.',
+    impl: 'About as acidic as lemon juice - tough on tooth enamel.' },
+  { name: 'Orange Juice',       ph: 3.5,  side: 'L', xTier: 0, emoji: 'ORA',
+    why: 'Citric and ascorbic (vitamin C) acids make OJ tangy.',
+    impl: 'Vitamin C is most stable in acidic conditions like OJ.' },
+  { name: 'Tomato',             ph: 4.2,  side: 'R', xTier: 0, emoji: 'TOM',
+    why: 'Malic and citric acids - just above the safety line.',
+    impl: 'Home-canned tomatoes often need added acid to stay below pH 4.6.' },
+  { name: 'Coffee',             ph: 5.0,  side: 'L', xTier: 0, emoji: 'COF',
+    why: 'Chlorogenic and quinic acids form during roasting.',
+    impl: 'Dark roasts are slightly less acidic than light roasts.' },
+  { name: 'Rainwater',          ph: 5.6,  side: 'R', xTier: 0, emoji: 'RAI',
+    why: 'CO2 in air dissolves to form weak carbonic acid.',
+    impl: 'Naturally acidic - "acid rain" is even lower (pH 4 or less).' },
+  { name: 'Milk',               ph: 6.5,  side: 'L', xTier: 0, emoji: 'MLK',
+    why: 'Slightly acidic from dissolved CO2 and lactic acid.',
+    impl: 'As milk spoils, bacteria make more lactic acid and pH drops.' },
+  { name: 'Pure Water',         ph: 7.0,  side: 'R', xTier: 0, emoji: 'H2O',
+    why: 'Equal H+ and OH- ions - the definition of neutral.',
+    impl: 'Pure water is the reference point for the entire pH scale.' },
+  { name: 'Egg White',          ph: 7.8,  side: 'R', xTier: 1, emoji: 'EGG',
+    why: 'Slightly basic; CO2 escapes as eggs age, raising pH.',
+    impl: 'Older eggs are MORE basic - they peel easier when boiled!' },
+  { name: 'Baking Soda',        ph: 8.3,  side: 'L', xTier: 0, emoji: 'BSD',
+    why: 'Sodium bicarbonate releases OH- ions in water.',
+    impl: 'Neutralizes acids - the reason it reacts with vinegar.' },
+  { name: 'Antacid Tablet',     ph: 10.5, side: 'R', xTier: 0, emoji: 'ANT',
+    why: 'Calcium or magnesium carbonates produce many OH- ions.',
+    impl: 'Designed to neutralize excess stomach acid.' },
+  { name: 'Bleach',             ph: 12.5, side: 'L', xTier: 0, emoji: 'BLE',
+    why: 'Sodium hypochlorite is strongly basic.',
+    impl: 'Never near food without dilution - used as a sanitizer at very low ppm.' }
+];
+
+let iconRadius = 18;
+let selectedFood = null;   // pinned by click
+let hoverFood = null;
+
+// Danger zone toggle
+let showDanger = false;
+let dangerButton;
+let resetButton;
+
+// --- pH gradient color helper ---
+// Returns a p5 color for any pH value 0..14
+function phColor(ph) {
+  ph = constrain(ph, 0, 14);
+  // Stops: 0=red, 2=orange, 4=yellow, 7=green, 9=cyan, 11=blue, 14=indigo
+  const stops = [
+    [0,  [200,  30,  30]],   // deep red
+    [2,  [230, 110,  40]],   // orange
+    [4,  [240, 200,  60]],   // yellow
+    [7,  [ 70, 160,  80]],   // green
+    [9,  [ 70, 180, 200]],   // cyan
+    [11, [ 40,  90, 190]],   // blue
+    [14, [ 50,  30, 140]]    // indigo
+  ];
+  for (let i = 0; i < stops.length - 1; i++) {
+    const a = stops[i], b = stops[i + 1];
+    if (ph >= a[0] && ph <= b[0]) {
+      const t = (ph - a[0]) / (b[0] - a[0]);
+      const r = lerp(a[1][0], b[1][0], t);
+      const g = lerp(a[1][1], b[1][1], t);
+      const bl = lerp(a[1][2], b[1][2], t);
+      return color(r, g, bl);
+    }
+  }
+  return color(0);
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI, Arial, sans-serif');
+
+  // Geometry
+  barX = canvasWidth / 2 - barW / 2;
+  barBottomY = drawHeight - 110;  // leave room for VERY BASIC label + readout box
+  barH = barBottomY - barTopY;
+  // Slider lives on the far right edge, outside the right icon column
+  sliderX = barX + barW + rightIconColWidth + 10;
+
+  // Controls
+  dangerButton = createButton('Show Danger Zone');
+  dangerButton.position(15, drawHeight + 15);
+  dangerButton.style('font-size', '14px');
+  dangerButton.style('padding', '6px 12px');
+  dangerButton.style('background', '#f57c00');
+  dangerButton.style('color', '#ffffff');
+  dangerButton.style('border', 'none');
+  dangerButton.style('border-radius', '4px');
+  dangerButton.style('cursor', 'pointer');
+  dangerButton.mousePressed(() => {
+    showDanger = !showDanger;
+    dangerButton.html(showDanger ? 'Hide Danger Zone' : 'Show Danger Zone');
+  });
+
+  resetButton = createButton('Reset');
+  resetButton.position(195, drawHeight + 15);
+  resetButton.style('font-size', '14px');
+  resetButton.style('padding', '6px 12px');
+  resetButton.style('background', '#2e7d32');
+  resetButton.style('color', '#ffffff');
+  resetButton.style('border', 'none');
+  resetButton.style('border-radius', '4px');
+  resetButton.style('cursor', 'pointer');
+  resetButton.mousePressed(() => {
+    testPh = 7.0;
+    selectedFood = null;
+    showDanger = false;
+    dangerButton.html('Show Danger Zone');
+  });
+}
+
+function updateCanvasSize() {
+  // Use the container width if present (mkdocs main), else default
+  const container = document.querySelector('main');
+  if (container) {
+    const w = container.offsetWidth;
+    if (w && w > 320) {
+      canvasWidth = Math.min(w, 900);
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  barX = canvasWidth / 2 - barW / 2;
+  sliderX = barX + barW + rightIconColWidth + 10;
+  // Reposition buttons
+  dangerButton.position(15, drawHeight + 15);
+  resetButton.position(195, drawHeight + 15);
+}
+
+function phToY(ph) {
+  return map(ph, 0, 14, barTopY, barBottomY);
+}
+
+function yToPh(y) {
+  return constrain(map(y, barTopY, barBottomY, 0, 14), 0, 14);
+}
+
+function draw() {
+  // Background tint = current test pH color, lightened
+  push();
+  const bgC = phColor(testPh);
+  // Mix toward white for a subtle wash
+  const r = lerp(red(bgC), 255, 0.78);
+  const g = lerp(green(bgC), 255, 0.78);
+  const bl = lerp(blue(bgC), 255, 0.78);
+  background(r, g, bl);
+  pop();
+
+  // Title & subtitle
+  push();
+  noStroke();
+  fill('#1b3a1f');
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('Interactive pH Food Scale', canvasWidth / 2, titleY - 14);
+  textSize(12);
+  textStyle(NORMAL);
+  fill('#3a5a3f');
+  text('Hover or click a food icon. Drag the slider on the right to test any pH.',
+       canvasWidth / 2, subtitleY - 14);
+  pop();
+
+  drawGradientBar();
+  drawTicks();
+  drawRegionLabels();
+  if (showDanger) drawDangerZone();
+  drawFoodIcons();
+  drawSlider();
+  drawInfoBox();
+  drawSliderReadout();
+  drawControlPanelDivider();
+}
+
+function drawGradientBar() {
+  push();
+  noStroke();
+  // Draw 1px tall strips for smooth gradient
+  for (let y = barTopY; y < barBottomY; y++) {
+    const ph = yToPh(y);
+    fill(phColor(ph));
+    rect(barX, y, barW, 1);
+  }
+  // Border
+  noFill();
+  stroke(40);
+  strokeWeight(1.5);
+  rect(barX, barTopY, barW, barH);
+  pop();
+}
+
+function drawTicks() {
+  push();
+  stroke(40);
+  strokeWeight(1);
+  fill('#1b3a1f');
+  noStroke();
+  textAlign(RIGHT, CENTER);
+  textSize(11);
+  for (let p = 0; p <= 14; p++) {
+    const y = phToY(p);
+    stroke(40);
+    line(barX - 6, y, barX, y);
+    noStroke();
+    text(p, barX - 9, y);
+  }
+  pop();
+}
+
+function drawRegionLabels() {
+  // Region labels sit ABOVE and BELOW the bar in clear empty space.
+  push();
+  textAlign(CENTER, BOTTOM);
+  textSize(11);
+  textStyle(BOLD);
+  noStroke();
+
+  fill('#a01a1a');
+  text('VERY ACIDIC', barX + barW / 2, barTopY - 8);
+
+  textAlign(CENTER, TOP);
+  fill('#1f3aa0');
+  text('VERY BASIC', barX + barW / 2, barBottomY + 8);
+  pop();
+}
+
+function drawDangerZone() {
+  push();
+  noStroke();
+  // Pathogen growth zone: pH 4.6 - 9.0
+  const yTop = phToY(4.6);
+  const yBot = phToY(9.0);
+  const c = color(220, 30, 30);
+  c.setAlpha(70);
+  fill(c);
+  // Slightly wider than bar to draw attention
+  rect(barX - 8, yTop, barW + 16, yBot - yTop);
+
+  // Hatched border lines
+  stroke(180, 20, 20, 200);
+  strokeWeight(2);
+  noFill();
+  rect(barX - 8, yTop, barW + 16, yBot - yTop);
+
+  // Label box on the LEFT side of the bar
+  noStroke();
+  const labelX = 20;
+  const labelY = (yTop + yBot) / 2 - 38;
+  const labelW = barX - 60;
+  fill(255, 245, 245, 240);
+  stroke(180, 20, 20);
+  strokeWeight(1);
+  rect(labelX, labelY, labelW, 76, 6);
+
+  noStroke();
+  fill('#a01a1a');
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(20);
+  text('☠', labelX + labelW / 2, labelY + 4); // skull symbol
+  textSize(11);
+  textStyle(BOLD);
+  text('PATHOGEN GROWTH ZONE', labelX + labelW / 2, labelY + 28);
+  textStyle(NORMAL);
+  textSize(10);
+  fill('#5a1a1a');
+  text('pH 4.6 - 9.0: most\nfood-spoilage bacteria\nthrive here',
+       labelX + labelW / 2, labelY + 44);
+  pop();
+}
+
+function drawFoodIcons() {
+  push();
+  for (let f of foods) {
+    const y = phToY(f.ph);
+    let x;
+    // Inner ring sits 22px from bar; outer ring (tier 1) pushed +95px further
+    const innerOffset = 22 + iconRadius;
+    const tierBump = f.xTier === 1 ? 95 : 0;
+    if (f.side === 'L') {
+      x = barX - innerOffset - tierBump;
+    } else {
+      x = barX + barW + innerOffset + tierBump;
+    }
+    // Connector line to bar - lighter for tier 1 so it visually recedes
+    stroke(f.xTier === 1 ? 140 : 80);
+    strokeWeight(1);
+    if (f.side === 'L') {
+      line(x + iconRadius, y, barX, y);
+    } else {
+      line(x - iconRadius, y, barX + barW, y);
+    }
+    // Icon circle filled with the food's pH color
+    noStroke();
+    fill(phColor(f.ph));
+    ellipse(x, y, iconRadius * 2);
+    // Outline (highlight on hover/selected)
+    const isActive = (f === hoverFood) || (f === selectedFood);
+    stroke(isActive ? '#f57c00' : '#222');
+    strokeWeight(isActive ? 3 : 1.2);
+    noFill();
+    ellipse(x, y, iconRadius * 2);
+    // 3-letter abbrev inside circle
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(9);
+    text(f.emoji, x, y);
+    // Food name label outside the icon
+    textStyle(NORMAL);
+    textSize(11);
+    fill('#1b1b1b');
+    if (f.side === 'L') {
+      textAlign(RIGHT, CENTER);
+      text(f.name + '  (pH ' + f.ph.toFixed(1) + ')', x - iconRadius - 4, y);
+    } else {
+      textAlign(LEFT, CENTER);
+      text(f.name + '  (pH ' + f.ph.toFixed(1) + ')', x + iconRadius + 4, y);
+    }
+    f._x = x;
+    f._y = y;
+  }
+  pop();
+}
+
+function drawSlider() {
+  push();
+  // Slider track to the right of bar
+  stroke(60);
+  strokeWeight(1);
+  line(sliderX + sliderHandleW / 2, barTopY,
+       sliderX + sliderHandleW / 2, barBottomY);
+  const y = phToY(testPh);
+  // Handle (arrow pointing left at the bar)
+  noStroke();
+  fill('#f57c00');
+  rect(sliderX, y - sliderHandleH / 2, sliderHandleW, sliderHandleH, 4);
+  // Arrow triangle on the left edge pointing at the bar
+  triangle(sliderX, y,
+           sliderX - 8, y - 6,
+           sliderX - 8, y + 6);
+  // pH reading on the handle
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(10);
+  text(testPh.toFixed(1), sliderX + sliderHandleW / 2, y);
+  pop();
+}
+
+function drawSliderReadout() {
+  push();
+  // Box under the bar showing test pH and nearby foods
+  const boxX = canvasWidth / 2 - 240;
+  const boxY = barBottomY + 30;
+  const boxW = 480;
+  const boxH = 50;
+  noStroke();
+  fill(255, 255, 255, 230);
+  stroke('#2e7d32');
+  strokeWeight(1.5);
+  rect(boxX, boxY, boxW, boxH, 6);
+
+  noStroke();
+  fill('#1b3a1f');
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Test pH: ' + testPh.toFixed(1), boxX + 10, boxY + 6);
+
+  // Find foods within +/- 0.3 pH
+  const near = foods.filter(f => Math.abs(f.ph - testPh) <= 0.3)
+                    .map(f => f.name);
+  textStyle(NORMAL);
+  textSize(11);
+  fill('#333');
+  const line1 = 'This pH is found in: ' +
+                (near.length ? near.join(', ') : '(no listed foods within +/- 0.3)');
+  // Word wrap manually if too long
+  textWrap(WORD);
+  text(line1, boxX + 10, boxY + 24, boxW - 20, boxH - 22);
+  pop();
+}
+
+function drawInfoBox() {
+  const f = selectedFood || hoverFood;
+  if (!f) return;
+  push();
+  // Info card pinned in the top-right corner
+  const boxW = 230;
+  const boxH = 130;
+  const boxX = canvasWidth - boxW - 12;
+  const boxY = 4;
+  noStroke();
+  fill(255, 255, 255, 245);
+  stroke('#f57c00');
+  strokeWeight(2);
+  rect(boxX, boxY, boxW, boxH, 6);
+
+  noStroke();
+  fill('#1b3a1f');
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(13);
+  text(f.name, boxX + 10, boxY + 8);
+  textStyle(NORMAL);
+  textSize(11);
+  fill('#f57c00');
+  textStyle(BOLD);
+  text('pH ' + f.ph.toFixed(1), boxX + 10, boxY + 28);
+  textStyle(NORMAL);
+  fill('#222');
+  textWrap(WORD);
+  text(f.why, boxX + 10, boxY + 46, boxW - 20, 40);
+  fill('#1f6b2a');
+  textStyle(ITALIC);
+  text(f.impl, boxX + 10, boxY + 84, boxW - 20, boxH - 90);
+  pop();
+}
+
+function drawControlPanelDivider() {
+  push();
+  stroke('#cccccc');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+  fill('#f1f8e9');
+  rect(0, drawHeight + 1, canvasWidth, controlHeight - 1);
+  // Hint text right of buttons
+  fill('#3a5a3f');
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  textStyle(NORMAL);
+  text('Tip: pH 4.6 is the food-safety line. Below it, most pathogens stop growing.',
+       275, drawHeight + 30);
+  pop();
+}
+
+// ----- Interaction -----
+function mousePressed() {
+  if (mouseY > drawHeight) return; // ignore clicks in control panel
+  // Slider grab? Hit-test on handle rectangle, or any click in slider column
+  const sy = phToY(testPh);
+  if (mouseX >= sliderX - 10 && mouseX <= sliderX + sliderHandleW &&
+      mouseY >= sy - sliderHandleH / 2 - 4 && mouseY <= sy + sliderHandleH / 2 + 4) {
+    draggingSlider = true;
+    return;
+  }
+  // Also allow grabbing anywhere along the slider track column
+  if (mouseX >= sliderX - 10 && mouseX <= sliderX + sliderHandleW + 4 &&
+      mouseY >= barTopY && mouseY <= barBottomY) {
+    draggingSlider = true;
+    testPh = yToPh(mouseY);
+    return;
+  }
+  // Food icon click
+  for (let f of foods) {
+    const d = dist(mouseX, mouseY, f._x, f._y);
+    if (d <= iconRadius) {
+      selectedFood = (selectedFood === f) ? null : f;
+      return;
+    }
+  }
+  // Click anywhere else clears selection
+  selectedFood = null;
+}
+
+function mouseDragged() {
+  if (draggingSlider) {
+    testPh = yToPh(mouseY);
+  }
+}
+
+function mouseReleased() {
+  draggingSlider = false;
+}
+
+function mouseMoved() {
+  hoverFood = null;
+  if (mouseY < 0 || mouseY > drawHeight) return;
+  for (let f of foods) {
+    const d = dist(mouseX, mouseY, f._x, f._y);
+    if (d <= iconRadius) {
+      hoverFood = f;
+      cursor(HAND);
+      return;
+    }
+  }
+  // Slider handle hover
+  const sy = phToY(testPh);
+  if (mouseX >= sliderX - 10 && mouseX <= sliderX + sliderHandleW &&
+      mouseY >= sy - sliderHandleH / 2 - 4 && mouseY <= sy + sliderHandleH / 2 + 4) {
+    cursor('ns-resize');
+    return;
+  }
+  cursor(ARROW);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

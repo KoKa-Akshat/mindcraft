@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>DDoS Mitigation Explorer MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// CANVAS_HEIGHT: 525
+// DDoS Mitigation Explorer
+// Bloom: Analyze. Students manipulate attack parameters and toggle defense
+// layers (BCP38 ingress filtering, anycast, scrubbing, rate limiting) and observe
+// how much traffic still reaches the origin's bandwidth and CPU. Legitimate
+// traffic (green) flows alongside attack traffic (amber) so students can see what
+// fraction of real requests get served under each configuration.
+
+let canvasWidth = 800;
+let drawHeight = 360;
+let controlHeight = 165;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let defaultTextSize = 16;
+
+let botsSlider, rateSlider, attackSelect, reflectorSelect;
+let bcp38Chk, anycastChk, scrubChk, rateLimitChk, resetBtn;
+
+let particles = [];
+let mouseOverCanvas = false;
+
+// Smoothed health meters (0..1)
+let bwLoad = 0, cpuLoad = 0;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  canvas.mouseOver(() => mouseOverCanvas = true);
+  canvas.mouseOut(() => mouseOverCanvas = false);
+
+  const m = document.querySelector('main');
+
+  botsSlider = createSlider(10, 10000, 2000, 10);   botsSlider.parent(m);
+  rateSlider = createSlider(1, 100, 20, 1);          rateSlider.parent(m);
+
+  attackSelect = createSelect(); attackSelect.parent(m);
+  attackSelect.option('Volumetric');
+  attackSelect.option('L7-CPU');
+  attackSelect.option('L7-DB');
+
+  reflectorSelect = createSelect(); reflectorSelect.parent(m);
+  reflectorSelect.option('No reflector');
+  reflectorSelect.option('DNS 50x');
+  reflectorSelect.option('NTP 500x');
+  reflectorSelect.option('Memcached 50000x');
+
+  bcp38Chk     = createCheckbox(' BCP38 ingress filter', false); bcp38Chk.parent(m);
+  anycastChk   = createCheckbox(' Anycast (3 PoPs)', false);      anycastChk.parent(m);
+  scrubChk     = createCheckbox(' Scrubbing center', false);      scrubChk.parent(m);
+  rateLimitChk = createCheckbox(' Rate limiting', false);         rateLimitChk.parent(m);
+
+  resetBtn = createButton('Reset'); resetBtn.parent(m);
+  resetBtn.mousePressed(resetSim);
+
+  describe('A DDoS mitigation simulation: an attacker botnet on the left sends ' +
+    'traffic toward an origin server on the right through optional defense ' +
+    'layers. Health bars show origin bandwidth and CPU. Controls set the number ' +
+    'of bots, attack rate, attack type, amplification reflector, and which ' +
+    'defenses are enabled.', LABEL);
+}
+
+function resetSim() {
+  botsSlider.value(2000);
+  rateSlider.value(20);
+  attackSelect.selected('Volumetric');
+  reflectorSelect.selected('No reflector');
+  bcp38Chk.checked(false);
+  anycastChk.checked(false);
+  scrubChk.checked(false);
+  rateLimitChk.checked(false);
+  particles = [];
+  bwLoad = 0; cpuLoad = 0;
+}
+
+// Returns the model results given current control values.
+function computeModel() {
+  const bots = botsSlider.value();
+  const rate = rateSlider.value();
+  const attack = attackSelect.value();
+  const reflector = reflectorSelect.value();
+  const isVolumetric = attack === 'Volumetric';
+
+  // amplification only for volumetric
+  let amp = 1;
+  if (isVolumetric) {
+    if (reflector.indexOf('DNS') >= 0) amp = 50;
+    else if (reflector.indexOf('NTP') >= 0) amp = 500;
+    else if (reflector.indexOf('Memcached') >= 0) amp = 50000;
+  }
+
+  // Raw attack "volume" normalized to 0..1 where ~1 saturates the origin.
+  // Use log scaling so the 10..10000 bot range and huge amp factors are legible.
+  let rawVolume = (bots * rate * amp);
+  // Tuned so the default (2000 bots x 20 req/s, no amplification) puts the origin
+  // under moderate stress, and amplified or high-rate attacks saturate it.
+  const saturate = 90000;
+  let attackFrac = Math.min(1.5, rawVolume / saturate);
+
+  // Defense effects
+  let bwAttack = attackFrac;
+  let cpuAttack = attackFrac;
+
+  // BCP38 ingress filtering: removes spoofed/amplified volumetric traffic.
+  // It is highly effective against amplified/reflected attacks (which rely on
+  // spoofing), useless against L7.
+  if (bcp38Chk.checked() && isVolumetric && amp > 1) {
+    bwAttack *= 0.10; // 90% of amplified traffic is spoofed -> dropped
+  }
+
+  // Anycast: splits traffic across 3 PoPs, each sees 1/3.
+  if (anycastChk.checked()) {
+    bwAttack /= 3;
+    cpuAttack /= 3;
+  }
+
+  // Scrubbing center: absorbs ~95% of identified attack traffic (+latency).
+  if (scrubChk.checked()) {
+    bwAttack *= 0.05;
+    cpuAttack *= 0.05;
+  }
+
+  // Rate limiting: drops L7 traffic above per-IP threshold; less effective when
+  // bots are diverse (many bots). Effectiveness scales down as bots grow.
+  if (rateLimitChk.checked()) {
+    const diversityPenalty = Math.min(1, bots / 5000); // more bots -> weaker
+    const effective = 0.85 * (1 - diversityPenalty * 0.7);
+    if (!isVolumetric) cpuAttack *= (1 - effective);
+  }
+
+  // Volumetric loads bandwidth; L7 loads CPU.
+  const targetBw = isVolumetric ? Math.min(1, bwAttack) : Math.min(1, bwAttack * 0.15);
+  const targetCpu = isVolumetric ? Math.min(1, cpuAttack * 0.15) : Math.min(1, cpuAttack);
+
+  // Legitimate fraction served: drops as the bottleneck resource saturates.
+  const bottleneck = Math.max(targetBw, targetCpu);
+  const served = Math.max(0, 1 - bottleneck);
+
+  return { bots, attack, isVolumetric, amp, targetBw, targetCpu, served,
+           latency: scrubChk.checked() ? 100 : 0 };
+}
+
+function draw() {
+  const r = computeModel();
+
+  // Backgrounds
+  fill('aliceblue'); stroke('silver');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); stroke('silver');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  noStroke(); fill('#0d47a1'); textSize(20); textAlign(CENTER, TOP);
+  text('DDoS Mitigation Explorer', canvasWidth / 2, 8);
+
+  // Region columns
+  const botX = 70;
+  const originX = canvasWidth - 90;
+  const pathTop = 70, pathBot = drawHeight - 70;
+
+  drawBotnet(botX, pathTop, pathBot, r);
+  drawDefenseLayers(botX + 40, originX - 40, pathTop, pathBot);
+  updateParticles(botX, originX, pathTop, pathBot, r);
+  drawParticles();
+  drawOrigin(originX, (pathTop + pathBot) / 2, r);
+  drawTicker(r);
+
+  drawControls(r);
+}
+
+function drawBotnet(x, top, bot, r) {
+  noStroke(); fill('#37474f'); textSize(12); textAlign(CENTER, BOTTOM);
+  text('Attacker botnet', x, top - 6);
+  textAlign(CENTER, TOP);
+  text(formatNum(r.bots) + ' bots', x, bot + 6);
+  // cluster of dots representing bots (count cosmetic, scaled by log)
+  const n = Math.min(60, Math.round(10 + Math.log10(r.bots) * 14));
+  randomSeed(7);
+  fill('#d84315');
+  for (let i = 0; i < n; i++) {
+    const px = x + random(-26, 26);
+    const py = (top + bot) / 2 + random(-(bot - top) / 2.2, (bot - top) / 2.2);
+    circle(px, py, 5);
+  }
+}
+
+function drawDefenseLayers(x0, x1, top, bot) {
+  const layers = [
+    { on: bcp38Chk.checked(),     label: 'BCP38\ningress' },
+    { on: anycastChk.checked(),   label: 'Anycast\n3 PoPs' },
+    { on: scrubChk.checked(),     label: 'Scrubbing' },
+    { on: rateLimitChk.checked(), label: 'Rate\nlimit' }
+  ];
+  const span = x1 - x0;
+  const step = span / layers.length;
+  textAlign(CENTER, CENTER); textSize(11);
+  for (let i = 0; i < layers.length; i++) {
+    const cx = x0 + step * (i + 0.5);
+    const w = step * 0.7, h = bot - top;
+    if (layers[i].on) { fill('#1565c0'); stroke('#0d47a1'); }
+    else { fill(220); stroke(190); }
+    strokeWeight(1.5);
+    rect(cx - w / 2, top, w, h, 6);
+    noStroke();
+    fill(layers[i].on ? '#ffffff' : '#90a4ae');
+    const lines = layers[i].label.split('\n');
+    for (let j = 0; j < lines.length; j++) {
+      text(lines[j], cx, (top + bot) / 2 + (j - (lines.length - 1) / 2) * 14);
+    }
+  }
+}
+
+function updateParticles(botX, originX, top, bot, r) {
+  if (mouseOverCanvas) {
+    // spawn attack particles proportional to attack intensity
+    const intensity = Math.min(1, (r.targetBw + r.targetCpu));
+    if (random() < 0.3 + intensity * 0.6) {
+      particles.push(makeParticle(botX, originX, top, bot, 'attack', r));
+    }
+    // legitimate steady stream
+    if (random() < 0.25) {
+      particles.push(makeParticle(botX, originX, top, bot, 'legit', r));
+    }
+  }
+  for (const p of particles) {
+    p.x += p.vx;
+    // attack particles that get "absorbed" by a defense fade before origin
+    if (p.absorbAt && p.x > p.absorbAt) p.alpha -= 18;
+  }
+  particles = particles.filter(p => p.x < originX - 8 && p.alpha > 10);
+}
+
+function makeParticle(botX, originX, top, bot, kind, r) {
+  const startY = kind === 'legit'
+    ? bot + 14
+    : random(top + 6, bot - 6);
+  // Decide if/where this attack particle is absorbed by an active defense.
+  let absorbAt = null;
+  if (kind === 'attack') {
+    const reduction = 1 - Math.min(r.targetBw, r.targetCpu === 0 ? r.targetBw : Math.max(r.targetBw, r.targetCpu));
+    // probability of absorption rises with how much defenses cut the attack
+    const stopped = 1 - Math.min(1, (r.targetBw + r.targetCpu));
+    if (random() < stopped) {
+      absorbAt = random(botX + 60, originX - 60);
+    }
+  }
+  return {
+    x: botX + 28,
+    y: startY,
+    vx: random(2.4, 3.6),
+    kind,
+    absorbAt,
+    alpha: 255
+  };
+}
+
+function drawParticles() {
+  noStroke();
+  for (const p of particles) {
+    if (p.kind === 'legit') fill(76, 175, 80, p.alpha);
+    else fill(255, 160, 0, p.alpha);
+    circle(p.x, p.y, p.kind === 'legit' ? 5 : 4);
+  }
+}
+
+function drawOrigin(x, cy, r) {
+  // server box
+  stroke('#455a64'); strokeWeight(2);
+  const overwhelmed = (r.targetBw > 0.92 || r.targetCpu > 0.92);
+  fill(overwhelmed ? '#d84315' : '#eceff1');
+  rect(x - 28, cy - 38, 70, 76, 6);
+  noStroke();
+  fill(overwhelmed ? '#fff' : '#455a64');
+  textAlign(CENTER, CENTER); textSize(11);
+  text('Origin', x + 7, cy - 26);
+  text(overwhelmed ? 'DOWN' : 'server', x + 7, cy - 12);
+
+  // health bars
+  drawBar(x - 28, cy + 6, 70, 'Bandwidth', r.targetBw);
+  drawBar(x - 28, cy + 26, 70, 'CPU', r.targetCpu);
+}
+
+function drawBar(x, y, w, label, frac) {
+  noStroke();
+  fill('#607d8b'); textAlign(RIGHT, CENTER); textSize(10);
+  text(label, x - 4, y + 6);
+  fill('#e0e0e0'); rect(x, y, w, 10, 2);
+  const c = frac > 0.85 ? color('#d84315') : frac > 0.6 ? color('#ffa000') : color('#4caf50');
+  fill(c); rect(x, y, w * Math.min(1, frac), 10, 2);
+}
+
+function drawTicker(r) {
+  noStroke();
+  const servedPct = Math.round(r.served * 100);
+  fill(servedPct >= 50 ? '#2e7d32' : '#d84315');
+  textAlign(CENTER, BOTTOM); textSize(14);
+  let msg = 'Legitimate requests served: ' + servedPct + '% of attempted';
+  if (r.latency) msg += '   (+' + r.latency + ' ms scrubbing latency)';
+  text(msg, canvasWidth / 2, drawHeight - 6);
+}
+
+function drawControls(r) {
+  const x0 = 12;
+  const y0 = drawHeight + 6;
+  // Row 1: bots slider
+  positionRow1();
+  // Row 2: rate slider
+  // Row 3: selects
+  // Row 4: checkboxes + reset
+  noStroke(); fill('black'); textAlign(LEFT, CENTER); textSize(13);
+
+  text('Bots: ' + formatNum(botsSlider.value()), x0, y0 + 8);
+  text('Rate/bot: ' + rateSlider.value() + ' req/s', x0, y0 + 38);
+  text('Attack:', x0, y0 + 70);
+  text('Reflector:', x0 + 175, y0 + 70);
+
+  // amplification disabled note
+  if (attackSelect.value() !== 'Volumetric') {
+    reflectorSelect.attribute('disabled', '');
+    fill('#b0bec5');
+  } else {
+    reflectorSelect.removeAttribute('disabled');
+  }
+}
+
+function positionRow1() {
+  const y0 = drawHeight + 6;
+  const sliderLeft = 175;
+  botsSlider.position(sliderLeft, y0 + 2);
+  botsSlider.size(canvasWidth - sliderLeft - margin);
+  rateSlider.position(sliderLeft, y0 + 32);
+  rateSlider.size(canvasWidth - sliderLeft - margin);
+
+  attackSelect.position(60, y0 + 62);
+  reflectorSelect.position(245, y0 + 62);
+
+  // Row 4 checkboxes
+  const cbY = y0 + 96;
+  bcp38Chk.position(12, cbY);
+  anycastChk.position(180, cbY);
+  scrubChk.position(330, cbY);
+  rateLimitChk.position(470, cbY);
+  resetBtn.position(600, cbY - 2);
+}
+
+function formatNum(n) {
+  if (n >= 1000) return (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'k';
+  return '' + n;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionRow1();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

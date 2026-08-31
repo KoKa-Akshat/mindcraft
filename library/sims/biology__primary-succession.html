@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Ecological Succession Timeline using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Ecological Succession Timeline MicroSim
+// Visualizes primary vs secondary succession with responsive panels and interactive controls
+
+let canvasWidth = 960;
+const drawHeight = 640;
+const controlHeight = 230;
+let canvasHeight = drawHeight + controlHeight;
+
+let stageImages = [];
+
+const margin = 24;
+const bannerHeight = 60;
+const landscapeHeight = 280;
+const timelineHeight = 130;
+const soilBandHeight = 70;
+
+const stageDatasets = {
+  primary: [
+    {
+      name: 'Bare Rock Exposure',
+      years: '0–50 years',
+      duration: 80,
+      soilDepth: 0.05,
+      description: 'Glacial retreat or lava leaves sterile rock with almost no soil. Wind-blown dust and lichens start the slow process of soil formation.',
+      highlight: 'Lichens and cyanobacteria chemically weather rock and trap organic particles.',
+      soilNote: 'Soil depth < 1 cm',
+      palette: { sky: '#cfe9ff', ground: '#b7a99a', soil: '#9f8a78' },
+      imageIndex: 0,
+      species: [
+        { name: 'Crustose Lichens', role: 'Secrete acids that break rock', icon: 'lichen', color: '#6aa398' },
+        { name: 'Cyanobacteria Films', role: 'Fix nitrogen on rock surface', icon: 'moss', color: '#7fb3c4' }
+      ]
+    },
+    {
+      name: 'Pioneer Lichens & Mosses',
+      years: '50–300 years',
+      duration: 220,
+      soilDepth: 0.15,
+      description: 'Organic crusts thicken and moss mats retain moisture. Small annuals find crevices to root.',
+      highlight: 'Biological weathering accelerates, capturing dust and organic matter.',
+      soilNote: 'Soil depth 1–2 cm',
+      palette: { sky: '#c7e0ff', ground: '#9fb08a', soil: '#8b9b74' },
+      imageIndex: 1,
+      species: [
+        { name: 'Reindeer Moss', role: 'Spreads carpet-like mats', icon: 'lichen', color: '#83b373' },
+        { name: 'Haircap Moss', role: 'Traps water in cushions', icon: 'moss', color: '#6a8c4f' },
+        { name: 'Tiny Annuals', role: 'Add organic matter as they decay', icon: 'flower', color: '#b784a7' }
+      ]
+    },
+    {
+      name: 'Grasses & Herb Meadows',
+      years: '300–800 years',
+      duration: 260,
+      soilDepth: 0.4,
+      description: 'Developing soils allow grasses and herbaceous plants to dominate. Insects and detritivores arrive.',
+      highlight: 'Root systems stabilize soil and increase organic inputs.',
+      soilNote: 'Soil depth 5–15 cm',
+      palette: { sky: '#c0e5ff', ground: '#8fb16a', soil: '#7a8d53' },
+      imageIndex: 2,
+      species: [
+        { name: 'Fireweed', role: 'Quickly colonizes disturbed soils', icon: 'flower', color: '#f06fa7' },
+        { name: 'Bunchgrasses', role: 'Dense fibrous roots hold soil', icon: 'grass', color: '#6f9c3a' },
+        { name: 'Detritivores', role: 'Accelerate decomposition', icon: 'critter', color: '#c98b3b' }
+      ]
+    },
+    {
+      name: 'Shrub Thicket',
+      years: '800–1,500 years',
+      duration: 320,
+      soilDepth: 0.65,
+      description: 'Woody shrubs and nitrogen-fixing species (alders, willows) add nutrients, shading out herbs.',
+      highlight: 'Woody litter deepens soil and prepares for tree seedlings.',
+      soilNote: 'Soil depth 20–40 cm',
+      palette: { sky: '#b6dbff', ground: '#6e8a55', soil: '#5f6f46' },
+      imageIndex: 3,
+      species: [
+        { name: 'Sitka Alder', role: 'Fixes nitrogen for the community', icon: 'shrub', color: '#4a8647' },
+        { name: 'Blueberry', role: 'Provides food for wildlife', icon: 'shrub', color: '#567c5d' },
+        { name: 'Willow', role: 'Stabilizes stream edges', icon: 'sapling', color: '#819d5b' }
+      ]
+    },
+    {
+      name: 'Climax Conifer Forest',
+      years: '1,500+ years',
+      duration: 480,
+      soilDepth: 0.92,
+      description: 'Spruce, fir, and hemlock form a closed canopy. Shade-tolerant understory plants thrive.',
+      highlight: 'Nutrient cycling stabilizes; biodiversity peaks.',
+      soilNote: 'Soil depth 40+ cm',
+      palette: { sky: '#afd2ff', ground: '#4f6a3b', soil: '#3b4c2d' },
+      imageIndex: 4,
+      species: [
+        { name: 'Sitka Spruce', role: 'Dominant canopy tree', icon: 'tree', color: '#1f5f3a' },
+        { name: 'Western Hemlock', role: 'Shade-tolerant co-dominant', icon: 'tree', color: '#2d7446' },
+        { name: 'Red-Capped Mushrooms', role: 'Decompose litter', icon: 'mushroom', color: '#c05243' }
+      ]
+    }
+  ],
+  secondary: [
+    {
+      name: 'Disturbed Field',
+      years: '0–1 year',
+      duration: 5,
+      soilDepth: 0.6,
+      description: 'Fire or plowing removes vegetation but leaves soil intact with buried seeds.',
+      highlight: 'Soil organisms survive; regrowth is rapid.',
+      soilNote: 'Existing soil ready for regrowth',
+      palette: { sky: '#d7ecff', ground: '#c0a56e', soil: '#a07d42' },
+      imageIndex: 0,
+      species: [
+        { name: 'Crabgrass', role: 'Covers exposed soil quickly', icon: 'grass', color: '#b8b13b' },
+        { name: 'Soil Seed Bank', role: 'Seeds sprout after disturbance', icon: 'seed', color: '#ba8546' }
+      ]
+    },
+    {
+      name: 'Annual Grasses & Herbs',
+      years: '1–3 years',
+      duration: 8,
+      soilDepth: 0.6,
+      description: 'Annual grasses dominate; herbivores return.',
+      highlight: 'Shade and litter suppress bare soil.',
+      soilNote: 'Soil depth unchanged but organic layer increases',
+      palette: { sky: '#d1e4ff', ground: '#a6bf5c', soil: '#8a9f45' },
+      imageIndex: 1,
+      species: [
+        { name: 'Foxtail Grass', role: 'Rapid growth and seed production', icon: 'grass', color: '#95b73d' },
+        { name: 'Aster', role: 'Supports pollinators early', icon: 'flower', color: '#d98ad3' },
+        { name: 'Grasshopper', role: 'Herbivore that recycles nutrients', icon: 'critter', color: '#8a9a3b' }
+      ]
+    },
+    {
+      name: 'Shrubland Expansion',
+      years: '3–10 years',
+      duration: 12,
+      soilDepth: 0.62,
+      description: 'Woody shrubs and berry bushes take over as competition intensifies.',
+      highlight: 'Birds disperse seeds; shade increases.',
+      soilNote: 'Organic layer deepens',
+      palette: { sky: '#c8e3ff', ground: '#7f9a45', soil: '#6a7f38' },
+      imageIndex: 3,
+      species: [
+        { name: 'Blackberry', role: 'Forms dense thickets', icon: 'shrub', color: '#4f5a23' },
+        { name: 'Sumac', role: 'Sprouts rapidly from roots', icon: 'shrub', color: '#7a602e' },
+        { name: 'Songbirds', role: 'Disperse seeds', icon: 'bird', color: '#4a86c5' }
+      ]
+    },
+    {
+      name: 'Young Forest',
+      years: '10–30 years',
+      duration: 18,
+      soilDepth: 0.68,
+      description: 'Fast-growing trees (aspen, pine) form a young canopy; shade-tolerant shrubs persist below.',
+      highlight: 'Light competition favors tree height.',
+      soilNote: 'Soil depth > 30 cm',
+      palette: { sky: '#c0dcff', ground: '#6a8441', soil: '#506032' },
+      imageIndex: 3,
+      species: [
+        { name: 'Aspen Saplings', role: 'Create shade quickly', icon: 'sapling', color: '#6db75d' },
+        { name: 'Lodgepole Pine', role: 'Seeds released after fire', icon: 'tree', color: '#3d6c4f' },
+        { name: 'Deer', role: 'Browse regrowth and recycle nutrients', icon: 'critter', color: '#a86943' }
+      ]
+    },
+    {
+      name: 'Mature Mixed Forest',
+      years: '30+ years',
+      duration: 25,
+      soilDepth: 0.75,
+      description: 'Deciduous oaks and maples mix with conifers. Complex canopy layers and rich soil profile.',
+      highlight: 'Nutrient cycling stabilizes; habitat diversity peaks.',
+      soilNote: 'Soil depth > 40 cm',
+      palette: { sky: '#b9d4ff', ground: '#4b6538', soil: '#3d4f2c' },
+      imageIndex: 4,
+      species: [
+        { name: 'Oak & Maple', role: 'Form mature canopy', icon: 'tree', color: '#2e5939' },
+        { name: 'Ferns', role: 'Fill shaded understory', icon: 'fern', color: '#3f8c54' },
+        { name: 'Fungi', role: 'Decompose litter efficiently', icon: 'mushroom', color: '#b8533d' }
+      ]
+    }
+  ]
+};
+
+const datasetColors = {
+  primary: '#256d85',
+  secondary: '#c4642c'
+};
+
+let canvas;
+let startButton;
+let primaryButton;
+let secondaryButton;
+let compareCheckbox;
+let stageSelect;
+let stageSelectLabel;
+let stageSlider;
+let stageSliderLabel;
+let speedSlider;
+let speedLabel;
+let showSoilCheckbox;
+let showTimelineCheckbox;
+let showSpeciesCheckbox;
+
+let timelinePosition = 0;
+let isPlaying = false;
+let lastUpdate = 0;
+let compareMode = false;
+let mode = 'primary';
+let timelineBounds = null;
+let labelTargets = [];
+let isComplete = false;
+
+function preload() {
+  stageImages = new Array(5).fill(null);
+  for (let i = 1; i <= 5; i += 1) {
+    const index = i - 1;
+    const filename = `image-${i}.png`;
+    const source = resolveAssetPath(filename);
+    stageImages[index] = loadImage(
+      source,
+      (img) => {
+        stageImages[index] = img;
+      },
+      () => {
+        stageImages[index] = null;
+      }
+    );
+  }
+}
+
+function resolveAssetPath(filename) {
+  if (typeof window !== 'undefined') {
+    const { hostname, pathname } = window.location;
+    if (hostname.includes('p5js.org')) {
+      const sketchMatch = pathname.match(/^(.*\/sketches\/[^/]+)(?:\/|$)/);
+      if (sketchMatch && sketchMatch[1]) {
+        return `${sketchMatch[1]}/${filename}`;
+      }
+    }
+  }
+  return filename;
+}
+
+function setup() {
+  updateCanvasSize();
+  canvas = createCanvas(canvasWidth, canvasHeight);
+  const mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  setupControls();
+  refreshStageSelect();
+  updateModeButtonStyles();
+  lastUpdate = millis();
+}
+
+function setupControls() {
+  startButton = createButton('Start Simulation');
+  startButton.mousePressed(handleStartButtonPress);
+
+  primaryButton = createButton('Primary Succession');
+  primaryButton.mousePressed(() => setMode('primary'));
+
+  secondaryButton = createButton('Secondary Succession');
+  secondaryButton.mousePressed(() => setMode('secondary'));
+
+  stageSelectLabel = createSpan('Stage');
+  stageSelectLabel.style('font-weight', '600');
+
+  stageSelect = createSelect();
+  stageSelect.changed(handleStageSelectChange);
+
+  compareCheckbox = createCheckbox('Compare modes', compareMode);
+  compareCheckbox.changed(() => {
+    compareMode = compareCheckbox.checked();
+  });
+
+  stageSliderLabel = createSpan('Stage Navigator');
+  stageSliderLabel.style('font-weight', '600');
+
+  stageSlider = createSlider(0, 100, 0, 1);
+  stageSlider.input(() => {
+    timelinePosition = stageSlider.value() / 100;
+  });
+
+  speedLabel = createSpan('Playback Speed');
+  speedLabel.style('font-weight', '600');
+
+  speedSlider = createSlider(1, 6, 3, 1);
+
+  showTimelineCheckbox = createCheckbox('Show time labels', true);
+  showSoilCheckbox = createCheckbox('Show soil depth bar', true);
+  showSpeciesCheckbox = createCheckbox('Show species labels', true);
+
+  positionControls();
+}
+
+function draw() {
+  background(230);
+  labelTargets = [];
+
+  const delta = millis() - lastUpdate;
+  if (isPlaying) {
+    const speedFactor = speedSlider ? speedSlider.value() : 3;
+    const progressRate = 0.00002 * speedFactor;
+    timelinePosition += progressRate * delta;
+    if (timelinePosition >= 1) {
+      timelinePosition = 1;
+      isComplete = true;
+      setPlaying(false);
+    }
+  }
+  lastUpdate = millis();
+
+  timelinePosition = constrain(timelinePosition, 0, 1);
+  if (stageSlider) {
+    stageSlider.value(timelinePosition * 100);
+  }
+
+  drawRegions();
+  drawControlsBackground();
+  drawTooltip();
+}
+
+function drawRegions() {
+  drawDrawingBackground();
+
+  const primaryInfo = getStageInfo('primary', timelinePosition);
+  const secondaryInfo = getStageInfo('secondary', timelinePosition);
+  const activeInfo = mode === 'primary' ? primaryInfo : secondaryInfo;
+
+  if (stageSelect) {
+    const currentValue = parseInt(stageSelect.value(), 10);
+    if (currentValue !== activeInfo.index) {
+      stageSelect.value(activeInfo.index);
+    }
+  }
+
+  drawTitle();
+  drawStageBanner(activeInfo);
+  drawLandscapePanels(primaryInfo, secondaryInfo);
+  drawDetailPanel(primaryInfo, secondaryInfo, activeInfo);
+  drawTimeline(primaryInfo, secondaryInfo);
+  drawSoilIndicator(primaryInfo, secondaryInfo);
+}
+
+function drawDrawingBackground() {
+  noStroke();
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+  stroke(180);
+  strokeWeight(2);
+  noFill();
+  rect(1, 1, canvasWidth - 2, drawHeight - 2, 6);
+}
+
+function drawControlsBackground() {
+  noStroke();
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(180);
+  strokeWeight(2);
+  noFill();
+  rect(1, drawHeight + 1, canvasWidth - 2, controlHeight - 2, 6);
+}
+
+function drawTitle() {
+  noStroke();
+  fill(30);
+  textSize(22);
+  textAlign(CENTER, CENTER);
+  noStroke();
+  text('Ecological Succession Timeline', canvasWidth / 2, 30);
+}
+
+// the banner below the title that shows the current stage and summary info for the active mode
+function drawStageBanner(info) {
+  fill(255, 255, 255, 240);
+  stroke(169);
+  rect(margin, 60, canvasWidth - margin * 2, bannerHeight, 8);
+
+  const stage = info.stage;
+  const summary = `${capitalize(mode)} Succession • Stage ${info.index + 1} of ${stageDatasets[mode].length}`;
+  const detail = `${stage.name} — ${stage.years}`;
+
+  textAlign(LEFT, CENTER);
+  fill(30);
+  textSize(18);
+  noStroke();
+  text(summary, margin + 10, 75);
+  fill(70);
+  textSize(13);
+  noStroke();
+  // parameters are text, x, y, maxWidth, maxHeight - constraining the text box allows for better line breaks
+  text(stage.highlight, margin + 10, 85, canvasWidth - margin * 2 - 32, 40);
+  textAlign(RIGHT, CENTER);
+  textSize(14);
+  noStroke();
+  text(detail, canvasWidth - margin - 16, 75);
+}
+
+function drawLandscapePanels(primaryInfo, secondaryInfo) {
+  const detailPanelWidth = max(260, canvasWidth * 0.28);
+  const landscapeWidth = canvasWidth - detailPanelWidth - margin * 3;
+  const panelX = margin;
+  const panelY = 130;
+  const availableHeight = landscapeHeight;
+
+  if (compareMode) {
+    const gutter = 14;
+    const stackHeight = (availableHeight - gutter) / 2;
+    drawLandscapePanel(
+      panelX,
+      panelY,
+      landscapeWidth,
+      stackHeight,
+      primaryInfo,
+      'primary',
+      compareMode
+    );
+    drawLandscapePanel(
+      panelX,
+      panelY + stackHeight + gutter,
+      landscapeWidth,
+      stackHeight,
+      secondaryInfo,
+      'secondary',
+      compareMode
+    );
+  } else {
+    const info = mode === 'primary' ? primaryInfo : secondaryInfo;
+    drawLandscapePanel(panelX, panelY, landscapeWidth, availableHeight, info, mode, compareMode);
+  }
+}
+
+function drawLandscapePanel(x, y, w, h, info, datasetKey, stacked) {
+  const stage = info.stage;
+
+  drawStageImage(stage, x, y, w, h, datasetKey);
+  drawSpeciesChips(stage, x, y, w, h, datasetKey);
+
+  fill(255);
+  textAlign(LEFT, TOP);
+  textSize(12);
+  const label = `${capitalize(datasetKey)} · ${stage.name}`;
+  noStroke();
+  text(label, x + 12, y + 10);
+  noStroke();
+  text(stage.years, x + 12, y + 26);
+
+  if (stacked) {
+    textAlign(RIGHT, TOP);
+    fill(datasetColors[datasetKey]);
+    noStroke();
+  text(`${Math.round(info.progress * 100)}% through stage`, x + w - 12, y + 10);
+  }
+}
+
+function drawStageImage(stage, x, y, w, h, datasetKey) {
+  const idx = stage.imageIndex ?? 0;
+  const img = stageImages[idx];
+  if (img) {
+    const targetRatio = w / h;
+    const imgRatio = img.width / img.height;
+    let renderW = w;
+    let renderH = h;
+    if (targetRatio > imgRatio) {
+      renderW = w;
+      renderH = w / imgRatio;
+    } else {
+      renderH = h;
+      renderW = h * imgRatio;
+    }
+    const offsetX = x + (w - renderW) / 2;
+    const offsetY = y + (h - renderH) / 2;
+    drawingContext.save();
+    clipRoundedRect(x, y, w, h, 10);
+    image(img, offsetX, offsetY, renderW, renderH);
+    drawingContext.restore();
+  } else {
+    noStroke();
+    fill(stage.palette.sky);
+    rect(x, y, w, h, 10);
+    fill(stage.palette.ground);
+    const groundTop = y + h * 0.45;
+    rect(x, groundTop, w, h - (groundTop - y), 0, 0, 10, 10);
+  }
+
+  const overlay = color(datasetColors[datasetKey]);
+  overlay.setAlpha(50);
+  fill(overlay);
+  rect(x, y, w, h, 10);
+}
+
+function clipRoundedRect(x, y, w, h, r) {
+  const ctx = drawingContext;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+  ctx.clip();
+}
+
+function drawSpeciesChips(stage, x, y, w, h, datasetKey) {
+  if (!showSpeciesCheckbox || !showSpeciesCheckbox.checked()) {
+    return;
+  }
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  const padding = 12;
+  const chipHeight = 26;
+  let cursorX = x + padding;
+  let cursorY = y + h - chipHeight - padding;
+  for (let i = 0; i < stage.species.length; i += 1) {
+    const species = stage.species[i];
+    const chipWidth = textWidth(species.name) + 24;
+    if (cursorX + chipWidth > x + w - padding) {
+      cursorX = x + padding;
+      cursorY -= chipHeight + 8;
+    }
+    const chipColor = color('#ffffff');
+    chipColor.setAlpha(220);
+    fill(chipColor);
+    stroke(datasetColors[datasetKey]);
+    rect(cursorX, cursorY, chipWidth, chipHeight, 12);
+    noStroke();
+    fill(20);
+    noStroke();
+  text(species.name, cursorX + 12, cursorY + chipHeight / 2);
+    labelTargets.push({
+      x: cursorX,
+      y: cursorY,
+      w: chipWidth,
+      h: chipHeight,
+      label: species.name,
+      detail: species.role,
+      dataset: datasetKey
+    });
+    cursorX += chipWidth + 12;
+  }
+}
+
+// the panel on the right that shows detailed info about the current stage, including species and soil depth
+function drawDetailPanel(primaryInfo, secondaryInfo, activeInfo) {
+  const detailPanelWidth = max(260, canvasWidth * 0.28);
+  const panelX = canvasWidth - detailPanelWidth - margin;
+  const panelY = 130;
+  const panelHeight = landscapeHeight;
+
+  fill(255);
+  stroke(200);
+  rect(panelX, panelY, detailPanelWidth, panelHeight, 12);
+
+  textAlign(LEFT, TOP);
+  textSize(15);
+  noStroke();
+  fill(30);
+  noStroke();
+  text('Stage Details', panelX + 16, panelY + 12);
+
+  const info = activeInfo.stage;
+  const textStartY = panelY + 40;
+  fill(datasetColors[mode]);
+  textSize(14);
+  noStroke();
+  text(`${capitalize(mode)}: ${info.name}`, panelX + 16, textStartY);
+  fill(50);
+  textSize(12);
+  noStroke();
+  text(info.years, panelX + 16, textStartY + 20);
+  fill(70);
+  noStroke();
+  text(info.description, panelX + 16, textStartY + 40, detailPanelWidth - 32, 90);
+
+  const speciesStart = textStartY + 140;
+  fill(30);
+  textSize(13);
+  noStroke();
+  text('Species & Roles', panelX + 16, speciesStart);
+  fill(70);
+  const species = info.species;
+  for (let i = 0; i < species.length; i += 1) {
+    const entry = species[i];
+    noStroke();
+  text(`• ${entry.name}: ${entry.role}`, panelX + 16, speciesStart + 20 + i * 18, detailPanelWidth - 32, 22);
+  }
+
+  if (compareMode) {
+    const otherKey = mode === 'primary' ? 'secondary' : 'primary';
+    const extraInfo = otherKey === 'primary' ? primaryInfo.stage : secondaryInfo.stage;
+    fill(40);
+    textSize(13);
+    noStroke();
+  text(`${capitalize(otherKey)} snapshot: ${extraInfo.name}`, panelX + 16, panelY + panelHeight - 70, detailPanelWidth - 32, 40);
+  }
+}
+
+// the panel below the image and info panels that are side-by-side
+function drawTimeline(primaryInfo, secondaryInfo) {
+  const timelineX = margin;
+  const timelineY = margin + bannerHeight + landscapeHeight + 60;
+  const timelineW = canvasWidth - margin * 2;
+  const rowHeight = 28;
+
+  fill('white');
+  stroke(190);
+  rect(timelineX, timelineY, timelineW, timelineHeight, 8);
+
+  timelineBounds = { x: timelineX, y: timelineY, w: timelineW, h: timelineHeight };
+
+  drawTimelineRow(stageDatasets.primary, timelineX, timelineY + 15, timelineW, rowHeight, 'Primary', datasetColors.primary, mode === 'primary', primaryInfo);
+  drawTimelineRow(stageDatasets.secondary, timelineX, timelineY + 65, timelineW, rowHeight, 'Secondary', datasetColors.secondary, mode === 'secondary', secondaryInfo);
+
+  const handleX = timelineX + timelineW * timelinePosition;
+  stroke(120);
+  strokeWeight(2);
+  line(handleX, timelineY + 8, handleX, timelineY + timelineHeight - 8);
+  fill('#ffb703');
+  noStroke();
+  ellipse(handleX, timelineY + timelineHeight / 2, 14, 14);
+}
+
+function drawTimelineRow(stages, x, y, w, h, label, colorValue, highlight, stageInfo) {
+  textAlign(LEFT, CENTER);
+  fill(50);
+  textSize(12);
+  noStroke();
+  text(label, x + 6, y - 6);
+
+  const totalDuration = stages.reduce((sum, stage) => sum + stage.duration, 0);
+  let cursor = 0;
+  for (let i = 0; i < stages.length; i += 1) {
+    const stage = stages[i];
+    const segmentW = (stage.duration / totalDuration) * w;
+    const segmentX = x + cursor;
+    fill(i === stageInfo.index && highlight ? colorValue : colorValue + '33');
+    stroke(220);
+    rect(segmentX, y, segmentW, h, 4);
+
+    fill(30);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    text(stage.name.split(' ')[0], segmentX + segmentW / 2, y + h / 2);
+    const showYears = showTimelineCheckbox && showTimelineCheckbox.checked();
+    if (showYears) {
+      textAlign(CENTER, TOP);
+      fill(80);
+      textSize(11);
+      let timeLabel = stage.years;
+      const availableWidth = segmentW - 12;
+      if (textWidth(timeLabel) > availableWidth) {
+        timeLabel = timeLabel.replace(/ years?$/, '');
+      }
+      noStroke();
+      text(timeLabel, segmentX + segmentW / 2, y + h + 4);
+      textSize(12);
+    }
+    cursor += segmentW;
+  }
+}
+
+function drawSoilIndicator(primaryInfo, secondaryInfo) {
+  const barX = margin;
+  const barY = drawHeight - soilBandHeight + 10;
+  const barW = canvasWidth - margin * 2;
+  const barH = soilBandHeight - 20;
+  const activeInfo = mode === 'primary' ? primaryInfo : secondaryInfo;
+
+  fill('#f1f5ff');
+  stroke(190);
+  rect(barX, barY, barW, barH, 8);
+
+  if (showSoilCheckbox && !showSoilCheckbox.checked()) {
+    fill(80);
+    textAlign(CENTER, CENTER);
+    noStroke();
+  text('Soil depth indicator hidden (toggle in controls).', barX + barW / 2, barY + barH / 2);
+    return;
+  }
+
+  if (compareMode) {
+    const halfWidth = (barW - 32) / 2;
+    drawSoilBar(barX, barY, halfWidth, barH - 16, primaryInfo, 'Primary');
+    drawSoilBar(barX + halfWidth + 16, barY, halfWidth, barH - 16, secondaryInfo, 'Secondary');
+  } else {
+    drawSoilBar(barX, barY, barW - 16, barH - 16, activeInfo, capitalize(mode));
+  }
+}
+
+function drawSoilBar(x, y, w, h, info, label) {
+  const soilPercent = info.stage.soilDepth;
+  fill('#d8dce6');
+  rect(x + 8, y + 8, w, h, 6);
+  fill('#8c6c3a');
+  const soilHeight = h * soilPercent;
+  rect(x + 8, y + 8 + (h - soilHeight), w, soilHeight, 6);
+
+  fill(40);
+  textAlign(LEFT, TOP);
+  textSize(12);
+  noStroke();
+  text(`${label} Soil Depth`, x + 8, y - 2);
+  fill(60);
+  noStroke();
+  text(`${Math.round(soilPercent * 100)}% of mature profile`, x + 8, y + h + 12);
+}
+
+function drawTooltip() {
+  if (!showSpeciesCheckbox || !showSpeciesCheckbox.checked()) {
+    return;
+  }
+  let hovered = null;
+  for (const chip of labelTargets) {
+    if (
+      mouseX >= chip.x &&
+      mouseX <= chip.x + chip.w &&
+      mouseY >= chip.y &&
+      mouseY <= chip.y + chip.h
+    ) {
+      hovered = chip;
+      break;
+    }
+  }
+  if (!hovered) {
+    return;
+  }
+
+  const padding = 10;
+  const textContent = `${hovered.label}\n${hovered.detail}`;
+  textSize(12);
+  const boxWidth = textWidth(hovered.label) + padding * 2;
+  const boxHeight = 40;
+  const tooltipX = constrain(mouseX + 12, 0, canvasWidth - boxWidth - 12);
+  const tooltipY = constrain(mouseY - boxHeight - 12, 0, drawHeight - boxHeight - 12);
+
+  fill(255);
+  stroke(120);
+  rect(tooltipX, tooltipY, boxWidth + 40, boxHeight + 10, 8);
+  noStroke();
+  fill(datasetColors[hovered.dataset]);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text(hovered.label, tooltipX + 12, tooltipY + 8);
+  fill(50);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text(hovered.detail, tooltipX + 12, tooltipY + 24, boxWidth + 16, boxHeight);
+}
+
+function getStageInfo(datasetKey, position) {
+  const stages = stageDatasets[datasetKey];
+  const total = stages.reduce((sum, stage) => sum + stage.duration, 0);
+  let accumulated = 0;
+  for (let i = 0; i < stages.length; i += 1) {
+    const stage = stages[i];
+    const start = accumulated / total;
+    const end = (accumulated + stage.duration) / total;
+    if (position <= end || i === stages.length - 1) {
+      const progress = constrain((position - start) / (end - start), 0, 1);
+      return { stage, index: i, progress, total };
+    }
+    accumulated += stage.duration;
+  }
+  return { stage: stages[stages.length - 1], index: stages.length - 1, progress: 1, total };
+}
+
+function setMode(newMode) {
+  mode = newMode;
+  refreshStageSelect();
+  updateModeButtonStyles();
+}
+
+function updateModeButtonStyles() {
+  if (!primaryButton || !secondaryButton) {
+    return;
+  }
+  if (mode === 'primary') {
+    primaryButton.style('background-color', datasetColors.primary);
+    primaryButton.style('color', '#fff');
+    secondaryButton.style('background-color', '#f4f5f7');
+    secondaryButton.style('color', '#1d2731');
+  } else {
+    secondaryButton.style('background-color', datasetColors.secondary);
+    secondaryButton.style('color', '#fff');
+    primaryButton.style('background-color', '#f4f5f7');
+    primaryButton.style('color', '#1d2731');
+  }
+}
+
+function refreshStageSelect() {
+  if (!stageSelect) {
+    return;
+  }
+  stageSelect.elt.innerHTML = '';
+  const stages = stageDatasets[mode];
+  stages.forEach((stage, index) => {
+    stageSelect.option(`${index + 1}. ${stage.name}`, index);
+  });
+  stageSelect.selected(getStageInfo(mode, timelinePosition).index);
+  if (stageSelectLabel) {
+    stageSelectLabel.html(`${capitalize(mode)} stage`);
+  }
+}
+
+function handleStageSelectChange() {
+  const index = parseInt(stageSelect.value(), 10);
+  if (Number.isNaN(index)) {
+    return;
+  }
+  const ratio = getStageStartRatio(mode, index);
+  timelinePosition = ratio;
+  if (stageSlider) {
+    stageSlider.value(timelinePosition * 100);
+  }
+}
+
+function getStageStartRatio(datasetKey, index) {
+  const stages = stageDatasets[datasetKey];
+  const total = stages.reduce((sum, stage) => sum + stage.duration, 0);
+  let accumulated = 0;
+  for (let i = 0; i < stages.length; i += 1) {
+    if (i === index) {
+      return accumulated / total;
+    }
+    accumulated += stages[i].duration;
+  }
+  return 0;
+}
+
+function setPlaying(state) {
+  isPlaying = state;
+  if (state) {
+    isComplete = false;
+  }
+  updateStartButtonLabel();
+}
+
+function handleStartButtonPress() {
+  if (isComplete) {
+    timelinePosition = 0;
+    if (stageSlider) {
+      stageSlider.value(0);
+    }
+    isComplete = false;
+    setPlaying(true);
+  } else {
+    setPlaying(!isPlaying);
+  }
+}
+
+function updateStartButtonLabel() {
+  if (!startButton) {
+    return;
+  }
+  if (isComplete) {
+    startButton.html('Restart Simulation');
+  } else {
+    startButton.html(isPlaying ? 'Pause Simulation' : 'Start Simulation');
+  }
+}
+
+function positionControls() {
+  if (!startButton) {
+    return;
+  }
+  const availableWidth = canvasWidth - margin * 2;
+  const wideLayout = availableWidth > 820;
+  const baseY = drawHeight + 15;
+  const lineGap = 48;
+
+  if (wideLayout) {
+    startButton.position(margin, baseY);
+    startButton.size(170, 36);
+
+    primaryButton.position(margin + 190, baseY);
+    primaryButton.size(150, 36);
+
+    secondaryButton.position(margin + 350, baseY);
+    secondaryButton.size(160, 36);
+
+    stageSelectLabel.position(margin + 540, baseY + 8);
+    stageSelect.position(margin + 620, baseY);
+    stageSelect.size(210, 32);
+
+    compareCheckbox.position(margin + 860, baseY + 8);
+  } else {
+    startButton.position(margin, baseY);
+    startButton.size(170, 36);
+
+    compareCheckbox.position(margin + 200, baseY + 8);
+
+    primaryButton.position(margin, baseY + lineGap);
+    primaryButton.size(150, 34);
+
+    secondaryButton.position(margin + 180, baseY + lineGap);
+    secondaryButton.size(160, 34);
+
+    stageSelectLabel.position(margin, baseY + lineGap * 2 + 6);
+    stageSelect.position(margin + 120, baseY + lineGap * 2);
+    stageSelect.size(220, 32);
+  }
+
+  const sliderBaseY = wideLayout ? baseY + lineGap : baseY + lineGap * 3;
+  stageSliderLabel.position(margin, sliderBaseY + 6);
+  stageSlider.position(margin + 150, sliderBaseY);
+  stageSlider.size(canvasWidth - margin * 2 - 180);
+
+  const speedBaseY = sliderBaseY + lineGap;
+  speedLabel.position(margin, speedBaseY + 6);
+  speedSlider.position(margin + 150, speedBaseY);
+  speedSlider.size(200, 20);
+
+  const toggleBaseY = speedBaseY + lineGap;
+  showTimelineCheckbox.position(margin, toggleBaseY + 4);
+  showSoilCheckbox.position(margin + 220, toggleBaseY + 4);
+  showSpeciesCheckbox.position(margin + 420, toggleBaseY + 4);
+}
+
+function updateCanvasSize() {
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    const bounds = mainElement.getBoundingClientRect();
+    canvasWidth = constrain(bounds.width || windowWidth - 40, 520, 1100);
+  } else {
+    canvasWidth = constrain(windowWidth - 40, 520, 1100);
+  }
+  canvasHeight = drawHeight + controlHeight;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  if (canvas) {
+    resizeCanvas(canvasWidth, canvasHeight);
+  }
+  positionControls();
+}
+
+function mousePressed() {
+  handleTimelineInteraction();
+}
+
+function mouseDragged() {
+  handleTimelineInteraction();
+}
+
+function handleTimelineInteraction() {
+  if (!timelineBounds) {
+    return;
+  }
+  if (
+    mouseX >= timelineBounds.x &&
+    mouseX <= timelineBounds.x + timelineBounds.w &&
+    mouseY >= timelineBounds.y &&
+    mouseY <= timelineBounds.y + timelineBounds.h
+  ) {
+    const ratio = (mouseX - timelineBounds.x) / timelineBounds.w;
+    timelinePosition = constrain(ratio, 0, 1);
+    if (stageSlider) {
+      stageSlider.value(timelinePosition * 100);
+    }
+  }
+}
+
+function capitalize(value) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

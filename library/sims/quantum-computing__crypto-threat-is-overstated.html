@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cryptographic Vulnerability Window</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Cryptographic Vulnerability Window MicroSim
+// Visualizes the gap between when quantum computers might break
+// current crypto and when post-quantum crypto is fully deployed.
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 200;
+let defaultTextSize = 16;
+
+// Timeline range
+let startYear = 2020;
+let endYear = 2060;
+
+// Sliders
+let threatSlider;
+let deploySpeedSlider;
+
+// Labels
+let threatLabel;
+let deployLabel;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    // Slider: QC threat timeline peak year
+    threatLabel = createDiv('QC Threat Year: 2050');
+    threatLabel.parent(document.querySelector('main'));
+    threatLabel.style('font-size', '14px');
+    threatLabel.style('display', 'inline-block');
+    threatLabel.style('width', (sliderLeftMargin - 10) + 'px');
+    threatLabel.style('text-align', 'right');
+    threatLabel.style('padding-right', '10px');
+    threatLabel.style('vertical-align', 'middle');
+
+    threatSlider = createSlider(2030, 2060, 2050, 1);
+    threatSlider.parent(document.querySelector('main'));
+    threatSlider.style('width', '250px');
+    threatSlider.style('vertical-align', 'middle');
+    threatSlider.input(updateDisplay);
+
+    // Line break
+    createDiv('').parent(document.querySelector('main')).style('height', '4px');
+
+    // Slider: PQC deployment speed
+    deployLabel = createDiv('PQC Deploy Speed: 5');
+    deployLabel.parent(document.querySelector('main'));
+    deployLabel.style('font-size', '14px');
+    deployLabel.style('display', 'inline-block');
+    deployLabel.style('width', (sliderLeftMargin - 10) + 'px');
+    deployLabel.style('text-align', 'right');
+    deployLabel.style('padding-right', '10px');
+    deployLabel.style('vertical-align', 'middle');
+
+    deploySpeedSlider = createSlider(1, 10, 5, 1);
+    deploySpeedSlider.parent(document.querySelector('main'));
+    deploySpeedSlider.style('width', '250px');
+    deploySpeedSlider.style('vertical-align', 'middle');
+    deploySpeedSlider.input(updateDisplay);
+}
+
+function updateDisplay() {
+    redraw();
+}
+
+function draw() {
+    let threatPeakYear = threatSlider.value();
+    let deploySpeed = deploySpeedSlider.value();
+
+    // Update labels
+    threatLabel.html('QC Threat Year: ' + threatPeakYear);
+    let speedWord = deploySpeed <= 3 ? 'Fast' : (deploySpeed <= 6 ? 'Medium' : 'Slow');
+    deployLabel.html('PQC Deploy Speed: ' + deploySpeed + ' (' + speedWord + ')');
+
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text('Cryptographic Vulnerability Window', canvasWidth / 2, 8);
+
+    // Chart area
+    let chartLeft = margin + 30;
+    let chartRight = canvasWidth - margin;
+    let chartWidth = chartRight - chartLeft;
+    let chartTop = 45;
+    let chartBottom = drawHeight - 90;
+    let chartHeight = chartBottom - chartTop;
+
+    // Draw axes
+    stroke('#666');
+    strokeWeight(1);
+    line(chartLeft, chartBottom, chartRight, chartBottom); // x-axis
+    line(chartLeft, chartTop, chartLeft, chartBottom);      // y-axis
+
+    // X-axis labels (years)
+    fill('#666');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    for (let y = startYear; y <= endYear; y += 5) {
+        let x = mapYear(y, chartLeft, chartRight);
+        text(y, x, chartBottom + 5);
+        stroke('#DDD');
+        strokeWeight(0.5);
+        line(x, chartTop, x, chartBottom);
+        noStroke();
+    }
+    textSize(12);
+    text('Year', chartLeft + chartWidth / 2, chartBottom + 22);
+
+    // Y-axis label
+    push();
+    fill('#666');
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    translate(margin - 5, chartTop + chartHeight / 2);
+    rotate(-HALF_PI);
+    text('Probability / Deployment %', 0, 0);
+    pop();
+
+    // Y-axis tick labels
+    fill('#666');
+    noStroke();
+    textSize(10);
+    textAlign(RIGHT, CENTER);
+    for (let v = 0; v <= 100; v += 25) {
+        let yPos = map(v, 0, 100, chartBottom, chartTop);
+        text(v + '%', chartLeft - 5, yPos);
+        stroke('#EEE');
+        strokeWeight(0.5);
+        line(chartLeft, yPos, chartRight, yPos);
+        noStroke();
+    }
+
+    // === PQC Deployment Sigmoid ===
+    // PQC migration starts in 2024, speed controls steepness
+    let pqcMidpoint = 2024 + deploySpeed; // midpoint of sigmoid
+    let pqcSteepness = 1.0 / (deploySpeed * 0.4); // steeper for fast deployment
+
+    // Find when PQC reaches 95% deployment
+    let pqcCompleteYear = pqcMidpoint + Math.log(0.95 / 0.05) / pqcSteepness;
+
+    // Draw PQC sigmoid curve
+    noFill();
+    stroke('#2E7D32');
+    strokeWeight(3);
+    beginShape();
+    for (let yr = startYear; yr <= endYear; yr += 0.5) {
+        let pqcVal = sigmoid(yr, pqcMidpoint, pqcSteepness);
+        let x = mapYear(yr, chartLeft, chartRight);
+        let y = map(pqcVal * 100, 0, 100, chartBottom, chartTop);
+        vertex(x, y);
+    }
+    endShape();
+
+    // === QC Threat Probability Distribution (Gaussian CDF) ===
+    // This represents cumulative probability that QC can break RSA-2048 by year X
+    let threatSigma = 6; // uncertainty spread in years
+    let qcThreatComplete = threatPeakYear; // the year 50% probability
+
+    // Draw QC threat CDF curve
+    noFill();
+    stroke('#D32F2F');
+    strokeWeight(3);
+    beginShape();
+    for (let yr = startYear; yr <= endYear; yr += 0.5) {
+        let qcVal = gaussianCDF(yr, qcThreatComplete, threatSigma);
+        let x = mapYear(yr, chartLeft, chartRight);
+        let y = map(qcVal * 100, 0, 100, chartBottom, chartTop);
+        vertex(x, y);
+    }
+    endShape();
+
+    // === Shade the vulnerability window ===
+    // The window exists where QC threat probability > PQC deployment fraction
+    // i.e., crypto is potentially breakable but PQC isn't fully deployed
+    for (let yr = startYear; yr <= endYear; yr += 0.3) {
+        let qcVal = gaussianCDF(yr, qcThreatComplete, threatSigma);
+        let pqcVal = sigmoid(yr, pqcMidpoint, pqcSteepness);
+
+        let x = mapYear(yr, chartLeft, chartRight);
+
+        if (qcVal > pqcVal) {
+            // Vulnerability exists: QC threat exceeds PQC deployment
+            let yTop = map(qcVal * 100, 0, 100, chartBottom, chartTop);
+            let yBot = map(pqcVal * 100, 0, 100, chartBottom, chartTop);
+            stroke(255, 0, 0, 40);
+            strokeWeight(2);
+            fill(255, 60, 60, 50);
+            noStroke();
+            rect(x - 0.5, yTop, 1.5, yBot - yTop);
+        } else if (pqcVal > qcVal && pqcVal > 0.01) {
+            // Safe: PQC deployed before threat
+            let yTop = map(pqcVal * 100, 0, 100, chartBottom, chartTop);
+            let yBot = map(qcVal * 100, 0, 100, chartBottom, chartTop);
+            noStroke();
+            fill(60, 180, 60, 30);
+            rect(x - 0.5, yTop, 1.5, yBot - yTop);
+        }
+    }
+
+    // === Harvest Now, Decrypt Later zone ===
+    // This is the period from now until PQC is deployed where data can be harvested
+    let harvestStart = 2025;
+    let harvestEnd = min(pqcCompleteYear, endYear);
+    if (harvestEnd > harvestStart) {
+        let hx1 = mapYear(harvestStart, chartLeft, chartRight);
+        let hx2 = mapYear(harvestEnd, chartLeft, chartRight);
+        noStroke();
+        fill(255, 165, 0, 25);
+        rect(hx1, chartTop, hx2 - hx1, chartHeight);
+
+        // Label
+        fill('#E65100');
+        textSize(10);
+        textAlign(CENTER, TOP);
+        textStyle(BOLD);
+        let labelX = (hx1 + hx2) / 2;
+        text('"Harvest Now,', labelX, chartTop + 5);
+        text('Decrypt Later"', labelX, chartTop + 17);
+        text('Attack Window', labelX, chartTop + 29);
+        textStyle(NORMAL);
+    }
+
+    // === Legend ===
+    let legendX = chartLeft + 10;
+    let legendY = drawHeight - 80;
+
+    // PQC legend
+    fill('#2E7D32');
+    noStroke();
+    rect(legendX, legendY, 20, 3);
+    fill('#333');
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text('PQC Deployment (sigmoid)', legendX + 26, legendY + 2);
+
+    // QC threat legend
+    fill('#D32F2F');
+    noStroke();
+    rect(legendX, legendY + 16, 20, 3);
+    fill('#333');
+    text('QC Threat Probability (CDF)', legendX + 26, legendY + 18);
+
+    // Vulnerability legend
+    noStroke();
+    fill(255, 60, 60, 100);
+    rect(legendX, legendY + 32, 14, 10);
+    fill('#333');
+    text('Vulnerability Window (threat > defense)', legendX + 26, legendY + 37);
+
+    // Safe zone legend
+    noStroke();
+    fill(60, 180, 60, 80);
+    rect(legendX, legendY + 48, 14, 10);
+    fill('#333');
+    text('Safe Zone (defense > threat)', legendX + 26, legendY + 53);
+
+    // === Status display ===
+    let statusX = canvasWidth - margin - 10;
+    let statusY = drawHeight - 75;
+
+    textAlign(RIGHT, TOP);
+    textSize(12);
+    textStyle(BOLD);
+
+    // Determine window status
+    let windowOpen = false;
+    let windowStart = null;
+    let windowEnd = null;
+    for (let yr = startYear; yr <= endYear; yr += 0.5) {
+        let qcVal = gaussianCDF(yr, qcThreatComplete, threatSigma);
+        let pqcVal = sigmoid(yr, pqcMidpoint, pqcSteepness);
+        if (qcVal > pqcVal + 0.02) {
+            if (!windowOpen) {
+                windowOpen = true;
+                windowStart = yr;
+            }
+            windowEnd = yr;
+        }
+    }
+
+    fill('#333');
+    textSize(11);
+    textStyle(NORMAL);
+    text('PQC ~95% deployed: ~' + round(pqcCompleteYear), statusX, statusY);
+    text('QC 50% threat: ' + threatPeakYear, statusX, statusY + 16);
+
+    if (windowOpen && windowStart && windowEnd) {
+        let gap = round(windowEnd - windowStart);
+        fill('#D32F2F');
+        textStyle(BOLD);
+        text('Window: OPEN (' + gap + ' yr gap, ~' + round(windowStart) + '-' + round(windowEnd) + ')', statusX, statusY + 36);
+    } else {
+        fill('#2E7D32');
+        textStyle(BOLD);
+        text('Window: CLOSED (defense leads threat)', statusX, statusY + 36);
+    }
+
+    // Current year marker
+    let nowX = mapYear(2025, chartLeft, chartRight);
+    stroke('#3F51B5');
+    strokeWeight(2);
+    drawingContext.setLineDash([4, 4]);
+    line(nowX, chartTop, nowX, chartBottom);
+    drawingContext.setLineDash([]);
+    fill('#3F51B5');
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, BOTTOM);
+    textStyle(BOLD);
+    text('2025', nowX, chartTop - 2);
+    text('(Today)', nowX, chartTop + 10);
+    textStyle(NORMAL);
+}
+
+// Map a year to x coordinate
+function mapYear(yr, left, right) {
+    return map(yr, startYear, endYear, left, right);
+}
+
+// Sigmoid function for PQC deployment
+function sigmoid(yr, midpoint, steepness) {
+    let t = (yr - midpoint) * steepness;
+    return 1.0 / (1.0 + Math.exp(-t));
+}
+
+// Gaussian CDF for QC threat probability
+function gaussianCDF(yr, mu, sigma) {
+    let z = (yr - mu) / (sigma * Math.sqrt(2));
+    return 0.5 * (1 + erf(z));
+}
+
+// Error function approximation (Abramowitz and Stegun)
+function erf(x) {
+    let sign = x >= 0 ? 1 : -1;
+    x = Math.abs(x);
+    let t = 1.0 / (1.0 + 0.3275911 * x);
+    let y = 1.0 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return sign * y;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Long-Term and Short-Term Memory Architecture using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Long-Term and Short-Term Memory Architecture - p5.js
+// CANVAS_HEIGHT: 640
+// Bloom Level: Understand (L2) - explain
+// Learning objective: Explain how short-term and long-term memory differ in
+// lifecycle, retrieval, and per-turn token cost.
+
+let canvas;
+const canvasWidth = 880;
+const drawHeight = 480;
+const controlHeight = 160;
+const canvasHeight = drawHeight + controlHeight;
+let containerWidth;
+const margin = 16;
+
+let addTurnButton, compactButton, resetButton;
+let thresholdSlider, costToggle;
+
+// Model state
+let shortTerm = []; // [{id, tokens}]
+let longTerm  = []; // [{title, tokens, createdAtTurn}]
+let nextTurnId = 1;
+let nextLtmId = 1;
+let lastEvent = '';
+let animateUntil = 0;
+let pendingCompaction = null; // visual transition state
+
+const D_THRESHOLD = 15;
+
+function updateCanvasSize() {
+    const el = document.querySelector('main').parentElement;
+    const w = el.clientWidth;
+    containerWidth = Math.max(420, Math.min(w, canvasWidth));
+}
+
+function setup() {
+    updateCanvasSize();
+    canvas = createCanvas(containerWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    addTurnButton = createButton('Add new turn');
+    addTurnButton.parent(document.querySelector('main'));
+    addTurnButton.mousePressed(addTurn);
+
+    compactButton = createButton('Manually compact now');
+    compactButton.parent(document.querySelector('main'));
+    compactButton.mousePressed(() => doCompaction(true));
+
+    resetButton = createButton('Reset to defaults');
+    resetButton.parent(document.querySelector('main'));
+    resetButton.mousePressed(resetState);
+
+    thresholdSlider = createSlider(10, 50, D_THRESHOLD, 1);
+    thresholdSlider.parent(document.querySelector('main'));
+    thresholdSlider.style('width', '240px');
+
+    costToggle = createCheckbox('Show per-turn input cost', true);
+    costToggle.parent(document.querySelector('main'));
+
+    // Seed default state
+    resetState();
+    positionControls();
+}
+
+function resetState() {
+    shortTerm = [];
+    longTerm = [];
+    nextTurnId = 1;
+    nextLtmId = 1;
+    for (let i = 0; i < 8; i++) {
+        shortTerm.push({ id: nextTurnId++, tokens: 800 + Math.floor(Math.random() * 600) });
+    }
+    longTerm = [
+        { title: 'Project facts', tokens: 220, createdAtTurn: 0 },
+        { title: 'Prior decisions', tokens: 180, createdAtTurn: 0 },
+        { title: 'Key learnings', tokens: 240, createdAtTurn: 0 }
+    ];
+    nextLtmId = 4;
+    lastEvent = 'Default state: 8 short-term turns, 3 long-term files.';
+    animateUntil = 0;
+    pendingCompaction = null;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, canvasHeight);
+    positionControls();
+}
+
+function positionControls() {
+    const y0 = drawHeight + 16;
+    addTurnButton.position(margin, y0);
+    compactButton.position(margin + 120, y0);
+    resetButton.position(margin + 270, y0);
+    thresholdSlider.position(margin, y0 + 50);
+    costToggle.position(margin, y0 + 90);
+}
+
+function addTurn() {
+    const t = { id: nextTurnId++, tokens: 800 + Math.floor(Math.random() * 700) };
+    shortTerm.push(t);
+    lastEvent = 'Added turn T' + t.id + ' (' + t.tokens + ' tokens).';
+    animateUntil = millis() + 500;
+    if (shortTerm.length > thresholdSlider.value()) {
+        doCompaction(false);
+    }
+}
+
+function doCompaction(manual) {
+    // Compact the oldest 60% of short-term turns into a single LTM file
+    const n = shortTerm.length;
+    if (n < 4) {
+        lastEvent = 'Not enough turns to compact yet (need >= 4).';
+        return;
+    }
+    const cutCount = Math.max(2, Math.floor(n * 0.6));
+    const cut = shortTerm.splice(0, cutCount);
+    const totalTokens = cut.reduce((s, t) => s + t.tokens, 0);
+    const summaryTokens = Math.max(150, Math.round(totalTokens * 0.10)); // 10:1
+    longTerm.push({
+        title: 'Summary #' + nextLtmId++ + ' (turns T' + cut[0].id + '–T' + cut[cut.length - 1].id + ')',
+        tokens: summaryTokens,
+        createdAtTurn: nextTurnId - 1
+    });
+    lastEvent = (manual ? 'Manual compaction: ' : 'Auto compaction: ') +
+                cutCount + ' turns × ~' + Math.round(totalTokens / cutCount) +
+                ' tokens → 1 summary × ' + summaryTokens + ' tokens.';
+    animateUntil = millis() + 700;
+    pendingCompaction = { cutCount, savedAt: millis() };
+}
+
+function shortTermTokens() {
+    return shortTerm.reduce((s, t) => s + t.tokens, 0);
+}
+function longTermSelectedTokens() {
+    // Per-turn input pulls a few selectively-retrieved LTM files
+    return longTerm.slice(0, Math.min(2, longTerm.length))
+                   .reduce((s, f) => s + f.tokens, 0);
+}
+
+function draw() {
+    background(248, 250, 252);
+
+    drawHeader();
+
+    // Three-column layout
+    const colW = (containerWidth - 4 * margin) / 3;
+    const col1X = margin;
+    const col2X = col1X + colW + margin;
+    const col3X = col2X + colW + margin;
+    const colY = 60;
+    const colH = 290;
+
+    drawShortTermColumn(col1X, colY, colW, colH);
+    drawCompactionColumn(col2X, colY, colW, colH);
+    drawLongTermColumn(col3X, colY, colW, colH);
+
+    drawPerTurnFlow();
+    drawEventLine();
+
+    // Divider above controls
+    stroke(203, 213, 225);
+    line(0, drawHeight, containerWidth, drawHeight);
+    noStroke();
+
+    drawControlLabels();
+}
+
+function drawHeader() {
+    fill(31, 41, 55);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(17);
+    textStyle(BOLD);
+    text('Long-Term and Short-Term Memory Architecture', margin, 14);
+    textStyle(NORMAL);
+    textSize(11);
+    fill(100, 116, 139);
+    text('Add turns until the threshold triggers compaction. Watch oldest turns flow into a long-term memory file.',
+         margin, 36);
+}
+
+function drawShortTermColumn(x, y, w, h) {
+    // Frame
+    stroke(226, 232, 240);
+    fill(255);
+    rect(x, y, w, h, 6);
+    noStroke();
+    fill(193, 68, 14);
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Short-Term Memory', x + 10, y + 8);
+    textStyle(NORMAL);
+    fill(100, 116, 139);
+    textSize(10);
+    text('Last ' + shortTerm.length + ' turns (threshold ' + thresholdSlider.value() + ')',
+         x + 10, y + 26);
+
+    // Stack of cards from top, scrollable when many
+    const padTop = 46;
+    const cardH = 22;
+    const visibleN = Math.floor((h - padTop - 10) / (cardH + 4));
+    const start = Math.max(0, shortTerm.length - visibleN);
+    for (let i = start; i < shortTerm.length; i++) {
+        const idx = i - start;
+        const cardY = y + padTop + idx * (cardH + 4);
+        const isNewest = (i === shortTerm.length - 1) && millis() < animateUntil;
+        fill(isNewest ? color(254, 215, 170) : color(255, 247, 237));
+        stroke(193, 68, 14);
+        rect(x + 10, cardY, w - 20, cardH, 3);
+        noStroke();
+        fill(120, 53, 15);
+        textSize(11);
+        textAlign(LEFT, CENTER);
+        text('T' + shortTerm[i].id, x + 16, cardY + cardH / 2);
+        textAlign(RIGHT, CENTER);
+        text(shortTerm[i].tokens + ' tk', x + w - 14, cardY + cardH / 2);
+    }
+    // Total
+    fill(55, 71, 79);
+    textSize(11);
+    textAlign(LEFT, BOTTOM);
+    textStyle(BOLD);
+    text('Total: ' + shortTermTokens().toLocaleString() + ' tokens', x + 10, y + h - 8);
+    textStyle(NORMAL);
+}
+
+function drawCompactionColumn(x, y, w, h) {
+    stroke(226, 232, 240);
+    fill(255);
+    rect(x, y, w, h, 6);
+    noStroke();
+
+    fill(124, 58, 237);
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Compaction', x + 10, y + 8);
+    textStyle(NORMAL);
+    fill(100, 116, 139);
+    textSize(10);
+    text('Summarize old turns into a memory file', x + 10, y + 26);
+
+    // Big arrow with summarize node
+    const cx = x + w / 2;
+    const arrowY1 = y + 60;
+    const arrowY2 = y + h - 70;
+
+    stroke(124, 58, 237);
+    strokeWeight(2.5);
+    line(cx - 60, arrowY1 + 30, cx + 60, arrowY1 + 30);
+    // Summarize node
+    fill(245, 243, 255);
+    rect(cx - 60, arrowY1 + 60, 120, 60, 8);
+    noStroke();
+    fill(76, 29, 149);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('LLM\nSummarize', cx, arrowY1 + 90);
+    textStyle(NORMAL);
+
+    // Arrows
+    stroke(124, 58, 237);
+    strokeWeight(2);
+    drawArrow(cx, arrowY1 + 38, cx, arrowY1 + 60);
+    drawArrow(cx, arrowY1 + 120, cx, arrowY2);
+    strokeWeight(1);
+    noStroke();
+
+    // Annotation
+    fill(76, 29, 149);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('20 turns × 1K tokens', cx, arrowY1 + 4);
+    text('→ 1 summary × 200 tokens', cx, arrowY1 + 18);
+
+    // Pending event flash
+    if (pendingCompaction && millis() - pendingCompaction.savedAt < 700) {
+        const a = map(millis() - pendingCompaction.savedAt, 0, 700, 200, 0);
+        fill(124, 58, 237, a);
+        rect(x + 4, y + 4, w - 8, h - 8, 6);
+        noStroke();
+    } else {
+        pendingCompaction = null;
+    }
+}
+
+function drawLongTermColumn(x, y, w, h) {
+    stroke(226, 232, 240);
+    fill(255);
+    rect(x, y, w, h, 6);
+    noStroke();
+    fill(2, 119, 189);
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Long-Term Memory', x + 10, y + 8);
+    textStyle(NORMAL);
+    fill(100, 116, 139);
+    textSize(10);
+    text(longTerm.length + ' files (selectively retrieved)', x + 10, y + 26);
+
+    // Files
+    const padTop = 46;
+    const cardH = 28;
+    for (let i = 0; i < longTerm.length; i++) {
+        const cardY = y + padTop + i * (cardH + 6);
+        if (cardY + cardH > y + h - 26) break;
+        const f = longTerm[i];
+        const isJustWritten = (i === longTerm.length - 1 && pendingCompaction);
+        fill(isJustWritten ? color(186, 230, 253) : color(224, 242, 254));
+        stroke(2, 119, 189);
+        rect(x + 10, cardY, w - 20, cardH, 4);
+        noStroke();
+        fill(7, 89, 133);
+        textSize(11);
+        textStyle(BOLD);
+        textAlign(LEFT, TOP);
+        text(f.title.length > 28 ? f.title.slice(0, 26) + '…' : f.title,
+             x + 16, cardY + 4);
+        textStyle(NORMAL);
+        textAlign(RIGHT, TOP);
+        text(f.tokens + ' tk', x + w - 14, cardY + 4);
+        // Selected indicator (top 2 are sent each turn)
+        textAlign(LEFT, BOTTOM);
+        textSize(9);
+        fill(i < 2 ? color(46, 125, 50) : color(148, 163, 184));
+        text(i < 2 ? '● included this turn' : '○ stored', x + 16, cardY + cardH - 3);
+    }
+    // Total
+    fill(55, 71, 79);
+    textSize(11);
+    textAlign(LEFT, BOTTOM);
+    textStyle(BOLD);
+    text('Total stored: ' + longTerm.reduce((s, f) => s + f.tokens, 0) + ' tk',
+         x + 10, y + h - 8);
+    textStyle(NORMAL);
+}
+
+function drawPerTurnFlow() {
+    const y = 360;
+    const xL = margin;
+    const xR = containerWidth - margin;
+    const w = xR - xL;
+    const h = 110;
+
+    stroke(226, 232, 240);
+    fill(248, 250, 252);
+    rect(xL, y, w, h, 6);
+    noStroke();
+
+    fill(31, 41, 55);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Per-turn input flow (what gets sent to the model this turn)', xL + 10, y + 8);
+    textStyle(NORMAL);
+
+    const components = [
+        { label: 'System\nprompt', tokens: 800, color: [55, 71, 79] },
+        { label: 'Selected\nLTM', tokens: longTermSelectedTokens(), color: [2, 119, 189] },
+        { label: 'All\nshort-term', tokens: shortTermTokens(), color: [193, 68, 14] },
+        { label: 'New user\nmessage', tokens: 200, color: [46, 125, 50] }
+    ];
+    const totalT = components.reduce((s, c) => s + c.tokens, 0);
+    const showCost = costToggle.checked();
+
+    // Stacked horizontal bar
+    const barX = xL + 14, barY = y + 38, barW = w - 28, barH = 30;
+    let cx = barX;
+    components.forEach(c => {
+        const segW = (c.tokens / totalT) * barW;
+        fill(...c.color, 220);
+        rect(cx, barY, segW, barH);
+        // Label inside if wide enough
+        if (segW > 80) {
+            fill(255);
+            textAlign(CENTER, CENTER);
+            textSize(10);
+            text(c.label.replace('\n', ' '), cx + segW / 2, barY + barH / 2);
+        }
+        cx += segW;
+    });
+    noStroke();
+
+    // Component readouts
+    let lx = barX;
+    components.forEach(c => {
+        const segW = (c.tokens / totalT) * barW;
+        fill(c.color[0], c.color[1], c.color[2]);
+        textSize(10);
+        textAlign(CENTER, TOP);
+        text(c.label, lx + segW / 2, barY + barH + 4);
+        fill(71, 85, 105);
+        text(c.tokens.toLocaleString() + ' tk', lx + segW / 2, barY + barH + 28);
+        lx += segW;
+    });
+
+    // Total + cost
+    fill(31, 41, 55);
+    textAlign(RIGHT, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    text('Per-turn input total: ' + totalT.toLocaleString() + ' tokens',
+         xR - 10, y + 8);
+    if (showCost) {
+        const costPerM = 1.50;
+        const cost = (totalT * costPerM / 1_000_000);
+        textAlign(RIGHT, TOP);
+        fill(193, 68, 14);
+        text('Cost: $' + cost.toFixed(5) + ' / turn',
+             xR - 10, y + 22);
+    }
+    textStyle(NORMAL);
+}
+
+function drawEventLine() {
+    const y = 478;
+    fill(15, 118, 110);
+    textSize(11);
+    textAlign(LEFT, BOTTOM);
+    text(lastEvent, margin, y);
+}
+
+function drawArrow(x1, y1, x2, y2) {
+    line(x1, y1, x2, y2);
+    push();
+    translate(x2, y2);
+    const angle = atan2(y2 - y1, x2 - x1);
+    rotate(angle);
+    fill(124, 58, 237);
+    noStroke();
+    triangle(0, 0, -8, -4, -8, 4);
+    pop();
+}
+
+function drawControlLabels() {
+    const y0 = drawHeight + 16;
+    fill(31, 41, 55);
+    textSize(12);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text('Controls', margin, y0 - 10);
+    textStyle(NORMAL);
+
+    fill(71, 85, 105);
+    textSize(11);
+    text('Compaction threshold (turns): ' + thresholdSlider.value(),
+         margin + 250, y0 + 50);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

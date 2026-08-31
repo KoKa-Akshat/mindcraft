@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Rhetorical Patterns in QC Advocacy</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Rhetorical Patterns in QC Advocacy
+// Interactive guide to rhetorical patterns commonly used in quantum computing hype
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Pattern data
+let patterns = [
+    {
+        name: "Appeal to Authority",
+        example: '"Nobel laureate says QC will change everything"',
+        severity: 3, // high
+        why: "A laureate's physics expertise does not transfer to market forecasting. Nobel Prizes reward past discoveries, not future predictions about commercial viability.",
+        counter: "Ask: Does this person have a track record of accurate technology predictions? What is their financial interest in promoting QC?",
+        expanded: false
+    },
+    {
+        name: "False Dichotomy",
+        example: '"Either invest in QC now or be left behind"',
+        severity: 3,
+        why: "Presents only two options when many exist: invest later, invest in classical alternatives, hedge across technologies, or wait for evidence of viability.",
+        counter: "List all available options. Real strategic decisions are rarely binary. Ask: What happens if we wait 5 years and the technology matures?",
+        expanded: false
+    },
+    {
+        name: "Moving Goalposts",
+        example: '"We said 2020, now we mean 2030"',
+        severity: 3,
+        why: "Each missed deadline is quietly replaced with a new one, preventing falsification. The pattern of shifted targets itself is evidence against the reliability of the predictions.",
+        counter: "Track every public prediction with its original date. Create a timeline of promises versus outcomes. The pattern becomes undeniable.",
+        expanded: false
+    },
+    {
+        name: "Equivocation",
+        example: '"Quantum advantage" means different things in different contexts',
+        severity: 2, // medium
+        why: "Key terms like 'advantage,' 'supremacy,' and 'utility' are redefined between contexts. A demo beating a classical algorithm on a contrived problem is called the same 'advantage' as a commercial speedup.",
+        counter: "Pin down the definition before evaluating the claim. Ask: Advantage at what task? Compared to what baseline? With what practical value?",
+        expanded: false
+    },
+    {
+        name: "Appeal to Novelty",
+        example: '"It\'s quantum, so it must be better"',
+        severity: 2,
+        why: "Newness and exoticism are confused with superiority. Quantum effects are real physics, but applying them to computation does not automatically outperform classical methods.",
+        counter: "Ask: Better at what, specifically? What is the concrete benchmark? Many 'quantum-inspired' classical algorithms now match or beat quantum approaches.",
+        expanded: false
+    },
+    {
+        name: "Straw Man",
+        example: '"Critics just don\'t understand quantum mechanics"',
+        severity: 2,
+        why: "Dismisses economic and engineering criticisms by mischaracterizing them as physics ignorance. Most skeptics accept the physics; they question the engineering timeline and economic viability.",
+        counter: "Restate the actual criticism precisely. The question is not whether quantum effects exist but whether they can be harnessed economically at scale.",
+        expanded: false
+    },
+    {
+        name: "Bandwagon",
+        example: '"Everyone is investing in QC"',
+        severity: 1, // lower
+        why: "Popularity of an investment does not validate the underlying technology. Herd behavior in markets is well-documented and often precedes bubbles, not breakthroughs.",
+        counter: "Ask: How many investors have done independent technical due diligence versus following peers? What percentage of 'everyone' is investing out of FOMO?",
+        expanded: false
+    },
+    {
+        name: "Appeal to Fear",
+        example: '"If we don\'t invest, China will dominate"',
+        severity: 1,
+        why: "Geopolitical anxiety is used to bypass cost-benefit analysis. Fear of falling behind is not evidence that the technology works or that investment will yield returns.",
+        counter: "Separate the geopolitical question from the technical one. Even if a competitor invests heavily, that does not mean the investment will pay off for either side.",
+        expanded: false
+    }
+];
+
+// Scroll offset for card list
+let scrollOffset = 0;
+let cardHeight = 58;
+let expandedCardHeight = 200;
+let resetButton;
+
+// Severity colors
+function getSeverityColor(severity) {
+    if (severity === 3) return '#E53935'; // red - high
+    if (severity === 2) return '#FB8C00'; // orange - medium
+    return '#FDD835'; // yellow - lower
+}
+
+function getSeverityLabel(severity) {
+    if (severity === 3) return 'HIGH';
+    if (severity === 2) return 'MEDIUM';
+    return 'LOWER';
+}
+
+function getSeverityBg(severity) {
+    if (severity === 3) return '#FFEBEE';
+    if (severity === 2) return '#FFF3E0';
+    return '#FFFDE7';
+}
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    resetButton = createButton('Collapse All');
+    resetButton.parent(document.querySelector('main'));
+    resetButton.position(canvasWidth / 2 - 50, drawHeight + 10);
+    resetButton.size(100, 30);
+    resetButton.style('font-size', '14px');
+    resetButton.style('cursor', 'pointer');
+    resetButton.style('border', '1px solid #999');
+    resetButton.style('border-radius', '4px');
+    resetButton.style('background', '#f0f0f0');
+    resetButton.mousePressed(collapseAll);
+
+    noLoop();
+}
+
+function collapseAll() {
+    for (let i = 0; i < patterns.length; i++) {
+        patterns[i].expanded = false;
+    }
+    scrollOffset = 0;
+    redraw();
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 4);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Rhetorical Patterns in QC Advocacy", canvasWidth / 2, 10);
+
+    // Subtitle
+    fill('#666');
+    textSize(12);
+    textStyle(ITALIC);
+    textAlign(CENTER, TOP);
+    text("Click a card to expand the full analysis. Color indicates frequency in QC marketing.", canvasWidth / 2, 34);
+
+    // Legend
+    let legendY = 54;
+    let legendCenterX = canvasWidth / 2;
+    textSize(11);
+    textStyle(NORMAL);
+    noStroke();
+
+    // High
+    fill(getSeverityColor(3));
+    rect(legendCenterX - 195, legendY, 12, 12, 2);
+    fill('#666');
+    textAlign(LEFT, TOP);
+    text("High frequency", legendCenterX - 179, legendY);
+
+    // Medium
+    fill(getSeverityColor(2));
+    rect(legendCenterX - 65, legendY, 12, 12, 2);
+    fill('#666');
+    text("Medium", legendCenterX - 49, legendY);
+
+    // Lower
+    fill(getSeverityColor(1));
+    rect(legendCenterX + 40, legendY, 12, 12, 2);
+    fill('#666');
+    text("Lower frequency", legendCenterX + 56, legendY);
+
+    // Draw cards
+    let cardLeft = margin;
+    let cardWidth = canvasWidth - 2 * margin;
+    let startY = 74;
+    let currentY = startY - scrollOffset;
+    let cardPadding = 10;
+    let cardGap = 6;
+
+    for (let i = 0; i < patterns.length; i++) {
+        let p = patterns[i];
+        let thisCardHeight = p.expanded ? expandedCardHeight : cardHeight;
+
+        // Adjust expanded height based on canvas width (more text wrapping on narrow screens)
+        if (p.expanded && canvasWidth < 500) {
+            thisCardHeight = 280;
+        }
+
+        // Only draw if visible
+        if (currentY + thisCardHeight > startY - 10 && currentY < drawHeight) {
+            // Card background
+            fill(p.expanded ? getSeverityBg(p.severity) : '#FFFFFF');
+            stroke(getSeverityColor(p.severity));
+            strokeWeight(p.expanded ? 2.5 : 1.5);
+            rect(cardLeft, currentY, cardWidth, thisCardHeight, 6);
+
+            // Severity badge
+            let badgeX = cardLeft + cardWidth - 80;
+            let badgeY = currentY + 8;
+            noStroke();
+            fill(getSeverityColor(p.severity));
+            rect(badgeX, badgeY, 65, 18, 9);
+            fill('white');
+            textSize(10);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text(getSeverityLabel(p.severity), badgeX + 32, badgeY + 9);
+
+            // Pattern name
+            fill('#333');
+            noStroke();
+            textSize(15);
+            textAlign(LEFT, TOP);
+            textStyle(BOLD);
+            text((i + 1) + ". " + p.name, cardLeft + cardPadding, currentY + 10);
+
+            // Example quote
+            fill('#555');
+            textSize(12);
+            textStyle(ITALIC);
+            let quoteMaxW = cardWidth - 110;
+            text(p.example, cardLeft + cardPadding, currentY + 30, quoteMaxW, 24);
+
+            // Expanded content
+            if (p.expanded) {
+                let detailY = currentY + 60;
+                let detailMaxW = cardWidth - 2 * cardPadding - 10;
+
+                // Why it's fallacious
+                fill('#3F51B5');
+                textSize(13);
+                textStyle(BOLD);
+                textAlign(LEFT, TOP);
+                text("Why it's fallacious:", cardLeft + cardPadding + 5, detailY);
+
+                fill('#444');
+                textSize(12);
+                textStyle(NORMAL);
+                text(p.why, cardLeft + cardPadding + 5, detailY + 18, detailMaxW, 60);
+
+                // How to counter
+                let counterY = detailY + 80;
+                fill('#E65100');
+                textSize(13);
+                textStyle(BOLD);
+                text("How to counter:", cardLeft + cardPadding + 5, counterY);
+
+                fill('#444');
+                textSize(12);
+                textStyle(NORMAL);
+                text(p.counter, cardLeft + cardPadding + 5, counterY + 18, detailMaxW, 60);
+            }
+
+            // Expand/collapse indicator
+            fill('#999');
+            textSize(16);
+            textAlign(RIGHT, CENTER);
+            textStyle(NORMAL);
+            let arrowY = currentY + (p.expanded ? 20 : thisCardHeight / 2);
+            text(p.expanded ? "\u25B2" : "\u25BC", cardLeft + cardWidth - cardPadding - 80, arrowY);
+        }
+
+        currentY += thisCardHeight + cardGap;
+    }
+
+    // Position reset button
+    resetButton.position(canvasWidth / 2 - 50, drawHeight + 10);
+}
+
+function mousePressed() {
+    let cardLeft = margin;
+    let cardWidth = canvasWidth - 2 * margin;
+    let startY = 74;
+    let currentY = startY - scrollOffset;
+    let cardGap = 6;
+
+    for (let i = 0; i < patterns.length; i++) {
+        let p = patterns[i];
+        let thisCardHeight = p.expanded ? expandedCardHeight : cardHeight;
+        if (p.expanded && canvasWidth < 500) {
+            thisCardHeight = 280;
+        }
+
+        if (mouseX >= cardLeft && mouseX <= cardLeft + cardWidth &&
+            mouseY >= currentY && mouseY <= currentY + thisCardHeight &&
+            mouseY > startY - 5 && mouseY < drawHeight) {
+            p.expanded = !p.expanded;
+
+            // Auto-scroll to keep expanded card visible
+            let totalHeight = getTotalContentHeight();
+            let maxScroll = max(0, totalHeight - (drawHeight - startY));
+            if (scrollOffset > maxScroll) {
+                scrollOffset = maxScroll;
+            }
+
+            redraw();
+            return;
+        }
+
+        currentY += thisCardHeight + cardGap;
+    }
+}
+
+function getTotalContentHeight() {
+    let total = 0;
+    let cardGap = 6;
+    for (let i = 0; i < patterns.length; i++) {
+        let h = patterns[i].expanded ? expandedCardHeight : cardHeight;
+        if (patterns[i].expanded && canvasWidth < 500) {
+            h = 280;
+        }
+        total += h + cardGap;
+    }
+    return total;
+}
+
+function mouseWheel(event) {
+    let startY = 74;
+    if (mouseX > 0 && mouseX < canvasWidth && mouseY > 0 && mouseY < drawHeight) {
+        scrollOffset += event.delta;
+        let totalHeight = getTotalContentHeight();
+        let maxScroll = max(0, totalHeight - (drawHeight - startY));
+        scrollOffset = constrain(scrollOffset, 0, maxScroll);
+        redraw();
+        return false; // prevent page scroll
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Plane MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Complex Plane MicroSim
+// Illustrates the geometric representation of complex numbers
+// showing both rectangular and polar forms
+
+// Canvas dimensions
+let canvasWidth = 550;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Complex number components
+let realPart = 3;
+let imagPart = 4;
+
+// Sliders
+let realSlider, imagSlider;
+
+// Coordinate system parameters
+let originX, originY;
+let scale = 40; // pixels per unit
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Create sliders for real and imaginary parts
+  realSlider = createSlider(-5, 5, realPart, 0.1);
+  realSlider.position(sliderLeftMargin, drawHeight + 15);
+  realSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  imagSlider = createSlider(-5, 5, imagPart, 0.1);
+  imagSlider.position(sliderLeftMargin, drawHeight + 50);
+  imagSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  describe('Interactive visualization of complex numbers in the complex plane showing rectangular and polar forms', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Get slider values
+  realPart = realSlider.value();
+  imagPart = imagSlider.value();
+
+  // Calculate origin position (center of drawing area)
+  originX = canvasWidth / 2;
+  originY = drawHeight / 2;
+
+  // Drawing area
+  fill('aliceblue');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke('silver');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  
+  // Reset text settings
+  textSize(defaultTextSize);
+  textAlign(LEFT, CENTER);
+
+  // Draw grid
+  drawGrid();
+
+  // Draw axes
+  drawAxes();
+  
+  // Title
+  fill('black');
+  noStroke();
+  textSize(24);
+  textAlign(CENTER, TOP);
+  text('Complex Plane', canvasWidth*.35, 10);
+
+
+  // Draw complex number visualization
+  drawComplexNumber();
+
+  // Draw annotations panel
+  drawAnnotations();
+
+  // Draw slider labels in control area
+  drawSliderLabels();
+}
+
+function drawGrid() {
+  stroke(220);
+  strokeWeight(1);
+
+  // Vertical grid lines
+  for (let x = -10; x <= 10; x++) {
+    let screenX = originX + x * scale;
+    if (screenX >= 0 && screenX <= canvasWidth) {
+      line(screenX, 0, screenX, drawHeight);
+    }
+  }
+
+  // Horizontal grid lines
+  for (let y = -10; y <= 10; y++) {
+    let screenY = originY - y * scale;
+    if (screenY >= 0 && screenY <= drawHeight) {
+      line(0, screenY, canvasWidth, screenY);
+    }
+  }
+}
+
+function drawAxes() {
+  strokeWeight(2);
+
+  // Real axis (blue)
+  stroke(0, 100, 200);
+  line(0, originY, canvasWidth, originY);
+
+  // Arrow for real axis
+  let arrowSize = 10;
+  line(canvasWidth - arrowSize, originY - arrowSize/2, canvasWidth, originY);
+  line(canvasWidth - arrowSize, originY + arrowSize/2, canvasWidth, originY);
+
+  // Imaginary axis (red)
+  stroke(200, 50, 50);
+  line(originX, 0, originX, drawHeight);
+
+  // Arrow for imaginary axis
+  line(originX - arrowSize/2, arrowSize, originX, 0);
+  line(originX + arrowSize/2, arrowSize, originX, 0);
+
+  // Axis labels
+  noStroke();
+  textSize(14);
+
+  // Real axis label
+  fill(0, 100, 200);
+  textAlign(RIGHT, TOP);
+  text('Real Axis', canvasWidth - 25, originY + 5);
+
+  // Imaginary axis label
+  fill(200, 50, 50);
+  textAlign(LEFT, TOP);
+  text('Imaginary Axis', originX + 8, 10);
+
+  // Origin label
+  fill(100);
+  textAlign(RIGHT, TOP);
+  text('0', originX - 5, originY + 5);
+
+  // Draw tick marks and labels
+  textSize(12);
+  textAlign(CENTER, TOP);
+  fill(80);
+
+  // Real axis ticks
+  for (let x = -5; x <= 5; x++) {
+    if (x !== 0) {
+      let screenX = originX + x * scale;
+      if (screenX >= 20 && screenX <= canvasWidth - 20) {
+        stroke(100);
+        strokeWeight(1);
+        line(screenX, originY - 4, screenX, originY + 4);
+        noStroke();
+        text(x, screenX, originY + 8);
+      }
+    }
+  }
+
+  // Imaginary axis ticks
+  textAlign(RIGHT, CENTER);
+  for (let y = -5; y <= 5; y++) {
+    if (y !== 0) {
+      let screenY = originY - y * scale;
+      if (screenY >= 40 && screenY <= drawHeight - 20) {
+        stroke(100);
+        strokeWeight(1);
+        line(originX - 4, screenY, originX + 4, screenY);
+        noStroke();
+        text(y + 'i', originX - 8, screenY);
+      }
+    }
+  }
+}
+
+function drawComplexNumber() {
+  // Calculate screen coordinates
+  let pointX = originX + realPart * scale;
+  let pointY = originY - imagPart * scale;
+
+  // Calculate magnitude and phase
+  let magnitude = sqrt(realPart * realPart + imagPart * imagPart);
+  let phase = atan2(imagPart, realPart);
+  let phaseDegrees = degrees(phase);
+
+  // Draw dashed projection lines
+  stroke(100, 100, 100);
+  strokeWeight(1);
+  drawingContext.setLineDash([5, 5]);
+
+  // Vertical projection (from point to real axis)
+  line(pointX, pointY, pointX, originY);
+
+  // Horizontal projection (from point to imaginary axis)
+  line(pointX, pointY, originX, pointY);
+
+  drawingContext.setLineDash([]);
+
+  // Draw right triangle sides with labels
+  // Real part (horizontal) - blue
+  stroke(0, 100, 200);
+  strokeWeight(3);
+  line(originX, originY, pointX, originY);
+
+  // Imaginary part (vertical) - red
+  stroke(200, 50, 50);
+  line(pointX, originY, pointX, pointY);
+
+  // Right angle marker
+  if (abs(realPart) > 0.3 && abs(imagPart) > 0.3) {
+    stroke(100);
+    strokeWeight(1);
+    noFill();
+    let rightAngleSize = 12;
+    let signX = realPart > 0 ? -1 : 1;
+    let signY = imagPart > 0 ? 1 : -1;
+    rect(pointX + signX * rightAngleSize, originY, rightAngleSize, signY * rightAngleSize);
+  }
+
+  // Draw angle arc
+  if (magnitude > 0.5) {
+    stroke(80, 180, 80);
+    strokeWeight(2);
+    noFill();
+    let arcRadius = min(50, magnitude * scale * 0.4);
+    arc(originX, originY, arcRadius * 2, arcRadius * 2, -phase, 0);
+
+    // Theta label
+    let labelAngle = -phase / 2;
+    let labelRadius = arcRadius + 15;
+    fill(80, 180, 80);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text('\u03B8', originX + labelRadius * cos(labelAngle), originY + labelRadius * sin(labelAngle));
+  }
+
+  // Draw complex number vector (green)
+  stroke(0, 160, 80);
+  strokeWeight(3);
+  line(originX, originY, pointX, pointY);
+
+  // Arrowhead
+  let arrowLen = 12;
+  let arrowAngle = 0.4;
+  let angle = atan2(pointY - originY, pointX - originX);
+  line(pointX, pointY,
+       pointX - arrowLen * cos(angle - arrowAngle),
+       pointY - arrowLen * sin(angle - arrowAngle));
+  line(pointX, pointY,
+       pointX - arrowLen * cos(angle + arrowAngle),
+       pointY - arrowLen * sin(angle + arrowAngle));
+
+  // Draw magnitude label on vector
+  if (magnitude > 0.5) {
+    let midX = (originX + pointX) / 2;
+    let midY = (originY + pointY) / 2;
+    // Offset label perpendicular to vector
+    let perpAngle = angle - PI/2;
+    let labelOffset = 18;
+    fill(0, 140, 70);
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('|z| = ' + magnitude.toFixed(2),
+         midX + labelOffset * cos(perpAngle),
+         midY + labelOffset * sin(perpAngle));
+  }
+
+  // Draw point
+  fill(0, 160, 80);
+  noStroke();
+  ellipse(pointX, pointY, 12, 12);
+
+  // Point label (z)
+  fill(0, 140, 70);
+  textSize(16);
+  textAlign(LEFT, BOTTOM);
+  let labelOffsetX = realPart >= 0 ? 10 : -30;
+  let labelOffsetY = imagPart >= 0 ? -5 : 20;
+  text('z', pointX + labelOffsetX, pointY + labelOffsetY);
+}
+
+function drawAnnotations() {
+  // Calculate values
+  let magnitude = sqrt(realPart * realPart + imagPart * imagPart);
+  let phase = atan2(imagPart, realPart);
+  let phaseDegrees = degrees(phase);
+
+  // White Annotation panel background right
+  fill(255, 255, 255, 230);
+  stroke(200);
+  strokeWeight(1);
+  let panelX = 10;
+  let panelY = 45;
+  let panelWidth = 180;
+  let panelHeight = 95;
+  rect(panelX, panelY, panelWidth, panelHeight, 10);
+
+  // Annotations text
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, TOP);
+  let lineHeight = 20;
+  let textX = panelX + 10;
+  let textY = panelY + 8;
+
+  // Real part (blue)
+  fill(0, 100, 200);
+  text('Re(z) = ' + realPart.toFixed(2), textX, textY);
+
+  // Imaginary part (red)
+  fill(200, 50, 50);
+  text('Im(z) = ' + imagPart.toFixed(2), textX, textY + lineHeight);
+
+  // Magnitude (green)
+  fill(0, 140, 70);
+  text('|z| = ' + magnitude.toFixed(3), textX, textY + lineHeight * 2);
+
+  // Phase
+  fill(80, 150, 80);
+  let phaseText = '\u03B8 = ' + phaseDegrees.toFixed(1) + '\u00B0';
+  text(phaseText, textX, textY + lineHeight * 3);
+
+  // Polar form panel
+  let polarPanelX = canvasWidth - 190;
+  let polarPanelY = 45;
+  let polarPanelWidth = 180;
+  let polarPanelHeight = 85;
+
+  // Right Annotation Panel
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(polarPanelX, polarPanelY, polarPanelWidth, polarPanelHeight, 10);
+
+  noStroke();
+  textSize(13);
+  fill(50);
+
+  // Rectangular form
+  let rectForm = 'z = ' + realPart.toFixed(1);
+  if (imagPart >= 0) {
+    rectForm += ' + ' + imagPart.toFixed(1) + 'i';
+  } else {
+    rectForm += ' - ' + abs(imagPart).toFixed(1) + 'i';
+  }
+  text('Rectangular:', polarPanelX + 10, polarPanelY + 10);
+  fill(80);
+  text(rectForm, polarPanelX + 10, polarPanelY + 28);
+
+  // Polar form
+  fill(50);
+  text('Polar:', polarPanelX + 10, polarPanelY + 48);
+  fill(80);
+  let polarForm = magnitude.toFixed(2) + '\u2220' + phaseDegrees.toFixed(1) + '\u00B0';
+  text(polarForm, polarPanelX + 10, polarPanelY + 66);
+}
+
+function drawSliderLabels() {
+  fill('black');
+  noStroke();
+  textSize(defaultTextSize);
+  textAlign(LEFT, CENTER);
+
+  // Real part slider label
+  text('Real Part: ' + realPart.toFixed(1), 10, drawHeight + 27);
+
+  // Imaginary part slider label
+  text('Imag Part: ' + imagPart.toFixed(1), 10, drawHeight + 62);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+
+    // Update slider widths
+    if (typeof realSlider !== 'undefined') {
+      realSlider.size(canvasWidth - sliderLeftMargin - margin);
+    }
+    if (typeof imagSlider !== 'undefined') {
+      imagSlider.size(canvasWidth - sliderLeftMargin - margin);
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

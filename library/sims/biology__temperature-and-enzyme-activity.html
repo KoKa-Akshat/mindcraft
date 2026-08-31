@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Temperature and pH Effects on Enzyme Activity using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>(function (global) {
+  const Map = {
+    A: 'ᴬ',
+    B: 'ᴮ',
+    C: '꜀',
+    D: 'ᴅ',
+    E: 'ᴱ',
+    G: 'ᴳ',
+    H: 'ᴴ',
+    I: 'ᴵ',
+    J: 'ᴶ',
+    K: 'ᴷ',
+    L: 'ᴸ',
+    M: 'ᴹ',
+    N: 'ᴺ',
+    O: 'ᴼ',
+    P: 'ᴾ',
+    R: 'ᴿ',
+    S: 'ˢ',
+    T: 'ᵀ',
+    U: 'ᵁ',
+    V: 'ⱽ',
+    W: 'ʷ',
+    X: 'ˣ',
+    Y: 'ʸ',
+    Z: 'ᶻ',
+    a: 'ᵃ',
+    b: 'ᵇ',
+    d: 'ᵈ',
+    e: 'ᵉ',
+    g: 'ᵍ',
+    h: 'ʰ',
+    i: 'ᶦ',
+    j: 'ʲ',
+    k: 'ᵏ',
+    l: 'ˡ',
+    m: 'ᵐ',
+    n: 'ⁿ',
+    o: 'ᵒ',
+    p: 'ᵖ',
+    r: 'ʳ',
+    s: 'ˢ',
+    t: 'ᵗ',
+    u: 'ᵘ',
+    v: 'ᵛ',
+    w: 'ʷ',
+    x: 'ˣ',
+    y: 'ʸ',
+    z: 'ᶻ',
+    '+': '⁺',
+    '-': '⁻',
+    '0': '⁰',
+    '1': '¹',
+    '2': '²',
+    '3': '³',
+    '4': '⁴',
+    '5': '⁵',
+    '6': '⁶',
+    '7': '⁷',
+    '8': '⁸',
+    '9': '⁹'
+  };
+
+  function convertSuperscriptOption(str) {
+    return str.replace(/\^([A-Za-z0-9+\-])/g, (_, ch) => MAP[ch] || ch);
+  }
+
+  function buildSuperscriptTokens(str, baseSize) {
+    const tokens = [];
+    const size = baseSize || 16;
+    let totalWidth = 0;
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '^' && i + 1 < str.length) {
+        const supChar = str[i + 1];
+        textSize(size * 0.75);
+        const width = textWidth(supChar);
+        tokens.push({ text: supChar, isSup: true, width });
+        totalWidth += width;
+        i += 2;
+      } else {
+        textSize(size);
+        const width = textWidth(str[i]);
+        tokens.push({ text: str[i], isSup: false, width });
+        totalWidth += width;
+        i++;
+      }
+    }
+    textSize(size);
+    return { tokens, totalWidth };
+  }
+
+  function drawSuperscriptText(str, x, y, baseSize, align = 'left', metrics = null) {
+    const size = baseSize || 16;
+    const tokenData = metrics || buildSuperscriptTokens(str, size);
+    const tokens = tokenData.tokens;
+    const totalWidth = tokenData.totalWidth;
+
+    let cursor = x;
+    if (align === 'center') cursor -= totalWidth / 2;
+    else if (align === 'right') cursor -= totalWidth;
+
+    push();
+    textAlign(LEFT, CENTER);
+    noStroke();
+    for (const token of tokens) {
+      if (token.isSup) {
+        textSize(size * 0.75);
+        text(token.text, cursor, y - size * 0.45);
+      } else {
+        textSize(size);
+        text(token.text, cursor, y);
+      }
+      cursor += token.width;
+    }
+    pop();
+    textSize(size);
+  }
+
+  global.SuperscriptText = {
+    convertSuperscriptOption,
+    buildSuperscriptTokens,
+    drawSuperscriptText
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+    <script>/* global SuperscriptText */
+// Temperature and pH Effects on Enzyme Activity MicroSim (p5.js)
+// Follows MicroSim template conventions: drawing region above control deck, width responsive layout, and paused default state.
+
+let containerWidth;
+let canvasWidth = 660;
+let drawHeight = 430; // diagram + explanation panes
+let controlHeight = 220; // space for buttons and sliders
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+// make sure there is enough space for the "Enzyme thermostability (FWHM)" label
+let sliderLeftMargin = 320; // provides space for labels/values to the left of each slider
+let sliderStartX = sliderLeftMargin; // updated responsively to keep sliders inside viewport
+// vertical spacing between slider rows - used by both the sliders and labels
+const sliderRowSpacing = 40;
+let defaultTextSize = 16;
+let layout = null;
+let presetLabelWidth = 140;
+
+// UI elements
+let startButton;
+let resetButton;
+let optimalTempSlider;
+let optimalPHSlider;
+let thermostabilitySlider;
+const presetButtons = [];
+
+let isRunning = false;
+let autoDirection = 1; // moves the cursor left/right during autoplay
+
+let mode = 'temperature';
+const axisRanges = {
+  temperature: { min: 0, max: 100, unit: '°C', label: 'Temperature (°C)' },
+  ph: { min: 0, max: 14, unit: '', label: 'pH' }
+};
+
+let targetOptTemp = 37;
+let displayOptTemp = 37;
+let targetOptPH = 7.2;
+let displayOptPH = 7.2;
+let targetThermoWidth = 18; // width at half-maximum, degrees Celsius
+let displayThermoWidth = 18;
+
+let cursorTempValue = 37;
+let cursorPHValue = 7.2;
+let draggingCursor = false;
+let wavePhase = 0;
+
+let toggleHitboxes = [];
+
+const presets = [
+  { label: 'Human enzyme (37°C, pH 7.2)', temp: 37, ph: 7.2, width: 18, mode: 'temperature' },
+  { label: 'Pepsin (pH 2)', temp: 37, ph: 2.0, width: 12, mode: 'ph' },
+  { label: 'Taq polymerase (72°C)', temp: 72, ph: 8.8, width: 28, mode: 'temperature' }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  const mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  startButton = createButton('Sweep Temperature Values');
+  startButton.mousePressed(toggleSimulation);
+
+  resetButton = createButton('Reset View');
+  resetButton.mousePressed(() => {
+    applyPreset(presets[0]);
+    stopSimulation();
+  });
+
+  optimalTempSlider = createSlider(25, 80, targetOptTemp, 0.1);
+  optimalTempSlider.input(() => {
+    targetOptTemp = optimalTempSlider.value();
+  });
+
+  optimalPHSlider = createSlider(0, 14, targetOptPH, 0.1);
+  optimalPHSlider.input(() => {
+    targetOptPH = optimalPHSlider.value();
+  });
+
+  thermostabilitySlider = createSlider(8, 32, targetThermoWidth, 0.5);
+  thermostabilitySlider.input(() => {
+    targetThermoWidth = thermostabilitySlider.value();
+  });
+
+  presets.forEach((preset, index) => {
+    const btn = createButton(preset.label);
+    btn.mousePressed(() => applyPreset(preset));
+    presetButtons[index] = btn;
+  });
+
+  updateControlPositions();
+
+  describe('Interactive MicroSim showing enzyme activity curves for temperature and pH with sliders, presets, and molecular explanations', LABEL);
+  updateStartButtonLabel();
+}
+
+function draw() {
+  updateCanvasSize();
+  layout = computeLayout();
+
+  background(255);
+
+  // Drawing and control backgrounds follow MicroSim styling
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawTitle();
+  drawModeToggle();
+
+  // Ease toward slider/preset targets so presets visibly animate the curve
+  displayOptTemp = lerp(displayOptTemp, targetOptTemp, 0.08);
+  displayOptPH = lerp(displayOptPH, targetOptPH, 0.08);
+  displayThermoWidth = lerp(displayThermoWidth, targetThermoWidth, 0.08);
+
+  if (isRunning) {
+    autoSweepCursor();
+    wavePhase = (wavePhase + 0.12) % (TWO_PI * 200);
+  }
+
+  drawActivityGraph();
+  drawRightPanel();
+  drawControlLabels();
+}
+
+function drawTitle() {
+  noStroke();
+  fill(20);
+  textAlign(CENTER, TOP);
+  textSize(28);
+  text('Enzyme Activity Explorer', canvasWidth / 2, margin);
+  textSize(16);
+  text('Predict how temperature or pH alters catalysis - use mouse to move the orange circle', canvasWidth / 2, margin + 32);
+}
+
+function drawModeToggle() {
+  const area = layout.toggleArea;
+  const gap = 12;
+  const buttonWidth = (area.width - gap) / 2;
+  const buttonHeight = area.height - 8;
+  toggleHitboxes = [];
+
+  ['temperature', 'ph'].forEach((name, index) => {
+    const x = area.x + index * (buttonWidth + gap);
+    const y = area.y + 4;
+    const isActive = mode === name;
+    stroke('#1c6e8c');
+    strokeWeight(2);
+    fill(isActive ? '#1f9aa0' : '#eef5ff');
+    rect(x, y, buttonWidth, buttonHeight, 10);
+    noStroke();
+    fill(isActive ? '#ffffff' : '#1a1a1a');
+    textAlign(CENTER, CENTER);
+    textSize(16);
+    const label = name === 'temperature' ? 'Temperature Mode' : 'pH Mode';
+    text(label, x + buttonWidth / 2, y + buttonHeight / 2 - 6);
+    textSize(12);
+    fill(isActive ? '#ffffff' : '#4b5563');
+    const sub = name === 'temperature' ? 'Collisions vs denaturation' : 'Charge balance in active site';
+    text(sub, x + buttonWidth / 2, y + buttonHeight / 2 + 12);
+    toggleHitboxes.push({ mode: name, x, y, width: buttonWidth, height: buttonHeight });
+  });
+}
+
+function drawActivityGraph() {
+  const graphArea = layout.graphArea;
+  const inner = layout.graphInner;
+  const axis = axisRanges[mode];
+  const mean = mode === 'temperature' ? displayOptTemp : displayOptPH;
+  const effectiveWidth = getEffectiveWidth();
+
+  fill('#f6fff5');
+  stroke('#4c956c');
+  rect(graphArea.x, graphArea.y, graphArea.width, graphArea.height, 12);
+
+  stroke('#4d4d4d');
+  strokeWeight(1.5);
+  line(inner.left, inner.bottom, inner.right, inner.bottom);
+  line(inner.left, inner.top, inner.left, inner.bottom);
+
+  noStroke();
+  fill(35);
+  textAlign(CENTER, TOP);
+  textSize(15);
+  text(axis.label, (inner.left + inner.right) / 2, inner.bottom + 10);
+  push();
+  translate(inner.left - 25, (inner.top + inner.bottom) / 2);
+  rotate(-HALF_PI);
+  textAlign(CENTER, CENTER);
+  text('Relative activity (%)', 0, 0);
+  pop();
+
+  drawFwhmIndicator(inner, mean, effectiveWidth, axis);
+
+  noFill();
+  stroke('#2c7fb8');
+  strokeWeight(3);
+  beginShape();
+  for (let i = 0; i <= 240; i++) {
+    const value = map(i, 0, 240, axis.min, axis.max);
+    const activity = computeActivity(value, mean, effectiveWidth);
+    const x = map(value, axis.min, axis.max, inner.left, inner.right);
+    const y = map(activity, 0, 1.05, inner.bottom, inner.top);
+    vertex(x, y);
+  }
+  endShape();
+
+  drawGraphAnnotations(inner, mean, effectiveWidth, axis);
+  drawCursor(inner, mean, effectiveWidth, axis);
+}
+
+function drawFwhmIndicator(inner, mean, widthValue, axis) {
+  const halfWidth = widthValue / 2;
+  const leftVal = constrain(mean - halfWidth, axis.min, axis.max);
+  const rightVal = constrain(mean + halfWidth, axis.min, axis.max);
+  const y = lerp(inner.bottom, inner.top, 0.45);
+  const leftX = map(leftVal, axis.min, axis.max, inner.left, inner.right);
+  const rightX = map(rightVal, axis.min, axis.max, inner.left, inner.right);
+
+  push();
+  stroke('#5c677d');
+  strokeWeight(2);
+  drawingContext.setLineDash([5, 4]);
+  line(leftX, y, rightX, y);
+  pop();
+
+  fill('#5c677d');
+  noStroke();
+  textAlign(CENTER, BOTTOM);
+  textSize(13);
+  const unitLabel = mode === 'temperature' ? '°C' : 'pH units';
+  text(`Width at 50% activity: ${widthValue.toFixed(1)} ${unitLabel}`, (leftX + rightX) / 2, y - 6);
+}
+
+function drawGraphAnnotations(inner, mean, widthValue, axis) {
+  noStroke();
+  textSize(13);
+
+  fill('#16697a');
+  const graphLeft = layout.graphArea.x + 12;
+  textAlign(LEFT, TOP);
+  text('Increasing collisions\n(more substrate binding)', graphLeft, inner.top - 10);
+
+  fill('#b8336a');
+  textAlign(RIGHT, TOP);
+  const graphRight = layout.graphArea.x + layout.graphArea.width - 12;
+  text('Denaturation', graphRight, inner.top + 10);
+}
+
+function drawCursor(inner, mean, widthValue, axis) {
+  const cursorValue = getActiveCursorValue();
+  const activity = constrain(computeActivity(cursorValue, mean, widthValue), 0, 1);
+  const cursorX = map(cursorValue, axis.min, axis.max, inner.left, inner.right);
+  const cursorY = map(activity, 0, 1.05, inner.bottom, inner.top);
+
+  // Vertical dashed line from cursor to x-axis
+  push();
+  stroke('#b48ead');
+  strokeWeight(2);
+  drawingContext.setLineDash([6, 6]);
+  line(cursorX, inner.bottom, cursorX, cursorY);
+  pop();
+
+  // Cursor circle that moves
+  noStroke();
+  fill('#ff6b35');
+  circle(cursorX, cursorY, 16);
+
+  // Readout box anchored to upper-right corner of the graph area
+  const readoutWidth = 150;
+  const readoutHeight = 48;
+  const readoutPadding = 12;
+  const readoutX = layout.graphArea.x + layout.graphArea.width - readoutWidth - readoutPadding;
+  const readoutY = layout.graphArea.y + readoutPadding;
+  push();
+  fill('#fff7d6');
+  stroke('#b99a35');
+  rect(readoutX, readoutY, readoutWidth, readoutHeight, 10);
+  noStroke();
+  fill('#1a1a1a');
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize - 2);
+  const axisLabel = mode === 'temperature' ? 'Temperature' : 'pH';
+  const unit = axis.unit;
+  text(`${axisLabel}: ${cursorValue.toFixed(1)}${unit}`, readoutX + 10, readoutY + 6);
+  text(`Activity: ${(activity * 100).toFixed(0)}%`, readoutX + 10, readoutY + 26);
+  pop();
+}
+
+function drawRightPanel() {
+  const panel = layout.panelArea;
+  fill('#f5edff');
+  stroke('#9d4edd');
+  rect(panel.x, panel.y, panel.width, panel.height, 12);
+
+  noStroke();
+  fill('#2b2d42');
+  textAlign(LEFT, TOP);
+  textSize(18);
+  const title = mode === 'temperature' ? 'Molecular Explanation' : 'Ionization State Insight';
+  text(title, panel.x + 16, panel.y + 14);
+
+  if (mode === 'temperature') {
+    drawTemperaturePanel(panel);
+  } else {
+    drawPhPanel(panel);
+  }
+}
+
+function drawTemperaturePanel(panel) {
+  const diff = cursorTempValue - displayOptTemp;
+  const stage = diff < -6 ? 'below' : diff > 6 ? 'above' : 'optimal';
+  const centerX = panel.x + panel.width / 2;
+  const centerY = panel.y + panel.height * 0.42;
+
+  // Cartoon enzyme and substrate
+  if (stage === 'above') {
+    noFill();
+    stroke('#f28482');
+    strokeWeight(3);
+    for (let i = 0; i < 3; i++) {
+      const offsetY = i * 18 - 18;
+      beginShape();
+      for (let x = -80; x <= 80; x += 10) {
+        const waveY = centerY + offsetY + sin((x + wavePhase) * 0.08) * 18;
+        vertex(centerX + x, waveY);
+      }
+      endShape();
+    }
+    noStroke();
+    fill('#f28482');
+    textAlign(CENTER, TOP);
+    textSize(14);
+    text('Denatured polypeptide — active site lost', centerX, centerY + 70);
+  } else {
+    fill('#90e0ef');
+    stroke('#0077b6');
+    strokeWeight(2);
+    ellipse(centerX - 10, centerY, 150, 90);
+    noStroke();
+    fill('#ffffff');
+    ellipse(centerX + 30, centerY, 36, 24); // active site pocket
+    fill('#ffd166');
+    ellipse(centerX + 63, centerY, 28, 28); // substrate
+  }
+
+  // Stage-specific explanation text
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(14);
+  const textX = panel.x + 20;
+  const textY = panel.y + panel.height * 0.68;
+
+  let heading;
+  let body;
+  if (stage === 'below') {
+    heading = 'Below optimum: Collision rate is rising';
+    body = 'Warmer temperatures boost kinetic energy so more enzyme-substrate pairs reach the active site with correct orientation.';
+  } else if (stage === 'optimal') {
+    heading = 'At optimum: Structure + motion balanced';
+    body = 'The active site keeps its precise hydrogen bonds while collisions happen fast enough for peak catalytic turnover.';
+  } else {
+    heading = 'Above optimum: Denaturation dominates';
+    body = 'Hydrogen bonds and hydrophobic cores unravel, so even frequent collisions cannot bind substrate — activity crashes.';
+  }
+  fill('#2b2d42');
+  text(heading, textX, textY - 20);
+  fill('#4b5563');
+  text(body, textX, textY - 2, panel.width - 40, panel.height * 0.25);
+}
+
+function drawPhPanel(panel) {
+  const pKa = 6.0;
+  const pH = cursorPHValue;
+  const fracProtonated = 1 / (1 + pow(10, pH - pKa));
+  const state = fracProtonated > 0.6 ? 'protonated' : fracProtonated < 0.4 ? 'neutral' : 'mixed';
+  const centerX = panel.x + panel.width / 2;
+  const gaugeTop = panel.y + panel.height * 0.28;
+
+  // Draw dual column gauge for histidine charge state
+  const barWidth = 60;
+  const barHeight = 130;
+  const protonatedHeight = barHeight * fracProtonated;
+  const neutralHeight = barHeight * (1 - fracProtonated);
+
+  noStroke();
+  fill('#f4acb7');
+  rect(centerX - barWidth - 10, gaugeTop + (barHeight - protonatedHeight), barWidth, protonatedHeight, 8);
+  fill('#8ecae6');
+  rect(centerX + 10, gaugeTop + (barHeight - neutralHeight), barWidth, neutralHeight, 8);
+
+  fill('#1a1a1a');
+  textAlign(CENTER, TOP);
+  textSize(13);
+  if (typeof SuperscriptText !== 'undefined') {
+    SuperscriptText.drawSuperscriptText('Histidine-H^+', centerX - barWidth / 2 - 10, gaugeTop + barHeight + 8, 13, 'center');
+    SuperscriptText.drawSuperscriptText('H^+', centerX - barWidth / 2 - 40, gaugeTop + barHeight - protonatedHeight - 14, 14, 'center');
+  } else {
+    text('Histidine-H+', centerX - barWidth / 2 - 10, gaugeTop + barHeight + 8);
+    text('H+', centerX - barWidth / 2 - 40, gaugeTop + barHeight - protonatedHeight - 14);
+  }
+  text('Histidine (neutral)', centerX + barWidth / 2 + 10, gaugeTop + barHeight + 8);
+
+  // Ionization explanation text
+  const explanationY = panel.y + panel.height * 0.65;
+  let heading;
+  let body;
+  if (state === 'protonated') {
+    heading = 'Acidic pH: histidine stays protonated';
+    body = 'Positive charge attracts the negatively charged substrate and keeps catalytic residues aligned. Activity rises until the charge balance is just right.';
+  } else if (state === 'neutral') {
+    heading = 'Basic pH: histidine loses its proton';
+    body = 'Without the positive charge, the active site cannot stabilize the transition state. Substrate slips away and activity drops.';
+  } else {
+    heading = 'Near pKa (~6): mix of charged states';
+    body = 'Small pH shifts toggle histidine between protonated and neutral forms, so activity sharply peaks around its preferred charge balance.';
+  }
+
+  noStroke();
+  fill('#2b2d42');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text(heading, panel.x + 18, explanationY - 20);
+  fill('#4b5563');
+  text(body, panel.x + 18, explanationY - 2, panel.width - 36, panel.height * 0.24);
+
+  fill('#6c757d');
+  text(`Histidine pKa ~ ${pKa.toFixed(1)} | Protonated: ${(fracProtonated * 100).toFixed(0)}%`, panel.x + 18, explanationY - 24);
+}
+
+function drawControlLabels() {
+  const firstRowCenter = drawHeight + 62;
+  const labelX = sliderStartX - 10;
+
+  drawSliderLabel('Optimal temperature', `${targetOptTemp.toFixed(1)} °C`, labelX, firstRowCenter);
+  drawSliderLabel('Optimal pH', `${targetOptPH.toFixed(1)}`, labelX, firstRowCenter + sliderRowSpacing);
+  drawSliderLabel('Enzyme thermostability (FWHM)', `${targetThermoWidth.toFixed(1)} °C`, labelX, firstRowCenter + sliderRowSpacing * 2);
+
+  noStroke();
+  fill('#1a1a1a');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  const presetLabel = 'Preset enzymes:';
+  const presetRowY = drawHeight + 170;
+  text(presetLabel, margin, presetRowY);
+  presetLabelWidth = textWidth(presetLabel);
+}
+
+function drawSliderLabel(label, value, labelX, centerY) {
+  noStroke();
+  fill('#1f2933');
+  textAlign(RIGHT, CENTER);
+  textSize(defaultTextSize);
+  text(`${label}: ${value}`, labelX, centerY);
+}
+
+function autoSweepCursor() {
+  const axis = axisRanges[mode];
+  const min = axis.min;
+  const max = axis.max;
+  const speed = mode === 'temperature' ? 0.25 : 0.04;
+
+  if (mode === 'temperature') {
+    cursorTempValue += autoDirection * speed;
+    if (cursorTempValue >= max || cursorTempValue <= min) {
+      autoDirection *= -1;
+      cursorTempValue = constrain(cursorTempValue, min, max);
+    }
+  } else {
+    cursorPHValue += autoDirection * speed;
+    if (cursorPHValue >= max || cursorPHValue <= min) {
+      autoDirection *= -1;
+      cursorPHValue = constrain(cursorPHValue, min, max);
+    }
+  }
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  updateStartButtonLabel();
+}
+
+function stopSimulation() {
+  isRunning = false;
+  updateStartButtonLabel();
+}
+
+function applyPreset(preset) {
+  targetOptTemp = preset.temp;
+  targetOptPH = preset.ph;
+  targetThermoWidth = preset.width;
+  optimalTempSlider.value(preset.temp);
+  optimalPHSlider.value(preset.ph);
+  thermostabilitySlider.value(preset.width);
+  mode = preset.mode;
+  updateStartButtonLabel();
+  if (mode === 'temperature') {
+    cursorTempValue = preset.temp;
+  } else {
+    cursorPHValue = preset.ph;
+  }
+}
+
+function getActiveCursorValue() {
+  return mode === 'temperature' ? cursorTempValue : cursorPHValue;
+}
+
+function setActiveCursorValue(val) {
+  const axis = axisRanges[mode];
+  const clamped = constrain(val, axis.min, axis.max);
+  if (mode === 'temperature') {
+    cursorTempValue = clamped;
+  } else {
+    cursorPHValue = clamped;
+  }
+}
+
+function getEffectiveWidth() {
+  if (mode === 'temperature') {
+    return displayThermoWidth;
+  }
+  // map thermostability slider to a narrower window for pH units
+  return constrain(map(displayThermoWidth, 8, 32, 1.2, 4.5), 1.0, 5.0);
+}
+
+function computeActivity(value, mean, widthValue) {
+  const sigma = max(widthValue / 2.355, 0.1);
+  const exponent = -0.5 * pow((value - mean) / sigma, 2);
+  return constrain(exp(exponent), 0, 1);
+}
+
+function mousePressed() {
+  if (!layout) return;
+  if (mouseY <= drawHeight) {
+    // Top toggle click detection
+    for (const box of toggleHitboxes) {
+      if (mouseX >= box.x && mouseX <= box.x + box.width && mouseY >= box.y && mouseY <= box.y + box.height) {
+        mode = box.mode;
+        updateStartButtonLabel();
+        return;
+      }
+    }
+
+    if (isInsideGraph(mouseX, mouseY)) {
+      updateCursorFromMouse(mouseX);
+      const cursorPixel = getCursorPixel();
+      if (dist(mouseX, mouseY, cursorPixel.x, cursorPixel.y) < 18) {
+        draggingCursor = true;
+      }
+    }
+  }
+}
+
+function mouseDragged() {
+  if (!layout || !draggingCursor) return;
+  updateCursorFromMouse(mouseX);
+}
+
+function mouseReleased() {
+  draggingCursor = false;
+}
+
+function isInsideGraph(x, y) {
+  const graphArea = layout.graphInner;
+  return x >= graphArea.left && x <= graphArea.right && y >= graphArea.top - 20 && y <= graphArea.bottom + 20;
+}
+
+function updateCursorFromMouse(mouseXPosition) {
+  const inner = layout.graphInner;
+  const axis = axisRanges[mode];
+  const value = map(mouseXPosition, inner.left, inner.right, axis.min, axis.max);
+  setActiveCursorValue(value);
+}
+
+function getCursorPixel() {
+  const inner = layout.graphInner;
+  const axis = axisRanges[mode];
+  const mean = mode === 'temperature' ? displayOptTemp : displayOptPH;
+  const widthValue = getEffectiveWidth();
+  const cursorValue = getActiveCursorValue();
+  const activity = constrain(computeActivity(cursorValue, mean, widthValue), 0, 1);
+  const x = map(cursorValue, axis.min, axis.max, inner.left, inner.right);
+  const y = map(activity, 0, 1.05, inner.bottom, inner.top);
+  return { x, y };
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  updateControlPositions();
+}
+
+function updateControlPositions() {
+  sliderStartX = sliderLeftMargin;
+  const sliderWidth = max(250, canvasWidth - sliderStartX - margin);
+  const firstRowY = drawHeight + 52;
+
+  startButton.position(margin, drawHeight + 15);
+  resetButton.position(margin + 190, drawHeight + 15);
+
+  optimalTempSlider.position(sliderStartX, firstRowY);
+  optimalPHSlider.position(sliderStartX, firstRowY + sliderRowSpacing);
+  thermostabilitySlider.position(sliderStartX, firstRowY + sliderRowSpacing * 2);
+
+  optimalTempSlider.size(sliderWidth);
+  optimalPHSlider.size(sliderWidth);
+  thermostabilitySlider.size(sliderWidth);
+
+  // Position preset buttons in a responsive row below the sliders
+  const presetRowY = drawHeight + 170;
+  const labelWidth = presetLabelWidth;
+  const buttonStartX = margin + presetLabelWidth + 20;
+  const presetWidth = max(190, (canvasWidth - buttonStartX - margin) / presets.length - 12);
+  
+  presetButtons.forEach((btn, index) => {
+    const x = buttonStartX + index * (presetWidth + 12);
+    btn.position(x, presetRowY);
+    btn.size(presetWidth, 40);
+  });
+}
+
+function getSweepLabel() {
+  return mode === 'temperature' ? 'Sweep Temperature Values' : 'Sweep pH Values';
+}
+
+function updateStartButtonLabel() {
+  if (!startButton) return;
+  startButton.html(isRunning ? 'Pause Sweep' : getSweepLabel());
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (!container) return;
+  const bounds = container.getBoundingClientRect();
+  containerWidth = Math.floor(bounds.width);
+  canvasWidth = containerWidth;
+}
+
+function computeLayout() {
+  const toggleArea = {
+    x: margin,
+    y: margin + 60,
+    width: canvasWidth - margin * 2,
+    height: 48
+  };
+
+  const graphY = toggleArea.y + toggleArea.height + margin;
+  const availableWidth = canvasWidth - margin * 2;
+  const minPanelWidth = 180;
+  const minGraphWidth = 160;
+  const maxPanelWidth = max(minPanelWidth, availableWidth - minGraphWidth - margin);
+  let panelWidth = availableWidth * 0.38;
+  panelWidth = constrain(panelWidth, minPanelWidth, maxPanelWidth);
+  const graphWidth = availableWidth - panelWidth - margin;
+  const graphArea = {
+    x: margin,
+    y: graphY,
+    width: graphWidth,
+    height: drawHeight - graphY - margin
+  };
+  const panelArea = {
+    x: graphArea.x + graphArea.width + margin,
+    y: graphArea.y,
+    width: panelWidth,
+    height: graphArea.height
+  };
+  const graphInner = {
+    left: graphArea.x + 40,
+    right: graphArea.x + graphArea.width - 16,
+    top: graphArea.y + 20,
+    bottom: graphArea.y + graphArea.height - 40
+  };
+  return { toggleArea, graphArea, panelArea, graphInner };
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

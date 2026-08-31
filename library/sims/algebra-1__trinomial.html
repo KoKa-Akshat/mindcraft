@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Polynomial Classification Game using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Polynomial Classification Game — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "polynomial-classification-game",
+  "title": "Polynomial Classification Game",
+  "kind": "quiz",
+  "objective": "Identify and classify algebraic expressions as monomials, binomials, trinomials, or non-polynomials",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Value A",
+  "bLabel": "Value B",
+  "choices": [
+    "Quadratic trinomial",
+    "Linear binomial",
+    "Cubic monomial"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Identify and classify algebraic expressions as monomials, binomials, trinomials, or non-polynomials
+//
+//     Canvas layout (900x600px):
+//     - Top area (900x150): Expression display and question
+//     - Middle area (900x300): Classification buttons and workspace
+//     - Bottom area (900x150): Feedback and score
+//
+//     Visual elements:
+//     - Large expression display (e.g., "$3x^2 + 5x - 7$")
+//     - Visual breakdown showing terms separated
+//     - Four classification buttons
+//     - Score and streak display
+//     - Timer (optional challenge mode)
+//     - Level indicator
+//
+//     Game mechanics:
+//     - Show an algebraic expression
+//     - Student classifies it by clicking appropriate button
+//     - Immediate feedback with explanation
+//     - Progressive difficulty (starts simple, adds complexity)
+//     - Point system: +10 points per correct answer
+//     - Streak multiplier (×2 after 5 correct in a row)
+//
+//     Classification buttons:
+//     1. "Monomial (1 term)"
+//     2. "Binomial (2 terms)"
+//     3. "Trinomial (3 terms)"
+//     4. "Not a polynomial"
+//
+//     Expression types by level:
+//
+//     Level 1 - Clear examples:
+//     - $5x$ → Monomial
+//     - $x + 3$ → Binomial
+//     - $x^2 + 2x + 1$ → Trinomial
+//
+//     Level 2 - With coefficients and exponents:
+//     - $-3x^2$ → Monomial
+//     - $4x^3 - 7x$ → Binomial
+//     - $2a^2 + 5a - 3$ → Trinomial
+//
+//     Level 3 - Tricky cases:
+//     - $\frac{1}{x} + 2$ → Not a polynomial (negative exponent)
+//     - $\sqrt{x} + 5$ → Not a polynomial (rational exponent)
+//     - $x^0$ → Monomial (equals 1)
+//
+//     Level 4 - Multiple variables:
+//     - $3xy$ → Monomial
+//     - $x^2y + xy^2$ → Binomial
+//     - $a^2 + 2ab + b^2$ → Trinomial
+//
+//     Interactive controls:
+//     - Four classification buttons
+//     - "Show terms" button (highlights each term)
+//     - "Hint" button (costs 3 points)
+//     - "Next expression" (after answering)
+//     - "Challenge mode" toggle (adds timer)
+//
+//     Default parameters:
+//     - Level: 1
+//     - Score: 0
+//     - Challenge mode: off
+//
+//     Behavior:
+//     - When "Show terms" clicked:
+//       - Visually separate terms with color coding
+//       - Count and display number of terms
+//       - Check for polynomial requirements (non-negative integer exponents)
+//     - When classification selected:
+//       - If correct: Green flash, explanation, award points
+//       - If incorrect: Red flash, show correct answer with why
+//     - Hint: "Count the terms. Check if all exponents are non-negative integers."
+//
+//     Feedback examples:
+//     - Correct: "✓ Right! This has 2 terms, making it a binomial."
+//     - Incorrect: "✗ Not quite. $\frac{1}{x}$ is the same as $x^{-1}$ (negative exponent), so this is NOT a polynomial."
+//     - Term breakdown: "$3x^2 + 5x - 7$ has THREE terms: $3x^2$, $5x$, and $-7$"
+//
+//     Visual features:
+//     - Term highlighting with different colors
+//     - Animated separation of terms
+//     - Exponent checking visualizer
+//     - Achievement badges (Perfect Classifier, Speed Demon)
+//
+//     Implementation: p5.js with button interactions, expression parsing, animation effects, persistent scoring
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Operon Regulation Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Operon Regulation Simulator
+// Compares lac (inducible) and trp (repressible) operon regulation
+// with toggleable environmental conditions
+
+let canvasWidth = 800;
+let drawHeight = 400;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+
+// State
+let operonMode = 'lac'; // 'lac' or 'trp'
+let lactosePresent = false;
+let glucosePresent = true;
+let tryptophanPresent = true;
+let quizMode = false;
+let quizAnswer = null;      // null = not answered, true/false
+let quizRevealed = false;
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    drawOperonSelector();
+    drawOperonDiagram();
+    drawConditionToggles();
+    drawResultPanel();
+    if (quizMode) drawQuizOverlay();
+}
+
+// --- Operon state logic ---
+
+function isOperonON() {
+    if (operonMode === 'lac') {
+        // Lac operon ON when: lactose present AND glucose absent
+        // (simplified: Cap activation not shown, just glucose repression)
+        return lactosePresent && !glucosePresent;
+    } else {
+        // Trp operon ON when: tryptophan absent
+        return !tryptophanPresent;
+    }
+}
+
+function isRepressorBound() {
+    if (operonMode === 'lac') {
+        // Lac repressor binds operator when lactose is ABSENT
+        return !lactosePresent;
+    } else {
+        // Trp repressor binds operator when tryptophan is PRESENT
+        return tryptophanPresent;
+    }
+}
+
+// --- Drawing functions ---
+
+function drawOperonSelector() {
+    let btnW = 100;
+    let btnH = 28;
+    let y = 8;
+    let x = canvasWidth / 2 - btnW - 5;
+
+    // Lac button
+    if (operonMode === 'lac') {
+        fill(52, 152, 219);
+    } else {
+        fill(200);
+    }
+    stroke(150);
+    strokeWeight(1);
+    rect(x, y, btnW, btnH, 6);
+    fill(operonMode === 'lac' ? 255 : 60);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Lac Operon', x + btnW / 2, y + btnH / 2);
+
+    // Trp button
+    x += btnW + 10;
+    if (operonMode === 'trp') {
+        fill(155, 89, 182);
+    } else {
+        fill(200);
+    }
+    stroke(150);
+    strokeWeight(1);
+    rect(x, y, btnW, btnH, 6);
+    fill(operonMode === 'trp' ? 255 : 60);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Trp Operon', x + btnW / 2, y + btnH / 2);
+
+    // Quiz mode toggle
+    let qx = canvasWidth - 110;
+    fill(quizMode ? [46, 204, 113] : [200, 200, 200]);
+    stroke(150);
+    strokeWeight(1);
+    rect(qx, y, 95, btnH, 6);
+    fill(quizMode ? 255 : 60);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text(quizMode ? '✓ Quiz Mode' : 'Quiz Mode', qx + 47, y + btnH / 2);
+}
+
+function drawOperonDiagram() {
+    let ox = 40;
+    let oy = 100;
+    let geneH = 36;
+    let totalW = canvasWidth - 80;
+    let on = isOperonON();
+    let bound = isRepressorBound();
+
+    // Regulatory gene
+    let regW = totalW * 0.12;
+    fill(180, 220, 180);
+    stroke(100);
+    strokeWeight(1.5);
+    rect(ox, oy, regW, geneH, 4);
+    fill(40);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text('Regulatory', ox + regW / 2, oy + 12);
+    text('gene', ox + regW / 2, oy + 24);
+
+    // Arrow from regulatory gene to repressor
+    let repX = ox + regW / 2;
+    let repY = oy + geneH + 45;
+    stroke(100);
+    strokeWeight(1);
+    drawingContext.setLineDash([3, 3]);
+    line(repX, oy + geneH, repX, repY - 15);
+    drawingContext.setLineDash([]);
+
+    // Repressor protein
+    drawRepressor(repX, repY, bound);
+
+    // Promoter
+    let promX = ox + regW + 8;
+    let promW = totalW * 0.08;
+    fill(100, 200, 100);
+    stroke(100);
+    strokeWeight(1.5);
+    rect(promX, oy, promW, geneH, 4);
+    fill(40);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text('Promoter', promX + promW / 2, oy + geneH / 2);
+
+    // Operator
+    let opX = promX + promW + 4;
+    let opW = totalW * 0.07;
+    fill(255, 180, 80);
+    stroke(100);
+    strokeWeight(1.5);
+    rect(opX, oy, opW, geneH, 4);
+    fill(40);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text('Operator', opX + opW / 2, oy + geneH / 2);
+
+    // Structural genes
+    let structX = opX + opW + 8;
+    let numGenes = operonMode === 'lac' ? 3 : 5;
+    let geneNames = operonMode === 'lac' ? ['lacZ', 'lacY', 'lacA'] : ['trpE', 'trpD', 'trpC', 'trpB', 'trpA'];
+    let structW = (totalW - (structX - ox) - 10) / numGenes;
+
+    for (let i = 0; i < numGenes; i++) {
+        let gx = structX + i * (structW + 3);
+        fill(on ? [100, 150, 220] : [180, 180, 190]);
+        stroke(100);
+        strokeWeight(1.5);
+        rect(gx, oy, structW - 3, geneH, 4);
+        fill(on ? 255 : 120);
+        noStroke();
+        textSize(constrain(structW * 0.25, 9, 12));
+        textAlign(CENTER, CENTER);
+        text(geneNames[i], gx + (structW - 3) / 2, oy + geneH / 2);
+    }
+
+    // RNA Polymerase
+    drawRNAPolymerase(promX + promW / 2, oy, on, bound);
+
+    // Repressor binding to operator (arrow or block)
+    if (bound) {
+        // Draw repressor moving to operator
+        let rTargetX = opX + opW / 2;
+        let rTargetY = oy + geneH + 8;
+
+        stroke(200, 50, 50);
+        strokeWeight(1.5);
+        drawingContext.setLineDash([4, 4]);
+        line(repX, repY, rTargetX, rTargetY);
+        drawingContext.setLineDash([]);
+
+        // Block symbol on operator
+        fill(200, 50, 50, 150);
+        noStroke();
+        ellipse(rTargetX, oy + geneH / 2, 20, 20);
+        fill(255);
+        textSize(14);
+        textAlign(CENTER, CENTER);
+        text('✕', rTargetX, oy + geneH / 2);
+    }
+
+    // Inducer / Corepressor molecule
+    drawEffectorMolecule(repX, repY, bound);
+
+    // mRNA and protein products when ON
+    if (on) {
+        drawTranscriptionProducts(structX, oy + geneH, numGenes, structW, geneNames);
+    }
+
+    // Labels
+    fill(80);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    text('DNA', ox - 30, oy + 12);
+}
+
+function drawRepressor(x, y, bound) {
+    // Draw as a pac-man-like shape
+    if (bound) {
+        fill(200, 80, 80);
+    } else {
+        fill(180, 180, 180);
+    }
+    stroke(100);
+    strokeWeight(1.5);
+    ellipse(x, y, 28, 28);
+
+    fill(40);
+    noStroke();
+    textSize(8);
+    textAlign(CENTER, CENTER);
+    text('Repressor', x, y - 1);
+
+    // Label active/inactive
+    fill(bound ? [180, 40, 40] : [100, 160, 100]);
+    textSize(9);
+    textStyle(BOLD);
+    text(bound ? 'ACTIVE' : 'INACTIVE', x, y + 18);
+    textStyle(NORMAL);
+}
+
+function drawRNAPolymerase(x, y, on, blocked) {
+    let rpY = y - 30;
+
+    if (on) {
+        // RNap bound and transcribing
+        fill(46, 204, 113, 200);
+        stroke(34, 153, 84);
+        strokeWeight(1.5);
+        ellipse(x, rpY, 50, 24);
+
+        fill(255);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, CENTER);
+        text('RNA Pol', x, rpY - 2);
+        text('→→→', x, rpY + 8);
+    } else if (blocked) {
+        // RNap blocked, shown hovering
+        fill(200, 200, 200, 180);
+        stroke(150);
+        strokeWeight(1.5);
+        ellipse(x, rpY - 10, 50, 24);
+
+        fill(120);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, CENTER);
+        text('RNA Pol', x, rpY - 12);
+        text('BLOCKED', x, rpY - 1);
+    } else {
+        // RNap present but conditions not met (glucose present for lac)
+        fill(200, 200, 200, 150);
+        stroke(150);
+        strokeWeight(1);
+        ellipse(x, rpY - 10, 50, 24);
+
+        fill(120);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, CENTER);
+        text('RNA Pol', x, rpY - 12);
+    }
+}
+
+function drawEffectorMolecule(repX, repY, bound) {
+    let emX = repX + 60;
+    let emY = repY;
+
+    if (operonMode === 'lac') {
+        if (lactosePresent) {
+            // Allolactose (inducer) shown binding to repressor
+            fill(155, 89, 182);
+            stroke(120, 60, 150);
+            strokeWeight(1);
+
+            // Small hexagon for lactose
+            beginShape();
+            for (let a = 0; a < 6; a++) {
+                let ax = emX + 10 * cos(a * PI / 3 - PI / 6);
+                let ay = emY + 10 * sin(a * PI / 3 - PI / 6);
+                vertex(ax, ay);
+            }
+            endShape(CLOSE);
+
+            fill(255);
+            noStroke();
+            textSize(7);
+            textAlign(CENTER, CENTER);
+            text('Lac', emX, emY);
+
+            // Arrow to repressor
+            stroke(155, 89, 182);
+            strokeWeight(1);
+            line(emX - 12, emY, repX + 16, repY);
+
+            // Label
+            fill(120, 60, 150);
+            noStroke();
+            textSize(9);
+            textAlign(LEFT, CENTER);
+            text('Inducer', emX + 14, emY);
+            text('(allolactose)', emX + 14, emY + 12);
+        }
+    } else {
+        if (tryptophanPresent) {
+            // Tryptophan (corepressor) binding to repressor
+            fill(241, 196, 15);
+            stroke(200, 160, 10);
+            strokeWeight(1);
+
+            // Diamond for tryptophan
+            beginShape();
+            vertex(emX, emY - 10);
+            vertex(emX + 10, emY);
+            vertex(emX, emY + 10);
+            vertex(emX - 10, emY);
+            endShape(CLOSE);
+
+            fill(40);
+            noStroke();
+            textSize(7);
+            textAlign(CENTER, CENTER);
+            text('Trp', emX, emY);
+
+            // Arrow to repressor
+            stroke(200, 160, 10);
+            strokeWeight(1);
+            line(emX - 12, emY, repX + 16, repY);
+
+            // Label
+            fill(180, 140, 0);
+            noStroke();
+            textSize(9);
+            textAlign(LEFT, CENTER);
+            text('Corepressor', emX + 14, emY);
+            text('(tryptophan)', emX + 14, emY + 12);
+        }
+    }
+}
+
+function drawTranscriptionProducts(startX, topY, numGenes, geneW, geneNames) {
+    let prodY = topY + 55;
+
+    // mRNA wavy line
+    stroke(52, 152, 219);
+    strokeWeight(2);
+    noFill();
+    beginShape();
+    for (let px = startX; px < startX + numGenes * (geneW + 3) - 3; px += 4) {
+        let py = prodY + sin((px - startX) * 0.15) * 3;
+        vertex(px, py);
+    }
+    endShape();
+
+    fill(52, 152, 219);
+    noStroke();
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text('mRNA', startX - 35, prodY);
+
+    // Protein products
+    let protY = prodY + 22;
+    fill(80);
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text('Proteins:', startX - 35, protY + 8);
+
+    for (let i = 0; i < numGenes; i++) {
+        let px = startX + i * (geneW + 3) + (geneW - 3) / 2;
+
+        fill(100, 180, 100);
+        stroke(60, 140, 60);
+        strokeWeight(1);
+        ellipse(px, protY + 8, 22, 16);
+
+        fill(255);
+        noStroke();
+        textSize(7);
+        textAlign(CENTER, CENTER);
+        text(geneNames[i], px, protY + 8);
+    }
+}
+
+function drawConditionToggles() {
+    let cy = drawHeight + 8;
+    let btnH = 28;
+    let btnW = 110;
+
+    fill(60);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text('Conditions:', 15, cy + btnH / 2);
+
+    let bx = 110;
+
+    if (operonMode === 'lac') {
+        // Lactose toggle
+        drawToggle(bx, cy, btnW, btnH, 'Lactose', lactosePresent, [155, 89, 182]);
+        bx += btnW + 10;
+
+        // Glucose toggle
+        drawToggle(bx, cy, btnW, btnH, 'Glucose', glucosePresent, [230, 126, 34]);
+    } else {
+        // Tryptophan toggle
+        drawToggle(bx, cy, btnW, btnH, 'Tryptophan', tryptophanPresent, [241, 196, 15]);
+    }
+}
+
+function drawToggle(x, y, w, h, label, state, onColor) {
+    if (state) {
+        fill(onColor[0], onColor[1], onColor[2]);
+    } else {
+        fill(200);
+    }
+    stroke(150);
+    strokeWeight(1);
+    rect(x, y, w, h, 6);
+
+    fill(state ? 255 : 80);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text((state ? '✓ ' : '✗ ') + label, x + w / 2, y + h / 2);
+}
+
+function drawResultPanel() {
+    let on = isOperonON();
+    let panelX = 10;
+    let panelY = drawHeight * 0.72;
+    let panelW = canvasWidth - 20;
+    let panelH = drawHeight * 0.25;
+
+    // Background
+    fill(255, 250, 240);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    // Status badge
+    fill(on ? [46, 204, 113] : [231, 76, 60]);
+    noStroke();
+    let badgeText = 'Operon: ' + (on ? 'ON' : 'OFF');
+    rect(panelX + 10, panelY + 8, textWidth(badgeText) + 30, 22, 10);
+    fill(255);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(LEFT, CENTER);
+    text(badgeText, panelX + 18, panelY + 19);
+    textStyle(NORMAL);
+
+    // Explanation
+    fill(60);
+    textSize(11);
+    textAlign(LEFT, TOP);
+    textLeading(15);
+    let desc = getExplanation();
+    let descX = panelX + 14;
+    let descY = panelY + 36;
+    let descW = panelW - 28;
+
+    // Word wrap
+    let words = desc.split(' ');
+    let currentLine = '';
+    let ly = descY;
+    for (let w of words) {
+        let test = currentLine + w + ' ';
+        if (textWidth(test) > descW) {
+            text(currentLine, descX, ly);
+            currentLine = w + ' ';
+            ly += 15;
+        } else {
+            currentLine = test;
+        }
+    }
+    text(currentLine, descX, ly);
+
+    // Effect symbols
+    let symX = panelX + panelW - 130;
+    let symY = panelY + 10;
+    fill(80);
+    textSize(10);
+    textAlign(LEFT, TOP);
+    if (operonMode === 'lac') {
+        text('Lactose: ' + (lactosePresent ? '✓' : '✗'), symX, symY);
+        text('Glucose: ' + (glucosePresent ? '✓' : '✗'), symX, symY + 14);
+        text('Repressor: ' + (isRepressorBound() ? 'bound' : 'free'), symX, symY + 28);
+    } else {
+        text('Trp: ' + (tryptophanPresent ? '✓' : '✗'), symX, symY);
+        text('Repressor: ' + (isRepressorBound() ? 'bound' : 'free'), symX, symY + 14);
+    }
+}
+
+function getExplanation() {
+    if (operonMode === 'lac') {
+        if (!lactosePresent && glucosePresent) {
+            return 'No lactose, glucose available. The repressor binds the operator, blocking RNA polymerase. The cell uses glucose as its preferred energy source — no need to make lac enzymes.';
+        } else if (!lactosePresent && !glucosePresent) {
+            return 'No lactose, no glucose. The repressor binds the operator, blocking transcription. Even though glucose is absent (Cap would activate), there is no inducer to remove the repressor.';
+        } else if (lactosePresent && glucosePresent) {
+            return 'Lactose present, but glucose also present. Allolactose removes the repressor from the operator, but low CAP-cAMP levels (due to glucose) mean RNA polymerase binds weakly. Transcription is minimal.';
+        } else {
+            return 'Lactose present, glucose absent. Allolactose (from lactose) binds the repressor, causing it to release from the operator. High cAMP levels activate CAP, enhancing RNA polymerase binding. Operon is fully ON — lac enzymes are produced.';
+        }
+    } else {
+        if (tryptophanPresent) {
+            return 'Tryptophan is abundant. Tryptophan acts as a corepressor, binding to the trp repressor and activating it. The activated repressor binds the operator, blocking transcription. The cell has enough tryptophan — no need to synthesize more.';
+        } else {
+            return 'Tryptophan is scarce. Without tryptophan, the repressor remains inactive and cannot bind the operator. RNA polymerase transcribes the structural genes, producing enzymes for tryptophan biosynthesis.';
+        }
+    }
+}
+
+function drawQuizOverlay() {
+    if (quizRevealed) return;
+
+    // Cover the result panel
+    let panelX = 10;
+    let panelY = drawHeight * 0.72;
+    let panelW = canvasWidth - 20;
+    let panelH = drawHeight * 0.25;
+
+    fill(240, 240, 255, 240);
+    stroke(100, 100, 200);
+    strokeWeight(2);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    fill(60);
+    noStroke();
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('Predict: Is the operon ON or OFF?', panelX + panelW / 2, panelY + 25);
+    textStyle(NORMAL);
+
+    // ON / OFF buttons
+    let btnW = 80;
+    let btnH = 30;
+    let centerX = panelX + panelW / 2;
+    let btnY = panelY + 50;
+
+    // ON button
+    fill(46, 204, 113);
+    stroke(150);
+    strokeWeight(1);
+    rect(centerX - btnW - 10, btnY, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('ON', centerX - btnW / 2 - 10, btnY + btnH / 2);
+
+    // OFF button
+    fill(231, 76, 60);
+    stroke(150);
+    strokeWeight(1);
+    rect(centerX + 10, btnY, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('OFF', centerX + 10 + btnW / 2, btnY + btnH / 2);
+
+    // Feedback
+    if (quizAnswer !== null) {
+        let correct = (quizAnswer === isOperonON());
+        fill(correct ? [46, 204, 113] : [231, 76, 60]);
+        textSize(13);
+        textStyle(BOLD);
+        textAlign(CENTER, CENTER);
+        text(correct ? '✓ Correct!' : '✗ Not quite — check the conditions!', centerX, btnY + btnH + 20);
+        textStyle(NORMAL);
+    }
+}
+
+function mousePressed() {
+    // Operon selector
+    let btnW = 100;
+    let btnH = 28;
+    let y = 8;
+    let x = canvasWidth / 2 - btnW - 5;
+
+    if (mouseX >= x && mouseX <= x + btnW && mouseY >= y && mouseY <= y + btnH) {
+        operonMode = 'lac';
+        resetQuiz();
+        return;
+    }
+    x += btnW + 10;
+    if (mouseX >= x && mouseX <= x + btnW && mouseY >= y && mouseY <= y + btnH) {
+        operonMode = 'trp';
+        resetQuiz();
+        return;
+    }
+
+    // Quiz toggle
+    let qx = canvasWidth - 110;
+    if (mouseX >= qx && mouseX <= qx + 95 && mouseY >= y && mouseY <= y + btnH) {
+        quizMode = !quizMode;
+        resetQuiz();
+        return;
+    }
+
+    // Condition toggles
+    let cy = drawHeight + 8;
+    let tBtnH = 28;
+    let tBtnW = 110;
+    let bx = 110;
+
+    if (operonMode === 'lac') {
+        if (mouseX >= bx && mouseX <= bx + tBtnW && mouseY >= cy && mouseY <= cy + tBtnH) {
+            lactosePresent = !lactosePresent;
+            resetQuiz();
+            return;
+        }
+        bx += tBtnW + 10;
+        if (mouseX >= bx && mouseX <= bx + tBtnW && mouseY >= cy && mouseY <= cy + tBtnH) {
+            glucosePresent = !glucosePresent;
+            resetQuiz();
+            return;
+        }
+    } else {
+        if (mouseX >= bx && mouseX <= bx + tBtnW && mouseY >= cy && mouseY <= cy + tBtnH) {
+            tryptophanPresent = !tryptophanPresent;
+            resetQuiz();
+            return;
+        }
+    }
+
+    // Quiz answer buttons
+    if (quizMode && !quizRevealed) {
+        let panelX = 10;
+        let panelY = drawHeight * 0.72;
+        let panelW = canvasWidth - 20;
+        let centerX = panelX + panelW / 2;
+        let qBtnW = 80;
+        let qBtnH = 30;
+        let qBtnY = panelY + 50;
+
+        // ON button
+        if (mouseX >= centerX - qBtnW - 10 && mouseX <= centerX - 10 &&
+            mouseY >= qBtnY && mouseY <= qBtnY + qBtnH) {
+            quizAnswer = true;
+            setTimeout(() => { quizRevealed = true; }, 1500);
+            return;
+        }
+
+        // OFF button
+        if (mouseX >= centerX + 10 && mouseX <= centerX + 10 + qBtnW &&
+            mouseY >= qBtnY && mouseY <= qBtnY + qBtnH) {
+            quizAnswer = false;
+            setTimeout(() => { quizRevealed = true; }, 1500);
+            return;
+        }
+    }
+}
+
+function resetQuiz() {
+    quizAnswer = null;
+    quizRevealed = false;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

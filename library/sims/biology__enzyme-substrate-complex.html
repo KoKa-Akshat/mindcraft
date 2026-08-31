@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Enzyme Regulation Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>let canvasWidth = 700;
+const drawHeight = 590;
+const controlHeight = 130; // Three rows of controls
+let canvasHeight = drawHeight + controlHeight;
+const margin = 20;
+const sliderLeftMargin = 190;
+const defaultTextSize = 16;
+
+let startButton;
+let inhibitorSlider;
+let substrateSlider;
+const modeButtons = {};
+const modeOrder = ['no', 'competitive', 'noncompetitive', 'feedback'];
+let currentMode = 'no';
+let isRunning = false;
+let animationTime = 0;
+
+const baseVmax = 100;
+const baseKm = 30;
+
+const modeDetails = {
+  no: {
+    label: 'No Inhibition',
+    buttonLabel: 'No Inhibition',
+    stripSummary: 'Baseline curve · Km and Vmax unchanged',
+    summary: 'Active site remains open and the enzyme follows standard Michaelis–Menten kinetics.',
+    context: 'Represents enzymes when the pathway needs high throughput with no regulatory signals.',
+    color: '#2563eb',
+    dashedCurve: false
+  },
+  competitive: {
+    label: 'Competitive',
+    buttonLabel: 'Competitive',
+    stripSummary: 'Km increases · Vmax unchanged',
+    summary: 'Inhibitor mimics the substrate and occupies the active site until high [S] displaces it.',
+    context: 'Seen with drugs that resemble substrates to temporarily slow a pathway.',
+    color: '#d14343',
+    dashedCurve: true
+  },
+  noncompetitive: {
+    label: 'Noncompetitive',
+    buttonLabel: 'Noncompetitive',
+    stripSummary: 'Vmax decreases · Km unchanged',
+    summary: 'Allosteric inhibitor binds outside the active site and lowers catalytic turnover regardless of [S].',
+    context: 'Useful in pathways when partial shutdown is needed without changing substrate affinity.',
+    color: '#7c3aed',
+    dashedCurve: true
+  },
+  feedback: {
+    label: 'Feedback Inhibition',
+    buttonLabel: 'Feedback',
+    stripSummary: 'Product binds allosteric site and lowers Vmax',
+    summary: 'End-product accumulates, binds the allosteric site, and shifts the enzyme into an inactive conformation.',
+    context: 'Balances biosynthetic pathways by turning off the first committed step once product levels rise.',
+    color: '#6d28d9',
+    dashedCurve: true
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  describe('Interactive enzyme regulation simulation comparing competitive, noncompetitive, and feedback inhibition with kinetics curves.');
+
+  startButton = createButton('Start Simulation');
+  startButton.mousePressed(toggleSimulation);
+
+  inhibitorSlider = createSlider(0, 100, 25, 1);
+  inhibitorSlider.input(() => {});
+
+  substrateSlider = createSlider(0, 100, 45, 1);
+  substrateSlider.input(() => {});
+
+  modeOrder.forEach((modeId) => {
+    const button = createButton(modeDetails[modeId].buttonLabel);
+    button.mousePressed(() => setMode(modeId));
+    modeButtons[modeId] = button;
+  });
+
+  positionControls();
+  setMode(currentMode);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  if (isRunning) {
+    animationTime += deltaTime / 1000;
+  }
+
+  background('white');
+
+  stroke('silver');
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  const inhibitorLevel = inhibitorSlider ? inhibitorSlider.value() : 0;
+  const kinetics = getKinetics(currentMode, inhibitorLevel / 100);
+
+  drawTitle();
+  drawTopStrip(100, 70, inhibitorLevel);
+  drawCenterPanels(185, 230, kinetics, inhibitorLevel / 100);
+  drawSummaryPanel(430, 150, kinetics);
+  drawControlLabels();
+}
+
+function drawTitle() {
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  fill('black');
+  text('Enzyme Regulation Simulator', canvasWidth / 2, margin + 15);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawTopStrip(y, height, inhibitorLevel) {
+  const x = margin;
+  stroke('#4b8fd3');
+  fill('#e5f1ff');
+  rect(x, y, canvasWidth - 2 * margin, height, 12);
+
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(15);
+  fill('#1f2933');
+  text('Modes respond instantly · Use the buttons below to switch inhibition type', x + 15, y - 22);
+  textAlign(RIGHT, CENTER);
+  textSize(13);
+  fill('#1f2933');
+  text(`Current inhibitor: ${nf(inhibitorLevel, 0, 0)}%`, canvasWidth - margin - 10, y - 22);
+  textAlign(LEFT, CENTER);
+  textSize(15);
+
+  const cardGap = 12;
+  const stripWidth = canvasWidth - 2 * margin - cardGap * (modeOrder.length + 1);
+  const cardWidth = stripWidth / modeOrder.length;
+  const cardHeight = height - 20;
+
+  modeOrder.forEach((modeId, idx) => {
+    const detail = modeDetails[modeId];
+    const cardX = x + cardGap + idx * (cardWidth + cardGap);
+    const cardY = y + 10;
+    stroke(modeId === currentMode ? detail.color : '#93c5fd');
+    strokeWeight(2);
+    fill(modeId === currentMode ? 'white' : '#f8fbff');
+    rect(cardX, cardY, cardWidth, cardHeight, 10);
+
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(14);
+    fill('black');
+    text(detail.label, cardX + 10, cardY + 8);
+    textSize(12);
+    fill('#374151');
+    text(detail.stripSummary, cardX + 10, cardY + 30, cardWidth - 20, cardHeight - 35);
+  });
+
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawCenterPanels(y, height, kinetics, inhibitorFraction) {
+  const gap = 20;
+  const panelWidth = (canvasWidth - 2 * margin - gap) / 2;
+  const leftRect = { x: margin, y, w: panelWidth, h: height };
+  const rightRect = { x: margin + panelWidth + gap, y, w: panelWidth, h: height };
+
+  stroke('#fbb6ce');
+  fill('#fff5fa');
+  rect(leftRect.x, leftRect.y, leftRect.w, leftRect.h, 16);
+  stroke('#86efac');
+  fill('#f0fff4');
+  rect(rightRect.x, rightRect.y, rightRect.w, rightRect.h, 16);
+
+  drawEnzymePanel(leftRect, inhibitorFraction);
+  drawKineticsPanel(rightRect, kinetics, inhibitorFraction);
+}
+
+function drawEnzymePanel(rect, inhibitorFraction) {
+  const padding = 20;
+  noStroke();
+  fill('black');
+  textSize(16);
+  textAlign(LEFT, CENTER);
+  text('Enzyme schematic', rect.x + padding, rect.y + padding - 10);
+
+  const inner = {
+    x: rect.x + padding,
+    y: rect.y + padding + 10,
+    w: rect.w - padding * 2,
+    h: rect.h - padding * 2 - 20
+  };
+
+  drawEnzymeShape(inner, inhibitorFraction);
+  drawEnzymeLabels(inner);
+}
+
+function drawEnzymeShape(inner, inhibitorFraction) {
+  const cx = inner.x + inner.w * 0.45;
+  const cy = inner.y + inner.h * 0.5;
+  const wobble = isRunning ? sin(animationTime * TWO_PI) * 6 : 0;
+  const activeSiteX = inner.x + inner.w * 0.78;
+  const activeSiteY = cy - 5;
+
+  noStroke();
+  const isAllosteric = currentMode === 'noncompetitive' || currentMode === 'feedback';
+  const baseColor = isAllosteric ? color('#f6ad55') : color('#c3dafe');
+  fill(baseColor);
+
+  beginShape();
+  curveVertex(inner.x + 30, inner.y + 20);
+  curveVertex(inner.x + 30, inner.y + 20 + wobble);
+  curveVertex(cx - 40, cy - 60 + wobble);
+  curveVertex(cx + 10, cy - 70 - wobble * 0.5);
+  curveVertex(activeSiteX, activeSiteY - 40);
+  curveVertex(activeSiteX + 40, activeSiteY - 10);
+  curveVertex(activeSiteX + 10, activeSiteY + 40);
+  curveVertex(cx + 20, cy + 70 + wobble * 0.5);
+  curveVertex(cx - 40, cy + 60 - wobble);
+  curveVertex(inner.x + 30, inner.y + inner.h - 30);
+  curveVertex(inner.x - 5, cy + 20);
+  curveVertex(inner.x - 5, cy - 30);
+  endShape(CLOSE);
+
+  // Active site pocket
+  noFill();
+  stroke('#1f2933');
+  strokeWeight(2);
+  beginShape();
+  curveVertex(activeSiteX - 5, activeSiteY - 20);
+  curveVertex(activeSiteX + 20, activeSiteY - 10 - inhibitorFraction * 10);
+  curveVertex(activeSiteX + 25, activeSiteY + 12 + inhibitorFraction * 5);
+  curveVertex(activeSiteX - 5, activeSiteY + 25);
+  endShape();
+
+  // Allosteric site
+  const allostericX = inner.x + inner.w * 0.2;
+  const allostericY = inner.y + inner.h * 0.25 + wobble * 0.1;
+  fill('#fde68a');
+  stroke('#f59e0b');
+  ellipse(allostericX, allostericY, 30, 22);
+
+  // Substrate particle
+  const substratePhase = (animationTime * 0.75) % 1;
+  const substrateX = lerp(inner.x - 30, activeSiteX + 15, isRunning ? substratePhase : 0.8);
+  const substrateY = activeSiteY + sin(animationTime * 2) * 5;
+  drawSubstrateShape(substrateX, substrateY);
+
+  // Inhibitor representation
+  const inhibitorX = isAllosteric ? allostericX + 40 : activeSiteX - 10;
+  const inhibitorY = isAllosteric ? allostericY + 40 : activeSiteY - 40;
+  const inhibitorOffset = isRunning ? sin(animationTime * 3) * 4 : 0;
+  drawInhibitorShape(inhibitorX, inhibitorY + inhibitorOffset, isAllosteric);
+
+  if (isAllosteric) {
+    drawAllostericConnections(allostericX, allostericY, activeSiteX, activeSiteY, inhibitorFraction);
+  }
+
+  if (currentMode === 'competitive') {
+    drawCompetitiveOverlay(activeSiteX, activeSiteY, inhibitorFraction);
+  }
+
+  if (currentMode === 'feedback') {
+    drawFeedbackLoop(allostericX, inner.y + inner.h - 30, inhibitorFraction);
+  }
+}
+
+function drawSubstrateShape(x, y) {
+  noStroke();
+  fill('#34d399');
+  beginShape();
+  const radius = 18;
+  for (let i = 0; i < 6; i++) {
+    const angle = TWO_PI / 6 * i + PI / 6;
+    const px = x + radius * cos(angle);
+    const py = y + radius * sin(angle);
+    vertex(px, py);
+  }
+  endShape(CLOSE);
+  noStroke();
+  fill('black');
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text('S', x, y);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawInhibitorShape(x, y, allosteric) {
+  noStroke();
+  fill(allosteric ? '#f472b6' : '#f97316');
+  beginShape();
+  vertex(x, y - 18);
+  vertex(x + 18, y + 18);
+  vertex(x - 18, y + 18);
+  endShape(CLOSE);
+  noStroke();
+  fill('white');
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text('I', x, y + 5);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawAllostericConnections(allostericX, allostericY, activeSiteX, activeSiteY, inhibitorFraction) {
+  const ctx = drawingContext;
+  ctx.save();
+  ctx.setLineDash([6, 6]);
+  stroke('#be123c');
+  strokeWeight(2);
+  line(allostericX + 15, allostericY + 10, activeSiteX - 30, activeSiteY - 20);
+  ctx.restore();
+
+  stroke('#f97316');
+  strokeWeight(2);
+  const arrowStrength = 40 + inhibitorFraction * 30;
+  line(activeSiteX - 15, activeSiteY - 5, activeSiteX - 15 - arrowStrength, activeSiteY - 25);
+  noStroke();
+}
+
+function drawCompetitiveOverlay(activeSiteX, activeSiteY, inhibitorFraction) {
+  noStroke();
+  fill(255, 255, 255, 160);
+  ellipse(activeSiteX + 10, activeSiteY + 5, 70 - inhibitorFraction * 10, 30);
+  stroke('#ef4444');
+  strokeWeight(2);
+  line(activeSiteX + 25, activeSiteY - 10, activeSiteX + 25, activeSiteY + 20);
+  noStroke();
+}
+
+function drawFeedbackLoop(allostericX, bottomY, inhibitorFraction) {
+  const loopRadius = 30 + inhibitorFraction * 20;
+  noFill();
+  stroke('#6d28d9');
+  strokeWeight(2);
+  arc(allostericX + 120, bottomY, loopRadius * 2, loopRadius, PI, PI + HALF_PI);
+  line(allostericX + 120 + loopRadius, bottomY - loopRadius * 0.5, allostericX + 40, bottomY - 20);
+  drawArrow(allostericX + 40, bottomY - 20, allostericX, bottomY - 50, '#6d28d9');
+  noStroke();
+}
+
+function drawArrow(x1, y1, x2, y2, strokeColor) {
+  stroke(strokeColor);
+  strokeWeight(2);
+  line(x1, y1, x2, y2);
+  const angle = atan2(y2 - y1, x2 - x1);
+  const size = 8;
+  line(x2, y2, x2 - size * cos(angle - PI / 6), y2 - size * sin(angle - PI / 6));
+  line(x2, y2, x2 - size * cos(angle + PI / 6), y2 - size * sin(angle + PI / 6));
+  noStroke();
+}
+
+function drawEnzymeLabels(inner) {
+  noStroke();
+  fill('#111827');
+  textSize(13);
+  textAlign(LEFT, CENTER);
+  text('Active site', inner.x + inner.w * 0.66, inner.y + inner.h * 0.2);
+  text('Allosteric site', inner.x + inner.w * 0.05, inner.y + inner.h * 0.15);
+  text('Substrate (S)', inner.x + inner.w * 0.05, inner.y + inner.h * 0.65);
+  text('Inhibitor (I)', inner.x + inner.w * 0.55, inner.y + inner.h * 0.75);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawKineticsPanel(rect, kinetics, inhibitorFraction) {
+  const padding = 24;
+  noStroke();
+  fill('black');
+  textSize(16);
+  textAlign(LEFT, CENTER);
+  text('Michaelis–Menten kinetics', rect.x + padding, rect.y + padding - 10);
+
+  const graph = {
+    x: rect.x + padding,
+    y: rect.y + padding + 5,
+    w: rect.w - padding * 2,
+    h: rect.h - padding * 2 - 20
+  };
+
+  drawAxes(graph);
+  drawBaselineCurve(graph);
+  drawModeCurve(graph, kinetics, inhibitorFraction);
+  drawProbeMarker(graph, kinetics);
+}
+
+function drawAxes(graph) {
+  stroke('#6b7280');
+  strokeWeight(1.5);
+  line(graph.x, graph.y + graph.h, graph.x + graph.w, graph.y + graph.h);
+  line(graph.x, graph.y + graph.h, graph.x, graph.y);
+
+  noStroke();
+  fill('#111827');
+  textAlign(CENTER, CENTER);
+  textSize(13);
+  text('[S] (substrate concentration)', graph.x + graph.w / 2, graph.y + graph.h + 30);
+  textAlign(CENTER, CENTER);
+  text('Reaction rate (v)', graph.x - 60, graph.y + graph.h / 2);
+
+  stroke('#d1d5db');
+  const tickCount = 5;
+  for (let i = 1; i < tickCount; i++) {
+    const tx = graph.x + (graph.w / tickCount) * i;
+    line(tx, graph.y + graph.h, tx, graph.y + graph.h + 6);
+  }
+
+  for (let i = 1; i < tickCount; i++) {
+    const ty = graph.y + graph.h - (graph.h / tickCount) * i;
+    line(graph.x - 6, ty, graph.x, ty);
+  }
+  noStroke();
+}
+
+function drawBaselineCurve(graph) {
+  stroke('#93c5fd');
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let s = 0; s <= 100; s += 2) {
+    const v = (baseVmax * s) / (baseKm + s);
+    const pt = mapToGraph(graph, s, v, baseVmax * 1.1);
+    vertex(pt.x, pt.y);
+  }
+  endShape();
+  noStroke();
+}
+
+function drawModeCurve(graph, kinetics, inhibitorFraction) {
+  const detail = modeDetails[currentMode];
+  stroke(detail.color);
+  strokeWeight(3);
+  const ctx = drawingContext;
+  if (detail.dashedCurve) {
+    ctx.save();
+    ctx.setLineDash([10, 7]);
+  }
+  noFill();
+  beginShape();
+  const effectiveKm = kinetics.Km;
+  const effectiveVmax = kinetics.Vmax;
+  const maxV = baseVmax * 1.1;
+  for (let s = 0; s <= 100; s += 2) {
+    const v = (effectiveVmax * s) / (effectiveKm + s);
+    const pt = mapToGraph(graph, s, v, maxV);
+    vertex(pt.x, pt.y);
+  }
+  endShape();
+  if (detail.dashedCurve) {
+    ctx.restore();
+  }
+  noStroke();
+
+  if (currentMode === 'feedback') {
+    drawFeedbackBadge(graph, inhibitorFraction);
+  }
+}
+
+function drawFeedbackBadge(graph, inhibitorFraction) {
+  const badgeX = graph.x + graph.w * 0.75;
+  const badgeY = graph.y + 20;
+  stroke('#6d28d9');
+  fill(255, 255, 255, 220);
+  rect(badgeX - 60, badgeY - 20, 140, 50, 10);
+  noStroke();
+  fill('#6d28d9');
+  textAlign(LEFT, CENTER);
+  textSize(12);
+  text('Product feedback ↓', badgeX - 50, badgeY - 5);
+  text('Loop strength: ' + nf(inhibitorFraction * 100, 0, 0) + '%', badgeX - 50, badgeY + 12);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawProbeMarker(graph, kinetics) {
+  const substrateValue = substrateSlider ? substrateSlider.value() : 40;
+  const v = (kinetics.Vmax * substrateValue) / (kinetics.Km + substrateValue);
+  const pt = mapToGraph(graph, substrateValue, v, baseVmax * 1.1);
+
+  const ctx = drawingContext;
+  ctx.save();
+  ctx.setLineDash([5, 5]);
+  stroke('#6b7280');
+  line(pt.x, graph.y + graph.h, pt.x, pt.y);
+  ctx.restore();
+
+  fill('#fbbf24');
+  stroke('#92400e');
+  strokeWeight(2);
+  ellipse(pt.x, pt.y, 14, 14);
+  noStroke();
+  fill('#111827');
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text(`Probe: [S]=${substrateValue} · v=${v.toFixed(1)}`, pt.x + 10, pt.y - 10);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function mapToGraph(graph, substrate, velocity, maxV) {
+  const x = map(substrate, 0, 100, graph.x, graph.x + graph.w);
+  const y = map(velocity, 0, maxV, graph.y + graph.h, graph.y);
+  return { x, y };
+}
+
+function drawSummaryPanel(y, height, kinetics) {
+  const x = margin;
+  stroke('#f59e0b');
+  fill('#fff7ed');
+  rect(x, y, canvasWidth - 2 * margin, height, 16);
+
+  const detail = modeDetails[currentMode];
+  const summaryText = `${detail.summary}`;
+  const contextText = `Context: ${detail.context}`;
+  const infoText = `Vmax: ${kinetics.Vmax.toFixed(1)}    Km: ${kinetics.Km.toFixed(1)}`;
+
+  const textBlockWidth = canvasWidth - 2 * margin - 36;
+  const lineSpacing = 28;
+  const startY = y + 18;
+
+  noStroke();
+  fill('#111827');
+  textAlign(LEFT, TOP);
+  textLeading(24);
+
+  textSize(16);
+  text(`Current mechanism: ${detail.label}`, x + 18, startY);
+
+  textSize(14);
+  text(infoText, x + 18, startY + lineSpacing);
+  const summaryY = startY + lineSpacing * 2;
+  const contextY = summaryY + lineSpacing * 1.2;
+  text(summaryText, x + 18, summaryY, textBlockWidth);
+  text(contextText, x + 18, contextY, textBlockWidth);
+
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  textLeading(20);
+}
+
+function drawControlLabels() {
+  noStroke();
+  fill('#111827');
+  textAlign(LEFT, CENTER);
+  const row1Y = drawHeight + 30;
+  const row2Y = drawHeight + 70;
+
+  const inhibitorValue = inhibitorSlider ? inhibitorSlider.value() : 0;
+  const substrateValue = substrateSlider ? substrateSlider.value() : 0;
+
+  text(`Inhibitor concentration: ${inhibitorValue}%`, sliderLeftMargin, row1Y);
+  text(`Probe substrate [S]: ${substrateValue}`, sliderLeftMargin, row2Y);
+  text('Mode Select:', 20, row2Y);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function getKinetics(modeId, inhibitorFraction) {
+  let Vmax = baseVmax;
+  let Km = baseKm;
+
+  if (modeId === 'competitive') {
+    Km = baseKm * (1 + inhibitorFraction * 2.2);
+  } else if (modeId === 'noncompetitive') {
+    Vmax = baseVmax * (1 - inhibitorFraction * 0.6);
+  } else if (modeId === 'feedback') {
+    Vmax = baseVmax * (1 - inhibitorFraction * 0.7);
+  }
+
+  Vmax = max(20, Vmax);
+  Km = max(5, Km);
+  return { Vmax, Km };
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  if (startButton) {
+    startButton.html(isRunning ? 'Pause Simulation' : 'Start Simulation');
+  }
+}
+
+function setMode(modeId) {
+  currentMode = modeId;
+  modeOrder.forEach((id) => {
+    const button = modeButtons[id];
+    if (!button) {
+      return;
+    }
+    if (id === modeId) {
+      button.style('background-color', '#dbeafe');
+      button.style('font-weight', '600');
+    } else {
+      button.style('background-color', '#ffffff');
+      button.style('font-weight', '400');
+    }
+  });
+}
+
+function positionControls() {
+  if (!startButton || !inhibitorSlider || !substrateSlider) {
+    return;
+  }
+  const rowYs = [drawHeight + 5, drawHeight + 45, drawHeight + 85];
+  startButton.position(10, rowYs[0]);
+  startButton.size(160, 32);
+
+  const sliderWidth = max(140, canvasWidth - sliderLeftMargin - margin);
+  inhibitorSlider.position(sliderLeftMargin, rowYs[0]);
+  inhibitorSlider.size(sliderWidth);
+  substrateSlider.position(sliderLeftMargin, rowYs[1]);
+  substrateSlider.size(sliderWidth);
+
+  const buttonWidth = 130;
+  const minGap = 10;
+  const availableWidth = canvasWidth - 2 * margin - buttonWidth * modeOrder.length;
+  const spacing = max(minGap, availableWidth / (modeOrder.length - 1));
+
+  modeOrder.forEach((modeId, index) => {
+    const x = margin + index * (buttonWidth + spacing);
+    modeButtons[modeId].position(max(10, x), rowYs[2]);
+    modeButtons[modeId].size(buttonWidth, 30);
+  });
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+  canvasHeight = drawHeight + controlHeight;
+  if (inhibitorSlider && substrateSlider) {
+    positionControls();
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

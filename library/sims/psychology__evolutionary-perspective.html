@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"timeline.json": "{\n  \"title\": \"Evolution of Fairness Detection\",\n  \"events\": [\n    {\n      \"start_date\": {\n        \"year\": \"-300000000\",\n        \"display_date\": \"300 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Social Insects Emerge\",\n        \"text\": \"Eusocial insects (ants, bees, termites) develop kin-based cooperation. Workers sacrifice reproduction to help relatives, demonstrating the earliest forms of cooperative behavior driven by genetic relatedness.\"\n      },\n      \"group\": \"Early Cooperation\",\n      \"notes\": \"Examples: Ants share food through trophallaxis; bees perform waggle dances to share resource locations. Hamilton's rule (1964) explains this as kin selection.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-65000000\",\n        \"display_date\": \"65 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Reciprocal Grooming in Mammals\",\n        \"text\": \"Early mammals develop reciprocal grooming behaviors, exchanging hygiene services in ways that require tracking social relationships and remembering past interactions.\"\n      },\n      \"group\": \"Mammalian Reciprocity\",\n      \"notes\": \"Examples: Vampire bats share blood meals with roost-mates who groomed them. Grooming relationships in mammals correlate with coalition support during conflicts.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-35000000\",\n        \"display_date\": \"35 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Primate Coalition Formation\",\n        \"text\": \"Primate ancestors begin forming coalitions for mutual defense and resource access. This requires sophisticated social cognition to track alliances, enemies, and past exchanges.\"\n      },\n      \"group\": \"Primate Social Cognition\",\n      \"notes\": \"Examples: Baboons form male-male alliances; female macaques support relatives in conflicts. Coalition formation requires memory of who helped whom.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-25000000\",\n        \"display_date\": \"25 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Inequity Aversion Emerges\",\n        \"text\": \"Old World monkeys demonstrate inequity aversion\u2014negative reactions to receiving less than a partner for the same work. This suggests emotional responses to unfair treatment.\"\n      },\n      \"group\": \"Primate Social Cognition\",\n      \"notes\": \"Research: Brosnan & de Waal (2003) showed capuchins reject cucumber when partners receive grapes. Similar responses found in chimpanzees, dogs, and corvids.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-7000000\",\n        \"display_date\": \"7 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Complex Social Tracking\",\n        \"text\": \"Hominid ancestors develop sophisticated abilities to track multiple social relationships, remember past exchanges, and anticipate future interactions\u2014cognitive prerequisites for fairness norms.\"\n      },\n      \"group\": \"Primate Social Cognition\",\n      \"notes\": \"The 'social brain hypothesis' links primate brain size to social group complexity. Tracking fairness in large groups requires substantial cognitive resources.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-2000000\",\n        \"display_date\": \"2 Million Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Punishment of Free-Riders\",\n        \"text\": \"Early humans show evidence of third-party punishment\u2014sanctioning cheaters even at personal cost. This enforcement mechanism stabilizes cooperation in larger groups.\"\n      },\n      \"group\": \"Human Moral Systems\",\n      \"notes\": \"Archaeological evidence suggests communal hunting required fair sharing. Groups with punishment mechanisms outcompeted those without, selecting for fairness enforcement.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"-200000\",\n        \"display_date\": \"200,000 Years Ago\"\n      },\n      \"text\": {\n        \"headline\": \"Explicit Fairness Norms\",\n        \"text\": \"Homo sapiens develops language-mediated fairness norms\u2014explicit rules about sharing, reciprocity, and justice that can be taught across generations and applied to novel situations.\"\n      },\n      \"group\": \"Human Moral Systems\",\n      \"notes\": \"Language enables abstract fairness principles beyond specific situations. Cultural transmission allows fairness norms to accumulate and become more sophisticated over time.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"2003\",\n        \"display_date\": \"2003 CE\"\n      },\n      \"text\": {\n        \"headline\": \"Cross-Cultural Universals Documented\",\n        \"text\": \"Research using economic games (Ultimatum, Dictator, Public Goods) documents fairness concerns across all human cultures studied, though specific norms vary with economic systems and social organization.\"\n      },\n      \"group\": \"Human Moral Systems\",\n      \"notes\": \"Henrich et al. (2010) found fairness in 15 small-scale societies worldwide. All cultures show some fairness concern, but 'fair' offers range from 25-50% depending on cultural context.\"\n    }\n  ]\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution of Fairness Detection</title>
+    <script src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <link href="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.css" rel="stylesheet">
+    <style>/* Evolution of Fairness Detection Timeline Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.filter-btn.active {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Category-specific button colors */
+.filter-btn[data-category="all"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.filter-btn[data-category="Early Cooperation"] {
+    background: #3498db;
+}
+
+.filter-btn[data-category="Mammalian Reciprocity"] {
+    background: #27ae60;
+}
+
+.filter-btn[data-category="Primate Social Cognition"] {
+    background: #e67e22;
+}
+
+.filter-btn[data-category="Human Moral Systems"] {
+    background: #e74c3c;
+}
+
+/* Navigation Controls */
+.nav-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.nav-btn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Timeline Container */
+#timeline {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Override vis-timeline default clipping */
+.vis-timeline {
+    border: none !important;
+    overflow: visible !important;
+}
+
+.vis-panel.vis-center {
+    overflow: visible !important;
+}
+
+.vis-item .vis-item-overflow {
+    overflow: visible !important;
+}
+
+/* Timeline item styling */
+.vis-item {
+    border-radius: 6px !important;
+    border: none !important;
+    font-size: 12px !important;
+    padding: 4px 10px !important;
+}
+
+.vis-item.vis-selected {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5) !important;
+}
+
+.vis-item .vis-item-content {
+    color: #fff !important;
+    font-weight: 500 !important;
+}
+
+/* Timeline axis */
+.vis-time-axis .vis-text {
+    color: #a0a0a0 !important;
+    font-size: 11px !important;
+}
+
+.vis-time-axis .vis-grid.vis-minor {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.vis-time-axis .vis-grid.vis-major {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Tooltip styling */
+.vis-tooltip {
+    background: rgba(20, 20, 40, 0.95) !important;
+    color: #fff !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    max-width: 320px !important;
+    line-height: 1.5 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.vis-tooltip div {
+    max-width: 300px !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+/* Instructions */
+.instructions {
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+/* Info Panel */
+.info-panel {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+/* Legend */
+.legend {
+    padding-right: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend h3 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+/* Event Details */
+.event-details {
+    min-height: 150px;
+}
+
+.event-details h3 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+#event-content {
+    color: #a0a0a0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#event-content.has-content {
+    color: #e0e0e0;
+}
+
+#event-content h4 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#event-content .event-date {
+    color: #8be9fd;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+#event-content .event-description {
+    margin-bottom: 12px;
+}
+
+#event-content .event-context {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+#event-content .event-context-label {
+    color: #888;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .info-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .legend {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-right: 0;
+        padding-bottom: 15px;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #timeline {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Evolution of Fairness Detection</h1>
+            <p>From social insects to human moral systems: 300 million years of cooperative evolution</p>
+        </header>
+
+        <div class="filter-controls">
+            <button class="filter-btn active" data-category="all" onclick="filterCategory('all')">All Events</button>
+            <button class="filter-btn" data-category="Early Cooperation" onclick="filterCategory('Early Cooperation')">Early Cooperation</button>
+            <button class="filter-btn" data-category="Mammalian Reciprocity" onclick="filterCategory('Mammalian Reciprocity')">Mammalian Reciprocity</button>
+            <button class="filter-btn" data-category="Primate Social Cognition" onclick="filterCategory('Primate Social Cognition')">Primate Cognition</button>
+            <button class="filter-btn" data-category="Human Moral Systems" onclick="filterCategory('Human Moral Systems')">Human Moral Systems</button>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="panLeft()">◀ Earlier</button>
+            <button class="nav-btn" onclick="zoomIn()">+ Zoom In</button>
+            <button class="nav-btn" onclick="zoomOut()">− Zoom Out</button>
+            <button class="nav-btn" onclick="fitAll()">Fit All</button>
+            <button class="nav-btn" onclick="panRight()">Later ▶</button>
+        </div>
+
+        <div id="timeline"></div>
+
+        <p class="instructions">
+            Click on events to see details below • Hover for research context • Use buttons to navigate
+        </p>
+
+        <div class="info-panel">
+            <div class="legend">
+                <h3>Evolutionary Stages</h3>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3498db;"></div>
+                    <span>Early Cooperation (Insects)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #27ae60;"></div>
+                    <span>Mammalian Reciprocity</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e67e22;"></div>
+                    <span>Primate Social Cognition</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e74c3c;"></div>
+                    <span>Human Moral Systems</span>
+                </div>
+            </div>
+
+            <div class="event-details">
+                <h3>Event Details</h3>
+                <div id="event-content">
+                    Click on any event in the timeline to see detailed information about that evolutionary milestone.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Category colors
+        const categoryColors = {
+            'Early Cooperation': '#3498db',
+            'Mammalian Reciprocity': '#27ae60',
+            'Primate Social Cognition': '#e67e22',
+            'Human Moral Systems': '#e74c3c'
+        };
+
+        // Store all items for filtering
+        let allItems = [];
+        let timeline;
+        let timelineData;
+
+        // Parse year string (handles negative years for BCE)
+        function parseYear(yearStr) {
+            const year = parseInt(yearStr);
+            // For very ancient dates, we'll use a logarithmic scale representation
+            // but vis-timeline needs actual dates, so we'll compress ancient history
+            if (year < -10000) {
+                // Map ancient dates to a compressed range for visualization
+                // -300,000,000 -> year 1000
+                // -1,000,000 -> year 1500
+                // -10,000 -> year 1900
+                const logYear = Math.log10(Math.abs(year));
+                const mappedYear = Math.round(1000 + (logYear - 4) * 150);
+                return new Date(mappedYear, 0, 1);
+            } else if (year < 0) {
+                // BCE dates close to present
+                return new Date(1900 + (year / 1000), 0, 1);
+            }
+            return new Date(year, 0, 1);
+        }
+
+        // Load and initialize timeline
+        fetch('timeline.json')
+            .then(response => response.json())
+            .then(data => {
+                // Convert events to vis-timeline format
+                allItems = data.events.map((event, index) => {
+                    const year = event.start_date.year;
+                    const displayDate = event.start_date.display_date || year;
+
+                    return {
+                        id: index,
+                        content: event.text.headline,
+                        start: parseYear(year),
+                        title: event.notes || event.text.text,
+                        category: event.group,
+                        style: `background-color: ${categoryColors[event.group]}; border-color: ${categoryColors[event.group]};`,
+                        // Store original data for detail display
+                        headline: event.text.headline,
+                        description: event.text.text,
+                        displayDate: displayDate,
+                        notes: event.notes
+                    };
+                });
+
+                // Create dataset
+                timelineData = new vis.DataSet(allItems);
+
+                // Timeline options
+                const options = {
+                    width: '100%',
+                    height: '350px',
+                    margin: {
+                        item: { horizontal: 50, vertical: 10 },
+                        axis: 40
+                    },
+                    orientation: 'top',
+                    zoomMin: 1000 * 60 * 60 * 24 * 365 * 20,     // 20 years minimum
+                    zoomMax: 1000 * 60 * 60 * 24 * 365 * 2000,   // 2000 years maximum
+                    min: new Date(900, 0, 1),
+                    max: new Date(2100, 0, 1),
+                    tooltip: {
+                        followMouse: true
+                    },
+                    stack: true,
+                    selectable: true,
+                    showCurrentTime: false,
+                    moveable: true,
+                    zoomable: false,
+                    align: 'center'
+                };
+
+                // Create timeline
+                const container = document.getElementById('timeline');
+                timeline = new vis.Timeline(container, timelineData, options);
+
+                // Set initial window with padding
+                fitAllWithPadding();
+
+                // Handle event selection
+                timeline.on('select', function(properties) {
+                    if (properties.items.length > 0) {
+                        const itemId = properties.items[0];
+                        const item = allItems.find(i => i.id === itemId);
+                        showEventDetails(item);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading timeline data:', error);
+                document.getElementById('timeline').innerHTML =
+                    '<p style="color: #e74c3c; padding: 20px;">Error loading timeline data. Please check the console for details.</p>';
+            });
+
+        // Show event details in panel
+        function showEventDetails(item) {
+            const contentDiv = document.getElementById('event-content');
+            contentDiv.classList.add('has-content');
+            contentDiv.innerHTML = `
+                <h4>${item.headline}</h4>
+                <div class="event-date">${item.displayDate}</div>
+                <div class="event-description">${item.description}</div>
+                ${item.notes ? `
+                <div class="event-context">
+                    <div class="event-context-label">Research Context</div>
+                    ${item.notes}
+                </div>
+                ` : ''}
+            `;
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Filter items
+            if (category === 'all') {
+                timelineData.clear();
+                timelineData.add(allItems);
+            } else {
+                const filtered = allItems.filter(item => item.category === category);
+                timelineData.clear();
+                timelineData.add(filtered);
+            }
+
+            // Fit to show filtered items
+            fitAllWithPadding();
+        }
+
+        // Navigation functions
+        function fitAllWithPadding() {
+            const currentItems = timelineData.get();
+            if (currentItems.length === 0) return;
+
+            const dates = currentItems.map(item => item.start.getTime());
+            const minDate = Math.min(...dates);
+            const maxDate = Math.max(...dates);
+
+            // Add 5% padding on each side
+            const range = maxDate - minDate;
+            const padding = range * 0.05;
+
+            timeline.setWindow(
+                new Date(minDate - padding),
+                new Date(maxDate + padding),
+                { animation: true }
+            );
+        }
+
+        function panLeft() {
+            const range = timeline.getWindow();
+            const interval = (range.end - range.start) * 0.3;
+            timeline.setWindow(
+                new Date(range.start.getTime() - interval),
+                new Date(range.end.getTime() - interval),
+                { animation: true }
+            );
+        }
+
+        function panRight() {
+            const range = timeline.getWindow();
+            const interval = (range.end - range.start) * 0.3;
+            timeline.setWindow(
+                new Date(range.start.getTime() + interval),
+                new Date(range.end.getTime() + interval),
+                { animation: true }
+            );
+        }
+
+        function zoomIn() {
+            const range = timeline.getWindow();
+            const center = (range.start.getTime() + range.end.getTime()) / 2;
+            const newInterval = (range.end - range.start) * 0.5;
+            timeline.setWindow(
+                new Date(center - newInterval / 2),
+                new Date(center + newInterval / 2),
+                { animation: true }
+            );
+        }
+
+        function zoomOut() {
+            const range = timeline.getWindow();
+            const center = (range.start.getTime() + range.end.getTime()) / 2;
+            const newInterval = (range.end - range.start) * 2;
+            timeline.setWindow(
+                new Date(center - newInterval / 2),
+                new Date(center + newInterval / 2),
+                { animation: true }
+            );
+        }
+
+        function fitAll() {
+            fitAllWithPadding();
+        }
+    </script>
+</body>
+</html>

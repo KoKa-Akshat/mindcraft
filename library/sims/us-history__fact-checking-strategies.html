@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Fact-Checking Workflow using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Fact-Checking Workflow MicroSim
+// CANVAS_HEIGHT: 605
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 560;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// SIFT steps
+let siftSteps = ['Stop', 'Investigate Source', 'Find Coverage', 'Trace Original'];
+let currentNode = 0; // 0 = start, 1-4 = SIFT steps, 5+ = result
+let confidence = 50;
+let claimSelect;
+let resetBt;
+let yesBtn, noBtn;
+
+let claims = [
+  {
+    text: '"Ocean plastic will outweigh fish by 2050"',
+    source: { name: 'World Economic Forum / Ellen MacArthur Foundation', credible: true, funding: 'Multiple foundations', history: 'Reputable policy organization' },
+    coverage: { agrees: 3, disagrees: 1, note: 'Widely reported by BBC, National Geographic, Reuters. Some scientists question exact numbers but agree on trend.' },
+    original: 'Based on peer-reviewed analysis published in Science (2015) by Jambeck et al., extrapolated by foundation report.',
+    expert: 'Likely reliable',
+    expertNote: 'The underlying science is solid, though the exact "outweigh" claim involves projections with uncertainty. The direction of the trend is well-supported.'
+  },
+  {
+    text: '"5G towers are killing birds across the country"',
+    source: { name: 'FreedomHealth.blog', credible: false, funding: 'Unknown / ad-supported', history: 'Known for health misinformation' },
+    coverage: { agrees: 0, disagrees: 4, note: 'Debunked by Audubon Society, Snopes, AP Fact Check, and FCC. No scientific studies support the claim.' },
+    original: 'Traces to a single Facebook post with a photo of dead birds near a cell tower. Photo was from an unrelated pesticide event.',
+    expert: 'Likely false',
+    expertNote: 'No credible scientific evidence links 5G to bird deaths. The original photo was misattributed.'
+  },
+  {
+    text: '"Organic food is always more nutritious than conventional"',
+    source: { name: 'OrganicAdvocate.com', credible: false, funding: 'Organic food industry sponsors', history: 'Advocacy site, not peer-reviewed' },
+    coverage: { agrees: 1, disagrees: 3, note: 'Stanford meta-analysis found little nutritional difference. Some studies show higher antioxidants in organic.' },
+    original: 'Original claim cites a single 2014 study. Multiple larger meta-analyses show mixed or minimal differences.',
+    expert: 'Likely misleading',
+    expertNote: 'While some organic produce may have higher levels of certain nutrients, the blanket "always more nutritious" claim is not supported by the weight of evidence.'
+  },
+  {
+    text: '"The Amazon rainforest produces 20% of Earth\'s oxygen"',
+    source: { name: 'Multiple news outlets (2019 fires coverage)', credible: true, funding: 'Major media', history: 'Widely repeated claim' },
+    coverage: { agrees: 2, disagrees: 2, note: 'Initially widely reported. Scientists later clarified the Amazon\'s net oxygen contribution is near zero due to respiration.' },
+    original: 'Misinterpretation of gross photosynthesis data. Net oxygen production is nearly zero because decomposition uses roughly equal oxygen.',
+    expert: 'Likely misleading',
+    expertNote: 'The 20% figure refers to gross photosynthesis, not net oxygen. The Amazon is critical for biodiversity and carbon storage, but not primarily as an oxygen source.'
+  },
+  {
+    text: '"Recycling plastic is largely a myth — most is landfilled"',
+    source: { name: 'NPR / PBS Frontline investigation', credible: true, funding: 'Public broadcasting', history: 'Award-winning investigative journalism' },
+    coverage: { agrees: 4, disagrees: 0, note: 'EPA data confirms only ~5-6% of US plastic was recycled in 2021. Supported by multiple investigations.' },
+    original: 'Based on EPA waste characterization data and industry documents showing plastic makers promoted recycling while knowing most plastic was not recyclable.',
+    expert: 'Likely reliable',
+    expertNote: 'EPA data and industry documents strongly support this claim. US plastic recycling rates are indeed very low.'
+  }
+];
+
+let currentClaim = 0;
+let nodeAnswers = [];
+let showResult = false;
+let resultText = '';
+
+// Node questions for each SIFT step
+let nodeQuestions = [
+  'Have you paused to check your emotional reaction before sharing?',
+  'Is the source credible with transparent funding and expertise?',
+  'Do multiple independent, reputable sources report this claim?',
+  'Can you trace the claim to a peer-reviewed or primary source?'
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Interactive fact-checking workflow using the SIFT method with sample environmental claims.', LABEL);
+
+  claimSelect = createSelect();
+  claimSelect.parent(document.querySelector('main'));
+  for (let i = 0; i < claims.length; i++) {
+    claimSelect.option('Claim ' + (i + 1), i);
+  }
+  claimSelect.changed(() => {
+    currentClaim = parseInt(claimSelect.value());
+    resetWorkflow();
+  });
+
+  yesBtn = createButton('Yes');
+  yesBtn.parent(document.querySelector('main'));
+  yesBtn.mousePressed(() => answerNode(true));
+
+  noBtn = createButton('No');
+  noBtn.parent(document.querySelector('main'));
+  noBtn.mousePressed(() => answerNode(false));
+
+  resetBt = createButton('Reset');
+  resetBt.parent(document.querySelector('main'));
+  resetBt.mousePressed(resetWorkflow);
+}
+
+function resetWorkflow() {
+  currentNode = 0;
+  confidence = 50;
+  nodeAnswers = [];
+  showResult = false;
+  resultText = '';
+}
+
+function answerNode(yes) {
+  if (showResult || currentNode >= 4) return;
+  nodeAnswers.push(yes);
+
+  if (yes) {
+    confidence = min(95, confidence + 12);
+  } else {
+    confidence = max(5, confidence - 15);
+  }
+  currentNode++;
+
+  if (currentNode >= 4) {
+    // Show result
+    showResult = true;
+    if (confidence > 70) resultText = 'Likely Reliable';
+    else if (confidence > 50) resultText = 'Needs More Investigation';
+    else if (confidence > 30) resultText = 'Likely Misleading';
+    else resultText = 'Likely False';
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+
+  let claim = claims[currentClaim];
+
+  // Colors
+  let cReliable = color(42, 157, 143);
+  let cUncertain = color(233, 196, 106);
+  let cMisleading = color(244, 162, 97);
+  let cFalse = color(230, 57, 70);
+  let cWorkflow = color(38, 70, 83);
+  let cActive = color(69, 123, 157);
+
+  // Background
+  fill(245, 247, 245);
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Claim card at top
+  let cardH = 65;
+  fill(cWorkflow);
+  noStroke();
+  rect(10, 8, canvasWidth - 20, cardH, 8);
+  fill(255);
+  noStroke();
+  textSize(11);
+  textAlign(LEFT, TOP);
+  text('Environmental Claim:', 20, 14);
+  textSize(13);
+  text(claim.text, 20, 30, canvasWidth - 40, 40);
+
+  // Flowchart nodes
+  let nodeY = cardH + 25;
+  let nodeH = 50;
+  let nodeSpacing = 12;
+  let nodeW = canvasWidth - 60;
+
+  for (let i = 0; i < 4; i++) {
+    let ny = nodeY + i * (nodeH + nodeSpacing);
+    let isActive = i === currentNode && !showResult;
+    let isDone = i < currentNode;
+
+    // Connector line
+    if (i > 0) {
+      stroke(isDone ? cReliable : color(200));
+      strokeWeight(2);
+      line(canvasWidth / 2, ny - nodeSpacing, canvasWidth / 2, ny);
+    }
+
+    // Node box
+    if (isActive) {
+      fill(cActive);
+    } else if (isDone) {
+      fill(nodeAnswers[i] ? cReliable : cMisleading);
+    } else {
+      fill(200);
+    }
+    noStroke();
+    rect(30, ny, nodeW, nodeH, 6);
+
+    // Step label
+    fill(255);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text('Step ' + (i + 1) + ': ' + siftSteps[i], 40, ny + 6);
+
+    // Question or answer
+    textSize(10);
+    if (isActive) {
+      text(nodeQuestions[i], 40, ny + 24, nodeW - 20, 24);
+    } else if (isDone) {
+      text(nodeAnswers[i] ? '✓ Yes' : '✗ No', 40, ny + 24);
+      // Show relevant info
+      let info = '';
+      if (i === 1) info = 'Source: ' + claim.source.name + (claim.source.credible ? ' (Credible)' : ' (Questionable)');
+      if (i === 2) info = claim.coverage.note.substring(0, 60) + '...';
+      if (i === 3) info = claim.original.substring(0, 60) + '...';
+      if (info) {
+        fill(255, 255, 255, 180);
+        textSize(9);
+        text(info, 80, ny + 24, nodeW - 60, 24);
+      }
+    } else {
+      fill(255, 255, 255, 150);
+      text(nodeQuestions[i], 40, ny + 24, nodeW - 20, 24);
+    }
+  }
+
+  // Confidence meter
+  let meterY = nodeY + 4 * (nodeH + nodeSpacing) + 5;
+  noStroke();
+  fill(cWorkflow);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Confidence:', 15, meterY + 10);
+  // Meter bar
+  fill(220);
+  rect(100, meterY + 3, canvasWidth - 120, 14, 7);
+  let meterColor = confidence > 70 ? cReliable : confidence > 50 ? cUncertain : confidence > 30 ? cMisleading : cFalse;
+  fill(meterColor);
+  rect(100, meterY + 3, (canvasWidth - 120) * confidence / 100, 14, 7);
+  fill(0);
+  noStroke();
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  text(confidence + '%', 100 + (canvasWidth - 120) / 2, meterY + 10);
+
+  // Result area
+  if (showResult) {
+    let resY = meterY + 28;
+    let resH = drawHeight - resY - 5;
+    let resColor = confidence > 70 ? cReliable : confidence > 50 ? cUncertain : confidence > 30 ? cMisleading : cFalse;
+
+    fill(resColor);
+    noStroke();
+    rect(10, resY, canvasWidth - 20, resH, 8);
+    fill(255);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text('Your Assessment: ' + resultText, canvasWidth / 2, resY + 8);
+
+    textSize(12);
+    text('Expert Assessment: ' + claim.expert, canvasWidth / 2, resY + 32);
+
+    textSize(10);
+    textAlign(LEFT, TOP);
+    text(claim.expertNote, 20, resY + 55, canvasWidth - 40, resH - 65);
+  }
+
+  // Info panel for current step (when active and not done)
+  if (!showResult && currentNode < 4 && currentNode >= 1) {
+    let infoY = meterY + 28;
+    let infoH = drawHeight - infoY - 5;
+    fill(255, 255, 255, 230);
+    noStroke();
+    rect(10, infoY, canvasWidth - 20, infoH, 6);
+    fill(38, 70, 83);
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+
+    if (currentNode === 1) {
+      text('Source: ' + claim.source.name, 20, infoY + 8);
+      text('Funding: ' + claim.source.funding, 20, infoY + 24);
+      text('History: ' + claim.source.history, 20, infoY + 40);
+    } else if (currentNode === 2) {
+      text('Coverage Check:', 20, infoY + 8);
+      text('Sources agreeing: ' + claim.coverage.agrees, 20, infoY + 24);
+      text('Sources disagreeing: ' + claim.coverage.disagrees, 20, infoY + 40);
+      text(claim.coverage.note, 20, infoY + 56, canvasWidth - 40, 40);
+    } else if (currentNode === 3) {
+      text('Original Source:', 20, infoY + 8);
+      text(claim.original, 20, infoY + 24, canvasWidth - 40, infoH - 30);
+    }
+  }
+
+  // Control area
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  positionControls();
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: select + buttons
+  claimSelect.position(ox + 10, oy + drawHeight + 5);
+  yesBtn.position(ox + canvasWidth * 0.4, oy + drawHeight + 5);
+  noBtn.position(ox + canvasWidth * 0.5, oy + drawHeight + 5);
+  resetBt.position(ox + canvasWidth * 0.6, oy + drawHeight + 5);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

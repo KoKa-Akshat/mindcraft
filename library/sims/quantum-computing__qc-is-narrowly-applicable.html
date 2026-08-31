@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Computational Complexity Landscape</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Computational Complexity Landscape
+// An Euler diagram showing containment relationships between complexity classes
+// with interactive hover for problem examples and class definitions
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Complexity class regions (ellipses defined relative to center)
+let classes = [];
+let problems = [];
+let hoveredClass = -1;
+let hoveredProblem = -1;
+let hoveredZone = false;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+}
+
+function defineRegions() {
+    let cx = canvasWidth / 2;
+    let cy = drawHeight / 2 + 5;
+    let scale = min(canvasWidth / 750, 1.0);
+
+    classes = [
+        {
+            name: "PSPACE",
+            cx: cx,
+            cy: cy,
+            rx: 340 * scale,
+            ry: 210 * scale,
+            fillColor: [160, 80, 210, 40],
+            strokeColor: [140, 60, 190],
+            labelOffsetX: 0,
+            labelOffsetY: -185 * scale,
+            description: "PSPACE: Problems solvable with polynomial memory.",
+            detail: "Includes all of NP and BQP. Examples: generalized chess,",
+            detail2: "quantified Boolean formulas, interactive proofs."
+        },
+        {
+            name: "NP",
+            cx: cx + 30 * scale,
+            cy: cy + 10 * scale,
+            rx: 230 * scale,
+            ry: 155 * scale,
+            fillColor: [255, 183, 77, 45],
+            strokeColor: [230, 130, 0],
+            labelOffsetX: 130 * scale,
+            labelOffsetY: -80 * scale,
+            description: "NP: Solutions verifiable in polynomial time.",
+            detail: "Contains P. Includes problems where finding a solution is hard",
+            detail2: "but checking one is easy. No known quantum speedup for NP-complete."
+        },
+        {
+            name: "BQP",
+            cx: cx - 60 * scale,
+            cy: cy + 5 * scale,
+            rx: 180 * scale,
+            ry: 140 * scale,
+            fillColor: [100, 149, 237, 45],
+            strokeColor: [50, 100, 200],
+            labelOffsetX: -120 * scale,
+            labelOffsetY: -85 * scale,
+            description: "BQP (Bounded-error Quantum Polynomial time): Solvable by a quantum computer in polynomial time.",
+            detail: "Contains P. Believed to extend beyond P (factoring, discrete log)",
+            detail2: "but NOT believed to contain NP-complete problems."
+        },
+        {
+            name: "P",
+            cx: cx + 5 * scale,
+            cy: cy + 20 * scale,
+            rx: 110 * scale,
+            ry: 90 * scale,
+            fillColor: [76, 175, 80, 55],
+            strokeColor: [46, 125, 50],
+            labelOffsetX: 0,
+            labelOffsetY: -50 * scale,
+            description: "P: Solvable in polynomial time by a classical computer.",
+            detail: "Most commercially relevant problems live here.",
+            detail2: "Classical computers already excel at these problems."
+        }
+    ];
+
+    // Quantum Advantage Zone: inside BQP but outside P
+    // (We'll draw this as a highlight in the draw function)
+
+    let pCx = classes[3].cx;
+    let pCy = classes[3].cy;
+    let bqpCx = classes[2].cx;
+    let bqpCy = classes[2].cy;
+    let npCx = classes[1].cx;
+    let npCy = classes[1].cy;
+    let pspaceCx = classes[0].cx;
+    let pspaceCy = classes[0].cy;
+
+    problems = [
+        // Inside P
+        {
+            name: "Sorting",
+            x: pCx - 40 * scale,
+            y: pCy - 30 * scale,
+            classRegion: "P",
+            dotColor: [46, 125, 50],
+            classical: "O(n log n) — Merge sort, Timsort",
+            quantum: "No significant quantum speedup",
+            speedup: "None — classical is already optimal"
+        },
+        {
+            name: "Shortest Path",
+            x: pCx + 50 * scale,
+            y: pCy - 5 * scale,
+            classRegion: "P",
+            dotColor: [46, 125, 50],
+            classical: "O(V + E) — Dijkstra's algorithm",
+            quantum: "No practical quantum speedup",
+            speedup: "None — classical algorithms are efficient"
+        },
+        {
+            name: "Linear\nProgramming",
+            x: pCx - 10 * scale,
+            y: pCy + 40 * scale,
+            classRegion: "P",
+            dotColor: [46, 125, 50],
+            classical: "Polynomial — Interior point methods",
+            quantum: "Potential quadratic speedup (unproven at scale)",
+            speedup: "Marginal at best — classical solvers are fast"
+        },
+        // Inside BQP but outside P (Quantum Advantage Zone)
+        {
+            name: "Integer\nFactoring",
+            x: bqpCx - 80 * scale,
+            y: bqpCy - 30 * scale,
+            classRegion: "In BQP but not P",
+            dotColor: [50, 100, 200],
+            classical: "Sub-exponential — General number field sieve",
+            quantum: "Polynomial — Shor's algorithm",
+            speedup: "Exponential (theoretical); largest quantum factored: 21"
+        },
+        {
+            name: "Discrete\nLogarithm",
+            x: bqpCx - 80 * scale,
+            y: bqpCy + 50 * scale,
+            classRegion: "In BQP but not P",
+            dotColor: [50, 100, 200],
+            classical: "Sub-exponential — Index calculus",
+            quantum: "Polynomial — Shor's algorithm",
+            speedup: "Exponential (theoretical); not demonstrated at useful scale"
+        },
+        {
+            name: "Quantum\nSimulation",
+            x: bqpCx - 35 * scale,
+            y: bqpCy + 85 * scale,
+            classRegion: "In BQP but not P",
+            dotColor: [50, 100, 200],
+            classical: "Exponential scaling for large systems",
+            quantum: "Polynomial — natural fit for quantum hardware",
+            speedup: "Potentially exponential; limited to small molecules so far"
+        },
+        // Inside NP but outside BQP
+        {
+            name: "Traveling\nSalesman",
+            x: npCx + 120 * scale,
+            y: npCy - 20 * scale,
+            classRegion: "NP-complete",
+            dotColor: [230, 130, 0],
+            classical: "Exponential — Branch and bound, heuristics",
+            quantum: "Grover gives quadratic speedup only",
+            speedup: "Quadratic at best — not enough to matter at scale"
+        },
+        {
+            name: "SAT",
+            x: npCx + 100 * scale,
+            y: npCy + 50 * scale,
+            classRegion: "NP-complete",
+            dotColor: [230, 130, 0],
+            classical: "Exponential — DPLL, CDCL solvers",
+            quantum: "Quadratic speedup via Grover's algorithm",
+            speedup: "Quadratic — insufficient for exponential-sized problems"
+        },
+        {
+            name: "Graph\nColoring",
+            x: npCx + 140 * scale,
+            y: npCy + 50 * scale,
+            classRegion: "NP-complete",
+            dotColor: [230, 130, 0],
+            classical: "Exponential — Backtracking algorithms",
+            quantum: "No known efficient quantum algorithm",
+            speedup: "None demonstrated"
+        },
+        // Inside PSPACE but outside NP
+        {
+            name: "QBF",
+            fullName: "Quantified Boolean Formula (QBF)",
+            x: pspaceCx + 280 * scale,
+            y: pspaceCy - 100 * scale,
+            classRegion: "PSPACE",
+            dotColor: [140, 60, 190],
+            classical: "PSPACE-complete — Exponential time",
+            quantum: "No known quantum speedup",
+            speedup: "None — beyond both NP and BQP"
+        },
+        {
+            name: "Generalized\nChess",
+            x: pspaceCx - 280 * scale,
+            y: pspaceCy - 80 * scale,
+            classRegion: "PSPACE",
+            dotColor: [140, 60, 190],
+            classical: "PSPACE-hard (on generalized boards)",
+            quantum: "No known quantum speedup",
+            speedup: "None — inherently requires exponential resources"
+        }
+    ];
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, drawHeight);
+    canvas.parent(document.querySelector('main'));
+    defineRegions();
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Computational Complexity Landscape", canvasWidth / 2, 8);
+
+    // Subtitle / instructions
+    fill('#888');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(ITALIC);
+    text("Hover over complexity classes (colored ellipses) and quantum computing problems (circular dots) to see details", canvasWidth / 2, 30);
+
+    // Precompute Quantum Advantage Zone label position
+    let scale = min(canvasWidth / 750, 1.0);
+    let bqp = classes[2];
+    let advX = bqp.cx - 60 * scale;
+    let advY = bqp.cy - 80 * scale;
+
+    // Detect hovers
+    hoveredClass = -1;
+    hoveredProblem = -1;
+    hoveredZone = false;
+
+    // Check problem hover first (smaller targets, higher priority)
+    for (let i = 0; i < problems.length; i++) {
+        let p = problems[i];
+        let d = dist(mouseX, mouseY, p.x, p.y);
+        if (d < 18) {
+            hoveredProblem = i;
+            break;
+        }
+    }
+
+    // Check Quantum Advantage Zone label hover
+    if (hoveredProblem < 0 && abs(mouseX - advX) < 35 && abs(mouseY - (advY + 12)) < 24) {
+        hoveredZone = true;
+    }
+
+    // Check class hover if no problem or zone is hovered
+    if (hoveredProblem < 0 && !hoveredZone) {
+        // Check in reverse order (smallest class = highest priority)
+        for (let i = classes.length - 1; i >= 0; i--) {
+            let c = classes[i];
+            let dx = (mouseX - c.cx) / c.rx;
+            let dy = (mouseY - c.cy) / c.ry;
+            if (dx * dx + dy * dy <= 1.0) {
+                hoveredClass = i;
+                break;
+            }
+        }
+    }
+
+    // Draw complexity class ellipses (outer to inner)
+    for (let i = 0; i < classes.length; i++) {
+        let c = classes[i];
+        let isHovered = (hoveredClass === i);
+
+        fill(c.fillColor[0], c.fillColor[1], c.fillColor[2], c.fillColor[3]);
+        stroke(c.strokeColor[0], c.strokeColor[1], c.strokeColor[2]);
+        strokeWeight(isHovered ? 3 : 1.5);
+        ellipse(c.cx, c.cy, c.rx * 2, c.ry * 2);
+
+        // Class label
+        fill(c.strokeColor[0], c.strokeColor[1], c.strokeColor[2]);
+        noStroke();
+        textSize(isHovered ? 15 : 13);
+        textStyle(BOLD);
+        textAlign(CENTER, CENTER);
+        text(c.name, c.cx + c.labelOffsetX, c.cy + c.labelOffsetY);
+    }
+
+    // Draw Quantum Advantage Zone label
+    fill(hoveredZone ? color(50, 100, 200) : color(50, 100, 200, 180));
+    noStroke();
+    textSize(10);
+    textStyle(ITALIC);
+    textAlign(CENTER, CENTER);
+    text("Quantum", advX, advY);
+    text("Advantage", advX, advY + 12);
+    text("Zone", advX, advY + 24);
+
+    // Draw problem dots
+    for (let i = 0; i < problems.length; i++) {
+        let p = problems[i];
+        let isHovered = (hoveredProblem === i);
+
+        // Dot
+        let dc = p.dotColor;
+        if (isHovered) {
+            fill(dc[0], dc[1], dc[2]);
+            stroke(dc[0] * 0.6, dc[1] * 0.6, dc[2] * 0.6);
+            strokeWeight(2);
+            ellipse(p.x, p.y, 16, 16);
+        } else {
+            fill(dc[0], dc[1], dc[2], 200);
+            stroke(dc[0] * 0.6, dc[1] * 0.6, dc[2] * 0.6);
+            strokeWeight(1);
+            ellipse(p.x, p.y, 10, 10);
+        }
+
+        // Problem label
+        fill(dc[0] * 0.8, dc[1] * 0.8, dc[2] * 0.8);
+        noStroke();
+        textSize(isHovered ? 12 : 10);
+        textStyle(isHovered ? BOLD : NORMAL);
+        textAlign(CENTER, TOP);
+        text(p.name, p.x, p.y + (isHovered ? 11 : 8));
+    }
+
+    // Tooltip for hovered problem
+    if (hoveredProblem >= 0) {
+        let p = problems[hoveredProblem];
+        drawTooltip([
+            (p.fullName || p.name.replace('\n', ' ')) + "  (" + p.classRegion + ")",
+            "Classical: " + p.classical,
+            "Quantum: " + p.quantum,
+            "Speedup: " + p.speedup
+        ]);
+    }
+
+    // Tooltip for hovered class
+    if (hoveredClass >= 0 && hoveredProblem < 0) {
+        let c = classes[hoveredClass];
+        drawTooltip([
+            c.description,
+            c.detail,
+            c.detail2
+        ]);
+    }
+
+    // Tooltip for Quantum Advantage Zone
+    if (hoveredZone) {
+        drawTooltip([
+            "Quantum Advantage Zone (BQP but not P)",
+            "Problems where quantum computers outperform all known classical algorithms.",
+            "Quantum runs in polynomial time; best classical algorithms are sub-exponential.",
+            "Key examples: integer factoring and discrete logarithm (Shor's algorithm)."
+        ]);
+    }
+
+}
+
+function drawTooltip(lines) {
+    let tooltipW = min(575, canvasWidth - 40);
+    let lineH = 17;
+    let tooltipH = lines.length * lineH + 16;
+    let tooltipX = canvasWidth / 2 - tooltipW / 2;
+    let tooltipY = drawHeight - tooltipH - 10;
+
+    // Background
+    fill(255, 255, 255, 245);
+    stroke('#3F51B5');
+    strokeWeight(2);
+    rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+    // Text
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, TOP);
+    for (let i = 0; i < lines.length; i++) {
+        if (i === 0) {
+            fill('#1A237E');
+            textStyle(BOLD);
+        } else {
+            fill('#333');
+            textStyle(NORMAL);
+        }
+        text(lines[i], tooltipX + 10, tooltipY + 8 + i * lineH);
+    }
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    defineRegions();
+    resizeCanvas(canvasWidth, drawHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

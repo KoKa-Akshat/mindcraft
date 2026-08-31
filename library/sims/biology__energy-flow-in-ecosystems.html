@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Complete Ecosystem Energy Budget using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Complete Ecosystem Energy Budget
+// CANVAS_HEIGHT: 565
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 520;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let presetSel;
+let checkBtn;
+let balanceMsg = '';
+let balanceColor = '#333';
+
+// Editable values
+let vals = {
+  solar: 10000,
+  gpp: 2000,
+  ra: 1000,
+  npp: 1000,
+  herbivore: 400,
+  decomposer: 300,
+  nep: 300,
+  rh_herb: 320,
+  rh_decomp: 240,
+  secondary: 80,
+  rh_secondary: 64
+};
+
+let presets = {
+  'Tropical Forest': { solar: 10000, gpp: 3000, ra: 1500, npp: 1500, herbivore: 600, decomposer: 500, nep: 400, rh_herb: 480, rh_decomp: 400, secondary: 120, rh_secondary: 96 },
+  'Temperate Forest': { solar: 8000, gpp: 1800, ra: 900, npp: 900, herbivore: 360, decomposer: 300, nep: 240, rh_herb: 288, rh_decomp: 240, secondary: 72, rh_secondary: 58 },
+  'Grassland': { solar: 9000, gpp: 1000, ra: 500, npp: 500, herbivore: 250, decomposer: 150, nep: 100, rh_herb: 200, rh_decomp: 120, secondary: 50, rh_secondary: 40 },
+  'Ocean': { solar: 7000, gpp: 600, ra: 300, npp: 300, herbivore: 150, decomposer: 80, nep: 70, rh_herb: 120, rh_decomp: 64, secondary: 30, rh_secondary: 24 }
+};
+
+let editField = null; // which field is being edited
+let editInput = null;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Complete ecosystem energy budget flow diagram with editable values', LABEL);
+
+  presetSel = createSelect();
+  presetSel.parent(document.querySelector('main'));
+  presetSel.position(10, drawHeight + 5);
+  for (let name in presets) {
+    presetSel.option(name);
+  }
+  presetSel.changed(() => {
+    let p = presets[presetSel.value()];
+    for (let k in p) vals[k] = p[k];
+  });
+
+  checkBtn = createButton('Balance Check');
+  checkBtn.parent(document.querySelector('main'));
+  checkBtn.position(200, drawHeight + 5);
+  checkBtn.mousePressed(checkBalance);
+
+  // Load default preset
+  let p = presets['Tropical Forest'];
+  for (let k in p) vals[k] = p[k];
+}
+
+function checkBalance() {
+  let energyIn = vals.gpp;
+  let energyOut = vals.ra + vals.rh_herb + vals.rh_decomp + vals.rh_secondary;
+  let stored = vals.nep;
+  let diff = abs(energyIn - energyOut - stored);
+  if (diff < 50) {
+    balanceMsg = 'Balanced! In=' + energyIn + ', Out+Stored=' + (energyOut + stored);
+    balanceColor = '#4CAF50';
+  } else {
+    balanceMsg = 'Imbalanced! In=' + energyIn + ', Out+Stored=' + (energyOut + stored) + ' (diff=' + diff + ')';
+    balanceColor = '#F44336';
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+  background(240);
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  noStroke();
+  fill(30);
+  textSize(14);
+  textAlign(CENTER, TOP);
+  text('Complete Ecosystem Energy Budget', canvasWidth / 2, 6);
+  textSize(10);
+  fill(100);
+  text('Click any value to edit it. Diagram recalculates downstream.', canvasWidth / 2, 22);
+
+  // Layout positions
+  let cx = canvasWidth / 2;
+  let bw = 110;
+  let bh = 40;
+
+  // Sun
+  drawValueBox('solar', cx - bw / 2, 42, bw, bh, '#FFD600', 'Solar Input');
+
+  // Arrow: Solar -> Producers
+  drawFlowArrow(cx, 82, cx, 100, '#FFD600');
+
+  // Producers box (GPP)
+  drawValueBox('gpp', cx - bw / 2, 102, bw, bh, '#4CAF50', 'Producers (GPP)');
+
+  // Ra arrow going right
+  let raX = cx + bw / 2 + 10;
+  drawFlowArrow(cx + bw / 2, 122, raX + 50, 122, '#F44336');
+  drawValueLabel('ra', raX + 55, 115, '#F44336', 'Ra');
+  drawHeatIcon(raX + 100, 115);
+
+  // NPP arrow down
+  drawFlowArrow(cx, 142, cx, 158, '#66BB6A');
+  drawValueLabel('npp', cx + 15, 148, '#388E3C', 'NPP');
+
+  // NPP splits into three
+  // Herbivores (left)
+  let herbX = cx - 130;
+  drawFlowArrow(cx, 165, herbX + bw / 2, 195, '#8BC34A');
+  drawValueBox('herbivore', herbX, 195, bw, bh, '#8BC34A', 'Herbivores');
+
+  // Rh from herbivores
+  drawFlowArrow(herbX + bw / 2, 235, herbX + bw / 2, 265, '#F44336');
+  drawValueLabel('rh_herb', herbX + bw / 2 + 15, 250, '#F44336', 'Rh');
+  drawHeatIcon(herbX + bw / 2 + 55, 250);
+
+  // Secondary consumers from herbivores
+  drawFlowArrow(herbX + bw, 215, herbX + bw + 30, 290, '#FF9800');
+  drawValueBox('secondary', herbX + bw + 30, 290, bw, 35, '#FF9800', 'Sec. Consumers');
+
+  // Rh from secondary
+  drawFlowArrow(herbX + bw + 30 + bw / 2, 325, herbX + bw + 30 + bw / 2, 350, '#F44336');
+  drawValueLabel('rh_secondary', herbX + bw + 30 + bw / 2 + 15, 340, '#F44336', 'Rh');
+  drawHeatIcon(herbX + bw + 30 + bw / 2 + 55, 340);
+
+  // Decomposers (right)
+  let decX = cx + 60;
+  drawFlowArrow(cx, 165, decX + bw / 2, 195, '#795548');
+  drawValueBox('decomposer', decX, 195, bw, bh, '#795548', 'Decomposers');
+
+  // Rh from decomposers
+  drawFlowArrow(decX + bw / 2, 235, decX + bw / 2, 265, '#F44336');
+  drawValueLabel('rh_decomp', decX + bw / 2 + 15, 250, '#F44336', 'Rh');
+  drawHeatIcon(decX + bw / 2 + 55, 250);
+
+  // NEP (stored) - center bottom
+  drawFlowArrow(cx, 165, cx, 380, '#2196F3');
+  drawValueBox('nep', cx - bw / 2, 380, bw, bh, '#2196F3', 'NEP (Stored)');
+
+  // Total heat loss counter
+  let totalHeat = vals.ra + vals.rh_herb + vals.rh_decomp + vals.rh_secondary;
+  noStroke();
+  fill('#F44336');
+  textSize(13);
+  textAlign(RIGHT, TOP);
+  text('Total Heat Loss: ' + totalHeat + ' g C/m\u00b2/yr', canvasWidth - 15, drawHeight - 50);
+
+  // Balance message
+  if (balanceMsg) {
+    fill(balanceColor);
+    textSize(12);
+    textAlign(CENTER, BOTTOM);
+    text(balanceMsg, canvasWidth / 2, drawHeight - 5);
+  }
+
+  // Control labels
+  noStroke();
+  fill(30);
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  text('Preset:', 230, drawHeight + 16);
+}
+
+function drawValueBox(key, x, y, w, h, clr, label) {
+  // Check if values are inconsistent
+  let inconsistent = false;
+  if (key === 'npp' && vals.npp !== vals.gpp - vals.ra) inconsistent = true;
+
+  if (inconsistent) {
+    stroke('#F44336');
+    strokeWeight(3);
+  } else {
+    stroke(clr);
+    strokeWeight(2);
+  }
+  fill(clr + '30');
+  rect(x, y, w, h, 5);
+
+  noStroke();
+  fill(30);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text(label, x + w / 2, y + 3);
+  textSize(13);
+  textAlign(CENTER, BOTTOM);
+  fill(clr);
+  text(vals[key], x + w / 2, y + h - 3);
+}
+
+function drawValueLabel(key, x, y, clr, label) {
+  noStroke();
+  fill(clr);
+  textSize(10);
+  textAlign(LEFT, CENTER);
+  text(label + ': ' + vals[key], x, y);
+}
+
+function drawFlowArrow(x1, y1, x2, y2, clr) {
+  stroke(clr);
+  strokeWeight(2);
+  line(x1, y1, x2, y2);
+  let angle = atan2(y2 - y1, x2 - x1);
+  let sz = 6;
+  line(x2, y2, x2 - sz * cos(angle - PI / 6), y2 - sz * sin(angle - PI / 6));
+  line(x2, y2, x2 - sz * cos(angle + PI / 6), y2 - sz * sin(angle + PI / 6));
+}
+
+function drawHeatIcon(x, y) {
+  noStroke();
+  fill('#F44336', 150);
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  text('\u2191heat', x, y);
+}
+
+function mousePressed() {
+  // Check if user clicked on a value box to edit
+  // Simplified: recalculate NPP when GPP or Ra changes
+  // Auto-recalculate downstream
+  vals.npp = vals.gpp - vals.ra;
+  if (vals.npp < 0) vals.npp = 0;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

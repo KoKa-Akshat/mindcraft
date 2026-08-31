@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period, Frequency, and Angular Frequency Relationships</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Period, Frequency, and Angular Frequency Relationship Diagram
+// Interactive infographic showing mathematical relationships
+
+let canvasWidth = 750;
+let drawHeight = 450;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+
+// User-controlled period
+let periodSlider;
+let periodValue = 2.0;
+
+// Animation
+let rotationAngle = 0;
+let isAnimating = true;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Period slider
+    periodSlider = createSlider(0.5, 5.0, 2.0, 0.1);
+    periodSlider.position(canvasWidth/2 - 100, drawHeight + 60);
+    periodSlider.size(200);
+
+    describe('Interactive infographic showing relationships between period, frequency, and angular frequency', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+    periodValue = periodSlider.value();
+
+    // Calculate derived values
+    let frequency = 1 / periodValue;
+    let angularFrequency = 2 * PI / periodValue;
+
+    // Drawing area
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    textSize(20);
+    textAlign(CENTER, TOP);
+    noStroke();
+    text('Period, Frequency, and Angular Frequency Relationships', canvasWidth / 2, 12);
+
+    // Draw central circle animation
+    drawCentralCircle(canvasWidth/2, 200, 80);
+
+    // Draw three concept boxes
+    drawPeriodBox(100, 100);
+    drawFrequencyBox(100, 300);
+    drawAngularFrequencyBox(canvasWidth - 250, 300);
+
+    // Draw relationship arrows
+    drawRelationshipArrows();
+
+    // Draw values display
+    drawValuesDisplay(periodValue, frequency, angularFrequency);
+
+    // Control label
+    fill(80);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('Adjust Period (T):', canvasWidth/2, drawHeight + 30);
+    text(periodValue.toFixed(1) + ' s', canvasWidth/2, drawHeight + 85);
+
+    // Animate rotation
+    if (isAnimating) {
+        rotationAngle += angularFrequency * 0.016; // 60fps approximation
+        if (rotationAngle > TWO_PI) rotationAngle -= TWO_PI;
+    }
+}
+
+function drawCentralCircle(cx, cy, radius) {
+    // Background circle
+    fill(255);
+    stroke(150);
+    strokeWeight(2);
+    circle(cx, cy, radius * 2 + 20);
+
+    // Circle path
+    noFill();
+    stroke(100);
+    strokeWeight(2);
+    circle(cx, cy, radius * 2);
+
+    // Rotating point
+    let px = cx + radius * cos(-rotationAngle + PI/2);
+    let py = cy - radius * sin(-rotationAngle + PI/2);
+
+    fill(70, 130, 220);
+    noStroke();
+    circle(px, py, 16);
+
+    // Radius line
+    stroke(70, 130, 220);
+    strokeWeight(2);
+    line(cx, cy, px, py);
+
+    // Center point
+    fill(100);
+    noStroke();
+    circle(cx, cy, 8);
+
+    // Arc showing angle
+    noFill();
+    stroke(230, 150, 50);
+    strokeWeight(3);
+    arc(cx, cy, 60, 60, -PI/2, -PI/2 + rotationAngle);
+
+    // Label
+    fill(60);
+    textSize(11);
+    textAlign(CENTER, TOP);
+    noStroke();
+    text('One Complete Cycle', cx, cy + radius + 15);
+    text('= 2π radians = 360°', cx, cy + radius + 28);
+
+    // Direction arrow
+    noFill();
+    stroke(100);
+    strokeWeight(1);
+    arc(cx, cy, radius * 2 + 35, radius * 2 + 35, -PI/4, PI/4);
+
+    // Arrowhead
+    push();
+    translate(cx + (radius + 17.5) * cos(PI/4), cy - (radius + 17.5) * sin(PI/4));
+    rotate(-PI/4 + PI/2);
+    fill(100);
+    noStroke();
+    triangle(0, -5, 0, 5, 8, 0);
+    pop();
+}
+
+function drawPeriodBox(x, y) {
+    // Box background
+    fill(200, 220, 255);
+    stroke(70, 130, 220);
+    strokeWeight(2);
+    rect(x, y, 150, 100, 10);
+
+    // Icon (clock)
+    fill(70, 130, 220);
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    text('⏱️', x + 75, y + 25);
+
+    // Title
+    textSize(16);
+    fill(40);
+    text('Period (T)', x + 75, y + 50);
+
+    // Definition
+    textSize(10);
+    fill(80);
+    text('Time for one', x + 75, y + 70);
+    text('complete cycle', x + 75, y + 82);
+
+    // Units
+    textSize(9);
+    fill(100);
+    text('Units: seconds (s)', x + 75, y + 95);
+}
+
+function drawFrequencyBox(x, y) {
+    // Box background
+    fill(200, 255, 200);
+    stroke(50, 180, 50);
+    strokeWeight(2);
+    rect(x, y, 150, 100, 10);
+
+    // Icon (wave)
+    fill(50, 180, 50);
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    text('〰️', x + 75, y + 25);
+
+    // Title
+    textSize(16);
+    fill(40);
+    text('Frequency (f)', x + 75, y + 50);
+
+    // Definition
+    textSize(10);
+    fill(80);
+    text('Cycles per', x + 75, y + 70);
+    text('second', x + 75, y + 82);
+
+    // Units
+    textSize(9);
+    fill(100);
+    text('Units: hertz (Hz) = s⁻¹', x + 75, y + 95);
+}
+
+function drawAngularFrequencyBox(x, y) {
+    // Box background
+    fill(255, 230, 200);
+    stroke(230, 150, 50);
+    strokeWeight(2);
+    rect(x, y, 150, 100, 10);
+
+    // Icon (angle)
+    fill(230, 150, 50);
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    text('∠', x + 75, y + 25);
+
+    // Title
+    textSize(16);
+    fill(40);
+    text('Angular Freq (ω)', x + 75, y + 50);
+
+    // Definition
+    textSize(10);
+    fill(80);
+    text('Radians per', x + 75, y + 70);
+    text('second', x + 75, y + 82);
+
+    // Units
+    textSize(9);
+    fill(100);
+    text('Units: rad/s', x + 75, y + 95);
+}
+
+function drawRelationshipArrows() {
+    // Arrow from Period to Frequency (f = 1/T)
+    stroke(100);
+    strokeWeight(2);
+
+    // Period to Frequency
+    let p1x = 175, p1y = 200;
+    let f1x = 175, f1y = 300;
+    line(p1x, p1y, f1x, f1y);
+    drawArrowhead(f1x, f1y, PI/2);
+    drawArrowhead(p1x, p1y, -PI/2);
+
+    // Formula label
+    fill(255, 255, 200);
+    stroke(150);
+    strokeWeight(1);
+    rect(130, 235, 90, 25, 5);
+
+    fill(60);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    text('f = 1/T', 175, 247);
+
+    // Period to Angular (ω = 2π/T)
+    let p2x = 250, p2y = 150;
+    let a2x = canvasWidth - 175, a2y = 300;
+
+    stroke(100);
+    strokeWeight(2);
+    // Curved arrow using bezier
+    noFill();
+    bezier(p2x, p2y, p2x + 150, p2y - 50, a2x - 50, a2y - 150, a2x, a2y);
+
+    // Arrow at angular frequency end
+    drawArrowhead(a2x, a2y, PI/3);
+
+    // Formula label
+    fill(255, 255, 200);
+    stroke(150);
+    strokeWeight(1);
+    rect(canvasWidth/2 + 50, 120, 90, 25, 5);
+
+    fill(60);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    text('ω = 2π/T', canvasWidth/2 + 95, 132);
+
+    // Frequency to Angular (ω = 2πf)
+    let f2x = 250, f2y = 350;
+    let a3x = canvasWidth - 250, a3y = 350;
+
+    stroke(100);
+    strokeWeight(2);
+    line(f2x, f2y, a3x, f2y);
+    drawArrowhead(a3x, f2y, 0);
+    drawArrowhead(f2x, f2y, PI);
+
+    // Formula label
+    fill(255, 255, 200);
+    stroke(150);
+    strokeWeight(1);
+    rect(canvasWidth/2 - 50, 360, 100, 25, 5);
+
+    fill(60);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    text('ω = 2πf', canvasWidth/2, 372);
+}
+
+function drawArrowhead(x, y, angle) {
+    push();
+    translate(x, y);
+    rotate(angle);
+    fill(100);
+    noStroke();
+    triangle(0, 0, -10, -5, -10, 5);
+    pop();
+}
+
+function drawValuesDisplay(T, f, omega) {
+    // Values box
+    fill(255, 255, 255, 230);
+    stroke(150);
+    strokeWeight(1);
+    rect(canvasWidth - 180, 50, 160, 90, 8);
+
+    // Title
+    fill(60);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    noStroke();
+    text('Current Values:', canvasWidth - 170, 65);
+
+    // Period value (blue)
+    fill(70, 130, 220);
+    textSize(13);
+    text('T = ' + T.toFixed(2) + ' s', canvasWidth - 170, 87);
+
+    // Frequency value (green)
+    fill(50, 180, 50);
+    text('f = ' + f.toFixed(3) + ' Hz', canvasWidth - 170, 107);
+
+    // Angular frequency value (orange)
+    fill(230, 150, 50);
+    text('ω = ' + omega.toFixed(3) + ' rad/s', canvasWidth - 170, 127);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    periodSlider.position(canvasWidth/2 - 100, drawHeight + 60);
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = Math.max(600, container.offsetWidth);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

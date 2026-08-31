@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Interactive Food Web Builder using vis-network</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script>// Interactive Food Web Builder - vis-network
+// CANVAS_HEIGHT: 605
+// Students build feeding relationships and test species removal
+
+document.addEventListener('DOMContentLoaded', function () {
+  const main = document.querySelector('main');
+
+  // Layout
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'display:flex;flex-direction:column;width:100%;font-family:Arial,Helvetica,sans-serif;';
+  main.appendChild(wrapper);
+
+  // Top controls
+  const controls = document.createElement('div');
+  controls.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px;background:#f5f5f5;border-radius:6px;margin-bottom:6px;';
+  wrapper.appendChild(controls);
+
+  const instrLabel = document.createElement('span');
+  instrLabel.textContent = 'Click two organisms to create a feeding link (prey → predator). ';
+  instrLabel.style.fontSize = '12px';
+  instrLabel.style.color = '#5d4037';
+  controls.appendChild(instrLabel);
+
+  const checkBtn = document.createElement('button');
+  checkBtn.textContent = 'Check Web';
+  checkBtn.style.cssText = 'font-size:13px;padding:5px 12px;cursor:pointer;background:#2e7d32;color:white;border:none;border-radius:4px;';
+  controls.appendChild(checkBtn);
+
+  const removeSelect = document.createElement('select');
+  removeSelect.style.cssText = 'font-size:13px;padding:4px;border-radius:4px;border:1px solid #ccc;';
+  const defaultOpt = document.createElement('option');
+  defaultOpt.textContent = 'Remove Species...';
+  defaultOpt.value = '';
+  removeSelect.appendChild(defaultOpt);
+  controls.appendChild(removeSelect);
+
+  const removeBtn = document.createElement('button');
+  removeBtn.textContent = 'Remove Species';
+  removeBtn.style.cssText = 'font-size:13px;padding:5px 12px;cursor:pointer;background:#c62828;color:white;border:none;border-radius:4px;';
+  controls.appendChild(removeBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Reset';
+  resetBtn.style.cssText = 'font-size:13px;padding:5px 12px;cursor:pointer;background:#795548;color:white;border:none;border-radius:4px;';
+  controls.appendChild(resetBtn);
+
+  // Network + info layout
+  const bodyDiv = document.createElement('div');
+  bodyDiv.style.cssText = 'display:flex;width:100%;height:500px;';
+  wrapper.appendChild(bodyDiv);
+
+  const networkDiv = document.createElement('div');
+  networkDiv.style.cssText = 'flex:2;height:100%;border:1px solid #ccc;border-radius:8px;background:#fafaf5;';
+  bodyDiv.appendChild(networkDiv);
+
+  const infoPanel = document.createElement('div');
+  infoPanel.style.cssText = 'flex:1;padding:12px;overflow-y:auto;border-left:2px solid #a1887f;background:#fff;font-size:13px;color:#3e2723;';
+  infoPanel.innerHTML = '<h3 style="margin-top:0;color:#2e7d32;">Food Web Builder</h3><p>Temperate Forest Ecosystem</p><p>Click an organism, then click what eats it to draw a feeding arrow.</p>';
+  bodyDiv.appendChild(infoPanel);
+
+  // Feedback area
+  const feedback = document.createElement('div');
+  feedback.style.cssText = 'padding:8px;font-size:13px;min-height:24px;';
+  wrapper.appendChild(feedback);
+
+  // Organism data
+  const organisms = [
+    { id: 1, label: 'Oak Tree', trophic: 'producer', y: 490 },
+    { id: 2, label: 'Grass', trophic: 'producer', y: 490 },
+    { id: 3, label: 'Berries', trophic: 'producer', y: 490 },
+    { id: 4, label: 'Caterpillar', trophic: 'primary', y: 300 },
+    { id: 5, label: 'Rabbit', trophic: 'primary', y: 300 },
+    { id: 6, label: 'Mouse', trophic: 'primary', y: 300 },
+    { id: 7, label: 'Deer', trophic: 'primary', y: 300 },
+    { id: 8, label: 'Frog', trophic: 'secondary', y: 150 },
+    { id: 9, label: 'Snake', trophic: 'secondary', y: 150 },
+    { id: 10, label: 'Fox', trophic: 'secondary', y: 150 },
+    { id: 11, label: 'Owl', trophic: 'tertiary', y: 20 },
+    { id: 12, label: 'Hawk', trophic: 'tertiary', y: 20 },
+    { id: 13, label: 'Mushroom', trophic: 'decomposer', y: 490 }
+  ];
+
+  const trophicColors = {
+    producer: { bg: '#c8e6c9', border: '#2e7d32' },
+    primary: { bg: '#bbdefb', border: '#1565c0' },
+    secondary: { bg: '#ffe0b2', border: '#e65100' },
+    tertiary: { bg: '#ffcdd2', border: '#c62828' },
+    decomposer: { bg: '#d7ccc8', border: '#4e342e' }
+  };
+
+  // Correct feeding relationships (prey -> predator)
+  const correctLinks = [
+    [1, 4], [1, 7], [2, 5], [2, 6], [2, 7], [3, 5], [3, 6],
+    [4, 8], [5, 10], [5, 11], [5, 12], [6, 9], [6, 10], [6, 11],
+    [8, 9], [9, 12], [10, 12],
+    // Decomposer connections are flexible
+  ];
+
+  // Build x positions by trophic level
+  let xPositions = {};
+  let trophicGroups = { producer: [], primary: [], secondary: [], tertiary: [], decomposer: [] };
+  organisms.forEach(o => trophicGroups[o.trophic].push(o.id));
+
+  for (let t in trophicGroups) {
+    let ids = trophicGroups[t];
+    let spacing = 600 / (ids.length + 1);
+    ids.forEach((id, idx) => {
+      xPositions[id] = -300 + spacing * (idx + 1);
+    });
+  }
+
+  // Create nodes
+  let nodesArray = organisms.map(o => ({
+    id: o.id,
+    label: o.label,
+    x: xPositions[o.id],
+    y: o.y,
+    color: { background: trophicColors[o.trophic].bg, border: trophicColors[o.trophic].border },
+    font: { size: 12, color: '#3e2723' },
+    shape: 'box',
+    borderWidth: 2,
+    margin: 6,
+    fixed: false,
+    title: o.trophic.charAt(0).toUpperCase() + o.trophic.slice(1)
+  }));
+
+  // Populate remove dropdown
+  organisms.forEach(o => {
+    let opt = document.createElement('option');
+    opt.value = o.id;
+    opt.textContent = o.label;
+    removeSelect.appendChild(opt);
+  });
+
+  let nodes = new vis.DataSet(nodesArray);
+  let edges = new vis.DataSet([]);
+  let edgeIdCounter = 1;
+
+  let data = { nodes: nodes, edges: edges };
+  let options = {
+    physics: false,
+    interaction: {
+      dragNodes: true,
+      dragView: false,
+      zoomView: false,
+      hover: true,
+      navigationButtons: true
+    },
+    edges: {
+      arrows: { to: { enabled: true, scaleFactor: 0.8 } },
+      color: { color: '#795548', highlight: '#e65100' },
+      width: 2,
+      smooth: { type: 'cubicBezier', roundness: 0.2 }
+    }
+  };
+
+  let network = new vis.Network(networkDiv, data, options);
+  network.once('afterDrawing', function () { network.fit({ animation: false }); });
+
+  // Click to build links
+  let firstSelection = null;
+
+  network.on('click', function (params) {
+    if (params.nodes.length > 0) {
+      let clickedId = params.nodes[0];
+
+      if (firstSelection === null) {
+        firstSelection = clickedId;
+        let org = organisms.find(o => o.id === clickedId);
+        feedback.innerHTML = '<span style="color:#0277bd;">Selected <strong>' + org.label + '</strong> as prey. Now click what eats it.</span>';
+        nodes.update({ id: clickedId, borderWidth: 4 });
+      } else {
+        if (clickedId !== firstSelection) {
+          // Create edge from prey to predator
+          let existingEdge = edges.get().find(e => e.from === firstSelection && e.to === clickedId);
+          if (!existingEdge) {
+            edges.add({ id: edgeIdCounter++, from: firstSelection, to: clickedId });
+            let prey = organisms.find(o => o.id === firstSelection);
+            let pred = organisms.find(o => o.id === clickedId);
+            feedback.innerHTML = '<span style="color:#2e7d32;">Added: ' + prey.label + ' → ' + pred.label + '</span>';
+          } else {
+            feedback.innerHTML = '<span style="color:#f57f17;">Link already exists!</span>';
+          }
+        }
+        // Reset selection
+        nodes.update({ id: firstSelection, borderWidth: 2 });
+        firstSelection = null;
+      }
+    } else {
+      if (firstSelection !== null) {
+        nodes.update({ id: firstSelection, borderWidth: 2 });
+        firstSelection = null;
+        feedback.textContent = '';
+      }
+    }
+  });
+
+  // Check Web
+  checkBtn.addEventListener('click', function () {
+    let userEdges = edges.get().map(e => [e.from, e.to]);
+    let correctCount = 0;
+    let wrongLinks = [];
+
+    userEdges.forEach(ue => {
+      let isCorrect = correctLinks.some(cl => cl[0] === ue[0] && cl[1] === ue[1]);
+      // Also allow decomposer links
+      let prey = organisms.find(o => o.id === ue[0]);
+      let pred = organisms.find(o => o.id === ue[1]);
+      if (pred && pred.trophic === 'decomposer') isCorrect = true;
+
+      if (isCorrect) {
+        correctCount++;
+        let edgeObj = edges.get().find(e => e.from === ue[0] && e.to === ue[1]);
+        if (edgeObj) edges.update({ id: edgeObj.id, color: { color: '#2e7d32' }, width: 3 });
+      } else {
+        wrongLinks.push(prey.label + '→' + pred.label);
+        let edgeObj = edges.get().find(e => e.from === ue[0] && e.to === ue[1]);
+        if (edgeObj) edges.update({ id: edgeObj.id, color: { color: '#c62828' }, width: 3, dashes: true });
+      }
+    });
+
+    let msg = 'Correct links: ' + correctCount + '/' + userEdges.length + '. ';
+    if (wrongLinks.length > 0) {
+      msg += 'Check these: ' + wrongLinks.join(', ');
+    } else if (userEdges.length > 0) {
+      msg += 'All links are valid!';
+    }
+    if (userEdges.length < correctLinks.length) {
+      msg += ' (There are more connections to find!)';
+    }
+    feedback.innerHTML = '<span style="color:#3e2723;">' + msg + '</span>';
+  });
+
+  // Remove species
+  removeBtn.addEventListener('click', function () {
+    let removeId = parseInt(removeSelect.value);
+    if (!removeId) return;
+
+    let removedOrg = organisms.find(o => o.id === removeId);
+    let affectedEdges = edges.get().filter(e => e.from === removeId || e.to === removeId);
+    let affectedNodeIds = new Set();
+
+    affectedEdges.forEach(e => {
+      edges.update({ id: e.id, color: { color: '#c62828' }, dashes: true, width: 3 });
+      if (e.from !== removeId) affectedNodeIds.add(e.from);
+      if (e.to !== removeId) affectedNodeIds.add(e.to);
+    });
+
+    // Flash the removed node
+    nodes.update({ id: removeId, color: { background: '#ffcdd2', border: '#c62828' }, borderWidth: 4 });
+
+    // Show impact
+    let impactMsg = '<strong>' + removedOrg.label + ' removed!</strong><br>';
+    affectedNodeIds.forEach(nid => {
+      let org = organisms.find(o => o.id === nid);
+      nodes.update({ id: nid, color: { background: '#fff9c4', border: '#f57f17' }, borderWidth: 3 });
+      let wasPreyOf = affectedEdges.filter(e => e.from === removeId && e.to === nid).length > 0;
+      let wasPredOf = affectedEdges.filter(e => e.to === removeId && e.from === nid).length > 0;
+      if (wasPreyOf) impactMsg += org.label + ': lost food source ↓<br>';
+      if (wasPredOf) impactMsg += org.label + ': lost a predator ↑<br>';
+    });
+
+    infoPanel.innerHTML = '<h3 style="color:#c62828;margin-top:0;">Trophic Cascade</h3>' + impactMsg;
+    feedback.innerHTML = '<span style="color:#c62828;">Species removed. Broken links shown in red.</span>';
+  });
+
+  // Reset
+  resetBtn.addEventListener('click', function () {
+    edges.clear();
+    edgeIdCounter = 1;
+    firstSelection = null;
+    organisms.forEach(o => {
+      let tc = trophicColors[o.trophic];
+      nodes.update({ id: o.id, color: { background: tc.bg, border: tc.border }, borderWidth: 2 });
+    });
+    feedback.textContent = '';
+    infoPanel.innerHTML = '<h3 style="margin-top:0;color:#2e7d32;">Food Web Builder</h3><p>Temperate Forest Ecosystem</p><p>Click an organism, then click what eats it to draw a feeding arrow.</p>';
+    network.fit({ animation: true });
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:12px;padding:6px;font-size:11px;flex-wrap:wrap;';
+  legend.innerHTML =
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#c8e6c9;border:2px solid #2e7d32;display:inline-block;border-radius:2px;"></span> Producer</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#bbdefb;border:2px solid #1565c0;display:inline-block;border-radius:2px;"></span> Primary Consumer</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#ffe0b2;border:2px solid #e65100;display:inline-block;border-radius:2px;"></span> Secondary Consumer</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#ffcdd2;border:2px solid #c62828;display:inline-block;border-radius:2px;"></span> Tertiary Consumer</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#d7ccc8;border:2px solid #4e342e;display:inline-block;border-radius:2px;"></span> Decomposer</span>';
+  wrapper.appendChild(legend);
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

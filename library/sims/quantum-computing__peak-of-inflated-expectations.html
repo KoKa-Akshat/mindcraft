@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Hype Amplification Pipeline</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// The Hype Amplification Pipeline
+// A p5.js MicroSim showing how scientific claims get distorted through communication stages
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 80;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Pipeline stages
+let stages = [
+    {
+        name: "Research Paper",
+        actor: "Scientists",
+        amplification: 1.0,
+        color: "#3F51B5",
+        textColor: "#FFFFFF",
+        text: "Our processor took 200 seconds for a task estimated at 10,000 years classically. The task has no practical application.",
+        transformation: "Original qualified claim",
+        removed: "Nothing — this is the source",
+        added: "Appropriate caveats included"
+    },
+    {
+        name: "Press Release",
+        actor: "PR Department",
+        amplification: 1.5,
+        color: "#5C97D6",
+        textColor: "#FFFFFF",
+        text: "Google achieves quantum supremacy — a computation that would take 10,000 years on the fastest supercomputer.",
+        transformation: "Drops caveats",
+        removed: "'No practical application,' 'estimated'",
+        added: "'Achieves quantum supremacy' framing"
+    },
+    {
+        name: "Tech Media",
+        actor: "Journalists",
+        amplification: 3.0,
+        color: "#F9A825",
+        textColor: "#333333",
+        text: "Google's quantum computer is 158 million times faster than the world's fastest supercomputer.",
+        transformation: "Adds superlatives",
+        removed: "Context about the specific task",
+        added: "'158 million times faster' reframing"
+    },
+    {
+        name: "Social Media",
+        actor: "Influencers & Public",
+        amplification: 5.0,
+        color: "#FF7043",
+        textColor: "#FFFFFF",
+        text: "Google built a computer more powerful than any supercomputer!",
+        transformation: "Viral simplification",
+        removed: "All technical nuance",
+        added: "General superiority claim"
+    },
+    {
+        name: "Investment Pitch",
+        actor: "Analysts & VCs",
+        amplification: 10.0,
+        color: "#C62828",
+        textColor: "#FFFFFF",
+        text: "Quantum computing has arrived. $65B market opportunity by 2030.",
+        transformation: "Monetizes the hype",
+        removed: "Any connection to original experiment",
+        added: "Market projections, urgency, FOMO"
+    }
+];
+
+// Animation
+let particles = [];
+let isRunning = false;
+let startButton;
+let accuracySlider;
+let hoveredStage = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    // Create slider
+    accuracySlider = createSlider(10, 100, 80, 1);
+    accuracySlider.parent(document.querySelector('main'));
+    accuracySlider.position(sliderLeftMargin, drawHeight + 14);
+    accuracySlider.size(canvasWidth - sliderLeftMargin - margin - 120, 20);
+
+    // Create start/pause button
+    startButton = createButton('Start');
+    startButton.parent(document.querySelector('main'));
+    startButton.position(canvasWidth - margin - 90, drawHeight + 10);
+    startButton.size(80, 30);
+    startButton.mousePressed(toggleRunning);
+    startButton.style('font-size', '14px');
+    startButton.style('cursor', 'pointer');
+    startButton.style('background-color', '#3F51B5');
+    startButton.style('color', 'white');
+    startButton.style('border', 'none');
+    startButton.style('border-radius', '4px');
+
+    frameRate(30);
+    noLoop();
+}
+
+function toggleRunning() {
+    isRunning = !isRunning;
+    startButton.html(isRunning ? 'Pause' : 'Start');
+    if (isRunning) {
+        loop();
+    } else {
+        noLoop();
+        redraw();
+    }
+}
+
+function getStageLayout() {
+    let numStages = stages.length;
+    let totalWidth = canvasWidth - 2 * margin;
+    let stageWidth = totalWidth / numStages;
+    let stageBoxPadding = 8;
+    let boxWidths = [];
+    let boxXs = [];
+
+    for (let i = 0; i < numStages; i++) {
+        let widthFraction = 0.5 + (i / (numStages - 1)) * 0.5;
+        let bw = (stageWidth - stageBoxPadding * 2) * widthFraction;
+        bw = max(bw, 60);
+        let cx = margin + stageWidth * i + stageWidth / 2;
+        boxWidths.push(bw);
+        boxXs.push(cx);
+    }
+    return { stageWidth, boxWidths, boxXs };
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("The Hype Amplification Pipeline", canvasWidth / 2, 8);
+
+    let layout = getStageLayout();
+    let { stageWidth, boxWidths, boxXs } = layout;
+    let initialAccuracy = accuracySlider.value();
+
+    // Pipeline vertical center and box dimensions
+    let pipelineY = 195;
+    let boxBaseHeight = 60;
+
+    // Detect hover
+    hoveredStage = -1;
+    for (let i = 0; i < stages.length; i++) {
+        let cx = boxXs[i];
+        let bw = boxWidths[i];
+        let growFactor = 1 + i * 0.25;
+        let bh = boxBaseHeight * growFactor;
+        let bx = cx - bw / 2;
+        let by = pipelineY - bh / 2;
+        if (mouseX >= bx && mouseX <= bx + bw && mouseY >= by && mouseY <= by + bh) {
+            hoveredStage = i;
+        }
+    }
+
+    // Draw connecting arrows between stages
+    for (let i = 0; i < stages.length - 1; i++) {
+        let cx1 = boxXs[i];
+        let cx2 = boxXs[i + 1];
+        let bw1 = boxWidths[i];
+        let bw2 = boxWidths[i + 1];
+        let arrowThickness = 2 + i * 2;
+
+        let x1 = cx1 + bw1 / 2;
+        let x2 = cx2 - bw2 / 2;
+        let arrowY = pipelineY;
+
+        // Arrow body
+        stroke('#888');
+        strokeWeight(arrowThickness);
+        line(x1 + 2, arrowY, x2 - 10, arrowY);
+
+        // Arrowhead
+        fill('#888');
+        noStroke();
+        let ah = arrowThickness * 1.5;
+        triangle(x2 - 2, arrowY, x2 - 12, arrowY - ah, x2 - 12, arrowY + ah);
+
+        // Transformation label on arrow
+        fill('#555');
+        noStroke();
+        textSize(constrain(stageWidth / 16, 7, 9));
+        textAlign(CENTER, BOTTOM);
+        textStyle(ITALIC);
+        let midX = (x1 + x2) / 2;
+        text(stages[i + 1].transformation, midX, arrowY - arrowThickness - 3);
+    }
+
+    // Draw stage boxes
+    for (let i = 0; i < stages.length; i++) {
+        let s = stages[i];
+        let cx = boxXs[i];
+        let bw = boxWidths[i];
+        let growFactor = 1 + i * 0.25;
+        let bh = boxBaseHeight * growFactor;
+        let bx = cx - bw / 2;
+        let by = pipelineY - bh / 2;
+        let isHovered = (hoveredStage === i);
+
+        // Box with highlight on hover
+        if (isHovered) {
+            stroke('#1A237E');
+            strokeWeight(3);
+        } else {
+            stroke('rgba(0,0,0,0.2)');
+            strokeWeight(1);
+        }
+        fill(s.color);
+        rect(bx, by, bw, bh, 6);
+
+        // Stage name
+        fill(s.textColor);
+        noStroke();
+        textSize(constrain(bw / 9, 9, 13));
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(s.name, cx, pipelineY - 10);
+
+        // Actor
+        textSize(constrain(bw / 11, 7, 10));
+        textStyle(ITALIC);
+        text(s.actor, cx, pipelineY + 8);
+
+        // Amplification factor below box
+        fill('#333');
+        textSize(12);
+        textStyle(BOLD);
+        textAlign(CENTER, TOP);
+        text(s.amplification + "x", cx, by + bh + 4);
+        textSize(8);
+        textStyle(NORMAL);
+        fill('#666');
+        text("amplification", cx, by + bh + 18);
+    }
+
+    // Accuracy degradation bar section
+    let barY = pipelineY + boxBaseHeight * 1.0 + 55;
+    let barHeight = 18;
+
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text("Accuracy:", margin, barY + barHeight / 2);
+
+    for (let i = 0; i < stages.length; i++) {
+        let cx = boxXs[i];
+        let bw = boxWidths[i];
+        let accuracy = initialAccuracy / stages[i].amplification;
+        accuracy = max(accuracy, 2);
+
+        // Accuracy bar background
+        let barW = bw * 0.85;
+        let barX = cx - barW / 2;
+
+        fill(220);
+        stroke(180);
+        strokeWeight(1);
+        rect(barX, barY, barW, barHeight, 3);
+
+        // Accuracy fill — green to red
+        let accColor = lerpColor(color('#C62828'), color('#43A047'), accuracy / 100);
+        fill(accColor);
+        noStroke();
+        let fillW = (accuracy / 100) * barW;
+        rect(barX, barY, fillW, barHeight, 3);
+
+        // Accuracy percentage text
+        fill('#333');
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(round(accuracy) + "%", cx, barY + barHeight / 2);
+    }
+
+    // Accuracy sub-label
+    fill('#666');
+    textSize(9);
+    textAlign(CENTER, TOP);
+    textStyle(ITALIC);
+    text("Claim accuracy at each stage", canvasWidth / 2, barY + barHeight + 4);
+
+    // Draw particles (animated information flowing through pipeline)
+    if (isRunning) {
+        for (let p of particles) {
+            let stageIdx = floor(p.progress * stages.length);
+            stageIdx = constrain(stageIdx, 0, stages.length - 1);
+            let pSize = 4 + stageIdx * 2.5;
+
+            // Interpolate position along pipeline
+            let fromX, toX;
+            if (stageIdx < stages.length - 1) {
+                fromX = boxXs[stageIdx];
+                toX = boxXs[stageIdx + 1];
+            } else {
+                fromX = boxXs[stageIdx];
+                toX = boxXs[stageIdx] + boxWidths[stageIdx] / 2 + 20;
+            }
+            let localProgress = (p.progress * stages.length) - stageIdx;
+            let px = lerp(fromX, toX, localProgress);
+            let py = pipelineY + sin(p.offset + frameCount * 0.06) * 12;
+
+            // Color transitions from blue to red as hype increases
+            let pColor = lerpColor(color('#3F51B5'), color('#C62828'), p.progress);
+            let alpha = 220 - stageIdx * 20;
+            fill(red(pColor), green(pColor), blue(pColor), alpha);
+            noStroke();
+            ellipse(px, py, pSize, pSize);
+
+            // Update particle position
+            p.progress += p.speed;
+        }
+
+        // Remove particles that have exited
+        particles = particles.filter(p => p.progress < 1.0);
+
+        // Spawn new particles periodically
+        if (frameCount % 8 === 0) {
+            particles.push({
+                progress: 0,
+                speed: random(0.003, 0.007),
+                offset: random(TWO_PI)
+            });
+        }
+    }
+
+    // Hover tooltip — draw last so it appears on top
+    if (hoveredStage >= 0) {
+        let s = stages[hoveredStage];
+        let tooltipW = min(440, canvasWidth - 20);
+        let tooltipH = 112;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = 30;
+
+        fill(255, 255, 255, 248);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        noStroke();
+        let tx = tooltipX + 12;
+        let ty = tooltipY + 10;
+        let lineSpacing = 16;
+
+        // Stage header
+        fill('#333');
+        textSize(12);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text("Stage: " + s.name + " (" + s.actor + ") — " + s.amplification + "x amplification", tx, ty);
+
+        // Quoted claim text with word wrap
+        fill('#3F51B5');
+        textSize(10);
+        textStyle(NORMAL);
+        let claimText = '\u201C' + s.text + '\u201D';
+        let maxW = tooltipW - 24;
+        text(claimText, tx, ty + lineSpacing, maxW, lineSpacing * 2.5);
+
+        // What was removed
+        fill('#C62828');
+        textSize(9);
+        textStyle(NORMAL);
+        text("Removed: " + s.removed, tx, ty + lineSpacing * 3.8);
+
+        // What was added
+        fill('#43A047');
+        text("Added: " + s.added, tx, ty + lineSpacing * 4.8);
+    }
+
+    // Control region labels
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("Initial Claim Accuracy:", margin, drawHeight + 25);
+
+    fill('#555');
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text(accuracySlider.value() + "%", sliderLeftMargin + accuracySlider.size().width + 8, drawHeight + 25);
+}
+
+function mouseMoved() {
+    if (!isRunning) {
+        redraw();
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    // Reposition controls
+    accuracySlider.size(canvasWidth - sliderLeftMargin - margin - 120, 20);
+    accuracySlider.position(sliderLeftMargin, drawHeight + 14);
+    startButton.position(canvasWidth - margin - 90, drawHeight + 10);
+
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

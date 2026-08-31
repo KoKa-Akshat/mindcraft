@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform vs Accelerated Motion MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Comparison of Uniform vs Uniformly Accelerated Motion MicroSim
+// Shows position, velocity, and acceleration graphs side by side
+
+let canvasWidth = 900;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+
+// Graph parameters
+let graphWidth, graphHeight;
+let timeMax = 10; // seconds
+let time = 0;
+let isRunning = true;
+let animationSpeed = 0.05;
+
+// Motion parameters
+let uniformVelocity = 5; // m/s
+let initialPosition = 0;
+let acceleration = 2; // m/s²
+
+// UI Controls
+let playButton;
+let resetButton;
+let velocitySlider;
+let accelSlider;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Calculate graph dimensions
+    graphWidth = (canvasWidth - 4 * margin) / 2;
+    graphHeight = (drawHeight - 120) / 3 - 10;
+
+    // Create controls
+    playButton = createButton('Pause');
+    playButton.position(margin, drawHeight + 12);
+    playButton.mousePressed(togglePlay);
+    playButton.style('font-size', '14px');
+    playButton.style('padding', '6px 16px');
+
+    resetButton = createButton('Reset');
+    resetButton.position(margin + 80, drawHeight + 12);
+    resetButton.mousePressed(resetSimulation);
+    resetButton.style('font-size', '14px');
+    resetButton.style('padding', '6px 16px');
+
+    velocitySlider = createSlider(1, 10, 5, 0.5);
+    velocitySlider.position(260, drawHeight + 15);
+    velocitySlider.style('width', '120px');
+
+    accelSlider = createSlider(0.5, 5, 2, 0.25);
+    accelSlider.position(500, drawHeight + 15);
+    accelSlider.style('width', '120px');
+
+    describe('Comparison of uniform motion and uniformly accelerated motion showing position, velocity, and acceleration graphs over time.', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+    graphWidth = (canvasWidth - 4 * margin) / 2;
+
+    // Get slider values
+    uniformVelocity = velocitySlider.value();
+    acceleration = accelSlider.value();
+
+    // Background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    noStroke();
+    textSize(22);
+    textAlign(CENTER, TOP);
+    text('Comparing Uniform and Uniformly Accelerated Motion', canvasWidth / 2, 8);
+
+    // Column headers
+    textSize(16);
+    fill(0, 100, 200);
+    text('Uniform Motion (v = ' + uniformVelocity.toFixed(1) + ' m/s)', margin + graphWidth / 2, 38);
+    fill(220, 100, 0);
+    text('Accelerated Motion (a = ' + acceleration.toFixed(2) + ' m/s²)', canvasWidth - margin - graphWidth / 2, 38);
+
+    // Draw graphs
+    let leftX = margin;
+    let rightX = canvasWidth / 2 + margin;
+    let startY = 65;
+    let spacing = graphHeight + 25;
+
+    // Row labels
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    fill(80);
+
+    // Position-Time Graphs
+    drawPositionTimeGraph(leftX, startY, graphWidth, graphHeight, 'uniform');
+    drawPositionTimeGraph(rightX, startY, graphWidth, graphHeight, 'accelerated');
+
+    // Velocity-Time Graphs
+    drawVelocityTimeGraph(leftX, startY + spacing, graphWidth, graphHeight, 'uniform');
+    drawVelocityTimeGraph(rightX, startY + spacing, graphWidth, graphHeight, 'accelerated');
+
+    // Acceleration-Time Graphs
+    drawAccelerationTimeGraph(leftX, startY + 2 * spacing, graphWidth, graphHeight, 'uniform');
+    drawAccelerationTimeGraph(rightX, startY + 2 * spacing, graphWidth, graphHeight, 'accelerated');
+
+    // Draw graph row labels
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    push();
+    translate(12, startY + graphHeight / 2);
+    rotate(-HALF_PI);
+    text('Position (m)', 0, 0);
+    pop();
+
+    push();
+    translate(12, startY + spacing + graphHeight / 2);
+    rotate(-HALF_PI);
+    text('Velocity (m/s)', 0, 0);
+    pop();
+
+    push();
+    translate(12, startY + 2 * spacing + graphHeight / 2);
+    rotate(-HALF_PI);
+    text('Accel (m/s²)', 0, 0);
+    pop();
+
+    // Update time
+    if (isRunning) {
+        time += animationSpeed;
+        if (time > timeMax) {
+            time = 0;
+        }
+    }
+
+    // Control labels
+    fill(0);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text('Velocity: ' + uniformVelocity.toFixed(1) + ' m/s', 180, drawHeight + 25);
+    text('Acceleration: ' + acceleration.toFixed(2) + ' m/s²', 420, drawHeight + 25);
+}
+
+function drawPositionTimeGraph(x, y, w, h, type) {
+    // Graph background
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x, y, w, h);
+
+    // Grid
+    stroke(230);
+    for (let i = 1; i < 5; i++) {
+        line(x + i * w / 5, y, x + i * w / 5, y + h);
+        line(x, y + i * h / 5, x + w, y + i * h / 5);
+    }
+
+    // Axes
+    stroke(100);
+    strokeWeight(1);
+    line(x, y + h, x + w, y + h); // x-axis
+    line(x, y, x, y + h); // y-axis
+
+    // Calculate max position for scaling
+    let maxPos = type === 'uniform' ?
+        uniformVelocity * timeMax :
+        0.5 * acceleration * timeMax * timeMax;
+
+    // Draw curve
+    stroke(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    strokeWeight(2);
+    noFill();
+    beginShape();
+    for (let t = 0; t <= timeMax; t += 0.1) {
+        let pos = type === 'uniform' ?
+            uniformVelocity * t :
+            0.5 * acceleration * t * t;
+        let px = map(t, 0, timeMax, x, x + w);
+        let py = map(pos, 0, maxPos * 1.1, y + h, y);
+        vertex(px, py);
+    }
+    endShape();
+
+    // Current position marker
+    let currentPos = type === 'uniform' ?
+        uniformVelocity * time :
+        0.5 * acceleration * time * time;
+    let markerX = map(time, 0, timeMax, x, x + w);
+    let markerY = map(currentPos, 0, maxPos * 1.1, y + h, y);
+
+    fill(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    noStroke();
+    ellipse(markerX, markerY, 10, 10);
+
+    // Labels
+    fill(80);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('Time (s)', x + w / 2, y + h + 2);
+    text('0', x, y + h + 2);
+    text(timeMax, x + w, y + h + 2);
+
+    // Title
+    textSize(11);
+    textAlign(CENTER, TOP);
+    fill(0);
+    text('Position vs Time', x + w / 2, y + 3);
+
+    // Show equation
+    textSize(9);
+    fill(60);
+    if (type === 'uniform') {
+        text('x = vt', x + w / 2, y + 15);
+    } else {
+        text('x = ½at²', x + w / 2, y + 15);
+    }
+}
+
+function drawVelocityTimeGraph(x, y, w, h, type) {
+    // Graph background
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x, y, w, h);
+
+    // Grid
+    stroke(230);
+    for (let i = 1; i < 5; i++) {
+        line(x + i * w / 5, y, x + i * w / 5, y + h);
+        line(x, y + i * h / 5, x + w, y + i * h / 5);
+    }
+
+    // Axes
+    stroke(100);
+    strokeWeight(1);
+    line(x, y + h, x + w, y + h);
+    line(x, y, x, y + h);
+
+    // Max velocity for scaling
+    let maxVel = type === 'uniform' ? uniformVelocity * 1.5 : acceleration * timeMax * 1.2;
+
+    // Draw line/curve
+    stroke(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    strokeWeight(2);
+
+    if (type === 'uniform') {
+        // Horizontal line
+        let vy = map(uniformVelocity, 0, maxVel, y + h, y);
+        line(x, vy, x + w, vy);
+    } else {
+        // Sloped line
+        noFill();
+        beginShape();
+        for (let t = 0; t <= timeMax; t += 0.5) {
+            let vel = acceleration * t;
+            let px = map(t, 0, timeMax, x, x + w);
+            let py = map(vel, 0, maxVel, y + h, y);
+            vertex(px, py);
+        }
+        endShape();
+    }
+
+    // Current velocity marker
+    let currentVel = type === 'uniform' ? uniformVelocity : acceleration * time;
+    let markerX = map(time, 0, timeMax, x, x + w);
+    let markerY = map(currentVel, 0, maxVel, y + h, y);
+
+    fill(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    noStroke();
+    ellipse(markerX, markerY, 10, 10);
+
+    // Shade area under curve (displacement)
+    fill(type === 'uniform' ? color(0, 100, 200, 50) : color(220, 100, 0, 50));
+    noStroke();
+    beginShape();
+    vertex(x, y + h);
+    for (let t = 0; t <= time; t += 0.1) {
+        let vel = type === 'uniform' ? uniformVelocity : acceleration * t;
+        let px = map(t, 0, timeMax, x, x + w);
+        let py = map(vel, 0, maxVel, y + h, y);
+        vertex(px, py);
+    }
+    vertex(map(time, 0, timeMax, x, x + w), y + h);
+    endShape(CLOSE);
+
+    // Labels
+    fill(80);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('Time (s)', x + w / 2, y + h + 2);
+
+    // Title
+    textSize(11);
+    textAlign(CENTER, TOP);
+    fill(0);
+    text('Velocity vs Time', x + w / 2, y + 3);
+
+    // Annotation
+    textSize(9);
+    fill(60);
+    text('Shaded area = displacement', x + w / 2, y + 15);
+}
+
+function drawAccelerationTimeGraph(x, y, w, h, type) {
+    // Graph background
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x, y, w, h);
+
+    // Grid
+    stroke(230);
+    for (let i = 1; i < 5; i++) {
+        line(x + i * w / 5, y, x + i * w / 5, y + h);
+    }
+
+    // Axes
+    stroke(100);
+    strokeWeight(1);
+    line(x, y + h, x + w, y + h);
+    line(x, y, x, y + h);
+
+    // Draw acceleration line
+    stroke(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    strokeWeight(2);
+
+    let accelValue = type === 'uniform' ? 0 : acceleration;
+    let maxAccel = acceleration * 1.5;
+    let ay = map(accelValue, 0, maxAccel, y + h, y);
+    line(x, ay, x + w, ay);
+
+    // Current position marker
+    let markerX = map(time, 0, timeMax, x, x + w);
+
+    fill(type === 'uniform' ? color(0, 100, 200) : color(220, 100, 0));
+    noStroke();
+    ellipse(markerX, ay, 10, 10);
+
+    // Labels
+    fill(80);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('Time (s)', x + w / 2, y + h + 2);
+
+    // Title
+    textSize(11);
+    textAlign(CENTER, TOP);
+    fill(0);
+    text('Acceleration vs Time', x + w / 2, y + 3);
+
+    // Value label
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    fill(60);
+    text('a = ' + accelValue.toFixed(1) + ' m/s²', x + 5, ay - 12);
+}
+
+function togglePlay() {
+    isRunning = !isRunning;
+    playButton.html(isRunning ? 'Pause' : 'Play');
+}
+
+function resetSimulation() {
+    time = 0;
+    isRunning = true;
+    playButton.html('Pause');
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    graphWidth = (canvasWidth - 4 * margin) / 2;
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = min(container.offsetWidth, 1000);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

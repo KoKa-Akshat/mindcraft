@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Mesh Geometry Anatomy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f8f9fa; }
+        main { display: block; width: 100%; }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>// Mesh Geometry Anatomy — vertices, edges, faces, and surface normals
+// CANVAS_HEIGHT: 560
+// Bloom L2: identify and explain the role of mesh primitives
+
+let containerWidth;
+let canvasWidth  = 700;
+let drawHeight   = 420;
+let infoH        = 140;
+let canvasHeight  = drawHeight + infoH;
+let containerHeight = canvasHeight;
+
+// Low-poly octahedron-like mesh for clear demonstration
+// Vertices in 3D, projected isometrically
+const V3 = [
+  [ 0,  80,  0],  // 0 top
+  [ 70, 0,  40],  // 1 front-right
+  [-70, 0,  40],  // 2 front-left
+  [ 70, 0, -40],  // 3 back-right
+  [-70, 0, -40],  // 4 back-left
+  [ 0, -80,  0],  // 5 bottom
+];
+
+const FACES = [
+  [0, 1, 2],  // top-front
+  [0, 3, 1],  // top-right
+  [0, 2, 4],  // top-left
+  [0, 4, 3],  // top-back
+  [5, 2, 1],  // bottom-front
+  [5, 1, 3],  // bottom-right
+  [5, 4, 2],  // bottom-left
+  [5, 3, 4],  // bottom-back
+];
+
+const FACE_COLS = [
+  [100, 140, 220],
+  [80,  120, 200],
+  [120, 155, 230],
+  [70,  105, 185],
+  [90,  130, 210],
+  [60,  100, 180],
+  [110, 145, 220],
+  [75,  115, 195],
+];
+
+// Highlight modes
+const MODES = ['Vertices', 'Edges', 'Faces', 'Normals'];
+const MODE_COLS = [
+  [220, 60, 60],   // vertices — red dots
+  [220, 160, 0],   // edges — yellow lines
+  [60, 180, 80],   // faces — green highlight
+  [220, 80, 200],  // normals — purple arrows
+];
+
+const DESCRIPTIONS = [
+  {
+    title: 'Vertices',
+    def: 'A vertex is a 3D coordinate point (X, Y, Z). Every triangle in a mesh is defined by three vertices.',
+    details: 'A typical 3D print model contains thousands to millions of vertices. Each vertex stores only a position — no color, no normal by itself. The octahedron above has 6 vertices.',
+    fact: 'Tip: STL files store 3 vertices per triangle with no shared data — a cube stores 36 vertices instead of 8.'
+  },
+  {
+    title: 'Edges',
+    def: 'An edge is the line segment connecting two adjacent vertices. In a manifold mesh, every edge is shared by exactly two faces.',
+    details: 'A T-junction occurs when an edge is shared by three faces — this is a non-manifold error that causes slicing failures. The octahedron has 12 edges.',
+    fact: 'Rule: Each edge in a watertight, printable mesh must border exactly two triangles — no more, no less.'
+  },
+  {
+    title: 'Faces (Triangles)',
+    def: 'A face (or polygon) is the flat surface defined by three or more vertices. In mesh files for 3D printing, faces are always triangulated.',
+    details: 'Triangles are used because any three non-collinear points define a unique flat plane — no chance of a non-planar polygon. The octahedron has 8 triangular faces.',
+    fact: 'Why triangles? Quadrilaterals can be non-planar (the corners might not all lie on one plane), which causes rendering and slicing ambiguity.'
+  },
+  {
+    title: 'Surface Normals',
+    def: 'A surface normal is a unit vector perpendicular to a face, pointing outward from the model\'s surface.',
+    details: 'Normals tell the slicer which side of each triangle faces "outside." An inverted normal points inward and confuses the slicer — it may see the inside as outside, creating hollow shells or missing walls.',
+    fact: 'In STL format, each triangle stores its own outward normal. The right-hand rule defines the correct winding order: curl your fingers from edge 1→2→3 and your thumb points outward.'
+  }
+];
+
+let selectedMode = 0;
+let rotAngle = 0;
+let autoRotate = true;
+let meshCX, meshCY;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  describe('Mesh Geometry Anatomy — click buttons to highlight vertices, edges, faces, or normals', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill(240, 244, 250); stroke(210); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255); noStroke();
+  rect(0, drawHeight, canvasWidth, infoH);
+
+  if (autoRotate) rotAngle += 0.008;
+
+  meshCX = canvasWidth * 0.38;
+  meshCY = drawHeight * 0.50;
+
+  // Title
+  noStroke(); fill(20, 50, 110);
+  textAlign(CENTER, TOP); textSize(17);
+  text('Mesh Geometry Anatomy', canvasWidth / 2, 6);
+
+  // Render mesh
+  drawMesh();
+
+  // Mode buttons
+  drawModeButtons();
+
+  // Info panel
+  drawInfo();
+}
+
+// ───── 3D projection ─────────────────────────────────────────────────────────
+
+function project(v3, cx, cy) {
+  let scale = min(canvasWidth * 0.14, drawHeight * 0.22);
+  let [x, y, z] = v3;
+  // Rotate around Y axis
+  let rx = x * cos(rotAngle) + z * sin(rotAngle);
+  let rz = -x * sin(rotAngle) + z * cos(rotAngle);
+  // Isometric-style: slight tilt
+  let tilt = 0.35;
+  let sx = cx + rx * scale / 80;
+  let sy = cy - y * scale / 80 + rz * tilt * scale / 80;
+  return [sx, sy];
+}
+
+function faceNormal(fi) {
+  let [a, b, c] = FACES[fi].map(vi => V3[vi]);
+  // Rotate vertices
+  let ra = rotated(a), rb = rotated(b), rc = rotated(c);
+  // Face center
+  let fcx = (ra[0]+rb[0]+rc[0])/3;
+  let fcy = (ra[1]+rb[1]+rc[1])/3;
+  let fcz = (ra[2]+rb[2]+rc[2])/3;
+  // Normal direction (simplified)
+  let ab = [rb[0]-ra[0], rb[1]-ra[1], rb[2]-ra[2]];
+  let ac = [rc[0]-ra[0], rc[1]-ra[1], rc[2]-ra[2]];
+  let nx = ab[1]*ac[2] - ab[2]*ac[1];
+  let ny = ab[2]*ac[0] - ab[0]*ac[2];
+  let nz = ab[0]*ac[1] - ab[1]*ac[0];
+  let len = sqrt(nx*nx + ny*ny + nz*nz);
+  return { fcx, fcy, fcz, nx:nx/len, ny:ny/len, nz:nz/len };
+}
+
+function rotated(v) {
+  let [x, y, z] = v;
+  let rx = x * cos(rotAngle) + z * sin(rotAngle);
+  let rz = -x * sin(rotAngle) + z * cos(rotAngle);
+  return [rx, y, rz];
+}
+
+function screenPosFromRot(v, cx, cy) {
+  let scale = min(canvasWidth * 0.14, drawHeight * 0.22);
+  let [rx, ry, rz] = v;
+  let tilt = 0.35;
+  let sx = cx + rx * scale / 80;
+  let sy = cy - ry * scale / 80 + rz * tilt * scale / 80;
+  return [sx, sy];
+}
+
+function drawMesh() {
+  let cx = meshCX, cy = meshCY;
+
+  // Sort faces by depth (painter's algorithm)
+  let sorted = FACES.map((f, i) => {
+    let [ra, rb, rc] = f.map(vi => rotated(V3[vi]));
+    let avgZ = (ra[2] + rb[2] + rc[2]) / 3;
+    return { i, avgZ };
+  }).sort((a, b) => b.avgZ - a.avgZ);
+
+  // Draw faces
+  sorted.forEach(({ i }) => {
+    let f = FACES[i];
+    let pts = f.map(vi => project(V3[vi], cx, cy));
+    let fc = FACE_COLS[i];
+    let isSelFace = selectedMode === 2;
+
+    if (isSelFace) {
+      fill(fc[0] * 0.5 + 30 * 0.5, fc[1] * 0.5 + 180 * 0.5, fc[2] * 0.5 + 80 * 0.5, 230);
+    } else {
+      fill(fc[0], fc[1], fc[2], 200);
+    }
+    stroke(40, 60, 100); strokeWeight(selectedMode === 1 ? 2.5 : 1);
+    if (selectedMode === 1) stroke(220, 160, 0);
+    triangle(pts[0][0], pts[0][1], pts[1][0], pts[1][1], pts[2][0], pts[2][1]);
+  });
+
+  // Draw normals
+  if (selectedMode === 3) {
+    sorted.forEach(({ i }) => {
+      let fn = faceNormal(i);
+      let [fx, fy] = screenPosFromRot([fn.fcx, fn.fcy, fn.fcz], cx, cy);
+      let scale = min(canvasWidth * 0.14, drawHeight * 0.22);
+      let tilt = 0.35;
+      let nx2 = cx + (fn.fcx + fn.nx * 40) * scale / 80;
+      let ny2 = cy - (fn.fcy + fn.ny * 40) * scale / 80 + (fn.fcz + fn.nz * 40) * tilt * scale / 80;
+      stroke(220, 80, 200); strokeWeight(2);
+      line(fx, fy, nx2, ny2);
+      fill(220, 80, 200); noStroke();
+      let ang = atan2(ny2 - fy, nx2 - fx);
+      triangle(nx2, ny2,
+        nx2 - cos(ang-0.5)*8, ny2 - sin(ang-0.5)*8,
+        nx2 - cos(ang+0.5)*8, ny2 - sin(ang+0.5)*8);
+    });
+  }
+
+  // Draw vertices
+  if (selectedMode === 0) {
+    V3.forEach((v, vi) => {
+      let [px, py] = project(v, cx, cy);
+      noStroke(); fill(220, 60, 60);
+      ellipse(px, py, 12, 12);
+      fill(255); textAlign(CENTER, CENTER); textSize(9);
+      text(vi, px, py);
+    });
+  }
+
+  // Vertex count / stats
+  noStroke(); fill(70);
+  textAlign(LEFT, TOP); textSize(10);
+  let stats = `Vertices: ${V3.length}   Edges: 12   Faces: ${FACES.length}`;
+  text(stats, cx - 70, drawHeight - 22);
+
+  // Click to pause/resume rotation
+  fill(120); textSize(9); textAlign(CENTER, TOP);
+  text(autoRotate ? 'Click mesh to pause rotation' : 'Click mesh to resume', cx, drawHeight - 12);
+}
+
+function drawModeButtons() {
+  let bx = canvasWidth * 0.72;
+  let by = 40;
+  let bw = min(canvasWidth * 0.25, 150);
+  let bh = 32;
+
+  noStroke(); fill(50); textAlign(LEFT, TOP); textSize(12);
+  text('Highlight:', bx, by - 18);
+
+  MODES.forEach((m, i) => {
+    let mc = MODE_COLS[i];
+    let isSel = selectedMode === i;
+    let isHov = mouseX >= bx && mouseX <= bx + bw && mouseY >= by + i*(bh+6) && mouseY <= by + i*(bh+6) + bh;
+
+    fill(mc[0], mc[1], mc[2], isSel ? 220 : isHov ? 160 : 110);
+    stroke(mc[0], mc[1], mc[2]);
+    strokeWeight(isSel ? 2.5 : 1);
+    rect(bx, by + i*(bh+6), bw, bh, 4);
+
+    noStroke(); fill(255);
+    textAlign(LEFT, CENTER); textSize(12);
+    text(m, bx + 10, by + i*(bh+6) + bh/2);
+  });
+}
+
+function drawInfo() {
+  let info = DESCRIPTIONS[selectedMode];
+  let x = 12, y = drawHeight + 10, w = canvasWidth - 24;
+
+  noStroke(); fill(MODE_COLS[selectedMode][0], MODE_COLS[selectedMode][1], MODE_COLS[selectedMode][2]);
+  textAlign(LEFT, TOP); textSize(14);
+  text(info.title, x, y);
+  stroke(MODE_COLS[selectedMode][0], MODE_COLS[selectedMode][1], MODE_COLS[selectedMode][2]);
+  strokeWeight(1.5);
+  line(x, y + 19, x + w, y + 19);
+
+  noStroke(); fill(35);
+  textSize(11.5); textAlign(LEFT, TOP);
+  text(info.def, x, y + 26, w * 0.65);
+
+  fill(90); textSize(10.5);
+  text(info.details, x, y + 50, w * 0.65);
+
+  // Fact box
+  let bx = x + w * 0.67;
+  fill(248, 250, 255); stroke(190); strokeWeight(1);
+  rect(bx, y + 5, w * 0.32, 110, 4);
+  noStroke(); fill(MODE_COLS[selectedMode][0], MODE_COLS[selectedMode][1], MODE_COLS[selectedMode][2]);
+  textSize(9); textAlign(LEFT, TOP);
+  text(info.fact, bx + 6, y + 12, w * 0.30);
+}
+
+function mousePressed() {
+  // Mode buttons
+  let bx = canvasWidth * 0.72;
+  let by = 40;
+  let bw = min(canvasWidth * 0.25, 150);
+  let bh = 32;
+  for (let i = 0; i < MODES.length; i++) {
+    if (mouseX >= bx && mouseX <= bx + bw &&
+        mouseY >= by + i*(bh+6) && mouseY <= by + i*(bh+6) + bh) {
+      selectedMode = i;
+      return;
+    }
+  }
+  // Mesh area: toggle rotation
+  if (mouseX < canvasWidth * 0.65 && mouseY < drawHeight) autoRotate = !autoRotate;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth    = containerWidth;
+}
+</script>
+</body>
+</html>

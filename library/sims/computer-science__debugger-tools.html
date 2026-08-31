@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expression Parts Explorer MicroSim using P5.js 1.11.10</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Expression Parts Explorer MicroSim
+// CANVAS_HEIGHT: 390
+// Helps students identify coefficients, variables, constants, and terms in algebraic expressions
+
+// Canvas dimensions
+let canvasWidth = 800;
+let drawHeight = 280;
+let controlHeight = 110;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;
+let sliderLeftMargin = 180;
+let defaultTextSize = 16;
+
+// Expression data structure
+let currentExpression = [];
+let complexityLevel = 'Simple';
+let quizMode = false;
+
+// UI Controls
+let newExpressionButton;
+let complexityDropdown;
+let showCoefficientsCheckbox;
+let showVariablesCheckbox;
+let showConstantsCheckbox;
+let showTermsCheckbox;
+let quizModeButton;
+
+// Hover tracking
+let hoveredPart = null;
+
+// Quiz mode tracking
+let selectedParts = [];
+let feedback = '';
+
+// Colors for different parts
+const COLORS = {
+  coefficient: '#2196F3',    // blue
+  variable: '#4CAF50',       // green
+  constant: '#FF9800',       // orange
+  operation: '#757575',      // gray
+  exponent: '#9C27B0',       // purple
+  highlight: '#FFEB3B',      // yellow
+  background: 'aliceblue',
+  controlBg: 'white'
+};
+
+// Expression element class
+class ExpressionPart {
+  constructor(value, type, x, y, width, height) {
+    this.value = value;
+    this.type = type; // 'coefficient', 'variable', 'constant', 'operation'
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  contains(mx, my) {
+    return mx >= this.x && mx <= this.x + this.width &&
+           my >= this.y && my <= this.y + this.height;
+  }
+
+  draw(showColor, isHighlighted) {
+    push();
+
+    // Background highlight
+    if (isHighlighted) {
+      fill(COLORS.highlight);
+      noStroke();
+      rect(this.x - 5, this.y - 5, this.width + 10, this.height + 10, 5);
+    }
+
+    // Text color
+    if (showColor && !quizMode) {
+      fill(COLORS[this.type]);
+    } else {
+      fill('black');
+    }
+
+    // Render exponents as superscripts
+    if (this.type === 'exponent') {
+      textSize(24); // Smaller text for exponents
+      textAlign(LEFT, TOP);
+      text(this.value, this.x, this.y - 10); // Raised position
+    } else {
+      textSize(36);
+      textAlign(LEFT, TOP);
+      text(this.value, this.x, this.y);
+    }
+
+    pop();
+  }
+
+  getLabel() {
+    switch(this.type) {
+      case 'coefficient': return 'Coefficient';
+      case 'variable': return 'Variable';
+      case 'constant': return 'Constant';
+      case 'operation': return 'Operation';
+      case 'exponent': return 'Exponent';
+      default: return 'Unknown';
+    }
+  }
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Create controls
+  let yPos = drawHeight + 15;
+
+  // New Expression Button
+  newExpressionButton = createButton('New Expression');
+  newExpressionButton.position(15, yPos);
+  newExpressionButton.mousePressed(generateNewExpression);
+
+  // Quiz Mode Button
+  quizModeButton = createButton('Quiz Mode is OFF (colors)');
+  quizModeButton.position(150, yPos);
+  quizModeButton.mousePressed(toggleQuizMode);
+
+  yPos += 40;
+
+  // Complexity Dropdown
+  complexityDropdown = createSelect();
+  complexityDropdown.position(20, yPos);
+  complexityDropdown.option('Simple');
+  complexityDropdown.option('Medium');
+  complexityDropdown.option('Complex');
+  complexityDropdown.selected('Simple');
+  complexityDropdown.changed(generateNewExpression);
+
+  yPos = drawHeight + 15;
+
+  // Checkboxes
+  showCoefficientsCheckbox = createCheckbox('Show Coefficients', true);
+  showCoefficientsCheckbox.position(350, yPos);
+
+  yPos += 30;
+
+  showVariablesCheckbox = createCheckbox('Show Variables', true);
+  showVariablesCheckbox.position(350, yPos);
+
+  yPos += 30;
+
+  showConstantsCheckbox = createCheckbox('Show Constants', true);
+  showConstantsCheckbox.position(350, yPos);
+
+  showTermsCheckbox = createCheckbox('Highlight Terms', false);
+  showTermsCheckbox.position(530, drawHeight + 15);
+
+  // Generate initial expression: 3x + 5y - 7
+  generateDefaultExpression();
+
+  describe('Interactive algebraic expression explorer showing coefficients, variables, constants, and operations in different colors', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Drawing area
+  fill('aliceblue');
+  stroke('silver');
+  rect(0, 0, width, drawHeight);
+
+  // Control area
+  fill(COLORS.controlBg);
+  rect(0, drawHeight, width, controlHeight);
+
+  // Border between areas
+  stroke('silver');
+  strokeWeight(1);
+  line(0, drawHeight, width, drawHeight);
+
+  // Title
+  fill('black');
+  textSize(36);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Expression Parts Explorer', canvasWidth*.35, margin);
+
+  // Instructions
+  textSize(16);
+  textAlign(CENTER, TOP);
+  fill('#666');
+  if (quizMode) {
+    text('Quiz Mode: Click on parts to identify them', canvasWidth*.3, margin + 45);
+  } else {
+    text('Hover over parts to see their classification', canvasWidth*.3, margin + 45);
+  }
+
+  // Draw expression
+  drawExpression();
+
+  // Draw analysis panel
+  drawAnalysisPanel();
+
+  // Draw hover tooltip
+  if (hoveredPart && !quizMode) {
+    drawTooltip();
+  }
+
+  // Draw quiz feedback
+  if (quizMode && feedback) {
+    drawFeedback();
+  }
+
+  // Reset defaults
+  stroke(0);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawExpression() {
+  // Check for hover
+  hoveredPart = null;
+  for (let part of currentExpression) {
+    if (part.contains(mouseX, mouseY)) {
+      hoveredPart = part;
+      break;
+    }
+  }
+
+  // Highlight terms if checkbox is checked
+  if (showTermsCheckbox.checked()) {
+    highlightTerms();
+  }
+
+  // Draw each part
+  for (let part of currentExpression) {
+    let showColor = shouldShowColor(part.type);
+    let isHighlighted = (hoveredPart === part);
+
+    part.draw(showColor, isHighlighted);
+  }
+}
+
+function highlightTerms() {
+  // Draw boxes around each term
+  push();
+  noFill();
+  stroke('#9C27B0'); // Purple for term boundaries
+  strokeWeight(2);
+
+  let termStart = 0;
+
+  for (let i = 0; i <= currentExpression.length; i++) {
+    // End of term is when we hit an operation or end of expression
+    if (i === currentExpression.length ||
+        (currentExpression[i].type === 'operation' &&
+         (currentExpression[i].value.includes('+') || currentExpression[i].value.includes('-')))) {
+
+      // Draw box around this term
+      if (i > termStart) {
+        let firstPart = currentExpression[termStart];
+        let lastPart = currentExpression[i - 1];
+        let boxX = firstPart.x - 8;
+        let boxY = firstPart.y - 8;
+        let boxW = (lastPart.x + lastPart.width) - firstPart.x + 16;
+        let boxH = 50;
+
+        rect(boxX, boxY, boxW, boxH, 5);
+      }
+
+      termStart = i + 1;
+    }
+  }
+
+  pop();
+}
+
+function shouldShowColor(type) {
+  if (type === 'coefficient') return showCoefficientsCheckbox.checked();
+  if (type === 'variable') return showVariablesCheckbox.checked();
+  if (type === 'constant') return showConstantsCheckbox.checked();
+  return true; // Always show operations
+}
+
+function drawTooltip() {
+  push();
+  fill(0, 0, 0, 200);
+  noStroke();
+  let tooltipText = hoveredPart.getLabel();
+  let tw = textWidth(tooltipText) + 20;
+  let th = 30;
+  let tx = mouseX + 15;
+  let ty = mouseY - 40;
+
+  // Keep tooltip on screen
+  if (tx + tw > width) tx = mouseX - tw - 15;
+  if (ty < 0) ty = mouseY + 15;
+
+  rect(tx, ty, tw, th, 5);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text(tooltipText, tx + tw/2, ty + th/2);
+  pop();
+}
+
+function drawAnalysisPanel() {
+  // Analysis panel on right side
+  push();
+  fill('white');
+  stroke('silver');
+  strokeWeight(1);
+  // wide enough for 7 numbers in a comma-separated list
+  let panelW = 175;
+  let panelH = 200;
+  let panelX = canvasWidth - panelW - margin;
+  let panelY = margin;
+
+  rect(panelX, panelY, panelW, panelH, 5);
+
+  fill('black');
+  noStroke();
+  textSize(18);
+  textAlign(LEFT, TOP);
+  text('Analysis', panelX + 10, panelY + 10);
+
+  textSize(14);
+  let yOffset = panelY + 40;
+  let verticalSpacing = 20;
+
+  // Count terms
+  let termCount = countTerms();
+  text('Terms: ' + termCount, panelX + 10, yOffset);
+  yOffset += verticalSpacing;
+
+  // Count operators
+  let operatorCount = getOperators().length;
+  text('Operators: ' + operatorCount, panelX + 10, yOffset);
+  yOffset += verticalSpacing;
+
+  // List coefficients
+  let coefficients = getCoefficients();
+  text('Coefficients:', panelX + 10, yOffset);
+  yOffset += verticalSpacing;
+
+  fill(COLORS.coefficient);
+  text(coefficients.length > 0 ? coefficients.join(', ') : 'none', panelX + 15, yOffset);
+  yOffset += verticalSpacing;
+
+  // List variables
+  fill('black');
+  let variables = getVariables();
+  text('Variables:', panelX + 10, yOffset);
+  yOffset += verticalSpacing;
+  fill(COLORS.variable);
+  text(variables.length > 0 ? variables.join(', ') : 'none', panelX + 15, yOffset);
+  yOffset += verticalSpacing;
+
+  // List constants
+  fill('black');
+  let constants = getConstants();
+  text('Constant:', panelX + 10, yOffset);
+  yOffset += verticalSpacing;
+  fill(COLORS.constant);
+  text(constants.length > 0 ? constants.join(', ') : 'none', panelX + 15, yOffset);
+
+  pop();
+}
+
+function drawFeedback() {
+  push();
+  textAlign(LEFT, TOP);
+  textSize(18);
+  if (feedback.includes('Correct')) {
+    fill('#4CAF50');
+  } else {
+    fill('#F44336');
+  }
+  text(feedback, margin, drawHeight - 40);
+  pop();
+}
+
+function countTerms() {
+  let count = 1;
+  for (let part of currentExpression) {
+    if (part.type === 'operation' && (part.value.includes('+') || part.value.includes('-'))) {
+      count++;
+    }
+  }
+  return count;
+}
+
+function getCoefficients() {
+  return currentExpression
+    .filter(p => p.type === 'coefficient')
+    .map(p => p.value);
+}
+
+function getVariables() {
+  return [...new Set(currentExpression
+    .filter(p => p.type === 'variable')
+    .map(p => p.value))];
+}
+
+function getConstants() {
+  return currentExpression
+    .filter(p => p.type === 'constant')
+    .map(p => p.value);
+}
+
+function getOperators() {
+  return currentExpression
+    .filter(p => p.type === 'operation' && (p.value.includes('+') || p.value.includes('-')))
+    .map(p => p.value.trim());
+}
+
+function generateDefaultExpression() {
+  // Generate: 3x + 5y - 7
+  currentExpression = [];
+  
+  // duplicate
+  let xPos = margin;
+  let yPos = drawHeight*.5;
+
+  let parts = [
+    {value: '3', type: 'coefficient'},
+    {value: 'x', type: 'variable'},
+    {value: ' + ', type: 'operation'},
+    {value: '5', type: 'coefficient'},
+    {value: 'y', type: 'variable'},
+    {value: ' - ', type: 'operation'},
+    {value: '7', type: 'constant'}
+  ];
+
+  for (let part of parts) {
+    // Calculate width based on type (exponents use smaller text)
+    if (part.type === 'exponent') {
+      textSize(24);
+    } else {
+      textSize(36);
+    }
+    let w = textWidth(part.value);
+    let h = 40;
+    currentExpression.push(new ExpressionPart(part.value, part.type, xPos, yPos, w, h));
+    xPos += w;
+  }
+}
+
+function generateNewExpression() {
+  complexityLevel = complexityDropdown.value();
+  currentExpression = [];
+
+  let expression = createRandomExpression(complexityLevel);
+
+  // duplicate
+  let xPos = margin;
+  let yPos = drawHeight * .5;
+
+  for (let part of expression) {
+    // Calculate width based on type (exponents use smaller text)
+    if (part.type === 'exponent') {
+      textSize(24);
+    } else {
+      textSize(36);
+    }
+    let w = textWidth(part.value);
+    let h = 40;
+    currentExpression.push(new ExpressionPart(part.value, part.type, xPos, yPos, w, h));
+    xPos += w;
+  }
+
+  feedback = '';
+}
+
+function createRandomExpression(complexity) {
+  let parts = [];
+  let numTerms;
+  let useExponents = false;
+  let maxCoeff;
+
+  if (complexity === 'Simple') {
+    numTerms = floor(random(2, 4)); // 2 or 3
+    maxCoeff = 10;
+  } else if (complexity === 'Medium') {
+    numTerms = floor(random(3, 6)); // 3, 4, or 5
+    maxCoeff = 20;
+    useExponents = random() > 0.5;
+  } else { // Complex
+    numTerms = floor(random(4, 7)); // 4, 5, or 6
+    maxCoeff = 50;
+    useExponents = true;
+  }
+
+  let variables = ['x', 'y', 'z', 'a', 'b', 'c'];
+  let usedVars = [];
+
+  for (let i = 0; i < numTerms; i++) {
+    // Add operation (except for first term)
+    if (i > 0) {
+      let op = random() > 0.5 ? ' + ' : ' - ';
+      parts.push({value: op, type: 'operation'});
+    }
+
+    // Decide if this term has a variable or is a constant
+    let hasVariable = (i < numTerms - 1) || random() > 0.3;
+
+    if (hasVariable) {
+      // Coefficient
+      let coeff = floor(random(1, maxCoeff + 1));
+      if (coeff !== 1 || random() > 0.5) {
+        parts.push({value: String(coeff), type: 'coefficient'});
+      }
+
+      // Variable
+      let varIndex = floor(random(variables.length));
+      let varName = variables[varIndex];
+      if (!usedVars.includes(varName)) usedVars.push(varName);
+      parts.push({value: varName, type: 'variable'});
+
+      // Exponent (for medium/complex)
+      if (useExponents && random() > 0.6) {
+        let exp = floor(random(2, 4));
+        parts.push({value: String(exp), type: 'exponent'});
+      }
+    } else {
+      // Constant term
+      let constant = floor(random(1, maxCoeff + 1));
+      parts.push({value: String(constant), type: 'constant'});
+    }
+  }
+
+  return parts;
+}
+
+function toggleQuizMode() {
+  quizMode = !quizMode;
+  quizModeButton.html(quizMode ? 'Quiz Mode is ON (no colors)' : 'Quiz Mode is OFF (colors)');
+  feedback = '';
+  selectedParts = [];
+
+  // Update checkbox labels for quiz mode by recreating them
+  let coefChecked = showCoefficientsCheckbox.checked();
+  let varChecked = showVariablesCheckbox.checked();
+  let constChecked = showConstantsCheckbox.checked();
+  let termsChecked = showTermsCheckbox.checked();
+
+  // Remove old checkboxes
+  showCoefficientsCheckbox.remove();
+  showVariablesCheckbox.remove();
+  showConstantsCheckbox.remove();
+  showTermsCheckbox.remove();
+
+  // Create new checkboxes with updated labels
+  let yPos = drawHeight + 15;
+
+  if (quizMode) {
+    showCoefficientsCheckbox = createCheckbox('Find Coefficients', coefChecked);
+    showCoefficientsCheckbox.position(350, yPos);
+    yPos += 30;
+
+    showVariablesCheckbox = createCheckbox('Find Variables', varChecked);
+    showVariablesCheckbox.position(350, yPos);
+    yPos += 30;
+
+    showConstantsCheckbox = createCheckbox('Find Constants', constChecked);
+    showConstantsCheckbox.position(350, yPos);
+
+    showTermsCheckbox = createCheckbox('Highlight Terms', termsChecked);
+    showTermsCheckbox.position(530, drawHeight + 15);
+  } else {
+    showCoefficientsCheckbox = createCheckbox('Show Coefficients', coefChecked);
+    showCoefficientsCheckbox.position(350, yPos);
+    yPos += 30;
+
+    showVariablesCheckbox = createCheckbox('Show Variables', varChecked);
+    showVariablesCheckbox.position(350, yPos);
+    yPos += 30;
+
+    showConstantsCheckbox = createCheckbox('Show Constants', constChecked);
+    showConstantsCheckbox.position(350, yPos);
+
+    showTermsCheckbox = createCheckbox('Highlight Terms', termsChecked);
+    showTermsCheckbox.position(530, drawHeight + 15);
+  }
+}
+
+function mousePressed() {
+  if (quizMode && mouseY < drawHeight) {
+    for (let part of currentExpression) {
+      if (part.contains(mouseX, mouseY)) {
+        checkAnswer(part);
+        break;
+      }
+    }
+  }
+}
+
+function checkAnswer(part) {
+  // Check which types the user is looking for
+  let lookingForCoefficients = showCoefficientsCheckbox.checked();
+  let lookingForVariables = showVariablesCheckbox.checked();
+  let lookingForConstants = showConstantsCheckbox.checked();
+
+  // Determine if this is a correct answer based on what they're looking for
+  let isCorrect = false;
+  let expectedType = '';
+
+  if (lookingForCoefficients && !lookingForVariables && !lookingForConstants) {
+    // Only looking for coefficients
+    expectedType = 'coefficient';
+    isCorrect = (part.type === 'coefficient');
+  } else if (!lookingForCoefficients && lookingForVariables && !lookingForConstants) {
+    // Only looking for variables
+    expectedType = 'variable';
+    isCorrect = (part.type === 'variable');
+  } else if (!lookingForCoefficients && !lookingForVariables && lookingForConstants) {
+    // Only looking for constants
+    expectedType = 'constant';
+    isCorrect = (part.type === 'constant');
+  } else if (lookingForCoefficients && lookingForVariables && !lookingForConstants) {
+    // Looking for coefficients or variables
+    isCorrect = (part.type === 'coefficient' || part.type === 'variable');
+    expectedType = 'coefficient or variable';
+  } else if (lookingForCoefficients && !lookingForVariables && lookingForConstants) {
+    // Looking for coefficients or constants
+    isCorrect = (part.type === 'coefficient' || part.type === 'constant');
+    expectedType = 'coefficient or constant';
+  } else if (!lookingForCoefficients && lookingForVariables && lookingForConstants) {
+    // Looking for variables or constants
+    isCorrect = (part.type === 'variable' || part.type === 'constant');
+    expectedType = 'variable or constant';
+  } else if (lookingForCoefficients && lookingForVariables && lookingForConstants) {
+    // Looking for all types
+    isCorrect = (part.type !== 'operation');
+    expectedType = 'coefficient, variable, or constant';
+  } else {
+    // Nothing is checked - provide general feedback
+    feedback = 'That\'s a ' + part.getLabel() + ': ' + part.value;
+    return;
+  }
+
+  // Provide feedback
+  if (isCorrect) {
+    feedback = 'Correct! That\'s a ' + part.getLabel() + ': ' + part.value;
+  } else {
+    if (part.type === 'operation') {
+      feedback = 'Sorry, that\'s an operation sign, not a ' + expectedType;
+    } else {
+      feedback = 'Sorry, that\'s a ' + part.getLabel() + ', not a ' + expectedType;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

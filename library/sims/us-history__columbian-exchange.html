@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Columbian Exchange Interactive Web</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// The Columbian Exchange Interactive Web
+// CANVAS_HEIGHT: 520
+// Chapter 2: Pre-Columbian Americas and European Contact
+// Bloom Level: Understand (L2) — click items to explore bidirectional transfers
+
+let canvasWidth = 700;
+let drawHeight = 460;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+let selectedItem = null;
+let hoveredItem = null;
+let showConsequences = false;
+let toggleBtn, resetBtn;
+
+const items = [
+  // Americas → Old World (flowing East)
+  { id:'corn',    dir:'E', name:'Maize (Corn)',    impact:'High',   icon:'🌽',
+    effect:'Became a staple crop across Europe, Africa, and Asia — feeding growing populations and enabling demographic expansion. Today it is the world\'s most-produced grain.',
+    r:200, g:150, b:20 },
+  { id:'potato',  dir:'E', name:'Potato',          impact:'High',   icon:'🥔',
+    effect:'Transformed European diets — especially in Ireland, Germany, and Russia. The potato enabled population growth by providing dense calories on small plots of land.',
+    r:160, g:100, b:40 },
+  { id:'tomato',  dir:'E', name:'Tomato',           impact:'Medium', icon:'🍅',
+    effect:'Eventually transformed European (especially Italian and Spanish) cuisine, though initially viewed with suspicion. Became essential to Mediterranean diets by the 18th century.',
+    r:200, g:50,  b:30 },
+  { id:'cacao',   dir:'E', name:'Cacao/Chocolate', impact:'Medium', icon:'🍫',
+    effect:'Became a luxury good in Europe, later a mass commodity. Cacao cultivation in West Africa (using enslaved labor) became a major industry by the 19th–20th centuries.',
+    r:100, g:60,  b:30 },
+  { id:'tobacco', dir:'E', name:'Tobacco',          impact:'High',   icon:'🚬',
+    effect:'Became enormously profitable — tobacco saved the Jamestown colony (1612) and drove the demand for enslaved African labor in Virginia. Its addictive qualities made it globally widespread.',
+    r:100, g:130, b:50 },
+  { id:'sweetpotato', dir:'E', name:'Sweet Potato', impact:'Medium', icon:'🍠',
+    effect:'Spread rapidly through Africa, Asia, and the Pacific — becoming a dietary staple in China and West Africa and supplementing food security in many regions.',
+    r:210, g:120, b:50 },
+  // Old World → Americas (flowing West)
+  { id:'smallpox', dir:'W', name:'Smallpox',       impact:'Catastrophic', icon:'☣️',
+    effect:'Killed an estimated 50–90% of Indigenous populations within a century of contact — the greatest demographic catastrophe in human history. Indigenous communities had no prior immunity.',
+    r:180, g:30,  b:30 },
+  { id:'horse',   dir:'W', name:'Horse',            impact:'High',   icon:'🐴',
+    effect:'Transformed the Great Plains — horses enabled buffalo hunting, mobile warfare, and a new way of life for the Lakota, Comanche, and other nations within a few generations of reintroduction.',
+    r:80,  g:60,  b:140 },
+  { id:'cattle',  dir:'W', name:'Cattle',           impact:'High',   icon:'🐄',
+    effect:'Transformed the American West and South American pampas. Cattle ranching became central to colonial economies and later to the U.S. Great Plains livestock industry.',
+    r:100, g:80,  b:40 },
+  { id:'wheat',   dir:'W', name:'Wheat',            impact:'High',   icon:'🌾',
+    effect:'Became the primary grain crop of European settlements in North America, displacing Indigenous food systems and enabling the agricultural economy of colonial New England and later the Midwest.',
+    r:180, g:160, b:40 },
+  { id:'sugar',   dir:'W', name:'Sugarcane',        impact:'Catastrophic', icon:'🧂',
+    effect:'Drove the transatlantic slave trade. The demand for sugar in European markets made enslaved African labor the cornerstone of Caribbean and Brazilian economies, enslaving millions.',
+    r:180, g:30,  b:30 },
+  { id:'measles', dir:'W', name:'Measles',          impact:'Catastrophic', icon:'🤒',
+    effect:'Like smallpox, measles devastated Indigenous populations with no prior immunity. Often arrived before European settlers themselves, creating "empty" lands that colonizers misread as uninhabited.',
+    r:180, g:30,  b:30 }
+];
+
+// Impact order for layout
+const impactOrder = {Catastrophic:0, High:1, Medium:2, Low:3};
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  toggleBtn = createButton('Show High/Catastrophic Only');
+  resetBtn  = createButton('Reset');
+
+  toggleBtn.mousePressed(() => {
+    showConsequences = !showConsequences;
+    toggleBtn.html(showConsequences ? 'Show All Items' : 'Show High/Catastrophic Only');
+    selectedItem = null;
+  });
+  resetBtn.mousePressed(() => { selectedItem = null; });
+
+  positionControls();
+  describe('Interactive diagram of the Columbian Exchange showing plants, animals, and diseases that moved between the Americas and the Old World after 1492. Click items to learn about their historical impact.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  toggleBtn.position(10, y);
+  resetBtn.position(canvasWidth - 70, y);
+}
+
+function visibleItems() {
+  if (!showConsequences) return items;
+  return items.filter(it => it.impact === 'High' || it.impact === 'Catastrophic');
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  let vi = visibleItems();
+
+  // Layout zones
+  let zoneW = (canvasWidth - margin*2) / 3;
+  let zoneH = drawHeight - 70;
+  let titleH = 50;
+
+  // Americas zone
+  fill(34, 100, 60, 30);
+  stroke(34, 100, 60);
+  strokeWeight(1.5);
+  rect(margin, titleH, zoneW - 4, zoneH, 8);
+
+  // Ocean zone
+  fill(150, 190, 230, 40);
+  stroke(100, 150, 200);
+  rect(margin + zoneW, titleH, zoneW - 4, zoneH, 8);
+
+  // Old World zone
+  fill(80, 80, 160, 30);
+  stroke(80, 80, 160);
+  rect(margin + zoneW*2, titleH, zoneW - 4, zoneH, 8);
+
+  // Zone labels
+  noStroke();
+  fill(20, 100, 50);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(15);
+  text('Americas\n(New World)', margin + zoneW/2, 28);
+  fill(80, 80, 160);
+  text('Europe / Africa\n(Old World)', margin + zoneW*2.5, 28);
+  fill(100, 150, 200);
+  textSize(12);
+  text('Atlantic Ocean\n(Columbian Exchange)', margin + zoneW*1.5, 28);
+  textStyle(NORMAL);
+
+  // Detect hover
+  hoveredItem = null;
+
+  // Draw items
+  let eastItems = vi.filter(it => it.dir === 'E');
+  let westItems = vi.filter(it => it.dir === 'W');
+
+  let drawItems = (itemList, inAmericas) => {
+    let n = itemList.length;
+    for (let i = 0; i < n; i++) {
+      let it = itemList[i];
+      let isSelected = selectedItem && selectedItem.id === it.id;
+      let x, y;
+      let slotH = (zoneH - 20) / Math.max(n, 1);
+      let cy = titleH + 10 + slotH * i + slotH / 2;
+
+      if (inAmericas) {
+        x = margin + zoneW * 0.5;
+      } else {
+        x = margin + zoneW * 2.5;
+      }
+      y = cy;
+
+      // Filter by impact in consequences mode
+      let alpha = showConsequences ? 255 : 200;
+
+      let iw = zoneW - 20;
+      let ih = min(slotH - 8, 46);
+      let bx = x - iw/2, by = y - ih/2;
+
+      fill(it.r, it.g, it.b, isSelected ? 220 : (hoveredItem && hoveredItem.id === it.id ? 200 : 140));
+      stroke(it.r, it.g, it.b, isSelected ? 255 : 180);
+      strokeWeight(isSelected ? 2.5 : 1);
+      rect(bx, by, iw, ih, 6);
+
+      noStroke();
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textSize(min(12, ih*0.28));
+      text(it.name, x, y - ih*0.18, iw - 8, ih*0.4);
+      textStyle(NORMAL);
+      textSize(min(10, ih*0.22));
+      fill(255, 255, 200);
+      text('Impact: ' + it.impact, x, y + ih*0.22);
+
+      // Check hover
+      if (mouseX > bx && mouseX < bx+iw && mouseY > by && mouseY < by+ih) hoveredItem = it;
+
+      // Draw arrow into ocean
+      let arrowX1 = inAmericas ? x + iw/2 : x - iw/2;
+      let arrowX2 = inAmericas ? margin + zoneW : margin + zoneW*2;
+      let arrowY = y;
+      stroke(it.r, it.g, it.b, 120);
+      strokeWeight(1.5);
+      line(arrowX1, arrowY, arrowX2, arrowY);
+      // Arrowhead
+      let dir = inAmericas ? 1 : -1;
+      fill(it.r, it.g, it.b, 120);
+      noStroke();
+      triangle(arrowX2 + dir*8, arrowY,
+               arrowX2 - dir*4, arrowY - 4,
+               arrowX2 - dir*4, arrowY + 4);
+    }
+  };
+
+  drawItems(eastItems, true);   // Americas → Old World
+  drawItems(westItems, false);  // Old World → Americas
+
+  // Ocean zone arrows label
+  noStroke();
+  fill(60, 100, 160);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(ITALIC);
+  text('← diseases, animals,\n   crops flow west', margin + zoneW*1.5, drawHeight * 0.35);
+  text('crops, crops flow east →', margin + zoneW*1.5, drawHeight * 0.65);
+  textStyle(NORMAL);
+
+  // Detail panel if item selected
+  if (selectedItem) {
+    let it = selectedItem;
+    let px = margin + zoneW + 4, py = titleH + 4;
+    let pw = zoneW - 12, ph = zoneH - 8;
+
+    fill(255, 255, 255, 248);
+    stroke(it.r, it.g, it.b);
+    strokeWeight(2);
+    rect(px, py, pw, ph, 8);
+
+    noStroke();
+    fill(it.r, it.g, it.b);
+    rect(px, py, pw, 38, 8, 8, 0, 0);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(14);
+    text(it.name, px + pw/2, py + 19);
+
+    let iy = py + 46;
+    fill(it.r, it.g, it.b);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    textSize(12);
+    text('Direction:', px+8, iy);
+    fill(40);
+    textStyle(NORMAL);
+    text(it.dir === 'E' ? 'Americas → Old World' : 'Old World → Americas', px+75, iy);
+
+    iy += 18;
+    fill(it.r, it.g, it.b);
+    textStyle(BOLD);
+    text('Impact:', px+8, iy);
+    fill(40);
+    textStyle(NORMAL);
+    text(it.impact, px+70, iy);
+
+    iy += 22;
+    stroke(220);
+    line(px+8, iy, px+pw-8, iy);
+    noStroke();
+    iy += 8;
+
+    fill(it.r, it.g, it.b);
+    textStyle(BOLD);
+    textSize(12);
+    text('Historical Significance:', px+8, iy);
+    fill(30);
+    textStyle(NORMAL);
+    textSize(12);
+    iy += 18;
+    text(it.effect, px+8, iy, pw-16, ph - (iy - py) - 8);
+
+    // Close hint
+    fill(150);
+    textAlign(RIGHT, BOTTOM);
+    textSize(10);
+    text('Click elsewhere to close', px+pw-6, py+ph-4);
+  }
+
+  positionControls();
+}
+
+function mousePressed() {
+  if (selectedItem) { selectedItem = null; return; }
+  if (hoveredItem) selectedItem = hoveredItem;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+</body>
+</html>

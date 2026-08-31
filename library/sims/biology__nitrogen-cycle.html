@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Nitrogen Cycle using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Nitrogen Cycle Step-Through MicroSim
+// CANVAS_HEIGHT: 545
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 500;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Cycle steps
+let steps = [
+  {
+    name: "N₂ Fixation",
+    desc: "Rhizobium bacteria in root nodules convert atmospheric N₂ into NH₄⁺ (ammonium).",
+    color: [160, 80, 220] // purple N2 -> blue NH4+
+  },
+  {
+    name: "Nitrification (Step 1)",
+    desc: "Nitrosomonas bacteria oxidize NH₄⁺ into NO₂⁻ (nitrite).",
+    color: [60, 120, 220] // blue -> red
+  },
+  {
+    name: "Nitrification (Step 2)",
+    desc: "Nitrobacter bacteria oxidize NO₂⁻ into NO₃⁻ (nitrate).",
+    color: [220, 60, 60] // red -> green
+  },
+  {
+    name: "Assimilation",
+    desc: "Plant roots absorb NO₃⁻ and incorporate nitrogen into organic molecules.",
+    color: [40, 180, 80] // green
+  },
+  {
+    name: "Decomposition",
+    desc: "Decomposers break down dead organisms, releasing NH₄⁺ back into soil (ammonification).",
+    color: [60, 120, 220]
+  },
+  {
+    name: "Denitrification",
+    desc: "Anaerobic bacteria in waterlogged soil convert NO₃⁻ back to N₂ gas, returning it to the atmosphere.",
+    color: [160, 80, 220]
+  }
+];
+
+let currentStep = 0;
+let playing = false;
+let speedSlider;
+let playBtn, stepBtn, fertBtn;
+let particles = [];
+let frameCounter = 0;
+let fertilizerAdded = false;
+let fertilizerTimer = 0;
+
+// Zone heights
+let skyH, soilTopY, soilH, waterY;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Interactive nitrogen cycle showing fixation, nitrification, assimilation, decomposition, and denitrification.', LABEL);
+
+  playBtn = createButton('▶ Play');
+  playBtn.parent(document.querySelector('main'));
+  playBtn.mousePressed(() => { playing = !playing; playBtn.html(playing ? '❚❚ Pause' : '▶ Play'); });
+
+  stepBtn = createButton('Step →');
+  stepBtn.parent(document.querySelector('main'));
+  stepBtn.mousePressed(() => {
+    if (!playing) {
+      currentStep = (currentStep + 1) % steps.length;
+      spawnParticlesForStep(currentStep);
+    }
+  });
+
+  fertBtn = createButton('Add Fertilizer');
+  fertBtn.parent(document.querySelector('main'));
+  fertBtn.mousePressed(() => {
+    fertilizerAdded = true;
+    fertilizerTimer = 300;
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: random(canvasWidth * 0.2, canvasWidth * 0.8),
+        y: random(soilTopY, soilTopY + soilH * 0.3),
+        vx: random(-0.5, 0.5),
+        vy: random(0.5, 2),
+        col: [40, 180, 80],
+        label: 'NO₃⁻',
+        life: 400,
+        size: random(4, 7)
+      });
+    }
+  });
+
+  speedSlider = createSlider(1, 5, 2, 1);
+  speedSlider.parent(document.querySelector('main'));
+
+  spawnParticlesForStep(0);
+}
+
+function spawnParticlesForStep(step) {
+  let count = 12;
+  for (let i = 0; i < count; i++) {
+    let p = createParticleForStep(step, i, count);
+    particles.push(p);
+  }
+}
+
+function createParticleForStep(step, i, count) {
+  let p = { life: 300, size: random(5, 8) };
+  let col = steps[step].color;
+  p.col = [...col];
+
+  switch (step) {
+    case 0: // Fixation - N2 descends from sky to root nodules
+      p.x = random(canvasWidth * 0.3, canvasWidth * 0.7);
+      p.y = random(10, skyH * 0.5);
+      p.vx = random(-0.3, 0.3);
+      p.vy = random(0.5, 1.5);
+      p.label = 'N₂';
+      p.targetY = soilTopY + soilH * 0.4;
+      break;
+    case 1: // Nitrification step 1 - NH4+ -> NO2-
+      p.x = random(canvasWidth * 0.2, canvasWidth * 0.8);
+      p.y = random(soilTopY + soilH * 0.1, soilTopY + soilH * 0.4);
+      p.vx = random(-0.5, 0.5);
+      p.vy = random(-0.3, 0.3);
+      p.label = 'NH₄⁺→NO₂⁻';
+      p.targetY = p.y;
+      break;
+    case 2: // Nitrification step 2 - NO2- -> NO3-
+      p.x = random(canvasWidth * 0.2, canvasWidth * 0.8);
+      p.y = random(soilTopY + soilH * 0.2, soilTopY + soilH * 0.5);
+      p.vx = random(-0.5, 0.5);
+      p.vy = random(-0.2, 0.2);
+      p.label = 'NO₂⁻→NO₃⁻';
+      p.targetY = p.y;
+      break;
+    case 3: // Assimilation - NO3- rises through plant
+      p.x = canvasWidth * 0.5 + random(-30, 30);
+      p.y = soilTopY + soilH * 0.3;
+      p.vx = random(-0.2, 0.2);
+      p.vy = random(-1.5, -0.5);
+      p.label = 'NO₃⁻';
+      p.targetY = skyH * 0.3;
+      break;
+    case 4: // Decomposition - leaves fall, release NH4+
+      p.x = random(canvasWidth * 0.2, canvasWidth * 0.8);
+      p.y = random(skyH * 0.4, skyH * 0.8);
+      p.vx = random(-0.5, 0.5);
+      p.vy = random(0.5, 1.0);
+      p.label = 'NH₄⁺';
+      p.targetY = soilTopY + soilH * 0.3;
+      break;
+    case 5: // Denitrification - NO3- -> N2 rises from waterlogged zone
+      p.x = random(canvasWidth * 0.2, canvasWidth * 0.8);
+      p.y = waterY - random(10, 40);
+      p.vx = random(-0.3, 0.3);
+      p.vy = random(-1.5, -0.5);
+      p.label = 'N₂↑';
+      p.targetY = 10;
+      break;
+  }
+  return p;
+}
+
+function draw() {
+  updateCanvasSize();
+  frameCounter++;
+
+  skyH = drawHeight * 0.35;
+  soilTopY = skyH;
+  soilH = drawHeight * 0.45;
+  waterY = soilTopY + soilH;
+
+  // Sky
+  for (let y = 0; y < skyH; y++) {
+    let inter = map(y, 0, skyH, 0, 1);
+    let c = lerpColor(color(135, 200, 250), color(200, 230, 255), inter);
+    stroke(c);
+    line(0, y, canvasWidth, y);
+  }
+
+  // Soil layers
+  noStroke();
+  fill(139, 119, 80);
+  rect(0, soilTopY, canvasWidth, soilH);
+  // Darker topsoil
+  fill(100, 80, 50);
+  rect(0, soilTopY, canvasWidth, soilH * 0.15);
+
+  // Waterlogged zone
+  fill(70, 100, 130);
+  rect(0, waterY, canvasWidth, drawHeight - waterY);
+
+  // Ground line
+  stroke(60, 100, 30);
+  strokeWeight(3);
+  line(0, soilTopY, canvasWidth, soilTopY);
+  strokeWeight(1);
+
+  // Draw tree / plant
+  noStroke();
+  fill(90, 60, 30);
+  rect(canvasWidth * 0.48, skyH * 0.2, canvasWidth * 0.04, skyH * 0.8);
+  fill(40, 150, 50, 200);
+  ellipse(canvasWidth * 0.5, skyH * 0.25, canvasWidth * 0.18, skyH * 0.4);
+
+  // Root nodules
+  fill(200, 150, 100);
+  for (let i = 0; i < 5; i++) {
+    let rx = canvasWidth * 0.5 + sin(i * 1.2) * canvasWidth * 0.08;
+    let ry = soilTopY + soilH * 0.15 + i * soilH * 0.06;
+    ellipse(rx, ry, 12, 8);
+  }
+  // Glow on root nodules during fixation step
+  if (currentStep === 0) {
+    fill(255, 255, 100, 60 + sin(frameCounter * 0.1) * 40);
+    for (let i = 0; i < 5; i++) {
+      let rx = canvasWidth * 0.5 + sin(i * 1.2) * canvasWidth * 0.08;
+      let ry = soilTopY + soilH * 0.15 + i * soilH * 0.06;
+      ellipse(rx, ry, 22, 16);
+    }
+  }
+
+  // Bacteria icons in soil
+  if (currentStep === 1 || currentStep === 2) {
+    fill(255, 220, 100, 150);
+    noStroke();
+    for (let i = 0; i < 8; i++) {
+      let bx = canvasWidth * 0.15 + i * canvasWidth * 0.1;
+      let by = soilTopY + soilH * 0.3 + sin(frameCounter * 0.05 + i) * 5;
+      ellipse(bx, by, 8, 5);
+    }
+  }
+
+  // Fertilizer runoff visualization
+  if (fertilizerAdded && fertilizerTimer > 0) {
+    fertilizerTimer--;
+    fill(40, 180, 80, map(fertilizerTimer, 0, 300, 0, 80));
+    noStroke();
+    rect(0, waterY, canvasWidth, drawHeight - waterY);
+    noStroke();
+    fill(255, 60, 60);
+    textSize(12);
+    textAlign(CENTER);
+    text('⚠ Excess NO₃⁻ leaching into groundwater!', canvasWidth / 2, waterY + 20);
+    if (fertilizerTimer <= 0) fertilizerAdded = false;
+  }
+
+  // Update and draw particles
+  let spd = speedSlider.value();
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
+    if (playing || true) {
+      p.x += p.vx * spd;
+      p.y += p.vy * spd;
+      p.life--;
+    }
+    // Contain horizontally
+    if (p.x < 5) p.x = 5;
+    if (p.x > canvasWidth - 5) p.x = canvasWidth - 5;
+    // Stop at target
+    if (p.targetY !== undefined) {
+      if (p.vy > 0 && p.y >= p.targetY) { p.y = p.targetY; p.vy *= 0.3; }
+      if (p.vy < 0 && p.y <= p.targetY) { p.y = p.targetY; p.vy *= 0.3; }
+    }
+
+    noStroke();
+    fill(p.col[0], p.col[1], p.col[2], map(p.life, 0, 50, 0, 240));
+    ellipse(p.x, p.y, p.size, p.size);
+
+    if (p.life <= 0) particles.splice(i, 1);
+  }
+
+  // Auto-advance when playing
+  if (playing && frameCounter % max(30, 80 - spd * 15) === 0) {
+    currentStep = (currentStep + 1) % steps.length;
+    spawnParticlesForStep(currentStep);
+  }
+
+  // Step info panel
+  noStroke();
+  fill(0, 0, 0, 160);
+  rect(10, drawHeight - 70, canvasWidth - 20, 60, 8);
+  fill(255);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  noStroke();
+  text('Step ' + (currentStep + 1) + ': ' + steps[currentStep].name, 20, drawHeight - 65);
+  textSize(11);
+  text(steps[currentStep].desc, 20, drawHeight - 46, canvasWidth - 40, 40);
+
+  // Control area background
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Label for slider
+  noStroke();
+  fill(0);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Speed: ' + speedSlider.value(), canvasWidth * 0.7, drawHeight + 15);
+
+  positionControls();
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: buttons + slider
+  playBtn.position(ox + 10, oy + drawHeight + 5);
+  stepBtn.position(ox + 90, oy + drawHeight + 5);
+  fertBtn.position(ox + 160, oy + drawHeight + 5);
+  speedSlider.position(ox + canvasWidth * 0.7, oy + drawHeight + 22);
+  speedSlider.size(canvasWidth * 0.25);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

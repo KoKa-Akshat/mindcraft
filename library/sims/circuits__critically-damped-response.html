@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main>
+    </main>
+    <script>// Types of Damping Interactive MicroSim
+// Shows mass-spring animation synchronized with displacement graph
+
+let canvasWidth = 800;
+let drawHeight = 400;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+
+// Layout regions
+let springRegionWidth = 200;
+let graphRegionX = 220;
+
+// Simulation parameters
+let omega0 = 2;       // Natural frequency (rad/s)
+let A0 = 1.0;         // Initial displacement (m)
+let tMax = 10;        // Max time (seconds)
+let timeScale = 1.0;  // Animation speed multiplier
+
+// Damping ratios for each type
+let dampingRatios = {
+    none: 0,
+    underdamped: 0.15,
+    critical: 1.0,
+    overdamped: 2.5
+};
+
+// State variables
+let currentDampingType = 'underdamped';
+let isRunning = false;
+let currentTime = 0;
+let lastFrameTime = 0;
+let displacementHistory = [];
+
+// UI control positions
+let buttonX, buttonY, buttonW, buttonH;
+let selectX, selectY, selectW, selectH;
+let checkboxX, checkboxY, checkboxSize;
+let dropdownOpen = false;
+let showAllCurves = false;
+let dampingOptions = ['none', 'underdamped', 'critical', 'overdamped'];
+let dampingLabels = {
+    none: 'No Damping (ζ = 0)',
+    underdamped: 'Underdamped (ζ = 0.15)',
+    critical: 'Critically Damped (ζ = 1.0)',
+    overdamped: 'Overdamped (ζ = 2.5)'
+};
+
+// Colors for each damping type
+let dampingColors = {
+    none: null,
+    underdamped: null,
+    critical: null,
+    overdamped: null
+};
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Initialize colors
+    dampingColors.none = color(148, 103, 189);       // Purple
+    dampingColors.underdamped = color(70, 130, 220);
+    dampingColors.critical = color(50, 180, 50);
+    dampingColors.overdamped = color(230, 150, 50);
+
+    // Set up control positions
+    selectX = 20;
+    selectY = drawHeight + 15;
+    selectW = 200;
+    selectH = 30;
+
+    buttonX = selectX + selectW + 20;
+    buttonY = drawHeight + 15;
+    buttonW = 80;
+    buttonH = 30;
+
+    checkboxX = buttonX + buttonW + 20;
+    checkboxY = drawHeight + 20;
+    checkboxSize = 18;
+
+    resetSimulation();
+
+    describe('Interactive damping simulation showing a mass-spring system with displacement graph', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+
+    // Update simulation
+    if (isRunning) {
+        let dt = deltaTime / 1000 * timeScale;
+        currentTime += dt;
+
+        // Calculate current displacement
+        let displacement = calculateDisplacement(currentTime, currentDampingType);
+        displacementHistory.push({ t: currentTime, d: displacement });
+
+        // Pause when time reaches max
+        if (currentTime >= tMax) {
+            currentTime = tMax;
+            isRunning = false;
+        }
+    }
+
+    // Drawing area background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area background
+    fill('white');
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    textSize(18);
+    textAlign(CENTER, TOP);
+    noStroke();
+    text('Damped Harmonic Oscillator', canvasWidth / 2, 10);
+
+    // Draw spring-mass system
+    drawSpringMass(30, 60, 100, 280);
+
+    // Draw displacement graph
+    drawGraph(graphRegionX, 55, canvasWidth - graphRegionX - 40, 300);
+
+    // Draw legend
+    drawLegend(graphRegionX + 20, 380);
+
+    // Draw controls
+    drawControls();
+}
+
+function calculateDisplacement(t, dampingType) {
+    let zeta = dampingRatios[dampingType];
+    let displacement;
+
+    if (zeta === 0) {
+        // No damping: simple harmonic motion
+        displacement = A0 * cos(omega0 * t);
+    } else if (zeta < 1) {
+        // Underdamped: oscillates with decreasing amplitude
+        let omegaD = omega0 * sqrt(1 - zeta * zeta);
+        displacement = A0 * exp(-zeta * omega0 * t) * cos(omegaD * t);
+    } else if (zeta === 1) {
+        // Critically damped: fastest return without overshoot
+        displacement = A0 * (1 + omega0 * t) * exp(-omega0 * t);
+    } else {
+        // Overdamped: slow return, no oscillation
+        let alpha1 = omega0 * (zeta + sqrt(zeta * zeta - 1));
+        let alpha2 = omega0 * (zeta - sqrt(zeta * zeta - 1));
+        let c1 = A0 * alpha1 / (alpha1 - alpha2);
+        let c2 = -A0 * alpha2 / (alpha1 - alpha2);
+        displacement = c1 * exp(-alpha2 * t) + c2 * exp(-alpha1 * t);
+    }
+
+    return displacement;
+}
+
+function drawSpringMass(x, y, w, h) {
+    let centerX = x + w / 2;
+    let anchorY = y + 20;
+    let restLength = h * 0.5;
+    let massRadius = 30;
+
+    // Get current displacement (scaled for visualization)
+    let currentDisplacement;
+    if (displacementHistory.length > 0) {
+        currentDisplacement = displacementHistory[displacementHistory.length - 1].d;
+    } else {
+        currentDisplacement = A0;
+    }
+
+    // Scale displacement for visual effect (multiply by pixels per meter)
+    let pixelsPerMeter = 100;
+    let visualDisplacement = currentDisplacement * pixelsPerMeter;
+
+    // Mass position (displaced from rest position, inverted so positive = up like graph)
+    let massY = anchorY + restLength - visualDisplacement;
+
+    // Draw background panel
+    fill(255, 255, 255, 200);
+    stroke(180);
+    strokeWeight(1);
+    rect(x - 10, y, w + 20, h + 40, 8);
+
+    // Draw ceiling/anchor
+    fill(100);
+    noStroke();
+    rect(centerX - 40, anchorY - 15, 80, 15, 3);
+
+    // Draw spring
+    drawSpring(centerX, anchorY, massY - massRadius, 20);
+
+    // Draw mass
+    let col = dampingColors[currentDampingType];
+    fill(col);
+    stroke(red(col) * 0.7, green(col) * 0.7, blue(col) * 0.7);
+    strokeWeight(2);
+    ellipse(centerX, massY, massRadius * 2, massRadius * 2);
+
+    // Mass label
+    fill(255);
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('m', centerX, massY);
+
+    // Draw equilibrium line (dashed)
+    let equilibriumY = anchorY + restLength;
+    stroke(100);
+    strokeWeight(1);
+    setLineDash([5, 5]);
+    line(x, equilibriumY, x + w, equilibriumY);
+    setLineDash([]);
+
+    // Equilibrium label
+    fill(100);
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    noStroke();
+    text('equilibrium', x + 5, equilibriumY - 10);
+
+    // Draw displacement indicator
+    if (abs(visualDisplacement) > 5) {
+        let arrowStartY = equilibriumY;
+        let arrowEndY = massY;
+
+        stroke(180, 50, 50);
+        strokeWeight(2);
+        line(x + w - 15, arrowStartY, x + w - 15, arrowEndY);
+
+        // Arrow head
+        let arrowDir = visualDisplacement > 0 ? 1 : -1;
+        line(x + w - 15, arrowEndY, x + w - 20, arrowEndY - arrowDir * 8);
+        line(x + w - 15, arrowEndY, x + w - 10, arrowEndY - arrowDir * 8);
+
+        // Displacement value
+        fill(180, 50, 50);
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        noStroke();
+        text(currentDisplacement.toFixed(2) + ' m', x + w - 15, (arrowStartY + arrowEndY) / 2);
+    }
+
+    // Time display
+    fill(60);
+    textSize(12);
+    textAlign(CENTER, TOP);
+    text('t = ' + currentTime.toFixed(2) + ' s', centerX, y + h + 20);
+}
+
+function drawSpring(x, y1, y2, coils) {
+    let springLength = y2 - y1;
+    let coilHeight = springLength / coils;
+    let coilWidth = 15;
+
+    stroke(80);
+    strokeWeight(2);
+    noFill();
+
+    beginShape();
+    vertex(x, y1);
+
+    for (let i = 0; i < coils; i++) {
+        let yStart = y1 + i * coilHeight;
+        let yMid1 = yStart + coilHeight * 0.25;
+        let yMid2 = yStart + coilHeight * 0.75;
+        let yEnd = yStart + coilHeight;
+
+        vertex(x + coilWidth, yMid1);
+        vertex(x - coilWidth, yMid2);
+        vertex(x, yEnd);
+    }
+
+    endShape();
+}
+
+function drawGraph(x, y, w, h) {
+    // Graph background
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(x - 45, y - 15, w + 55, h + 55, 5);
+
+    // Axis labels
+    fill(60);
+    textSize(12);
+    noStroke();
+    textAlign(RIGHT, TOP);
+    text('Time (s)', x + w -20, y + h + 10);
+
+    push();
+    translate(x - 25, y + h/2);
+    rotate(-PI/2);
+    textAlign(CENTER, BOTTOM);
+    text('Displacement (m)', 0, 0);
+    pop();
+
+    // Grid lines
+    stroke(230);
+    strokeWeight(1);
+
+    // Vertical grid (time)
+    for (let t = 0; t <= tMax; t += 2) {
+        let px = x + (t / tMax) * w;
+        line(px, y, px, y + h);
+    }
+
+    // Horizontal grid (displacement)
+    for (let d = -1; d <= 1; d += 0.5) {
+        let py = y + h/2 - (d / 1.2) * (h/2);
+        line(x, py, x + w, py);
+    }
+
+    // Axes
+    stroke(100);
+    strokeWeight(2);
+    line(x, y + h/2, x + w, y + h/2);  // Zero line
+    line(x, y, x, y + h);  // Y-axis
+
+    // Axis tick labels
+    fill(100);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    noStroke();
+
+    for (let t = 0; t <= tMax; t += 2) {
+        let px = x + (t / tMax) * w;
+        text(t, px, y + h + 5);
+    }
+
+    textAlign(RIGHT, CENTER);
+    for (let d = -1; d <= 1; d += 0.5) {
+        let py = y + h/2 - (d / 1.2) * (h/2);
+        text(d.toFixed(1), x - 8, py);
+    }
+
+    // Draw preview curves
+    if (showAllCurves) {
+        // Draw all damping type curves for comparison
+        for (let dampType of dampingOptions) {
+            if (dampType !== currentDampingType) {
+                drawPreviewCurve(x, y, w, h, dampType);
+            }
+        }
+        drawPreviewCurve(x, y, w, h, currentDampingType);
+    } else if (displacementHistory.length < 2) {
+        // Just show current type preview before animation starts
+        drawPreviewCurve(x, y, w, h, currentDampingType);
+    }
+
+    // Draw actual displacement history
+    if (displacementHistory.length > 1) {
+        let col = dampingColors[currentDampingType];
+        noFill();
+        stroke(col);
+        strokeWeight(3);
+        beginShape();
+        for (let pt of displacementHistory) {
+            let px = x + (pt.t / tMax) * w;
+            let py = y + h/2 - (pt.d / 1.2) * (h/2);
+            vertex(px, py);
+        }
+        endShape();
+
+        // Draw current point marker
+        let lastPt = displacementHistory[displacementHistory.length - 1];
+        let lastPx = x + (lastPt.t / tMax) * w;
+        let lastPy = y + h/2 - (lastPt.d / 1.2) * (h/2);
+
+        fill(col);
+        noStroke();
+        ellipse(lastPx, lastPy, 10, 10);
+    }
+
+    // Draw starting point marker when paused at start
+    if (displacementHistory.length <= 1 && !isRunning) {
+        let col = dampingColors[currentDampingType];
+        let startPy = y + h/2 - (A0 / 1.2) * (h/2);
+        fill(col);
+        noStroke();
+        ellipse(x, startPy, 12, 12);
+
+        // Label
+        fill(60);
+        textSize(10);
+        textAlign(LEFT, CENTER);
+        text('Initial', x + 10, startPy);
+    }
+}
+
+function drawPreviewCurve(x, y, w, h, dampType) {
+    let col = dampingColors[dampType];
+    noFill();
+    stroke(red(col), green(col), blue(col), 100);
+    strokeWeight(2);
+    setLineDash([5, 5]);
+
+    beginShape();
+    for (let t = 0; t <= tMax; t += 0.05) {
+        let d = calculateDisplacement(t, dampType);
+        let px = x + (t / tMax) * w;
+        let py = y + h/2 - (d / 1.2) * (h/2);
+        vertex(px, py);
+    }
+    endShape();
+
+    setLineDash([]);
+}
+
+function drawLegend(x, y) {
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    noStroke();
+
+    let shortLabels = {
+        none: 'No Damping',
+        underdamped: 'Underdamped',
+        critical: 'Critical',
+        overdamped: 'Overdamped'
+    };
+
+    let descriptions = {
+        none: 'Oscillates forever at constant amplitude',
+        underdamped: 'Oscillates with decreasing amplitude',
+        critical: 'Fastest return without overshoot',
+        overdamped: 'Slow return, no oscillation'
+    };
+
+    if (showAllCurves) {
+        // Show all damping types in legend
+        let legendX = x;
+        for (let i = 0; i < dampingOptions.length; i++) {
+            let dampType = dampingOptions[i];
+            let col = dampingColors[dampType];
+
+            // Color indicator
+            fill(col);
+            noStroke();
+            rect(legendX, y - 5, 15, 10, 2);
+
+            // Label
+            fill(dampType === currentDampingType ? 0 : 80);
+            textStyle(dampType === currentDampingType ? BOLD : NORMAL);
+            text(shortLabels[dampType], legendX + 20, y);
+
+            legendX += textWidth(shortLabels[dampType]) + 35;
+        }
+        textStyle(NORMAL);
+    } else {
+        // Show only current type
+        let col = dampingColors[currentDampingType];
+
+        // Color indicator
+        fill(col);
+        noStroke();
+        rect(x, y - 5, 20, 10, 2);
+
+        // Description
+        fill(60);
+        text(descriptions[currentDampingType], x + 28, y);
+    }
+}
+
+function drawControls() {
+    // Draw dropdown selector
+    let isHoverSelect = mouseX > selectX && mouseX < selectX + selectW &&
+                        mouseY > selectY && mouseY < selectY + selectH;
+
+    // Dropdown background
+    fill(isHoverSelect ? 245 : 255);
+    stroke(150);
+    strokeWeight(1);
+    rect(selectX, selectY, selectW, selectH, 4);
+
+    // Current selection text
+    fill(40);
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text(dampingLabels[currentDampingType], selectX + 10, selectY + selectH/2);
+
+    // Dropdown arrow
+    fill(100);
+    noStroke();
+    triangle(selectX + selectW - 20, selectY + 12,
+             selectX + selectW - 10, selectY + 12,
+             selectX + selectW - 15, selectY + 20);
+
+    // Draw dropdown options if open (opens upward)
+    if (dropdownOpen) {
+        for (let i = 0; i < dampingOptions.length; i++) {
+            let optY = selectY - (i + 1) * selectH;
+            let isHoverOpt = mouseX > selectX && mouseX < selectX + selectW &&
+                             mouseY > optY && mouseY < optY + selectH;
+
+            fill(isHoverOpt ? 230 : 255);
+            stroke(150);
+            strokeWeight(1);
+            rect(selectX, optY, selectW, selectH, i === dampingOptions.length - 1 ? 4 : 0);
+
+            fill(40);
+            noStroke();
+            textAlign(LEFT, CENTER);
+            text(dampingLabels[dampingOptions[i]], selectX + 10, optY + selectH/2);
+        }
+    }
+
+    // Draw action button
+    let isHoverButton = mouseX > buttonX && mouseX < buttonX + buttonW &&
+                        mouseY > buttonY && mouseY < buttonY + buttonH;
+
+    let buttonLabel, buttonColor;
+    if (currentTime >= tMax) {
+        buttonLabel = 'Reset';
+        buttonColor = color(33, 150, 243);  // Blue
+    } else if (isRunning) {
+        buttonLabel = 'Pause';
+        buttonColor = color(244, 67, 54);   // Red
+    } else if (currentTime > 0) {
+        buttonLabel = 'Resume';
+        buttonColor = color(255, 152, 0);   // Orange
+    } else {
+        buttonLabel = 'Release';
+        buttonColor = color(76, 175, 80);   // Green
+    }
+
+    // Button with hover effect
+    if (isHoverButton) {
+        fill(red(buttonColor) * 0.9, green(buttonColor) * 0.9, blue(buttonColor) * 0.9);
+    } else {
+        fill(buttonColor);
+    }
+    noStroke();
+    rect(buttonX, buttonY, buttonW, buttonH, 4);
+
+    // Button text
+    fill(255);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text(buttonLabel, buttonX + buttonW/2, buttonY + buttonH/2);
+
+    // Draw checkbox
+    let isHoverCheckbox = mouseX > checkboxX && mouseX < checkboxX + checkboxSize + 70 &&
+                          mouseY > checkboxY && mouseY < checkboxY + checkboxSize;
+
+    // Checkbox box
+    fill(isHoverCheckbox ? 245 : 255);
+    stroke(150);
+    strokeWeight(1);
+    rect(checkboxX, checkboxY, checkboxSize, checkboxSize, 3);
+
+    // Checkmark if checked
+    if (showAllCurves) {
+        stroke(76, 175, 80);
+        strokeWeight(3);
+        noFill();
+        beginShape();
+        vertex(checkboxX + 4, checkboxY + checkboxSize/2);
+        vertex(checkboxX + checkboxSize/2 - 1, checkboxY + checkboxSize - 5);
+        vertex(checkboxX + checkboxSize - 3, checkboxY + 4);
+        endShape();
+    }
+
+    // Checkbox label
+    fill(40);
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text('Show All', checkboxX + checkboxSize + 6, checkboxY + checkboxSize/2);
+
+    // Cursor style
+    if (isHoverSelect || isHoverButton || isHoverCheckbox || dropdownOpen) {
+        cursor(HAND);
+    } else {
+        cursor(ARROW);
+    }
+}
+
+function mousePressed() {
+    // Check dropdown toggle
+    if (mouseX > selectX && mouseX < selectX + selectW &&
+        mouseY > selectY && mouseY < selectY + selectH) {
+        dropdownOpen = !dropdownOpen;
+        return;
+    }
+
+    // Check dropdown options (opens upward)
+    if (dropdownOpen) {
+        for (let i = 0; i < dampingOptions.length; i++) {
+            let optY = selectY - (i + 1) * selectH;
+            if (mouseX > selectX && mouseX < selectX + selectW &&
+                mouseY > optY && mouseY < optY + selectH) {
+                currentDampingType = dampingOptions[i];
+                resetSimulation();
+                dropdownOpen = false;
+                return;
+            }
+        }
+        // Click outside closes dropdown
+        dropdownOpen = false;
+    }
+
+    // Check button click
+    if (mouseX > buttonX && mouseX < buttonX + buttonW &&
+        mouseY > buttonY && mouseY < buttonY + buttonH) {
+        toggleSimulation();
+        return;
+    }
+
+    // Check checkbox click
+    if (mouseX > checkboxX && mouseX < checkboxX + checkboxSize + 70 &&
+        mouseY > checkboxY && mouseY < checkboxY + checkboxSize) {
+        showAllCurves = !showAllCurves;
+    }
+}
+
+function toggleSimulation() {
+    if (currentTime >= tMax) {
+        // Reset
+        resetSimulation();
+    } else if (isRunning) {
+        // Pause
+        isRunning = false;
+    } else {
+        // Start/Resume
+        isRunning = true;
+    }
+}
+
+function resetSimulation() {
+    isRunning = false;
+    currentTime = 0;
+    displacementHistory = [{ t: 0, d: A0 }];
+}
+
+function setLineDash(list) {
+    drawingContext.setLineDash(list);
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = Math.min(850, Math.max(700, container.offsetWidth));
+    }
+}
+</script>
+  </body>
+</html>

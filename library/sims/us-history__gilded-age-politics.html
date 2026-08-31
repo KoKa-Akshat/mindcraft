@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Gilded Age Inequality — Wealth Distribution Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Gilded Age Inequality — Wealth Distribution Chart
+// CANVAS_HEIGHT: 600
+// Chapter 10: The Gilded Age: Industrialization and Labor (1865–1890)
+// Bloom Level: Analyze (L4) — Compare wealth distribution across periods
+//
+// Layout: drawHeight (540) + controlHeight (60) = 600
+// Stacked bar chart of U.S. wealth distribution (Top 1%, Next 9%,
+// Bottom 90%) across five periods: 1870, 1900, 1929, 1970, 2020.
+// View mode toggles between "Stacked shares", "Top 1% only", "Top 10%
+// only", and "Bottom 90% only". Hover or click a bar for context.
+
+let canvasWidth = 900;
+let drawHeight = 540;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+// Color scheme from spec
+const COLOR_TOP1   = { r: 249, g: 168, b:  37 }; // dark gold
+const COLOR_NEXT9  = { r:  57, g:  73, b: 171 }; // indigo
+const COLOR_BOT90  = { r:   0, g: 137, b: 123 }; // teal
+const COLOR_BG     = { r: 248, g: 249, b: 250 };
+
+const periods = [
+  {
+    year: 1870,
+    label: '1870',
+    top1: 27, next9: 38, bot90: 35,
+    era: 'Reconstruction Era',
+    context: 'Post–Civil War recovery. Industrial fortunes (Vanderbilt, Carnegie) just beginning to compound. No federal income tax. Sharecropping locks former slaves into debt; western lands open under the Homestead Act.',
+    policy: 'Reconstruction Amendments (13th, 14th, 15th); no income tax (1872 expiration of Civil War tax); high tariffs protect industry.',
+    labor: 'Knights of Labor founded 1869; National Labor Union 1866. Unions weak and largely ignored by courts.'
+  },
+  {
+    year: 1900,
+    label: '1900',
+    top1: 35, next9: 35, bot90: 30,
+    era: 'Gilded Age Peak',
+    context: 'The Robber Baron era — Carnegie, Rockefeller, Morgan, Vanderbilt heirs. Trusts dominate steel, oil, rail, sugar. Mass immigration into urban tenements; child labor common in factories and mines.',
+    policy: 'Sherman Antitrust Act (1890) on the books but rarely enforced. No federal income tax (Pollock v. Farmers, 1895, struck it down). Lochner-era courts strike down labor laws.',
+    labor: 'Homestead Strike (1892) and Pullman Strike (1894) crushed by federal troops. AFL (1886) growing slowly; socialists and Populists rising.'
+  },
+  {
+    year: 1929,
+    label: '1929',
+    top1: 44, next9: 33, bot90: 23,
+    era: 'Roaring Twenties Peak',
+    context: 'Highest concentration of wealth in U.S. history before the Great Depression. Stock market boom funded by margin loans; consumer credit invented; farm sector already in depression since 1921.',
+    policy: 'Mellon tax cuts (1921, 1924, 1926) cut top rate from 73% to 25%. Coolidge: "the business of America is business." Smoot-Hawley tariff coming (1930).',
+    labor: 'Union membership falling. Welfare capitalism (company unions) replacing independent unions. Open shop drives in manufacturing.'
+  },
+  {
+    year: 1970,
+    label: '1970',
+    top1: 22, next9: 33, bot90: 45,
+    era: 'Great Compression',
+    context: 'Lowest U.S. inequality on record. Strong unions, high marginal taxes, GI Bill homeownership, and rising real wages built the largest middle class in history. Often called the "Great Compression."',
+    policy: 'Top marginal income tax 70% (down from 91% in 1963). Strong New Deal labor laws (Wagner Act 1935). Medicare/Medicaid (1965). High estate taxes.',
+    labor: 'Union density ~27% of workforce. Pattern bargaining lifts non-union wages. UAW-style contracts set economy-wide norms.'
+  },
+  {
+    year: 2020,
+    label: '2020',
+    top1: 35, next9: 37, bot90: 28,
+    era: 'Second Gilded Age',
+    context: 'Wealth concentration approaching 1929 levels. Tech billionaires replace railroad barons; finance and software replace steel and oil. Real wages for non-college workers stagnant since the 1970s.',
+    policy: 'Top marginal tax 37% (down from 70% in 1980). Corporate tax cut to 21% (2017). Capital gains taxed below wages. Estate tax exemption $11.7M.',
+    labor: 'Union density ~10% (private sector ~6%). Gig economy expands. Right-to-work in 27 states. Recent organizing wins at Amazon, Starbucks signal possible turn.'
+  }
+];
+
+// Transitions between consecutive periods — what drove the change
+const transitions = [
+  {
+    from: 1870, to: 1900,
+    text: 'Between 1870 and 1900: industrialization, mass immigration, and unregulated trusts concentrated wealth among Robber Barons. No federal income tax; courts struck down most labor laws. Inequality climbed sharply.'
+  },
+  {
+    from: 1900, to: 1929,
+    text: 'Between 1900 and 1929: Progressive Era reforms (16th Amendment income tax, antitrust, Federal Reserve) slowed concentration briefly, but the 1920s Mellon tax cuts and stock-market boom drove the top 1% share to its all-time peak of 44%.'
+  },
+  {
+    from: 1929, to: 1970,
+    text: 'Between 1929 and 1970: New Deal labor laws (Wagner Act), 90%+ top marginal tax rates, Social Security, the GI Bill, and the postwar union era cut the top 1% share nearly in half. This is the "Great Compression."'
+  },
+  {
+    from: 1970, to: 2020,
+    text: 'Between 1970 and 2020: deregulation, declining union density, tax cuts on top incomes and capital gains, globalization, and skill-biased technical change pushed inequality back toward Gilded Age levels — the "Second Gilded Age."'
+  }
+];
+
+let viewSelect;
+let resetBtn;
+let transitionBtn;
+
+let selectedPeriodIdx = -1;     // index into periods, -1 = none
+let hoveredPeriodIdx  = -1;
+let hoveredSegment    = '';     // 'top1' | 'next9' | 'bot90' | ''
+let activeTransition  = null;   // transition object or null
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  viewSelect = createSelect();
+  viewSelect.option('Stacked shares (all three tiers)', 'stacked');
+  viewSelect.option('Top 1% share only',                'top1');
+  viewSelect.option('Top 10% share only',               'top10');
+  viewSelect.option('Bottom 90% share only',            'bot90');
+  viewSelect.selected('stacked');
+  viewSelect.changed(() => { activeTransition = null; });
+
+  transitionBtn = createButton('Show transitions →');
+  transitionBtn.mousePressed(cycleTransition);
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    viewSelect.selected('stacked');
+    selectedPeriodIdx = -1;
+    activeTransition = null;
+  });
+
+  positionControls();
+  describe('Bar chart of U.S. wealth distribution across five historical periods (1870, 1900, 1929, 1970, 2020) showing the Top 1%, Next 9%, and Bottom 90% shares of national wealth. Use the dropdown to switch view modes, click a bar to read context, or step through transitions.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 14;
+  viewSelect.position(margin + 50, y);
+  viewSelect.style('font-size', '13px');
+  transitionBtn.position(margin + 320, y);
+  transitionBtn.style('font-size', '13px');
+  resetBtn.position(canvasWidth - 70, y);
+}
+
+function cycleTransition() {
+  if (!activeTransition) {
+    activeTransition = transitions[0];
+    return;
+  }
+  let idx = transitions.indexOf(activeTransition);
+  idx = (idx + 1) % (transitions.length + 1);
+  activeTransition = idx === transitions.length ? null : transitions[idx];
+}
+
+// ---- Layout helpers -----------------------------------------------------
+
+function chartArea() {
+  // Reserve right side for context panel when one is selected; else full width
+  let rightPad = 16;
+  let leftPad = 56;
+  let topPad = 60;
+  let bottomPad = 60;
+  let panelW = (selectedPeriodIdx >= 0) ? min(360, canvasWidth * 0.42) : 0;
+  return {
+    x: margin + leftPad,
+    y: topPad,
+    w: canvasWidth - margin * 2 - leftPad - rightPad - panelW - (panelW > 0 ? 12 : 0),
+    h: drawHeight - topPad - bottomPad,
+    panelW: panelW
+  };
+}
+
+function barRectFor(i, area) {
+  let n = periods.length;
+  let gap = 18;
+  let barW = (area.w - gap * (n - 1)) / n;
+  let x = area.x + i * (barW + gap);
+  return { x: x, w: barW, top: area.y, bottom: area.y + area.h };
+}
+
+// What share value to render in the current view mode
+function shareInView(p, mode) {
+  if (mode === 'top1')  return p.top1;
+  if (mode === 'top10') return p.top1 + p.next9;
+  if (mode === 'bot90') return p.bot90;
+  return 100;
+}
+
+// ---- Draw ---------------------------------------------------------------
+
+function draw() {
+  updateCanvasSize();
+
+  // Backgrounds
+  noStroke();
+  fill(COLOR_BG.r, COLOR_BG.g, COLOR_BG.b);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(220);
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+
+  // Title
+  fill(20, 50, 110);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('U.S. Wealth Distribution, 1870–2020', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+  fill(90);
+  textSize(12);
+  text('Share of national wealth held by Top 1%, Next 9%, and Bottom 90%. Click any bar for context.',
+       canvasWidth / 2, 34);
+
+  let mode = viewSelect.value();
+  let area = chartArea();
+
+  drawYAxis(area, mode);
+
+  hoveredPeriodIdx = -1;
+  hoveredSegment   = '';
+  for (let i = 0; i < periods.length; i++) {
+    drawPeriodBar(i, area, mode);
+  }
+
+  drawLegend(area, mode);
+
+  if (activeTransition) {
+    drawTransitionBanner(area);
+  }
+
+  if (selectedPeriodIdx >= 0) {
+    drawContextPanel(periods[selectedPeriodIdx], area);
+  } else if (hoveredPeriodIdx >= 0) {
+    drawHoverTooltip(hoveredPeriodIdx, area, mode);
+  }
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text('View:', margin + 8, drawHeight + controlHeight / 2 + 2);
+
+  positionControls();
+}
+
+function drawYAxis(area, mode) {
+  let max = 100;
+  // Tighten Y axis when single-tier view to make differences readable
+  if (mode === 'top1') max = 50;
+  if (mode === 'top10' || mode === 'bot90') max = 100;
+
+  stroke(180);
+  strokeWeight(1);
+  line(area.x - 4, area.y, area.x - 4, area.y + area.h);
+
+  noStroke();
+  fill(80);
+  textAlign(RIGHT, CENTER);
+  textSize(10.5);
+  let stepCount = 5;
+  for (let s = 0; s <= stepCount; s++) {
+    let v = (max * s) / stepCount;
+    let y = area.y + area.h - (v / max) * area.h;
+    stroke(220);
+    line(area.x - 4, y, area.x + area.w, y);
+    noStroke();
+    fill(80);
+    text(v.toFixed(0) + '%', area.x - 8, y);
+  }
+
+  // Axis title
+  push();
+  translate(margin + 14, area.y + area.h / 2);
+  rotate(-HALF_PI);
+  fill(60);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text('Share of national wealth', 0, 0);
+  textStyle(NORMAL);
+  pop();
+}
+
+function drawPeriodBar(i, area, mode) {
+  let p = periods[i];
+  let r = barRectFor(i, area);
+  let ymax = (mode === 'top1') ? 50 : 100;
+
+  let isSelected = selectedPeriodIdx === i;
+  let isPeak1929 = p.year === 1929;
+
+  let mouseInBar = mouseX > r.x && mouseX < r.x + r.w &&
+                   mouseY > r.top && mouseY < r.bottom;
+
+  if (mouseInBar) hoveredPeriodIdx = i;
+
+  // Highlight transition pair
+  let inTransition = activeTransition &&
+    (p.year === activeTransition.from || p.year === activeTransition.to);
+
+  // Background tint of bar slot
+  if (inTransition) {
+    noStroke();
+    fill(255, 245, 200);
+    rect(r.x - 4, area.y - 6, r.w + 8, area.h + 12, 6);
+  }
+
+  // Helper to plot a stacked segment
+  let plotSeg = (value, baseValue, color, segId) => {
+    let y0 = area.y + area.h - (baseValue / ymax) * area.h;
+    let y1 = area.y + area.h - ((baseValue + value) / ymax) * area.h;
+    let segH = y0 - y1;
+
+    // Hover detection
+    let segHover = mouseInBar && mouseY > y1 && mouseY < y0;
+    if (segHover) hoveredSegment = segId;
+
+    let alpha = 255;
+    let dimmed = false;
+    if (mode === 'top1' && segId !== 'top1') dimmed = true;
+    if (mode === 'top10' && segId === 'bot90') dimmed = true;
+    if (mode === 'bot90' && segId !== 'bot90') dimmed = true;
+
+    if (dimmed) {
+      // Draw as light outline only
+      noFill();
+      stroke(color.r, color.g, color.b, 70);
+      strokeWeight(1);
+      rect(r.x, y1, r.w, segH);
+      noStroke();
+      return;
+    }
+
+    noStroke();
+    if (segHover || isSelected) {
+      fill(min(color.r + 30, 255), min(color.g + 30, 255), min(color.b + 30, 255), alpha);
+    } else {
+      fill(color.r, color.g, color.b, alpha);
+    }
+    rect(r.x, y1, r.w, segH);
+
+    // Inline value label if segment tall enough
+    if (segH > 18) {
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textSize(11);
+      text(value + '%', r.x + r.w / 2, y1 + segH / 2);
+      textStyle(NORMAL);
+    }
+  };
+
+  // Stacked from bottom: Bottom 90 → Next 9 → Top 1
+  plotSeg(p.bot90, 0,                    COLOR_BOT90, 'bot90');
+  plotSeg(p.next9, p.bot90,              COLOR_NEXT9, 'next9');
+  plotSeg(p.top1,  p.bot90 + p.next9,    COLOR_TOP1,  'top1');
+
+  // Outline when selected
+  if (isSelected) {
+    noFill();
+    stroke(40);
+    strokeWeight(2.5);
+    rect(r.x - 1, area.y - 1, r.w + 2, area.h + 2, 4);
+    noStroke();
+  }
+
+  // Year label below bar
+  fill(40);
+  textAlign(CENTER, TOP);
+  textStyle(isSelected ? BOLD : NORMAL);
+  textSize(13);
+  text(p.label, r.x + r.w / 2, area.y + area.h + 6);
+  textStyle(NORMAL);
+
+  // Era subtitle
+  fill(80);
+  textSize(10);
+  text(p.era, r.x + r.w / 2, area.y + area.h + 24, r.w + 10, 26);
+
+  // 1929 peak marker
+  if (isPeak1929 && mode === 'stacked') {
+    fill(180, 30, 30);
+    textSize(10);
+    textStyle(BOLD);
+    textAlign(CENTER, BOTTOM);
+    text('PEAK', r.x + r.w / 2, area.y - 4);
+    textStyle(NORMAL);
+  }
+
+  // Single-tier view: large value above bar
+  if (mode !== 'stacked') {
+    let v = shareInView(p, mode);
+    let y0 = area.y + area.h - (v / ymax) * area.h;
+    fill(20);
+    textStyle(BOLD);
+    textSize(14);
+    textAlign(CENTER, BOTTOM);
+    text(v + '%', r.x + r.w / 2, y0 - 4);
+    textStyle(NORMAL);
+  }
+}
+
+function drawLegend(area, mode) {
+  let y = drawHeight - 18;
+  let items = [
+    { label: 'Top 1%',     color: COLOR_TOP1,  active: (mode === 'stacked' || mode === 'top1' || mode === 'top10') },
+    { label: 'Next 9%',    color: COLOR_NEXT9, active: (mode === 'stacked' || mode === 'top10') },
+    { label: 'Bottom 90%', color: COLOR_BOT90, active: (mode === 'stacked' || mode === 'bot90') }
+  ];
+
+  let totalW = 0;
+  textSize(12);
+  for (let it of items) totalW += textWidth(it.label) + 26;
+  let x = (canvasWidth - totalW) / 2;
+
+  for (let it of items) {
+    noStroke();
+    if (it.active) {
+      fill(it.color.r, it.color.g, it.color.b);
+    } else {
+      fill(it.color.r, it.color.g, it.color.b, 80);
+    }
+    rect(x, y - 6, 14, 12, 2);
+    fill(it.active ? 30 : 130);
+    textAlign(LEFT, CENTER);
+    textSize(12);
+    text(it.label, x + 18, y);
+    x += textWidth(it.label) + 26;
+  }
+}
+
+function drawTransitionBanner(area) {
+  let bannerH = 40;
+  let bannerY = drawHeight - 56;
+  let bannerX = margin + 56;
+  let bannerW = canvasWidth - margin * 2 - 56 - 100;
+
+  noStroke();
+  fill(255, 248, 220);
+  stroke(230, 180, 60);
+  strokeWeight(1);
+  rect(bannerX, bannerY, bannerW, bannerH, 6);
+  noStroke();
+
+  fill(120, 80, 0);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  text(activeTransition.text, bannerX + 8, bannerY + bannerH / 2,
+       bannerW - 16, bannerH - 6);
+}
+
+function drawHoverTooltip(idx, area, mode) {
+  let p = periods[idx];
+  let r = barRectFor(idx, area);
+
+  let lines = [
+    p.year + ' — ' + p.era,
+    'Top 1%: ' + p.top1 + '%   Next 9%: ' + p.next9 + '%   Bottom 90%: ' + p.bot90 + '%'
+  ];
+  if (hoveredSegment === 'top1')  lines.push('Top 1% share: ' + p.top1 + '%');
+  if (hoveredSegment === 'next9') lines.push('Next 9% share: ' + p.next9 + '%');
+  if (hoveredSegment === 'bot90') lines.push('Bottom 90% share: ' + p.bot90 + '%');
+  lines.push('Click for full context');
+
+  textSize(11);
+  let tw = 0;
+  for (let l of lines) tw = max(tw, textWidth(l));
+  tw += 16;
+  let th = lines.length * 14 + 8;
+
+  let tx = constrain(r.x + r.w / 2 - tw / 2, margin, canvasWidth - tw - margin);
+  let ty = area.y - th - 8;
+  if (ty < 50) ty = area.y + area.h + 50;
+
+  noStroke();
+  fill(30, 40, 60, 235);
+  rect(tx, ty, tw, th, 6);
+  fill(255);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  for (let i = 0; i < lines.length; i++) {
+    if (i === 0) textStyle(BOLD); else textStyle(NORMAL);
+    text(lines[i], tx + 8, ty + 6 + i * 14);
+  }
+  textStyle(NORMAL);
+}
+
+function drawContextPanel(p, area) {
+  let panelW = area.panelW;
+  if (panelW <= 0) return;
+  let panelX = canvasWidth - margin - panelW;
+  let panelY = area.y;
+  let panelH = area.h + 10;
+
+  noStroke();
+  fill(255);
+  stroke(COLOR_TOP1.r, COLOR_TOP1.g, COLOR_TOP1.b);
+  strokeWeight(2);
+  rect(panelX, panelY, panelW, panelH, 8);
+  noStroke();
+
+  // Title bar
+  fill(20, 50, 110);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(14);
+  text(p.year + ' — ' + p.era, panelX + 10, panelY + 8);
+
+  fill(120);
+  textAlign(RIGHT, TOP);
+  textStyle(NORMAL);
+  textSize(10);
+  text('(click bar again to close)', panelX + panelW - 10, panelY + 12);
+
+  // Stat row
+  let statY = panelY + 32;
+  drawStatChip(panelX + 10,             statY, 'Top 1%',  p.top1 + '%', COLOR_TOP1);
+  drawStatChip(panelX + 10 + 100,       statY, 'Next 9%', p.next9 + '%', COLOR_NEXT9);
+  drawStatChip(panelX + 10 + 200,       statY, 'Bot 90%', p.bot90 + '%', COLOR_BOT90);
+
+  // Body fields
+  let bodyX = panelX + 10;
+  let bodyW = panelW - 20;
+  let bodyY = statY + 50;
+  textAlign(LEFT, TOP);
+
+  bodyY = drawPanelField(bodyX, bodyY, bodyW, 'Context:', p.context);
+  bodyY = drawPanelField(bodyX, bodyY + 4, bodyW, 'Tax & legal policy:', p.policy);
+  bodyY = drawPanelField(bodyX, bodyY + 4, bodyW, 'Labor movement:', p.labor);
+}
+
+function drawStatChip(x, y, label, value, color) {
+  noStroke();
+  fill(color.r, color.g, color.b);
+  rect(x, y, 90, 38, 6);
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(NORMAL);
+  textSize(10);
+  text(label, x + 45, y + 4);
+  textStyle(BOLD);
+  textSize(15);
+  text(value, x + 45, y + 16);
+  textStyle(NORMAL);
+}
+
+function drawPanelField(x, y, w, label, body) {
+  noStroke();
+  fill(80, 30, 100);
+  textStyle(BOLD);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  text(label, x, y);
+  fill(35);
+  textStyle(NORMAL);
+  textSize(11);
+  let bodyH = textHeightWrap(body, w, 13);
+  text(body, x, y + 14, w, bodyH + 4);
+  return y + 14 + bodyH + 2;
+}
+
+function textHeightWrap(str, w, lineH) {
+  textSize(11);
+  let words = str.split(' ');
+  let line = '';
+  let lines = 1;
+  for (let word of words) {
+    let test = line + word + ' ';
+    if (textWidth(test) > w) {
+      lines++;
+      line = word + ' ';
+    } else {
+      line = test;
+    }
+  }
+  return lines * lineH;
+}
+
+function mousePressed() {
+  if (mouseY < 0 || mouseY > drawHeight) return;
+  let area = chartArea();
+  for (let i = 0; i < periods.length; i++) {
+    let r = barRectFor(i, area);
+    if (mouseX > r.x && mouseX < r.x + r.w &&
+        mouseY > r.top && mouseY < r.bottom) {
+      if (selectedPeriodIdx === i) {
+        selectedPeriodIdx = -1;
+      } else {
+        selectedPeriodIdx = i;
+      }
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: chart
+    sim-id: gilded-age-inequality
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to visualize wealth distribution in the Gilded Age,
+    compare it to other historical periods, and connect it to the social
+    conflicts of the era.
+
+    Bloom Level: Analyze (L4)
+    Bloom Verb: Compare
+
+    Learning Objective: Students compare wealth distribution across historical
+    periods and explain how extreme inequality in the Gilded Age contributed to
+    the rise of labor and reform movements.
+
+    Periods: 1870, 1900, 1929 (peak), 1970 (post-New Deal low), 2020.
+    Stacked bar of Top 1% / Next 9% / Bottom 90% national wealth shares.
+
+    View modes: Stacked / Top 1% only / Top 10% only / Bottom 90% only.
+    Click a bar for era context (policy, labor movement). "Show transitions"
+    cycles through narrative explanations of what drove each shift.
+
+    Color scheme: Top 1% gold (#f9a825), Next 9% indigo (#3949ab),
+    Bottom 90% teal (#00897b).
+    -->
+</body>
+</html>

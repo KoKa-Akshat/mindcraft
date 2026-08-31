@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Probability Waterfall: How joint probability collapses across required quantum computing breakthroughs.">
+    <title>Probability Waterfall: Cascading Requirements</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <h2>How Joint Probability Collapses</h2>
+        <div id="controls">
+            <label for="preset-select">Scenario: </label>
+            <select id="preset-select">
+                <option value="generous" selected>Generous Estimates</option>
+                <option value="pessimistic">Pessimistic</option>
+                <option value="very-optimistic">Very Optimistic</option>
+                <option value="proponent">Proponent Claims</option>
+            </select>
+        </div>
+        <canvas id="waterfallChart"></canvas>
+        <p id="final-text"></p>
+    </div>
+    <script>
+// Probability Waterfall MicroSim
+// Shows how joint probability collapses across required breakthroughs
+
+const presets = {
+    generous: {
+        label: "Generous Estimates",
+        breakthroughs: [
+            { name: "Error Rates",        prob: 0.30 },
+            { name: "Qubit Count",        prob: 0.40 },
+            { name: "Coherence",          prob: 0.35 },
+            { name: "Connectivity",       prob: 0.40 },
+            { name: "Cryogenics",         prob: 0.30 },
+            { name: "Algorithms",         prob: 0.20 },
+            { name: "Cost",               prob: 0.15 },
+            { name: "Error Correction",   prob: 0.25 },
+            { name: "Control Electronics",prob: 0.40 },
+            { name: "Software",           prob: 0.50 }
+        ]
+    },
+    pessimistic: {
+        label: "Pessimistic",
+        breakthroughs: [
+            { name: "Error Rates",        prob: 0.10 },
+            { name: "Qubit Count",        prob: 0.15 },
+            { name: "Coherence",          prob: 0.10 },
+            { name: "Connectivity",       prob: 0.15 },
+            { name: "Cryogenics",         prob: 0.10 },
+            { name: "Algorithms",         prob: 0.05 },
+            { name: "Cost",               prob: 0.05 },
+            { name: "Error Correction",   prob: 0.08 },
+            { name: "Control Electronics",prob: 0.15 },
+            { name: "Software",           prob: 0.20 }
+        ]
+    },
+    "very-optimistic": {
+        label: "Very Optimistic",
+        breakthroughs: [
+            { name: "Error Rates",        prob: 0.60 },
+            { name: "Qubit Count",        prob: 0.65 },
+            { name: "Coherence",          prob: 0.55 },
+            { name: "Connectivity",       prob: 0.60 },
+            { name: "Cryogenics",         prob: 0.55 },
+            { name: "Algorithms",         prob: 0.40 },
+            { name: "Cost",               prob: 0.35 },
+            { name: "Error Correction",   prob: 0.45 },
+            { name: "Control Electronics",prob: 0.60 },
+            { name: "Software",           prob: 0.70 }
+        ]
+    },
+    proponent: {
+        label: "Proponent Claims",
+        breakthroughs: [
+            { name: "Error Rates",        prob: 0.80 },
+            { name: "Qubit Count",        prob: 0.85 },
+            { name: "Coherence",          prob: 0.75 },
+            { name: "Connectivity",       prob: 0.80 },
+            { name: "Cryogenics",         prob: 0.70 },
+            { name: "Algorithms",         prob: 0.60 },
+            { name: "Cost",               prob: 0.55 },
+            { name: "Error Correction",   prob: 0.65 },
+            { name: "Control Electronics",prob: 0.75 },
+            { name: "Software",           prob: 0.85 }
+        ]
+    }
+};
+
+// Color interpolation from green -> yellow -> red based on value 0..1
+function barColor(fraction) {
+    // fraction: 0 = lowest probability (red), 1 = highest (green)
+    if (fraction > 0.5) {
+        // green to yellow
+        const t = (fraction - 0.5) * 2;
+        const r = Math.round(255 * (1 - t) + 56 * t);
+        const g = Math.round(193 * (1 - t) + 142 * t);
+        const b = Math.round(7 * (1 - t) + 60 * t);
+        return `rgb(${r},${g},${b})`;
+    } else {
+        // yellow to red
+        const t = fraction * 2;
+        const r = Math.round(229 * (1 - t) + 255 * t);
+        const g = Math.round(57 * (1 - t) + 193 * t);
+        const b = Math.round(53 * (1 - t) + 7 * t);
+        return `rgb(${r},${g},${b})`;
+    }
+}
+
+function computeData(preset) {
+    const items = preset.breakthroughs;
+    const labels = ["Start"];
+    const cumulativeValues = [100];
+    const reductionValues = [0];
+    const baseValues = [0]; // invisible base for waterfall effect
+    const colors = [];
+    const reductionColors = [];
+
+    let cumulative = 100;
+
+    for (let i = 0; i < items.length; i++) {
+        const prev = cumulative;
+        cumulative = cumulative * items[i].prob;
+        labels.push("After\n" + items[i].name);
+        cumulativeValues.push(cumulative);
+        reductionValues.push(prev - cumulative);
+        baseValues.push(cumulative);
+    }
+
+    // Compute colors for the remaining (green) bars
+    const maxVal = 100;
+    for (let i = 0; i < cumulativeValues.length; i++) {
+        const frac = cumulativeValues[i] / maxVal;
+        colors.push(barColor(frac));
+        reductionColors.push("rgba(229, 57, 53, 0.45)");
+    }
+
+    return { labels, cumulativeValues, reductionValues, baseValues, colors, reductionColors };
+}
+
+function formatOdds(pct) {
+    if (pct >= 1) return (pct).toFixed(1) + "%";
+    const ratio = Math.round(100 / pct);
+    return pct.toFixed(4) + "% (~1 in " + ratio.toLocaleString() + ")";
+}
+
+let chart = null;
+
+function renderChart(presetKey) {
+    const preset = presets[presetKey];
+    const d = computeData(preset);
+    const finalPct = d.cumulativeValues[d.cumulativeValues.length - 1];
+    const finalOdds = Math.round(100 / finalPct);
+
+    document.getElementById("final-text").textContent =
+        "Final joint probability: " + finalPct.toFixed(5) + "% — approximately 1 in " + finalOdds.toLocaleString();
+
+    const ctx = document.getElementById("waterfallChart").getContext("2d");
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: d.labels,
+            datasets: [
+                {
+                    label: "Base (invisible)",
+                    data: d.baseValues,
+                    backgroundColor: "transparent",
+                    borderWidth: 0,
+                    barPercentage: 0.7
+                },
+                {
+                    label: "Remaining probability",
+                    data: d.cumulativeValues,
+                    backgroundColor: d.colors,
+                    borderColor: d.colors.map(c => c.replace("rgb", "rgba").replace(")", ",0.9)")),
+                    borderWidth: 1,
+                    barPercentage: 0.7
+                },
+                {
+                    label: "Reduction",
+                    data: d.reductionValues,
+                    backgroundColor: d.reductionColors,
+                    borderColor: "rgba(229, 57, 53, 0.6)",
+                    borderWidth: 1,
+                    barPercentage: 0.7
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Probability Waterfall: Cascading Requirements (" + preset.label + ")",
+                    font: { size: 15, weight: "bold" },
+                    color: "#333"
+                },
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: function(items) {
+                            return items[0].label.replace(/\n/g, " ");
+                        },
+                        label: function(context) {
+                            if (context.datasetIndex === 0) return null; // skip invisible base
+                            const idx = context.dataIndex;
+                            const cum = d.cumulativeValues[idx];
+                            if (context.datasetIndex === 1) {
+                                return "Remaining: " + formatOdds(cum);
+                            }
+                            if (context.datasetIndex === 2 && idx > 0) {
+                                const indiv = preset.breakthroughs[idx - 1].prob * 100;
+                                return [
+                                    "Individual probability: " + indiv + "%",
+                                    "Reduction: " + d.reductionValues[idx].toFixed(4) + " pp"
+                                ];
+                            }
+                            return null;
+                        }
+                    }
+                },
+                annotation: {
+                    annotations: {
+                        onePctLine: {
+                            type: "line",
+                            yMin: 1, yMax: 1,
+                            borderColor: "#FF7043",
+                            borderWidth: 1.5,
+                            borderDash: [6, 3],
+                            label: {
+                                display: true,
+                                content: "1% — rational investors allocate minimal capital",
+                                position: "start",
+                                font: { size: 10 },
+                                color: "#BF360C"
+                            }
+                        },
+                        pointZeroOnePctLine: {
+                            type: "line",
+                            yMin: 0.01, yMax: 0.01,
+                            borderColor: "#C62828",
+                            borderWidth: 1.5,
+                            borderDash: [6, 3],
+                            label: {
+                                display: true,
+                                content: '0.01% — "lottery ticket" allocation only',
+                                position: "start",
+                                font: { size: 10 },
+                                color: "#C62828"
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: {
+                        font: { size: 10 },
+                        maxRotation: 45,
+                        minRotation: 30
+                    },
+                    grid: { display: false }
+                },
+                y: {
+                    stacked: true,
+                    type: "logarithmic",
+                    min: 0.0001,
+                    max: 120,
+                    title: {
+                        display: true,
+                        text: "Cumulative Probability (%)",
+                        font: { size: 12 }
+                    },
+                    ticks: {
+                        callback: function(val) {
+                            if ([100, 10, 1, 0.1, 0.01, 0.001, 0.0001].includes(val)) {
+                                return val + "%";
+                            }
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Initial render
+document.addEventListener("DOMContentLoaded", function() {
+    renderChart("generous");
+
+    document.getElementById("preset-select").addEventListener("change", function() {
+        renderChart(this.value);
+    });
+});
+
+</script>
+</body>
+</html>

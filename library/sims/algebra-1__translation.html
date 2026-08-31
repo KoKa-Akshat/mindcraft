@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Translation Examples</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Translation Examples
+// Shows multiple translation examples with vectors
+
+let canvasWidth = 800;
+let drawHeight = 400;
+let canvasHeight = drawHeight;
+
+let selectedExample = 0;
+let animProgress = 1;
+let isAnimating = false;
+
+let examples = [
+  {
+    name: "Horizontal",
+    h: 5, k: 0,
+    label: "T₍₅,₀₎: Translate 5 units right",
+    shape: [[0, 1], [2, 1], [1, -1]] // triangle
+  },
+  {
+    name: "Vertical",
+    h: 0, k: 4,
+    label: "T₍₀,₄₎: Translate 4 units up",
+    shape: [[-1, -1], [1, -1], [1, 1], [-1, 1], [0, 2]] // pentagon
+  },
+  {
+    name: "Diagonal",
+    h: 3, k: -2,
+    label: "T₍₃,₋₂₎: Translate 3 right, 2 down",
+    shape: [[0, 0], [2, 0], [2.5, 1.5], [1, 2]] // quadrilateral
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  describe('Diagram showing multiple translation examples with vectors', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  background('#FAFAFA');
+
+  // Title
+  fill('#1565C0');
+  textSize(18);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text("Translations: Sliding Figures in the Plane", canvasWidth / 2, 10);
+  textStyle(NORMAL);
+
+  fill('#757575');
+  textSize(11);
+  text('Click an example to animate', canvasWidth / 2, 35);
+
+  // Update animation
+  if (isAnimating) {
+    animProgress += 0.025;
+    if (animProgress >= 1) {
+      animProgress = 1;
+      isAnimating = false;
+    }
+  }
+
+  // Draw example buttons
+  drawExampleButtons();
+
+  // Draw selected example
+  drawExample(examples[selectedExample]);
+}
+
+function drawExampleButtons() {
+  let buttonWidth = 130;
+  let buttonHeight = 30;
+  let startX = canvasWidth / 2 - (examples.length * (buttonWidth + 10)) / 2;
+  let y = 55;
+
+  for (let i = 0; i < examples.length; i++) {
+    let x = startX + i * (buttonWidth + 10);
+
+    if (i === selectedExample) {
+      fill('#1565C0');
+    } else {
+      fill('#90CAF9');
+    }
+    noStroke();
+    rect(x, y, buttonWidth, buttonHeight, 5);
+
+    fill(i === selectedExample ? 'white' : '#1565C0');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(examples[i].name, x + buttonWidth / 2, y + buttonHeight / 2);
+  }
+}
+
+function drawExample(ex) {
+  let gridSize = min(canvasWidth - 100, 280);
+  let cellSize = gridSize / 12;
+  let centerX = canvasWidth / 2;
+  let centerY = 230;
+
+  // Draw grid
+  stroke('#E0E0E0');
+  strokeWeight(1);
+  for (let i = -6; i <= 6; i++) {
+    let x = centerX + i * cellSize;
+    let y = centerY + i * cellSize;
+    line(x, centerY - 6 * cellSize, x, centerY + 6 * cellSize);
+    line(centerX - 6 * cellSize, y, centerX + 6 * cellSize, y);
+  }
+
+  // Draw axes
+  stroke('#424242');
+  strokeWeight(2);
+  line(centerX - 6 * cellSize, centerY, centerX + 6 * cellSize, centerY);
+  line(centerX, centerY - 6 * cellSize, centerX, centerY + 6 * cellSize);
+
+  // Axis labels
+  fill('#424242');
+  noStroke();
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('x', centerX + 6 * cellSize - 5, centerY + 5);
+  textAlign(LEFT, CENTER);
+  text('y', centerX + 5, centerY - 6 * cellSize + 5);
+
+  // Draw pre-image (blue)
+  let preImageVerts = ex.shape.map(p => [
+    centerX + p[0] * cellSize,
+    centerY - p[1] * cellSize
+  ]);
+
+  fill('#1565C0');
+  stroke('#0D47A1');
+  strokeWeight(2);
+  beginShape();
+  for (let v of preImageVerts) {
+    vertex(v[0], v[1]);
+  }
+  endShape(CLOSE);
+
+  // Calculate animated position
+  let currentH = lerp(0, ex.h, animProgress);
+  let currentK = lerp(0, ex.k, animProgress);
+
+  // Draw translation vector (red arrow)
+  let arrowStartX = centerX;
+  let arrowStartY = centerY;
+  let arrowEndX = centerX + currentH * cellSize;
+  let arrowEndY = centerY - currentK * cellSize;
+
+  stroke('#E53935');
+  strokeWeight(3);
+  line(arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+
+  // Arrow head
+  if (animProgress > 0.1) {
+    push();
+    translate(arrowEndX, arrowEndY);
+    let angle = atan2(arrowStartY - arrowEndY, arrowStartX - arrowEndX);
+    rotate(angle);
+    fill('#E53935');
+    noStroke();
+    triangle(0, 0, 12, 5, 12, -5);
+    pop();
+  }
+
+  // Draw image (green) - animated
+  let imageVerts = ex.shape.map(p => [
+    centerX + (p[0] + currentH) * cellSize,
+    centerY - (p[1] + currentK) * cellSize
+  ]);
+
+  if (animProgress < 1) {
+    fill(76, 175, 80, 150);
+    stroke(46, 125, 50, 150);
+  } else {
+    fill('#4CAF50');
+    stroke('#2E7D32');
+  }
+  strokeWeight(2);
+  beginShape();
+  for (let v of imageVerts) {
+    vertex(v[0], v[1]);
+  }
+  endShape(CLOSE);
+
+  // Draw dashed lines connecting corresponding vertices
+  if (animProgress >= 1) {
+    stroke('#9E9E9E');
+    strokeWeight(1);
+    setLineDash([5, 3]);
+    for (let i = 0; i < ex.shape.length; i++) {
+      line(preImageVerts[i][0], preImageVerts[i][1],
+           imageVerts[i][0], imageVerts[i][1]);
+    }
+    setLineDash([]);
+  }
+
+  // Labels
+  noStroke();
+  fill('#0D47A1');
+  textSize(12);
+  textAlign(CENTER, TOP);
+  text("Pre-Image", preImageVerts[0][0] - 20, preImageVerts[0][1] + 10);
+
+  if (animProgress >= 1) {
+    fill('#2E7D32');
+    text("Image", imageVerts[0][0] + 30, imageVerts[0][1] + 10);
+  }
+
+  // Translation label
+  fill('#424242');
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text(ex.label, canvasWidth / 2, drawHeight - 50);
+  textStyle(NORMAL);
+
+  // Show coordinate rule
+  fill('#757575');
+  textSize(12);
+  text(`(x, y) → (x + ${ex.h}, y + ${ex.k > 0 ? ex.k : '(' + ex.k + ')'})`, canvasWidth / 2, drawHeight - 30);
+}
+
+function mousePressed() {
+  // Check button clicks
+  let buttonWidth = 130;
+  let buttonHeight = 30;
+  let startX = canvasWidth / 2 - (examples.length * (buttonWidth + 10)) / 2;
+  let y = 55;
+
+  for (let i = 0; i < examples.length; i++) {
+    let x = startX + i * (buttonWidth + 10);
+    if (mouseX >= x && mouseX <= x + buttonWidth &&
+        mouseY >= y && mouseY <= y + buttonHeight) {
+      if (i !== selectedExample) {
+        selectedExample = i;
+        animProgress = 0;
+        isAnimating = true;
+      } else {
+        // Re-animate same example
+        animProgress = 0;
+        isAnimating = true;
+      }
+      return;
+    }
+  }
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 800);
+    canvasWidth = max(canvasWidth, 400);
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

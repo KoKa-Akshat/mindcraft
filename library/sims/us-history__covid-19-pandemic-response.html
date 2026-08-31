@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>COVID-19 Excess Mortality by Demographic Group</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #212529;
+        }
+        main {
+            width: 100%;
+            padding: 8px 12px 10px 12px;
+        }
+        h1 {
+            font-size: 16px;
+            color: #1a3a6c;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        #toggle {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        #toggle button {
+            background: #e9ecef; color: #495057; border: 1px solid #ced4da;
+            padding: 6px 12px; font-size: 13px; border-radius: 4px; cursor: pointer;
+        }
+        #toggle button.active { background: #1a3a6c; color: white; border-color: #1a3a6c; }
+        #chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 380px;
+        }
+        #note {
+            font-size: 12px; color: #555; padding: 6px 8px;
+            background: #f4f7fb; border-left: 3px solid #1a3a6c;
+            margin-top: 6px; line-height: 1.4;
+        }
+        #source { font-size: 11px; color: #777; margin-top: 4px; text-align: right; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>COVID-19 Excess Mortality by Demographic Group (US, 2020–2022)</h1>
+    <div id="toggle">
+        <button id="btn-race" class="active">By Race / Ethnicity</button>
+        <button id="btn-age">By Age Group</button>
+    </div>
+    <div id="chart-wrap"><canvas id="emChart"></canvas></div>
+    <div id="note">
+        These data reflect documented disparities in mortality burden. They
+        are presented to support evidence-based understanding of structural
+        inequity, not for comparison of population value.
+    </div>
+    <div id="source">Source: CDC NCHS Excess Deaths Estimates, 2020–2022 (approximate published values).</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>// COVID-19 Excess Mortality by Demographic Group (US, 2020–2022)
+// CANVAS_HEIGHT: 540
+// Approximate values consistent with published CDC NCHS excess-death estimates.
+
+// Color palette: ColorBrewer-style, colorblind-safe
+const PALETTE = ['#1a3a6c', '#e69f00', '#56b4e9', '#009e73', '#cc79a7'];
+
+// Race / ethnicity — excess deaths per 100,000 population (rough CDC published range)
+const RACE = {
+    labels: ['White (NH)', 'Black (NH)', 'Hispanic', 'Asian', 'AI/AN'],
+    rates: [180, 285, 270, 145, 335],
+    ciLo:  [170, 270, 255, 130, 305],
+    ciHi:  [190, 300, 285, 160, 365]
+};
+// Age groups (years) — excess deaths per 100,000
+const AGE = {
+    labels: ['18–44', '45–64', '65–74', '75–84', '85+'],
+    rates: [25, 110, 310, 520, 905],
+    ciLo:  [22, 102, 295, 500, 875],
+    ciHi:  [28, 118, 325, 540, 935]
+};
+
+const WHITE_BASELINE = RACE.rates[0]; // for ratio in tooltip
+
+let chart = null;
+
+// Custom plugin: draw error-bar whiskers for the 95% CI
+const errorBars = {
+    id: 'errorBars',
+    afterDatasetsDraw(chart) {
+        const ds = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1.5;
+        meta.data.forEach((bar, i) => {
+            const x = bar.x;
+            const yLo = chart.scales.y.getPixelForValue(ds._ciLo[i]);
+            const yHi = chart.scales.y.getPixelForValue(ds._ciHi[i]);
+            ctx.beginPath();
+            ctx.moveTo(x, yLo); ctx.lineTo(x, yHi);
+            ctx.moveTo(x - 6, yLo); ctx.lineTo(x + 6, yLo);
+            ctx.moveTo(x - 6, yHi); ctx.lineTo(x + 6, yHi);
+            ctx.stroke();
+        });
+        ctx.restore();
+    }
+};
+
+function render(view) {
+    const ctx = document.getElementById('emChart').getContext('2d');
+    const src = view === 'race' ? RACE : AGE;
+    const colors = src.labels.map((_, i) => PALETTE[i % PALETTE.length]);
+    const baseline = view === 'race' ? WHITE_BASELINE : null;
+
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: src.labels,
+            datasets: [{
+                label: 'Excess deaths per 100,000',
+                data: src.rates,
+                _ciLo: src.ciLo,
+                _ciHi: src.ciHi,
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Excess deaths per 100,000' }
+                },
+                x: {
+                    title: { display: true, text: view === 'race' ? 'Race / Ethnicity' : 'Age group (years)' }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (c) => {
+                            const i = c.dataIndex;
+                            const r = src.rates[i];
+                            const lines = [
+                                'Rate: ' + r + ' per 100,000',
+                                '95% CI: [' + src.ciLo[i] + ', ' + src.ciHi[i] + ']'
+                            ];
+                            if (baseline !== null) {
+                                const ratio = (r / baseline).toFixed(2);
+                                lines.push('Ratio vs White (NH): ' + ratio + 'x');
+                            }
+                            return lines;
+                        }
+                    }
+                }
+            }
+        },
+        plugins: [errorBars]
+    });
+}
+
+function setView(view) {
+    document.getElementById('btn-race').classList.toggle('active', view === 'race');
+    document.getElementById('btn-age').classList.toggle('active', view === 'age');
+    render(view);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-race').addEventListener('click', () => setView('race'));
+    document.getElementById('btn-age').addEventListener('click', () => setView('age'));
+    render('race');
+});
+</script>
+</body>
+</html>

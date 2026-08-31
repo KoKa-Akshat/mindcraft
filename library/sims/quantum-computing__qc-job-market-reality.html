@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>QC Application Landscape</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// QC Application Landscape
+// A 2D bubble chart showing quantum computing application domains
+// by quantum advantage likelihood vs. market size
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Chart area
+let chartLeft, chartRight, chartTop, chartBottom, chartWidth, chartHeight;
+
+// Application data
+let applications = [
+    {
+        name: "Drug Discovery",
+        x: 25, y: 80, size: 40,
+        color: [255, 152, 0],       // orange
+        algorithm: "Variational Quantum Eigensolver (VQE)",
+        qubits: "~1M+ error-corrected qubits",
+        status: "No advantage demonstrated over classical DFT",
+        classical: "Classical molecular dynamics, DFT, AI-driven drug design (AlphaFold)"
+    },
+    {
+        name: "Cryptography",
+        x: 40, y: 50, size: 30,
+        color: [211, 47, 47],       // red
+        algorithm: "Shor's Algorithm",
+        qubits: "~4,000 logical / millions physical qubits",
+        status: "Proven theory; hardware decades away at scale",
+        classical: "RSA, elliptic curve cryptography; post-quantum crypto already deploying"
+    },
+    {
+        name: "Optimization",
+        x: 15, y: 100, size: 40,
+        color: [255, 152, 0],       // orange
+        algorithm: "QAOA, Quantum Annealing",
+        qubits: "~10,000+ logical qubits",
+        status: "No speedup over classical solvers demonstrated",
+        classical: "Gurobi, CPLEX, simulated annealing solve thousands of variables"
+    },
+    {
+        name: "Materials Science",
+        x: 30, y: 60, size: 30,
+        color: [255, 152, 0],       // orange
+        algorithm: "Quantum Phase Estimation",
+        qubits: "~100K+ logical qubits",
+        status: "Small molecules simulated; nothing industrially relevant",
+        classical: "Classical DFT and DMFT handle real materials today"
+    },
+    {
+        name: "Machine Learning",
+        x: 5, y: 200, size: 40,
+        color: [211, 47, 47],       // red
+        algorithm: "Quantum kernels, QNNs",
+        qubits: "Unclear — no proven architecture",
+        status: "No practical advantage on any real-world task",
+        classical: "GPT, transformers, CNNs dominate all benchmarks"
+    },
+    {
+        name: "Financial Modeling",
+        x: 10, y: 150, size: 30,
+        color: [255, 152, 0],       // orange
+        algorithm: "Quantum Monte Carlo, amplitude estimation",
+        qubits: "~7,500 logical qubits estimated",
+        status: "Theoretical quadratic speedup; not yet practical",
+        classical: "Classical Monte Carlo on GPUs already highly optimized"
+    },
+    {
+        name: "Climate Modeling",
+        x: 20, y: 40, size: 20,
+        color: [255, 193, 7],       // yellow
+        algorithm: "Quantum simulation of fluid dynamics",
+        qubits: "Unknown — problem poorly defined for QC",
+        status: "Speculative; no concrete quantum approach",
+        classical: "Exascale classical HPC (Frontier, Aurora) running climate models now"
+    }
+];
+
+let hoveredApp = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Chart area dimensions
+    chartLeft = 90;
+    chartRight = canvasWidth - margin * 2;
+    chartTop = 55;
+    chartBottom = drawHeight - 55;
+    chartWidth = chartRight - chartLeft;
+    chartHeight = chartBottom - chartTop;
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("QC Application Landscape", canvasWidth / 2, 10);
+
+    // Axis ranges
+    let xMin = 0, xMax = 50;   // Quantum Advantage Likelihood (%)
+    let yMin = 0, yMax = 220;  // Market Size ($B)
+
+    // Quadrant dividers
+    let quadX = mapVal(25, xMin, xMax, chartLeft, chartRight);
+    let quadY = mapVal(75, yMin, yMax, chartBottom, chartTop);
+
+    stroke('#BBBBBB');
+    strokeWeight(1);
+    drawingContext.setLineDash([6, 4]);
+    line(quadX, chartTop, quadX, chartBottom);
+    line(chartLeft, quadY, chartRight, quadY);
+    drawingContext.setLineDash([]);
+
+    // Quadrant labels
+    fill('#999');
+    noStroke();
+    textSize(11);
+    textStyle(ITALIC);
+
+    textAlign(CENTER, TOP);
+    // Top-left: Overhyped
+    text("OVERHYPED", (chartLeft + quadX) / 2, chartTop + 5);
+    // Top-right: Sweet Spot
+    text("SWEET SPOT", (quadX + chartRight) / 2, chartTop + 5);
+    // Bottom-left: Questionable
+    text("QUESTIONABLE", (chartLeft + quadX) / 2, quadY + 5);
+    // Bottom-right: Niche
+    text("NICHE", (quadX + chartRight) / 2, quadY + 5);
+
+    // Draw axes
+    stroke('#666');
+    strokeWeight(1.5);
+    line(chartLeft, chartBottom, chartRight, chartBottom);  // x-axis
+    line(chartLeft, chartTop, chartLeft, chartBottom);       // y-axis
+
+    // X-axis labels
+    fill('#555');
+    noStroke();
+    textSize(11);
+    textStyle(NORMAL);
+    textAlign(CENTER, TOP);
+    for (let v = 0; v <= xMax; v += 10) {
+        let px = mapVal(v, xMin, xMax, chartLeft, chartRight);
+        text(v + "%", px, chartBottom + 5);
+        // Tick
+        stroke('#CCC');
+        strokeWeight(1);
+        line(px, chartBottom, px, chartBottom + 3);
+        noStroke();
+    }
+    textSize(12);
+    textStyle(BOLD);
+    fill('#444');
+    text("Quantum Advantage Likelihood", (chartLeft + chartRight) / 2, chartBottom + 22);
+
+    // Y-axis labels
+    textAlign(RIGHT, CENTER);
+    textSize(11);
+    textStyle(NORMAL);
+    fill('#555');
+    for (let v = 0; v <= yMax; v += 50) {
+        let py = mapVal(v, yMin, yMax, chartBottom, chartTop);
+        noStroke();
+        text("$" + v + "B", chartLeft - 8, py);
+        stroke('#CCC');
+        strokeWeight(1);
+        line(chartLeft - 3, py, chartLeft, py);
+    }
+
+    // Y-axis title (rotated)
+    push();
+    translate(18, (chartTop + chartBottom) / 2);
+    rotate(-HALF_PI);
+    fill('#444');
+    noStroke();
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text("Market Size ($B)", 0, 0);
+    pop();
+
+    // Detect hover
+    hoveredApp = -1;
+    for (let i = 0; i < applications.length; i++) {
+        let app = applications[i];
+        let px = mapVal(app.x, xMin, xMax, chartLeft, chartRight);
+        let py = mapVal(app.y, yMin, yMax, chartBottom, chartTop);
+        let r = app.size;
+        let d = dist(mouseX, mouseY, px, py);
+        if (d < r) {
+            hoveredApp = i;
+        }
+    }
+
+    // Draw bubbles
+    for (let i = 0; i < applications.length; i++) {
+        let app = applications[i];
+        let px = mapVal(app.x, xMin, xMax, chartLeft, chartRight);
+        let py = mapVal(app.y, yMin, yMax, chartBottom, chartTop);
+        let r = app.size;
+        let isHovered = (hoveredApp === i);
+
+        // Bubble
+        let c = app.color;
+        if (isHovered) {
+            fill(c[0], c[1], c[2], 220);
+            stroke('#333');
+            strokeWeight(2);
+        } else {
+            fill(c[0], c[1], c[2], 160);
+            stroke(c[0], c[1], c[2], 200);
+            strokeWeight(1);
+        }
+        ellipse(px, py, r * 2, r * 2);
+
+        // Label
+        fill(isHovered ? '#000' : '#333');
+        noStroke();
+        textSize(isHovered ? 12 : 11);
+        textStyle(isHovered ? BOLD : NORMAL);
+        textAlign(CENTER, CENTER);
+        text(app.name, px, py - r - 10);
+    }
+
+    // Hover tooltip
+    if (hoveredApp >= 0) {
+        let app = applications[hoveredApp];
+        let tooltipW = 420;
+        let tooltipH = 90;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = drawHeight - tooltipH - 8;
+
+        // Keep tooltip within canvas
+        if (tooltipX < 5) tooltipX = 5;
+        if (tooltipX + tooltipW > canvasWidth - 5) tooltipX = canvasWidth - tooltipW - 5;
+
+        // Background
+        fill(255, 255, 255, 245);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        // Text
+        fill('#333');
+        noStroke();
+        textAlign(LEFT, TOP);
+        textSize(12);
+        textStyle(BOLD);
+        text(app.name, tooltipX + 10, tooltipY + 8);
+
+        textStyle(NORMAL);
+        textSize(10);
+        text("Algorithm: " + app.algorithm, tooltipX + 10, tooltipY + 26);
+        text("Qubits needed: " + app.qubits, tooltipX + 10, tooltipY + 40);
+        text("Status: " + app.status, tooltipX + 10, tooltipY + 54);
+        fill('#666');
+        textStyle(ITALIC);
+        text("Classical alternative: " + app.classical, tooltipX + 10, tooltipY + 70);
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Hover over a bubble to see application details and classical alternatives", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+// Map value to pixel coordinate (avoids p5 map name)
+function mapVal(value, inMin, inMax, outMin, outMax) {
+    return outMin + (value - inMin) / (inMax - inMin) * (outMax - outMin);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

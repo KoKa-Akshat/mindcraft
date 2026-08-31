@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Distance Formula Explorer MicroSim using P5.js 1.11.10</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Distance Formula Explorer MicroSim
+// Learning Objective: Students will apply the distance formula to find distances
+// between two points on the coordinate plane, visualizing the connection to the
+// Pythagorean theorem (Bloom's: Applying, Understanding)
+
+// Canvas dimensions - REQUIRED structure
+let canvasWidth = 800;              // Initial width (responsive)
+let drawHeight = 600;                // Drawing/simulation area height
+let controlHeight = 100;             // Controls area height
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;                     // Margin for visual elements
+let defaultTextSize = 16;            // Base text size
+
+// Grid parameters
+let gridSize = 40; // pixels per unit
+let gridRange = 10; // -10 to 10 on both axes
+let centerX, centerY; // Center of coordinate plane
+
+// Points
+let pointA = {x: 1, y: 2};
+let pointB = {x: 4, y: 6};
+
+// Dragging state
+let draggingPoint = null;
+let offsetX = 0;
+let offsetY = 0;
+
+// UI Controls
+let showTriangleCheckbox;
+let showCalculationCheckbox;
+let snapToGridCheckbox;
+let randomButton;
+
+// Input fields
+let aXInput, aYInput, bXInput, bYInput;
+
+function setup() {
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  // Try to parent to main, but don't fail if it doesn't exist
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    canvas.parent(mainElement);
+  }
+
+  // Calculate center of grid
+  centerX = canvasWidth / 2;
+  centerY = drawHeight / 2;
+
+  // Create checkboxes
+  showTriangleCheckbox = createCheckbox('Show Right Triangle', true);
+  showTriangleCheckbox.position(10, drawHeight + 10);
+
+  showCalculationCheckbox = createCheckbox('Show Calculation Steps', false);
+  showCalculationCheckbox.position(10, drawHeight + 35);
+
+  snapToGridCheckbox = createCheckbox('Snap to Grid', true);
+  snapToGridCheckbox.position(10, drawHeight + 60);
+
+  // Create random button
+  randomButton = createButton('Random Points');
+  randomButton.position(200, drawHeight + 10);
+  randomButton.mousePressed(randomizePoints);
+
+  /* We don't need input fields since we can drag the points
+  // Create input fields for Point A
+  createP('Point A:').position(200, drawHeight + 30).style('margin', '0');
+  aXInput = createInput(pointA.x.toString());
+  aXInput.position(260, drawHeight + 45);
+  aXInput.size(40);
+  aXInput.input(updateFromInputs);
+
+  aYInput = createInput(pointA.y.toString());
+  aYInput.position(310, drawHeight + 45);
+  aYInput.size(40);
+  aYInput.input(updateFromInputs);
+
+  // Create input fields for Point B
+  
+  createP('Point B:').position(370, drawHeight + 30).style('margin', '0');
+  bXInput = createInput(pointB.x.toString());
+  bXInput.position(430, drawHeight + 45);
+  bXInput.size(40);
+  bXInput.input(updateFromInputs);
+
+  bYInput = createInput(pointB.y.toString());
+  bYInput.position(480, drawHeight + 45);
+  bYInput.size(40);
+  bYInput.input(updateFromInputs);
+  */
+  
+  describe('Interactive coordinate plane showing the distance formula between two draggable points, with visual representation of the right triangle formed and the Pythagorean theorem connection.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Drawing area (light blue background)
+  fill('aliceblue');
+  stroke('silver');
+  rect(0, 0, width, drawHeight);
+
+  // Control area (white background)
+  fill('white');
+  rect(0, drawHeight, width, controlHeight);
+
+  // Update center
+  centerX = canvasWidth / 2;
+  centerY = drawHeight / 2;
+
+  // Draw coordinate grid
+  drawGrid();
+
+  // Calculate distances and values
+  let dx = pointB.x - pointA.x;
+  let dy = pointB.y - pointA.y;
+  let horizontalDist = abs(dx);
+  let verticalDist = abs(dy);
+  let distance = dist(
+    gridToCanvasX(pointA.x), gridToCanvasY(pointA.y),
+    gridToCanvasX(pointB.x), gridToCanvasY(pointB.y)
+  ) / gridSize;
+
+  // Draw right triangle if enabled
+  if (showTriangleCheckbox.checked()) {
+    drawRightTriangle();
+  }
+
+  // Draw line connecting points
+  stroke('purple');
+  strokeWeight(3);
+  line(
+    gridToCanvasX(pointA.x), gridToCanvasY(pointA.y),
+    gridToCanvasX(pointB.x), gridToCanvasY(pointB.y)
+  );
+
+  // Draw points
+  drawPoint(pointA, 'A', color(0, 0, 255)); // Blue
+  drawPoint(pointB, 'B', color(255, 0, 0)); // Red
+
+  // Display calculations
+  displayCalculations(distance, dx, dy, horizontalDist, verticalDist);
+
+    // Place the title in the top center of the canvas
+  fill('black');
+  textSize(28);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Distance Formula Explorer', canvasWidth/2, 10);
+  
+  textSize(16);
+  fill('gray');
+  textAlign(LEFT, CENTER);
+  text("Drag points to change distance", 10, drawHeight-12)
+
+  // Return default settings
+  stroke('black');
+  strokeWeight(1);
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+}
+
+function drawGrid() {
+  stroke(200);
+  strokeWeight(1);
+
+  // Vertical grid lines
+  for (let i = -gridRange; i <= gridRange; i++) {
+    let x = gridToCanvasX(i);
+    if (x >= 0 && x <= canvasWidth) {
+      line(x, 0, x, drawHeight);
+    }
+  }
+
+  // Horizontal grid lines
+  for (let i = -gridRange; i <= gridRange; i++) {
+    let y = gridToCanvasY(i);
+    if (y >= 0 && y <= drawHeight) {
+      line(0, y, canvasWidth, y);
+    }
+  }
+
+  // Draw axes
+  stroke(0);
+  strokeWeight(2);
+
+  // X-axis
+  let yAxis = gridToCanvasY(0);
+  if (yAxis >= 0 && yAxis <= drawHeight) {
+    line(0, yAxis, canvasWidth, yAxis);
+  }
+
+  // Y-axis
+  let xAxis = gridToCanvasX(0);
+  if (xAxis >= 0 && xAxis <= canvasWidth) {
+    line(xAxis, 0, xAxis, drawHeight);
+  }
+
+  // Draw axis labels
+  fill(0);
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(14);
+
+  // X-axis labels
+  for (let i = -gridRange; i <= gridRange; i += 2) {
+    if (i !== 0) {
+      let x = gridToCanvasX(i);
+      let y = gridToCanvasY(0);
+      if (x >= 0 && x <= canvasWidth && y >= 0 && y <= drawHeight) {
+        text(i, x, y + 5);
+      }
+    }
+  }
+
+  // Y-axis labels
+  textAlign(RIGHT, CENTER);
+  for (let i = -gridRange; i <= gridRange; i += 2) {
+    if (i !== 0) {
+      let x = gridToCanvasX(0);
+      let y = gridToCanvasY(i);
+      if (x >= 0 && x <= canvasWidth && y >= 0 && y <= drawHeight) {
+        text(i, x - 5, y);
+      }
+    }
+  }
+
+  // Label origin
+  textAlign(RIGHT, TOP);
+  let originX = gridToCanvasX(0);
+  let originY = gridToCanvasY(0);
+  if (originX >= 0 && originX <= canvasWidth && originY >= 0 && originY <= drawHeight) {
+    text('0', originX - 5, originY + 5);
+  }
+}
+
+function drawRightTriangle() {
+  let ax = gridToCanvasX(pointA.x);
+  let ay = gridToCanvasY(pointA.y);
+  let bx = gridToCanvasX(pointB.x);
+  let by = gridToCanvasY(pointB.y);
+
+  // Draw triangle
+  fill(200, 200, 200, 100);
+  stroke(100);
+  strokeWeight(2);
+  triangle(ax, ay, bx, ay, bx, by);
+
+  // Draw labels for legs
+  fill(0);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(14);
+
+  let dx = abs(pointB.x - pointA.x);
+  let dy = abs(pointB.y - pointA.y);
+
+  // Horizontal leg label
+  text(dx.toFixed(1), (ax + bx) / 2, ay - 15);
+
+  // Vertical leg label
+  text(dy.toFixed(1), bx + 20, (ay + by) / 2);
+
+  // Distance label on hypotenuse
+  let distance = sqrt(dx * dx + dy * dy);
+  fill(128, 0, 128);
+  text(distance.toFixed(2), (ax + bx) / 2, (ay + by) / 2 - 15);
+}
+
+function drawPoint(pt, label, col) {
+  let x = gridToCanvasX(pt.x);
+  let y = gridToCanvasY(pt.y);
+
+  // Draw point
+  fill(col);
+  stroke(0);
+  strokeWeight(2);
+  circle(x, y, 20);
+
+  // Draw label
+  fill(255);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text(label, x, y);
+
+  // Draw coordinates next to point
+  fill(0);
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  text(`(${pt.x}, ${pt.y})`, x + 15, y - 20);
+}
+
+function displayCalculations(distance, dx, dy, horizontalDist, verticalDist) {
+  fill(0);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(16);
+
+  let startY = drawHeight + 10;
+  let rightX = canvasWidth - 350;
+
+  if (showCalculationCheckbox.checked()) {
+    text(`Δx = x₂ - x₁ = ${pointB.x} - ${pointA.x} = ${dx.toFixed(1)}`, rightX, startY);
+    text(`Δy = y₂ - y₁ = ${pointB.y} - ${pointA.y} = ${dy.toFixed(1)}`, rightX, startY + 20);
+    text(`d = √[(Δx)² + (Δy)²] = √[${dx.toFixed(1)}² + ${dy.toFixed(1)}²]`, rightX, startY + 40);
+    text(`d = √[${(dx*dx).toFixed(2)} + ${(dy*dy).toFixed(2)}] = ${distance.toFixed(2)}`, rightX, startY + 60);
+  } else {
+    text(`Distance = ${distance.toFixed(2)} units`, rightX, startY + 20);
+  }
+}
+
+function mousePressed() {
+  // Check if clicking on a point
+  let ax = gridToCanvasX(pointA.x);
+  let ay = gridToCanvasY(pointA.y);
+  let bx = gridToCanvasX(pointB.x);
+  let by = gridToCanvasY(pointB.y);
+
+  if (dist(mouseX, mouseY, ax, ay) < 15) {
+    draggingPoint = 'A';
+    offsetX = pointA.x - canvasToGridX(mouseX);
+    offsetY = pointA.y - canvasToGridY(mouseY);
+  } else if (dist(mouseX, mouseY, bx, by) < 15) {
+    draggingPoint = 'B';
+    offsetX = pointB.x - canvasToGridX(mouseX);
+    offsetY = pointB.y - canvasToGridY(mouseY);
+  }
+}
+
+function mouseDragged() {
+  if (draggingPoint && mouseY < drawHeight) {
+    let newX = canvasToGridX(mouseX) + offsetX;
+    let newY = canvasToGridY(mouseY) + offsetY;
+
+    // Snap to grid if enabled
+    if (snapToGridCheckbox.checked()) {
+      newX = round(newX);
+      newY = round(newY);
+    }
+
+    // Constrain to grid range
+    newX = constrain(newX, -gridRange, gridRange);
+    newY = constrain(newY, -gridRange, gridRange);
+
+    if (draggingPoint === 'A') {
+      pointA.x = newX;
+      pointA.y = newY;
+      // updateInputFields();
+    } else if (draggingPoint === 'B') {
+      pointB.x = newX;
+      pointB.y = newY;
+      // updateInputFields();
+    }
+  }
+}
+
+function mouseReleased() {
+  draggingPoint = null;
+}
+
+function gridToCanvasX(gridX) {
+  return centerX + gridX * gridSize;
+}
+
+function gridToCanvasY(gridY) {
+  return centerY - gridY * gridSize; // Flip Y axis
+}
+
+function canvasToGridX(canvasX) {
+  return (canvasX - centerX) / gridSize;
+}
+
+function canvasToGridY(canvasY) {
+  return -(canvasY - centerY) / gridSize; // Flip Y axis
+}
+
+function randomizePoints() {
+  pointA.x = floor(random(-7, 8));
+  pointA.y = floor(random(-7, 7));
+  pointB.x = floor(random(-7, 8));
+  pointB.y = floor(random(-7, 7));
+  // updateInputFields();
+}
+
+/*
+function updateInputFields() {
+  aXInput.value(pointA.x.toString());
+  aYInput.value(pointA.y.toString());
+  bXInput.value(pointB.x.toString());
+  bYInput.value(pointB.y.toString());
+}
+*/
+
+function updateFromInputs() {
+  let newAX = parseFloat(aXInput.value());
+  let newAY = parseFloat(aYInput.value());
+  let newBX = parseFloat(bXInput.value());
+  let newBY = parseFloat(bYInput.value());
+
+  if (!isNaN(newAX)) pointA.x = constrain(newAX, -gridRange, gridRange);
+  if (!isNaN(newAY)) pointA.y = constrain(newAY, -gridRange, gridRange);
+  if (!isNaN(newBX)) pointB.x = constrain(newBX, -gridRange, gridRange);
+  if (!isNaN(newBY)) pointB.y = constrain(newBY, -gridRange, gridRange);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+
+  // Update control positions
+  centerX = canvasWidth / 2;
+  centerY = drawHeight / 2;
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

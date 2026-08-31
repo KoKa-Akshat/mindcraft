@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Biome Connections Network using vis-network</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script>// Biome Connections Network - vis-network
+// CANVAS_HEIGHT: 590
+// Network graph showing material/energy flows between biomes
+
+document.addEventListener('DOMContentLoaded', function () {
+  const main = document.querySelector('main');
+
+  // Layout container
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'display:flex;flex-direction:column;width:100%;font-family:Arial,Helvetica,sans-serif;';
+  main.appendChild(wrapper);
+
+  // Controls
+  const controls = document.createElement('div');
+  controls.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px;background:#f5f5f5;border-radius:6px;margin-bottom:6px;';
+  wrapper.appendChild(controls);
+
+  const disruptSelect = document.createElement('select');
+  disruptSelect.style.cssText = 'font-size:13px;padding:4px;border-radius:4px;border:1px solid #ccc;';
+  const defaultOpt = document.createElement('option');
+  defaultOpt.textContent = 'Select biome to disrupt...';
+  defaultOpt.value = '';
+  disruptSelect.appendChild(defaultOpt);
+  controls.appendChild(disruptSelect);
+
+  const disruptBtn = document.createElement('button');
+  disruptBtn.textContent = 'Disrupt Biome';
+  disruptBtn.style.cssText = 'font-size:13px;padding:5px 12px;cursor:pointer;background:#c62828;color:white;border:none;border-radius:4px;';
+  controls.appendChild(disruptBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Reset View';
+  resetBtn.style.cssText = 'font-size:13px;padding:5px 12px;cursor:pointer;background:#795548;color:white;border:none;border-radius:4px;';
+  controls.appendChild(resetBtn);
+
+  // Body
+  const bodyDiv = document.createElement('div');
+  bodyDiv.style.cssText = 'display:flex;width:100%;height:520px;';
+  wrapper.appendChild(bodyDiv);
+
+  const networkDiv = document.createElement('div');
+  networkDiv.style.cssText = 'flex:2;height:100%;border:1px solid #ccc;border-radius:8px;background:#fafaf5;';
+  bodyDiv.appendChild(networkDiv);
+
+  const infoPanel = document.createElement('div');
+  infoPanel.style.cssText = 'flex:1;padding:12px;overflow-y:auto;border-left:2px solid #a1887f;background:#fff;font-size:13px;color:#3e2723;';
+  infoPanel.innerHTML = '<h3 style="margin-top:0;color:#01579b;">Biome Connections</h3><p>Click a biome to see its connections. Use "Disrupt" to simulate degradation.</p>';
+  bodyDiv.appendChild(infoPanel);
+
+  // Biome data
+  const biomeData = {
+    1: { label: 'Tropical\nRainforest', type: 'terrestrial', desc: 'Hot and wet; greatest biodiversity on Earth. Produces ~28% of world oxygen.', x: -250, y: -100 },
+    2: { label: 'Temperate\nForest', type: 'terrestrial', desc: 'Moderate climate with distinct seasons. Major carbon storage.', x: -120, y: -200 },
+    3: { label: 'Desert', type: 'terrestrial', desc: 'Extreme temperatures, very low precipitation. Dust storms transport minerals globally.', x: -280, y: 50 },
+    4: { label: 'Tundra', type: 'terrestrial', desc: 'Frozen, treeless; stores massive carbon in permafrost.', x: 0, y: -280 },
+    5: { label: 'Grassland', type: 'terrestrial', desc: 'Dominated by grasses; breadbasket biome for agriculture.', x: -60, y: -40 },
+    6: { label: 'Chaparral', type: 'terrestrial', desc: 'Mediterranean climate with fire-adapted species.', x: -200, y: -200 },
+    7: { label: 'Taiga', type: 'terrestrial', desc: 'Largest terrestrial biome; vast coniferous forests. Major oxygen producer.', x: 80, y: -200 },
+    8: { label: 'Open\nOcean', type: 'aquatic', desc: 'Pelagic zone; phytoplankton produce ~50% of world oxygen.', x: 250, y: -80 },
+    9: { label: 'Coral\nReef', type: 'aquatic', desc: 'Rainforests of the sea; immense biodiversity in warm shallow waters.', x: 180, y: 60 },
+    10: { label: 'Estuary', type: 'aquatic', desc: 'Where rivers meet the sea; nutrient-rich nursery habitat.', x: 80, y: 100 },
+    11: { label: 'Freshwater\nLake', type: 'aquatic', desc: 'Standing freshwater; supports inland food webs and water cycling.', x: -60, y: 150 },
+    12: { label: 'River', type: 'aquatic', desc: 'Flowing freshwater; transports nutrients and sediments between biomes.', x: 50, y: -100 },
+    13: { label: 'Deep\nOcean', type: 'aquatic', desc: 'Abyssal zone; carbon sink and home to chemosynthetic communities.', x: 280, y: 80 }
+  };
+
+  // Connection data
+  const connections = [
+    { from: 1, to: 8, label: 'River runoff\ncarries nutrients', impact: 'Nutrient pollution increases; ocean dead zones may form.' },
+    { from: 1, to: 12, label: 'Watershed\ndrainage', impact: 'Sediment load in rivers increases dramatically.' },
+    { from: 2, to: 12, label: 'Leaf litter\nfeeds streams', impact: 'Stream ecosystems lose organic matter input.' },
+    { from: 2, to: 5, label: 'Bird\nmigration', impact: 'Migratory bird populations decline; seed dispersal reduced.' },
+    { from: 3, to: 8, label: 'Dust mineral\ntransport', impact: 'Ocean iron fertilization decreases; phytoplankton affected.' },
+    { from: 3, to: 1, label: 'Saharan dust\nfertilizes Amazon', impact: 'Amazon phosphorus input drops; forest productivity declines.' },
+    { from: 4, to: 8, label: 'Meltwater\ncarries carbon', impact: 'Permafrost thaw releases methane; ocean chemistry shifts.' },
+    { from: 4, to: 7, label: 'Treeline\nadvance/retreat', impact: 'Taiga expands northward; tundra species lose habitat.' },
+    { from: 5, to: 12, label: 'Erosion feeds\nrivers', impact: 'River sediment load changes; downstream habitats affected.' },
+    { from: 5, to: 11, label: 'Nutrient\nrunoff', impact: 'Lake eutrophication; algal blooms increase.' },
+    { from: 7, to: 4, label: 'Carbon exchange\nand wildlife', impact: 'Carbon storage patterns shift across northern latitudes.' },
+    { from: 7, to: 12, label: 'Snowmelt\nwater supply', impact: 'River flow patterns change; downstream communities affected.' },
+    { from: 8, to: 13, label: 'Marine snow\ncarbon sink', impact: 'Deep ocean carbon sequestration disrupted.' },
+    { from: 8, to: 9, label: 'Ocean currents\nconnect reefs', impact: 'Coral larval dispersal disrupted; reef recovery slows.' },
+    { from: 9, to: 8, label: 'Reef fish\nmigration', impact: 'Open ocean food webs lose reef-dependent species.' },
+    { from: 10, to: 8, label: 'Nutrient export\nto ocean', impact: 'Coastal ocean productivity declines.' },
+    { from: 10, to: 9, label: 'Sediment and\nfreshwater flow', impact: 'Coral stress increases from changed salinity.' },
+    { from: 11, to: 12, label: 'Lake overflow\nand drainage', impact: 'River flow regulation disrupted.' },
+    { from: 12, to: 10, label: 'Freshwater\ndelivery', impact: 'Estuary salinity balance disrupted; nursery habitat quality drops.' },
+    { from: 6, to: 5, label: 'Fire-driven\nseed dispersal', impact: 'Altered fire regimes change grassland dynamics.' }
+  ];
+
+  // Create nodes
+  let nodesArray = [];
+  for (let id in biomeData) {
+    let b = biomeData[id];
+    let isTerr = b.type === 'terrestrial';
+    nodesArray.push({
+      id: parseInt(id),
+      label: b.label,
+      x: b.x,
+      y: b.y,
+      color: {
+        background: isTerr ? '#c8e6c9' : '#bbdefb',
+        border: isTerr ? '#2e7d32' : '#1565c0',
+        highlight: { background: '#fff9c4', border: isTerr ? '#2e7d32' : '#1565c0' }
+      },
+      font: { size: 11, color: isTerr ? '#1b5e20' : '#0d47a1', multi: true },
+      shape: 'box',
+      borderWidth: 2,
+      margin: 8,
+      fixed: true,
+      title: b.desc
+    });
+
+    // Populate dropdown
+    let opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = b.label.replace('\n', ' ');
+    disruptSelect.appendChild(opt);
+  }
+
+  // Create edges
+  let edgesArray = connections.map((c, i) => ({
+    id: i + 1,
+    from: c.from,
+    to: c.to,
+    label: c.label,
+    arrows: 'to',
+    color: { color: '#795548', highlight: '#e65100' },
+    font: { size: 9, color: '#5d4037', strokeWidth: 2, strokeColor: '#fff', multi: true },
+    width: 1.5,
+    smooth: { type: 'cubicBezier', roundness: 0.3 }
+  }));
+
+  let nodes = new vis.DataSet(nodesArray);
+  let edges = new vis.DataSet(edgesArray);
+
+  let network = new vis.Network(networkDiv, { nodes, edges }, {
+    physics: false,
+    interaction: {
+      dragNodes: true,
+      dragView: false,
+      zoomView: false,
+      hover: true,
+      navigationButtons: true
+    },
+    edges: {
+      smooth: { type: 'cubicBezier', roundness: 0.3 }
+    }
+  });
+
+  network.once('afterDrawing', function () { network.fit({ animation: false }); });
+
+  // Click to highlight connections
+  network.on('click', function (params) {
+    resetAllStyles();
+
+    if (params.nodes.length > 0) {
+      let nodeId = params.nodes[0];
+      let b = biomeData[nodeId];
+      let connEdgeIds = network.getConnectedEdges(nodeId);
+      let connNodeIds = network.getConnectedNodes(nodeId);
+
+      // Dim everything else
+      nodesArray.forEach(n => {
+        if (n.id !== nodeId && !connNodeIds.includes(n.id)) {
+          nodes.update({ id: n.id, opacity: 0.2 });
+        }
+      });
+      edgesArray.forEach(e => {
+        if (!connEdgeIds.includes(e.id)) {
+          edges.update({ id: e.id, hidden: true });
+        }
+      });
+
+      // Info panel
+      let connDetails = connections.filter(c => c.from === nodeId || c.to === nodeId);
+      let html = '<h3 style="margin-top:0;color:' + (b.type === 'terrestrial' ? '#2e7d32' : '#0277bd') + ';">' + b.label.replace('\n', ' ') + '</h3>';
+      html += '<p style="font-size:12px;">' + b.desc + '</p>';
+      html += '<hr style="border:none;border-top:1px solid #e0e0e0;">';
+      html += '<p style="font-size:12px;"><strong>Connections (' + connDetails.length + '):</strong></p>';
+      connDetails.forEach(c => {
+        let otherBiome = c.from === nodeId ? biomeData[c.to] : biomeData[c.from];
+        let dir = c.from === nodeId ? '→' : '←';
+        html += '<p style="font-size:11px;margin:4px 0;">' + dir + ' ' + otherBiome.label.replace('\n', ' ') + ': ' + c.label.replace('\n', ' ') + '</p>';
+      });
+      infoPanel.innerHTML = html;
+    }
+  });
+
+  // Disrupt biome
+  disruptBtn.addEventListener('click', function () {
+    let biomeId = parseInt(disruptSelect.value);
+    if (!biomeId) return;
+    resetAllStyles();
+
+    let b = biomeData[biomeId];
+    nodes.update({ id: biomeId, color: { background: '#ffcdd2', border: '#c62828' }, borderWidth: 4 });
+
+    let affectedConns = connections.filter(c => c.from === biomeId || c.to === biomeId);
+    let affectedNodeIds = new Set();
+
+    affectedConns.forEach(c => {
+      let otherId = c.from === biomeId ? c.to : c.from;
+      affectedNodeIds.add(otherId);
+      nodes.update({ id: otherId, color: { background: '#fff9c4', border: '#f57f17' }, borderWidth: 3 });
+    });
+
+    let html = '<h3 style="margin-top:0;color:#c62828;">Disruption: ' + b.label.replace('\n', ' ') + '</h3>';
+    html += '<p style="font-size:12px;color:#c62828;">This biome has been degraded. Impacts on connected biomes:</p>';
+    affectedConns.forEach(c => {
+      let otherId = c.from === biomeId ? c.to : c.from;
+      let otherBiome = biomeData[otherId];
+      html += '<div style="background:#fff3e0;padding:6px;margin:4px 0;border-radius:4px;border-left:3px solid #f57f17;">';
+      html += '<strong style="font-size:11px;">' + otherBiome.label.replace('\n', ' ') + '</strong>';
+      html += '<p style="font-size:11px;margin:2px 0;">' + c.impact + '</p></div>';
+    });
+    infoPanel.innerHTML = html;
+  });
+
+  function resetAllStyles() {
+    nodesArray.forEach(n => {
+      let b = biomeData[n.id];
+      let isTerr = b.type === 'terrestrial';
+      nodes.update({
+        id: n.id,
+        opacity: 1.0,
+        color: { background: isTerr ? '#c8e6c9' : '#bbdefb', border: isTerr ? '#2e7d32' : '#1565c0' },
+        borderWidth: 2
+      });
+    });
+    edgesArray.forEach(e => {
+      edges.update({ id: e.id, hidden: false, color: { color: '#795548' } });
+    });
+  }
+
+  // Reset
+  resetBtn.addEventListener('click', function () {
+    resetAllStyles();
+    infoPanel.innerHTML = '<h3 style="margin-top:0;color:#01579b;">Biome Connections</h3><p>Click a biome to see its connections. Use "Disrupt" to simulate degradation.</p>';
+    network.fit({ animation: true });
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:15px;padding:6px;font-size:11px;flex-wrap:wrap;';
+  legend.innerHTML =
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#c8e6c9;border:2px solid #2e7d32;display:inline-block;border-radius:2px;"></span> Terrestrial Biome</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:12px;height:12px;background:#bbdefb;border:2px solid #1565c0;display:inline-block;border-radius:2px;"></span> Aquatic Biome</span>' +
+    '<span style="display:flex;align-items:center;gap:3px;"><span style="width:20px;height:2px;background:#795548;display:inline-block;"></span> Material/Energy Flow</span>';
+  wrapper.appendChild(legend);
+});
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

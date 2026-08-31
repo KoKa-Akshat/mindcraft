@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Survivorship Curves Comparator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: aliceblue;
+            user-select: none;
+        }
+        .container {
+            max-width: 100%;
+            padding: 6px 10px;
+        }
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .action-btn {
+            padding: 5px 14px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .reset-btn { background: #95a5a6; color: white; border-color: #7f8c8d; }
+        .reset-btn:hover { background: #7f8c8d; }
+        .hint-btn { background: #f39c12; color: white; border-color: #e67e22; }
+        .hint-btn:hover { background: #e67e22; }
+        .hint-btn.active { background: #d35400; }
+        .score-display {
+            font-size: 13px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-left: auto;
+        }
+        .main-area {
+            display: flex;
+            gap: 10px;
+        }
+        .chart-wrapper {
+            flex: 1;
+            position: relative;
+            min-width: 0;
+        }
+        .chart-container {
+            position: relative;
+            height: 370px;
+        }
+        /* Drop zones overlay the chart */
+        .drop-overlay {
+            position: absolute;
+            left: 60px;   /* approximate chart area left edge */
+            right: 10px;  /* approximate chart area right edge */
+            border: 2px dashed transparent;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap: 3px;
+            padding: 4px 8px;
+            transition: all 0.2s;
+            z-index: 10;
+            cursor: default;
+        }
+        .drop-overlay .zone-label {
+            font-size: 12px;
+            font-weight: bold;
+            pointer-events: none;
+            width: 100%;
+            margin-bottom: 2px;
+        }
+        /* Three zones stacked vertically over the chart */
+        .drop-type1 {
+            top: 30px;
+            height: 28%;
+            background: rgba(52, 152, 219, 0.06);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        .drop-type1 .zone-label { color: #2980b9; }
+        .drop-type2 {
+            top: calc(30px + 28% + 4px);
+            height: 28%;
+            background: rgba(39, 174, 96, 0.06);
+            border-color: rgba(39, 174, 96, 0.3);
+        }
+        .drop-type2 .zone-label { color: #1e8449; }
+        .drop-type3 {
+            top: calc(30px + 56% + 8px);
+            height: 28%;
+            background: rgba(230, 126, 34, 0.06);
+            border-color: rgba(230, 126, 34, 0.3);
+        }
+        .drop-type3 .zone-label { color: #d35400; }
+        .drop-overlay.drag-over {
+            border-style: solid;
+        }
+        .drop-type1.drag-over { background: rgba(52, 152, 219, 0.15); border-color: #3498db; }
+        .drop-type2.drag-over { background: rgba(39, 174, 96, 0.15); border-color: #27ae60; }
+        .drop-type3.drag-over { background: rgba(230, 126, 34, 0.15); border-color: #e67e22; }
+        .drop-overlay.selected-target {
+            border-style: solid;
+            animation: pulse-border 0.8s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-border {
+            from { border-width: 2px; }
+            to { border-width: 3px; }
+        }
+        .drop-type1.selected-target { background: rgba(52, 152, 219, 0.12); border-color: #3498db; }
+        .drop-type2.selected-target { background: rgba(39, 174, 96, 0.12); border-color: #27ae60; }
+        .drop-type3.selected-target { background: rgba(230, 126, 34, 0.12); border-color: #e67e22; }
+
+        .organism-panel {
+            width: 180px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .panel-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .organism-chip {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: grab;
+            text-align: center;
+            transition: all 0.2s;
+            border: 2px solid #ccc;
+            background: white;
+        }
+        .organism-chip:hover { transform: scale(1.03); box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .organism-chip.dragging { opacity: 0.5; cursor: grabbing; }
+        .organism-chip.selected {
+            border-color: #8e44ad;
+            background: #f5eef8;
+            box-shadow: 0 0 8px rgba(142,68,173,0.4);
+            transform: scale(1.05);
+        }
+        .placed-chip {
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 1px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        .placed-correct { background: rgba(213, 245, 227, 0.9); color: #1e8449; }
+        .placed-incorrect { background: rgba(250, 219, 216, 0.9); color: #c0392b; }
+        .info-row {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .legend-inline {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        .legend-dot {
+            display: inline-block;
+            width: 12px;
+            height: 3px;
+            border-radius: 2px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="controls">
+        <div class="legend-inline">
+            <span><span class="legend-dot" style="background:#3498db;"></span>Type I</span>
+            <span><span class="legend-dot" style="background:#27ae60;"></span>Type II</span>
+            <span><span class="legend-dot" style="background:#e67e22;"></span>Type III</span>
+        </div>
+        <span style="margin-left: 8px;"></span>
+        <button class="action-btn hint-btn" id="btn-hint" onclick="toggleHints()">Hints</button>
+        <button class="action-btn reset-btn" onclick="resetAll()">Reset</button>
+        <span class="score-display" id="score-display"></span>
+    </div>
+    <div class="main-area">
+        <div class="chart-wrapper">
+            <div class="chart-container">
+                <canvas id="survChart"></canvas>
+                <!-- Drop zones overlaid on the chart -->
+                <div class="drop-overlay drop-type1" id="drop-type1"
+                     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
+                     ondrop="handleDrop(event, 'I')" onclick="handleZoneClick('I')">
+                    <span class="zone-label">Type I — low early mortality</span>
+                </div>
+                <div class="drop-overlay drop-type2" id="drop-type2"
+                     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
+                     ondrop="handleDrop(event, 'II')" onclick="handleZoneClick('II')">
+                    <span class="zone-label">Type II — constant mortality</span>
+                </div>
+                <div class="drop-overlay drop-type3" id="drop-type3"
+                     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
+                     ondrop="handleDrop(event, 'III')" onclick="handleZoneClick('III')">
+                    <span class="zone-label">Type III — high early mortality</span>
+                </div>
+            </div>
+        </div>
+        <div class="organism-panel">
+            <div class="panel-title">Click or drag organisms to curves</div>
+            <div id="organism-pool"></div>
+        </div>
+    </div>
+    <div class="info-row" id="info-text">
+        Click an organism, then click a curve zone — or drag and drop.
+    </div>
+</div>
+<div id="return-link" style="display:none; padding: 8px 16px;">
+    <a href=".">← Return to Lesson Plan</a>
+</div>
+<script>
+    if (window.self === window.top) {
+        document.getElementById('return-link').style.display = 'block';
+    }
+</script>
+<script>// Survivorship Curves Comparator
+// Semi-log plot of Type I, II, III curves with organism classification activity
+
+const ORGANISMS = [
+    { name: 'Human',     type: 'I',   emoji: '👤', hint: 'High parental care, few offspring' },
+    { name: 'Elephant',  type: 'I',   emoji: '🐘', hint: 'Long lifespan, low reproduction rate' },
+    { name: 'Whale',     type: 'I',   emoji: '🐋', hint: 'K-selected, large body size' },
+    { name: 'Robin',     type: 'II',  emoji: '🐦', hint: 'Constant mortality rate at all ages' },
+    { name: 'Squirrel',  type: 'II',  emoji: '🐿️', hint: 'Equal chance of death at any age' },
+    { name: 'Turtle',    type: 'II',  emoji: '🐢', hint: 'Steady mortality once past juvenile stage' },
+    { name: 'Oyster',    type: 'III', emoji: '🦪', hint: 'Millions of eggs, most die young' },
+    { name: 'Oak Tree',  type: 'III', emoji: '🌳', hint: 'Produces thousands of acorns' },
+    { name: 'Salmon',    type: 'III', emoji: '🐟', hint: 'Mass spawning, very few survive' },
+];
+
+let chart;
+let placements = {}; // organism name -> placed type
+let hintsOn = false;
+let correctCount = 0;
+let selectedOrgIndex = null; // for click-to-place
+
+// Generate survivorship data (semi-log: y-axis is log scale)
+function generateCurveData() {
+    let labels = [];
+    let type1 = [];
+    let type2 = [];
+    let type3 = [];
+    let N = 1000;
+    let steps = 100;
+
+    for (let i = 0; i <= steps; i++) {
+        let x = i / steps; // fraction of max lifespan (0 to 1)
+        labels.push(Math.round(x * 100));
+
+        // Type I: most survive until old age, then rapid death
+        let s1 = N * Math.exp(-Math.pow(x / 0.85, 8));
+        type1.push(Math.max(1, s1));
+
+        // Type II: constant mortality rate (exponential decay)
+        let s2 = N * Math.exp(-4.6 * x);
+        type2.push(Math.max(1, s2));
+
+        // Type III: very high early mortality, few survivors live long
+        let s3 = N * Math.exp(-8 * Math.pow(x, 0.3));
+        type3.push(Math.max(1, s3));
+    }
+
+    return { labels, type1, type2, type3 };
+}
+
+function createChart() {
+    let data = generateCurveData();
+    let ctx = document.getElementById('survChart').getContext('2d');
+
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [
+                {
+                    label: 'Type I (e.g., humans)',
+                    data: data.type1,
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.05)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 3,
+                    tension: 0.4
+                },
+                {
+                    label: 'Type II (e.g., robins)',
+                    data: data.type2,
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39, 174, 96, 0.05)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 3,
+                    tension: 0.4
+                },
+                {
+                    label: 'Type III (e.g., oysters)',
+                    data: data.type3,
+                    borderColor: '#e67e22',
+                    backgroundColor: 'rgba(230, 126, 34, 0.05)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 3,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500 },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Survivorship Curves (Semi-Log Scale)',
+                    font: { size: 14 }
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Percentage of Maximum Lifespan',
+                        font: { size: 12 }
+                    },
+                    ticks: {
+                        callback: function(val, idx) {
+                            return idx % 10 === 0 ? this.getLabelForValue(val) + '%' : '';
+                        },
+                        font: { size: 9 }
+                    }
+                },
+                y: {
+                    type: 'logarithmic',
+                    title: {
+                        display: true,
+                        text: 'Number of Survivors (log scale)',
+                        font: { size: 12 }
+                    },
+                    min: 1,
+                    max: 1000,
+                    ticks: {
+                        font: { size: 9 },
+                        callback: function(val) {
+                            if ([1, 10, 100, 1000].includes(val)) return val;
+                            return '';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Organism pool rendering
+function renderPool() {
+    let pool = document.getElementById('organism-pool');
+    pool.innerHTML = '';
+
+    ORGANISMS.forEach((org, i) => {
+        if (placements[org.name]) return; // already placed
+
+        let chip = document.createElement('div');
+        chip.className = 'organism-chip';
+        if (selectedOrgIndex === i) {
+            chip.classList.add('selected');
+        }
+        chip.draggable = true;
+        chip.dataset.index = i;
+        chip.textContent = org.emoji + ' ' + org.name;
+
+        if (hintsOn) {
+            chip.title = org.hint;
+            chip.textContent += ' \u24D8';
+        }
+
+        // Drag support
+        chip.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', i.toString());
+            chip.classList.add('dragging');
+            selectedOrgIndex = null;
+            clearZoneHighlights();
+        });
+        chip.addEventListener('dragend', () => {
+            chip.classList.remove('dragging');
+        });
+
+        // Click-to-select support
+        chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (selectedOrgIndex === i) {
+                // Deselect
+                selectedOrgIndex = null;
+                clearZoneHighlights();
+            } else {
+                selectedOrgIndex = i;
+                highlightZones();
+            }
+            renderPool();
+            updateInfoText();
+        });
+
+        pool.appendChild(chip);
+    });
+}
+
+function highlightZones() {
+    document.querySelectorAll('.drop-overlay').forEach(z => z.classList.add('selected-target'));
+}
+
+function clearZoneHighlights() {
+    document.querySelectorAll('.drop-overlay').forEach(z => z.classList.remove('selected-target'));
+}
+
+function renderDropZones() {
+    ['I', 'II', 'III'].forEach(type => {
+        let zoneId = type === 'I' ? 'drop-type1' : type === 'II' ? 'drop-type2' : 'drop-type3';
+        let zone = document.getElementById(zoneId);
+
+        let label = type === 'I' ? 'Type I \u2014 low early mortality' :
+                    type === 'II' ? 'Type II \u2014 constant mortality' :
+                    'Type III \u2014 high early mortality';
+
+        let placedHtml = Object.entries(placements)
+            .filter(([name, t]) => t === type)
+            .map(([name]) => {
+                let org = ORGANISMS.find(o => o.name === name);
+                let correct = org.type === type;
+                let cls = correct ? 'placed-correct' : 'placed-incorrect';
+                return '<span class="placed-chip ' + cls + '">' + org.emoji + ' ' + name +
+                       (correct ? ' \u2713' : ' \u2717') + '</span>';
+            }).join(' ');
+
+        zone.innerHTML = '<span class="zone-label">' + label + '</span>' +
+                         (placedHtml ? ' ' + placedHtml : '');
+    });
+
+    // Restore highlight if an organism is selected
+    if (selectedOrgIndex !== null) {
+        highlightZones();
+    }
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e, type) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+
+    let idx = parseInt(e.dataTransfer.getData('text/plain'));
+    placeOrganism(idx, type);
+}
+
+function handleZoneClick(type) {
+    if (selectedOrgIndex === null) return;
+    placeOrganism(selectedOrgIndex, type);
+    selectedOrgIndex = null;
+    clearZoneHighlights();
+}
+
+function placeOrganism(idx, type) {
+    let org = ORGANISMS[idx];
+    if (placements[org.name]) return; // already placed
+
+    placements[org.name] = type;
+    let correct = org.type === type;
+
+    if (correct) {
+        correctCount++;
+    }
+
+    renderPool();
+    renderDropZones();
+    updateScore();
+
+    // Check if all placed
+    if (Object.keys(placements).length === ORGANISMS.length) {
+        let total = ORGANISMS.length;
+        if (correctCount === total) {
+            document.getElementById('info-text').textContent =
+                'Perfect! All ' + total + ' organisms correctly classified!';
+        } else {
+            document.getElementById('info-text').textContent =
+                correctCount + ' of ' + total + ' correct. Click Reset to try again.';
+        }
+    } else {
+        updateInfoText();
+    }
+}
+
+function updateInfoText() {
+    if (selectedOrgIndex !== null) {
+        let org = ORGANISMS[selectedOrgIndex];
+        document.getElementById('info-text').textContent =
+            org.emoji + ' ' + org.name + ' selected \u2014 click a curve zone on the graph to place it.';
+    } else {
+        document.getElementById('info-text').textContent =
+            'Click an organism, then click a curve zone \u2014 or drag and drop.';
+    }
+}
+
+function updateScore() {
+    let placed = Object.keys(placements).length;
+    let total = ORGANISMS.length;
+    document.getElementById('score-display').textContent =
+        correctCount + ' correct / ' + placed + ' placed (' + total + ' total)';
+}
+
+function toggleHints() {
+    hintsOn = !hintsOn;
+    let btn = document.getElementById('btn-hint');
+    if (hintsOn) {
+        btn.classList.add('active');
+        btn.textContent = '\u2713 Hints';
+    } else {
+        btn.classList.remove('active');
+        btn.textContent = 'Hints';
+    }
+    renderPool();
+}
+
+function resetAll() {
+    placements = {};
+    correctCount = 0;
+    hintsOn = false;
+    selectedOrgIndex = null;
+    document.getElementById('btn-hint').classList.remove('active');
+    document.getElementById('btn-hint').textContent = 'Hints';
+    document.getElementById('info-text').textContent =
+        'Click an organism, then click a curve zone \u2014 or drag and drop.';
+    document.getElementById('score-display').textContent = '';
+    clearZoneHighlights();
+    renderPool();
+    renderDropZones();
+}
+
+// Deselect organism when clicking outside
+document.addEventListener('click', (e) => {
+    if (selectedOrgIndex !== null &&
+        !e.target.closest('.organism-chip') &&
+        !e.target.closest('.drop-overlay')) {
+        selectedOrgIndex = null;
+        clearZoneHighlights();
+        renderPool();
+        updateInfoText();
+    }
+});
+
+// Initialize
+window.addEventListener('DOMContentLoaded', () => {
+    createChart();
+    renderPool();
+    renderDropZones();
+});
+</script>
+</body>
+</html>

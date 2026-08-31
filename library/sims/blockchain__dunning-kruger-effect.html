@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Dunning-Kruger Confidence Curve using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Dunning-Kruger Confidence Curve MicroSim - Interactive draggable explorer dot
+// CANVAS_HEIGHT: 510
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 430;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 60;
+let defaultTextSize = 14;
+
+// Controls
+let domainSelect;
+let reflectButton;
+
+// State
+let dragging = false;
+let curveT = 0.05; // parameter 0-1 along the curve
+let showReflection = false;
+let curvePoints = [];
+
+// Plot area
+let plotLeft, plotRight, plotTop, plotBottom;
+
+// Stage definitions
+let stages = [
+  { name: "Mt. Stupid", tStart: 0, tEnd: 0.22, color: [255, 180, 100, 60] },
+  { name: "Valley of Despair", tStart: 0.22, tEnd: 0.45, color: [150, 180, 255, 60] },
+  { name: "Slope of Enlightenment", tStart: 0.45, tEnd: 0.75, color: [180, 230, 160, 60] },
+  { name: "Plateau of Sustainability", tStart: 0.75, tEnd: 1.0, color: [220, 200, 255, 60] }
+];
+
+// Domain data with examples per stage
+let domains = {
+  "Learning a Language": [
+    "\"I learned 'hello' and 'goodbye' — I'm practically fluent!\"",
+    "\"I can't understand native speakers at all...\"",
+    "\"I'm getting better at reading news articles.\"",
+    "\"I can navigate most conversations with nuance.\""
+  ],
+  "Learning to Code": [
+    "\"I made a website with HTML — I'm basically a software engineer!\"",
+    "\"I can't even solve a simple algorithm problem...\"",
+    "\"I'm starting to understand design patterns and trade-offs.\"",
+    "\"I know what I know, and I know what to look up.\""
+  ],
+  "Studying Philosophy": [
+    "\"I read one Nietzsche quote — I understand existence now!\"",
+    "\"The more I read, the less I feel I understand anything...\"",
+    "\"I can trace arguments and spot logical fallacies.\"",
+    "\"I hold views thoughtfully while staying open to revision.\""
+  ],
+  "Playing a Sport": [
+    "\"I scored one goal in practice — I'm a natural!\"",
+    "\"Everyone else is so much better than me...\"",
+    "\"My technique is improving and I see the game differently.\"",
+    "\"I play consistently and know where I need to grow.\""
+  ]
+};
+
+let domainNames;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  domainNames = Object.keys(domains);
+
+  // Row 1: Domain dropdown
+  domainSelect = createSelect();
+  domainSelect.parent(document.querySelector('main'));
+  for (let name of domainNames) {
+    domainSelect.option(name);
+  }
+  domainSelect.changed(() => {
+    showReflection = false;
+  });
+  domainSelect.style('font-size', '14px');
+  domainSelect.style('padding', '4px 8px');
+  domainSelect.style('margin-right', '10px');
+
+  // Row 2: Reflection button
+  reflectButton = createButton('Where Am I?');
+  reflectButton.parent(document.querySelector('main'));
+  reflectButton.mousePressed(() => {
+    showReflection = !showReflection;
+    reflectButton.html(showReflection ? 'Hide Reflection' : 'Where Am I?');
+  });
+  reflectButton.style('font-size', '14px');
+  reflectButton.style('padding', '4px 12px');
+  reflectButton.style('margin-top', '6px');
+
+  describe('Interactive Dunning-Kruger effect curve showing confidence versus competence with a draggable explorer dot and domain-specific examples.');
+}
+
+function draw() {
+  // Drawing area background
+  fill('aliceblue');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area background
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke('silver');
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  // Title
+  noStroke();
+  fill('black');
+  textSize(18);
+  textAlign(CENTER, TOP);
+  text('The Dunning-Kruger Effect', canvasWidth / 2, 8);
+
+  // Plot area
+  plotLeft = margin + 10;
+  plotRight = canvasWidth - 30;
+  plotTop = 38;
+  plotBottom = drawHeight - 120;
+
+  // Build curve points
+  buildCurvePoints();
+
+  // Draw colored stage zones
+  drawStageZones();
+
+  // Draw axes
+  drawAxes();
+
+  // Draw ideal calibration line (dotted)
+  drawIdealLine();
+
+  // Draw DK curve
+  drawDKCurve();
+
+  // Draw stage labels
+  drawStageLabels();
+
+  // Handle dragging
+  handleDrag();
+
+  // Draw explorer dot
+  drawExplorerDot();
+
+  // Draw info panel
+  drawInfoPanel();
+
+  // Draw reflection prompt
+  if (showReflection) {
+    drawReflectionPrompt();
+  }
+}
+
+function buildCurvePoints() {
+  curvePoints = [];
+  let numPoints = 200;
+  for (let i = 0; i <= numPoints; i++) {
+    let t = i / numPoints;
+    let pos = getCurvePosition(t);
+    curvePoints.push({ t: t, x: pos.x, y: pos.y });
+  }
+}
+
+function getCurvePosition(t) {
+  // DK curve shape using piecewise sine/cosine for the classic shape
+  // x = competence (0 to 1), y = confidence (0 to 1)
+  let competence = t;
+  let confidence;
+
+  if (t < 0.12) {
+    // Rapid rise to Mt. Stupid peak
+    confidence = 0.15 + 0.75 * sin(map(t, 0, 0.12, 0, HALF_PI));
+  } else if (t < 0.35) {
+    // Drop from Mt. Stupid to Valley of Despair
+    confidence = 0.9 - 0.72 * sin(map(t, 0.12, 0.35, 0, HALF_PI));
+  } else if (t < 0.50) {
+    // Bottom of valley
+    confidence = 0.18 - 0.05 * cos(map(t, 0.35, 0.50, 0, PI));
+  } else if (t < 0.85) {
+    // Slope of Enlightenment
+    confidence = 0.23 + 0.47 * sin(map(t, 0.50, 0.85, 0, HALF_PI));
+  } else {
+    // Plateau of Sustainability
+    confidence = 0.70 + 0.05 * (1 - cos(map(t, 0.85, 1.0, 0, HALF_PI)));
+  }
+
+  let px = map(competence, 0, 1, plotLeft, plotRight);
+  let py = map(confidence, 0, 1, plotBottom, plotTop);
+  return { x: px, y: py };
+}
+
+function drawStageZones() {
+  noStroke();
+  for (let stage of stages) {
+    let x1 = map(stage.tStart, 0, 1, plotLeft, plotRight);
+    let x2 = map(stage.tEnd, 0, 1, plotLeft, plotRight);
+    fill(stage.color[0], stage.color[1], stage.color[2], stage.color[3]);
+    rect(x1, plotTop, x2 - x1, plotBottom - plotTop);
+  }
+}
+
+function drawAxes() {
+  stroke('black');
+  strokeWeight(2);
+  // Y axis
+  line(plotLeft, plotTop, plotLeft, plotBottom);
+  // X axis
+  line(plotLeft, plotBottom, plotRight, plotBottom);
+
+  // Axis labels
+  noStroke();
+  fill('black');
+  textSize(13);
+  textAlign(CENTER, TOP);
+  text('Competence →', (plotLeft + plotRight) / 2, plotBottom + 8);
+
+  push();
+  translate(15, (plotTop + plotBottom) / 2);
+  rotate(-HALF_PI);
+  textAlign(CENTER, BOTTOM);
+  text('Confidence →', 0, 0);
+  pop();
+
+  // Tick marks on axes
+  textSize(10);
+  fill('gray');
+  noStroke();
+  textAlign(CENTER, TOP);
+  text('Low', plotLeft, plotBottom + 22);
+  text('High', plotRight, plotBottom + 22);
+  textAlign(RIGHT, CENTER);
+  text('Low', plotLeft - 6, plotBottom);
+  text('High', plotLeft - 6, plotTop);
+}
+
+function drawIdealLine() {
+  stroke('gray');
+  strokeWeight(1.5);
+  drawingContext.setLineDash([6, 6]);
+  line(plotLeft, plotBottom, plotRight, plotTop);
+  drawingContext.setLineDash([]);
+
+  // Label for ideal line
+  noStroke();
+  fill('gray');
+  textSize(10);
+  textAlign(LEFT, BOTTOM);
+  let labelX = plotRight - 80;
+  let labelY = map(labelX, plotLeft, plotRight, plotBottom, plotTop) - 4;
+  text('Ideal calibration', labelX, labelY);
+}
+
+function drawDKCurve() {
+  stroke('steelblue');
+  strokeWeight(3);
+  noFill();
+  beginShape();
+  for (let pt of curvePoints) {
+    vertex(pt.x, pt.y);
+  }
+  endShape();
+}
+
+function drawStageLabels() {
+  noStroke();
+  textSize(10);
+  textAlign(CENTER, TOP);
+
+  for (let stage of stages) {
+    let centerT = (stage.tStart + stage.tEnd) / 2;
+    let cx = map(centerT, 0, 1, plotLeft, plotRight);
+    fill(stage.color[0] * 0.5, stage.color[1] * 0.5, stage.color[2] * 0.5);
+
+    // Split long names
+    let words = stage.name.split(' ');
+    if (words.length <= 2) {
+      text(stage.name, cx, plotBottom + 34);
+    } else {
+      let half = ceil(words.length / 2);
+      text(words.slice(0, half).join(' '), cx, plotBottom + 34);
+      text(words.slice(half).join(' '), cx, plotBottom + 46);
+    }
+  }
+}
+
+function handleDrag() {
+  if (dragging) {
+    // Find closest point on curve to mouse
+    let bestDist = Infinity;
+    let bestT = curveT;
+    for (let pt of curvePoints) {
+      let d = dist(mouseX, mouseY, pt.x, pt.y);
+      if (d < bestDist) {
+        bestDist = d;
+        bestT = pt.t;
+      }
+    }
+    curveT = bestT;
+  }
+}
+
+function drawExplorerDot() {
+  let pos = getCurvePosition(curveT);
+
+  // Glow effect
+  noStroke();
+  fill(255, 120, 50, 60);
+  ellipse(pos.x, pos.y, 28, 28);
+
+  // Dot
+  fill('orangered');
+  stroke('white');
+  strokeWeight(2);
+  ellipse(pos.x, pos.y, 18, 18);
+
+  // Label
+  noStroke();
+  fill('orangered');
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  text('← drag me', pos.x + 36, pos.y + 4);
+
+  // Check hover
+  let d = dist(mouseX, mouseY, pos.x, pos.y);
+  if (d < 16) {
+    cursor(HAND);
+  } else if (!dragging) {
+    cursor(ARROW);
+  }
+}
+
+function drawInfoPanel() {
+  let currentDomain = domainSelect.value();
+  let examples = domains[currentDomain];
+
+  // Determine which stage the dot is in
+  let stageIndex = 0;
+  for (let i = 0; i < stages.length; i++) {
+    if (curveT >= stages[i].tStart && curveT < stages[i].tEnd) {
+      stageIndex = i;
+      break;
+    }
+    if (i === stages.length - 1) stageIndex = i;
+  }
+
+  let stage = stages[stageIndex];
+  let example = examples[stageIndex];
+
+  // Info panel at bottom of draw area
+  let panelY = plotBottom + 60;
+  let panelH = drawHeight - panelY - 4;
+  let panelX = plotLeft;
+  let panelW = plotRight - plotLeft;
+
+  noStroke();
+  fill(255, 255, 255, 200);
+  rect(panelX, panelY, panelW, panelH, 5);
+  stroke(stage.color[0], stage.color[1], stage.color[2]);
+  strokeWeight(2);
+  noFill();
+  rect(panelX, panelY, panelW, panelH, 5);
+
+  // Stage name
+  noStroke();
+  fill(stage.color[0] * 0.5, stage.color[1] * 0.5, stage.color[2] * 0.5);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  text(stage.name, panelX + 8, panelY + 5);
+  textStyle(NORMAL);
+
+  // Example quote
+  fill('black');
+  textSize(11);
+  text(example, panelX + 8, panelY + 22, panelW - 16, panelH - 28);
+}
+
+function drawReflectionPrompt() {
+  // Overlay
+  noStroke();
+  fill(0, 0, 0, 120);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Panel
+  let pw = min(canvasWidth - 40, 380);
+  let ph = 180;
+  let px = (canvasWidth - pw) / 2;
+  let py = (drawHeight - ph) / 2;
+
+  fill('white');
+  stroke('steelblue');
+  strokeWeight(2);
+  rect(px, py, pw, ph, 8);
+
+  noStroke();
+  fill('steelblue');
+  textSize(16);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text('Where Am I on the Curve?', canvasWidth / 2, py + 12);
+  textStyle(NORMAL);
+
+  fill('black');
+  textSize(12);
+  textAlign(LEFT, TOP);
+  let prompts = [
+    "1. Think of a skill you are currently learning.",
+    "2. How confident do you feel about it right now?",
+    "3. How much do you actually know?",
+    "4. Drag the dot to where you think you are.",
+    "5. Would a teacher place you in the same spot?"
+  ];
+  for (let i = 0; i < prompts.length; i++) {
+    noStroke();
+    text(prompts[i], px + 16, py + 40 + i * 24, pw - 32);
+  }
+
+  // Hint
+  fill('gray');
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  noStroke();
+  text('Click "Hide Reflection" to return to the curve', canvasWidth / 2, py + ph - 8);
+}
+
+function mousePressed() {
+  let pos = getCurvePosition(curveT);
+  let d = dist(mouseX, mouseY, pos.x, pos.y);
+  if (d < 20) {
+    dragging = true;
+  }
+}
+
+function mouseReleased() {
+  dragging = false;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const main = document.querySelector('main');
+  if (main) {
+    containerWidth = main.offsetWidth;
+  } else {
+    containerWidth = windowWidth;
+  }
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

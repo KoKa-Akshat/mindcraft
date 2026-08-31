@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Skeptical Inquiry Flowchart</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Skeptical Inquiry Flowchart
+// An interactive flowchart for evaluating quantum computing claims
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Flowchart state
+let activeQuestion = -1; // which question node is active (-1 = none, 0 = start)
+let currentPath = [];     // indices of nodes in the current path
+let answeredNodes = {};   // questionIndex -> 'yes' or 'no'
+
+// Node geometry (computed in draw)
+let nodePositions = [];   // {x, y, w, h, type} for each node
+
+// Flowchart structure
+// Questions (diamonds)
+let questions = [
+    { id: 'q1', label: 'Is the claim\nfalsifiable?' },
+    { id: 'q2', label: 'Is there peer-reviewed\nevidence?' },
+    { id: 'q3', label: 'Has it been\nindependently replicated?' },
+    { id: 'q4', label: 'Does it demonstrate\npractical advantage?' },
+    { id: 'q5', label: 'Is it economically competitive\nwith classical?' }
+];
+
+// Outcomes (rounded rectangles) — mapped by question index for "No" answers
+let noOutcomes = [
+    { label: 'Not science — dismiss', color: '#D32F2F', textColor: '#FFFFFF' },
+    { label: 'Unsubstantiated — treat\nwith extreme skepticism', color: '#F57C00', textColor: '#FFFFFF' },
+    { label: 'Preliminary — wait\nfor replication', color: '#FBC02D', textColor: '#333333' },
+    { label: 'Theoretical only — not\ncommercially relevant', color: '#FBC02D', textColor: '#333333' },
+    { label: 'Not viable — monitor\nbut don\'t invest', color: '#F57C00', textColor: '#FFFFFF' }
+];
+
+// Final "Yes" outcome
+let yesOutcome = { label: 'Potentially viable —\ninvestigate further', color: '#388E3C', textColor: '#FFFFFF' };
+
+// Layout constants
+let nodeW = 200;
+let diamondSize = 70;
+let outcomeW = 180;
+let outcomeH = 50;
+let startH = 36;
+let verticalSpacing;
+let flowchartTop = 52;
+let flowchartCenterX;
+let outcomeOffsetX;
+
+// Reset button
+let resetBtn;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+    flowchartCenterX = canvasWidth * 0.42;
+    outcomeOffsetX = 170;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+
+    // Start with the first question highlighted
+    activeQuestion = 0;
+    currentPath = [0];
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Skeptical Inquiry Flowchart", canvasWidth / 2, 10);
+
+    // Subtitle
+    textSize(11);
+    textStyle(ITALIC);
+    fill('#666');
+    text("Click a question node to reveal Yes/No paths", canvasWidth / 2, 32);
+
+    // Compute layout
+    let numQuestions = questions.length;
+    let totalFlowHeight = drawHeight - flowchartTop - 20;
+    verticalSpacing = totalFlowHeight / (numQuestions + 1); // +1 for start + final outcome
+    if (verticalSpacing > 90) verticalSpacing = 90;
+
+    nodePositions = [];
+
+    // Start node
+    let startY = flowchartTop + 10;
+    let startNode = { x: flowchartCenterX, y: startY, w: 180, h: startH, type: 'start' };
+    nodePositions.push(startNode);
+
+    // Draw start node
+    fill('#3F51B5');
+    stroke('#283593');
+    strokeWeight(2);
+    rectMode(CENTER);
+    rect(startNode.x, startNode.y, startNode.w, startNode.h, 18);
+    fill('#FFFFFF');
+    noStroke();
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Evaluate a QC Claim", startNode.x, startNode.y);
+    rectMode(CORNER);
+
+    // Draw questions and outcomes
+    for (let i = 0; i < numQuestions; i++) {
+        let cy = flowchartTop + 10 + (i + 1) * verticalSpacing;
+        let qNode = { x: flowchartCenterX, y: cy, w: diamondSize, h: diamondSize, type: 'question', index: i };
+        nodePositions.push(qNode);
+
+        let isOnPath = currentPath.indexOf(i) >= 0;
+        let isActive = (activeQuestion === i);
+        let isAnswered = answeredNodes[i] !== undefined;
+
+        // Connector from previous node
+        let prevY;
+        if (i === 0) {
+            prevY = startNode.y + startNode.h / 2;
+        } else {
+            prevY = flowchartTop + 10 + i * verticalSpacing + diamondSize / 2;
+        }
+        let topOfDiamond = cy - diamondSize / 2;
+
+        // Draw connector line
+        if (isOnPath || i === 0) {
+            stroke('#3F51B5');
+            strokeWeight(2);
+        } else {
+            stroke('#BDBDBD');
+            strokeWeight(1);
+        }
+        line(flowchartCenterX, prevY, flowchartCenterX, topOfDiamond);
+        // Arrow head
+        let arrowY = topOfDiamond;
+        fill(isOnPath || i === 0 ? '#3F51B5' : '#BDBDBD');
+        noStroke();
+        triangle(flowchartCenterX - 5, arrowY - 8, flowchartCenterX + 5, arrowY - 8, flowchartCenterX, arrowY);
+
+        // Draw diamond
+        let dFill = '#E8EAF6'; // light indigo
+        let dStroke = '#3F51B5';
+        let dStrokeW = 1;
+        if (isActive) {
+            dFill = '#C5CAE9';
+            dStroke = '#1A237E';
+            dStrokeW = 3;
+        } else if (isOnPath) {
+            dFill = '#E8EAF6';
+            dStroke = '#3F51B5';
+            dStrokeW = 2;
+        } else {
+            dFill = '#F5F5F5';
+            dStroke = '#BDBDBD';
+            dStrokeW = 1;
+        }
+
+        fill(dFill);
+        stroke(dStroke);
+        strokeWeight(dStrokeW);
+        drawDiamond(flowchartCenterX, cy, diamondSize + 40, diamondSize);
+
+        // Question text
+        fill(isOnPath || isActive ? '#1A237E' : '#757575');
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        let lines = questions[i].label.split('\n');
+        for (let li = 0; li < lines.length; li++) {
+            let ly = cy + (li - (lines.length - 1) / 2) * 12;
+            text(lines[li], flowchartCenterX, ly);
+        }
+
+        // Draw Yes/No labels and outcome if this question has been answered
+        if (isAnswered || isActive) {
+            // "Yes" label going down
+            let yesLabelY = cy + diamondSize / 2 + 10;
+            fill('#388E3C');
+            noStroke();
+            textSize(10);
+            textStyle(BOLD);
+            textAlign(CENTER, TOP);
+            if (answeredNodes[i] === 'yes') {
+                text("YES", flowchartCenterX, yesLabelY);
+            }
+
+            // "No" label going right
+            let noLabelX = flowchartCenterX + diamondSize / 2 + 30;
+            let noLabelY = cy;
+            if (answeredNodes[i] === 'no' || isActive) {
+                // Draw "No" connector line to outcome
+                stroke(answeredNodes[i] === 'no' ? '#D32F2F' : '#BDBDBD');
+                strokeWeight(answeredNodes[i] === 'no' ? 2 : 1);
+                let diamondRight = flowchartCenterX + (diamondSize + 40) / 2;
+                let outcomeLeft = flowchartCenterX + outcomeOffsetX - outcomeW / 2;
+                line(diamondRight, cy, outcomeLeft, cy);
+                // Arrow head
+                fill(answeredNodes[i] === 'no' ? '#D32F2F' : '#BDBDBD');
+                noStroke();
+                triangle(outcomeLeft, cy - 4, outcomeLeft, cy + 4, outcomeLeft + 6, cy);
+
+                // "No" label on the connector
+                fill(answeredNodes[i] === 'no' ? '#D32F2F' : '#999');
+                textSize(10);
+                textStyle(BOLD);
+                textAlign(CENTER, BOTTOM);
+                text("NO", (diamondRight + outcomeLeft) / 2, cy - 4);
+            }
+
+            // Draw No outcome box
+            if (answeredNodes[i] === 'no' || isActive) {
+                let oc = noOutcomes[i];
+                let ocX = flowchartCenterX + outcomeOffsetX;
+                let ocY = cy;
+                let ocNode = { x: ocX, y: ocY, w: outcomeW, h: outcomeH, type: 'outcome', index: i };
+
+                let isNoAnswer = answeredNodes[i] === 'no';
+                fill(isNoAnswer ? oc.color : '#F5F5F5');
+                stroke(isNoAnswer ? oc.color : '#BDBDBD');
+                strokeWeight(isNoAnswer ? 2 : 1);
+                rectMode(CENTER);
+                rect(ocX, ocY, outcomeW, outcomeH, 10);
+
+                fill(isNoAnswer ? oc.textColor : '#999');
+                noStroke();
+                textSize(10);
+                textAlign(CENTER, CENTER);
+                textStyle(BOLD);
+                let ocLines = oc.label.split('\n');
+                for (let li = 0; li < ocLines.length; li++) {
+                    let ly = ocY + (li - (ocLines.length - 1) / 2) * 13;
+                    text(ocLines[li], ocX, ly);
+                }
+                rectMode(CORNER);
+            }
+
+            // Draw "Yes" going down label
+            if (answeredNodes[i] === 'yes') {
+                fill('#388E3C');
+                noStroke();
+                textSize(10);
+                textStyle(BOLD);
+                textAlign(LEFT, CENTER);
+                text("YES", flowchartCenterX + 6, cy + diamondSize / 2 + 6);
+            }
+        }
+
+        // If this is the last question and answered yes, draw the green outcome
+        if (i === numQuestions - 1 && answeredNodes[i] === 'yes') {
+            let finalY = cy + verticalSpacing * 0.7;
+            // Connector
+            stroke('#388E3C');
+            strokeWeight(2);
+            line(flowchartCenterX, cy + diamondSize / 2, flowchartCenterX, finalY - outcomeH / 2);
+            // Arrow
+            fill('#388E3C');
+            noStroke();
+            triangle(flowchartCenterX - 5, finalY - outcomeH / 2 - 6,
+                     flowchartCenterX + 5, finalY - outcomeH / 2 - 6,
+                     flowchartCenterX, finalY - outcomeH / 2);
+
+            // Green outcome box
+            fill(yesOutcome.color);
+            stroke('#2E7D32');
+            strokeWeight(2);
+            rectMode(CENTER);
+            rect(flowchartCenterX, finalY, outcomeW + 20, outcomeH, 10);
+
+            fill(yesOutcome.textColor);
+            noStroke();
+            textSize(11);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            let ycLines = yesOutcome.label.split('\n');
+            for (let li = 0; li < ycLines.length; li++) {
+                let ly = finalY + (li - (ycLines.length - 1) / 2) * 14;
+                text(ycLines[li], flowchartCenterX, ly);
+            }
+            rectMode(CORNER);
+        }
+    }
+
+    // Draw reset button in control area
+    let btnW = 80;
+    let btnH = 30;
+    let btnX = canvasWidth / 2 - btnW / 2;
+    let btnY = drawHeight + (controlHeight - btnH) / 2;
+
+    fill('#3F51B5');
+    stroke('#283593');
+    strokeWeight(1);
+    rect(btnX, btnY, btnW, btnH, 6);
+    fill('#FFFFFF');
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Reset", btnX + btnW / 2, btnY + btnH / 2);
+
+    // Store reset button position for click detection
+    nodePositions.push({ x: btnX + btnW / 2, y: btnY + btnH / 2, w: btnW, h: btnH, type: 'reset' });
+
+    // Instructions
+    fill('#888');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(ITALIC);
+    text("Click a question diamond to answer Yes or No", margin, drawHeight + controlHeight / 2);
+
+    textAlign(RIGHT, CENTER);
+    text("Click right side = No, left/below = Yes", canvasWidth - margin, drawHeight + controlHeight / 2);
+}
+
+function drawDiamond(cx, cy, dw, dh) {
+    beginShape();
+    vertex(cx, cy - dh / 2);       // top
+    vertex(cx + dw / 2, cy);       // right
+    vertex(cx, cy + dh / 2);       // bottom
+    vertex(cx - dw / 2, cy);       // left
+    endShape(CLOSE);
+}
+
+function mousePressed() {
+    // Check reset button
+    for (let n of nodePositions) {
+        if (n.type === 'reset') {
+            if (mouseX >= n.x - n.w / 2 && mouseX <= n.x + n.w / 2 &&
+                mouseY >= n.y - n.h / 2 && mouseY <= n.y + n.h / 2) {
+                activeQuestion = 0;
+                currentPath = [0];
+                answeredNodes = {};
+                redraw();
+                return;
+            }
+        }
+    }
+
+    // Check if clicking on the active question diamond
+    if (activeQuestion >= 0 && activeQuestion < questions.length) {
+        let qIndex = activeQuestion;
+        let cy = flowchartTop + 10 + (qIndex + 1) * verticalSpacing;
+        let cx = flowchartCenterX;
+
+        // Check if click is within the diamond area (use bounding box)
+        let dw = diamondSize + 40;
+        let dh = diamondSize;
+        if (mouseX >= cx - dw / 2 - 10 && mouseX <= cx + dw / 2 + 10 &&
+            mouseY >= cy - dh / 2 - 10 && mouseY <= cy + dh / 2 + 10) {
+
+            // Determine yes or no based on click position relative to diamond center
+            // Right side of diamond center = No, Left side or below = Yes
+            if (mouseX > cx + 10) {
+                // Answer: No
+                answeredNodes[qIndex] = 'no';
+                // Path ends here
+                activeQuestion = -1;
+            } else {
+                // Answer: Yes
+                answeredNodes[qIndex] = 'yes';
+                if (qIndex < questions.length - 1) {
+                    activeQuestion = qIndex + 1;
+                    currentPath.push(qIndex + 1);
+                } else {
+                    activeQuestion = -1; // completed
+                }
+            }
+            redraw();
+            return;
+        }
+    }
+
+    // Allow clicking on previously answered questions to re-answer from that point
+    for (let i = 0; i < questions.length; i++) {
+        let cy = flowchartTop + 10 + (i + 1) * verticalSpacing;
+        let cx = flowchartCenterX;
+        let dw = diamondSize + 40;
+        let dh = diamondSize;
+
+        if (mouseX >= cx - dw / 2 - 10 && mouseX <= cx + dw / 2 + 10 &&
+            mouseY >= cy - dh / 2 - 10 && mouseY <= cy + dh / 2 + 10) {
+            // Reset from this point forward
+            for (let j = i; j < questions.length; j++) {
+                delete answeredNodes[j];
+            }
+            activeQuestion = i;
+            currentPath = [];
+            for (let j = 0; j <= i; j++) {
+                currentPath.push(j);
+            }
+            redraw();
+            return;
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

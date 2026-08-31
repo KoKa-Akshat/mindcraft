@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Fermentation Pathways Comparison using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Fermentation Pathways Comparison MicroSim (p5.js)
+// Interactive comparison of lactic acid and alcoholic fermentation with animation, oxygen-mode toggle, and organism fun facts.
+
+let containerWidth;
+let canvasWidth = 760;
+const drawHeight = 680;
+const controlHeight = 180;
+const canvasHeight = drawHeight + controlHeight;
+const margin = 24;
+const columnGap = 18;
+let layout = null;
+
+let startButton;
+let resetButton;
+let prevButton;
+let nextButton;
+let focusSelect;
+let modeSelect;
+let delaySlider;
+
+let isRunning = false;
+let currentStep = 0;
+let lastStepChangedAt = 0;
+let autoDelay = 2000;
+let focusMode = 'lactic';
+let environmentMode = 'anaerobic';
+let funFactText = 'Click any organism icon to learn how it uses fermentation.';
+let selectedOrganism = null;
+let organismHitboxes = [];
+
+const lacticStages = [
+  { key: 'glucose', label: 'Glucose (C6H12O6)', detail: 'Fuel enters cytosol', color: '#fde4ef' },
+  { key: 'glycolysis', label: 'Glycolysis', detail: 'Nets 2 ATP + 2 NADH', color: '#fff4da' },
+  { key: 'pyruvate', label: '2 Pyruvate + 2 NADH', detail: 'End of glycolysis', color: '#fffde8' },
+  { key: 'lactate', label: 'Lactate formation', detail: 'NADH -> NAD+', color: '#f9e0ff' }
+];
+
+const alcoholicStages = [
+  { key: 'glucose', label: 'Glucose feedstock', detail: 'Stored sugars or starch', color: '#eafbe5' },
+  { key: 'glycolysis', label: 'Glycolysis', detail: '2 ATP + 2 NADH', color: '#f1ffe7' },
+  { key: 'pyruvate', label: '2 Pyruvate + CO2 potential', detail: 'Branch point', color: '#f8ffef' },
+  { key: 'acetaldehyde', label: 'Acetaldehyde + CO2', detail: 'Pyruvate decarboxylase', color: '#e3f8d8' },
+  { key: 'ethanol', label: 'Ethanol production', detail: 'NADH -> NAD+', color: '#d4f3c4' }
+];
+
+const organismData = [
+  { name: 'Muscle Cells', panel: 'lactic', fact: 'Fast-twitch muscle fibers convert pyruvate to lactate during all-out sprints.', color: '#e6537c' },
+  { name: 'Red Blood Cells', panel: 'lactic', fact: 'Red blood cells lack mitochondria, so fermentation is their only ATP source.', color: '#c5299b' },
+  { name: 'Lactobacillus', panel: 'lactic', fact: 'Lactobacillus bacteria acidify yogurt and sauerkraut via lactic fermentation.', color: '#f28f3b' },
+  { name: 'Baker\'s Yeast', panel: 'alcoholic', fact: 'Saccharomyces cerevisiae makes CO2 bubbles that make bread dough rise.', color: '#2a9d8f' },
+  { name: 'Brewer\'s Yeast', panel: 'alcoholic', fact: 'Brewers capture ethanol and CO2 generated during fermentation tanks.', color: '#287271' },
+  { name: 'Flooded Plant Tissue', panel: 'alcoholic', fact: 'Roots in waterlogged soil ferment to survive until oxygen diffuses back in.', color: '#90be6d' }
+];
+
+const highlightColors = {
+  lactic: '#e33973',
+  alcoholic: '#1c9b6b'
+};
+
+const stepSequence = [
+  {
+    title: '1. Glycolysis splits glucose into pyruvate',
+    description: 'Both pathways begin with glycolysis, yielding two pyruvate molecules, 2 NADH, and a net of 2 ATP.',
+    highlight: {
+      lactic: ['glucose', 'glycolysis', 'pyruvate'],
+      alcoholic: ['glucose', 'glycolysis', 'pyruvate']
+    },
+    pathSegments: [
+      { panel: 'lactic', from: 'glucose', to: 'pyruvate', color: highlightColors.lactic },
+      { panel: 'alcoholic', from: 'glucose', to: 'pyruvate', color: highlightColors.alcoholic }
+    ]
+  },
+  {
+    title: '2. Lactic fermentation reduces pyruvate',
+    description: 'NADH donates electrons directly to pyruvate, producing lactate and regenerating NAD+.',
+    highlight: { lactic: ['pyruvate', 'lactate'] },
+    pathSegments: [{ panel: 'lactic', from: 'pyruvate', to: 'lactate', color: highlightColors.lactic }]
+  },
+  {
+    title: '3. Lactate leaves the tissue as waste',
+    description: 'Muscle cells, red blood cells, and Lactobacillus export lactate until oxygen returns.',
+    highlight: { lactic: ['waste', 'organisms'] }
+  },
+  {
+    title: '4. Alcoholic fermentation removes CO2 first',
+    description: 'Yeast split pyruvate into acetaldehyde and CO2 before the final reduction step.',
+    highlight: { alcoholic: ['pyruvate', 'acetaldehyde'] },
+    pathSegments: [{ panel: 'alcoholic', from: 'pyruvate', to: 'acetaldehyde', color: highlightColors.alcoholic }]
+  },
+  {
+    title: '5. Ethanol forms as NADH is oxidized',
+    description: 'Acetaldehyde accepts electrons from NADH, creating ethanol and recycled NAD+ for glycolysis.',
+    highlight: { alcoholic: ['acetaldehyde', 'ethanol'] },
+    pathSegments: [{ panel: 'alcoholic', from: 'acetaldehyde', to: 'ethanol', color: highlightColors.alcoholic }]
+  },
+  {
+    title: '6. Yeast and plants rely on alcoholic fermentation',
+    description: 'Bread yeast, brewers, and flooded plant tissues keep glycolysis alive when oxygen is scarce.',
+    highlight: { alcoholic: ['organisms'] }
+  },
+  {
+    title: '7. Regenerated NAD+ feeds glycolysis again',
+    description: 'The regenerated NAD+ loops back to glycolysis in both pathways-otherwise ATP production would stop.',
+    highlight: { lactic: ['glycolysis'], alcoholic: ['glycolysis'], central: ['nadBadge'] }
+  },
+  {
+    title: '8. ATP yield stays at just 2 per glucose',
+    description: 'Fermentation buys time by sustaining the 2 ATP from glycolysis-no extra ATP is added without oxygen.',
+    highlight: { lactic: ['atp'], alcoholic: ['atp'], central: ['summary'] }
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  const mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  startButton = createButton('Start Simulation');
+  startButton.mousePressed(toggleSimulation);
+
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetSimulation);
+
+  prevButton = createButton('Previous Step');
+  prevButton.mousePressed(stepBackward);
+
+  nextButton = createButton('Next Step');
+  nextButton.mousePressed(stepForward);
+
+  focusSelect = createSelect();
+  focusSelect.option('Lactic Pathway Only', 'lactic');
+  focusSelect.option('Show Both Pathways', 'both');
+  focusSelect.option('Alcoholic Pathway Only', 'alcoholic');
+  focusSelect.changed(() => {
+    focusMode = focusSelect.value();
+  });
+  focusSelect.selected(focusMode);
+
+  modeSelect = createSelect();
+  modeSelect.option('Anaerobic (O2 scarce)', 'anaerobic');
+  modeSelect.option('Aerobic (O2 plentiful)', 'aerobic');
+  modeSelect.changed(() => {
+    environmentMode = modeSelect.value();
+  });
+
+  delaySlider = createSlider(1000, 4000, autoDelay, 100);
+  delaySlider.input(() => {
+    autoDelay = delaySlider.value();
+  });
+
+  updateControlPositions();
+  updateStartButtonLabel();
+  describe('Interactive Fermentation Pathways MicroSim with animation, organism fun facts, and oxygen mode toggle.', LABEL);
+  lastStepChangedAt = millis();
+}
+
+function draw() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight, true);
+  layout = computeLayout();
+  organismHitboxes = [];
+
+  background(255);
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  const now = millis();
+  if (isRunning && now - lastStepChangedAt >= autoDelay) {
+    const before = currentStep;
+    stepForward();
+    if (before === currentStep) {
+      stopSimulation();
+    }
+  }
+
+  drawTitle();
+  drawModeStrip();
+  drawPanels();
+  drawCentralColumn();
+  drawStepNarration();
+  drawFunFactArea();
+  drawControlLabels();
+}
+
+function drawTitle() {
+  textAlign(CENTER, TOP);
+  noStroke();
+  fill('#102a43');
+  textSize(30);
+  text('Fermentation Pathways Comparison', canvasWidth / 2, margin);
+  textSize(15);
+  fill('#1f4b99');
+  text('Trace electrons and NAD+ recycling in lactic acid vs alcoholic fermentation', canvasWidth / 2, margin + 36);
+}
+
+function drawModeStrip() {
+  const strip = layout.modeStrip;
+  const isAnaerobic = environmentMode === 'anaerobic';
+  fill(isAnaerobic ? '#e3f2ff' : '#f0f4f8');
+  stroke('#8aa5c2');
+  rect(strip.x, strip.y, strip.width, strip.height, 10);
+
+  noStroke();
+  fill('#0f1f2f');
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  const status = isAnaerobic ? 'Anaerobic - ETC is blocked, so fermentation is essential.' : 'Aerobic - ETC is active, fermentation slows.';
+  text(status, strip.x + 16, strip.y + strip.height / 2 - 8);
+  textSize(13);
+  fill('#41546f');
+  text('Use the control toggle to change oxygen availability. The strip mirrors that choice visually.', strip.x + 16, strip.y + strip.height / 2 + 12);
+
+  // ETC indicator box
+  const etcWidth = 200;
+  const etcHeight = strip.height - 16;
+  const etcX = strip.x + strip.width - etcWidth - 16;
+  const etcY = strip.y + 8;
+  stroke(isAnaerobic ? '#c53030' : '#2f855a');
+  strokeWeight(2);
+  fill(isAnaerobic ? 'rgba(255, 245, 245, 0.9)' : 'rgba(232, 255, 238, 0.9)');
+  rect(etcX, etcY, etcWidth, etcHeight, 8);
+  noStroke();
+  fill(isAnaerobic ? '#9b2c2c' : '#22543d');
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text(isAnaerobic ? 'Electron Transport Chain: X (stalled)' : 'Electron Transport Chain: OK active', etcX + etcWidth / 2, etcY + etcHeight / 2 - 6);
+  textSize(12);
+  fill('#234e52');
+  text(isAnaerobic ? 'Cells must recycle NAD+ by fermentation.' : 'O2 allows NADH to unload in mitochondria.', etcX + etcWidth / 2, etcY + etcHeight / 2 + 12);
+}
+
+function drawPanels() {
+  const step = stepSequence[currentStep];
+  const localProgress = constrain((millis() - lastStepChangedAt) / 1200, 0, 1);
+  const lacticHighlights = step.highlight?.lactic || [];
+  const alcoholicHighlights = step.highlight?.alcoholic || [];
+  const segments = step.pathSegments || [];
+
+  drawPathwayPanel('lactic', layout.lacticPanel, lacticStages, lacticHighlights, segments, localProgress);
+  drawPathwayPanel('alcoholic', layout.alcoholicPanel, alcoholicStages, alcoholicHighlights, segments, localProgress);
+}
+
+function drawPathwayPanel(panelName, area, stageData, highlightKeys, segments, stepProgress) {
+  const highlightSet = new Set(highlightKeys);
+  const isDimmed = (focusMode !== 'both' && focusMode !== panelName) || environmentMode === 'aerobic';
+  const baseColor = panelName === 'lactic' ? color(252, 232, 241) : color(229, 248, 235);
+  baseColor.setAlpha(isDimmed ? 150 : 230);
+  noStroke();
+  fill(baseColor);
+  rect(area.x, area.y, area.width, area.height, 18);
+
+  const headerColor = panelName === 'lactic' ? '#c01a5b' : '#0f8a4b';
+  fill(headerColor);
+  textAlign(LEFT, TOP);
+  textSize(16);
+  const title = panelName === 'lactic' ? 'Lactic Acid Fermentation' : 'Alcoholic Fermentation';
+  text(title, area.x + 14, area.y + 8);
+  textSize(12);
+  fill('#1f1f1f');
+  text(panelName === 'lactic' ? 'Occurs in muscle cells, RBCs, Lactobacillus' : 'Occurs in yeast & plant tissues', area.x + 14, area.y + 26);
+
+  const innerPadding = 16;
+  const reservedSpace = 50;
+  const stageBoxHeight = 28;
+  const stageAreaHeight = area.height - innerPadding * 2 - reservedSpace;
+  const stageCount = stageData.length;
+  const spacing = stageCount > 1 ? (stageAreaHeight - stageBoxHeight * stageCount) / (stageCount - 1) : 0;
+  const nodes = {};
+
+  let currentY = area.y + innerPadding;
+  stroke('#4a4a4a');
+  strokeWeight(1);
+
+  for (const stage of stageData) {
+    const x = area.x + innerPadding;
+    const width = area.width - innerPadding * 2;
+    const isHighlighted = highlightSet.has(stage.key);
+    const stageColor = color(stage.color);
+    stageColor.setAlpha(isHighlighted ? 255 : isDimmed ? 120 : 200);
+    fill(stageColor);
+    rect(x, currentY, width, stageBoxHeight, 8);
+    nodes[stage.key] = {
+      centerX: x + width / 2,
+      top: currentY,
+      bottom: currentY + stageBoxHeight,
+      left: x,
+      width,
+      height: stageBoxHeight
+    };
+    noStroke();
+    fill('#111827');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(stage.label, nodes[stage.key].centerX, currentY + 10);
+    textSize(10);
+    fill('#3d3d3d');
+    text(stage.detail, nodes[stage.key].centerX, currentY + stageBoxHeight - 7);
+    currentY += stageBoxHeight + spacing;
+    stroke('#4a4a4a');
+  }
+
+  stroke('#5a5a5a');
+  strokeWeight(2);
+  for (let i = 0; i < stageData.length - 1; i++) {
+    const currentKey = stageData[i].key;
+    const nextKey = stageData[i + 1].key;
+    const start = nodes[currentKey];
+    const end = nodes[nextKey];
+    drawArrow(start.centerX, start.bottom, end.centerX, end.top, '#5a5a5a');
+  }
+
+  segments
+    .filter((segment) => segment.panel === panelName)
+    .forEach((segment) => {
+      const start = nodes[segment.from];
+      const end = nodes[segment.to];
+      if (!start || !end) return;
+      const sx = start.centerX;
+      const sy = start.bottom;
+      const ex = end.centerX;
+      const ey = end.top;
+      const progressX = lerp(sx, ex, stepProgress);
+      const progressY = lerp(sy, ey, stepProgress);
+      stroke(segment.color);
+      strokeWeight(3);
+      drawArrow(sx, sy, ex, ey, segment.color);
+      fill(segment.color);
+      noStroke();
+      circle(progressX, progressY, 10);
+    });
+
+  const nadColor = panelName === 'lactic' ? '#be185d' : '#0c8b53';
+  stroke(nadColor);
+  strokeWeight(2.2);
+  noFill();
+  const pyruvateNode = nodes['pyruvate'];
+  const reductionTarget = panelName === 'lactic' ? nodes['lactate'] : nodes['ethanol'];
+  if (pyruvateNode && reductionTarget) {
+    const rightX = area.x + area.width - 20;
+    bezier(
+      pyruvateNode.centerX + 40,
+      pyruvateNode.bottom - 10,
+      rightX,
+      pyruvateNode.bottom - 30,
+      rightX,
+      reductionTarget.top + 10,
+      reductionTarget.centerX + 40,
+      reductionTarget.top + 10
+    );
+    noStroke();
+    fill(nadColor);
+    textAlign(RIGHT, CENTER);
+    textSize(12);
+    text('NADH -> NAD+', rightX, (pyruvateNode.bottom + reductionTarget.top) / 2);
+  }
+
+  if (panelName === 'alcoholic') {
+    const acetaldehydeNode = nodes['acetaldehyde'];
+    const pyroNode = nodes['pyruvate'];
+    if (acetaldehydeNode && pyroNode) {
+      noFill();
+      stroke('#b45309');
+      strokeWeight(1.5);
+      for (let i = 0; i < 3; i++) {
+        const bx = acetaldehydeNode.centerX - 70 - i * 14;
+        const by = lerp(pyroNode.bottom, acetaldehydeNode.top, 0.2 + i * 0.2);
+        circle(bx, by, 10 + i * 2);
+      }
+      noStroke();
+      fill('#92400e');
+      textSize(11);
+      textAlign(LEFT, CENTER);
+      text('CO2 released', acetaldehydeNode.centerX - 120, pyroNode.bottom - 4);
+    }
+  }
+
+  const badgeWidth = area.width - 40;
+  const atpY = area.y + area.height - 92;
+  const atpHighlight = highlightSet.has('atp');
+  fill(atpHighlight ? '#ffb703' : '#ffe3a3');
+  stroke('#a16207');
+  rect(area.x + 20, atpY, badgeWidth, 32, 10);
+  noStroke();
+  fill('#3c2903');
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text(`Net ATP = 2 (from glycolysis only)`, area.x + area.width / 2, atpY + 10);
+  textSize(10);
+  fill('#53340d');
+  text(panelName === 'lactic' ? 'Emergency ATP for sprinting tissues' : 'Keeps yeast & plants alive temporarily', area.x + area.width / 2, atpY + 24);
+
+  const wasteY = area.y + area.height - 52;
+  const wasteLabel = panelName === 'lactic' ? 'Waste product: Lactate (C3H5O3-)' : 'Waste products: Ethanol + CO2 bubbles';
+  fill(highlightSet.has('waste') ? '#fed7aa' : '#fff7ed');
+  stroke('#dd6b20');
+  rect(area.x + 20, wasteY - 10, badgeWidth, 22, 8);
+  noStroke();
+  fill('#7c2d12');
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  text(wasteLabel, area.x + area.width / 2, wasteY + 1);
+
+  const panelOrganisms = organismData.filter((org) => org.panel === panelName);
+  const iconY = area.y + area.height - 12;
+  const spacingX = area.width / (panelOrganisms.length + 1);
+  textAlign(CENTER, BOTTOM);
+  textSize(11);
+  fill('#1f2937');
+  text('Organisms depending on this pathway', area.x + area.width / 2, iconY - 26);
+  const highlightOrganisms = highlightSet.has('organisms');
+
+  panelOrganisms.forEach((org, index) => {
+    const iconX = area.x + spacingX * (index + 1);
+    const iconWidth = 76;
+    const iconHeight = 24;
+    const isSelected = selectedOrganism === org.name;
+    stroke(isSelected ? '#d97706' : highlightOrganisms ? '#f97316' : '#0f172a');
+    strokeWeight(isSelected ? 2.4 : highlightOrganisms ? 2 : 1);
+    fill(org.color);
+    rect(iconX - iconWidth / 2, iconY - iconHeight, iconWidth, iconHeight, 8);
+    noStroke();
+    fill(isSelected ? '#1f2937' : '#ffffff');
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(org.name, iconX, iconY - iconHeight / 2);
+    organismHitboxes.push({
+      name: org.name,
+      fact: org.fact,
+      x: iconX - iconWidth / 2,
+      y: iconY - iconHeight,
+      width: iconWidth,
+      height: iconHeight
+    });
+  });
+}
+
+function drawCentralColumn() {
+  const column = layout.centralColumn;
+  stroke('#805ad5');
+  strokeWeight(1.5);
+  fill('#f4ecff');
+  rect(column.x, column.y, column.width, column.height, 18);
+
+  noStroke();
+  fill('#5a189a');
+  textAlign(CENTER, TOP);
+  textSize(16);
+  text('NAD+ Regeneration Hub', column.x + column.width / 2, column.y + 12);
+  textSize(12);
+  fill('#3f3d56');
+  text('Purpose: keep glycolysis fed with oxidized NAD+ so ATP keeps flowing.', column.x + column.width / 2, column.y + 36);
+
+  const circleX = column.x + column.width / 2;
+  const circleY = column.y + column.height / 2 - 8;
+  const circleRadius = Math.min(column.width, column.height) * 0.35;
+  stroke('#5a189a');
+  strokeWeight(3);
+  noFill();
+  circle(circleX, circleY, circleRadius * 2);
+  noStroke();
+  fill('#5a189a');
+  textSize(13);
+  textAlign(CENTER, CENTER);
+  text('NADH <-> NAD+', circleX, circleY);
+
+  textSize(12);
+  fill('#2d3748');
+  text('Both pathways ship NAD+ back to glycolysis.', column.x + column.width / 2, circleY + 60);
+
+  const step = stepSequence[currentStep];
+  const centralHighlights = step.highlight?.central || [];
+  if (centralHighlights.includes('nadBadge')) {
+    stroke('#f97316');
+    strokeWeight(3);
+    noFill();
+    circle(circleX, circleY, circleRadius * 2 + 20);
+  }
+  if (centralHighlights.includes('summary')) {
+    noStroke();
+    fill('#f97316');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text('Fermentation = survival mode -> 2 ATP until oxygen returns', column.x + column.width / 2, column.y + column.height - 20);
+  }
+}
+
+function drawStepNarration() {
+  const area = layout.stepArea;
+  stroke('#d38b15');
+  strokeWeight(1);
+  fill('#fff3da');
+  rect(area.x, area.y, area.width, area.height, 16);
+
+  const step = stepSequence[currentStep];
+  textAlign(LEFT, TOP);
+  noStroke();
+  fill('#7a341a');
+  textSize(16);
+  text(step.title, area.x + 16, area.y + 12);
+  textSize(13);
+  fill('#3b2f2f');
+  text(step.description, area.x + 16, area.y + 36, area.width - 32, area.height - 40);
+
+  const progress = (currentStep + 1) / stepSequence.length;
+  const barY = area.y + area.height - 16;
+  const barWidth = area.width - 32;
+  noStroke();
+  fill('#fbd38d');
+  rect(area.x + 16, barY, barWidth, 6, 4);
+  fill('#f97316');
+  rect(area.x + 16, barY, barWidth * progress, 6, 4);
+  fill('#7b341f');
+  textAlign(RIGHT, BOTTOM);
+  textSize(12);
+  text(`Step ${currentStep + 1} of ${stepSequence.length}`, area.x + area.width - 18, area.y + area.height - 18);
+}
+
+function drawFunFactArea() {
+  const area = layout.funFactArea;
+  stroke('#94a3b8');
+  strokeWeight(1);
+  fill('#f8fbff');
+  rect(area.x, area.y, area.width, area.height, 14);
+
+  noStroke();
+  fill('#0f172a');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('Fun Fact / Legend', area.x + 16, area.y + 10);
+  textSize(12);
+  fill('#1e293b');
+  text(funFactText, area.x + 16, area.y + 30, area.width - 32, area.height - 30);
+
+  // Legend for highlight colors
+  const legendY = area.y + area.height - 20;
+  drawLegendSwatch(area.x + 16, legendY, highlightColors.lactic, 'Lactic highlight');
+  drawLegendSwatch(area.x + 180, legendY, highlightColors.alcoholic, 'Alcoholic highlight');
+  drawLegendSwatch(area.x + 360, legendY, '#be185d', 'NADH arc');
+}
+
+function drawLegendSwatch(x, y, swatchColor, label) {
+  fill(swatchColor);
+  stroke('#1f2937');
+  rect(x, y - 10, 20, 12, 3);
+  noStroke();
+  fill('#0f172a');
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  text(label, x + 26, y - 4);
+}
+
+function drawControlLabels() {
+  fill('#0f172a');
+  textAlign(LEFT, TOP);
+  textSize(13);
+  const baseY = drawHeight + 64;
+  text('Pathway focus', margin, baseY);
+  text('Oxygen mode', margin + 260, baseY);
+
+  const sliderY = drawHeight + 116;
+  text('Auto Step Delay (seconds)', margin, sliderY);
+  const seconds = (delaySlider.value() / 1000).toFixed(1);
+  textAlign(RIGHT, TOP);
+  text(`${seconds} s`, canvasWidth - margin, sliderY);
+
+  textAlign(LEFT, TOP);
+  textSize(12);
+  fill('#475569');
+  const status = isRunning ? 'Status: Running (auto-advance on)' : 'Status: Paused';
+  text(status, margin, drawHeight + controlHeight - 26);
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  if (isRunning && currentStep === stepSequence.length - 1) {
+    currentStep = 0;
+  }
+  lastStepChangedAt = millis();
+  updateStartButtonLabel();
+}
+
+function resetSimulation() {
+  stopSimulation();
+  currentStep = 0;
+  lastStepChangedAt = millis();
+  focusMode = 'lactic';
+  focusSelect.selected('lactic');
+  environmentMode = 'anaerobic';
+  modeSelect.value('anaerobic');
+  selectedOrganism = null;
+  funFactText = 'Click any organism icon to learn how it uses fermentation.';
+}
+
+function stopSimulation() {
+  isRunning = false;
+  updateStartButtonLabel();
+}
+
+function stepForward() {
+  if (currentStep < stepSequence.length - 1) {
+    currentStep += 1;
+    lastStepChangedAt = millis();
+  } else {
+    stopSimulation();
+  }
+}
+
+function stepBackward() {
+  if (currentStep > 0) {
+    currentStep -= 1;
+    lastStepChangedAt = millis();
+  }
+}
+
+function updateStartButtonLabel() {
+  if (!startButton) return;
+  startButton.html(isRunning ? 'Pause Simulation' : 'Start Simulation');
+}
+
+function drawArrow(x1, y1, x2, y2, strokeColor) {
+  stroke(strokeColor);
+  line(x1, y1, x2, y2);
+  const angle = atan2(y2 - y1, x2 - x1);
+  push();
+  translate(x2, y2);
+  rotate(angle);
+  fill(strokeColor);
+  noStroke();
+  triangle(-8, -5, 0, 0, -8, 5);
+  pop();
+}
+
+function updateControlPositions() {
+  const rowY = drawHeight + 20;
+  startButton.position(margin, rowY);
+  startButton.size(150, 36);
+
+  resetButton.position(margin + 160, rowY);
+  resetButton.size(100, 36);
+
+  prevButton.position(margin + 280, rowY);
+  prevButton.size(140, 36);
+
+  nextButton.position(margin + 430, rowY);
+  nextButton.size(120, 36);
+
+  focusSelect.position(margin, rowY + 46);
+  focusSelect.size(220, 30);
+
+  modeSelect.position(margin + 260, rowY + 46);
+  modeSelect.size(220, 30);
+
+  delaySlider.position(margin, rowY + 100);
+  delaySlider.size(Math.max(160, canvasWidth - margin * 2 - 200));
+}
+
+function computeLayout() {
+  const availableWidth = canvasWidth - margin * 2;
+  const centralWidth = constrain(availableWidth * 0.18, 120, 190);
+  const sideWidth = (availableWidth - centralWidth - columnGap * 2) / 2;
+  const sectionGap = 12;
+  const titleHeight = 70;
+  const modeHeight = 50;
+  const stepHeight = 90;
+  const panelsHeight = 210 * 1.5;
+  const panelsTop = margin + titleHeight + sectionGap + modeHeight + sectionGap;
+  const stepY = panelsTop + panelsHeight + sectionGap;
+  const funFactY = stepY + stepHeight + sectionGap;
+  const remainingForFunFact = drawHeight - funFactY - margin;
+  const funFactHeight = max(60, remainingForFunFact);
+
+  return {
+    modeStrip: {
+      x: margin,
+      y: margin + titleHeight + sectionGap,
+      width: availableWidth,
+      height: modeHeight
+    },
+    lacticPanel: {
+      x: margin,
+      y: panelsTop,
+      width: sideWidth,
+      height: panelsHeight
+    },
+    centralColumn: {
+      x: margin + sideWidth + columnGap,
+      y: panelsTop,
+      width: centralWidth,
+      height: panelsHeight
+    },
+    alcoholicPanel: {
+      x: margin + sideWidth + columnGap + centralWidth + columnGap,
+      y: panelsTop,
+      width: sideWidth,
+      height: panelsHeight
+    },
+    stepArea: {
+      x: margin,
+      y: stepY,
+      width: availableWidth,
+      height: stepHeight
+    },
+    funFactArea: {
+      x: margin,
+      y: funFactY,
+      width: availableWidth,
+      height: funFactHeight
+    }
+  };
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (!container) return;
+  const bounds = container.getBoundingClientRect();
+  containerWidth = Math.floor(bounds.width);
+  canvasWidth = containerWidth;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight, true);
+  updateControlPositions();
+}
+
+function mousePressed() {
+  for (const hit of organismHitboxes) {
+    if (
+      mouseX >= hit.x &&
+      mouseX <= hit.x + hit.width &&
+      mouseY >= hit.y &&
+      mouseY <= hit.y + hit.height
+    ) {
+      selectedOrganism = hit.name;
+      funFactText = hit.fact;
+      stopSimulation();
+      return;
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

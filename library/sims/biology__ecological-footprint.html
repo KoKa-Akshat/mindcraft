@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Carbon Footprint of Common Foods</title>
+    <!-- CANVAS_HEIGHT: 880 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f1f8e9;
+            color: #212529;
+            padding: 12px;
+        }
+        #container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 14px 18px 18px 18px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 4px;
+            color: #2e7d32;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #control-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0 10px 0;
+            padding: 8px 10px;
+            background: #f7faf2;
+            border-radius: 6px;
+            border: 1px solid #e3ebd5;
+        }
+        #control-row label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        #view-select {
+            font-size: 13px;
+            padding: 4px 8px;
+            border: 1px solid #c5d4a8;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        .hint {
+            font-size: 11px;
+            color: #777;
+            font-style: italic;
+        }
+        #chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            margin: 0 auto;
+        }
+        #breakdown-panel {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #fff8e1;
+            border: 1px solid #f5d76e;
+            border-radius: 6px;
+            display: none;
+        }
+        #breakdown-panel.visible { display: block; }
+        #breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        #breakdown-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        #close-breakdown {
+            background: #f57c00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        #close-breakdown:hover { opacity: 0.9; }
+        #breakdown-wrap {
+            position: relative;
+            width: 100%;
+            height: 110px;
+        }
+        #breakdown-note {
+            font-size: 11px;
+            color: #666;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        #legend-note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #444;
+            text-align: center;
+        }
+        .legend-swatch {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin: 0 4px 0 10px;
+            vertical-align: middle;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+        .footnote {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Carbon Footprint of Common Foods</h1>
+        <div class="subtitle">Greenhouse-gas emissions (kg CO<sub>2</sub>e) and freshwater use (liters) per kilogram of food</div>
+
+        <div id="control-row">
+            <label for="view-select">Compare by:</label>
+            <select id="view-select">
+                <option value="kg">per kg of food</option>
+                <option value="protein">per 100 g protein</option>
+                <option value="calorie">per 100 Calories</option>
+            </select>
+            <span class="hint">Click any bar to see the emissions breakdown</span>
+        </div>
+
+        <div id="chart-wrap">
+            <canvas id="mainChart"></canvas>
+        </div>
+
+        <div id="legend-note">
+            <span class="legend-swatch" style="background:#f57c00"></span>CO<sub>2</sub>e (kg per unit)
+            <span class="legend-swatch" style="background:#1e88e5"></span>Water (×100 L per unit)
+        </div>
+
+        <div id="breakdown-panel">
+            <div id="breakdown-header">
+                <div id="breakdown-title">Breakdown</div>
+                <button id="close-breakdown">Close</button>
+            </div>
+            <div id="breakdown-wrap"><canvas id="breakdownChart"></canvas></div>
+            <div id="breakdown-note">Share of total CO<sub>2</sub>e emissions by life-cycle stage.</div>
+        </div>
+
+        <div class="footnote">
+            Sources: Poore &amp; Nemecek (2018) <em>Science</em>; Mekonnen &amp; Hoekstra (2012) water-footprint database. Values are global averages and vary by region and production method.
+        </div>
+    </div>
+
+<script>
+// ----- Data -------------------------------------------------------------
+// Sorted descending by CO2e/kg so beef is on top of horizontal bars.
+const foods = [
+    {
+        name: 'Beef (grass-fed)',
+        co2e: 60.0, water: 15000,
+        proteinG_per_kg: 260, kcal_per_kg: 2500,
+        // share of CO2e by stage: [land-use, farm, processing, transport, retail]
+        breakdown: [62, 30, 3, 3, 2]
+    },
+    {
+        name: 'Beef (feedlot)',
+        co2e: 27.0, water: 15400,
+        proteinG_per_kg: 260, kcal_per_kg: 2500,
+        breakdown: [30, 58, 5, 4, 3]
+    },
+    {
+        name: 'Lamb',
+        co2e: 24.0, water: 10400,
+        proteinG_per_kg: 250, kcal_per_kg: 2940,
+        breakdown: [28, 60, 4, 5, 3]
+    },
+    {
+        name: 'Cheese',
+        co2e: 13.0, water: 5000,
+        proteinG_per_kg: 250, kcal_per_kg: 4000,
+        breakdown: [18, 55, 18, 5, 4]
+    },
+    {
+        name: 'Chicken',
+        co2e: 6.0, water: 4300,
+        proteinG_per_kg: 270, kcal_per_kg: 1650,
+        breakdown: [14, 65, 10, 6, 5]
+    },
+    {
+        name: 'Farmed salmon',
+        co2e: 6.0, water: 2500,
+        proteinG_per_kg: 200, kcal_per_kg: 2080,
+        breakdown: [8, 60, 18, 9, 5]
+    },
+    {
+        name: 'Eggs',
+        co2e: 4.5, water: 3300,
+        proteinG_per_kg: 130, kcal_per_kg: 1550,
+        breakdown: [12, 62, 12, 8, 6]
+    },
+    {
+        name: 'Rice',
+        co2e: 3.5, water: 1670,
+        proteinG_per_kg: 70, kcal_per_kg: 3650,
+        breakdown: [6, 78, 6, 6, 4]
+    },
+    {
+        name: 'Tofu',
+        co2e: 2.0, water: 2200,
+        proteinG_per_kg: 80, kcal_per_kg: 760,
+        breakdown: [10, 50, 22, 12, 6]
+    },
+    {
+        name: 'Lentils',
+        co2e: 0.9, water: 1250,
+        proteinG_per_kg: 250, kcal_per_kg: 3530,
+        breakdown: [5, 65, 12, 12, 6]
+    },
+    {
+        name: 'Vegetables (avg)',
+        co2e: 0.4, water: 300,
+        proteinG_per_kg: 20, kcal_per_kg: 350,
+        breakdown: [3, 55, 14, 20, 8]
+    }
+];
+
+const stageNames = ['Land-use change', 'Farm practices', 'Processing', 'Transport', 'Retail'];
+const stageColors = ['#8d6e63', '#43a047', '#fb8c00', '#1e88e5', '#8e24aa'];
+
+// ----- Compute per-view values ------------------------------------------
+function computeValues(view) {
+    return foods.map(f => {
+        let co2e, water;
+        if (view === 'kg') {
+            co2e = f.co2e;            // kg CO2e per kg food
+            water = f.water;          // L per kg food
+        } else if (view === 'protein') {
+            // per 100 g protein
+            const factor = 100 / f.proteinG_per_kg; // kg of food per 100 g protein
+            co2e = f.co2e * factor;
+            water = f.water * factor;
+        } else { // calorie: per 100 kcal
+            const factor = 100 / f.kcal_per_kg; // kg of food per 100 kcal
+            co2e = f.co2e * factor;
+            water = f.water * factor;
+        }
+        return { name: f.name, co2e, water };
+    });
+}
+
+function unitLabels(view) {
+    if (view === 'kg')      return { unit: 'per kg of food',  co2Unit: 'kg CO₂e / kg', waterUnit: 'L water / kg' };
+    if (view === 'protein') return { unit: 'per 100 g protein', co2Unit: 'kg CO₂e / 100 g protein', waterUnit: 'L water / 100 g protein' };
+    return                       { unit: 'per 100 Calories', co2Unit: 'kg CO₂e / 100 kcal', waterUnit: 'L water / 100 kcal' };
+}
+
+// ----- Chart setup ------------------------------------------------------
+const ctx = document.getElementById('mainChart').getContext('2d');
+let currentView = 'kg';
+
+function buildDatasets(view) {
+    const vals = computeValues(view);
+    const labels = vals.map(v => v.name);
+    const co2Data = vals.map(v => v.co2e);
+    // Water scaled by /100 so both series share an x-axis with comparable magnitudes.
+    const waterScaled = vals.map(v => v.water / 100);
+    return { labels, co2Data, waterScaled, raw: vals };
+}
+
+let { labels, co2Data, waterScaled, raw } = buildDatasets(currentView);
+
+const labelsForView = unitLabels(currentView);
+
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                label: 'CO₂e (kg)',
+                data: co2Data,
+                backgroundColor: '#f57c00',
+                borderColor: '#e65100',
+                borderWidth: 1,
+                borderRadius: 3,
+                categoryPercentage: 0.85,
+                barPercentage: 0.9
+            },
+            {
+                label: 'Water use (×100 L)',
+                data: waterScaled,
+                backgroundColor: '#1e88e5',
+                borderColor: '#1565c0',
+                borderWidth: 1,
+                borderRadius: 3,
+                categoryPercentage: 0.85,
+                barPercentage: 0.9
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 400 },
+        plugins: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Environmental cost ' + labelsForView.unit,
+                font: { size: 13, weight: '600' },
+                color: '#2e7d32',
+                padding: { top: 2, bottom: 8 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        const i = ctx.dataIndex;
+                        const r = raw[i];
+                        if (ctx.datasetIndex === 0) {
+                            return 'CO₂e: ' + r.co2e.toFixed(2) + ' ' + currentLabels.co2Unit;
+                        } else {
+                            return 'Water: ' + Math.round(r.water).toLocaleString() + ' ' + currentLabels.waterUnit;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'CO₂e (kg) and water (×100 L)',
+                    font: { size: 11 },
+                    color: '#555'
+                },
+                ticks: { font: { size: 11 } },
+                grid: { color: '#eee' }
+            },
+            y: {
+                ticks: { font: { size: 11 }, color: '#222' },
+                grid: { display: false }
+            }
+        },
+        onClick: function(evt, elements) {
+            if (!elements.length) return;
+            const i = elements[0].index;
+            showBreakdown(i);
+        }
+    }
+});
+
+let currentLabels = labelsForView;
+
+// ----- View switching ---------------------------------------------------
+document.getElementById('view-select').addEventListener('change', (e) => {
+    currentView = e.target.value;
+    const built = buildDatasets(currentView);
+    labels = built.labels;
+    co2Data = built.co2Data;
+    waterScaled = built.waterScaled;
+    raw = built.raw;
+    currentLabels = unitLabels(currentView);
+
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = co2Data;
+    chart.data.datasets[1].data = waterScaled;
+    chart.options.plugins.title.text = 'Environmental cost ' + currentLabels.unit;
+    chart.update();
+    // Also refresh the breakdown title units if a panel is open (breakdown shares are unit-independent, so no data change).
+});
+
+// ----- Breakdown popup --------------------------------------------------
+const bCtx = document.getElementById('breakdownChart').getContext('2d');
+let breakdownChart = null;
+
+function showBreakdown(foodIndex) {
+    const food = foods[foodIndex];
+    document.getElementById('breakdown-title').textContent =
+        'CO₂e breakdown — ' + food.name + ' (' + food.co2e + ' kg CO₂e / kg)';
+
+    if (breakdownChart) breakdownChart.destroy();
+
+    breakdownChart = new Chart(bCtx, {
+        type: 'bar',
+        data: {
+            labels: [''],
+            datasets: stageNames.map((name, i) => ({
+                label: name + ' (' + food.breakdown[i] + '%)',
+                data: [food.breakdown[i]],
+                backgroundColor: stageColors[i],
+                borderColor: 'white',
+                borderWidth: 1
+            }))
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 300 },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: { font: { size: 11 }, boxWidth: 12, padding: 6 }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ctx.dataset.label
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    max: 100,
+                    ticks: { font: { size: 10 }, callback: (v) => v + '%' },
+                    grid: { color: '#eee' }
+                },
+                y: {
+                    stacked: true,
+                    ticks: { display: false },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    document.getElementById('breakdown-panel').classList.add('visible');
+    // Scroll into view so user sees it
+    document.getElementById('breakdown-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+document.getElementById('close-breakdown').addEventListener('click', () => {
+    document.getElementById('breakdown-panel').classList.remove('visible');
+    if (breakdownChart) { breakdownChart.destroy(); breakdownChart = null; }
+});
+
+// ----- Responsive redraw ------------------------------------------------
+window.addEventListener('resize', () => {
+    chart.resize();
+    if (breakdownChart) breakdownChart.resize();
+});
+</script>
+</body>
+</html>

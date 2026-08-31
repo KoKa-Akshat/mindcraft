@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"data.json": "{\n  \"nodes\": [\n    {\n      \"id\": 1,\n      \"label\": \"Error Rates \\u2193100x\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 5,\n      \"optimistic2035\": 40,\n      \"description\": \"Physical error rates must decrease by two orders of magnitude to enable fault-tolerant quantum computing. Current best: ~10\\u207b\\u00b3, needed: ~10\\u207b\\u2075.\",\n      \"x\": 0,\n      \"y\": -250\n    },\n    {\n      \"id\": 2,\n      \"label\": \"Qubit Count \\u21911000x\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 10,\n      \"optimistic2035\": 30,\n      \"description\": \"Scaling from ~1,000 physical qubits to millions. Requires solving wiring, crosstalk, and yield challenges simultaneously.\",\n      \"x\": -200,\n      \"y\": -150\n    },\n    {\n      \"id\": 3,\n      \"label\": \"Coherence \\u2191100x\",\n      \"category\": \"engineering\",\n      \"color\": \"#FF7043\",\n      \"defaultProgress\": 15,\n      \"optimistic2035\": 35,\n      \"description\": \"Qubit coherence times must increase ~100x to allow meaningful computation before quantum state decays.\",\n      \"x\": 200,\n      \"y\": -150\n    },\n    {\n      \"id\": 4,\n      \"label\": \"Connectivity \\u219110x\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 5,\n      \"optimistic2035\": 25,\n      \"description\": \"Most architectures have nearest-neighbor connectivity. Full or near-full connectivity is needed for efficient algorithms.\",\n      \"x\": -300,\n      \"y\": 0\n    },\n    {\n      \"id\": 5,\n      \"label\": \"Cryogenics Scale\",\n      \"category\": \"engineering\",\n      \"color\": \"#FF7043\",\n      \"defaultProgress\": 10,\n      \"optimistic2035\": 30,\n      \"description\": \"Dilution refrigerators must scale to cool millions of qubits at millikelvin temperatures. Current systems support ~1,000 qubits.\",\n      \"x\": 300,\n      \"y\": 0\n    },\n    {\n      \"id\": 6,\n      \"label\": \"New Algorithms\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 5,\n      \"optimistic2035\": 15,\n      \"description\": \"Only a handful of quantum algorithms show theoretical speedup. Commercially relevant algorithms beyond Shor's and Grover's remain elusive.\",\n      \"x\": -200,\n      \"y\": 150\n    },\n    {\n      \"id\": 7,\n      \"label\": \"Cost \\u219310\\u2076x\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 1,\n      \"optimistic2035\": 10,\n      \"description\": \"Cost per useful quantum operation must decrease by ~6 orders of magnitude to compete with classical computing economics.\",\n      \"x\": 200,\n      \"y\": 150\n    },\n    {\n      \"id\": 8,\n      \"label\": \"Error Correction\",\n      \"category\": \"fundamental\",\n      \"color\": \"#E53935\",\n      \"defaultProgress\": 3,\n      \"optimistic2035\": 20,\n      \"description\": \"Quantum error correction requires 1,000-10,000 physical qubits per logical qubit. Overhead must decrease dramatically.\",\n      \"x\": 0,\n      \"y\": -80\n    },\n    {\n      \"id\": 9,\n      \"label\": \"Control Electronics\",\n      \"category\": \"engineering\",\n      \"color\": \"#FF7043\",\n      \"defaultProgress\": 10,\n      \"optimistic2035\": 35,\n      \"description\": \"Each qubit needs precise microwave control. Scaling to millions requires integrated cryogenic electronics that don't generate excess heat.\",\n      \"x\": -300,\n      \"y\": 200\n    },\n    {\n      \"id\": 10,\n      \"label\": \"Software/Compilers\",\n      \"category\": \"software\",\n      \"color\": \"#FFC107\",\n      \"defaultProgress\": 20,\n      \"optimistic2035\": 50,\n      \"description\": \"Quantum compilers and software stacks are the most mature area, but still far from production-ready for fault-tolerant systems.\",\n      \"x\": 300,\n      \"y\": 200\n    },\n    {\n      \"id\": 0,\n      \"label\": \"Commercial\\nViability\",\n      \"category\": \"outcome\",\n      \"color\": \"#9E9E9E\",\n      \"defaultProgress\": 0,\n      \"optimistic2035\": 0,\n      \"description\": \"Commercially viable quantum computing requires ALL breakthroughs to reach 100%. Partial progress yields zero commercial value.\",\n      \"x\": 0,\n      \"y\": 50,\n      \"isOutcome\": true\n    }\n  ],\n  \"dependency_edges\": [\n    { \"from\": 1, \"to\": 0 },\n    { \"from\": 2, \"to\": 0 },\n    { \"from\": 3, \"to\": 0 },\n    { \"from\": 4, \"to\": 0 },\n    { \"from\": 5, \"to\": 0 },\n    { \"from\": 6, \"to\": 0 },\n    { \"from\": 7, \"to\": 0 },\n    { \"from\": 8, \"to\": 0 },\n    { \"from\": 9, \"to\": 0 },\n    { \"from\": 10, \"to\": 0 }\n  ],\n  \"coupling_edges\": [\n    { \"from\": 1, \"to\": 8, \"label\": \"Error rates determine EC overhead\" },\n    { \"from\": 8, \"to\": 1, \"label\": \"EC introduces additional errors\" },\n    { \"from\": 2, \"to\": 5, \"label\": \"More qubits need more cooling\" },\n    { \"from\": 2, \"to\": 4, \"label\": \"More qubits compound connectivity\" },\n    { \"from\": 2, \"to\": 9, \"label\": \"More qubits need more control lines\" },\n    { \"from\": 3, \"to\": 1, \"label\": \"Decoherence is a source of errors\" },\n    { \"from\": 7, \"to\": 5, \"label\": \"Cooling dominates cost\" },\n    { \"from\": 7, \"to\": 2, \"label\": \"More qubits increase cost\" },\n    { \"from\": 8, \"to\": 2, \"label\": \"EC requires many more physical qubits\" },\n    { \"from\": 6, \"to\": 8, \"label\": \"Algorithm complexity sets EC requirements\" }\n  ]\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Breakthrough Dependencies Map</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>/* Breakthrough Dependencies Map Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: aliceblue;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Network canvas fills the viewport */
+#network {
+    width: 100%;
+    height: 100%;
+}
+
+/* Title overlay at top center */
+.title {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 18px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Legend at upper left */
+.legend {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 6px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+    z-index: 10;
+}
+
+.legend h4 {
+    margin: 0 0 6px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.legend-label {
+    color: #555;
+}
+
+/* Right panel with controls, sliders, and info */
+.right-panel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 240px;
+    max-height: calc(100vh - 16px);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    font-size: 13px;
+    z-index: 10;
+}
+
+.right-panel h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Preset buttons */
+.preset-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.preset-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: left;
+}
+
+.preset-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
+}
+
+/* Progress summary */
+.progress-summary {
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.progress-summary .achieved {
+    font-weight: 600;
+    color: #3F51B5;
+}
+
+.progress-summary .viability-status {
+    font-weight: 700;
+}
+
+.viability-status.blocked {
+    color: #E53935;
+}
+
+.viability-status.viable {
+    color: #43A047;
+}
+
+/* Slider controls */
+.slider-section {
+    margin-bottom: 12px;
+}
+
+.slider-section h5 {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.slider-row label {
+    flex: 1;
+    font-size: 11px;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.slider-row input[type="range"] {
+    width: 70px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.slider-row .slider-value {
+    width: 32px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    flex-shrink: 0;
+}
+
+/* Info panel for hover/click details */
+.info-panel {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 4px;
+}
+
+.info-panel h5 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+}
+
+.info-panel p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.info-panel .info-placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Edge tooltip styles */
+.edge-tooltip {
+    font-size: 12px;
+    color: #555;
+    margin-top: 6px;
+    padding: 6px 8px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid #42A5F5;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div id="network"></div>
+        <div class="title">Breakthrough Dependencies Map</div>
+        <div class="legend">
+            <h4>Categories</h4>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background-color: #E53935;"></span>
+                <span class="legend-label">Fundamental</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background-color: #FF7043;"></span>
+                <span class="legend-label">Engineering</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background-color: #FFC107;"></span>
+                <span class="legend-label">Software</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background-color: #9E9E9E;"></span>
+                <span class="legend-label">Outcome</span>
+            </div>
+            <div style="margin-top: 8px; border-top: 1px solid #ddd; padding-top: 6px;">
+                <div class="legend-item">
+                    <span style="display:inline-block;width:20px;border-top:2px dashed #999;"></span>
+                    <span class="legend-label">Dependency</span>
+                </div>
+                <div class="legend-item">
+                    <span style="display:inline-block;width:20px;border-top:2px solid #42A5F5;"></span>
+                    <span class="legend-label">Coupling</span>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+            <h4>Controls</h4>
+            <div class="preset-buttons">
+                <button class="preset-btn" id="btn-current">Set to Current State (2025)</button>
+                <button class="preset-btn" id="btn-optimistic">Set to Optimistic 2035</button>
+                <button class="preset-btn" id="btn-all100">Set All to 100%</button>
+                <button class="preset-btn" id="btn-reset">Reset to 0%</button>
+            </div>
+            <div class="progress-summary" id="progress-summary">
+                Breakthroughs achieved: <span class="achieved">0/10</span><br>
+                Commercial viability: <span class="viability-status blocked">BLOCKED</span>
+            </div>
+            <div class="slider-section" id="slider-section">
+                <h5>Breakthrough Progress</h5>
+            </div>
+            <div class="info-panel" id="info-panel">
+                <h5>Details</h5>
+                <p class="info-placeholder">Hover over a node or edge for details.</p>
+            </div>
+        </div>
+    </div>
+    <script>// Breakthrough Dependencies Map
+// Interactive vis-network visualization showing the ten breakthroughs
+// required for commercially viable quantum computing.
+
+let network = null;
+let graphData = null;
+let nodesDataSet = null;
+let edgesDataSet = null;
+let progressValues = {};
+
+// Color interpolation from red through orange/yellow to green based on progress
+function progressColor(progress) {
+    if (progress < 25) {
+        return '#E53935'; // red
+    } else if (progress < 50) {
+        return '#FF7043'; // orange
+    } else if (progress < 75) {
+        return '#FFC107'; // yellow
+    } else if (progress < 100) {
+        return '#8BC34A'; // light green
+    }
+    return '#43A047'; // green at 100%
+}
+
+// Determine font color for readability on node background
+function fontColorFor(progress) {
+    if (progress < 50) return '#fff';
+    if (progress < 75) return '#333';
+    return '#fff';
+}
+
+async function loadData() {
+    try {
+        const response = await fetch('data.json');
+        graphData = await response.json();
+        initSliders();
+        applyPreset('current');
+    } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('network').innerHTML =
+            '<p style="color:red;padding:20px;">Error loading data.json.</p>';
+    }
+}
+
+function initSliders() {
+    const section = document.getElementById('slider-section');
+    // Keep the h5 header, add sliders after it
+    const breakthroughNodes = graphData.nodes.filter(n => !n.isOutcome);
+    breakthroughNodes.forEach(node => {
+        progressValues[node.id] = 0;
+        const row = document.createElement('div');
+        row.className = 'slider-row';
+        row.innerHTML = `
+            <label title="${node.label}">${node.label}</label>
+            <input type="range" min="0" max="100" value="0" id="slider-${node.id}">
+            <span class="slider-value" id="val-${node.id}">0%</span>
+        `;
+        section.appendChild(row);
+
+        const slider = row.querySelector('input[type="range"]');
+        slider.addEventListener('input', function () {
+            progressValues[node.id] = parseInt(this.value);
+            document.getElementById(`val-${node.id}`).textContent = this.value + '%';
+            updateNodeColors();
+            updateSummary();
+        });
+    });
+}
+
+function applyPreset(preset) {
+    const breakthroughNodes = graphData.nodes.filter(n => !n.isOutcome);
+    breakthroughNodes.forEach(node => {
+        let val = 0;
+        if (preset === 'current') val = node.defaultProgress;
+        else if (preset === 'optimistic') val = node.optimistic2035;
+        else if (preset === 'all100') val = 100;
+        else val = 0;
+
+        progressValues[node.id] = val;
+        const slider = document.getElementById(`slider-${node.id}`);
+        const valSpan = document.getElementById(`val-${node.id}`);
+        if (slider) slider.value = val;
+        if (valSpan) valSpan.textContent = val + '%';
+    });
+    buildNetwork();
+    updateSummary();
+}
+
+function buildNetwork() {
+    const container = document.getElementById('network');
+
+    // Build nodes
+    const nodes = graphData.nodes.map(node => {
+        const progress = node.isOutcome ? 0 : (progressValues[node.id] || 0);
+        const isOutcome = node.isOutcome;
+        const allAt100 = isOutcome && checkAllComplete();
+        const bgColor = isOutcome
+            ? (allAt100 ? '#43A047' : '#9E9E9E')
+            : progressColor(progress);
+
+        return {
+            id: node.id,
+            label: isOutcome
+                ? (allAt100 ? 'Commercial\nViability' : 'Commercial\nViability\nBLOCKED')
+                : `${node.label}\n${progress}%`,
+            x: node.x,
+            y: node.y,
+            fixed: true,
+            shape: isOutcome ? 'circle' : 'box',
+            size: isOutcome ? 45 : undefined,
+            color: {
+                background: bgColor,
+                border: isOutcome ? (allAt100 ? '#2E7D32' : '#757575') : darken(bgColor),
+                highlight: { background: bgColor, border: '#333' },
+                hover: { background: bgColor, border: '#555' }
+            },
+            font: {
+                color: isOutcome ? '#fff' : fontColorFor(progress),
+                size: isOutcome ? 13 : 12,
+                face: 'Arial',
+                bold: isOutcome
+            },
+            borderWidth: isOutcome ? 3 : 2,
+            shadow: true,
+            margin: isOutcome ? undefined : 8,
+            title: node.description
+        };
+    });
+
+    // Build edges
+    const edges = [];
+
+    // Dependency edges (dashed gray, to center)
+    graphData.dependency_edges.forEach((edge, i) => {
+        edges.push({
+            id: `dep-${i}`,
+            from: edge.from,
+            to: edge.to,
+            arrows: 'to',
+            dashes: [6, 4],
+            color: { color: '#999', opacity: 0.5 },
+            width: 1.5,
+            smooth: { type: 'curvedCW', roundness: 0.1 },
+            edgeType: 'dependency'
+        });
+    });
+
+    // Coupling edges (solid blue, between breakthroughs)
+    graphData.coupling_edges.forEach((edge, i) => {
+        const fromProgress = progressValues[edge.from] || 0;
+        const toProgress = progressValues[edge.to] || 0;
+        const bothLow = fromProgress < 30 && toProgress < 30;
+        edges.push({
+            id: `coupling-${i}`,
+            from: edge.from,
+            to: edge.to,
+            arrows: 'to',
+            dashes: false,
+            color: { color: bothLow ? '#E53935' : '#42A5F5', opacity: bothLow ? 0.8 : 0.6 },
+            width: bothLow ? 2.5 : 1.5,
+            smooth: { type: 'curvedCW', roundness: 0.15 },
+            title: edge.label,
+            edgeType: 'coupling',
+            couplingLabel: edge.label
+        });
+    });
+
+    nodesDataSet = new vis.DataSet(nodes);
+    edgesDataSet = new vis.DataSet(edges);
+
+    const options = {
+        layout: {
+            randomSeed: 42
+        },
+        physics: {
+            enabled: false
+        },
+        nodes: {
+            shape: 'box',
+            font: {
+                size: 12,
+                face: 'Arial',
+                multi: true
+            },
+            borderWidth: 2,
+            shadow: true
+        },
+        edges: {
+            width: 1.5
+        },
+        interaction: {
+            hover: true,
+            tooltipDelay: 150,
+            zoomView: false,
+            dragView: false,
+            dragNodes: false,
+            navigationButtons: false,
+            keyboard: false
+        }
+    };
+
+    if (network) {
+        network.destroy();
+    }
+
+    network = new vis.Network(container, { nodes: nodesDataSet, edges: edgesDataSet }, options);
+
+    // Hover on node: show details in info panel
+    network.on('hoverNode', function (params) {
+        const nodeId = params.node;
+        const node = graphData.nodes.find(n => n.id === nodeId);
+        if (node) {
+            showNodeInfo(node);
+        }
+    });
+
+    network.on('blurNode', function () {
+        resetInfoPanel();
+    });
+
+    // Click on node: highlight dependency chain
+    network.on('selectNode', function (params) {
+        if (params.nodes.length > 0) {
+            highlightDependencyChain(params.nodes[0]);
+        }
+    });
+
+    network.on('deselectNode', function () {
+        resetHighlight();
+    });
+
+    // Hover on edge: show coupling info
+    network.on('hoverEdge', function (params) {
+        const edge = edgesDataSet.get(params.edge);
+        if (edge && edge.couplingLabel) {
+            showEdgeInfo(edge);
+        }
+    });
+
+    network.on('blurEdge', function () {
+        resetInfoPanel();
+    });
+}
+
+function updateNodeColors() {
+    if (!nodesDataSet || !graphData) return;
+
+    graphData.nodes.forEach(node => {
+        const isOutcome = node.isOutcome;
+        const progress = isOutcome ? 0 : (progressValues[node.id] || 0);
+        const allAt100 = isOutcome && checkAllComplete();
+        const bgColor = isOutcome
+            ? (allAt100 ? '#43A047' : '#9E9E9E')
+            : progressColor(progress);
+
+        nodesDataSet.update({
+            id: node.id,
+            label: isOutcome
+                ? (allAt100 ? 'Commercial\nViability' : 'Commercial\nViability\nBLOCKED')
+                : `${node.label}\n${progress}%`,
+            color: {
+                background: bgColor,
+                border: isOutcome ? (allAt100 ? '#2E7D32' : '#757575') : darken(bgColor),
+                highlight: { background: bgColor, border: '#333' },
+                hover: { background: bgColor, border: '#555' }
+            },
+            font: {
+                color: isOutcome ? '#fff' : fontColorFor(progress),
+                size: isOutcome ? 13 : 12,
+                face: 'Arial'
+            }
+        });
+    });
+
+    // Update coupling edge colors (red when both nodes have low progress)
+    graphData.coupling_edges.forEach((edge, i) => {
+        const fromProgress = progressValues[edge.from] || 0;
+        const toProgress = progressValues[edge.to] || 0;
+        const bothLow = fromProgress < 30 && toProgress < 30;
+        edgesDataSet.update({
+            id: `coupling-${i}`,
+            color: { color: bothLow ? '#E53935' : '#42A5F5', opacity: bothLow ? 0.8 : 0.6 },
+            width: bothLow ? 2.5 : 1.5
+        });
+    });
+}
+
+function checkAllComplete() {
+    const breakthroughNodes = graphData.nodes.filter(n => !n.isOutcome);
+    return breakthroughNodes.every(n => (progressValues[n.id] || 0) >= 100);
+}
+
+function updateSummary() {
+    const breakthroughNodes = graphData.nodes.filter(n => !n.isOutcome);
+    const achieved = breakthroughNodes.filter(n => (progressValues[n.id] || 0) >= 100).length;
+    const total = breakthroughNodes.length;
+    const allDone = achieved === total;
+
+    const summary = document.getElementById('progress-summary');
+    summary.innerHTML = `
+        Breakthroughs achieved: <span class="achieved">${achieved}/${total}</span><br>
+        Commercial viability: <span class="viability-status ${allDone ? 'viable' : 'blocked'}">${allDone ? 'YES' : 'BLOCKED'}</span>
+    `;
+}
+
+function showNodeInfo(node) {
+    const panel = document.getElementById('info-panel');
+    const progress = node.isOutcome ? (checkAllComplete() ? 100 : 0) : (progressValues[node.id] || 0);
+    panel.innerHTML = `
+        <h5>${node.label.replace('\n', ' ')}</h5>
+        <p>${node.description}</p>
+        ${!node.isOutcome ? `<p style="margin-top:6px;font-weight:600;">Progress: ${progress}%</p>` : ''}
+    `;
+}
+
+function showEdgeInfo(edge) {
+    const panel = document.getElementById('info-panel');
+    const fromNode = graphData.nodes.find(n => n.id === edge.from);
+    const toNode = graphData.nodes.find(n => n.id === edge.to);
+    panel.innerHTML = `
+        <h5>Coupling</h5>
+        <div class="edge-tooltip">
+            <strong>${fromNode ? fromNode.label : ''} &rarr; ${toNode ? toNode.label : ''}</strong><br>
+            ${edge.couplingLabel}
+        </div>
+    `;
+}
+
+function resetInfoPanel() {
+    const panel = document.getElementById('info-panel');
+    panel.innerHTML = `
+        <h5>Details</h5>
+        <p class="info-placeholder">Hover over a node or edge for details.</p>
+    `;
+}
+
+function highlightDependencyChain(nodeId) {
+    if (!nodesDataSet) return;
+
+    // Find connected nodes
+    const connectedEdges = edgesDataSet.get().filter(
+        e => e.from === nodeId || e.to === nodeId
+    );
+    const connectedNodeIds = new Set([nodeId]);
+    connectedEdges.forEach(e => {
+        connectedNodeIds.add(e.from);
+        connectedNodeIds.add(e.to);
+    });
+
+    // Dim unconnected nodes
+    graphData.nodes.forEach(node => {
+        const isConnected = connectedNodeIds.has(node.id);
+        nodesDataSet.update({
+            id: node.id,
+            opacity: isConnected ? 1.0 : 0.2
+        });
+    });
+
+    // Dim unconnected edges
+    edgesDataSet.get().forEach(edge => {
+        const isConnected = edge.from === nodeId || edge.to === nodeId;
+        edgesDataSet.update({
+            id: edge.id,
+            hidden: !isConnected
+        });
+    });
+}
+
+function resetHighlight() {
+    if (!nodesDataSet) return;
+    graphData.nodes.forEach(node => {
+        nodesDataSet.update({ id: node.id, opacity: 1.0 });
+    });
+    edgesDataSet.get().forEach(edge => {
+        edgesDataSet.update({ id: edge.id, hidden: false });
+    });
+}
+
+// Simple color darkening for borders
+function darken(hex) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const r = Math.max(0, (num >> 16) - 40);
+    const g = Math.max(0, ((num >> 8) & 0x00FF) - 40);
+    const b = Math.max(0, (num & 0x0000FF) - 40);
+    return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
+}
+
+// Preset button handlers
+document.getElementById('btn-current').addEventListener('click', () => applyPreset('current'));
+document.getElementById('btn-optimistic').addEventListener('click', () => applyPreset('optimistic'));
+document.getElementById('btn-all100').addEventListener('click', () => applyPreset('all100'));
+document.getElementById('btn-reset').addEventListener('click', () => applyPreset('reset'));
+
+// Initialize
+document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>

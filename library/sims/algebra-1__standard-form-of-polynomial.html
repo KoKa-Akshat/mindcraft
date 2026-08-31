@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Polynomial Classification Interactive Tool using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Polynomial Classification Interactive Tool — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "polynomial-classification-interactive-tool",
+  "title": "Polynomial Classification Interactive Tool",
+  "kind": "quiz",
+  "objective": "Practice identifying degree, leading coefficient, and standard form of polynomials",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Value A",
+  "bLabel": "Value B",
+  "choices": [
+    "Quadratic trinomial",
+    "Linear binomial",
+    "Cubic monomial"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Practice identifying degree, leading coefficient, and standard form of polynomials
+//
+//     Canvas layout (900x600px):
+//     - Top area (900x200): Polynomial display and analysis
+//     - Middle area (900x250): Interactive workspace
+//     - Bottom area (900x150): Feedback and controls
+//
+//     Visual elements:
+//     - Large polynomial display (e.g., "$3x^2 + 5x^4 - 2x + 7$")
+//     - Terms highlighted individually with different colors
+//     - Degree indicator with visual representation
+//     - Leading coefficient highlighted
+//     - Standard form comparison display
+//     - Drag-and-drop term reordering interface
+//
+//     Interactive features:
+//     - Random polynomial generator
+//     - Drag terms to rearrange into standard form
+//     - Click to identify highest degree term
+//     - Input fields for: degree, leading coefficient
+//     - Button: "Check answers"
+//     - Button: "Show standard form"
+//     - Difficulty selector (simple/medium/complex)
+//
+//     Default parameters:
+//     - Difficulty: medium
+//     - Number of terms: 3-5
+//
+//     Behavior:
+//     - Display polynomial in random order
+//     - Student drags terms to rearrange
+//     - Snap terms into standard form order
+//     - Highlight degree of each term
+//     - When "Check" clicked:
+//       - Verify standard form arrangement
+//       - Confirm degree and leading coefficient
+//       - Provide immediate feedback
+//
+//     Visual features:
+//     - Color-coded exponents
+//     - Animated rearrangement
+//     - Degree visualization (stacked blocks)
+//     - Celebration for correct answers
+//
+//     Implementation: p5.js with drag-and-drop, validation, animation
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

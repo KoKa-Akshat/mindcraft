@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Saturated vs. Unsaturated Fat Molecule Explorer MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Saturated vs. Unsaturated Fat Molecule Explorer - Food Science MicroSim
+// CANVAS_HEIGHT: 620
+// Students compare saturated, monounsaturated, and polyunsaturated fatty acid
+// structures and observe how chain shape determines physical state (solid vs liquid).
+
+// ----- Layout constants -----
+let canvasWidth = 760;
+let drawHeight = 520;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let defaultTextSize = 14;
+
+// Palette
+const COL_BG        = '#f1f8e9';
+const COL_PANEL     = '#ffffff';
+const COL_PANEL_BD  = '#c8e6c9';
+const COL_TITLE     = '#2e7d32';   // primary green
+const COL_ACCENT    = '#f57c00';   // accent orange
+const COL_CARBON    = '#37474f';   // dark gray
+const COL_H_ATOM    = '#b0bec5';   // light gray
+const COL_DOUBLE    = '#e53935';   // red for double bond
+const COL_TEXT      = '#212121';
+const COL_LABEL     = '#546e7a';
+const COL_LIQUID    = '#bbdefb';   // light blue (liquid background)
+const COL_SOLID     = '#cfd8dc';   // gray-blue (solid background)
+const COL_TOOLTIP_BG= '#fffde7';
+
+// Panel layout
+let panelTop = 70;
+let panelHeight = 320;
+let panelGap = 10;
+let panelMargin = 15;
+
+// Food row
+let foodRowTop;     // computed in setup
+let foodRowHeight = 90;
+
+// Three fatty acid molecules — each defined by carbon count and double-bond positions.
+// Each panel has its own canonical "zigzag" path that gets distorted by kinks at double bonds.
+const molecules = [
+  {
+    name: 'Saturated Fat',
+    short: 'Saturated',
+    chainLen: 14,
+    doubleBonds: [],            // none → straight zigzag
+    meltC: 45,                  // melts above this
+    foods: [
+      { name: 'Butter',  pct: 51, emoji: 'B' },
+      { name: 'Cheese',  pct: 30, emoji: 'C' },
+      { name: 'Coconut', pct: 87, emoji: 'O' }
+    ],
+    desc: 'Straight chains pack tightly together → SOLID at room temp.'
+  },
+  {
+    name: 'Monounsaturated Fat',
+    short: 'Mono',
+    chainLen: 14,
+    doubleBonds: [7],           // one double bond → one kink
+    meltC: -5,                  // always liquid in our 0-80 range
+    foods: [
+      { name: 'Olive Oil', pct: 14, emoji: 'O' },
+      { name: 'Avocado',   pct: 15, emoji: 'A' },
+      { name: 'Almond',    pct: 8,  emoji: 'N' }
+    ],
+    desc: 'One kink keeps chains from packing → LIQUID at room temp.'
+  },
+  {
+    name: 'Polyunsaturated Fat',
+    short: 'Poly',
+    chainLen: 14,
+    doubleBonds: [5, 9],        // two double bonds → two kinks
+    meltC: -15,
+    foods: [
+      { name: 'Salmon',      pct: 20, emoji: 'S' },
+      { name: 'Walnut',      pct: 9,  emoji: 'W' },
+      { name: 'Sunflower Oil', pct: 10, emoji: 'F' }
+    ],
+    desc: 'Two kinks make packing impossible → LIQUID, even when cold.'
+  }
+];
+
+// UI controls
+let tempSlider;
+let packButton;
+let resetButton;
+
+// Interaction state
+let temperature = 20;
+let selectedCarbon = null;       // {panelIdx, carbonIdx, isDouble}
+let selectedFood = null;         // {panelIdx, foodIdx}
+let packMode = false;
+let packStartMs = 0;
+const PACK_DURATION = 5000;
+
+// Cached carbon positions per panel (rebuilt when window resizes)
+let panelData = [];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI, Arial, sans-serif');
+
+  buildLayout();
+
+  // Temperature slider
+  tempSlider = createSlider(0, 80, 20, 1);
+  tempSlider.position(120, drawHeight + 18);
+  tempSlider.size(220);
+  tempSlider.input(() => { temperature = tempSlider.value(); });
+
+  // Pack Together button
+  packButton = createButton('Pack Together');
+  packButton.position(380, drawHeight + 14);
+  packButton.mousePressed(togglePackMode);
+  packButton.style('background-color', COL_ACCENT);
+  packButton.style('color', 'white');
+  packButton.style('border', 'none');
+  packButton.style('padding', '6px 14px');
+  packButton.style('border-radius', '4px');
+  packButton.style('cursor', 'pointer');
+  packButton.style('font-size', '13px');
+  packButton.style('font-weight', '600');
+
+  // Reset button
+  resetButton = createButton('Reset');
+  resetButton.position(500, drawHeight + 14);
+  resetButton.mousePressed(() => {
+    tempSlider.value(20);
+    temperature = 20;
+    selectedCarbon = null;
+    selectedFood = null;
+    packMode = false;
+  });
+  resetButton.style('background-color', '#eeeeee');
+  resetButton.style('color', COL_TEXT);
+  resetButton.style('border', '1px solid #bdbdbd');
+  resetButton.style('padding', '6px 14px');
+  resetButton.style('border-radius', '4px');
+  resetButton.style('cursor', 'pointer');
+  resetButton.style('font-size', '13px');
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  buildLayout();
+}
+
+// Build per-panel rects and carbon position lists.
+function buildLayout() {
+  panelData = [];
+  const totalGap = panelGap * 2;
+  const usableW = canvasWidth - panelMargin * 2 - totalGap;
+  const panelW = usableW / 3;
+  foodRowTop = panelTop + panelHeight + 10;
+
+  for (let i = 0; i < 3; i++) {
+    const px = panelMargin + i * (panelW + panelGap);
+    const py = panelTop;
+    const mol = molecules[i];
+
+    // Build carbon positions inside the panel.
+    // Chain runs horizontally; zigzag amplitude ~ 14px.
+    const chainPad = 18;
+    const chainW = panelW - chainPad * 2;
+    const segmentW = chainW / (mol.chainLen - 1);
+    const baselineY = py + 130;
+    const amp = 14;
+
+    // Compute kink offsets: each double bond rotates the remainder of the chain
+    // by a small angle, alternating direction so the chain stays in panel.
+    let carbons = [];
+    let cx = px + chainPad;
+    let cy = baselineY;
+    let angle = 0; // baseline horizontal
+    let kinkDir = -1; // alternating kink direction
+    for (let c = 0; c < mol.chainLen; c++) {
+      // zigzag: alternate up/down around current direction
+      const zig = (c % 2 === 0) ? -amp : amp;
+      if (c === 0) {
+        carbons.push({ x: cx, y: cy + zig });
+      } else {
+        const prev = carbons[c - 1];
+        const stepDx = segmentW * Math.cos(angle);
+        const stepDy = segmentW * Math.sin(angle);
+        const nx = prev.x + stepDx;
+        const ny = prev.y + stepDy + (zig - (carbons[c - 1].zig || 0));
+        carbons.push({ x: nx, y: ny });
+        carbons[c].zig = zig;
+      }
+      // If this carbon is the second member of a double bond, kink the chain
+      if (mol.doubleBonds.includes(c)) {
+        // Smaller alternating kinks keep chain within panel
+        angle += kinkDir * Math.PI / 11;  // ~16 degrees, alternating
+        kinkDir = -kinkDir;
+      }
+    }
+
+    // Re-center vertically so the chain fits inside panel
+    let minY = Infinity, maxY = -Infinity;
+    for (const c of carbons) { if (c.y < minY) minY = c.y; if (c.y > maxY) maxY = c.y; }
+    const chainCenterY = (minY + maxY) / 2;
+    const panelChainCenterY = py + 130;
+    const shift = panelChainCenterY - chainCenterY;
+    for (const c of carbons) c.y += shift;
+
+    panelData.push({
+      x: px, y: py, w: panelW, h: panelHeight,
+      carbons: carbons,
+      mol: mol,
+      molIdx: i
+    });
+  }
+}
+
+function draw() {
+  background(COL_BG);
+
+  drawTitle();
+  drawPanels();
+  drawFoodRows();
+  drawControlsLabels();
+  drawTooltip();
+  drawPackOverlay();
+}
+
+function drawTitle() {
+  noStroke();
+  fill(COL_TITLE);
+  textAlign(CENTER, TOP);
+  textSize(20);
+  textStyle(BOLD);
+  text('Fat Molecule Explorer', canvasWidth / 2, 12);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(COL_LABEL);
+  text('Compare fatty acid shapes — see why some fats are solid and others stay liquid.',
+       canvasWidth / 2, 40);
+}
+
+function drawPanels() {
+  for (const p of panelData) {
+    const isSolid = (temperature < p.mol.meltC);
+    const bgColor = isSolid ? COL_SOLID : COL_LIQUID;
+
+    // Panel background
+    noStroke();
+    fill(bgColor);
+    rect(p.x, p.y, p.w, p.h, 8);
+
+    // Panel border
+    noFill();
+    stroke(COL_PANEL_BD);
+    strokeWeight(2);
+    rect(p.x, p.y, p.w, p.h, 8);
+
+    // Panel title
+    noStroke();
+    fill(COL_TITLE);
+    textAlign(CENTER, TOP);
+    textSize(15);
+    textStyle(BOLD);
+    text(p.mol.name, p.x + p.w / 2, p.y + 10);
+    textStyle(NORMAL);
+
+    // Number of double bonds + chain length
+    fill(COL_LABEL);
+    textSize(11);
+    const dbCount = p.mol.doubleBonds.length;
+    text(`${p.mol.chainLen} carbons | ${dbCount} double bond${dbCount === 1 ? '' : 's'}`,
+         p.x + p.w / 2, p.y + 32);
+
+    drawMolecule(p);
+
+    // State indicator at bottom of molecule area
+    const stateY = p.y + p.h - 70;
+    const stateText = isSolid ? 'SOLID' : 'LIQUID';
+    const stateColor = isSolid ? '#455a64' : '#1976d2';
+    textAlign(CENTER, CENTER);
+    textSize(18);
+    textStyle(BOLD);
+    fill(stateColor);
+    text(stateText, p.x + p.w / 2, stateY);
+
+    textStyle(NORMAL);
+    textSize(11);
+    fill(COL_LABEL);
+    text(`at ${temperature}°C  (melts ~${p.mol.meltC}°C)`,
+         p.x + p.w / 2, stateY + 18);
+
+    // Description
+    textSize(10);
+    fill(COL_TEXT);
+    textAlign(CENTER, TOP);
+    text(p.mol.desc, p.x + 8, p.y + p.h - 32, p.w - 16, 28);
+  }
+}
+
+function drawMolecule(p) {
+  const mol = p.mol;
+  const carbons = p.carbons;
+  const isSolid = (temperature < mol.meltC);
+
+  // Solid -> draw chain in tidy form. Liquid -> add slight wobble for life.
+  let wobbleAmp = isSolid ? 0 : 2;
+  let t = millis() / 600;
+
+  // Draw bonds
+  strokeWeight(2.5);
+  for (let i = 0; i < carbons.length - 1; i++) {
+    const a = carbons[i];
+    const b = carbons[i + 1];
+    const ax = a.x + (isSolid ? 0 : Math.sin(t + i) * wobbleAmp);
+    const ay = a.y + (isSolid ? 0 : Math.cos(t + i * 0.7) * wobbleAmp);
+    const bx = b.x + (isSolid ? 0 : Math.sin(t + (i + 1)) * wobbleAmp);
+    const by = b.y + (isSolid ? 0 : Math.cos(t + (i + 1) * 0.7) * wobbleAmp);
+
+    // Is this a double bond? doubleBonds list contains the index of the SECOND carbon of the bond
+    const isDouble = mol.doubleBonds.includes(i + 1);
+    if (isDouble) {
+      stroke(COL_DOUBLE);
+      strokeWeight(2.5);
+      // Two parallel lines
+      const dx = bx - ax, dy = by - ay;
+      const len = Math.sqrt(dx * dx + dy * dy) || 1;
+      const nx = -dy / len * 3.5;
+      const ny = dx / len * 3.5;
+      line(ax + nx, ay + ny, bx + nx, by + ny);
+      line(ax - nx, ay - ny, bx - nx, by - ny);
+    } else {
+      stroke(COL_CARBON);
+      strokeWeight(2.5);
+      line(ax, ay, bx, by);
+    }
+  }
+
+  // Draw H atoms above and below each carbon (skip endpoints' extra H for clarity)
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(10);
+  for (let i = 0; i < carbons.length; i++) {
+    const c = carbons[i];
+    // Bond carbon adjacency
+    const prevIsDouble = i > 0 && mol.doubleBonds.includes(i);
+    const nextIsDouble = i < carbons.length - 1 && mol.doubleBonds.includes(i + 1);
+    // For double-bonded carbons → only ONE H above (not two); skip below
+    if (prevIsDouble || nextIsDouble) {
+      fill(COL_H_ATOM);
+      text('H', c.x, c.y - 14);
+    } else {
+      fill(COL_H_ATOM);
+      text('H', c.x, c.y - 14);
+      text('H', c.x, c.y + 14);
+    }
+  }
+
+  // Draw carbons (circles) on top
+  for (let i = 0; i < carbons.length; i++) {
+    const c = carbons[i];
+    const isSelected = selectedCarbon &&
+                       selectedCarbon.panelIdx === p.molIdx &&
+                       selectedCarbon.carbonIdx === i;
+    if (isSelected) {
+      noStroke();
+      fill(COL_ACCENT);
+      circle(c.x, c.y, 13);
+    }
+    noStroke();
+    fill(COL_CARBON);
+    circle(c.x, c.y, 7);
+    // 'C' label
+    fill(255);
+    textSize(8);
+    textAlign(CENTER, CENTER);
+    text('C', c.x, c.y);
+  }
+}
+
+function drawFoodRows() {
+  textAlign(CENTER, TOP);
+  for (const p of panelData) {
+    const foods = p.mol.foods;
+    const n = foods.length;
+    const rowW = p.w - 6;
+    const itemW = rowW / n;
+    for (let i = 0; i < n; i++) {
+      const food = foods[i];
+      const fx = p.x + 3 + i * itemW + itemW / 2;
+      const fy = foodRowTop + 8;
+      const isSel = selectedFood &&
+                    selectedFood.panelIdx === p.molIdx &&
+                    selectedFood.foodIdx === i;
+      // food icon background circle
+      noStroke();
+      if (isSel) {
+        fill(COL_ACCENT);
+        circle(fx, fy + 14, 34);
+      }
+      fill(COL_PANEL);
+      stroke(COL_PANEL_BD);
+      strokeWeight(1.5);
+      circle(fx, fy + 14, 28);
+      noStroke();
+      fill(COL_TITLE);
+      textSize(13);
+      textStyle(BOLD);
+      text(food.emoji, fx, fy + 10);
+      textStyle(NORMAL);
+      // food name (clamp inside item slot)
+      fill(COL_TEXT);
+      textSize(10);
+      text(food.name, fx - itemW / 2 + 2, fy + 34, itemW - 4, 24);
+    }
+  }
+}
+
+function drawControlsLabels() {
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text(`Temperature: ${temperature}°C`, 15, drawHeight + 26);
+  fill(COL_LABEL);
+  textSize(10);
+  text('0°C', 118, drawHeight + 40);
+  text('80°C', 335, drawHeight + 40);
+  textAlign(LEFT, CENTER);
+  fill(COL_LABEL);
+  text('Click a carbon to see bond info | Click a food to see fat % | "Pack Together" to compare chain stacking',
+       15, drawHeight + 60);
+  textSize(10);
+  text('Red double bond = rigid kink. Gray single bond = can rotate freely.',
+       15, drawHeight + 80);
+}
+
+function drawTooltip() {
+  if (selectedCarbon) {
+    const p = panelData[selectedCarbon.panelIdx];
+    const c = p.carbons[selectedCarbon.carbonIdx];
+    const isDouble = selectedCarbon.isDouble;
+    const msg1 = isDouble ? 'Double bond (C=C)' : 'Single bond (C-C)';
+    const msg2 = isDouble ? 'Rigid — creates a kink in the chain.'
+                          : 'Can rotate freely.';
+    drawTooltipBox(c.x, c.y - 30, msg1, msg2);
+  }
+  if (selectedFood) {
+    const p = panelData[selectedFood.panelIdx];
+    const food = p.mol.foods[selectedFood.foodIdx];
+    const rowW = p.w - 10;
+    const itemW = rowW / p.mol.foods.length;
+    const fx = p.x + 5 + selectedFood.foodIdx * itemW + itemW / 2;
+    const fy = foodRowTop + 22;
+    drawTooltipBox(fx, fy - 16, food.name,
+                   `${p.mol.short} fat | ${food.pct}% saturated`);
+  }
+}
+
+function drawTooltipBox(cx, cy, line1, line2) {
+  textSize(11);
+  const w1 = textWidth(line1);
+  const w2 = textWidth(line2);
+  const boxW = Math.max(w1, w2) + 16;
+  const boxH = 38;
+  let bx = cx - boxW / 2;
+  let by = cy - boxH - 6;
+  if (by < 60) by = cy + 14;
+  if (bx < 4) bx = 4;
+  if (bx + boxW > canvasWidth - 4) bx = canvasWidth - 4 - boxW;
+  noStroke();
+  fill(0, 0, 0, 30);
+  rect(bx + 2, by + 2, boxW, boxH, 5);
+  fill(COL_TOOLTIP_BG);
+  stroke(COL_ACCENT);
+  strokeWeight(1.5);
+  rect(bx, by, boxW, boxH, 5);
+  noStroke();
+  fill(COL_TEXT);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text(line1, bx + boxW / 2, by + 4);
+  textStyle(NORMAL);
+  fill(COL_LABEL);
+  text(line2, bx + boxW / 2, by + 20);
+}
+
+function drawPackOverlay() {
+  if (!packMode) return;
+  const elapsed = millis() - packStartMs;
+  if (elapsed > PACK_DURATION) {
+    packMode = false;
+    return;
+  }
+  const progress = Math.min(1, elapsed / 1500);  // animation fills in over 1.5s
+
+  // Dim background
+  noStroke();
+  let bg = color(0, 0, 0, 120);
+  fill(bg);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  fill(255);
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('How Do Fats Pack Together?', canvasWidth / 2, 20);
+
+  // Three columns: straight chains stack neatly, kinked chains do not
+  const colW = canvasWidth / 3;
+  for (let i = 0; i < 3; i++) {
+    const cx = colW * i + colW / 2;
+    const top = 60;
+    const mol = molecules[i];
+    fill(255);
+    textSize(13);
+    textStyle(BOLD);
+    text(mol.short, cx, top);
+
+    // Draw N stacked chain silhouettes
+    const stacks = 6;
+    const stackGap = mol.doubleBonds.length === 0 ? 14 : 26 + mol.doubleBonds.length * 6;
+    const animatedGap = lerp(40, stackGap, progress);
+    const chainLen = 100;
+    for (let s = 0; s < stacks; s++) {
+      const y = top + 50 + s * animatedGap;
+      drawStackChain(cx - chainLen / 2, y, chainLen, mol.doubleBonds.length, i);
+    }
+  }
+
+  // Overlay text near bottom
+  fill(COL_ACCENT);
+  textSize(15);
+  textStyle(BOLD);
+  textAlign(CENTER, BOTTOM);
+  text('Tight packing = SOLID.  Loose packing = LIQUID.', canvasWidth / 2, drawHeight - 36);
+  fill(255);
+  textSize(12);
+  textStyle(NORMAL);
+  text('The kink makes all the difference!', canvasWidth / 2, drawHeight - 16);
+}
+
+function drawStackChain(x, y, len, kinks, panelIdx) {
+  stroke(255);
+  strokeWeight(2);
+  noFill();
+  if (kinks === 0) {
+    line(x, y, x + len, y);
+  } else if (kinks === 1) {
+    // single kink in middle
+    line(x, y, x + len * 0.5, y - 8);
+    line(x + len * 0.5, y - 8, x + len, y);
+  } else {
+    // two kinks
+    line(x, y, x + len * 0.3, y - 8);
+    line(x + len * 0.3, y - 8, x + len * 0.6, y + 6);
+    line(x + len * 0.6, y + 6, x + len, y - 4);
+  }
+  // double-bond highlight as red dot at kink
+  if (kinks >= 1) {
+    noStroke();
+    fill(COL_DOUBLE);
+    circle(x + len * (kinks === 1 ? 0.5 : 0.3), y - 8, 4);
+    if (kinks === 2) circle(x + len * 0.6, y + 6, 4);
+  }
+}
+
+function mousePressed() {
+  // If in pack mode, click anywhere dismisses it
+  if (packMode) { packMode = false; return; }
+
+  // Check carbons
+  for (const p of panelData) {
+    for (let i = 0; i < p.carbons.length; i++) {
+      const c = p.carbons[i];
+      if (dist(mouseX, mouseY, c.x, c.y) < 8) {
+        // is this carbon part of a double bond? double bonds reference second-carbon index
+        const isDouble = p.mol.doubleBonds.includes(i) ||
+                         p.mol.doubleBonds.includes(i + 1);
+        selectedCarbon = { panelIdx: p.molIdx, carbonIdx: i, isDouble: isDouble };
+        selectedFood = null;
+        return;
+      }
+    }
+  }
+
+  // Check foods
+  for (const p of panelData) {
+    const foods = p.mol.foods;
+    const n = foods.length;
+    const rowW = p.w - 10;
+    const itemW = rowW / n;
+    for (let i = 0; i < n; i++) {
+      const fx = p.x + 5 + i * itemW + itemW / 2;
+      const fy = foodRowTop + 22;
+      if (dist(mouseX, mouseY, fx, fy) < 18) {
+        selectedFood = { panelIdx: p.molIdx, foodIdx: i };
+        selectedCarbon = null;
+        return;
+      }
+    }
+  }
+
+  // Click elsewhere clears selection
+  selectedCarbon = null;
+  selectedFood = null;
+}
+
+function togglePackMode() {
+  packMode = !packMode;
+  if (packMode) packStartMs = millis();
+}
+
+// ---- Responsive width helper ----
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    const w = container.getBoundingClientRect().width;
+    if (w > 0) canvasWidth = Math.min(900, Math.max(560, Math.floor(w)));
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

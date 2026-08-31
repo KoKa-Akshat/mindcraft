@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Foundations of Geometry - Concept Map</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #FAFAFA;
+        }
+        main {
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8px;
+        }
+        h1 {
+            color: #1565C0;
+            text-align: center;
+            font-size: 22px;
+            margin: 8px 0 4px 0;
+        }
+        .subtitle {
+            color: #757575;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        #network-container {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            background: radial-gradient(ellipse at center, #FFFFFF 0%, #E3F2FD 100%);
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .controls button {
+            padding: 7px 14px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .btn-all { background: #9E9E9E; color: white; }
+        .btn-undefined { background: #E53935; color: white; }
+        .btn-object { background: #1976D2; color: white; }
+        .btn-relationship { background: #43A047; color: white; }
+        .btn-reasoning { background: #FF9800; color: white; }
+        .controls button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 8px 0;
+            font-size: 11px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.15);
+        }
+        #info-panel {
+            display: none;
+            background: linear-gradient(135deg, #E3F2FD, #F3E5F5);
+            border: 2px solid #1976D2;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 10px;
+            position: relative;
+        }
+        #info-panel .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+        #info-panel .close-btn:hover {
+            color: #333;
+        }
+        #selected-concept {
+            color: #1565C0;
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+        #concept-category {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        #concept-definition {
+            color: #424242;
+            font-size: 13px;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .info-row {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #616161;
+        }
+        .info-row strong {
+            color: #424242;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="container">
+        <h1>Foundations of Geometry &mdash; Concept Map</h1>
+        <p class="subtitle">Click any concept to see its definition. Hover to highlight. Drag to rearrange.</p>
+
+        <div class="controls">
+            <button class="btn-all" onclick="resetView()">Show All</button>
+            <button class="btn-undefined" onclick="filterByGroup('undefined')">Undefined Terms</button>
+            <button class="btn-object" onclick="filterByGroup('object')">Basic Objects</button>
+            <button class="btn-relationship" onclick="filterByGroup('relationship')">Relationships</button>
+            <button class="btn-reasoning" onclick="filterByGroup('reasoning')">Reasoning</button>
+        </div>
+
+        <div id="network-container"></div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #1565C0;"></div>
+                <span>Center Hub</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #E53935;"></div>
+                <span>Undefined Terms</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #1976D2;"></div>
+                <span>Basic Objects</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #43A047;"></div>
+                <span>Relationships</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF9800;"></div>
+                <span>Reasoning</span>
+            </div>
+        </div>
+
+        <div id="info-panel">
+            <button class="close-btn" onclick="hideConceptInfo(); resetHighlight(); network.unselectAll();">&times;</button>
+            <div id="selected-concept"></div>
+            <span id="concept-category"></span>
+            <div id="concept-definition"></div>
+            <div class="info-row"><strong>Examples:</strong> <span id="concept-examples"></span></div>
+            <div class="info-row"><strong>Related Concepts:</strong> <span id="concept-related"></span></div>
+        </div>
+    </div>
+</main>
+
+    <script>// Chapter 01: Foundations of Geometry - Concept Map
+// Interactive vis-network graph showing concept dependencies
+// Uses hub-and-spoke layout with hierarchical ring organization
+
+// Concept definitions for tooltips and info panel
+const definitions = {
+    hub: {
+        label: 'Foundations of\nGeometry',
+        short: 'The foundation of geometry: undefined terms, basic objects, relationships, and reasoning.',
+        full: 'This chapter introduces the undefined terms (point, line, plane) and basic geometric objects that form the foundation of all geometry. It covers spatial relationships and both inductive and deductive reasoning skills.',
+        examples: 'All of geometry is built from these foundational concepts.',
+        group: 'hub'
+    },
+    point: {
+        label: 'Point',
+        short: 'A location in space with no size or dimension.',
+        full: 'A point represents a specific location in space. It has no length, width, or thickness\u2014it exists purely as a position. Points are named with capital letters (Point A, Point B).',
+        examples: 'A star in the night sky, an address on a map.',
+        group: 'undefined'
+    },
+    line: {
+        label: 'Line',
+        short: 'A straight path extending infinitely in both directions.',
+        full: 'A line is one-dimensional\u2014it has length but no thickness. It extends infinitely in both directions and is perfectly straight. Named by any two points on it.',
+        examples: 'The edge where two walls meet, the path of a laser beam extended both ways.',
+        group: 'undefined'
+    },
+    plane: {
+        label: 'Plane',
+        short: 'A flat surface extending infinitely in all directions.',
+        full: 'A plane is two-dimensional\u2014it has length and width but no thickness. It extends infinitely in all directions and is perfectly flat. Named by three non-collinear points.',
+        examples: 'A perfectly smooth tabletop, a calm ocean surface.',
+        group: 'undefined'
+    },
+    ray: {
+        label: 'Ray',
+        short: 'Starts at one endpoint, extends infinitely in one direction.',
+        full: 'A ray is part of a line that has one endpoint and extends infinitely in one direction. Written as AB with an arrow, where A is the endpoint.',
+        examples: 'A flashlight beam, a laser pointer.',
+        group: 'object'
+    },
+    segment: {
+        label: 'Line\nSegment',
+        short: 'Part of a line between two endpoints with measurable length.',
+        full: 'A line segment is the part of a line between two endpoints. Unlike a line or ray, it has definite, measurable length. The shortest path between two points.',
+        examples: 'The edge of a desk, a side of a triangle.',
+        group: 'object'
+    },
+    angle: {
+        label: 'Angle',
+        short: 'Formed by two rays sharing a common endpoint (vertex).',
+        full: 'An angle is formed by two rays that share a common endpoint called the vertex. Angles measure the amount of rotation between the rays, in degrees or radians.',
+        examples: 'The opening of a door, hands of a clock.',
+        group: 'object'
+    },
+    vertex: {
+        label: 'Vertex',
+        short: 'The common endpoint where two rays meet to form an angle.',
+        full: 'The vertex is the point where two rays meet to form an angle. It is the center of the angle and always the middle letter in three-point notation.',
+        examples: 'The hinge of a door, the corner of a room.',
+        group: 'object'
+    },
+    midpoint: {
+        label: 'Midpoint',
+        short: 'The point that divides a segment into two equal parts.',
+        full: 'The midpoint of a line segment is exactly halfway between the endpoints, dividing it into two congruent parts. Found by averaging coordinates.',
+        examples: 'The center of a bridge span, the middle of a ruler.',
+        group: 'object'
+    },
+    intersection: {
+        label: 'Intersection',
+        short: 'Where two or more geometric figures meet.',
+        full: 'An intersection is the set of points that two or more figures have in common. Two lines intersect at a point; two planes intersect at a line.',
+        examples: 'A crossroads, a pencil touching paper.',
+        group: 'object'
+    },
+    collinear: {
+        label: 'Collinear\nPoints',
+        short: 'Points that all lie on the same line.',
+        full: 'Points are collinear if they all lie on the same line. Any two points are always collinear, but three or more may or may not be.',
+        examples: 'Cities along a straight highway.',
+        group: 'relationship'
+    },
+    coplanar: {
+        label: 'Coplanar\nPoints',
+        short: 'Points that all lie on the same plane.',
+        full: 'Points are coplanar if they all lie on the same plane. Any three points are always coplanar, but four or more may or may not be.',
+        examples: 'Corners of a rectangular table.',
+        group: 'relationship'
+    },
+    parallel: {
+        label: 'Parallel\nLines',
+        short: 'Lines in the same plane that never intersect.',
+        full: 'Two lines are parallel if they lie in the same plane and never intersect. They are always the same distance apart and have the same slope.',
+        examples: 'Railroad tracks, opposite sides of a rectangle.',
+        group: 'relationship'
+    },
+    perpendicular: {
+        label: 'Perpendicular\nLines',
+        short: 'Lines that intersect at a right angle (90 degrees).',
+        full: 'Two lines are perpendicular if they intersect at a right angle (90 degrees). They form four right angles at the intersection.',
+        examples: 'Corner of a room, x and y axes.',
+        group: 'relationship'
+    },
+    skew: {
+        label: 'Skew\nLines',
+        short: 'Non-coplanar lines that never intersect.',
+        full: 'Skew lines do not lie in the same plane and never intersect. They are NOT parallel because parallel lines must be coplanar. Only exist in 3D space.',
+        examples: 'A highway overpass and the road beneath it.',
+        group: 'relationship'
+    },
+    inductive: {
+        label: 'Inductive\nReasoning',
+        short: 'Using observed patterns to form a general conclusion.',
+        full: 'Inductive reasoning is the process of reaching a general conclusion based on observing patterns in specific examples. Great for discovery but does not guarantee truth.',
+        examples: 'Noticing that the sum of two even numbers is always even.',
+        group: 'reasoning'
+    },
+    deductive: {
+        label: 'Deductive\nReasoning',
+        short: 'Using logic and accepted facts to reach a guaranteed conclusion.',
+        full: 'Deductive reasoning uses logic to draw conclusions from accepted facts, definitions, and proven statements. If premises are true and logic is correct, the conclusion must be true.',
+        examples: 'All rectangles have four right angles; ABCD is a rectangle; therefore ABCD has four right angles.',
+        group: 'reasoning'
+    },
+    conjecture: {
+        label: 'Conjecture',
+        short: 'An unproven statement believed to be true based on observations.',
+        full: 'A conjecture is an unproven statement that you believe to be true based on observations. Conjectures come from inductive reasoning and may become theorems once proven.',
+        examples: "Goldbach's Conjecture: every even number > 2 is the sum of two primes.",
+        group: 'reasoning'
+    },
+    counterexample: {
+        label: 'Counter-\nexample',
+        short: 'A specific example that proves a conjecture is false.',
+        full: 'A counterexample is a specific example that shows a conjecture is false. Just one counterexample is enough to disprove any conjecture.',
+        examples: '"All primes are odd" is disproved by 2 (prime and even).',
+        group: 'reasoning'
+    }
+};
+
+// Fixed positions for hub-and-spoke layout
+// Center at (0, 0), rings at increasing radii
+// y-offsets on horizontal edges avoid vis-network label rendering bug
+const nodePositions = {
+    // Center hub
+    hub:            { x: 0,    y: 0 },
+
+    // First ring - Undefined Terms (radius ~160)
+    point:          { x: -180, y: -80 },
+    line:           { x: 0,    y: -160 },
+    plane:          { x: 180,  y: -80 },
+
+    // Second ring - Basic Objects (radius ~300)
+    ray:            { x: -180, y: -300 },
+    segment:        { x: 60,   y: -310 },
+    angle:          { x: -320, y: -310 },
+    vertex:         { x: -420, y: -190 },
+    midpoint:       { x: 220,  y: -310 },
+    intersection:   { x: 310,  y: -190 },
+
+    // Third ring - Point & Line Relationships (radius ~400)
+    collinear:      { x: -120, y: 170 },
+    coplanar:       { x: 120,  y: 170 },
+    parallel:       { x: -320, y: 100 },
+    perpendicular:  { x: -180, y: 290 },
+    skew:           { x: 320,  y: 100 },
+
+    // Fourth ring - Reasoning (radius ~450)
+    inductive:      { x: -400, y: 320 },
+    deductive:      { x: 400,  y: 320 },
+    conjecture:     { x: -280, y: 450 },
+    counterexample: { x: -80,  y: 490 }
+};
+
+// Group styling
+const groupStyles = {
+    hub: {
+        color: { background: '#1565C0', border: '#0D47A1', highlight: { background: '#1976D2', border: '#0D47A1' } },
+        font: { color: '#FFFFFF', size: 16, bold: true },
+        size: 45,
+        shape: 'circle'
+    },
+    undefined: {
+        color: { background: '#E53935', border: '#C62828', highlight: { background: '#EF5350', border: '#C62828' } },
+        font: { color: '#FFFFFF', size: 14, bold: true },
+        size: 32,
+        shape: 'circle'
+    },
+    object: {
+        color: { background: '#1976D2', border: '#1565C0', highlight: { background: '#42A5F5', border: '#1565C0' } },
+        font: { color: '#FFFFFF', size: 12 },
+        size: 28,
+        shape: 'circle'
+    },
+    relationship: {
+        color: { background: '#43A047', border: '#2E7D32', highlight: { background: '#66BB6A', border: '#2E7D32' } },
+        font: { color: '#FFFFFF', size: 11 },
+        size: 28,
+        shape: 'circle'
+    },
+    reasoning: {
+        color: { background: '#FF9800', border: '#F57C00', highlight: { background: '#FFB74D', border: '#F57C00' } },
+        font: { color: '#FFFFFF', size: 11 },
+        size: 28,
+        shape: 'circle'
+    }
+};
+
+// Build nodes array
+function buildNodes() {
+    const nodeArray = [];
+    for (const [id, def] of Object.entries(definitions)) {
+        const style = groupStyles[def.group];
+        const pos = nodePositions[id];
+        nodeArray.push({
+            id: id,
+            label: def.label,
+            title: def.short,
+            x: pos.x,
+            y: pos.y,
+            color: style.color,
+            font: style.font,
+            size: style.size,
+            shape: style.shape,
+            borderWidth: 3,
+            shadow: true,
+            group: def.group
+        });
+    }
+    return nodeArray;
+}
+
+// Edge definitions
+const edgeData = [
+    // Hub to undefined terms
+    { from: 'hub', to: 'point',  width: 3, color: '#888888' },
+    { from: 'hub', to: 'line',   width: 3, color: '#888888' },
+    { from: 'hub', to: 'plane',  width: 3, color: '#888888' },
+
+    // Line to derived objects
+    { from: 'line',    to: 'ray',          label: 'defines', color: '#AAAAAA' },
+    { from: 'line',    to: 'segment',      label: 'defines', color: '#AAAAAA' },
+    { from: 'ray',     to: 'angle',        label: 'forms',   color: '#AAAAAA' },
+    { from: 'angle',   to: 'vertex',       label: 'has',     color: '#AAAAAA' },
+    { from: 'segment', to: 'midpoint',     label: 'has',     color: '#AAAAAA' },
+
+    // Intersection connections
+    { from: 'line',  to: 'intersection', label: 'can have', color: '#AAAAAA' },
+    { from: 'plane', to: 'intersection', label: 'can have', color: '#AAAAAA' },
+
+    // Point relationships
+    { from: 'line',  to: 'collinear', label: 'defines',  color: '#AAAAAA' },
+    { from: 'plane', to: 'coplanar',  label: 'defines',  color: '#AAAAAA' },
+
+    // Line relationships
+    { from: 'line',  to: 'parallel',      label: 'can be',  color: '#AAAAAA' },
+    { from: 'line',  to: 'perpendicular', label: 'can be',  color: '#AAAAAA' },
+    { from: 'angle', to: 'perpendicular', label: '90\u00b0',     color: '#AAAAAA', dashes: true },
+    { from: 'line',  to: 'skew',          label: 'can be',  color: '#AAAAAA' },
+    { from: 'plane', to: 'skew',          label: 'not in',  color: '#AAAAAA', dashes: true },
+
+    // Hub to reasoning
+    { from: 'hub', to: 'inductive', width: 3, color: '#888888' },
+    { from: 'hub', to: 'deductive', width: 3, color: '#888888' },
+
+    // Reasoning chain
+    { from: 'inductive',  to: 'conjecture',     label: 'produces', color: '#AAAAAA' },
+    { from: 'conjecture', to: 'counterexample',  label: 'disproved by', color: '#AAAAAA' }
+];
+
+// Build edges array
+function buildEdges() {
+    return edgeData.map((e, i) => ({
+        id: 'e' + i,
+        from: e.from,
+        to: e.to,
+        label: e.label || '',
+        width: e.width || 2,
+        color: { color: e.color, highlight: e.color },
+        arrows: e.from === 'hub' ? '' : 'to',
+        dashes: e.dashes || false,
+        font: { size: 10, color: '#666666', strokeWidth: 2, strokeColor: '#FFFFFF' },
+        smooth: { type: 'curvedCW', roundness: 0.15 }
+    }));
+}
+
+// Network instance
+let network = null;
+let allNodes = null;
+let allEdges = null;
+
+// Initialize the network
+function initNetwork() {
+    const container = document.getElementById('network-container');
+
+    allNodes = new vis.DataSet(buildNodes());
+    allEdges = new vis.DataSet(buildEdges());
+
+    const data = { nodes: allNodes, edges: allEdges };
+
+    const options = {
+        physics: {
+            enabled: false
+        },
+        layout: {
+            randomSeed: 42
+        },
+        nodes: {
+            borderWidth: 3,
+            shadow: {
+                enabled: true,
+                color: 'rgba(0,0,0,0.2)',
+                size: 8,
+                x: 3,
+                y: 3
+            }
+        },
+        edges: {
+            smooth: {
+                type: 'curvedCW',
+                roundness: 0.15
+            }
+        },
+        interaction: {
+            hover: true,
+            tooltipDelay: 150,
+            navigationButtons: false,
+            keyboard: true,
+            dragNodes: true,
+            zoomView: true,
+            dragView: true
+        }
+    };
+
+    network = new vis.Network(container, data, options);
+
+    // Fit to view after stabilization
+    network.once('afterDrawing', function() {
+        network.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+    });
+
+    // Click handler: show info panel and highlight connections
+    network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+            const nodeId = params.nodes[0];
+            showConceptInfo(nodeId);
+            highlightConnections(nodeId);
+        } else {
+            hideConceptInfo();
+            resetHighlight();
+        }
+    });
+
+    // Hover handler: enlarge node
+    network.on('hoverNode', function(params) {
+        const nodeId = params.node;
+        allNodes.update({ id: nodeId, size: (groupStyles[definitions[nodeId].group].size) * 1.3 });
+    });
+
+    network.on('blurNode', function(params) {
+        const nodeId = params.node;
+        // Only reset if not the currently selected node
+        const selected = network.getSelectedNodes();
+        if (!selected.includes(nodeId)) {
+            allNodes.update({ id: nodeId, size: groupStyles[definitions[nodeId].group].size });
+        }
+    });
+}
+
+// Show concept info in panel
+function showConceptInfo(nodeId) {
+    const def = definitions[nodeId];
+    if (!def) return;
+
+    document.getElementById('selected-concept').textContent = def.label.replace(/\n/g, ' ');
+    document.getElementById('concept-definition').textContent = def.full;
+    document.getElementById('concept-examples').textContent = def.examples;
+
+    // Show related concepts
+    const connected = network.getConnectedNodes(nodeId);
+    const relatedNames = connected.map(id => definitions[id].label.replace(/\n/g, ' '));
+    document.getElementById('concept-related').textContent = relatedNames.join(', ') || 'None';
+
+    // Category badge
+    const badge = document.getElementById('concept-category');
+    const groupLabels = {
+        hub: 'Center Hub',
+        undefined: 'Undefined Term',
+        object: 'Basic Object',
+        relationship: 'Relationship',
+        reasoning: 'Reasoning'
+    };
+    const groupColors = {
+        hub: '#1565C0',
+        undefined: '#E53935',
+        object: '#1976D2',
+        relationship: '#43A047',
+        reasoning: '#FF9800'
+    };
+    badge.textContent = groupLabels[def.group];
+    badge.style.background = groupColors[def.group];
+
+    document.getElementById('info-panel').style.display = 'block';
+}
+
+function hideConceptInfo() {
+    document.getElementById('info-panel').style.display = 'none';
+}
+
+// Highlight connected nodes, dim others
+function highlightConnections(nodeId) {
+    const connectedNodes = network.getConnectedNodes(nodeId);
+    connectedNodes.push(nodeId);
+    const connectedEdges = network.getConnectedEdges(nodeId);
+
+    // Dim all nodes not connected
+    const updates = [];
+    allNodes.forEach(function(node) {
+        if (connectedNodes.includes(node.id)) {
+            const style = groupStyles[definitions[node.id].group];
+            updates.push({
+                id: node.id,
+                color: style.color,
+                font: { ...style.font, color: '#FFFFFF' },
+                opacity: 1.0
+            });
+        } else {
+            updates.push({
+                id: node.id,
+                opacity: 0.25
+            });
+        }
+    });
+    allNodes.update(updates);
+
+    // Dim edges not connected
+    const edgeUpdates = [];
+    allEdges.forEach(function(edge) {
+        if (connectedEdges.includes(edge.id)) {
+            edgeUpdates.push({ id: edge.id, hidden: false, width: 3 });
+        } else {
+            edgeUpdates.push({ id: edge.id, hidden: false, width: 0.5, color: { color: '#DDDDDD' } });
+        }
+    });
+    allEdges.update(edgeUpdates);
+}
+
+// Reset all highlighting
+function resetHighlight() {
+    const nodeUpdates = [];
+    allNodes.forEach(function(node) {
+        const style = groupStyles[definitions[node.id].group];
+        nodeUpdates.push({
+            id: node.id,
+            color: style.color,
+            font: style.font,
+            size: style.size,
+            opacity: 1.0
+        });
+    });
+    allNodes.update(nodeUpdates);
+
+    // Reset edges
+    const freshEdges = buildEdges();
+    allEdges.update(freshEdges);
+}
+
+// Filter functions for buttons
+function filterByGroup(groupName) {
+    resetHighlight();
+    hideConceptInfo();
+
+    if (groupName === 'all') {
+        network.fit({ animation: { duration: 400 } });
+        return;
+    }
+
+    // Select all nodes in the group
+    const groupNodeIds = [];
+    for (const [id, def] of Object.entries(definitions)) {
+        if (def.group === groupName) {
+            groupNodeIds.push(id);
+        }
+    }
+    // Also include the hub for context
+    if (!groupNodeIds.includes('hub')) {
+        groupNodeIds.push('hub');
+    }
+
+    network.selectNodes(groupNodeIds);
+
+    // Highlight selected, dim others
+    const nodeUpdates = [];
+    allNodes.forEach(function(node) {
+        if (groupNodeIds.includes(node.id)) {
+            nodeUpdates.push({ id: node.id, opacity: 1.0 });
+        } else {
+            nodeUpdates.push({ id: node.id, opacity: 0.15 });
+        }
+    });
+    allNodes.update(nodeUpdates);
+
+    // Dim unrelated edges
+    const edgeUpdates = [];
+    allEdges.forEach(function(edge) {
+        const fromIn = groupNodeIds.includes(edge.from);
+        const toIn = groupNodeIds.includes(edge.to);
+        if (fromIn && toIn) {
+            edgeUpdates.push({ id: edge.id, width: 3 });
+        } else {
+            edgeUpdates.push({ id: edge.id, width: 0.5, color: { color: '#DDDDDD' } });
+        }
+    });
+    allEdges.update(edgeUpdates);
+}
+
+// Reset view
+function resetView() {
+    resetHighlight();
+    hideConceptInfo();
+    network.unselectAll();
+    network.fit({ animation: { duration: 400 } });
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initNetwork);
+</script>
+</body>
+</html>

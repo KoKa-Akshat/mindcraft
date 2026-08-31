@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relative Velocity Solver MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Relative Velocity Problem Solver MicroSim
+// Visualize and solve relative velocity problems in 2D
+
+let canvasWidth = 900;
+let drawHeight = 420;
+let controlHeight = 130;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 15;
+
+// Object A parameters
+let speedA = 10; // m/s
+let angleA = 0; // degrees (0 = east)
+
+// Object B parameters
+let speedB = 8; // m/s
+let angleB = 90; // degrees
+
+// Animation state
+let objectA = null;
+let objectB = null;
+let isAnimating = false;
+let time = 0;
+
+// Display
+let scale = 12; // pixels per (m/s) for vectors
+let originX, originY;
+
+// Presets
+let currentPreset = 0;
+const presets = [
+    { name: 'Custom', speedA: 10, angleA: 0, speedB: 8, angleB: 90 },
+    { name: 'Chase', speedA: 15, angleA: 45, speedB: 10, angleB: 45 },
+    { name: 'Head-on', speedA: 10, angleA: 0, speedB: 10, angleB: 180 },
+    { name: 'Perpendicular', speedA: 8, angleA: 0, speedB: 8, angleB: 90 }
+];
+
+// UI Controls
+let speedASlider, angleASlider, speedBSlider, angleBSlider;
+let animateButton, resetButton, presetSelect;
+let showComponentsCheckbox, showFromBCheckbox;
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    originX = 280;
+    originY = drawHeight / 2;
+
+    // Preset dropdown
+    presetSelect = createSelect();
+    presetSelect.position(margin, drawHeight + 15);
+    presetSelect.style('font-size', '12px');
+    for (let p of presets) {
+        presetSelect.option(p.name);
+    }
+    presetSelect.changed(applyPreset);
+
+    // Buttons
+    animateButton = createButton('Animate');
+    animateButton.position(margin + 105, drawHeight + 15);
+    animateButton.mousePressed(toggleAnimation);
+    animateButton.style('font-size', '12px');
+    animateButton.style('padding', '5px 12px');
+
+    resetButton = createButton('Reset');
+    resetButton.position(margin + 180, drawHeight + 15);
+    resetButton.mousePressed(resetSimulation);
+    resetButton.style('font-size', '12px');
+    resetButton.style('padding', '5px 12px');
+
+    // Object A sliders
+    speedASlider = createSlider(0, 20, 10, 0.5);
+    speedASlider.position(340, drawHeight + 15);
+    speedASlider.style('width', '80px');
+
+    angleASlider = createSlider(0, 360, 0, 5);
+    angleASlider.position(340, drawHeight + 42);
+    angleASlider.style('width', '80px');
+
+    // Object B sliders
+    speedBSlider = createSlider(0, 20, 8, 0.5);
+    speedBSlider.position(340, drawHeight + 69);
+    speedBSlider.style('width', '80px');
+
+    angleBSlider = createSlider(0, 360, 90, 5);
+    angleBSlider.position(340, drawHeight + 96);
+    angleBSlider.style('width', '80px');
+
+    // Checkboxes
+    showComponentsCheckbox = createCheckbox('Components', false);
+    showComponentsCheckbox.position(530, drawHeight + 15);
+    showComponentsCheckbox.style('font-size', '11px');
+
+    showFromBCheckbox = createCheckbox('View from B', false);
+    showFromBCheckbox.position(530, drawHeight + 38);
+    showFromBCheckbox.style('font-size', '11px');
+
+    resetSimulation();
+
+    describe('Relative velocity problem solver showing two objects with velocity vectors and calculating their relative velocity.', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+    originX = min(280, canvasWidth / 3);
+    originY = drawHeight / 2;
+
+    // Update from sliders when not animating
+    if (!isAnimating) {
+        speedA = speedASlider.value();
+        angleA = angleASlider.value();
+        speedB = speedBSlider.value();
+        angleB = angleBSlider.value();
+    }
+
+    // Background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    noStroke();
+    textSize(18);
+    textAlign(CENTER, TOP);
+    text('Relative Velocity: v_AB = v_A - v_B', canvasWidth / 2 - 100, 8);
+
+    // Draw main visualization
+    drawVisualization();
+
+    // Update animation
+    if (isAnimating) {
+        updateAnimation();
+    }
+
+    // Draw control labels
+    drawControlLabels();
+
+    // Draw solution panel
+    drawSolutionPanel();
+}
+
+function drawVisualization() {
+    // Grid
+    stroke(220);
+    strokeWeight(1);
+    for (let x = originX % 50; x < canvasWidth - 180; x += 50) {
+        line(x, 40, x, drawHeight - 20);
+    }
+    for (let y = 40; y < drawHeight - 20; y += 50) {
+        line(50, y, canvasWidth - 180, y);
+    }
+
+    // Axes
+    stroke(150);
+    strokeWeight(2);
+    line(50, originY, canvasWidth - 180, originY);
+    line(originX, 40, originX, drawHeight - 20);
+
+    // Axis labels
+    fill(100);
+    textSize(10);
+    textAlign(CENTER, TOP);
+    noStroke();
+    text('East (+x)', canvasWidth - 200, originY + 5);
+    textAlign(LEFT, CENTER);
+    text('North (+y)', originX + 5, 50);
+
+    // Calculate velocity components
+    let vAx = speedA * cos(radians(angleA));
+    let vAy = speedA * sin(radians(angleA));
+    let vBx = speedB * cos(radians(angleB));
+    let vBy = speedB * sin(radians(angleB));
+
+    // Relative velocity: v_AB = v_A - v_B
+    let vABx = vAx - vBx;
+    let vABy = vAy - vBy;
+    let vABmag = sqrt(vABx * vABx + vABy * vABy);
+    let vABangle = degrees(atan2(vABy, vABx));
+    if (vABangle < 0) vABangle += 360;
+
+    // Draw velocity vectors from origin
+    if (!showFromBCheckbox.checked()) {
+        // Normal view: both from origin
+        // Object A velocity (blue)
+        drawVelocityVector(originX, originY, vAx, vAy, [50, 100, 255], 'v_A');
+
+        // Object B velocity (red)
+        drawVelocityVector(originX, originY, vBx, vBy, [255, 80, 80], 'v_B');
+
+        // Relative velocity (purple, dashed)
+        drawVelocityVector(originX, originY, vABx, vABy, [180, 50, 180], 'v_AB', true);
+
+        // Show components if checked
+        if (showComponentsCheckbox.checked()) {
+            drawComponents(originX, originY, vAx, vAy, [50, 100, 255]);
+            drawComponents(originX, originY, vBx, vBy, [255, 80, 80]);
+        }
+
+        // Vector subtraction diagram
+        drawSubtractionDiagram(vAx, vAy, vBx, vBy);
+    } else {
+        // View from B's perspective: B is stationary at origin
+        // Only show relative velocity of A
+        drawVelocityVector(originX, originY, vABx, vABy, [180, 50, 180], 'v_AB (A relative to B)');
+
+        // B is stationary (marked with circle)
+        fill(255, 80, 80);
+        stroke(200, 50, 50);
+        strokeWeight(2);
+        ellipse(originX, originY, 20, 20);
+        fill(255);
+        textSize(12);
+        textAlign(CENTER, CENTER);
+        noStroke();
+        text('B', originX, originY);
+
+        // Show A's position if animating
+        if (objectA) {
+            let relX = objectA.x - objectB.x;
+            let relY = objectA.y - objectB.y;
+            let px = originX + relX * 3;
+            let py = originY - relY * 3;
+
+            fill(50, 100, 255);
+            stroke(30, 70, 200);
+            strokeWeight(2);
+            ellipse(px, py, 20, 20);
+            fill(255);
+            textSize(12);
+            textAlign(CENTER, CENTER);
+            noStroke();
+            text('A', px, py);
+        }
+
+        // Note
+        fill(100);
+        textSize(10);
+        textAlign(LEFT, BOTTOM);
+        text('From B\'s view, B is stationary', 60, drawHeight - 25);
+        text('A moves with velocity v_AB', 60, drawHeight - 10);
+    }
+
+    // Draw animated objects if animating (normal view only)
+    if (isAnimating && !showFromBCheckbox.checked()) {
+        drawAnimatedObjects();
+    }
+}
+
+function drawVelocityVector(ox, oy, vx, vy, col, label, dashed = false) {
+    let endX = ox + vx * scale;
+    let endY = oy - vy * scale; // Flip y for screen coords
+
+    stroke(col[0], col[1], col[2]);
+    strokeWeight(3);
+    if (dashed) {
+        setLineDash([8, 4]);
+    }
+    line(ox, oy, endX, endY);
+    setLineDash([]);
+
+    // Arrowhead
+    let angle = atan2(oy - endY, endX - ox);
+    fill(col[0], col[1], col[2]);
+    noStroke();
+    push();
+    translate(endX, endY);
+    rotate(angle);
+    triangle(0, 0, -12, -5, -12, 5);
+    pop();
+
+    // Label
+    textSize(11);
+    fill(col[0], col[1], col[2]);
+    textAlign(LEFT, CENTER);
+    noStroke();
+    let labelX = endX + 8;
+    let labelY = endY;
+    text(label, labelX, labelY);
+}
+
+function drawComponents(ox, oy, vx, vy, col) {
+    // X component
+    stroke(col[0], col[1], col[2], 100);
+    strokeWeight(1);
+    setLineDash([3, 3]);
+    line(ox, oy, ox + vx * scale, oy);
+    line(ox + vx * scale, oy, ox + vx * scale, oy - vy * scale);
+    setLineDash([]);
+}
+
+function drawSubtractionDiagram(vAx, vAy, vBx, vBy) {
+    // Small diagram showing v_A - v_B = v_AB
+    let diagX = canvasWidth - 160;
+    let diagY = 60;
+
+    fill(255, 255, 255, 230);
+    stroke(200);
+    strokeWeight(1);
+    rect(diagX - 10, diagY - 10, 150, 130, 8);
+
+    textSize(11);
+    fill(0);
+    textAlign(LEFT, TOP);
+    noStroke();
+    text('Vector Subtraction:', diagX, diagY);
+
+    let baseX = diagX + 30;
+    let baseY = diagY + 80;
+    let dScale = 5;
+
+    // Draw v_A
+    stroke(50, 100, 255);
+    strokeWeight(2);
+    line(baseX, baseY, baseX + vAx * dScale, baseY - vAy * dScale);
+
+    // Draw -v_B from tip of v_A
+    let tipAx = baseX + vAx * dScale;
+    let tipAy = baseY - vAy * dScale;
+    stroke(255, 80, 80);
+    line(tipAx, tipAy, tipAx - vBx * dScale, tipAy + vBy * dScale);
+
+    // Draw v_AB (resultant)
+    let endX = tipAx - vBx * dScale;
+    let endY = tipAy + vBy * dScale;
+    stroke(180, 50, 180);
+    setLineDash([4, 2]);
+    line(baseX, baseY, endX, endY);
+    setLineDash([]);
+
+    // Legend
+    textSize(9);
+    fill(50, 100, 255);
+    text('\u2014 v_A', diagX, diagY + 95);
+    fill(255, 80, 80);
+    text('\u2014 -v_B', diagX + 40, diagY + 95);
+    fill(180, 50, 180);
+    text('-- v_AB', diagX + 85, diagY + 95);
+}
+
+function drawAnimatedObjects() {
+    if (objectA && objectB) {
+        // Object A (blue)
+        let pAx = originX + objectA.x * 3;
+        let pAy = originY - objectA.y * 3;
+        fill(50, 100, 255);
+        stroke(30, 70, 200);
+        strokeWeight(2);
+        ellipse(pAx, pAy, 18, 18);
+        fill(255);
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        noStroke();
+        text('A', pAx, pAy);
+
+        // Object B (red)
+        let pBx = originX + objectB.x * 3;
+        let pBy = originY - objectB.y * 3;
+        fill(255, 80, 80);
+        stroke(200, 50, 50);
+        strokeWeight(2);
+        ellipse(pBx, pBy, 18, 18);
+        fill(255);
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        noStroke();
+        text('B', pBx, pBy);
+
+        // Trails
+        stroke(50, 100, 255, 100);
+        strokeWeight(1);
+        for (let i = 1; i < objectA.trail.length; i++) {
+            let p1 = objectA.trail[i - 1];
+            let p2 = objectA.trail[i];
+            line(originX + p1.x * 3, originY - p1.y * 3, originX + p2.x * 3, originY - p2.y * 3);
+        }
+        stroke(255, 80, 80, 100);
+        for (let i = 1; i < objectB.trail.length; i++) {
+            let p1 = objectB.trail[i - 1];
+            let p2 = objectB.trail[i];
+            line(originX + p1.x * 3, originY - p1.y * 3, originX + p2.x * 3, originY - p2.y * 3);
+        }
+    }
+}
+
+function drawSolutionPanel() {
+    let panelX = canvasWidth - 160;
+    let panelY = 200;
+
+    fill(255, 255, 255, 240);
+    stroke(200);
+    strokeWeight(1);
+    rect(panelX - 10, panelY, 150, 180, 8);
+
+    // Calculate values
+    let vAx = speedA * cos(radians(angleA));
+    let vAy = speedA * sin(radians(angleA));
+    let vBx = speedB * cos(radians(angleB));
+    let vBy = speedB * sin(radians(angleB));
+    let vABx = vAx - vBx;
+    let vABy = vAy - vBy;
+    let vABmag = sqrt(vABx * vABx + vABy * vABy);
+    let vABangle = degrees(atan2(vABy, vABx));
+    if (vABangle < 0) vABangle += 360;
+
+    textSize(11);
+    textAlign(LEFT, TOP);
+    noStroke();
+
+    let y = panelY + 8;
+    let lineH = 16;
+
+    fill(0);
+    text('Solution:', panelX, y);
+    y += lineH + 4;
+
+    fill(50, 100, 255);
+    text('v_Ax = ' + vAx.toFixed(1), panelX, y);
+    y += lineH;
+    text('v_Ay = ' + vAy.toFixed(1), panelX, y);
+    y += lineH + 4;
+
+    fill(255, 80, 80);
+    text('v_Bx = ' + vBx.toFixed(1), panelX, y);
+    y += lineH;
+    text('v_By = ' + vBy.toFixed(1), panelX, y);
+    y += lineH + 4;
+
+    fill(180, 50, 180);
+    text('v_ABx = ' + vABx.toFixed(1), panelX, y);
+    y += lineH;
+    text('v_ABy = ' + vABy.toFixed(1), panelX, y);
+    y += lineH + 4;
+
+    fill(0);
+    text('|v_AB| = ' + vABmag.toFixed(1) + ' m/s', panelX, y);
+    y += lineH;
+    text('\u03B8 = ' + vABangle.toFixed(1) + '\u00B0', panelX, y);
+}
+
+function drawControlLabels() {
+    fill(0);
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    noStroke();
+
+    // Object A labels (blue)
+    fill(50, 100, 255);
+    text('A speed: ' + speedA.toFixed(1), 250, drawHeight + 25);
+    text('A angle: ' + angleA + '\u00B0', 250, drawHeight + 52);
+
+    // Object B labels (red)
+    fill(255, 80, 80);
+    text('B speed: ' + speedB.toFixed(1), 250, drawHeight + 79);
+    text('B angle: ' + angleB + '\u00B0', 250, drawHeight + 106);
+
+    // Status
+    fill(0);
+    textSize(11);
+    if (isAnimating) {
+        text('t = ' + time.toFixed(1) + ' s', 530, drawHeight + 65);
+    }
+}
+
+function setLineDash(list) {
+    drawingContext.setLineDash(list);
+}
+
+function applyPreset() {
+    let selected = presetSelect.value();
+    for (let p of presets) {
+        if (p.name === selected) {
+            speedASlider.value(p.speedA);
+            angleASlider.value(p.angleA);
+            speedBSlider.value(p.speedB);
+            angleBSlider.value(p.angleB);
+            break;
+        }
+    }
+    resetSimulation();
+}
+
+function toggleAnimation() {
+    if (isAnimating) {
+        isAnimating = false;
+        animateButton.html('Animate');
+    } else {
+        // Initialize objects at origin
+        objectA = { x: 0, y: 0, trail: [] };
+        objectB = { x: 0, y: 0, trail: [] };
+        time = 0;
+        isAnimating = true;
+        animateButton.html('Stop');
+    }
+}
+
+function updateAnimation() {
+    let dt = 1 / 60;
+    time += dt;
+
+    // Move objects according to their velocities
+    let vAx = speedA * cos(radians(angleA));
+    let vAy = speedA * sin(radians(angleA));
+    let vBx = speedB * cos(radians(angleB));
+    let vBy = speedB * sin(radians(angleB));
+
+    objectA.x += vAx * dt;
+    objectA.y += vAy * dt;
+    objectB.x += vBx * dt;
+    objectB.y += vBy * dt;
+
+    // Record trails
+    if (frameCount % 3 === 0) {
+        objectA.trail.push({ x: objectA.x, y: objectA.y });
+        objectB.trail.push({ x: objectB.x, y: objectB.y });
+        // Limit trail length
+        if (objectA.trail.length > 100) objectA.trail.shift();
+        if (objectB.trail.length > 100) objectB.trail.shift();
+    }
+
+    // Reset if objects go too far
+    if (time > 10) {
+        resetSimulation();
+    }
+}
+
+function resetSimulation() {
+    objectA = null;
+    objectB = null;
+    time = 0;
+    isAnimating = false;
+    animateButton.html('Animate');
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = min(container.offsetWidth, 950);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

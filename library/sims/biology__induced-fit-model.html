@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Enzyme Kinetics Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Enzyme Kinetics Explorer MicroSim (p5.js)
+// Visualizes Michaelis-Menten kinetics with inhibitor overlays and a draggable probe dot
+
+let canvasWidth = 700;
+const drawHeight = 450;
+const controlHeight = 160;
+const canvasHeight = drawHeight + controlHeight;
+const margin = 24;
+const sliderLeftMargin = 200;
+const buttonYoffset = drawHeight + 117;
+
+let vmaxSlider;
+let kmSlider;
+let inhibitorSlider;
+let compToggle;
+let noncompToggle;
+let startPauseButton;
+let resetButton;
+
+let isPaused = true;
+let autoDirection = 1;
+let probeS = 2; // substrate concentration for probe (umol/L)
+let isDraggingProbe = false;
+const graphBounds = { left: 0, right: 0, top: 0, bottom: 0 };
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  vmaxSlider = createSlider(1, 100, 50, 1);
+  kmSlider = createSlider(0.1, 10, 2, 0.1);
+  inhibitorSlider = createSlider(0, 3, 0, 0.1);
+
+  compToggle = createCheckbox('', false);
+  compToggle.attribute('aria-label', 'Add competitive inhibitor');
+  noncompToggle = createCheckbox('', false);
+  noncompToggle.attribute('aria-label', 'Add noncompetitive inhibitor');
+
+  startPauseButton = createButton('Start');
+  startPauseButton.mousePressed(toggleSimulation);
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetParameters);
+
+  positionControls();
+
+  describe('Interactive enzyme kinetics graph with adjustable Vmax and Km, draggable probe dot, and optional inhibitor overlays.');
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  const vmax = vmaxSlider.value();
+  const km = kmSlider.value();
+  const inhibitorFactor = inhibitorSlider.value();
+  const maxSubstrate = km * 10;
+  const maxVelocity = vmax * 1.2;
+
+  probeS = constrain(probeS, 0, maxSubstrate);
+  updateProbeAuto(maxSubstrate);
+
+  drawTitle();
+  drawGraph(vmax, km, inhibitorFactor, maxSubstrate, maxVelocity);
+  const probeVelocity = michaelisMenten(probeS, vmax, km);
+  const percentVmax = vmax === 0 ? 0 : (probeVelocity / vmax) * 100;
+  drawInfoPanel(vmax, km, inhibitorFactor, probeVelocity, percentVmax, maxSubstrate);
+  drawControlLabels();
+}
+
+function drawTitle() {
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Enzyme Kinetics Explorer', canvasWidth / 2, 12);
+  textSize(14);
+  text('Adjust Vmax, Km, and inhibitors to interpret Michaelis-Menten behavior', canvasWidth / 2, 40);
+}
+
+function drawGraph(vmax, km, inhibitorFactor, maxSubstrate, maxVelocity) {
+  const panelX = margin;
+  const panelWidth = canvasWidth * 0.6;
+  const panelY = 100; // lowered 30px to provide extra separation from the legend
+  const panelHeight = drawHeight - panelY - 50;
+
+  push();
+  stroke(210);
+  fill(255);
+  rect(panelX - 12, panelY - 30, panelWidth + 24, panelHeight + 40, 14);
+  pop();
+
+  const graphShift = 25;
+  const axisLeft = panelX + graphShift;
+  const axisRight = axisLeft + (panelWidth - 35);
+  const axisTop = panelY;
+  const axisBottom = panelY + panelHeight - 20;
+
+  drawAxes(axisLeft, axisRight, axisTop, axisBottom, maxSubstrate, maxVelocity);
+  drawReferenceLines(axisLeft, axisRight, axisTop, axisBottom, vmax, km, maxVelocity, maxSubstrate);
+
+  const baselinePoints = sampleCurve(axisLeft, axisRight, vmax, km, maxSubstrate, axisTop, axisBottom, maxVelocity);
+  drawCurve(baselinePoints, '#1976d2', 3, []);
+
+  let compStats = null;
+  if (compToggle.checked() && inhibitorFactor > 0) {
+    const apparentKm = km * (1 + inhibitorFactor);
+    const compPoints = sampleCurve(axisLeft, axisRight, vmax, apparentKm, maxSubstrate, axisTop, axisBottom, maxVelocity);
+    drawCurve(compPoints, '#d32f2f', 2, [9, 8]);
+    compStats = { apparentKm };
+  }
+
+  let noncompStats = null;
+  if (noncompToggle.checked() && inhibitorFactor > 0) {
+    const apparentVmax = vmax / (1 + inhibitorFactor);
+    const noncompPoints = sampleCurve(axisLeft, axisRight, apparentVmax, km, maxSubstrate, axisTop, axisBottom, maxVelocity);
+    drawCurve(noncompPoints, '#6a1b9a', 2, [6, 6]);
+    noncompStats = { apparentVmax };
+  }
+
+  const probeVelocity = michaelisMenten(probeS, vmax, km);
+  graphBounds.left = axisLeft;
+  graphBounds.right = axisRight;
+  graphBounds.top = axisTop;
+  graphBounds.bottom = axisBottom;
+  drawProbe(axisLeft, axisRight, axisTop, axisBottom, maxSubstrate, maxVelocity, probeVelocity, vmax, km);
+  drawLegend(axisLeft - 20, axisTop - 18);
+}
+
+function drawAxes(axisLeft, axisRight, axisTop, axisBottom, maxSubstrate, maxVelocity) {
+  stroke('#444');
+  strokeWeight(1.5);
+  line(axisLeft, axisBottom, axisRight, axisBottom);
+  line(axisLeft, axisBottom, axisLeft, axisTop);
+
+  noStroke();
+  fill('#222');
+  textSize(12);
+  textAlign(CENTER, TOP);
+  text('[S] (umol/L)', (axisLeft + axisRight) / 2, axisBottom + 10);
+  push();
+  translate(axisLeft - 35, (axisTop + axisBottom) / 2);
+  rotate(-HALF_PI);
+  text('Velocity v (umol/min)', 0, 0);
+  pop();
+
+  stroke('#888');
+  const xTicks = 5;
+  for (let i = 0; i <= xTicks; i++) {
+    const x = lerp(axisLeft, axisRight, i / xTicks);
+    line(x, axisBottom, x, axisBottom + 5);
+    noStroke();
+    fill('#111');
+    const sValue = (maxSubstrate / xTicks) * i;
+    textAlign(CENTER, TOP);
+    text(sValue.toFixed(1), x, axisBottom + 8);
+    stroke('#888');
+  }
+
+  const yTicks = 4;
+  for (let j = 0; j <= yTicks; j++) {
+    const y = lerp(axisBottom, axisTop, j / yTicks);
+    line(axisLeft - 5, y, axisLeft, y);
+    noStroke();
+    fill('#111');
+    const velocityValue = (maxVelocity / yTicks) * j;
+    textAlign(RIGHT, CENTER);
+    text(velocityValue.toFixed(0), axisLeft - 8, y);
+    stroke('#888');
+  }
+}
+
+function drawReferenceLines(axisLeft, axisRight, axisTop, axisBottom, vmax, km, maxVelocity, maxSubstrate) {
+  const vmaxY = map(vmax, 0, maxVelocity, axisBottom, axisTop);
+  stroke('#90caf9');
+  drawingContext.setLineDash([6, 4]);
+  line(axisLeft, vmaxY, axisRight, vmaxY);
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill('#0d47a1');
+  textAlign(RIGHT, BOTTOM);
+  text('Vmax', axisRight, vmaxY - 4);
+
+  const xKm = map(km, 0, maxSubstrate, axisLeft, axisRight);
+  const halfV = vmax / 2;
+  const kmY = map(halfV, 0, maxVelocity, axisBottom, axisTop);
+  stroke('#ffb74d');
+  drawingContext.setLineDash([8, 6]);
+  line(xKm, kmY, xKm, axisBottom);
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill('#e65100');
+  textAlign(CENTER, TOP);
+  text('Km', xKm, axisBottom + 6);
+}
+
+function sampleCurve(axisLeft, axisRight, vmax, km, maxSubstrate, axisTop, axisBottom, maxVelocity) {
+  const steps = 100;
+  const points = [];
+  for (let i = 0; i <= steps; i++) {
+    const s = (maxSubstrate / steps) * i;
+    const x = map(s, 0, maxSubstrate, axisLeft, axisRight);
+    const v = michaelisMenten(s, vmax, km);
+    const y = map(v, 0, maxVelocity, axisBottom, axisTop);
+    points.push({ x, y });
+  }
+  return points;
+}
+
+function drawCurve(points, strokeColor, weight, dashPattern) {
+  noFill();
+  stroke(strokeColor);
+  strokeWeight(weight);
+  drawingContext.setLineDash(dashPattern);
+  beginShape();
+  points.forEach(pt => vertex(pt.x, pt.y));
+  endShape();
+  drawingContext.setLineDash([]);
+}
+
+function drawProbe(axisLeft, axisRight, axisTop, axisBottom, maxSubstrate, maxVelocity, probeVelocity, vmax, km) {
+  const probeX = map(probeS, 0, maxSubstrate, axisLeft, axisRight);
+  const probeY = map(probeVelocity, 0, maxVelocity, axisBottom, axisTop);
+
+  stroke('#1976d2');
+  strokeWeight(1);
+  line(probeX, axisTop, probeX, axisBottom);
+
+  fill('#1976d2');
+  stroke('#0d47a1');
+  strokeWeight(2);
+  circle(probeX, probeY, 12);
+
+  const percent = vmax === 0 ? 0 : (probeVelocity / vmax) * 100;
+  noStroke();
+  fill('#0d47a1');
+  textAlign(LEFT, BOTTOM);
+  textSize(12);
+  text(`v = ${probeVelocity.toFixed(1)} umol/min (${percent.toFixed(0)}% Vmax)`, probeX + 10, probeY - 6);
+}
+
+function drawLegend(x, y) {
+  const items = [
+    { color: '#1976d2', label: 'Baseline enzyme' },
+    { color: '#d32f2f', label: 'Competitive (Km↑)' },
+    { color: '#6a1b9a', label: 'Noncompetitive (Vmax↓)' }
+  ];
+  const labelX = sliderLeftMargin - 10;
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  let offsetX = x;
+  items.forEach(item => {
+    stroke(item.color);
+    strokeWeight(3);
+    const dash = item.color === '#1976d2' ? [] : [6, 4];
+    drawingContext.setLineDash(dash);
+    line(offsetX, y, offsetX + 25, y);
+    drawingContext.setLineDash([]);
+    noStroke();
+    fill('#111');
+    text(item.label, offsetX + 30, y + 1);
+    offsetX += 140;
+  });
+}
+
+function drawInfoPanel(vmax, km, inhibitorFactor, probeVelocity, percentVmax, maxSubstrate) {
+  const panelX = margin + canvasWidth * 0.6 + 32;
+  const panelY = 70;
+  const panelW = canvasWidth - panelX - margin;
+  const panelH = drawHeight - panelY - 30;
+
+  push();
+  stroke('#ffd54f');
+  fill('#fff9e6');
+  rect(panelX, panelY, panelW, panelH, 12);
+  pop();
+
+  const lineHeight = 18;
+  let cursorY = panelY + 16;
+  const textX = panelX + 14;
+  fill('#bf360c');
+  textAlign(LEFT, TOP);
+  textSize(13);
+  text('Current Parameters', textX, cursorY);
+  cursorY += lineHeight + 2;
+  fill('#222');
+  textSize(12);
+  text(`Vmax: ${vmax.toFixed(0)} umol/min`, textX, cursorY);
+  cursorY += lineHeight;
+  text(`Km: ${km.toFixed(2)} umol/L`, textX, cursorY);
+  cursorY += lineHeight;
+  text(`[S] axis max: ${maxSubstrate.toFixed(1)} umol/L (10xKm)`, textX, cursorY);
+  cursorY += lineHeight;
+  text(`Probe velocity: ${probeVelocity.toFixed(2)} umol/min`, textX, cursorY);
+  cursorY += lineHeight;
+  text(`Probe as % Vmax: ${percentVmax.toFixed(1)}%`, textX, cursorY);
+  cursorY += lineHeight * 1.3;
+
+  fill('#6d4c41');
+  text('Inhibitor Insights', textX, cursorY);
+  cursorY += lineHeight + 2;
+  fill('#222');
+  const inhibitorInfo = buildInhibitorMessages(km, vmax, inhibitorFactor);
+  inhibitorInfo.forEach(msg => {
+    text(msg, textX, cursorY, panelW - 20, lineHeight * 1.5);
+    cursorY += lineHeight * 1.5;
+  });
+
+  cursorY += 6;
+  fill('#1b5e20');
+  text('Stage Prompts', textX, cursorY);
+  cursorY += lineHeight;
+  fill('#222');
+  text('- Stage 1: Set Km and Vmax, then read the labeled dashed lines.', textX, cursorY, panelW - 20, lineHeight * 1.4);
+  cursorY += lineHeight * 1.4;
+  text('- Stage 2: Drag the probe dot or watch autoplay to relate [S] and velocity.', textX, cursorY, panelW - 20, lineHeight * 1.4);
+  cursorY += lineHeight * 1.4;
+  text('- Stage 3: Toggle inhibitors to compare Km shifts vs Vmax drops.', textX, cursorY, panelW - 20, lineHeight * 1.4);
+}
+
+function buildInhibitorMessages(km, vmax, inhibitorFactor) {
+  const messages = [];
+  if (compToggle.checked()) {
+    const apparentKm = km * (1 + inhibitorFactor);
+    const fold = (apparentKm / km).toFixed(2);
+    messages.push(`Competitive inhibitor raises apparent Km to ${apparentKm.toFixed(2)} umol/L (${fold}x). Binding affinity drops, so the curve shifts right.`);
+  } else {
+    messages.push('Competitive inhibitor OFF: Km equals the slider value, and the curve reflects intrinsic affinity.');
+  }
+
+  if (noncompToggle.checked()) {
+    const apparentVmax = vmax / (1 + inhibitorFactor);
+    messages.push(`Noncompetitive inhibitor lowers Vmax to ${apparentVmax.toFixed(1)} umol/min while Km stays ${km.toFixed(2)} umol/L.`);
+  } else {
+    messages.push('Noncompetitive inhibitor OFF: Vmax equals the slider value and remains the asymptote.');
+  }
+
+  if (inhibitorFactor === 0) {
+    messages.push('Slide the inhibitor concentration to visualize stronger overlay shifts (0-3x scaling).');
+  }
+
+  return messages;
+}
+
+function drawControlLabels() {
+  fill('#111');
+  textAlign(RIGHT, CENTER);
+  textSize(13);
+  const row1Y = drawHeight + 25;
+  const row2Y = row1Y + 35;
+  const row3Y = row2Y + 35;
+
+  const labelRightEdge = sliderLeftMargin - 15;
+  text(`Vmax (umol/min): ${vmaxSlider.value().toFixed(0)}`, labelRightEdge, row1Y);
+  text(`Km (umol/L): ${kmSlider.value().toFixed(2)}`, labelRightEdge, row2Y);
+  text(`[Inhibitor] concentration (x): ${inhibitorSlider.value().toFixed(1)}`, labelRightEdge, row3Y);
+
+  textAlign(RIGHT, CENTER);
+  const toggleLabelX = canvasWidth - margin - 30;
+  text('Competitive overlay', toggleLabelX, row1Y - 4);
+  text('Noncompetitive overlay', toggleLabelX, row2Y -4);
+  textAlign(LEFT, CENTER);
+  fill('#444');
+  text('Reset returns the default kinetic profile', margin + 270, buttonYoffset + 15);
+}
+
+function toggleSimulation() {
+  isPaused = !isPaused;
+  startPauseButton.html(isPaused ? 'Start' : 'Pause');
+}
+
+function resetParameters() {
+  vmaxSlider.value(50);
+  kmSlider.value(2);
+  inhibitorSlider.value(0);
+  compToggle.checked(false);
+  noncompToggle.checked(false);
+  probeS = 2;
+  isPaused = true;
+  autoDirection = 1;
+  startPauseButton.html('Start');
+}
+
+function updateProbeAuto(maxSubstrate) {
+  if (isPaused || isDraggingProbe) return;
+  const sweepSpeed = maxSubstrate * 0.05; // traverses axis in ~20 seconds
+  probeS += autoDirection * sweepSpeed * (deltaTime / 1000);
+  if (probeS >= maxSubstrate) {
+    probeS = maxSubstrate;
+    autoDirection = -1;
+  } else if (probeS <= 0) {
+    probeS = 0;
+    autoDirection = 1;
+  }
+}
+
+function mousePressed() {
+  if (isMouseOverProbe(mouseX, mouseY)) {
+    isDraggingProbe = true;
+  }
+}
+
+function mouseDragged() {
+  if (isDraggingProbe) {
+    updateProbeFromMouse(mouseX);
+  }
+}
+
+function mouseReleased() {
+  isDraggingProbe = false;
+}
+
+function updateProbeFromMouse(mx) {
+  if (mx < graphBounds.left) mx = graphBounds.left;
+  if (mx > graphBounds.right) mx = graphBounds.right;
+  const km = kmSlider.value();
+  const maxSubstrate = km * 10;
+  probeS = map(mx, graphBounds.left, graphBounds.right, 0, maxSubstrate);
+}
+
+function isMouseOverProbe(mx, my) {
+  if (mx < graphBounds.left || mx > graphBounds.right || my < graphBounds.top || my > graphBounds.bottom) {
+    return false;
+  }
+  const vmax = vmaxSlider.value();
+  const km = kmSlider.value();
+  const maxSubstrate = km * 10;
+  const maxVelocity = vmax * 1.2;
+  const probeVelocity = michaelisMenten(probeS, vmax, km);
+  const probeX = map(probeS, 0, maxSubstrate, graphBounds.left, graphBounds.right);
+  const probeY = map(probeVelocity, 0, maxVelocity, graphBounds.bottom, graphBounds.top);
+  return dist(mx, my, probeX, probeY) <= 10;
+}
+
+function michaelisMenten(s, vmax, km) {
+  return (vmax * s) / (km + s);
+}
+
+function positionControls() {
+  const checkboxWidth = 180;
+  // leave room on the right for the checkboxes and the labels
+  const sliderWidth = canvasWidth - sliderLeftMargin - margin - checkboxWidth;
+  const row1Y = drawHeight + 10;
+  const row2Y = row1Y + 35;
+  const row3Y = row2Y + 35;
+
+  vmaxSlider.position(sliderLeftMargin, row1Y);
+  vmaxSlider.size(sliderWidth);
+
+  kmSlider.position(sliderLeftMargin, row2Y);
+  kmSlider.size(sliderWidth);
+
+  inhibitorSlider.position(sliderLeftMargin, row3Y);
+  inhibitorSlider.size(sliderWidth);
+
+  const toggleX = canvasWidth - margin - 24;
+  compToggle.position(toggleX, row1Y);
+  noncompToggle.position(toggleX, row2Y);
+
+  startPauseButton.position(margin, buttonYoffset);
+  startPauseButton.size(120, 32);
+  resetButton.position(margin + 140, buttonYoffset);
+  resetButton.size(100, 32);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    const newWidth = container.offsetWidth;
+    if (newWidth && newWidth !== canvasWidth) {
+      canvasWidth = newWidth;
+      if (typeof vmaxSlider !== 'undefined') {
+        positionControls();
+      }
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

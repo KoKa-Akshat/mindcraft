@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Energy Pyramid Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Energy Pyramid Explorer MicroSim
+// Adjustable trophic-level pyramid with energy/biomass/numbers modes
+
+let containerWidth;
+let canvasWidth = 780;
+const drawHeight = 380;
+const controlHeight = 110;
+const canvasHeight = drawHeight + controlHeight;
+
+const margin = 24;
+const sliderLeftMargin = 240;
+const pyramidAreaHeight = 210;
+const pyramidAreaTop = 90;
+const detailPanelWidthMin = 220;
+const bottomMargin = 20;
+const sliderVerticalSpacing = 30;
+
+const levelColors = ['#5AC97B', '#F5A75E', '#F0704C', '#CC4F56', '#8C3A73', '#5C2E91'];
+const levelNames = [
+  'Producers',
+  'Primary Consumers',
+  'Secondary Consumers',
+  'Tertiary Consumers',
+  'Quaternary Consumers',
+  'Apex Consumers'
+];
+
+let producerSlider;
+let efficiencySlider;
+let addLevelButton;
+let removeLevelButton;
+let biomassToggle;
+let numbersToggle;
+
+let levels = levelNames.slice(0, 4);
+let selectedLevel = 0;
+let barBounds = [];
+let hoverIndex = null;
+let showBiomass = false;
+let showIndividuals = false;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  const mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  producerSlider = createSlider(1000, 100000, 20000, 500);
+  producerSlider.position(sliderLeftMargin, drawHeight + 10);
+  producerSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  efficiencySlider = createSlider(5, 20, 10, 1);
+  efficiencySlider.position(sliderLeftMargin, drawHeight + 10 + sliderVerticalSpacing);
+  efficiencySlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  addLevelButton = createButton('Add Level');
+  addLevelButton.position(20, drawHeight + 70);
+  addLevelButton.size(120, 32);
+  addLevelButton.mousePressed(addLevel);
+
+  removeLevelButton = createButton('Remove Level');
+  removeLevelButton.position(150, drawHeight + 70);
+  removeLevelButton.size(120, 32);
+  removeLevelButton.mousePressed(removeLevel);
+  removeLevelButton.attribute('disabled', 'true');
+
+  biomassToggle = createCheckbox('Show Biomass', false);
+  biomassToggle.position(290, drawHeight + 88);
+  biomassToggle.changed(() => {
+    showBiomass = biomassToggle.checked();
+  });
+
+  numbersToggle = createCheckbox('Show Individuals', false);
+  numbersToggle.position(450, drawHeight + 88);
+  numbersToggle.changed(() => {
+    showIndividuals = numbersToggle.checked();
+  });
+
+  describe(
+    'Energy pyramid explorer with sliders for producer input and transfer efficiency, an add level button, and toggles for biomass or numbers pyramids plus value displays.',
+    LABEL
+  );
+}
+
+function draw() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight, true);
+
+  // Draw a light border for both regions so responsive bounds are visible during QA.
+  fill('aliceblue');
+  stroke('silver');
+  rect(0, 0, canvasWidth, canvasHeight);
+
+  // Control area needs a white fill to hide any pyramid grid lines that extend downward.
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawTitleAndInstructions();
+
+  const energyValues = computeEnergyValues();
+  const biomassValues = showBiomass ? convertToBiomass(energyValues) : null;
+  const numbersValues = showIndividuals ? computeNumbersValues() : null;
+  hoverIndex = null;
+  drawPyramid(energyValues, biomassValues, numbersValues);
+  drawHeatBand(energyValues);
+  drawDetailPanel(energyValues, biomassValues, numbersValues);
+  drawControlLabels();
+  drawHoverTooltip(energyValues, biomassValues, numbersValues);
+}
+
+function drawTitleAndInstructions() {
+  fill('#122033');
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text('Energy Pyramid Explorer', canvasWidth / 2, 36);
+
+  textSize(15);
+  fill('#1d3c58');
+  text(
+    'Click any level or use the controls to adjust producer input, efficiency, and pyramid type.',
+    canvasWidth / 2,
+    60
+  );
+}
+
+function drawPyramid(energyValues, biomassValues, numbersValues) {
+  const pyramidWidth = Math.max(canvasWidth * 0.62, 320);
+  const areaX = margin;
+  const centerX = areaX + pyramidWidth / 2;
+  const levelHeight = pyramidAreaHeight / levels.length;
+  const maxValue = max(energyValues);
+  const structuralStep = max((pyramidWidth - 160) / (levels.length + 1), 30);
+
+  barBounds = [];
+
+  for (let i = 0; i < levels.length; i++) {
+    const idxFromBottom = i;
+    const y = pyramidAreaTop + pyramidAreaHeight - (idxFromBottom + 1) * levelHeight;
+    const value = energyValues[i];
+    const widthFactor = maxValue === 0 ? 0 : constrain(value / maxValue, 0, 1);
+    const valueWidth = widthFactor * (pyramidWidth - 80);
+    const structuralWidth = pyramidWidth - 80 - structuralStep * idxFromBottom;
+    const barWidth = max(valueWidth, structuralWidth, 180);
+    const x = centerX - barWidth / 2;
+
+    const barColor = color(levelColors[i % levelColors.length]);
+    if (i === selectedLevel) {
+      barColor.setAlpha(220);
+    } else if (hoverIndex === i) {
+      barColor.setAlpha(200);
+    } else {
+      barColor.setAlpha(255);
+    }
+    fill(barColor);
+    stroke('#233143');
+    strokeWeight(i === selectedLevel ? 4 : 1);
+    const rectHeight = levelHeight - 4;
+    const isHover =
+      mouseX >= x &&
+      mouseX <= x + barWidth &&
+      mouseY >= y &&
+      mouseY <= y + rectHeight;
+    if (isHover) {
+      hoverIndex = i;
+    }
+    rect(x, y, barWidth, rectHeight, 10);
+
+    noStroke();
+    if (levels[i].includes('Quaternary') || levels[i].includes('Apex')) {
+      fill('#FFFFFF');
+    } else {
+      fill('#0c1726');
+    }
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text(levels[i], centerX, y + rectHeight / 2 - 6);
+    const lines = [];
+    let valueLine = `${formatValue(value)} kcal`;
+    if (showBiomass && biomassValues) {
+      valueLine += `  •  ${formatValue(biomassValues[i])} kg/ha`;
+    }
+    if (showIndividuals && numbersValues) {
+      valueLine += `  •  ${formatValue(numbersValues[i])} ind`;
+    }
+    lines.push(valueLine);
+    textSize(13);
+    const totalTextHeight = lines.length * 16;
+    let startY = y + rectHeight / 2 - totalTextHeight / 2 + 16;
+    for (const line of lines) {
+      text(line, centerX, startY);
+      startY += 16;
+    }
+
+    barBounds.push({ x, y, w: barWidth, h: rectHeight, index: i });
+  }
+}
+
+function drawHeatBand(values) {
+  const bandY = pyramidAreaTop + pyramidAreaHeight + 25;
+  const bandHeight = 40;
+  fill('#FFF5CC');
+  stroke('#d1b45b');
+  strokeWeight(1);
+  rect(margin, bandY, canvasWidth - margin * 2, bandHeight, 8);
+
+  const segmentWidth = (canvasWidth - margin * 2 - 40) / max(levels.length - 1, 1);
+  const efficiency = efficiencySlider.value() / 100;
+  for (let i = 0; i < levels.length - 1; i++) {
+    const heatLoss = max(values[i] - values[i + 1], 0);
+    const arrowX = margin + 20 + i * segmentWidth;
+    const arrowCenterY = bandY + bandHeight / 2;
+    drawArrow(arrowX, arrowCenterY, segmentWidth - 10, heatLoss);
+  }
+}
+
+function drawArrow(x, y, width, heatLoss) {
+  fill('#f3b57a');
+  noStroke();
+  const arrowHeight = 16;
+  const headWidth = 16;
+  rect(x, y - arrowHeight / 2, width - headWidth, arrowHeight, 6);
+  const headX = x + width - headWidth;
+  triangle(
+    headX,
+    y - arrowHeight / 2 - 1,
+    headX + headWidth,
+    y,
+    headX,
+    y + arrowHeight / 2 + 1
+  );
+  fill('#8b4a07');
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text(`${formatValue(heatLoss)} lost`, x + width / 2, y - 14);
+}
+
+function drawDetailPanel(values, biomassValues, numbersValues) {
+  const panelWidth = max(canvasWidth * 0.3, detailPanelWidthMin);
+  const panelX = canvasWidth - panelWidth - margin / 2;
+  const panelY = 80;
+  const panelHeight = 230;
+
+  fill('#F4E4FF');
+  stroke('#694E8E');
+  strokeWeight(1);
+  rect(panelX, panelY, panelWidth, panelHeight, 16);
+
+  const selectedValue = values[selectedLevel] || 0;
+  const nextValue = values[selectedLevel + 1] || 0;
+  const heatLoss = max(selectedValue - nextValue, 0);
+  const efficiency = efficiencySlider.value();
+
+  // Level name and value
+  fill('#241244');
+  noStroke();
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text(levels[selectedLevel], panelX + 18, panelY + 18);
+
+  // Energy value
+  textStyle(NORMAL);
+  textSize(16);
+  fill('#472C6C');
+  text(`${formatValue(selectedValue)} kcal`, panelX + 18, panelY + 52);
+
+  /* now shown in bars and pyramid
+  but could be added back if we want more explicit value readouts outside of energy mode
+  if (showBiomass && biomassValues) {
+    textSize(12);
+    fill('#2d1a3c');
+    text(
+      `${formatValue(biomassValues[selectedLevel])} kg/ha`,
+      panelX + 18,
+      panelY + 30
+    );
+  }
+  if (showIndividuals && numbersValues) {
+    textSize(12);
+    fill('#2d1a3c');
+    text(
+      `${formatValue(numbersValues[selectedLevel])} ind`,
+      panelX + 18,
+      panelY + 104
+    );
+  }
+    */
+
+  textSize(12);
+  fill('#2d1a3c');
+  text(
+    `Transfer efficiency: ${efficiency.toFixed(0)}%`,
+    panelX + 18,
+    panelY + 80
+  );
+  text(
+    `Transferred upward: ${formatValue(nextValue)} kcal`,
+    panelX + 18,
+    panelY + 102
+  );
+  text(
+    `Heat & waste: ${formatValue(heatLoss)} kcal`,
+    panelX + 18,
+    panelY + 124
+  );
+  text(
+    showIndividuals
+      ? 'Individuals hint at inverted aquatic pyramids (consumers may outnumber phytoplankton).'
+      : 'Biomass converts kcal to kg/ha; Energy view always shown in kcal.',
+    panelX + 18,
+    panelY + 146,
+    panelWidth - 36,
+    80
+  );
+}
+
+function drawControlLabels() {
+  fill('#14263c');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(15);
+  text(`Producer Input (kcal): ${formatValue(producerSlider.value())}`, 20, drawHeight + 20);
+  text(
+    `Transfer Efficiency (%): ${efficiencySlider.value().toFixed(0)}`,
+    20,
+    drawHeight + 20 + sliderVerticalSpacing
+  );
+}
+
+function drawHoverTooltip(values, biomassValues, numbersValues) {
+  if (hoverIndex === null) return;
+  const current = values[hoverIndex];
+  const nextVal = values[hoverIndex + 1] || 0;
+  const heatLoss = max(current - nextVal, 0);
+  const tooltipWidth = 180;
+  const tooltipHeight = 100;
+  const x = constrain(mouseX + 14, 0, canvasWidth - tooltipWidth - 10);
+  const y = constrain(mouseY - tooltipHeight - 10, 80, drawHeight - tooltipHeight - 10);
+
+  fill(255, 255, 255, 240);
+  stroke('#333');
+  rect(x, y, tooltipWidth, tooltipHeight, 10);
+  noStroke();
+  fill('#111');
+  textAlign(LEFT, TOP);
+  textSize(13);
+  let tooltipText = `${levels[hoverIndex]}
+Energy: ${formatValue(current)} kcal
+Heat loss: ${formatValue(heatLoss)} kcal`;
+  if (showBiomass && biomassValues) {
+    tooltipText += `\nBiomass: ${formatValue(biomassValues[hoverIndex])} kg/ha`;
+  }
+  if (showIndividuals && numbersValues) {
+    tooltipText += `\nIndividuals: ${formatValue(numbersValues[hoverIndex])} ind`;
+  }
+  text(tooltipText, x + 10, y + 8);
+}
+
+function computeEnergyValues() {
+  const eff = efficiencySlider.value() / 100;
+  const base = producerSlider.value();
+  const values = [];
+  let current = base;
+  for (let i = 0; i < levels.length; i++) {
+    if (i === 0) {
+      current = base;
+    } else {
+      current = current * eff;
+    }
+    values.push(current);
+  }
+  return values;
+}
+
+function convertToBiomass(energyValues) {
+  return energyValues.map((val) => val * 0.005);
+}
+
+function computeNumbersValues() {
+  const raw = producerSlider.value();
+  const base = max(Math.round(raw / 120), 40);
+  const values = [];
+  for (let i = 0; i < levels.length; i++) {
+    let value;
+    if (i === 0) {
+      value = max(base * 0.35, 30);
+    } else if (i === 1) {
+      value = base;
+    } else {
+      value = max(base * Math.pow(0.6, i - 1), 5);
+    }
+    values.push(value);
+  }
+  return values;
+}
+
+function addLevel() {
+  if (levels.length >= levelNames.length) {
+    return;
+  }
+  levels.push(levelNames[levels.length]);
+  removeLevelButton.removeAttribute('disabled');
+  if (levels.length >= levelNames.length) {
+    addLevelButton.attribute('disabled', 'true');
+  }
+}
+
+function removeLevel() {
+  if (levels.length <= 4) {
+    removeLevelButton.attribute('disabled', 'true');
+    return;
+  }
+  levels.pop();
+  addLevelButton.removeAttribute('disabled');
+  if (levels.length <= 4) {
+    removeLevelButton.attribute('disabled', 'true');
+  }
+}
+
+function formatValue(val) {
+  const formatter = Intl.NumberFormat('en-US', { maximumFractionDigits: 1 });
+  return formatter.format(val);
+}
+
+function mousePressed() {
+  for (const bound of barBounds) {
+    if (
+      mouseX >= bound.x &&
+      mouseX <= bound.x + bound.w &&
+      mouseY >= bound.y &&
+      mouseY <= bound.y + bound.h
+    ) {
+      selectedLevel = bound.index;
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  producerSlider.position(sliderLeftMargin, drawHeight + 10);
+  producerSlider.size(canvasWidth - sliderLeftMargin - margin);
+  efficiencySlider.position(sliderLeftMargin, drawHeight + 50);
+  efficiencySlider.size(canvasWidth - sliderLeftMargin - margin);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

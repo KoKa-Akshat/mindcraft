@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>C3, C4, and CAM Photosynthesis Comparison using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// C3, C4, and CAM Photosynthesis Comparison MicroSim
+// Bloom Level: Analyze (L4) - compare/differentiate strategies
+// Canvas: responsive width x 460 height
+
+let containerWidth;
+let canvasWidth = 700;
+let drawHeight = 380;
+let controlHeight = 0;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 10;
+
+// Strategy selection
+let selectedStrategy = 'C3';
+let compareAll = false;
+
+// Climate sliders
+let tempSlider, waterSlider, lightSlider;
+
+// Layout regions (computed in updateLayout)
+let leftW, centerX, centerW, rightX, rightW;
+
+// Colors
+const C3_COLOR = '#4CAF50';
+const C4_COLOR = '#2196F3';
+const CAM_COLOR = '#FF9800';
+const MESOPHYLL = '#8BC34A';
+const BUNDLE_SHEATH = '#388E3C';
+const VACUOLE = '#CE93D8';
+const STOMATA_OPEN = '#66BB6A';
+const STOMATA_CLOSED = '#EF5350';
+
+// Strategy data
+const strategies = {
+  C3: {
+    name: 'C3 (Calvin Cycle)',
+    examples: 'Rice, Wheat, Soybeans',
+    color: C3_COLOR,
+    stomata: 'Open during day',
+    enzyme: 'RuBisCO directly fixes CO2',
+    photorespiration: 'High (wastes 25-30% carbon)',
+    bestClimate: 'Cool, moist, moderate light',
+    mechanism: 'Direct fixation in mesophyll'
+  },
+  C4: {
+    name: 'C4 (Spatial Separation)',
+    examples: 'Corn, Sugarcane, Crabgrass',
+    color: C4_COLOR,
+    stomata: 'Open during day',
+    enzyme: 'PEP carboxylase in mesophyll',
+    photorespiration: 'Suppressed (CO2 concentrated)',
+    bestClimate: 'Hot, sunny, moderate water',
+    mechanism: 'Kranz anatomy separates fixation'
+  },
+  CAM: {
+    name: 'CAM (Temporal Separation)',
+    examples: 'Cacti, Pineapple, Jade plant',
+    color: CAM_COLOR,
+    stomata: 'Open at night only',
+    enzyme: 'PEP carboxylase at night',
+    photorespiration: 'Minimal (stomata closed by day)',
+    bestClimate: 'Hot, dry, high light',
+    mechanism: 'Night/day temporal separation'
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  updateLayout();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  // Climate sliders
+  tempSlider = createSlider(0, 100, 30);
+  tempSlider.parent(mainElement);
+  waterSlider = createSlider(0, 100, 70);
+  waterSlider.parent(mainElement);
+  lightSlider = createSlider(0, 100, 50);
+  lightSlider.parent(mainElement);
+
+  positionSliders();
+  describe('Interactive comparison of C3, C4, and CAM photosynthesis strategies with climate sliders');
+}
+
+function draw() {
+  updateCanvasSize();
+  updateLayout();
+  background('aliceblue');
+
+  // Drawing region border
+  stroke('silver');
+  strokeWeight(1);
+  fill('aliceblue');
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawLeftPanel();
+
+  if (compareAll) {
+    drawCompareAll();
+  } else {
+    drawCenterPanel(selectedStrategy);
+  }
+
+  drawRightPanel();
+  drawControlLabels();
+}
+
+function updateLayout() {
+  leftW = canvasWidth * 0.18;
+  centerX = leftW;
+  centerW = canvasWidth * 0.52;
+  rightX = centerX + centerW;
+  rightW = canvasWidth - rightX;
+}
+
+// ---- LEFT PANEL: Strategy buttons ----
+function drawLeftPanel() {
+  // Panel background
+  fill(245);
+  stroke(200);
+  strokeWeight(1);
+  rect(2, 2, leftW - 4, drawHeight - 4, 5);
+
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text('Strategy', leftW / 2, 10);
+  textStyle(NORMAL);
+
+  let btnY = 38;
+  let btnH = 42;
+  let btnW = leftW - 20;
+  let btnX = 10;
+
+  // C3 button
+  drawStrategyButton(btnX, btnY, btnW, btnH, 'C3', C3_COLOR);
+  btnY += btnH + 8;
+  // C4 button
+  drawStrategyButton(btnX, btnY, btnW, btnH, 'C4', C4_COLOR);
+  btnY += btnH + 8;
+  // CAM button
+  drawStrategyButton(btnX, btnY, btnW, btnH, 'CAM', CAM_COLOR);
+  btnY += btnH + 16;
+
+  // Compare All toggle
+  let caActive = compareAll;
+  fill(caActive ? '#9C27B0' : 220);
+  stroke(caActive ? '#7B1FA2' : 180);
+  strokeWeight(1);
+  rect(btnX, btnY, btnW, btnH, 8);
+  noStroke();
+  fill(caActive ? 255 : 60);
+  textSize(12);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text('Compare', btnX + btnW / 2, btnY + btnH / 2 - 8);
+  text('All', btnX + btnW / 2, btnY + btnH / 2 + 8);
+  textStyle(NORMAL);
+
+  // Info about selected strategy
+  if (!compareAll) {
+    let info = strategies[selectedStrategy];
+    btnY += btnH + 16;
+    fill(60);
+    textSize(10);
+    textAlign(LEFT, TOP);
+    let infoX = 8;
+    text('Examples:', infoX, btnY);
+    btnY += 14;
+    fill(100);
+    textSize(9);
+    text(info.examples, infoX, btnY, leftW - 16);
+  }
+}
+
+function drawStrategyButton(x, y, w, h, label, col) {
+  let isSelected = (selectedStrategy === label && !compareAll);
+  fill(isSelected ? col : 230);
+  stroke(isSelected ? color(red(color(col)), green(color(col)), blue(color(col)), 200) : 180);
+  strokeWeight(isSelected ? 2 : 1);
+  rect(x, y, w, h, 8);
+  noStroke();
+  fill(isSelected ? 255 : 60);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  textStyle(BOLD);
+  text(label, x + w / 2, y + h / 2);
+  textStyle(NORMAL);
+}
+
+// ---- CENTER PANEL: Leaf cross-section diagrams ----
+function drawCenterPanel(strategy) {
+  // Panel background
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(centerX + 2, 2, centerW - 4, drawHeight - 4, 5);
+
+  // Title
+  noStroke();
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(15);
+  textStyle(BOLD);
+  let info = strategies[strategy];
+  text(info.name, centerX + centerW / 2, 8);
+  textStyle(NORMAL);
+  textSize(11);
+  fill(80);
+  text(info.mechanism, centerX + centerW / 2, 26);
+
+  if (strategy === 'C3') drawC3Diagram();
+  else if (strategy === 'C4') drawC4Diagram();
+  else drawCAMDiagram();
+}
+
+function drawC3Diagram() {
+  let cx = centerX + centerW / 2;
+  let cy = 80;
+  let dw = centerW - 40;
+  let dh = drawHeight - 100;
+
+  // Leaf outline
+  drawLeafOutline(centerX + 20, cy, dw, dh * 0.65);
+
+  let leafTop = cy + 15;
+  let leafBot = cy + dh * 0.65 - 15;
+  let leafLeft = centerX + 40;
+  let leafRight = centerX + dw;
+
+  // Mesophyll cells (uniform - no bundle sheath)
+  let cellW = (leafRight - leafLeft) * 0.8;
+  let cellH = (leafBot - leafTop) * 0.6;
+  let cellX = (leafLeft + leafRight) / 2 - cellW / 2;
+  let cellY = (leafTop + leafBot) / 2 - cellH / 2;
+
+  fill(MESOPHYLL + '80');
+  stroke(MESOPHYLL);
+  strokeWeight(1);
+  rect(cellX, cellY, cellW, cellH, 10);
+
+  // Label mesophyll
+  noStroke();
+  fill(30);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text('Mesophyll Cells', cellX + cellW / 2, cellY + cellH - 14);
+  textStyle(NORMAL);
+
+  // Stomata (open)
+  let stX = cx - 20;
+  let stY = cy + dh * 0.65 - 5;
+  drawStomata(stX, stY, true);
+
+  // CO2 flow arrow: stomata -> mesophyll -> RuBisCO -> Calvin cycle
+  let arrowStartY = stY - 5;
+  let arrowMidY = cellY + cellH - 30;
+  let ruX = cellX + cellW / 2;
+  let ruY = cellY + cellH * 0.5;
+
+  // CO2 arrow up from stomata
+  stroke(C3_COLOR);
+  strokeWeight(2);
+  drawArrowLine(cx, arrowStartY, cx, arrowMidY);
+
+  noStroke();
+  fill(C3_COLOR);
+  textSize(11);
+  textStyle(BOLD);
+  text('CO2', cx + 18, (arrowStartY + arrowMidY) / 2);
+  textStyle(NORMAL);
+
+  // RuBisCO box
+  fill('#FFF9C4');
+  stroke('#F9A825');
+  strokeWeight(2);
+  let rbW = 80;
+  let rbH = 28;
+  rect(ruX - rbW / 2, ruY - rbH / 2, rbW, rbH, 5);
+  noStroke();
+  fill('#E65100');
+  textSize(11);
+  textStyle(BOLD);
+  text('RuBisCO', ruX, ruY);
+  textStyle(NORMAL);
+
+  // Calvin cycle box
+  let ccY = ruY - 55;
+  fill('#E8F5E9');
+  stroke(C3_COLOR);
+  strokeWeight(1.5);
+  ellipse(ruX, ccY, 90, 35);
+  noStroke();
+  fill(30);
+  textSize(10);
+  textStyle(BOLD);
+  text('Calvin Cycle', ruX, ccY);
+  textStyle(NORMAL);
+
+  // Arrow from RuBisCO to Calvin cycle
+  stroke(C3_COLOR);
+  strokeWeight(2);
+  drawArrowLine(ruX, ruY - rbH / 2, ruX, ccY + 18);
+
+  // Photorespiration warning
+  let prX = cellX + cellW - 10;
+  let prY = ruY + 5;
+  stroke('#F44336');
+  strokeWeight(1.5);
+  drawArrowLine(ruX + rbW / 2 + 2, ruY, prX + 30, prY);
+  noStroke();
+  fill('#F44336');
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  text('Photorespiration', prX + 10, prY - 12);
+  text('(wastes carbon', prX + 10, prY + 1);
+  text(' at high temp)', prX + 10, prY + 12);
+
+  // Sun icon
+  drawSun(centerX + 40, cy + 8, 12);
+
+  // Day label
+  noStroke();
+  fill(80);
+  textAlign(LEFT, CENTER);
+  textSize(10);
+  text('Daytime', centerX + 56, cy + 8);
+
+  textAlign(CENTER, CENTER);
+}
+
+function drawC4Diagram() {
+  let cx = centerX + centerW / 2;
+  let cy = 80;
+  let dw = centerW - 40;
+  let dh = drawHeight - 100;
+
+  // Leaf outline
+  drawLeafOutline(centerX + 20, cy, dw, dh * 0.65);
+
+  let leafTop = cy + 15;
+  let leafBot = cy + dh * 0.65 - 15;
+  let leafLeft = centerX + 40;
+  let leafRight = centerX + dw;
+  let midX = (leafLeft + leafRight) / 2;
+
+  // Mesophyll cells (outer)
+  let mW = (leafRight - leafLeft) * 0.38;
+  let mH = (leafBot - leafTop) * 0.7;
+  let mX = leafLeft + 10;
+  let mY = (leafTop + leafBot) / 2 - mH / 2;
+  fill(MESOPHYLL + '80');
+  stroke(MESOPHYLL);
+  strokeWeight(1);
+  rect(mX, mY, mW, mH, 10);
+  noStroke();
+  fill(30);
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('Mesophyll', mX + mW / 2, mY + 5);
+  textStyle(NORMAL);
+
+  // Bundle sheath cells (inner, darker)
+  let bW = (leafRight - leafLeft) * 0.38;
+  let bH = mH;
+  let bX = leafRight - bW - 20;
+  let bY = mY;
+  fill(BUNDLE_SHEATH + '60');
+  stroke(BUNDLE_SHEATH);
+  strokeWeight(1.5);
+  rect(bX, bY, bW, bH, 10);
+  noStroke();
+  fill(255);
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('Bundle Sheath', bX + bW / 2, bY + 5);
+  textSize(9);
+  textStyle(NORMAL);
+  fill(220);
+  text('(Kranz anatomy)', bX + bW / 2, bY + 20);
+
+  // PEP carboxylase in mesophyll
+  let pepX = mX + mW / 2;
+  let pepY = mY + mH * 0.4;
+  fill('#FFECB3');
+  stroke('#FF8F00');
+  strokeWeight(1.5);
+  let pepW = 75;
+  rect(pepX - pepW / 2, pepY - 12, pepW, 24, 4);
+  noStroke();
+  fill('#E65100');
+  textSize(9);
+  textStyle(BOLD);
+  text('PEP carboxylase', pepX, pepY);
+  textStyle(NORMAL);
+
+  // OAA -> Malate labels
+  fill(60);
+  textSize(9);
+  text('OAA -> Malate', pepX, pepY + 22);
+
+  // RuBisCO in bundle sheath
+  let ruX = bX + bW / 2;
+  let ruY = bY + bH * 0.45;
+  fill('#FFF9C4');
+  stroke('#F9A825');
+  strokeWeight(2);
+  let rbW = 70;
+  rect(ruX - rbW / 2, ruY - 12, rbW, 24, 4);
+  noStroke();
+  fill('#E65100');
+  textSize(10);
+  textStyle(BOLD);
+  text('RuBisCO', ruX, ruY);
+  textStyle(NORMAL);
+
+  // CO2 concentrated label
+  fill(C4_COLOR);
+  textSize(9);
+  textStyle(BOLD);
+  text('High [CO2]', ruX, ruY - 22);
+  textStyle(NORMAL);
+
+  // Calvin cycle
+  let ccY = ruY - 55;
+  fill('#E3F2FD');
+  stroke(C4_COLOR);
+  strokeWeight(1.5);
+  ellipse(ruX, ccY, 80, 30);
+  noStroke();
+  fill(30);
+  textSize(10);
+  textStyle(BOLD);
+  text('Calvin Cycle', ruX, ccY);
+  textStyle(NORMAL);
+
+  // Arrow RuBisCO -> Calvin
+  stroke(C4_COLOR);
+  strokeWeight(2);
+  drawArrowLine(ruX, ruY - 14, ruX, ccY + 16);
+
+  // Transport arrow: mesophyll -> bundle sheath
+  let transY = pepY + 2;
+  stroke('#FF6F00');
+  strokeWeight(2);
+  drawArrowLine(mX + mW, transY, bX, transY);
+  noStroke();
+  fill('#FF6F00');
+  textSize(8);
+  text('Malate transport', (mX + mW + bX) / 2, transY - 10);
+
+  // Stomata
+  let stX = cx - 30;
+  let stY = cy + dh * 0.65 - 5;
+  drawStomata(stX, stY, true);
+
+  // CO2 arrow into mesophyll
+  stroke(C4_COLOR);
+  strokeWeight(2);
+  drawArrowLine(stX + 10, stY - 5, pepX, pepY + 14);
+
+  noStroke();
+  fill(C4_COLOR);
+  textSize(10);
+  textStyle(BOLD);
+  text('CO2', stX - 5, stY - 20);
+  textStyle(NORMAL);
+
+  // Photorespiration suppressed
+  let prX = bX + bW + 5;
+  let prY = ruY + 5;
+  noStroke();
+  fill('#4CAF50');
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  text('Photorespiration', prX, prY - 6);
+  text('SUPPRESSED', prX, prY + 6);
+  textStyle(NORMAL);
+
+  // Sun
+  drawSun(centerX + 40, cy + 8, 12);
+  noStroke();
+  fill(80);
+  textAlign(LEFT, CENTER);
+  textSize(10);
+  text('Daytime', centerX + 56, cy + 8);
+
+  textAlign(CENTER, CENTER);
+}
+
+function drawCAMDiagram() {
+  let cx = centerX + centerW / 2;
+  let cy = 65;
+  let dw = centerW - 30;
+  let halfW = dw * 0.45;
+  let dh = drawHeight - 90;
+
+  // Night panel (left half)
+  let nightX = centerX + 15;
+  let dayX = centerX + dw * 0.52;
+
+  // Night background
+  fill('#263238');
+  stroke(180);
+  strokeWeight(1);
+  rect(nightX, cy, halfW, dh * 0.75, 8);
+
+  // Day background
+  fill('#FFF8E1');
+  stroke(180);
+  rect(dayX, cy, halfW, dh * 0.75, 8);
+
+  // Night label with moon
+  noStroke();
+  fill(200);
+  textAlign(CENTER, TOP);
+  textSize(13);
+  textStyle(BOLD);
+  text('NIGHT', nightX + halfW / 2, cy + 5);
+  textStyle(NORMAL);
+  drawMoon(nightX + halfW / 2 + 35, cy + 12, 8);
+
+  // Day label with sun
+  fill(50);
+  textSize(13);
+  textStyle(BOLD);
+  text('DAY', dayX + halfW / 2, cy + 5);
+  textStyle(NORMAL);
+  drawSun(dayX + halfW / 2 + 25, cy + 12, 8);
+
+  // Night elements
+  let ncX = nightX + halfW / 2;
+  let ncY = cy + 35;
+
+  // Stomata open at night
+  drawStomata(ncX - 15, ncY + 8, true);
+  fill(STOMATA_OPEN);
+  noStroke();
+  textSize(9);
+  text('Stomata OPEN', ncX, ncY + 28);
+
+  // CO2 arrow
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(ncX, ncY + 35, ncX, ncY + 55);
+  noStroke();
+  fill(200);
+  textSize(10);
+  textStyle(BOLD);
+  text('CO2', ncX + 18, ncY + 45);
+  textStyle(NORMAL);
+
+  // PEP carboxylase
+  let pepY = ncY + 65;
+  fill('#FFECB3');
+  stroke('#FF8F00');
+  strokeWeight(1.5);
+  rect(ncX - 42, pepY - 10, 84, 20, 4);
+  noStroke();
+  fill('#E65100');
+  textSize(9);
+  textStyle(BOLD);
+  text('PEP carboxylase', ncX, pepY);
+  textStyle(NORMAL);
+
+  // Arrow to malate
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(ncX, pepY + 12, ncX, pepY + 32);
+
+  // Malate label
+  noStroke();
+  fill(200);
+  textSize(10);
+  text('Malate', ncX, pepY + 42);
+
+  // Vacuole storage
+  let vacY = pepY + 65;
+  fill(VACUOLE + '60');
+  stroke(VACUOLE);
+  strokeWeight(1.5);
+  ellipse(ncX, vacY, 90, 45);
+  noStroke();
+  fill(255);
+  textSize(10);
+  textStyle(BOLD);
+  text('Vacuole', ncX, vacY - 7);
+  textSize(9);
+  textStyle(NORMAL);
+  text('(stored as', ncX, vacY + 6);
+  text('organic acid)', ncX, vacY + 17);
+
+  // Arrow to vacuole
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(ncX, pepY + 50, ncX, vacY - 24);
+
+  // Day elements
+  let dcX = dayX + halfW / 2;
+  let dcY = cy + 35;
+
+  // Stomata closed during day
+  drawStomata(dcX - 15, dcY + 8, false);
+  fill(STOMATA_CLOSED);
+  noStroke();
+  textSize(9);
+  text('Stomata CLOSED', dcX, dcY + 28);
+
+  // Vacuole releasing
+  let dvacY = dcY + 60;
+  fill(VACUOLE + '60');
+  stroke(VACUOLE);
+  strokeWeight(1.5);
+  ellipse(dcX, dvacY, 90, 45);
+  noStroke();
+  fill(80);
+  textSize(10);
+  textStyle(BOLD);
+  text('Vacuole', dcX, dvacY - 7);
+  textSize(9);
+  textStyle(NORMAL);
+  text('Malate released', dcX, dvacY + 7);
+
+  // Decarboxylation arrow
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(dcX, dvacY + 24, dcX, dvacY + 48);
+
+  // CO2 released
+  noStroke();
+  fill('#E65100');
+  textSize(10);
+  textStyle(BOLD);
+  text('CO2', dcX, dvacY + 56);
+  textStyle(NORMAL);
+
+  // Arrow to RuBisCO
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(dcX, dvacY + 64, dcX, dvacY + 80);
+
+  // RuBisCO
+  let druY = dvacY + 90;
+  fill('#FFF9C4');
+  stroke('#F9A825');
+  strokeWeight(2);
+  rect(dcX - 35, druY - 12, 70, 24, 4);
+  noStroke();
+  fill('#E65100');
+  textSize(10);
+  textStyle(BOLD);
+  text('RuBisCO', dcX, druY);
+  textStyle(NORMAL);
+
+  // Calvin cycle
+  let dccY = druY + 38;
+  fill('#FFF3E0');
+  stroke(CAM_COLOR);
+  strokeWeight(1.5);
+  ellipse(dcX, dccY, 80, 30);
+  noStroke();
+  fill(30);
+  textSize(10);
+  textStyle(BOLD);
+  text('Calvin Cycle', dcX, dccY);
+  textStyle(NORMAL);
+
+  // Arrow RuBisCO -> Calvin
+  stroke(CAM_COLOR);
+  strokeWeight(2);
+  drawArrowLine(dcX, druY + 14, dcX, dccY - 16);
+
+  // Connecting arrow between night and day (vacuole transport)
+  stroke(VACUOLE);
+  strokeWeight(2);
+  setLineDash([5, 4]);
+  let midVacY = (vacY + dvacY) / 2 + 10;
+  line(ncX + 46, vacY, dayX - 2, dvacY);
+  setLineDash([]);
+
+  // Photorespiration minimal
+  noStroke();
+  fill('#4CAF50');
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  let prX = dayX + halfW - 5;
+  text('Photorespiration', prX, druY - 6);
+  text('MINIMAL', prX, druY + 6);
+  textStyle(NORMAL);
+
+  textAlign(CENTER, CENTER);
+}
+
+function drawCompareAll() {
+  // Three mini panels side by side
+  let pw = (centerW - 16) / 3;
+  let types = ['C3', 'C4', 'CAM'];
+
+  for (let i = 0; i < 3; i++) {
+    let px = centerX + 4 + i * (pw + 2);
+    let info = strategies[types[i]];
+
+    // Panel
+    fill(255);
+    stroke(color(info.color));
+    strokeWeight(2);
+    rect(px, 4, pw, drawHeight - 8, 5);
+
+    // Title
+    noStroke();
+    fill(info.color);
+    textAlign(CENTER, TOP);
+    textSize(13);
+    textStyle(BOLD);
+    text(types[i], px + pw / 2, 10);
+    textStyle(NORMAL);
+
+    // Key facts
+    fill(60);
+    textSize(9);
+    textAlign(LEFT, TOP);
+    let ty = 30;
+    let tx = px + 6;
+    let tw = pw - 12;
+
+    textStyle(BOLD);
+    text('Stomata:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.stomata, tx, ty, tw);
+    ty += 22;
+
+    textStyle(BOLD);
+    text('CO2 Fixation:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.enzyme, tx, ty, tw);
+    ty += 30;
+
+    textStyle(BOLD);
+    text('Photorespiration:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.photorespiration, tx, ty, tw);
+    ty += 30;
+
+    textStyle(BOLD);
+    text('Mechanism:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.mechanism, tx, ty, tw);
+    ty += 25;
+
+    textStyle(BOLD);
+    text('Best Climate:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.bestClimate, tx, ty, tw);
+    ty += 25;
+
+    textStyle(BOLD);
+    text('Examples:', tx, ty);
+    textStyle(NORMAL);
+    ty += 12;
+    text(info.examples, tx, ty, tw);
+
+    // Simple diagram
+    ty += 30;
+    drawMiniDiagram(px + pw / 2, ty, pw - 20, types[i], info.color);
+  }
+}
+
+function drawMiniDiagram(cx, y, w, type, col) {
+  // Simplified CO2 flow diagram
+  let boxW = w * 0.7;
+  let boxH = 25;
+
+  if (type === 'C3') {
+    // CO2 -> RuBisCO -> Calvin
+    fill(col + '40');
+    stroke(col);
+    strokeWeight(1);
+    rect(cx - boxW / 2, y, boxW, boxH, 4);
+    noStroke();
+    fill(30);
+    textSize(8);
+    textAlign(CENTER, CENTER);
+    text('Mesophyll', cx, y + boxH / 2);
+
+    stroke(col);
+    strokeWeight(1.5);
+    drawArrowLine(cx, y + boxH + 2, cx, y + boxH + 15);
+
+    fill('#FFF9C4');
+    stroke('#F9A825');
+    strokeWeight(1);
+    rect(cx - 25, y + boxH + 16, 50, 18, 3);
+    noStroke();
+    fill('#E65100');
+    textSize(7);
+    text('RuBisCO', cx, y + boxH + 25);
+
+    stroke(col);
+    strokeWeight(1.5);
+    drawArrowLine(cx, y + boxH + 36, cx, y + boxH + 48);
+
+    fill('#E8F5E9');
+    stroke(col);
+    strokeWeight(1);
+    ellipse(cx, y + boxH + 58, 55, 20);
+    noStroke();
+    fill(30);
+    textSize(7);
+    text('Calvin Cycle', cx, y + boxH + 58);
+
+  } else if (type === 'C4') {
+    // CO2 -> PEP -> transport -> RuBisCO -> Calvin
+    fill(MESOPHYLL + '60');
+    stroke(MESOPHYLL);
+    strokeWeight(1);
+    rect(cx - boxW / 2, y, boxW * 0.45, boxH + 40, 4);
+
+    fill(BUNDLE_SHEATH + '40');
+    stroke(BUNDLE_SHEATH);
+    rect(cx + 2, y, boxW * 0.45, boxH + 40, 4);
+
+    noStroke();
+    fill(30);
+    textSize(7);
+    textAlign(CENTER, CENTER);
+    text('Meso', cx - boxW * 0.2, y + 10);
+    text('PEP', cx - boxW * 0.2, y + 25);
+    text('Bundle', cx + boxW * 0.24, y + 10);
+
+    fill('#FFF9C4');
+    stroke('#F9A825');
+    strokeWeight(1);
+    rect(cx + boxW * 0.24 - 20, y + 22, 40, 14, 3);
+    noStroke();
+    fill('#E65100');
+    textSize(6);
+    text('RuBisCO', cx + boxW * 0.24, y + 29);
+
+    stroke('#FF6F00');
+    strokeWeight(1.5);
+    drawArrowLine(cx - 2, y + 25, cx + 4, y + 25);
+
+    stroke(col);
+    drawArrowLine(cx + boxW * 0.24, y + 42, cx + boxW * 0.24, y + 50);
+
+    fill('#E3F2FD');
+    stroke(col);
+    strokeWeight(1);
+    ellipse(cx + boxW * 0.24, y + 60, 50, 16);
+    noStroke();
+    fill(30);
+    textSize(6);
+    text('Calvin', cx + boxW * 0.24, y + 60);
+
+  } else {
+    // CAM: Night/Day split
+    let halfW = boxW * 0.48;
+    fill('#37474F');
+    stroke(180);
+    strokeWeight(1);
+    rect(cx - boxW / 2, y, halfW, boxH + 40, 4);
+
+    fill('#FFF8E1');
+    stroke(180);
+    rect(cx + 2, y, halfW, boxH + 40, 4);
+
+    noStroke();
+    fill(200);
+    textSize(7);
+    textAlign(CENTER, CENTER);
+    text('Night', cx - boxW / 2 + halfW / 2, y + 8);
+    text('CO2->PEP', cx - boxW / 2 + halfW / 2, y + 22);
+    text('->Vacuole', cx - boxW / 2 + halfW / 2, y + 34);
+
+    fill(60);
+    text('Day', cx + 2 + halfW / 2, y + 8);
+    text('Vacuole', cx + 2 + halfW / 2, y + 22);
+    text('->RuBisCO', cx + 2 + halfW / 2, y + 34);
+    text('->Calvin', cx + 2 + halfW / 2, y + 46);
+  }
+}
+
+// ---- RIGHT PANEL: Climate suitability ----
+function drawRightPanel() {
+  // Panel background
+  fill(250);
+  stroke(200);
+  strokeWeight(1);
+  rect(rightX + 2, 2, rightW - 4, drawHeight - 4, 5);
+
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(13);
+  textStyle(BOLD);
+  text('Climate', rightX + rightW / 2, 8);
+  text('Suitability', rightX + rightW / 2, 22);
+  textStyle(NORMAL);
+
+  let temp = tempSlider.value();
+  let water = waterSlider.value();
+  let light = lightSlider.value();
+
+  // Slider labels
+  let slY = 48;
+  let slX = rightX + 8;
+  let slW = rightW - 16;
+
+  textAlign(LEFT, TOP);
+  textSize(10);
+  fill(80);
+  text('Temp: ' + getTempLabel(temp), slX, slY);
+  slY += 45;
+  text('Water: ' + getWaterLabel(water), slX, slY);
+  slY += 45;
+  text('Light: ' + getLightLabel(light), slX, slY);
+
+  // Calculate suitability scores
+  let c3Score = calcC3Score(temp, water, light);
+  let c4Score = calcC4Score(temp, water, light);
+  let camScore = calcCAMScore(temp, water, light);
+  let maxScore = max(c3Score, c4Score, camScore);
+
+  // Draw suitability bars
+  slY += 30;
+  noStroke();
+  fill(50);
+  textSize(11);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('Best Suited:', rightX + rightW / 2, slY);
+  textStyle(NORMAL);
+  slY += 18;
+
+  drawSuitabilityBar(slX, slY, slW, 'C3', c3Score, maxScore, C3_COLOR);
+  slY += 28;
+  drawSuitabilityBar(slX, slY, slW, 'C4', c4Score, maxScore, C4_COLOR);
+  slY += 28;
+  drawSuitabilityBar(slX, slY, slW, 'CAM', camScore, maxScore, CAM_COLOR);
+
+  // Winner label
+  slY += 28;
+  let winner = 'C3';
+  let winColor = C3_COLOR;
+  if (c4Score >= c3Score && c4Score >= camScore) { winner = 'C4'; winColor = C4_COLOR; }
+  if (camScore >= c3Score && camScore >= c4Score) { winner = 'CAM'; winColor = CAM_COLOR; }
+
+  fill(winColor);
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text(winner + ' wins!', rightX + rightW / 2, slY);
+  textStyle(NORMAL);
+
+  // Explanation
+  fill(80);
+  textSize(9);
+  textAlign(LEFT, TOP);
+  slY += 22;
+  text(getExplanation(winner, temp, water), rightX + 10, slY, slW);
+}
+
+function drawSuitabilityBar(x, y, w, label, score, maxScore, col) {
+  // Label
+  noStroke();
+  fill(60);
+  textSize(10);
+  textAlign(LEFT, CENTER);
+  text(label, x, y + 8);
+
+  // Bar background
+  let barX = x + 28;
+  let barW = w - 50;
+  fill(220);
+  rect(barX, y + 2, barW, 14, 3);
+
+  // Bar fill
+  let fillW = map(score, 0, 100, 0, barW);
+  fill(score === maxScore ? col : col + '80');
+  rect(barX, y + 2, fillW, 14, 3);
+
+  // Score
+  fill(60);
+  textSize(9);
+  textAlign(LEFT, CENTER);
+  text(score + '%', barX + barW + 3, y + 9);
+
+  // Star for winner
+  if (score === maxScore) {
+    fill(col);
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    text('*', barX + barW + 22, y + 8);
+  }
+}
+
+// Climate scoring functions
+function calcC3Score(t, w, l) {
+  // C3 prefers: cool-moderate temp, high water, moderate light
+  let tScore = t < 40 ? map(t, 0, 40, 90, 100) : map(t, 40, 100, 100, 20);
+  let wScore = map(w, 0, 100, 20, 100);
+  let lScore = l < 60 ? map(l, 0, 60, 50, 90) : map(l, 60, 100, 90, 70);
+  return round((tScore + wScore + lScore) / 3);
+}
+
+function calcC4Score(t, w, l) {
+  // C4 prefers: hot temp, moderate-high water, high light
+  let tScore = map(t, 0, 100, 20, 100);
+  let wScore = w < 30 ? map(w, 0, 30, 30, 60) : map(w, 30, 100, 60, 95);
+  let lScore = map(l, 0, 100, 30, 100);
+  return round((tScore + wScore + lScore) / 3);
+}
+
+function calcCAMScore(t, w, l) {
+  // CAM prefers: hot temp, very low water, high light
+  let tScore = map(t, 0, 100, 30, 90);
+  let wScore = map(w, 0, 100, 100, 20);
+  let lScore = map(l, 0, 100, 40, 95);
+  return round((tScore + wScore + lScore) / 3);
+}
+
+function getTempLabel(v) {
+  if (v < 25) return 'Cool';
+  if (v < 50) return 'Moderate';
+  if (v < 75) return 'Warm';
+  return 'Hot';
+}
+
+function getWaterLabel(v) {
+  if (v < 25) return 'Arid';
+  if (v < 50) return 'Dry';
+  if (v < 75) return 'Moist';
+  return 'Wet';
+}
+
+function getLightLabel(v) {
+  if (v < 25) return 'Low';
+  if (v < 50) return 'Moderate';
+  if (v < 75) return 'Bright';
+  return 'Intense';
+}
+
+function getExplanation(winner, t, w) {
+  if (winner === 'C3') return 'C3 thrives in cool, moist conditions where photorespiration is minimal.';
+  if (winner === 'C4') return 'C4 plants concentrate CO2 via Kranz anatomy, thriving in hot sunny conditions.';
+  return 'CAM conserves water by opening stomata only at night — ideal for hot, dry habitats.';
+}
+
+// ---- CONTROL REGION ----
+function drawControlLabels() {
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  let cy = drawHeight + controlHeight / 2;
+  let sx = rightX + 8;
+  // Labels are drawn next to sliders in the right panel area
+  // Sliders are positioned by positionSliders()
+}
+
+// ---- HELPER DRAWING FUNCTIONS ----
+function drawLeafOutline(x, y, w, h) {
+  fill('#E8F5E9');
+  stroke('#66BB6A');
+  strokeWeight(2);
+  // Simple leaf shape
+  beginShape();
+  vertex(x, y + h / 2);
+  bezierVertex(x, y - h * 0.1, x + w, y - h * 0.1, x + w, y + h / 2);
+  bezierVertex(x + w, y + h * 1.1, x, y + h * 1.1, x, y + h / 2);
+  endShape(CLOSE);
+}
+
+function drawStomata(x, y, isOpen) {
+  // Two guard cells
+  stroke(isOpen ? STOMATA_OPEN : STOMATA_CLOSED);
+  strokeWeight(2);
+  noFill();
+  if (isOpen) {
+    arc(x, y, 20, 14, PI * 0.15, PI * 0.85);
+    arc(x + 20, y, 20, 14, PI * 1.15, PI * 1.85);
+  } else {
+    arc(x, y, 20, 4, PI * 0.15, PI * 0.85);
+    arc(x + 20, y, 20, 4, PI * 1.15, PI * 1.85);
+  }
+}
+
+function drawSun(x, y, r) {
+  fill('#FFD54F');
+  noStroke();
+  ellipse(x, y, r * 2, r * 2);
+  stroke('#FFB300');
+  strokeWeight(1.5);
+  for (let a = 0; a < TWO_PI; a += PI / 4) {
+    let x1 = x + cos(a) * (r + 2);
+    let y1 = y + sin(a) * (r + 2);
+    let x2 = x + cos(a) * (r + 6);
+    let y2 = y + sin(a) * (r + 6);
+    line(x1, y1, x2, y2);
+  }
+}
+
+function drawMoon(x, y, r) {
+  fill('#FFD54F');
+  noStroke();
+  arc(x, y, r * 2, r * 2, -HALF_PI, HALF_PI);
+  fill('#263238');
+  ellipse(x + 3, y, r * 1.5, r * 2);
+}
+
+function drawArrowLine(x1, y1, x2, y2) {
+  let currentStroke = drawingContext.strokeStyle;
+  line(x1, y1, x2, y2);
+  // Arrowhead
+  let angle = atan2(y2 - y1, x2 - x1);
+  let sz = 7;
+  push();
+  noStroke();
+  fill(currentStroke);
+  triangle(
+    x2, y2,
+    x2 - cos(angle - 0.4) * sz, y2 - sin(angle - 0.4) * sz,
+    x2 - cos(angle + 0.4) * sz, y2 - sin(angle + 0.4) * sz
+  );
+  pop();
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
+// ---- MOUSE INTERACTION ----
+function mousePressed() {
+  // Check strategy buttons
+  let btnW = leftW - 20;
+  let btnH = 42;
+  let btnX = 10;
+  let btnY = 38;
+
+  if (mouseX >= btnX && mouseX <= btnX + btnW) {
+    if (mouseY >= btnY && mouseY <= btnY + btnH) {
+      selectedStrategy = 'C3';
+      compareAll = false;
+    }
+    btnY += btnH + 8;
+    if (mouseY >= btnY && mouseY <= btnY + btnH) {
+      selectedStrategy = 'C4';
+      compareAll = false;
+    }
+    btnY += btnH + 8;
+    if (mouseY >= btnY && mouseY <= btnY + btnH) {
+      selectedStrategy = 'CAM';
+      compareAll = false;
+    }
+    btnY += btnH + 16;
+    if (mouseY >= btnY && mouseY <= btnY + btnH) {
+      compareAll = !compareAll;
+    }
+  }
+}
+
+// ---- RESPONSIVE ----
+function positionSliders() {
+  // Get canvas position on the page
+  let canvasEl = document.querySelector('main canvas');
+  if (!canvasEl) return;
+  let canvasRect = canvasEl.getBoundingClientRect();
+  let mainRect = document.querySelector('main').getBoundingClientRect();
+  let offsetX = canvasRect.left - mainRect.left;
+  let offsetY = canvasRect.top - mainRect.top;
+
+  let slX = offsetX + rightX + 8;
+  let slW = rightW - 16;
+  let slY = offsetY + 60;
+
+  tempSlider.position(slX, slY);
+  tempSlider.size(slW);
+  slY += 45;
+  waterSlider.position(slX, slY);
+  waterSlider.size(slW);
+  slY += 45;
+  lightSlider.position(slX, slY);
+  lightSlider.size(slW);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  updateLayout();
+  positionSliders();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

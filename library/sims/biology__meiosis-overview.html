@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Nondisjunction in Meiosis Visualizer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Nondisjunction in Meiosis Visualizer
+// Three parallel columns comparing normal meiosis, nondisjunction in meiosis I,
+// and nondisjunction in meiosis II — step-through animation.
+
+let containerWidth;
+let canvasWidth = 800;
+let drawHeight = 340;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 10;
+
+let currentStep = 0;
+const totalSteps = 5;
+let prevBtn, nextBtn;
+
+// Colors for chromosomes
+const MATERNAL = [255, 140, 160]; // pink
+const PATERNAL = [120, 160, 220]; // blue
+const ERROR_GLOW = [231, 76, 60, 60]; // red glow
+const NORMAL_BORDER = [72, 180, 120]; // green border
+const ABNORMAL_BORDER = [231, 76, 60]; // red border
+
+// Stage descriptions
+const stageNames = [
+    'Start: Diploid Cell (2n=4)',
+    'Meiosis I: Homologs Align',
+    'After Meiosis I: Two Cells',
+    'Meiosis II: Sister Chromatids Separate',
+    'Final: Four Gametes'
+];
+
+const columnTitles = [
+    'Normal Meiosis',
+    'Nondisjunction\nin Meiosis I',
+    'Nondisjunction\nin Meiosis II'
+];
+
+const stageDescriptions = [
+    [
+        'Diploid cell with 2 homologous pairs (2n=4). Each pair has a maternal (pink) and paternal (blue) chromosome.',
+        'Same starting cell. Nondisjunction will occur when homologs fail to separate in anaphase I.',
+        'Same starting cell. Nondisjunction will occur when sister chromatids fail to separate in anaphase II.'
+    ],
+    [
+        'Homologous pairs line up at the metaphase plate. Each homolog will be pulled to opposite poles.',
+        'Homologs line up, but one pair will FAIL to separate. Both homologs will move to the same pole.',
+        'Homologs line up normally. Meiosis I will proceed correctly.'
+    ],
+    [
+        'Two haploid cells, each with one chromosome from each homologous pair (n=2).',
+        'ERROR: One cell has both homologs of pair 1 (3 chromosomes), the other has only pair 2 (1 chromosome).',
+        'Two normal haploid cells (n=2 each). The error has not occurred yet.'
+    ],
+    [
+        'Sister chromatids separate in both cells. Each cell divides into two.',
+        'Sister chromatids separate in both cells (even though chromosome counts are wrong).',
+        'One cell divides normally. In the other, sister chromatids of one chromosome FAIL to separate.'
+    ],
+    [
+        'Four normal gametes, each with n=2 chromosomes.',
+        'Two gametes with n+1=3 chromosomes (will cause trisomy). Two gametes with n-1=1 chromosome (will cause monosomy).',
+        'Two normal gametes (n=2). One gamete with n+1=3 (trisomy). One gamete with n-1=1 (monosomy).'
+    ]
+];
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(containerWidth, containerHeight);
+    const mainEl = document.querySelector('main');
+    canvas.parent(mainEl);
+
+    prevBtn = createButton('\u25C0 Previous');
+    prevBtn.parent(mainEl);
+    prevBtn.mousePressed(() => { if (currentStep > 0) currentStep--; });
+
+    nextBtn = createButton('Next \u25B6');
+    nextBtn.parent(mainEl);
+    nextBtn.mousePressed(() => { if (currentStep < totalSteps - 1) currentStep++; });
+
+    positionControls();
+    textFont('Arial');
+    describe('Nondisjunction visualizer comparing normal meiosis with errors in meiosis I and II');
+}
+
+function positionControls() {
+    let y = drawHeight + 8;
+    prevBtn.position(canvasWidth / 2 - 120, y);
+    nextBtn.position(canvasWidth / 2 + 20, y);
+}
+
+function draw() {
+    updateCanvasSize();
+    // fill the drawing area and control area backgrounds
+    // fill the drawing area with a light blue, and the control area with white
+    fill('aliceblue');
+    // draw a thin gray line around both the drawing and control area
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+    fill('white');
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill(30);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(16);
+    text('Nondisjunction in Meiosis', canvasWidth / 2, 4);
+
+    // Stage indicator
+    fill(80);
+    textSize(12);
+    text('Stage ' + (currentStep + 1) + ' of ' + totalSteps + ': ' + stageNames[currentStep], canvasWidth / 2, 22);
+
+    // Draw three columns
+    let colW = (canvasWidth - 4 * margin) / 3;
+    for (let c = 0; c < 3; c++) {
+        let cx = margin + c * (colW + margin);
+        drawColumn(cx, 40, colW, c);
+    }
+
+    // Step indicator dots at the bottom of the control area
+    let dotY = drawHeight + 45;
+    for (let i = 0; i < totalSteps; i++) {
+        fill(i === currentStep ? '#2C3E50' : '#BDC3C7');
+        noStroke();
+        circle(canvasWidth / 2 - 40 + i * 20, dotY, 8);
+    }
+
+    // Disable buttons at boundaries
+    prevBtn.elt.disabled = (currentStep === 0);
+    nextBtn.elt.disabled = (currentStep === totalSteps - 1);
+}
+
+function drawColumn(x, y, w, colIdx) {
+    // Column background
+    let isError = false;
+    if (colIdx === 1 && (currentStep === 1 || currentStep === 2)) isError = true;
+    if (colIdx === 2 && (currentStep === 3)) isError = true;
+
+    fill(isError ? [255, 240, 240] : [250, 252, 255]);
+    stroke(isError ? [231, 76, 60, 100] : [200, 210, 220]);
+    strokeWeight(1);
+    rect(x, y, w, drawHeight - y - 10, 6);
+
+    // Column title
+    fill(isError ? '#E74C3C' : '#2C3E50');
+    noStroke();
+    textAlign(CENTER, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    let titleLines = columnTitles[colIdx].split('\n');
+    for (let i = 0; i < titleLines.length; i++) {
+        text(titleLines[i], x + w / 2, y + 6 + i * 14);
+    }
+    textStyle(NORMAL);
+
+    // Draw cells based on current step
+    let cellY = y + 38;
+    let cellArea = drawHeight - y - 80;
+
+    drawCells(x + 10, cellY, w - 20, cellArea, colIdx, currentStep);
+
+    // Description text at bottom
+    fill(60);
+    textSize(9);
+    textAlign(LEFT, BOTTOM);
+    textLeading(12);
+    let desc = stageDescriptions[currentStep][colIdx];
+    text(desc, x + 6, drawHeight - 74, w - 12, 60);
+}
+
+function drawCells(x, y, w, h, colIdx, step) {
+    // Each step draws different cell configurations
+    switch (step) {
+        case 0: drawStep0(x, y, w, h, colIdx); break;
+        case 1: drawStep1(x, y, w, h, colIdx); break;
+        case 2: drawStep2(x, y, w, h, colIdx); break;
+        case 3: drawStep3(x, y, w, h, colIdx); break;
+        case 4: drawStep4(x, y, w, h, colIdx); break;
+    }
+}
+
+// Helper: draw a single cell with chromosomes
+function drawCell(cx, cy, r, chromosomes, isNormal, showCount) {
+    // Cell membrane
+    fill(255, 255, 255, 200);
+    if (isNormal === true) {
+        stroke(NORMAL_BORDER);
+    } else if (isNormal === false) {
+        stroke(ABNORMAL_BORDER);
+    } else {
+        stroke(180);
+    }
+    strokeWeight(2);
+    ellipse(cx, cy, r * 2, r * 2);
+
+    // Draw chromosomes inside
+    let chromCount = chromosomes.length;
+    for (let i = 0; i < chromCount; i++) {
+        let angle = (TWO_PI / chromCount) * i - HALF_PI;
+        let dist = r * 0.4;
+        let chromX = cx + cos(angle) * dist;
+        let chromY = cy + sin(angle) * dist;
+        drawChromosome(chromX, chromY, chromosomes[i].color, chromosomes[i].sister, r * 0.18);
+    }
+
+    // Chromosome count label
+    if (showCount !== false) {
+        fill(60);
+        noStroke();
+        textSize(9);
+        textAlign(CENTER, TOP);
+        text('n=' + chromCount, cx, cy + r + 2);
+    }
+}
+
+function drawChromosome(x, y, col, hasSister, size) {
+    stroke(col[0] * 0.7, col[1] * 0.7, col[2] * 0.7);
+    strokeWeight(2);
+    fill(col);
+
+    if (hasSister) {
+        // Two sister chromatids joined at centromere
+        let offset = size * 0.3;
+        line(x - offset, y - size, x - offset, y + size);
+        line(x + offset, y - size, x + offset, y + size);
+        // Centromere
+        fill(col[0] * 0.8, col[1] * 0.8, col[2] * 0.8);
+        ellipse(x, y, size * 0.4, size * 0.4);
+    } else {
+        // Single chromatid
+        line(x, y - size, x, y + size);
+    }
+}
+
+// M = maternal chromosome object, P = paternal
+function M(sister) { return { color: MATERNAL, sister: sister !== false }; }
+function P(sister) { return { color: PATERNAL, sister: sister !== false }; }
+function Ms() { return { color: MATERNAL, sister: false }; } // single chromatid
+function Ps() { return { color: PATERNAL, sister: false }; }
+
+// Step 0: One diploid cell (2n=4, 2 homologous pairs with sister chromatids)
+function drawStep0(x, y, w, h, colIdx) {
+    let cx = x + w / 2;
+    let cy = y + h * 0.35;
+    let r = min(w * 0.35, h * 0.3);
+    drawCell(cx, cy, r, [M(), P(), M(), P()], null, false);
+    fill(60);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('2n = 4', cx, cy + r + 4);
+}
+
+// Step 1: Homologs aligning (showing pairs)
+function drawStep1(x, y, w, h, colIdx) {
+    let cx = x + w / 2;
+    let cy = y + h * 0.35;
+    let r = min(w * 0.35, h * 0.3);
+
+    // Show cell with chromosomes aligning at metaphase plate
+    fill(255, 255, 255, 200);
+    stroke(180);
+    strokeWeight(2);
+    ellipse(cx, cy, r * 2, r * 2);
+
+    // Metaphase plate line
+    stroke(200);
+    strokeWeight(1);
+    line(cx - r * 0.8, cy, cx + r * 0.8, cy);
+
+    // Pair 1 aligned
+    let pairX1 = cx - r * 0.35;
+    drawChromosome(pairX1 - 4, cy - 5, MATERNAL, true, r * 0.18);
+    drawChromosome(pairX1 + 4, cy + 5, PATERNAL, true, r * 0.18);
+
+    // Pair 2 aligned
+    let pairX2 = cx + r * 0.35;
+    drawChromosome(pairX2 - 4, cy - 5, MATERNAL, true, r * 0.18);
+    drawChromosome(pairX2 + 4, cy + 5, PATERNAL, true, r * 0.18);
+
+    // Error highlight for nondisjunction I
+    if (colIdx === 1) {
+        fill(ERROR_GLOW);
+        noStroke();
+        ellipse(pairX1, cy, r * 0.7, r * 0.7);
+        fill('#E74C3C');
+        textSize(8);
+        textAlign(CENTER, BOTTOM);
+        text('FAIL', pairX1, cy - r * 0.25);
+    }
+
+    fill(60);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text('2n = 4', cx, cy + r + 4);
+}
+
+// Step 2: After meiosis I - two cells
+function drawStep2(x, y, w, h, colIdx) {
+    let cellR = min(w * 0.28, h * 0.22);
+    let cx = x + w / 2;
+    let cy1 = y + h * 0.22;
+    let cy2 = y + h * 0.58;
+
+    if (colIdx === 0) {
+        // Normal: each cell has n=2 (one from each pair)
+        drawCell(cx, cy1, cellR, [M(), P()], true);
+        drawCell(cx, cy2, cellR, [M(), P()], true);
+    } else if (colIdx === 1) {
+        // Nondisjunction I: one cell gets both homologs of pair 1
+        drawCell(cx, cy1, cellR, [M(), P(), M()], false);
+        fill(60); noStroke(); textSize(9); textAlign(CENTER, TOP);
+        text('n=3 (n+1)', cx, cy1 + cellR + 2);
+        drawCell(cx, cy2, cellR, [P()], false);
+        fill(60); noStroke(); textSize(9); textAlign(CENTER, TOP);
+        text('n=1 (n-1)', cx, cy2 + cellR + 2);
+    } else {
+        // Nondisjunction II: normal at this stage
+        drawCell(cx, cy1, cellR, [M(), P()], true);
+        drawCell(cx, cy2, cellR, [M(), P()], true);
+    }
+}
+
+// Step 3: Meiosis II - sister chromatids separating
+function drawStep3(x, y, w, h, colIdx) {
+    let cellR = min(w * 0.22, h * 0.16);
+    let cx = x + w / 2;
+    let positions = [
+        { x: cx - w * 0.2, y: y + h * 0.15 },
+        { x: cx + w * 0.2, y: y + h * 0.15 },
+        { x: cx - w * 0.2, y: y + h * 0.52 },
+        { x: cx + w * 0.2, y: y + h * 0.52 }
+    ];
+
+    if (colIdx === 0) {
+        // Normal: 4 cells forming, each with single chromatids
+        drawCell(positions[0].x, positions[0].y, cellR, [Ms()], true);
+        drawCell(positions[1].x, positions[1].y, cellR, [Ps()], true);
+        drawCell(positions[2].x, positions[2].y, cellR, [Ms()], true);
+        drawCell(positions[3].x, positions[3].y, cellR, [Ps()], true);
+        fill(80); noStroke(); textSize(9); textAlign(CENTER, CENTER);
+        text('Dividing...', cx, y + h * 0.38);
+    } else if (colIdx === 1) {
+        // Nondisjunction I consequences
+        drawCell(positions[0].x, positions[0].y, cellR, [Ms(), Ps()], false);
+        drawCell(positions[1].x, positions[1].y, cellR, [Ms()], false);
+        drawCell(positions[2].x, positions[2].y, cellR, [Ps()], false);
+        drawCell(positions[3].x, positions[3].y, cellR, [], false);
+        fill(80); noStroke(); textSize(9); textAlign(CENTER, CENTER);
+        text('Dividing...', cx, y + h * 0.38);
+    } else {
+        // Nondisjunction II: error in one cell
+        drawCell(positions[0].x, positions[0].y, cellR, [Ms()], true);
+        drawCell(positions[1].x, positions[1].y, cellR, [Ps()], true);
+
+        // Error cell - sister chromatids fail to separate
+        fill(ERROR_GLOW);
+        noStroke();
+        ellipse(positions[2].x, positions[2].y, cellR * 2.5, cellR * 2.5);
+        drawCell(positions[2].x, positions[2].y, cellR, [Ms(), Ms()], false);
+        fill('#E74C3C'); textSize(8); textAlign(CENTER, BOTTOM); noStroke();
+        text('FAIL', positions[2].x, positions[2].y - cellR - 4);
+
+        drawCell(positions[3].x, positions[3].y, cellR, [], false);
+    }
+}
+
+// Step 4: Final four gametes
+function drawStep4(x, y, w, h, colIdx) {
+    let cellR = min(w * 0.18, h * 0.14);
+    let cx = x + w / 2;
+    let spacing = w * 0.22;
+    let positions = [
+        { x: cx - spacing * 1.2, y: y + h * 0.2 },
+        { x: cx + spacing * 1.2, y: y + h * 0.2 },
+        { x: cx - spacing * 1.2, y: y + h * 0.52 },
+        { x: cx + spacing * 1.2, y: y + h * 0.52 }
+    ];
+
+    if (colIdx === 0) {
+        // Normal: 4 gametes, each n=2
+        for (let i = 0; i < 4; i++) {
+            drawCell(positions[i].x, positions[i].y, cellR, [Ms(), Ps()], true);
+        }
+    } else if (colIdx === 1) {
+        // Nondisjunction I: 2 with n+1, 2 with n-1
+        drawCell(positions[0].x, positions[0].y, cellR, [Ms(), Ps(), Ms()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n+1', positions[0].x, positions[0].y + cellR + 1);
+
+        drawCell(positions[1].x, positions[1].y, cellR, [Ms(), Ps(), Ms()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n+1', positions[1].x, positions[1].y + cellR + 1);
+
+        drawCell(positions[2].x, positions[2].y, cellR, [Ps()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n-1', positions[2].x, positions[2].y + cellR + 1);
+
+        drawCell(positions[3].x, positions[3].y, cellR, [Ps()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n-1', positions[3].x, positions[3].y + cellR + 1);
+    } else {
+        // Nondisjunction II: 2 normal, 1 n+1, 1 n-1
+        drawCell(positions[0].x, positions[0].y, cellR, [Ms(), Ps()], true);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('normal', positions[0].x, positions[0].y + cellR + 1);
+
+        drawCell(positions[1].x, positions[1].y, cellR, [Ms(), Ps()], true);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('normal', positions[1].x, positions[1].y + cellR + 1);
+
+        drawCell(positions[2].x, positions[2].y, cellR, [Ms(), Ms(), Ps()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n+1', positions[2].x, positions[2].y + cellR + 1);
+
+        drawCell(positions[3].x, positions[3].y, cellR, [Ps()], false);
+        fill(60); noStroke(); textSize(8); textAlign(CENTER, TOP);
+        text('n-1', positions[3].x, positions[3].y + cellR + 1);
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(containerWidth, containerHeight);
+    positionControls();
+    redraw();
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main').getBoundingClientRect();
+    containerWidth = Math.floor(container.width);
+    canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

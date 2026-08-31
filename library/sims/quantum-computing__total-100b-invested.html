@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>QC Investment Flow</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>QC Investment Flow: Where Does the Money Go?</h2>
+        <div id="sankey-chart"></div>
+        <p class="source">Data estimated from public reports and industry analyses, cumulative through 2024</p>
+    </div>
+    <script>
+// Node indices:
+// Sources (0-4)
+//   0: Government Grants ($40B)
+//   1: Corporate R&D ($30B)
+//   2: Venture Capital ($15B)
+//   3: SPAC/Public Market ($10B)
+//   4: Other ($10B)
+// Middle (5-10)
+//   5: Hardware Research
+//   6: Algorithm Research
+//   7: Software/Tools
+//   8: Cloud Infrastructure
+//   9: Operations/Overhead
+//  10: Salaries & Talent
+// Outputs (11-13)
+//  11: Scientific Papers
+//  12: Patents
+//  13: Revenue ($0.05B)
+
+var nodeLabels = [
+    "Government Grants ($40B)",
+    "Corporate R&D ($30B)",
+    "Venture Capital ($15B)",
+    "SPAC/Public Market ($10B)",
+    "Other ($10B)",
+    "Hardware Research ($45B)",
+    "Algorithm Research ($15B)",
+    "Software/Tools ($10B)",
+    "Cloud Infrastructure ($10B)",
+    "Operations/Overhead ($15B)",
+    "Salaries & Talent ($10B)",
+    "Scientific Papers",
+    "Patents",
+    "Revenue ($0.05B)"
+];
+
+var nodeColors = [
+    "#2196F3", // Government - blue
+    "#3F51B5", // Corporate - indigo
+    "#4CAF50", // VC - green
+    "#FF9800", // SPAC - orange
+    "#9E9E9E", // Other - gray
+    "#5C6BC0", // Hardware
+    "#7986CB", // Algorithm
+    "#9FA8DA", // Software
+    "#42A5F5", // Cloud
+    "#FF7043", // Overhead - orange accent
+    "#FFAB91", // Salaries
+    "#66BB6A", // Papers - green
+    "#81C784", // Patents - green
+    "#E53935"  // Revenue - red (thin = alarming)
+];
+
+// Source -> Middle flows
+// Government ($40B): Hardware 20, Algorithm 8, Software 3, Cloud 2, Overhead 4, Salaries 3
+// Corporate ($30B): Hardware 15, Algorithm 3, Software 4, Cloud 3, Overhead 3, Salaries 2
+// VC ($15B): Hardware 5, Algorithm 2, Software 2, Cloud 3, Overhead 2, Salaries 1
+// SPAC ($10B): Hardware 3, Algorithm 1, Software 0.5, Cloud 1.5, Overhead 3, Salaries 1
+// Other ($10B): Hardware 2, Algorithm 1, Software 0.5, Cloud 0.5, Overhead 3, Salaries 3
+
+var sources = [
+    // Government -> middle
+    0, 0, 0, 0, 0, 0,
+    // Corporate -> middle
+    1, 1, 1, 1, 1, 1,
+    // VC -> middle
+    2, 2, 2, 2, 2, 2,
+    // SPAC -> middle
+    3, 3, 3, 3, 3, 3,
+    // Other -> middle
+    4, 4, 4, 4, 4, 4,
+    // Middle -> outputs
+    5, 5, 5,       // Hardware -> Papers, Patents, Revenue
+    6, 6,          // Algorithm -> Papers, Patents
+    7, 7, 7,       // Software -> Papers, Patents, Revenue
+    8, 8,          // Cloud -> Papers, Revenue
+    9,             // Overhead -> (nothing productive, but need a flow)
+    10             // Salaries -> Papers
+];
+
+var targets = [
+    // Government -> middle
+    5, 6, 7, 8, 9, 10,
+    // Corporate -> middle
+    5, 6, 7, 8, 9, 10,
+    // VC -> middle
+    5, 6, 7, 8, 9, 10,
+    // SPAC -> middle
+    5, 6, 7, 8, 9, 10,
+    // Other -> middle
+    5, 6, 7, 8, 9, 10,
+    // Middle -> outputs
+    11, 12, 13,    // Hardware -> Papers, Patents, Revenue
+    11, 12,        // Algorithm -> Papers, Patents
+    11, 12, 13,    // Software -> Papers, Patents, Revenue
+    11, 13,        // Cloud -> Papers, Revenue
+    11,            // Overhead -> Papers (reports/whitepapers)
+    11             // Salaries -> Papers
+];
+
+var values = [
+    // Government -> middle
+    20, 8, 3, 2, 4, 3,
+    // Corporate -> middle
+    15, 3, 4, 3, 3, 2,
+    // VC -> middle
+    5, 2, 2, 3, 2, 1,
+    // SPAC -> middle
+    3, 1, 0.5, 1.5, 3, 1,
+    // Other -> middle
+    2, 1, 0.5, 0.5, 3, 3,
+    // Middle -> outputs
+    20, 15, 0.03,  // Hardware -> Papers(20), Patents(15), Revenue(0.03)
+    12, 3,         // Algorithm -> Papers(12), Patents(3)
+    4, 4, 0.015,   // Software -> Papers(4), Patents(4), Revenue(0.015)
+    5, 0.005,      // Cloud -> Papers(5), Revenue(0.005)
+    5,             // Overhead -> Papers(5) (reports)
+    5              // Salaries -> Papers(5)
+];
+
+// Color flows by type
+var linkColors = [
+    // Government flows (blue tint)
+    "rgba(33,150,243,0.3)", "rgba(33,150,243,0.3)", "rgba(33,150,243,0.3)",
+    "rgba(33,150,243,0.3)", "rgba(33,150,243,0.3)", "rgba(33,150,243,0.3)",
+    // Corporate flows (indigo tint)
+    "rgba(63,81,181,0.3)", "rgba(63,81,181,0.3)", "rgba(63,81,181,0.3)",
+    "rgba(63,81,181,0.3)", "rgba(63,81,181,0.3)", "rgba(63,81,181,0.3)",
+    // VC flows (green tint)
+    "rgba(76,175,80,0.3)", "rgba(76,175,80,0.3)", "rgba(76,175,80,0.3)",
+    "rgba(76,175,80,0.3)", "rgba(76,175,80,0.3)", "rgba(76,175,80,0.3)",
+    // SPAC flows (orange tint)
+    "rgba(255,152,0,0.3)", "rgba(255,152,0,0.3)", "rgba(255,152,0,0.3)",
+    "rgba(255,152,0,0.3)", "rgba(255,152,0,0.3)", "rgba(255,152,0,0.3)",
+    // Other flows (gray tint)
+    "rgba(158,158,158,0.3)", "rgba(158,158,158,0.3)", "rgba(158,158,158,0.3)",
+    "rgba(158,158,158,0.3)", "rgba(158,158,158,0.3)", "rgba(158,158,158,0.3)",
+    // Output flows: green for productive, red for revenue (thin)
+    "rgba(102,187,106,0.4)", "rgba(102,187,106,0.4)", "rgba(229,57,53,0.6)",  // Hardware -> Papers, Patents, Revenue
+    "rgba(102,187,106,0.4)", "rgba(102,187,106,0.4)",                          // Algorithm -> Papers, Patents
+    "rgba(102,187,106,0.4)", "rgba(102,187,106,0.4)", "rgba(229,57,53,0.6)",  // Software -> Papers, Patents, Revenue
+    "rgba(102,187,106,0.4)", "rgba(229,57,53,0.6)",                            // Cloud -> Papers, Revenue
+    "rgba(255,112,67,0.4)",                                                     // Overhead -> Papers
+    "rgba(255,171,145,0.4)"                                                     // Salaries -> Papers
+];
+
+// Build hover labels with dollar amounts
+var linkLabels = values.map(function(v) {
+    if (v >= 1) {
+        return "$" + v + "B";
+    } else {
+        return "$" + (v * 1000).toFixed(0) + "M";
+    }
+});
+
+var data = [{
+    type: "sankey",
+    orientation: "h",
+    arrangement: "snap",
+    node: {
+        pad: 20,
+        thickness: 25,
+        line: { color: "#555", width: 1 },
+        label: nodeLabels,
+        color: nodeColors,
+        hovertemplate: "%{label}<extra></extra>"
+    },
+    link: {
+        source: sources,
+        target: targets,
+        value: values,
+        color: linkColors,
+        customdata: linkLabels,
+        hovertemplate: "%{source.label} → %{target.label}<br>%{customdata}<extra></extra>"
+    }
+}];
+
+var layout = {
+    font: { size: 12, family: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" },
+    margin: { l: 10, r: 10, t: 10, b: 10 },
+    paper_bgcolor: "aliceblue",
+    plot_bgcolor: "aliceblue",
+    height: 460
+};
+
+var config = {
+    responsive: true,
+    displayModeBar: false
+};
+
+Plotly.newPlot("sankey-chart", data, layout, config);
+
+// Resize on window change
+window.addEventListener("resize", function() {
+    Plotly.Plots.resize("sankey-chart");
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Carbohydrate Size Ladder MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Carbohydrate Size Ladder - Food Science MicroSim
+// CANVAS_HEIGHT: 640
+// Three rungs (top->bottom): Polysaccharides, Disaccharides, Monosaccharides.
+// Click hexagons to see name/formula/food source. Click the -H2O droplet on
+// the disaccharide rung to animate condensation. Click food icons for info.
+// Toggle "Show alpha/beta bonds" to overlay green alpha / red beta markers
+// on the polysaccharide chain.
+
+// ----- Layout constants -----
+let canvasWidth = 760;
+let drawHeight = 520;
+let controlHeight = 120;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 15;
+
+// Rung Y positions (top of each row)
+let rungYPoly, rungYDi, rungYMono;
+let rungHeight = 130;
+
+// Palette
+const BG = '#f1f8e9';
+const RUNG_BG = '#ffffff';
+const RUNG_STROKE = '#c5e1a5';
+const TITLE_GREEN = '#2e7d32';
+const ACCENT_ORANGE = '#f57c00';
+const ALPHA_GREEN = '#2e7d32';
+const BETA_RED = '#e53935';
+const GLUCOSE_BLUE = '#1e88e5';
+const FRUCTOSE_ORANGE = '#f57c00';
+const GALACTOSE_GREEN = '#43a047';
+const HEX_STROKE = '#37474f';
+const TEXT_DARK = '#212121';
+const TEXT_MUTED = '#546e7a';
+
+// Hex size
+const HEX_R = 26;        // mono / disaccharide hex radius
+const HEX_R_POLY = 18;   // polysaccharide hex radius (smaller, in chain)
+
+// State -------------------------------------------------------------------
+let showBonds = false;     // alpha/beta overlay toggle
+let btnBonds, btnReset;
+
+// Tooltip / info card
+let activeTooltip = null;  // { x, y, lines:[] }
+let activeInfoCard = null; // { title, body }
+
+// Condensation animation state
+// phases: 'idle' | 'showWater' | 'removing' | 'merging' | 'bonded'
+let condAnim = {
+  phase: 'idle',
+  t: 0,            // 0..1 progress for current phase
+  duration: 60,    // frames per phase
+};
+
+// Hexagon click targets (rebuilt each frame)
+let hitTargets = [];   // {kind, x, y, r, data}
+
+// Polysaccharide chain (8 hex)
+let polyChainCount = 9;
+
+// Monosaccharides data
+const MONOS = [
+  { name: 'Glucose',   formula: 'C₆H₁₂O₆', color: GLUCOSE_BLUE,    food: 'Found in grapes, honey, blood sugar.' },
+  { name: 'Fructose',  formula: 'C₆H₁₂O₆', color: FRUCTOSE_ORANGE, food: 'Found in fruit and honey. Same formula as glucose, different shape.' },
+  { name: 'Galactose', formula: 'C₆H₁₂O₆', color: GALACTOSE_GREEN, food: 'Found in milk (as part of lactose).' }
+];
+
+// Disaccharide example: sucrose = glucose + fructose
+const DISACC = {
+  name: 'Sucrose',
+  formula: 'C₁₂H₂₂O₁₁',
+  note: 'Glucose + Fructose − H₂O',
+  food: 'Table sugar.'
+};
+
+// Food icons (emoji + label + description shown in info card)
+const FOODS_MONO = [
+  { emoji: '\u{1F347}', label: 'Grapes', body: 'Grapes are loaded with glucose and fructose — monosaccharides your body uses for quick energy.' },
+  { emoji: '\u{1F36F}', label: 'Honey',  body: 'Honey is mostly glucose + fructose (monosaccharides). Bees break apart nectar sugars into these small units.' }
+];
+const FOODS_DI = [
+  { emoji: '\u{1F95B}', label: 'Milk',   body: 'Milk contains lactose, a disaccharide (glucose + galactose). Lactase enzyme splits it back apart in your gut.' },
+  { emoji: '\u{1F36C}', label: 'Sugar',  body: 'Table sugar is sucrose, a disaccharide (glucose + fructose). Your body splits it before absorbing it.' }
+];
+const FOODS_POLY = [
+  { emoji: '\u{1F35E}', label: 'Bread',    body: 'Bread starch is a polysaccharide of glucose units linked by α (alpha) bonds — easy to digest into sugar.' },
+  { emoji: '\u{1F966}', label: 'Broccoli', body: 'Broccoli has cellulose: glucose units linked by β (beta) bonds. Humans can\'t break beta bonds — this is fiber.' },
+  { emoji: '\u{1F33E}', label: 'Oats',     body: 'Oats contain starch (alpha-linked, digestible) plus beta-glucan fiber (beta-linked, not digestible).' }
+];
+
+// ------------------------------------------------------------------------
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI, Arial, sans-serif');
+
+  // Rung Y baselines (center of each rung)
+  rungYPoly = 70 + rungHeight / 2;
+  rungYDi   = rungYPoly + rungHeight + 10;
+  rungYMono = rungYDi + rungHeight + 10;
+
+  // Buttons
+  let btnY = drawHeight + 25;
+  btnBonds = createButton('Show α/β bonds');
+  styleButton(btnBonds, TITLE_GREEN);
+  btnBonds.position(margin, btnY);
+  btnBonds.parent(document.querySelector('main'));
+  btnBonds.mousePressed(() => {
+    showBonds = !showBonds;
+    btnBonds.html(showBonds ? 'Hide α/β bonds' : 'Show α/β bonds');
+  });
+
+  btnReset = createButton('Reset');
+  styleButton(btnReset, ACCENT_ORANGE);
+  btnReset.position(margin + 180, btnY);
+  btnReset.parent(document.querySelector('main'));
+  btnReset.mousePressed(() => {
+    showBonds = false;
+    btnBonds.html('Show α/β bonds');
+    activeTooltip = null;
+    activeInfoCard = null;
+    condAnim.phase = 'idle';
+    condAnim.t = 0;
+  });
+
+  describe('Three-rung visual ladder of carbohydrates: polysaccharides (chain of blue hexagons), disaccharides (two hexagons + water droplet), monosaccharides (single colored hexagons for glucose, fructose, galactose). Click hexagons and food icons to learn more.', LABEL);
+}
+
+function styleButton(b, bg) {
+  b.style('background', bg);
+  b.style('color', 'white');
+  b.style('border', 'none');
+  b.style('border-radius', '6px');
+  b.style('padding', '8px 14px');
+  b.style('font-size', '13px');
+  b.style('font-family', 'Segoe UI, Arial, sans-serif');
+  b.style('cursor', 'pointer');
+  b.style('font-weight', '600');
+}
+
+function draw() {
+  hitTargets = [];
+
+  // Background regions
+  noStroke();
+  fill(BG);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke('silver');
+  noFill();
+  rect(0, 0, canvasWidth - 1, drawHeight);
+  rect(0, drawHeight, canvasWidth - 1, controlHeight - 1);
+
+  // Title
+  noStroke();
+  fill(TITLE_GREEN);
+  textAlign(LEFT, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('Carbohydrate Size Ladder — From Sugar to Starch', margin, 12);
+  textStyle(NORMAL);
+  fill(TEXT_MUTED);
+  textSize(12);
+  text('Click any hexagon, food icon, or the water droplet to explore.', margin, 36);
+
+  // Draw the three rungs (top -> bottom)
+  drawRung('Polysaccharides',  'Long chains — starch, cellulose, glycogen', rungYPoly, drawPolyRung, FOODS_POLY);
+  drawRung('Disaccharides',    'Two sugars linked — sucrose, lactose',     rungYDi,   drawDiRung,   FOODS_DI);
+  drawRung('Monosaccharides',  'Single sugars — glucose, fructose, galactose', rungYMono, drawMonoRung, FOODS_MONO);
+
+  // Advance condensation animation
+  updateCondAnim();
+
+  // Tooltip / info card overlays
+  if (activeTooltip) drawTooltip(activeTooltip);
+  if (activeInfoCard) drawInfoCard(activeInfoCard);
+
+  // Hover cursor
+  let overClickable = false;
+  for (let h of hitTargets) {
+    if (h.kind === 'hex' || h.kind === 'food' || h.kind === 'droplet') {
+      if (hitTest(h, mouseX, mouseY)) { overClickable = true; break; }
+    }
+  }
+  cursor(overClickable ? HAND : ARROW);
+
+  // Bottom control region label
+  noStroke();
+  fill(TEXT_MUTED);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  let infoY = drawHeight + 65;
+  if (showBonds) {
+    fill(TEXT_DARK);
+    textSize(13);
+    text('α (alpha) = digestible (green)   β (beta) = indigestible / fiber (red)', margin, infoY);
+    fill(TEXT_MUTED);
+    textSize(12);
+    text('This tiny difference determines whether you can digest it!', margin, infoY + 18);
+  } else {
+    text('Tip: toggle "Show α/β bonds" to see why starch is digestible but fiber is not.', margin, infoY);
+  }
+}
+
+// ----- Rung drawing -----------------------------------------------------
+
+function drawRung(title, subtitle, yCenter, contentFn, foods) {
+  let top = yCenter - rungHeight / 2;
+  // Rung card
+  noStroke();
+  fill(RUNG_BG);
+  rect(margin, top, canvasWidth - 2 * margin, rungHeight, 10);
+  stroke(RUNG_STROKE);
+  noFill();
+  strokeWeight(1.5);
+  rect(margin, top, canvasWidth - 2 * margin, rungHeight, 10);
+  strokeWeight(1);
+
+  // Left label block
+  noStroke();
+  fill(TITLE_GREEN);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text(title, margin + 12, top + 10);
+  textStyle(NORMAL);
+  fill(TEXT_MUTED);
+  textSize(11);
+  text(subtitle, margin + 12, top + 30);
+
+  // Content area
+  let contentX = margin + 170;
+  let contentW = canvasWidth - 2 * margin - 170 - 170; // leave room for foods on right
+  contentFn(contentX, yCenter, contentW);
+
+  // Food icons on the right
+  drawFoodIcons(foods, canvasWidth - margin - 160, yCenter);
+}
+
+function drawMonoRung(x, yCenter, w) {
+  // Three hexagons spaced evenly
+  let spacing = 90;
+  let totalW = spacing * (MONOS.length - 1);
+  let startX = x + (w - totalW) / 2;
+  for (let i = 0; i < MONOS.length; i++) {
+    let m = MONOS[i];
+    let hx = startX + i * spacing;
+    let hy = yCenter;
+    drawHex(hx, hy, HEX_R, m.color);
+    // Letter label
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+    textStyle(BOLD);
+    text(m.name[0], hx, hy);
+    textStyle(NORMAL);
+    // Name below
+    fill(TEXT_DARK);
+    textSize(11);
+    text(m.name, hx, hy + HEX_R + 12);
+    // Register hit target
+    hitTargets.push({
+      kind: 'hex', x: hx, y: hy, r: HEX_R,
+      data: { type: 'mono', name: m.name, formula: m.formula, food: m.food }
+    });
+  }
+}
+
+function drawDiRung(x, yCenter, w) {
+  // Two hexagons (glucose blue + fructose orange) with a water droplet between/above
+  let centerX = x + w / 2;
+  let baseGap = 80;     // separation when "not bonded"
+  let bondedGap = 2 * HEX_R + 4;
+  let gap;
+  let dropletAlpha = 255;
+  let dropletShown = true;
+
+  switch (condAnim.phase) {
+    case 'idle':
+      gap = baseGap;
+      dropletAlpha = 255;
+      break;
+    case 'showWater':
+      gap = baseGap;
+      dropletAlpha = 255;
+      break;
+    case 'removing':
+      // droplet floats upward and fades
+      gap = baseGap;
+      dropletAlpha = 255 * (1 - condAnim.t);
+      break;
+    case 'merging':
+      gap = lerp(baseGap, bondedGap, condAnim.t);
+      dropletShown = false;
+      break;
+    case 'bonded':
+      gap = bondedGap;
+      dropletShown = false;
+      break;
+    default:
+      gap = baseGap;
+  }
+
+  let leftX = centerX - gap / 2;
+  let rightX = centerX + gap / 2;
+  let hy = yCenter + 6;
+
+  // Connecting line if bonded
+  if (condAnim.phase === 'merging' || condAnim.phase === 'bonded') {
+    stroke(HEX_STROKE);
+    strokeWeight(3);
+    line(leftX + HEX_R - 2, hy, rightX - HEX_R + 2, hy);
+    strokeWeight(1);
+  }
+
+  drawHex(leftX, hy, HEX_R, GLUCOSE_BLUE);
+  noStroke(); fill(255); textAlign(CENTER, CENTER); textSize(13); textStyle(BOLD);
+  text('G', leftX, hy);
+  textStyle(NORMAL);
+  fill(TEXT_DARK); textSize(11);
+  text('Glucose', leftX, hy + HEX_R + 12);
+
+  drawHex(rightX, hy, HEX_R, FRUCTOSE_ORANGE);
+  noStroke(); fill(255); textAlign(CENTER, CENTER); textSize(13); textStyle(BOLD);
+  text('F', rightX, hy);
+  textStyle(NORMAL);
+  fill(TEXT_DARK); textSize(11);
+  text('Fructose', rightX, hy + HEX_R + 12);
+
+  // Register hit targets for the two hexagons too
+  hitTargets.push({ kind: 'hex', x: leftX, y: hy, r: HEX_R,
+    data: { type: 'mono', name: 'Glucose', formula: 'C₆H₁₂O₆', food: 'Half of sucrose; full glucose unit.' } });
+  hitTargets.push({ kind: 'hex', x: rightX, y: hy, r: HEX_R,
+    data: { type: 'mono', name: 'Fructose', formula: 'C₆H₁₂O₆', food: 'Half of sucrose; full fructose unit.' } });
+
+  // Water droplet
+  if (dropletShown) {
+    let dropX = centerX;
+    let dropY = hy - HEX_R - 18;
+    if (condAnim.phase === 'removing') {
+      dropY -= 30 * condAnim.t;
+    }
+    drawDroplet(dropX, dropY, 14, dropletAlpha);
+    if (dropletAlpha > 60) {
+      noStroke();
+      let tc = color(TEXT_DARK);
+      tc.setAlpha(dropletAlpha);
+      fill(tc);
+      textAlign(CENTER, CENTER);
+      textSize(11);
+      textStyle(BOLD);
+      text('− H₂O', dropX + 32, dropY);
+      textStyle(NORMAL);
+    }
+    // Register droplet target only when idle/visible
+    if (condAnim.phase === 'idle' || condAnim.phase === 'showWater') {
+      hitTargets.push({ kind: 'droplet', x: dropX, y: dropY, r: 16, data: { } });
+    }
+  }
+
+  // Disaccharide label when bonded
+  if (condAnim.phase === 'bonded') {
+    noStroke();
+    fill(TITLE_GREEN);
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('Sucrose (C₁₂H₂₂O₁₁)', centerX, hy - HEX_R - 14);
+    textStyle(NORMAL);
+  } else {
+    // Hint
+    noStroke();
+    fill(TEXT_MUTED);
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text('click droplet to remove H₂O', centerX, hy + HEX_R + 30);
+  }
+}
+
+function drawPolyRung(x, yCenter, w) {
+  // 9 blue hexagons in a row, last 2 fade to suggest a longer chain
+  let n = polyChainCount;
+  let spacing = 38;
+  let totalW = spacing * (n - 1);
+  let startX = x + 10;
+  let hy = yCenter + 4;
+
+  // Connecting bonds
+  stroke(HEX_STROKE);
+  strokeWeight(2);
+  for (let i = 0; i < n - 1; i++) {
+    let x1 = startX + i * spacing + HEX_R_POLY - 2;
+    let x2 = startX + (i + 1) * spacing - HEX_R_POLY + 2;
+    let alpha = 255;
+    if (i >= n - 3) alpha = map(i, n - 3, n - 1, 200, 60);
+    stroke(55, 71, 79, alpha);
+    line(x1, hy, x2, hy);
+  }
+  strokeWeight(1);
+
+  // Hexagons
+  for (let i = 0; i < n; i++) {
+    let hx = startX + i * spacing;
+    let alpha = 255;
+    if (i >= n - 3) alpha = map(i, n - 3, n - 1, 220, 60);
+    drawHex(hx, hy, HEX_R_POLY, GLUCOSE_BLUE, alpha);
+    if (alpha > 150) {
+      noStroke();
+      fill(255, alpha);
+      textAlign(CENTER, CENTER);
+      textSize(10);
+      textStyle(BOLD);
+      text('G', hx, hy);
+      textStyle(NORMAL);
+    }
+    hitTargets.push({ kind: 'hex', x: hx, y: hy, r: HEX_R_POLY,
+      data: { type: 'mono', name: 'Glucose unit', formula: 'C₆H₁₂O₆', food: 'One unit of a polysaccharide chain (starch, cellulose, or glycogen).' } });
+  }
+
+  // Trailing ellipsis
+  noStroke();
+  fill(TEXT_MUTED);
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  text('…', startX + (n - 1) * spacing + 14, hy);
+
+  // Label below
+  fill(TEXT_DARK);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  text('starch / cellulose / glycogen', startX, hy + HEX_R_POLY + 10);
+
+  // Alpha/beta bond overlay
+  if (showBonds) {
+    // Alternate: first 4 bonds alpha (green, digestible), next 4 beta (red)
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    textStyle(BOLD);
+    for (let i = 0; i < n - 1; i++) {
+      let bx = startX + i * spacing + spacing / 2;
+      let by = hy - HEX_R_POLY - 8;
+      let isAlpha = i < Math.floor((n - 1) / 2);
+      let col = isAlpha ? ALPHA_GREEN : BETA_RED;
+      let label = isAlpha ? 'α' : 'β';
+      let alpha = 255;
+      if (i >= n - 3) alpha = map(i, n - 3, n - 1, 220, 60);
+      // small marker line
+      let mc = color(col);
+      mc.setAlpha(alpha);
+      stroke(mc);
+      strokeWeight(2);
+      line(bx, by + 6, bx, by + 14);
+      // glyph
+      noStroke();
+      let fc = color(col);
+      fc.setAlpha(alpha);
+      fill(fc);
+      text(label, bx, by);
+    }
+    textStyle(NORMAL);
+    strokeWeight(1);
+  }
+}
+
+// ----- Food icons -------------------------------------------------------
+
+function drawFoodIcons(foods, xRight, yCenter) {
+  // Render in a column on the right side of each rung
+  let n = foods.length;
+  let spacing = 36;
+  let totalH = spacing * (n - 1);
+  let startY = yCenter - totalH / 2;
+  for (let i = 0; i < n; i++) {
+    let fx = xRight + 60;
+    let fy = startY + i * spacing;
+    // pill background
+    noStroke();
+    fill('#fff8e1');
+    rect(fx - 55, fy - 14, 130, 28, 14);
+    stroke('#ffe082');
+    noFill();
+    rect(fx - 55, fy - 14, 130, 28, 14);
+    // emoji
+    noStroke();
+    fill(TEXT_DARK);
+    textAlign(LEFT, CENTER);
+    textSize(18);
+    text(foods[i].emoji, fx - 48, fy);
+    // label
+    textSize(12);
+    fill(TEXT_DARK);
+    text(foods[i].label, fx - 22, fy);
+    // hit target (rect-as-circle approximation)
+    hitTargets.push({ kind: 'food', x: fx + 10, y: fy, r: 65,
+      shape: 'rect', x1: fx - 55, y1: fy - 14, x2: fx + 75, y2: fy + 14,
+      data: foods[i] });
+  }
+}
+
+// ----- Hex / Droplet primitives -----------------------------------------
+
+function drawHex(cx, cy, r, fillCol, alpha) {
+  if (alpha === undefined) alpha = 255;
+  push();
+  stroke(HEX_STROKE);
+  strokeWeight(2);
+  let c = color(fillCol);
+  c.setAlpha(alpha);
+  fill(c);
+  beginShape();
+  for (let i = 0; i < 6; i++) {
+    let a = TWO_PI / 6 * i - PI / 2;
+    vertex(cx + r * cos(a), cy + r * sin(a));
+  }
+  endShape(CLOSE);
+  pop();
+}
+
+function drawDroplet(cx, cy, r, alpha) {
+  push();
+  let c = color('#42a5f5');
+  c.setAlpha(alpha);
+  fill(c);
+  stroke(25, 118, 210, alpha);
+  strokeWeight(1.5);
+  beginShape();
+  vertex(cx, cy - r);
+  bezierVertex(cx + r, cy - r * 0.4, cx + r, cy + r * 0.6, cx, cy + r);
+  bezierVertex(cx - r, cy + r * 0.6, cx - r, cy - r * 0.4, cx, cy - r);
+  endShape(CLOSE);
+  // highlight
+  noStroke();
+  fill(255, alpha * 0.6);
+  ellipse(cx - r * 0.3, cy - r * 0.2, r * 0.35, r * 0.5);
+  pop();
+}
+
+// ----- Condensation animation -------------------------------------------
+
+function updateCondAnim() {
+  if (condAnim.phase === 'idle' || condAnim.phase === 'bonded') return;
+  condAnim.t += 1 / condAnim.duration;
+  if (condAnim.t >= 1) {
+    condAnim.t = 0;
+    if (condAnim.phase === 'showWater') condAnim.phase = 'removing';
+    else if (condAnim.phase === 'removing') condAnim.phase = 'merging';
+    else if (condAnim.phase === 'merging') {
+      condAnim.phase = 'bonded';
+      // Show info card explaining the result
+      activeInfoCard = {
+        title: 'Condensation Reaction',
+        body: [
+          'Glucose + Fructose → Sucrose + H₂O',
+          '',
+          'When two monosaccharides bond, one water molecule (H₂O) is removed.',
+          'This is called a CONDENSATION (or dehydration) reaction.',
+          'Sucrose formula: C₁₂H₂₂O₁₁',
+          '(Click Reset to try again.)'
+        ]
+      };
+    }
+  }
+}
+
+// ----- Tooltip / Info card ---------------------------------------------
+
+function drawTooltip(tt) {
+  let pad = 8;
+  textSize(12);
+  textAlign(LEFT, TOP);
+  let maxW = 0;
+  for (let line of tt.lines) {
+    let w = textWidth(line);
+    if (w > maxW) maxW = w;
+  }
+  let boxW = maxW + pad * 2;
+  let boxH = tt.lines.length * 16 + pad * 2;
+  let bx = constrain(tt.x + 14, margin, canvasWidth - boxW - margin);
+  let by = constrain(tt.y - boxH - 10, margin, drawHeight - boxH - margin);
+  // shadow + box
+  noStroke();
+  fill(0, 40);
+  rect(bx + 2, by + 3, boxW, boxH, 6);
+  fill(255);
+  stroke(TITLE_GREEN);
+  strokeWeight(1.5);
+  rect(bx, by, boxW, boxH, 6);
+  strokeWeight(1);
+  noStroke();
+  fill(TEXT_DARK);
+  for (let i = 0; i < tt.lines.length; i++) {
+    text(tt.lines[i], bx + pad, by + pad + i * 16);
+  }
+}
+
+function drawInfoCard(card) {
+  let cardW = 360;
+  let lineH = 16;
+  let pad = 14;
+  textSize(13);
+  textAlign(LEFT, TOP);
+  // Wrap body lines (already pre-wrapped as array of strings)
+  let bodyLines = card.body;
+  let cardH = pad * 2 + 22 + bodyLines.length * lineH + 6;
+  let bx = (canvasWidth - cardW) / 2;
+  let by = (drawHeight - cardH) / 2;
+  // backdrop
+  noStroke();
+  fill(0, 80);
+  rect(0, 0, canvasWidth, drawHeight);
+  // card
+  fill(255);
+  stroke(TITLE_GREEN);
+  strokeWeight(2);
+  rect(bx, by, cardW, cardH, 10);
+  strokeWeight(1);
+  // title
+  noStroke();
+  fill(TITLE_GREEN);
+  textSize(15);
+  textStyle(BOLD);
+  text(card.title, bx + pad, by + pad);
+  textStyle(NORMAL);
+  // body
+  fill(TEXT_DARK);
+  textSize(12);
+  for (let i = 0; i < bodyLines.length; i++) {
+    text(bodyLines[i], bx + pad, by + pad + 26 + i * lineH);
+  }
+  // close hint
+  fill(TEXT_MUTED);
+  textSize(11);
+  textAlign(RIGHT, BOTTOM);
+  text('click anywhere to close', bx + cardW - pad, by + cardH - pad / 2);
+}
+
+// ----- Interaction ------------------------------------------------------
+
+function hitTest(h, mx, my) {
+  if (h.shape === 'rect') {
+    return mx >= h.x1 && mx <= h.x2 && my >= h.y1 && my <= h.y2;
+  }
+  let dx = mx - h.x;
+  let dy = my - h.y;
+  return dx * dx + dy * dy <= h.r * h.r;
+}
+
+function mousePressed() {
+  // Close info card on any click
+  if (activeInfoCard) {
+    activeInfoCard = null;
+    return;
+  }
+  // Out-of-canvas guard
+  if (mouseX < 0 || mouseX > canvasWidth || mouseY < 0 || mouseY > drawHeight) {
+    activeTooltip = null;
+    return;
+  }
+  // Find topmost hit
+  let hit = null;
+  for (let i = hitTargets.length - 1; i >= 0; i--) {
+    if (hitTest(hitTargets[i], mouseX, mouseY)) { hit = hitTargets[i]; break; }
+  }
+  if (!hit) {
+    activeTooltip = null;
+    return;
+  }
+  if (hit.kind === 'hex') {
+    activeTooltip = {
+      x: hit.x, y: hit.y,
+      lines: [
+        hit.data.name,
+        'Formula: ' + hit.data.formula,
+        hit.data.food
+      ]
+    };
+  } else if (hit.kind === 'food') {
+    activeInfoCard = {
+      title: hit.data.label,
+      body: wrapText(hit.data.body, 50)
+    };
+  } else if (hit.kind === 'droplet') {
+    // Start condensation animation
+    if (condAnim.phase === 'idle') {
+      condAnim.phase = 'removing';
+      condAnim.t = 0;
+    }
+  }
+}
+
+function wrapText(s, maxChars) {
+  let words = s.split(' ');
+  let lines = [];
+  let cur = '';
+  for (let w of words) {
+    if ((cur + ' ' + w).trim().length > maxChars) {
+      lines.push(cur.trim());
+      cur = w;
+    } else {
+      cur += ' ' + w;
+    }
+  }
+  if (cur.trim().length) lines.push(cur.trim());
+  return lines;
+}
+
+// ----- Responsive -------------------------------------------------------
+
+function updateCanvasSize() {
+  const el = document.querySelector('main');
+  if (el) {
+    const w = el.getBoundingClientRect().width;
+    if (w > 0) {
+      // Keep fixed for now; canvas will scale via CSS if needed.
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

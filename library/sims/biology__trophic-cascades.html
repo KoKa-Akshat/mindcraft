@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Invasive Species Impact Network using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Invasive Species Cascade Simulator
+// CANVAS_HEIGHT: 560
+// Shows how invasive species cascade through a food web
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 480;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Species in the food web
+let species = {};
+let connections = [];
+let invasivePresent = false;
+let invasiveType = 'python';
+let timeStep = 0;
+let running = false;
+let maxTime = 60;
+
+// Controls
+let introduceBtn, removeBtn, resetBtn, pauseBtn, scenarioSel;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Invasive species cascade through a native food web', LABEL);
+
+  scenarioSel = createSelect();
+  scenarioSel.parent(document.querySelector('main'));
+  scenarioSel.option('Burmese Python');
+  scenarioSel.option('Zebra Mussel');
+  scenarioSel.option('Kudzu');
+  scenarioSel.changed(() => {
+    let v = scenarioSel.value();
+    if (v === 'Burmese Python') invasiveType = 'python';
+    else if (v === 'Zebra Mussel') invasiveType = 'mussel';
+    else invasiveType = 'kudzu';
+    resetSim();
+  });
+
+  pauseBtn = createButton('Start');
+  pauseBtn.parent(document.querySelector('main'));
+  pauseBtn.mousePressed(() => { running = !running; pauseBtn.html(running ? 'Pause' : 'Start'); });
+
+  introduceBtn = createButton('Introduce Invasive');
+  introduceBtn.parent(document.querySelector('main'));
+  introduceBtn.mousePressed(() => { invasivePresent = true; });
+
+  removeBtn = createButton('Remove Invasive');
+  removeBtn.parent(document.querySelector('main'));
+  removeBtn.mousePressed(() => { invasivePresent = false; });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(resetSim);
+
+  resetSim();
+}
+
+function resetSim() {
+  invasivePresent = false;
+  timeStep = 0;
+  running = false;
+  if (pauseBtn) pauseBtn.html('Start');
+  initWeb();
+}
+
+function initWeb() {
+  let cx = canvasWidth / 2;
+  species = {
+    sun:     { name: 'Sun',     pop: 1.0, basePop: 1.0, x: cx, y: 30,  icon: 'sun',   color: [255, 200, 0] },
+    grass:   { name: 'Grass',   pop: 1.0, basePop: 1.0, x: cx - 120, y: 120, icon: 'plant', color: [50, 160, 50] },
+    trees:   { name: 'Trees',   pop: 1.0, basePop: 1.0, x: cx + 120, y: 120, icon: 'tree',  color: [30, 120, 30] },
+    rabbit:  { name: 'Rabbit',  pop: 1.0, basePop: 1.0, x: cx - 160, y: 230, icon: 'herb',  color: [160, 130, 80] },
+    deer:    { name: 'Deer',    pop: 1.0, basePop: 1.0, x: cx - 40, y: 230, icon: 'herb',  color: [140, 100, 60] },
+    insect:  { name: 'Insects', pop: 1.0, basePop: 1.0, x: cx + 80, y: 230, icon: 'bug',   color: [180, 160, 40] },
+    fish:    { name: 'Fish',    pop: 1.0, basePop: 1.0, x: cx + 180, y: 230, icon: 'fish',  color: [60, 130, 200] },
+    fox:     { name: 'Fox',     pop: 1.0, basePop: 1.0, x: cx - 130, y: 340, icon: 'pred',  color: [200, 120, 40] },
+    wolf:    { name: 'Wolf',    pop: 1.0, basePop: 1.0, x: cx + 10, y: 340, icon: 'pred',  color: [100, 100, 110] },
+    bird:    { name: 'Birds',   pop: 1.0, basePop: 1.0, x: cx + 140, y: 340, icon: 'bird',  color: [80, 140, 200] }
+  };
+
+  connections = [
+    { from: 'sun', to: 'grass' }, { from: 'sun', to: 'trees' },
+    { from: 'grass', to: 'rabbit' }, { from: 'grass', to: 'deer' },
+    { from: 'grass', to: 'insect' }, { from: 'trees', to: 'insect' },
+    { from: 'trees', to: 'bird' },
+    { from: 'rabbit', to: 'fox' }, { from: 'deer', to: 'wolf' },
+    { from: 'insect', to: 'bird' }, { from: 'fish', to: 'bird' }
+  ];
+}
+
+function updateCascade() {
+  if (!invasivePresent) {
+    // Recovery
+    for (let k in species) {
+      if (k !== 'sun') {
+        species[k].pop = lerp(species[k].pop, species[k].basePop, 0.02);
+      }
+    }
+    return;
+  }
+
+  timeStep++;
+  let t = min(timeStep / maxTime, 1.0);
+
+  if (invasiveType === 'python') {
+    // Python eats rabbits and deer
+    species.rabbit.pop = max(0.1, 1.0 - t * 0.8);
+    species.deer.pop = max(0.15, 1.0 - t * 0.7);
+    // Fox and wolf decline (food loss)
+    species.fox.pop = max(0.2, 1.0 - t * 0.6);
+    species.wolf.pop = max(0.25, 1.0 - t * 0.5);
+    // Grass grows unchecked
+    species.grass.pop = min(1.8, 1.0 + t * 0.7);
+    // Birds relatively unaffected
+    species.bird.pop = max(0.6, 1.0 - t * 0.2);
+  } else if (invasiveType === 'mussel') {
+    // Zebra mussels outcompete native filter feeders
+    species.fish.pop = max(0.15, 1.0 - t * 0.7);
+    species.bird.pop = max(0.3, 1.0 - t * 0.5);
+    // Clears water -> more plants
+    species.grass.pop = min(1.4, 1.0 + t * 0.3);
+    species.insect.pop = max(0.5, 1.0 - t * 0.3);
+  } else { // kudzu
+    // Kudzu smothers trees and native plants
+    species.trees.pop = max(0.1, 1.0 - t * 0.8);
+    species.grass.pop = max(0.2, 1.0 - t * 0.6);
+    species.insect.pop = max(0.3, 1.0 - t * 0.5);
+    species.bird.pop = max(0.3, 1.0 - t * 0.5);
+    species.rabbit.pop = max(0.4, 1.0 - t * 0.4);
+    species.deer.pop = max(0.3, 1.0 - t * 0.5);
+    species.fox.pop = max(0.4, 1.0 - t * 0.3);
+    species.wolf.pop = max(0.4, 1.0 - t * 0.3);
+  }
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  fill('#eef6ee');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Update positions to current canvas size
+  let cx = canvasWidth / 2;
+  species.sun.x = cx;
+  species.grass.x = cx - canvasWidth * 0.25;
+  species.trees.x = cx + canvasWidth * 0.25;
+  species.rabbit.x = cx - canvasWidth * 0.35;
+  species.deer.x = cx - canvasWidth * 0.1;
+  species.insect.x = cx + canvasWidth * 0.15;
+  species.fish.x = cx + canvasWidth * 0.35;
+  species.fox.x = cx - canvasWidth * 0.25;
+  species.wolf.x = cx + canvasWidth * 0.02;
+  species.bird.x = cx + canvasWidth * 0.28;
+
+  if (running && frameCount % 5 === 0) {
+    updateCascade();
+  }
+
+  // Draw connections
+  for (let c of connections) {
+    let s1 = species[c.from];
+    let s2 = species[c.to];
+    stroke(180);
+    strokeWeight(1);
+    line(s1.x, s1.y + 18, s2.x, s2.y - 18);
+  }
+
+  // Draw species nodes
+  for (let k in species) {
+    let s = species[k];
+    drawSpeciesNode(s, k);
+  }
+
+  // Draw invasive if present
+  if (invasivePresent) {
+    let invX = cx;
+    let invY = drawHeight * 0.9;
+    let pulse = sin(frameCount * 0.1) * 5 + 25;
+    fill(200, 30, 30, 150);
+    noStroke();
+    ellipse(invX, invY, pulse * 2, pulse * 2);
+    fill(255);
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    let invName = invasiveType === 'python' ? 'Python' : invasiveType === 'mussel' ? 'Zebra Mussel' : 'Kudzu';
+    text(invName, invX, invY);
+  }
+
+  // Title
+  noStroke();
+  fill(40);
+  textSize(15);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text('Invasive Species Cascade', canvasWidth / 2, 5);
+  textStyle(NORMAL);
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('Scenario:', 10, drawHeight + 15);
+  text('Time: ' + timeStep, canvasWidth * 0.5, drawHeight + 15);
+
+  positionControls();
+}
+
+function drawSpeciesNode(s, key) {
+  let sz = 36;
+  // Color based on population health
+  let r, g, b;
+  if (s.pop >= 0.8) { r = 50; g = 160; b = 50; }       // healthy green
+  else if (s.pop >= 0.5) { r = 220; g = 180; b = 30; }  // stressed yellow
+  else if (s.pop >= 0.3) { r = 230; g = 130; b = 30; }  // orange
+  else { r = 210; g = 50; b = 50; }                       // critical red
+
+  // Overgrowth
+  if (s.pop > 1.2) { r = 30; g = 200; b = 30; sz = 42; }
+
+  // Node circle
+  fill(r, g, b, 180);
+  stroke(r, g, b);
+  strokeWeight(2);
+  ellipse(s.x, s.y, sz, sz);
+
+  // Icon/label
+  noStroke();
+  fill(255);
+  textSize(9);
+  textAlign(CENTER, CENTER);
+  text(s.name, s.x, s.y);
+
+  // Population bar
+  let barW = 40;
+  let barH = 6;
+  let bx = s.x - barW / 2;
+  let by = s.y + sz / 2 + 4;
+  fill(200);
+  noStroke();
+  rect(bx, by, barW, barH, 2);
+  fill(r, g, b);
+  rect(bx, by, barW * min(s.pop, 1.8) / 1.8, barH, 2);
+
+  // Pop text
+  noStroke();
+  fill(80);
+  textSize(9);
+  text(nf(s.pop * 100, 1, 0) + '%', s.x, by + barH + 8);
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: select
+  scenarioSel.position(ox + 75, oy + drawHeight + 5);
+  // Row 2: buttons
+  pauseBtn.position(ox + 10, oy + drawHeight + 40);
+  introduceBtn.position(ox + 80, oy + drawHeight + 40);
+  removeBtn.position(ox + 220, oy + drawHeight + 40);
+  resetBtn.position(ox + canvasWidth - 70, oy + drawHeight + 40);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

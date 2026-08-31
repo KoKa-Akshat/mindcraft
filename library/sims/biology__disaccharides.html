@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Carbohydrate Structures Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Carbohydrate Structures Explorer
+// Students explore Haworth projections of mono-, di-, and polysaccharides
+// Bloom Level: Understand (L2) — explain structural differences
+// MicroSim template version 2026.02
+
+let containerWidth;
+let canvasWidth = 660;
+let drawHeight = 415;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Controls
+let moleculeSelect;
+let showBondLabelsCheckbox;
+
+// Current molecule
+let currentMolecule = 'alpha-glucose';
+let transitionProgress = 1; // 0 to 1
+
+// Molecule data
+const molecules = {
+  'alpha-glucose': {
+    name: 'α-Glucose',
+    type: 'Monosaccharide',
+    formula: 'C₆H₁₂O₆',
+    bondType: 'None (monomer)',
+    func: 'Primary energy source for cells',
+    fact: 'The C-1 hydroxyl (–OH) points DOWN in the α form, allowing starch formation.',
+    ringType: 'pyranose'
+  },
+  'beta-glucose': {
+    name: 'β-Glucose',
+    type: 'Monosaccharide',
+    formula: 'C₆H₁₂O₆',
+    bondType: 'None (monomer)',
+    func: 'Structural monomer for cellulose',
+    fact: 'The C-1 hydroxyl (–OH) points UP in the β form, enabling straight cellulose chains.',
+    ringType: 'pyranose'
+  },
+  'sucrose': {
+    name: 'Sucrose',
+    type: 'Disaccharide',
+    formula: 'C₁₂H₂₂O₁₁',
+    bondType: 'α-1,2 glycosidic bond',
+    func: 'Transport sugar in plants',
+    fact: 'Composed of α-glucose and β-fructose linked by a α-1,2 bond.',
+    ringType: 'mixed'
+  },
+  'starch': {
+    name: 'Starch (amylose)',
+    type: 'Polysaccharide',
+    formula: '(C₆H₁₀O₅)ₙ',
+    bondType: 'α-1,4 glycosidic bonds',
+    func: 'Energy storage in plants',
+    fact: 'α-1,4 bonds cause the chain to coil into a helix. Humans digest starch easily.',
+    ringType: 'pyranose'
+  },
+  'cellulose': {
+    name: 'Cellulose',
+    type: 'Polysaccharide',
+    formula: '(C₆H₁₀O₅)ₙ',
+    bondType: 'β-1,4 glycosidic bonds',
+    func: 'Structural support in plant cell walls',
+    fact: 'β-1,4 bonds produce straight chains that form hydrogen-bonded fibrils. Most animals cannot digest cellulose.',
+    ringType: 'pyranose'
+  }
+};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+  textSize(defaultTextSize);
+
+  // Molecule selector dropdown
+  moleculeSelect = createSelect();
+  moleculeSelect.position(10, drawHeight + 8);
+  moleculeSelect.option('α-Glucose', 'alpha-glucose');
+  moleculeSelect.option('β-Glucose', 'beta-glucose');
+  moleculeSelect.option('Sucrose', 'sucrose');
+  moleculeSelect.option('Starch (amylose)', 'starch');
+  moleculeSelect.option('Cellulose', 'cellulose');
+  moleculeSelect.selected('alpha-glucose');
+  moleculeSelect.changed(() => {
+    currentMolecule = moleculeSelect.value();
+    transitionProgress = 0;
+  });
+  moleculeSelect.style('font-size', '14px');
+  moleculeSelect.style('padding', '4px');
+
+  // Bond labels checkbox
+  showBondLabelsCheckbox = createCheckbox('Show bond orientation labels', false);
+  showBondLabelsCheckbox.position(220, drawHeight + 10);
+  showBondLabelsCheckbox.style('font-size', '14px');
+
+  describe('Interactive carbohydrate structure explorer showing Haworth projections of glucose, sucrose, starch, and cellulose', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Update transition
+  if (transitionProgress < 1) {
+    transitionProgress = min(1, transitionProgress + 0.08);
+  }
+
+  // Drawing area background
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area background
+  fill('white');
+  stroke('silver');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(22);
+  text('Carbohydrate Structures Explorer', canvasWidth / 2, 8);
+
+  let mol = molecules[currentMolecule];
+  let alpha = transitionProgress * 255;
+
+  // Draw the molecule in the center area
+  push();
+  drawMolecule(currentMolecule, transitionProgress);
+  pop();
+
+  // Draw properties panel on the right
+  drawPropertiesPanel(mol, alpha);
+}
+
+function drawPropertiesPanel(mol, alpha) {
+  let panelX = canvasWidth - 210;
+  let panelY = 30;
+  let panelW = 195;
+  let panelH = 380;
+
+  // Panel background
+  fill(255, 255, 255, alpha);
+  stroke(180);
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  // Panel title
+  noStroke();
+  fill(0, 100, 0, alpha);
+  textAlign(CENTER, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Properties', panelX + panelW / 2, panelY + 10);
+
+  // Property labels and values
+  textStyle(NORMAL);
+  textSize(13);
+  textAlign(LEFT, TOP);
+  let yPos = panelY + 35;
+  let indent = panelX + 12;
+  let lineH = 22;
+
+  let props = [
+    ['Name', mol.name],
+    ['Type', mol.type],
+    ['Formula', mol.formula],
+    ['Bond', mol.bondType],
+    ['Function', mol.func]
+  ];
+
+  for (let p of props) {
+    fill(80, 80, 80, alpha);
+    textStyle(BOLD);
+    text(p[0] + ':', indent, yPos);
+    yPos += lineH - 4;
+    fill(0, 0, 0, alpha);
+    textStyle(NORMAL);
+    let wrapped = wrapText(p[1], panelW - 24);
+    for (let wLine of wrapped) {
+      text(wLine, indent, yPos);
+      yPos += lineH - 4;
+    }
+    yPos += 6;
+  }
+
+  // Key fact box
+  yPos += 4;
+  fill(255, 248, 220, alpha);
+  stroke(200, 180, 100, alpha);
+  strokeWeight(1);
+  rect(panelX + 8, yPos, panelW - 16, panelH - (yPos - panelY) - 10, 5);
+
+  noStroke();
+  fill(140, 100, 0, alpha);
+  textStyle(BOLD);
+  textSize(12);
+  text('Key Fact:', panelX + 14, yPos + 6);
+  textStyle(NORMAL);
+  fill(80, 60, 0, alpha);
+  let factWrapped = wrapText(mol.fact, panelW - 32);
+  let fy = yPos + 22;
+  for (let fLine of factWrapped) {
+    text(fLine, panelX + 14, fy);
+    fy += 16;
+  }
+}
+
+function wrapText(txt, maxWidth) {
+  let words = txt.split(' ');
+  let lines = [];
+  let currentLine = '';
+  textSize(13);
+  for (let w of words) {
+    let testLine = currentLine ? currentLine + ' ' + w : w;
+    if (textWidth(testLine) > maxWidth && currentLine) {
+      lines.push(currentLine);
+      currentLine = w;
+    } else {
+      currentLine = testLine;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
+}
+
+function drawMolecule(molKey, alpha) {
+  let centerX = (canvasWidth - 210) / 2;
+  let centerY = drawHeight / 2 + 10;
+  let showLabels = showBondLabelsCheckbox.checked();
+
+  switch (molKey) {
+    case 'alpha-glucose':
+      drawGlucoseRing(centerX, centerY, 'alpha', alpha, showLabels);
+      break;
+    case 'beta-glucose':
+      drawGlucoseRing(centerX, centerY, 'beta', alpha, showLabels);
+      break;
+    case 'sucrose':
+      drawSucroseStructure(centerX, centerY, alpha, showLabels);
+      break;
+    case 'starch':
+      drawStarchChain(centerX, centerY, alpha, showLabels);
+      break;
+    case 'cellulose':
+      drawCelluloseChain(centerX, centerY, alpha, showLabels);
+      break;
+  }
+}
+
+// Haworth pyranose ring points — wider and taller for clear label spacing
+function getHaworthPyranosePoints(cx, cy, w, h) {
+  // Flattened hexagon: O top-right, C1–C5 clockwise
+  return [
+    { x: cx + w * 0.35, y: cy - h },        // 0: O (top right)
+    { x: cx + w,        y: cy - h * 0.25 },  // 1: C1 (right upper)
+    { x: cx + w,        y: cy + h * 0.55 },  // 2: C2 (right lower)
+    { x: cx + w * 0.25, y: cy + h },          // 3: C3 (bottom right)
+    { x: cx - w * 0.25, y: cy + h },          // 4: C4 (bottom left)
+    { x: cx - w,        y: cy - h * 0.25 }   // 5: C5 (left)
+  ];
+}
+
+function getHaworthFuranosePoints(cx, cy, w, h) {
+  return [
+    { x: cx + w * 0.3, y: cy - h },
+    { x: cx + w,       y: cy - h * 0.2 },
+    { x: cx + w * 0.6, y: cy + h },
+    { x: cx - w * 0.6, y: cy + h },
+    { x: cx - w,       y: cy - h * 0.2 }
+  ];
+}
+
+// ──────────────────────────────────────────────
+// GLUCOSE RING — full detail with substituents
+// ──────────────────────────────────────────────
+function drawGlucoseRing(cx, cy, form, alpha, showLabels) {
+  let a = alpha * 255;
+  // Larger ring for clear spacing
+  let ringW = 100;
+  let ringH = 55;
+  let pts = getHaworthPyranosePoints(cx, cy, ringW, ringH);
+
+  // ── Ring polygon ──
+  fill(245, 245, 255, a);
+  stroke(60, 60, 60, a);
+  strokeWeight(2);
+  beginShape();
+  for (let p of pts) vertex(p.x, p.y);
+  endShape(CLOSE);
+
+  // Thick front edges (Haworth convention)
+  stroke(30, 30, 30, a);
+  strokeWeight(4);
+  line(pts[3].x, pts[3].y, pts[4].x, pts[4].y);
+  line(pts[4].x, pts[4].y, pts[5].x, pts[5].y);
+
+  // ── Ring atom labels ──
+  noStroke();
+  textAlign(CENTER, CENTER);
+
+  // Oxygen — above the ring vertex
+  fill(220, 0, 0, a);
+  textSize(16);
+  textStyle(BOLD);
+  text('O', pts[0].x, pts[0].y - 16);
+
+  // Carbon numbers — placed outside the ring with generous offsets
+  fill(80, 80, 80, a);
+  textSize(12);
+  textStyle(NORMAL);
+  let cLabels = [
+    { n: 1, x: pts[1].x + 18, y: pts[1].y - 12 },
+    { n: 2, x: pts[2].x + 18, y: pts[2].y },
+    { n: 3, x: pts[3].x + 12, y: pts[3].y + 14 },
+    { n: 4, x: pts[4].x - 12, y: pts[4].y + 14 },
+    { n: 5, x: pts[5].x - 18, y: pts[5].y - 10 }
+  ];
+  for (let cl of cLabels) {
+    text('C' + cl.n, cl.x, cl.y);
+  }
+
+  // ── C-5: CH₂OH going up-left ──
+  let ch2x = pts[5].x - 12;
+  let ch2y = pts[5].y - 42;
+  stroke(80, 80, 80, a);
+  strokeWeight(2);
+  line(pts[5].x, pts[5].y, ch2x, ch2y);
+  noStroke();
+  fill(80, 80, 80, a);
+  textSize(13);
+  textStyle(NORMAL);
+  textAlign(CENTER, CENTER);
+  text('CH₂OH', ch2x, ch2y - 14);
+
+  // ── C-1: OH — the KEY distinguishing group ──
+  // Alpha: OH down-right from C1; Beta: OH up-right from C1
+  let oh1Len = 40;
+  let oh1x, oh1y, ohColor;
+  if (form === 'alpha') {
+    oh1x = pts[1].x + 20;
+    oh1y = pts[1].y + oh1Len;
+    ohColor = color(220, 50, 50, a);
+  } else {
+    oh1x = pts[1].x + 20;
+    oh1y = pts[1].y - oh1Len;
+    ohColor = color(50, 50, 220, a);
+  }
+  stroke(ohColor);
+  strokeWeight(2);
+  line(pts[1].x, pts[1].y, oh1x, oh1y);
+  noStroke();
+  fill(ohColor);
+  textSize(15);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text('OH', oh1x + 18, oh1y);
+
+  // H on opposite side of C-1 OH
+  let h1y = form === 'alpha' ? pts[1].y - 22 : pts[1].y + 22;
+  stroke(150, 150, 150, a);
+  strokeWeight(1);
+  line(pts[1].x, pts[1].y, pts[1].x + 8, h1y);
+  noStroke();
+  fill(150, 150, 150, a);
+  textSize(11);
+  textStyle(NORMAL);
+  text('H', pts[1].x + 8, h1y + (form === 'alpha' ? -10 : 10));
+
+  // ── C-2: OH down, H up — offset to the right to avoid C1 ──
+  let c2ohLen = 35;
+  stroke(0, 150, 0, a);
+  strokeWeight(2);
+  line(pts[2].x, pts[2].y, pts[2].x + 16, pts[2].y + c2ohLen);
+  noStroke();
+  fill(0, 150, 0, a);
+  textSize(13);
+  textStyle(BOLD);
+  text('OH', pts[2].x + 22, pts[2].y + c2ohLen + 12);
+
+  // H on C-2 going up
+  stroke(150, 150, 150, a);
+  strokeWeight(1);
+  line(pts[2].x, pts[2].y, pts[2].x + 12, pts[2].y - 20);
+  noStroke();
+  fill(150, 150, 150, a);
+  textSize(11);
+  textStyle(NORMAL);
+  text('H', pts[2].x + 12, pts[2].y - 30);
+
+  // ── C-3: OH down, H up ──
+  stroke(0, 150, 0, a);
+  strokeWeight(2);
+  line(pts[3].x, pts[3].y, pts[3].x, pts[3].y + c2ohLen);
+  noStroke();
+  fill(0, 150, 0, a);
+  textSize(13);
+  textStyle(BOLD);
+  text('OH', pts[3].x, pts[3].y + c2ohLen + 12);
+
+  // H on C-3 going up
+  stroke(150, 150, 150, a);
+  strokeWeight(1);
+  line(pts[3].x, pts[3].y, pts[3].x, pts[3].y - 20);
+  noStroke();
+  fill(150, 150, 150, a);
+  textSize(11);
+  textStyle(NORMAL);
+  text('H', pts[3].x, pts[3].y - 30);
+
+  // ── C-4: OH up, H down ──
+  stroke(0, 150, 0, a);
+  strokeWeight(2);
+  line(pts[4].x, pts[4].y, pts[4].x, pts[4].y - c2ohLen);
+  noStroke();
+  fill(0, 150, 0, a);
+  textSize(13);
+  textStyle(BOLD);
+  text('OH', pts[4].x, pts[4].y - c2ohLen - 12);
+
+  // H on C-4 going down
+  stroke(150, 150, 150, a);
+  strokeWeight(1);
+  line(pts[4].x, pts[4].y, pts[4].x, pts[4].y + 20);
+  noStroke();
+  fill(150, 150, 150, a);
+  textSize(11);
+  textStyle(NORMAL);
+  text('H', pts[4].x, pts[4].y + 30);
+
+  // ── Bond orientation annotation (when checkbox on) ──
+  if (showLabels) {
+    noFill();
+    stroke(ohColor);
+    strokeWeight(2);
+    drawingContext.setLineDash([4, 4]);
+    ellipse(oh1x + 10, oh1y, 55, 35);
+    drawingContext.setLineDash([]);
+
+    noStroke();
+    fill(ohColor);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    let annY = form === 'alpha' ? oh1y + 28 : oh1y - 28;
+    text('C-1 –OH (' + (form === 'alpha' ? 'DOWN = α' : 'UP = β') + ')', oh1x + 10, annY);
+    textStyle(NORMAL);
+  }
+
+  // ── Title below ring ──
+  noStroke();
+  fill(0, 0, 0, a);
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  textStyle(BOLD);
+  text(form === 'alpha' ? 'α-Glucose' : 'β-Glucose', cx, cy + ringH + 70);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(100, 100, 100, a);
+  text('Haworth Projection (Pyranose Ring)', cx, cy + ringH + 90);
+}
+
+// ──────────────────────────────────────────────
+// SUCROSE
+// ──────────────────────────────────────────────
+function drawSucroseStructure(cx, cy, alpha, showLabels) {
+  let a = alpha * 255;
+  let glucoseX = cx - 100;
+  let fructoseX = cx + 100;
+
+  drawSmallRing(glucoseX, cy, 'pyranose', 'α-Glucose', a, 0.85);
+  drawSmallRing(fructoseX, cy, 'furanose', 'β-Fructose', a, 0.85);
+
+  // Glycosidic bond
+  let bondStartX = glucoseX + 60;
+  let bondEndX = fructoseX - 60;
+  stroke(255, 140, 0, a);
+  strokeWeight(4);
+  line(bondStartX, cy, bondEndX, cy);
+
+  noStroke();
+  fill(255, 140, 0, a);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  textStyle(BOLD);
+  text('α-1,2', (bondStartX + bondEndX) / 2, cy - 16);
+  textStyle(NORMAL);
+
+  // Water molecule
+  drawWaterMolecule((bondStartX + bondEndX) / 2, cy + 55, a);
+
+  if (showLabels) {
+    noFill();
+    stroke(255, 140, 0, a);
+    strokeWeight(2);
+    drawingContext.setLineDash([4, 4]);
+    ellipse((bondStartX + bondEndX) / 2, cy, bondEndX - bondStartX + 20, 30);
+    drawingContext.setLineDash([]);
+
+    noStroke();
+    fill(255, 100, 0, a);
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('glycosidic bond', (bondStartX + bondEndX) / 2, cy + 24);
+  }
+
+  // Title
+  noStroke();
+  fill(0, 0, 0, a);
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  textStyle(BOLD);
+  text('Sucrose', cx, cy + 115);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(100, 100, 100, a);
+  text('α-Glucose + β-Fructose (α-1,2 glycosidic bond)', cx, cy + 135);
+}
+
+function drawSmallRing(cx, cy, ringType, label, a, scale) {
+  let pts;
+  if (ringType === 'pyranose') {
+    pts = getHaworthPyranosePoints(cx, cy, 55 * scale, 32 * scale);
+  } else {
+    pts = getHaworthFuranosePoints(cx, cy, 48 * scale, 30 * scale);
+  }
+
+  fill(245, 245, 255, a);
+  stroke(60, 60, 60, a);
+  strokeWeight(2);
+  beginShape();
+  for (let p of pts) vertex(p.x, p.y);
+  endShape(CLOSE);
+
+  // Thick front edges
+  stroke(30, 30, 30, a);
+  strokeWeight(3);
+  let n = pts.length;
+  line(pts[n - 2].x, pts[n - 2].y, pts[n - 1].x, pts[n - 1].y);
+  if (n > 2) line(pts[n - 3].x, pts[n - 3].y, pts[n - 2].x, pts[n - 2].y);
+
+  // O label
+  noStroke();
+  fill(220, 0, 0, a);
+  textSize(13);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text('O', pts[0].x + 2, pts[0].y - 12);
+
+  // Ring label below
+  fill(80, 80, 80, a);
+  textSize(12);
+  textStyle(NORMAL);
+  text(label, cx, cy + 55 * scale + 10);
+}
+
+// ──────────────────────────────────────────────
+// STARCH CHAIN
+// ──────────────────────────────────────────────
+function drawStarchChain(cx, cy, alpha, showLabels) {
+  let a = alpha * 255;
+  let unitW = 75;
+  let gap = 20;
+  let startX = cx - (unitW + gap) * 1.7;
+  let coilAmp = 18;
+
+  for (let i = 0; i < 4; i++) {
+    let ux = startX + i * (unitW + gap);
+    let uy = cy + sin(i * 0.8) * coilAmp;
+
+    drawSimplifiedGlucose(ux, uy, 'alpha', a, 0.55);
+
+    if (i < 3) {
+      let nextX = startX + (i + 1) * (unitW + gap);
+      let nextY = cy + sin((i + 1) * 0.8) * coilAmp;
+      stroke(255, 140, 0, a);
+      strokeWeight(3);
+      line(ux + 40, uy, nextX - 40, nextY);
+
+      if (showLabels && i === 1) {
+        let midX = (ux + 40 + nextX - 40) / 2;
+        let midY = (uy + nextY) / 2;
+        noStroke();
+        fill(255, 100, 0, a);
+        textAlign(CENTER, CENTER);
+        textSize(12);
+        textStyle(BOLD);
+        text('α-1,4', midX, midY - 16);
+
+        noFill();
+        stroke(255, 100, 0, a);
+        strokeWeight(1.5);
+        drawingContext.setLineDash([3, 3]);
+        ellipse(midX, midY, 44, 26);
+        drawingContext.setLineDash([]);
+      }
+    }
+
+    if (i === 0) {
+      drawWaterMolecule(ux + unitW * 0.65, uy + 55, a);
+    }
+  }
+
+  // Coiling indicator
+  noFill();
+  stroke(100, 100, 200, a);
+  strokeWeight(1.5);
+  drawingContext.setLineDash([5, 5]);
+  arc(cx, cy + coilAmp + 62, 180, 30, PI, TWO_PI);
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill(100, 100, 200, a);
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text('chains coil into helix', cx, cy + coilAmp + 86);
+
+  // Title
+  noStroke();
+  fill(0, 0, 0, a);
+  textSize(18);
+  textStyle(BOLD);
+  text('Starch (Amylose)', cx, cy + 120);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(100, 100, 100, a);
+  text('α-1,4 glycosidic bonds → coiled chain', cx, cy + 140);
+}
+
+// ──────────────────────────────────────────────
+// CELLULOSE CHAIN
+// ──────────────────────────────────────────────
+function drawCelluloseChain(cx, cy, alpha, showLabels) {
+  let a = alpha * 255;
+  let unitW = 75;
+  let gap = 20;
+  let startX = cx - (unitW + gap) * 1.7;
+
+  for (let i = 0; i < 4; i++) {
+    let ux = startX + i * (unitW + gap);
+    let flipped = (i % 2 === 1);
+
+    drawSimplifiedGlucose(ux, cy, 'beta', a, 0.55, flipped);
+
+    if (i < 3) {
+      let nextX = startX + (i + 1) * (unitW + gap);
+      stroke(255, 140, 0, a);
+      strokeWeight(3);
+      line(ux + 40, cy, nextX - 40, cy);
+
+      if (showLabels && i === 1) {
+        let midX = (ux + 40 + nextX - 40) / 2;
+        noStroke();
+        fill(255, 100, 0, a);
+        textAlign(CENTER, CENTER);
+        textSize(12);
+        textStyle(BOLD);
+        text('β-1,4', midX, cy - 16);
+
+        noFill();
+        stroke(255, 100, 0, a);
+        strokeWeight(1.5);
+        drawingContext.setLineDash([3, 3]);
+        ellipse(midX, cy, 44, 26);
+        drawingContext.setLineDash([]);
+      }
+    }
+
+    if (i === 0) {
+      drawWaterMolecule(ux + unitW * 0.65, cy + 55, a);
+    }
+  }
+
+  // Straight arrow
+  stroke(100, 150, 100, a);
+  strokeWeight(2);
+  let arrowY = cy + 65;
+  line(cx - 100, arrowY, cx + 100, arrowY);
+  line(cx + 100, arrowY, cx + 90, arrowY - 5);
+  line(cx + 100, arrowY, cx + 90, arrowY + 5);
+  noStroke();
+  fill(100, 150, 100, a);
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text('straight, rigid chains', cx, arrowY + 16);
+
+  // H-bond indicators
+  stroke(0, 150, 200, a * 0.6);
+  strokeWeight(1);
+  drawingContext.setLineDash([2, 4]);
+  for (let i = 0; i < 3; i++) {
+    let hx = startX + 30 + i * 95;
+    line(hx, cy - 40, hx, cy - 58);
+  }
+  drawingContext.setLineDash([]);
+  noStroke();
+  fill(0, 150, 200, a * 0.6);
+  textSize(11);
+  text('H-bonds between chains', cx, cy - 68);
+
+  // Title
+  noStroke();
+  fill(0, 0, 0, a);
+  textSize(18);
+  textStyle(BOLD);
+  text('Cellulose', cx, cy + 120);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(100, 100, 100, a);
+  text('β-1,4 glycosidic bonds → straight chain', cx, cy + 140);
+}
+
+// ──────────────────────────────────────────────
+// SIMPLIFIED GLUCOSE for polymer chains
+// ──────────────────────────────────────────────
+function drawSimplifiedGlucose(cx, cy, form, a, scale, flipped) {
+  let w = 65 * scale;
+  let h = 38 * scale;
+  let pts = getHaworthPyranosePoints(cx, cy, w, h);
+
+  if (flipped) {
+    for (let p of pts) p.y = cy - (p.y - cy);
+  }
+
+  fill(245, 245, 255, a);
+  stroke(60, 60, 60, a);
+  strokeWeight(1.5);
+  beginShape();
+  for (let p of pts) vertex(p.x, p.y);
+  endShape(CLOSE);
+
+  noStroke();
+  fill(220, 0, 0, a);
+  textSize(10);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  let oY = flipped ? pts[0].y + 10 : pts[0].y - 10;
+  text('O', pts[0].x, oY);
+  textStyle(NORMAL);
+}
+
+// ──────────────────────────────────────────────
+// WATER MOLECULE
+// ──────────────────────────────────────────────
+function drawWaterMolecule(x, y, a) {
+  // Oxygen
+  fill(220, 50, 50, a * 0.8);
+  noStroke();
+  ellipse(x, y, 14, 14);
+  fill(255, 255, 255, a);
+  textSize(9);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text('O', x, y);
+
+  // Hydrogens
+  fill(180, 180, 220, a * 0.8);
+  ellipse(x - 10, y - 8, 10, 10);
+  ellipse(x + 10, y - 8, 10, 10);
+  fill(255, 255, 255, a);
+  textSize(8);
+  text('H', x - 10, y - 8);
+  text('H', x + 10, y - 8);
+
+  noStroke();
+  fill(150, 100, 100, a);
+  textSize(10);
+  textStyle(NORMAL);
+  text('H₂O', x, y + 14);
+}
+
+// ──────────────────────────────────────────────
+// RESPONSIVE LAYOUT
+// ──────────────────────────────────────────────
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

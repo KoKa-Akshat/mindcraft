@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"./timeline.json": "{\n  \"title\": \"Atomic Theory Timeline\",\n  \"events\": [\n    {\n      \"start_date\": {\n        \"year\": \"-400\",\n        \"display_date\": \"~400 BCE\"\n      },\n      \"text\": {\n        \"headline\": \"Democritus\",\n        \"text\": \"Greek philosopher Democritus proposed that all matter is composed of tiny, indivisible particles he called <em>atomos</em> (\\\"uncuttable\\\"). This was a philosophical idea, not a scientific theory \u2014 he had no experimental evidence, but the concept was remarkably prescient.\"\n      },\n      \"group\": \"Ancient Philosophy\",\n      \"notes\": \"Democritus (~460\u2013370 BCE) developed the atomic hypothesis with his mentor Leucippus. The idea was largely ignored in favor of Aristotle's four-element theory for over 2000 years.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1803\",\n        \"display_date\": \"1803\"\n      },\n      \"text\": {\n        \"headline\": \"John Dalton\",\n        \"text\": \"English chemist John Dalton published the first modern atomic theory based on experimental observations. He proposed that all matter consists of atoms, that all atoms of a given element are identical, and that atoms combine in simple whole-number ratios to form compounds.\"\n      },\n      \"group\": \"Classical Atomic Theory\",\n      \"notes\": \"Dalton's atomic theory gave chemistry a quantitative foundation. While some postulates (e.g., atoms are indivisible) were later revised, his model was revolutionary. He also produced the first table of atomic weights.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1897\",\n        \"display_date\": \"1897\"\n      },\n      \"text\": {\n        \"headline\": \"J.J. Thomson\",\n        \"text\": \"British physicist J.J. Thomson discovered the electron using cathode ray tubes, proving that atoms are <em>not</em> indivisible. He proposed the \\\"plum pudding\\\" model: a positive sphere with electrons embedded throughout, like raisins in a pudding.\"\n      },\n      \"group\": \"Classical Atomic Theory\",\n      \"notes\": \"Thomson's discovery overturned Dalton's postulate that atoms are indivisible. His cathode ray experiments showed that electrons are particles with negative charge, far lighter than hydrogen atoms.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1909\",\n        \"display_date\": \"1909\"\n      },\n      \"text\": {\n        \"headline\": \"Robert Millikan\",\n        \"text\": \"American physicist Robert Millikan precisely measured the charge of the electron using his famous oil drop experiment. By balancing gravitational and electric forces on tiny charged oil droplets, he determined the elementary charge to be 1.6 \u00d7 10\u207b\u00b9\u2079 coulombs.\"\n      },\n      \"group\": \"Classical Atomic Theory\",\n      \"notes\": \"Millikan's result, combined with Thomson's charge-to-mass ratio, allowed calculation of the electron's mass. He was awarded the Nobel Prize in Physics in 1923.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1911\",\n        \"display_date\": \"1911\"\n      },\n      \"text\": {\n        \"headline\": \"Ernest Rutherford\",\n        \"text\": \"New Zealand-born physicist Ernest Rutherford fired alpha particles at gold foil and found that some bounced straight back \u2014 a result he likened to firing artillery at tissue paper. This proved atoms have a tiny, dense, positively charged nucleus surrounded by mostly empty space.\"\n      },\n      \"group\": \"Classical Atomic Theory\",\n      \"notes\": \"Rutherford's gold foil experiment disproved Thomson's plum pudding model. He proposed the nuclear model: a dense nucleus containing most of the atom's mass, with electrons orbiting at a distance. He later discovered the proton (1917).\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1913\",\n        \"display_date\": \"1913\"\n      },\n      \"text\": {\n        \"headline\": \"Niels Bohr\",\n        \"text\": \"Danish physicist Niels Bohr proposed that electrons orbit the nucleus only in specific, quantized energy levels \u2014 like rungs on a ladder. Electrons absorb or emit energy only when jumping between levels, explaining the discrete spectral lines of hydrogen.\"\n      },\n      \"group\": \"Quantum Model\",\n      \"notes\": \"Bohr's model successfully explained the hydrogen emission spectrum and introduced quantum ideas into atomic structure. While later replaced by quantum mechanics, the Bohr model is still used to visualize electron shells and explain periodic trends.\"\n    },\n    {\n      \"start_date\": {\n        \"year\": \"1926\",\n        \"display_date\": \"1926\"\n      },\n      \"text\": {\n        \"headline\": \"Erwin Schr\u00f6dinger\",\n        \"text\": \"Austrian physicist Erwin Schr\u00f6dinger published the wave equation that describes electrons as probability waves rather than particles in fixed orbits. This quantum mechanical model replaces Bohr's defined paths with electron clouds (orbitals) that show the probability of finding an electron.\"\n      },\n      \"group\": \"Quantum Model\",\n      \"notes\": \"Schr\u00f6dinger's wave mechanics (developed simultaneously with Heisenberg's matrix mechanics) became the foundation of modern quantum chemistry. The electron orbitals it predicts \u2014 s, p, d, f \u2014 explain bonding, periodic trends, and chemical reactivity.\"\n    }\n  ]\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Atomic Theory Timeline</title>
+    <script src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.css">
+    <style>/* Atomic Theory Timeline — Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: aliceblue;
+    color: #222;
+}
+
+/* ── Page header ─────────────────────────────────── */
+header {
+    background: linear-gradient(135deg, #5c3317 0%, #1a3a5c 100%);
+    color: white;
+    padding: 16px 20px 12px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+header p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+/* ── Filter buttons ──────────────────────────────── */
+#filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: #f0f4f8;
+    border-bottom: 1px solid #d0d8e4;
+    align-items: center;
+}
+
+#filter-bar label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    margin-right: 4px;
+}
+
+.filter-btn {
+    padding: 5px 14px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.filter-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.filter-btn.active { border-color: #222; }
+
+.filter-btn[data-cat="all"]                  { background: #555; }
+.filter-btn[data-cat="Ancient Philosophy"]   { background: #8b5e3c; }
+.filter-btn[data-cat="Classical Atomic Theory"] { background: #1a6e8a; }
+.filter-btn[data-cat="Quantum Model"]        { background: #4a3080; }
+
+/* ── Navigation controls ─────────────────────────── */
+#nav-bar {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #f0f4f8;
+    border-bottom: 1px solid #d0d8e4;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn {
+    padding: 4px 12px;
+    border: 1px solid #b0b8c4;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #333;
+    transition: background 0.15s;
+}
+
+.nav-btn:hover { background: #e4eaf2; }
+
+/* ── Timeline container ──────────────────────────── */
+#timeline-container {
+    padding: 10px 80px;
+    overflow: hidden;
+}
+
+#timeline {
+    border-radius: 6px;
+}
+
+/* Prevent scroll hijack inside iframe */
+.vis-timeline { overflow: visible !important; }
+.vis-panel.vis-center { overflow: visible !important; }
+.vis-item .vis-item-overflow { overflow: visible !important; }
+
+/* ── vis-timeline item colours ───────────────────── */
+.vis-item.vis-Ancient-Philosophy,
+.vis-item.vis-Ancient-Philosophy.vis-selected {
+    background-color: #8b5e3c;
+    border-color: #6b4229;
+    color: white;
+}
+
+.vis-item.vis-Classical-Atomic-Theory,
+.vis-item.vis-Classical-Atomic-Theory.vis-selected {
+    background-color: #1a6e8a;
+    border-color: #104f66;
+    color: white;
+}
+
+.vis-item.vis-Quantum-Model,
+.vis-item.vis-Quantum-Model.vis-selected {
+    background-color: #4a3080;
+    border-color: #30205a;
+    color: white;
+}
+
+/* ── Tooltip ─────────────────────────────────────── */
+.vis-tooltip {
+    background: #2c3e50 !important;
+    color: white !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    max-width: 300px !important;
+    line-height: 1.4 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+}
+
+.vis-tooltip div {
+    max-width: 280px !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+/* ── Detail panel ────────────────────────────────── */
+#detail-panel {
+    margin: 0 16px 12px;
+    padding: 16px 20px;
+    background: white;
+    border-radius: 8px;
+    border-left: 5px solid #555;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#detail-panel h3 {
+    font-size: 1.1rem;
+    color: #222;
+}
+
+#detail-panel .detail-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#detail-panel .detail-body {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #333;
+}
+
+#detail-panel .detail-context {
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #f5f7fa;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.45;
+}
+
+#detail-panel .detail-context strong {
+    color: #333;
+}
+
+/* ── Legend ──────────────────────────────────────── */
+#legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 8px 16px 12px;
+    font-size: 0.8rem;
+    color: #555;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+/* ── Instructions ────────────────────────────────── */
+#instructions {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #888;
+    padding: 4px 16px 6px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Atomic Theory Timeline</h1>
+    <p>From Democritus (~400 BCE) to the Quantum Mechanical Model (1926)</p>
+</header>
+
+<!-- Category filter buttons -->
+<div id="filter-bar">
+    <label>Show:</label>
+    <button class="filter-btn active" data-cat="all">All Events</button>
+    <button class="filter-btn" data-cat="Ancient Philosophy">Ancient Philosophy</button>
+    <button class="filter-btn" data-cat="Classical Atomic Theory">Classical Atomic Theory</button>
+    <button class="filter-btn" data-cat="Quantum Model">Quantum Model</button>
+</div>
+
+<!-- Zoom / pan controls -->
+<div id="nav-bar">
+    <button class="nav-btn" id="pan-left">◀ Pan Left</button>
+    <button class="nav-btn" id="zoom-in">+ Zoom In</button>
+    <button class="nav-btn" id="fit-all">Fit All</button>
+    <button class="nav-btn" id="zoom-out">− Zoom Out</button>
+    <button class="nav-btn" id="pan-right">Pan Right ▶</button>
+</div>
+
+<p id="instructions">Click any event to see full details below • Hover for a quick note • Drag to pan</p>
+
+<!-- vis-timeline renders here -->
+<div id="timeline-container">
+    <div id="timeline"></div>
+</div>
+
+<!-- Detail panel — populated on click -->
+<div id="detail-panel">
+    <div class="detail-body" style="color:#888;">Click an event above to read about that scientist's contribution.</div>
+</div>
+
+<!-- Colour legend -->
+<div id="legend">
+    <div class="legend-item">
+        <div class="legend-dot" style="background:#8b5e3c;"></div>
+        <span>Ancient Philosophy</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-dot" style="background:#1a6e8a;"></div>
+        <span>Classical Atomic Theory</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-dot" style="background:#4a3080;"></div>
+        <span>Quantum Model</span>
+    </div>
+</div>
+
+<script>
+// ── Colour map ───────────────────────────────────────────────────
+const categoryColors = {
+    'Ancient Philosophy':      { bg: '#8b5e3c', border: '#6b4229' },
+    'Classical Atomic Theory': { bg: '#1a6e8a', border: '#104f66' },
+    'Quantum Model':           { bg: '#4a3080', border: '#30205a' }
+};
+
+// CSS class names for vis-timeline (spaces → hyphens)
+function cssClass(cat) {
+    return 'vis-' + cat.replace(/\s+/g, '-');
+}
+
+// ── Parse timeline.json ──────────────────────────────────────────
+let allItems = [];
+let timelineData;
+let timeline;
+
+async function loadTimeline() {
+    const resp = await fetch('./timeline.json');
+    const data = await resp.json();
+
+    // Convert JSON events → vis DataSet items
+    allItems = data.events.map((ev, idx) => {
+        const yearInt = parseInt(ev.start_date.year, 10);
+        // JavaScript Date with year < 100 needs special handling to avoid 1900 offset
+        const startDate = new Date(0);
+        startDate.setFullYear(yearInt, 0, 1);
+
+        const displayDate = ev.start_date.display_date || ev.start_date.year;
+        const cat = ev.group || 'Classical Atomic Theory';
+        const colors = categoryColors[cat] || { bg: '#555', border: '#333' };
+
+        return {
+            id: idx + 1,
+            content: `<strong>${ev.text.headline}</strong><br><small>${displayDate}</small>`,
+            start: startDate,
+            group: cat,
+            category: cat,
+            className: cssClass(cat),
+            title: ev.notes,           // tooltip on hover
+            headline: ev.text.headline,
+            body: ev.text.text,
+            notes: ev.notes,
+            displayDate: displayDate,
+            style: `background-color:${colors.bg};border-color:${colors.border};color:white;`
+        };
+    });
+
+    timelineData = new vis.DataSet(allItems);
+
+    // ── Timeline options ─────────────────────────────────────────
+    const container = document.getElementById('timeline');
+    const options = {
+        width: '100%',
+        height: '200px',
+        margin: {
+            item: { horizontal: 50, vertical: 10 },
+            axis: 40
+        },
+        orientation: 'top',
+        // Wide zoom range to accommodate ~400 BCE through 1926
+        zoomMin: 1000 * 60 * 60 * 24 * 365 * 5,     // 5 years
+        zoomMax: 1000 * 60 * 60 * 24 * 365 * 2500,   // 2500 years
+        tooltip: { followMouse: true },
+        stack: true,
+        selectable: true,
+        showCurrentTime: false,
+        moveable: true,
+        zoomable: false,   // Disable scroll-wheel zoom to prevent page-scroll hijack
+        align: 'center'
+    };
+
+    timeline = new vis.Timeline(container, timelineData, options);
+
+    // Initial view: padded window around all events
+    fitAll();
+
+    // ── Click → detail panel ─────────────────────────────────────
+    timeline.on('select', function(props) {
+        if (props.items.length === 0) return;
+        const item = allItems.find(i => i.id === props.items[0]);
+        if (item) showDetail(item);
+    });
+
+    // ── Filter buttons ───────────────────────────────────────────
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            filterCategory(this.dataset.cat);
+        });
+    });
+
+    // ── Navigation controls ──────────────────────────────────────
+    document.getElementById('pan-left').addEventListener('click', () => {
+        const w = timeline.getWindow();
+        const shift = (w.end - w.start) * 0.3;
+        timeline.setWindow(new Date(w.start - shift), new Date(w.end - shift));
+    });
+
+    document.getElementById('pan-right').addEventListener('click', () => {
+        const w = timeline.getWindow();
+        const shift = (w.end.getTime() - w.start.getTime()) * 0.3;
+        timeline.setWindow(new Date(w.start.getTime() + shift), new Date(w.end.getTime() + shift));
+    });
+
+    document.getElementById('zoom-in').addEventListener('click', () => {
+        const w = timeline.getWindow();
+        const mid   = (w.start.getTime() + w.end.getTime()) / 2;
+        const half  = (w.end - w.start) * 0.25;
+        timeline.setWindow(new Date(mid - half), new Date(mid + half), { animation: true });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+        const w = timeline.getWindow();
+        const mid   = (w.start.getTime() + w.end.getTime()) / 2;
+        const half  = (w.end - w.start) * 1.0;
+        timeline.setWindow(new Date(mid - half), new Date(mid + half), { animation: true });
+    });
+
+    document.getElementById('fit-all').addEventListener('click', fitAll);
+}
+
+// ── Category filter ──────────────────────────────────────────────
+function filterCategory(cat) {
+    let filtered = cat === 'all' ? allItems : allItems.filter(i => i.category === cat);
+    timelineData.clear();
+    timelineData.add(filtered);
+    fitWindowTo(filtered);
+}
+
+// ── Fit view to a list of items (with 2-year padding each side) ──
+function fitWindowTo(items) {
+    if (items.length === 0) return;
+    const times = items.map(i => i.start.getTime());
+    const min = Math.min(...times);
+    const max = Math.max(...times);
+    const pad = 2 * 365.25 * 24 * 60 * 60 * 1000;  // 2 years in ms
+    timeline.setWindow(new Date(min - pad), new Date(max + pad), { animation: false });
+}
+
+function fitAll() { fitWindowTo(allItems); }
+
+// ── Populate detail panel ────────────────────────────────────────
+function showDetail(item) {
+    const colors = categoryColors[item.category] || { bg: '#555' };
+    const panel = document.getElementById('detail-panel');
+    panel.style.borderLeftColor = colors.bg;
+    panel.innerHTML = `
+        <div class="detail-date">${item.displayDate} · ${item.category}</div>
+        <h3>${item.headline}</h3>
+        <div class="detail-body">${item.body}</div>
+        ${item.notes ? `<div class="detail-context"><strong>Historical context:</strong> ${item.notes}</div>` : ''}
+    `;
+}
+
+// ── Boot ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', loadTimeline);
+</script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Quantum Portfolio Explorer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Quantum Portfolio Explorer
+// A p5.js MicroSim for exploring quantum technology investment portfolio allocation
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 150;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 200;
+let defaultTextSize = 16;
+
+// Category data
+const categories = [
+    { name: "Quantum Sensing",        color: '#388E3C', eReturn: 25, risk: 15, defaultPct: 35 },
+    { name: "Classical AI Hardware",   color: '#1565C0', eReturn: 30, risk: 20, defaultPct: 30 },
+    { name: "Quantum Security (QKD)",  color: '#FFC107', eReturn: 10, risk: 35, defaultPct: 12 },
+    { name: "Adjacent Emerging Tech",  color: '#7B1FA2', eReturn: 20, risk: 25, defaultPct: 15 },
+    { name: "Quantum Computing",       color: '#E53935', eReturn: -15, risk: 85, defaultPct: 8 }
+];
+
+// Market allocation preset
+const marketAlloc = [10, 15, 5, 5, 65];
+
+// Sliders and buttons
+let sliders = [];
+let resetRationalBtn, setMarketBtn, randomizeBtn;
+let adjustingSlider = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    let sliderWidth = canvasWidth - sliderLeftMargin - margin * 2;
+    let sliderY = drawHeight + 10;
+    let sliderSpacing = 24;
+
+    for (let i = 0; i < categories.length; i++) {
+        let s = createSlider(0, 100, categories[i].defaultPct, 1);
+        s.parent(document.querySelector('main'));
+        s.position(sliderLeftMargin, sliderY + i * sliderSpacing);
+        s.size(sliderWidth);
+        s.input(() => handleSliderChange(i));
+        sliders.push(s);
+    }
+
+    // Buttons
+    let btnY = sliderY + categories.length * sliderSpacing + 4;
+    let btnWidth = 140;
+    let btnGap = 10;
+    let btnStartX = sliderLeftMargin;
+
+    resetRationalBtn = createButton('Reset to Rational');
+    resetRationalBtn.parent(document.querySelector('main'));
+    resetRationalBtn.position(btnStartX, btnY);
+    resetRationalBtn.size(btnWidth, 26);
+    resetRationalBtn.mousePressed(() => applyPreset(categories.map(c => c.defaultPct)));
+
+    setMarketBtn = createButton('Set to Current Market');
+    setMarketBtn.parent(document.querySelector('main'));
+    setMarketBtn.position(btnStartX + btnWidth + btnGap, btnY);
+    setMarketBtn.size(btnWidth + 20, 26);
+    setMarketBtn.mousePressed(() => applyPreset(marketAlloc));
+
+    randomizeBtn = createButton('Randomize');
+    randomizeBtn.parent(document.querySelector('main'));
+    randomizeBtn.position(btnStartX + (btnWidth + btnGap) * 2 + 20, btnY);
+    randomizeBtn.size(100, 26);
+    randomizeBtn.mousePressed(applyRandom);
+}
+
+function applyPreset(values) {
+    for (let i = 0; i < sliders.length; i++) {
+        sliders[i].value(values[i]);
+    }
+}
+
+function applyRandom() {
+    // Generate random allocation summing to 100
+    let vals = [];
+    let remaining = 100;
+    for (let i = 0; i < categories.length - 1; i++) {
+        let v = Math.floor(Math.random() * (remaining + 1));
+        vals.push(v);
+        remaining -= v;
+    }
+    vals.push(remaining);
+    // Shuffle
+    for (let i = vals.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [vals[i], vals[j]] = [vals[j], vals[i]];
+    }
+    applyPreset(vals);
+}
+
+function handleSliderChange(changedIdx) {
+    // Adjust other sliders proportionally to maintain 100% total
+    let changedVal = sliders[changedIdx].value();
+    let otherSum = 0;
+    for (let i = 0; i < sliders.length; i++) {
+        if (i !== changedIdx) otherSum += sliders[i].value();
+    }
+
+    let targetOtherSum = 100 - changedVal;
+
+    if (otherSum === 0) {
+        // Distribute evenly among others
+        let each = Math.floor(targetOtherSum / (sliders.length - 1));
+        let remainder = targetOtherSum - each * (sliders.length - 1);
+        for (let i = 0; i < sliders.length; i++) {
+            if (i !== changedIdx) {
+                sliders[i].value(each + (remainder > 0 ? 1 : 0));
+                if (remainder > 0) remainder--;
+            }
+        }
+    } else {
+        let scale = targetOtherSum / otherSum;
+        let newVals = [];
+        let newSum = 0;
+        for (let i = 0; i < sliders.length; i++) {
+            if (i !== changedIdx) {
+                let v = Math.round(sliders[i].value() * scale);
+                v = Math.max(0, Math.min(100, v));
+                newVals.push({ idx: i, val: v });
+                newSum += v;
+            }
+        }
+        // Fix rounding errors
+        let diff = targetOtherSum - newSum;
+        if (newVals.length > 0 && diff !== 0) {
+            newVals[0].val += diff;
+            newVals[0].val = Math.max(0, Math.min(100, newVals[0].val));
+        }
+        for (let nv of newVals) {
+            sliders[nv.idx].value(nv.val);
+        }
+    }
+}
+
+function getAllocations() {
+    return sliders.map(s => s.value());
+}
+
+function calcMetrics(alloc) {
+    let totalPct = alloc.reduce((a, b) => a + b, 0);
+    if (totalPct === 0) totalPct = 1;
+    let weights = alloc.map(a => a / totalPct);
+
+    let expectedReturn = 0;
+    let portfolioRisk = 0;
+    for (let i = 0; i < categories.length; i++) {
+        expectedReturn += weights[i] * categories[i].eReturn;
+        portfolioRisk += weights[i] * categories[i].risk;
+    }
+    // Add a simple diversification adjustment to risk
+    let herfindahl = weights.reduce((sum, w) => sum + w * w, 0);
+    portfolioRisk *= (0.7 + 0.3 * herfindahl); // more concentrated = higher risk
+
+    let riskFree = 4; // risk-free rate %
+    let sharpe = portfolioRisk > 0 ? (expectedReturn - riskFree) / portfolioRisk : 0;
+
+    return { expectedReturn, portfolioRisk, sharpe };
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    let alloc = getAllocations();
+    let userMetrics = calcMetrics(alloc);
+    let marketMetrics = calcMetrics(marketAlloc);
+    let rationalMetrics = calcMetrics(categories.map(c => c.defaultPct));
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Quantum Portfolio Explorer", canvasWidth / 2, 8);
+
+    textSize(12);
+    textStyle(NORMAL);
+    fill('#666');
+    text("Allocate a $100M technology investment portfolio across five categories", canvasWidth / 2, 30);
+
+    // Layout: left side = pie chart, right side = metrics + comparison
+    let pieX = margin + 110;
+    let pieY = 180;
+    let pieR = 120;
+    let rightColX = canvasWidth * 0.45;
+
+    // Draw pie chart
+    drawPieChart(pieX, pieY, pieR, alloc);
+
+    // Draw legend below pie
+    drawLegend(pieX - 100, pieY + pieR + 15, alloc);
+
+    // Draw metrics on right side
+    drawMetrics(rightColX, 52, userMetrics, marketMetrics, rationalMetrics);
+
+    // Draw comparison bars
+    drawComparisonBars(rightColX, 240, userMetrics, marketMetrics, rationalMetrics);
+
+    // Slider labels in control region
+    let sliderY = drawHeight + 10;
+    let sliderSpacing = 24;
+
+    fill('#333');
+    noStroke();
+    textSize(12);
+    textAlign(RIGHT, CENTER);
+    textStyle(NORMAL);
+
+    for (let i = 0; i < categories.length; i++) {
+        let val = sliders[i].value();
+        let label = categories[i].name + ": " + val + "%";
+        // Color dot
+        fill(categories[i].color);
+        noStroke();
+        ellipse(margin + 10, sliderY + i * sliderSpacing + 8, 10, 10);
+        fill('#333');
+        textAlign(RIGHT, CENTER);
+        text(label, sliderLeftMargin - 10, sliderY + i * sliderSpacing + 8);
+    }
+}
+
+function drawPieChart(cx, cy, r, alloc) {
+    let total = alloc.reduce((a, b) => a + b, 0);
+    if (total === 0) return;
+
+    let startAngle = -HALF_PI;
+    for (let i = 0; i < categories.length; i++) {
+        let sweep = (alloc[i] / total) * TWO_PI;
+        if (sweep < 0.001) continue;
+        fill(categories[i].color);
+        noStroke();
+        arc(cx, cy, r * 2, r * 2, startAngle, startAngle + sweep, PIE);
+
+        // Label inside slice if big enough
+        if (alloc[i] >= 8) {
+            let midAngle = startAngle + sweep / 2;
+            let labelR = r * 0.6;
+            let lx = cx + cos(midAngle) * labelR;
+            let ly = cy + sin(midAngle) * labelR;
+            fill(255);
+            textSize(11);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text(alloc[i] + "%", lx, ly);
+        }
+        startAngle += sweep;
+    }
+
+    // Center circle for donut effect
+    fill('aliceblue');
+    noStroke();
+    ellipse(cx, cy, r * 0.6, r * 0.6);
+
+    fill('#333');
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("$100M", cx, cy);
+}
+
+function drawLegend(x, y, alloc) {
+    textSize(10);
+    textStyle(NORMAL);
+    textAlign(LEFT, CENTER);
+    let total = alloc.reduce((a, b) => a + b, 0);
+    if (total === 0) total = 1;
+
+    for (let i = 0; i < categories.length; i++) {
+        let ly = y + i * 15;
+        fill(categories[i].color);
+        noStroke();
+        rect(x, ly - 5, 10, 10, 2);
+        fill('#333');
+        let dollarVal = (alloc[i] / total * 100).toFixed(0);
+        text(categories[i].name + " ($" + dollarVal + "M)", x + 14, ly);
+    }
+}
+
+function drawMetrics(x, y, user, market, rational) {
+    let colWidth = canvasWidth - x - margin;
+
+    // User portfolio metrics
+    fill('#333');
+    textSize(14);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("Your Portfolio Metrics", x, y);
+
+    textSize(13);
+    textStyle(NORMAL);
+    let metricY = y + 24;
+    let spacing = 22;
+
+    // Expected Return
+    fill(user.expectedReturn >= 0 ? '#388E3C' : '#E53935');
+    textStyle(BOLD);
+    text("Expected Return: " + user.expectedReturn.toFixed(1) + "%", x, metricY);
+
+    // vs market
+    let retDiff = user.expectedReturn - market.expectedReturn;
+    fill(retDiff >= 0 ? '#388E3C' : '#E53935');
+    textSize(11);
+    textStyle(NORMAL);
+    text((retDiff >= 0 ? "+" : "") + retDiff.toFixed(1) + "% vs Market", x + colWidth * 0.55, metricY + 2);
+
+    // Portfolio Risk
+    textSize(13);
+    metricY += spacing;
+    fill(user.portfolioRisk <= 30 ? '#388E3C' : (user.portfolioRisk <= 50 ? '#FF8F00' : '#E53935'));
+    textStyle(BOLD);
+    text("Portfolio Risk: " + user.portfolioRisk.toFixed(1) + "%", x, metricY);
+
+    let riskDiff = user.portfolioRisk - market.portfolioRisk;
+    fill(riskDiff <= 0 ? '#388E3C' : '#E53935');
+    textSize(11);
+    textStyle(NORMAL);
+    text((riskDiff >= 0 ? "+" : "") + riskDiff.toFixed(1) + "% vs Market", x + colWidth * 0.55, metricY + 2);
+
+    // Sharpe Ratio
+    textSize(13);
+    metricY += spacing;
+    fill(user.sharpe >= 0.5 ? '#388E3C' : (user.sharpe >= 0 ? '#FF8F00' : '#E53935'));
+    textStyle(BOLD);
+    text("Sharpe Ratio: " + user.sharpe.toFixed(2), x, metricY);
+
+    let sharpeDiff = user.sharpe - market.sharpe;
+    fill(sharpeDiff >= 0 ? '#388E3C' : '#E53935');
+    textSize(11);
+    textStyle(NORMAL);
+    text((sharpeDiff >= 0 ? "+" : "") + sharpeDiff.toFixed(2) + " vs Market", x + colWidth * 0.55, metricY + 2);
+
+    // Risk-free rate note
+    metricY += spacing + 4;
+    fill('#999');
+    textSize(10);
+    textStyle(ITALIC);
+    text("Risk-free rate: 4% | Sharpe = (Return - Rf) / Risk", x, metricY);
+
+    // 10-year projection
+    metricY += spacing;
+    fill('#3F51B5');
+    textSize(13);
+    textStyle(BOLD);
+    text("10-Year Projection on $100M", x, metricY);
+
+    textStyle(NORMAL);
+    textSize(12);
+    metricY += 18;
+    let projectedValue = 100 * (1 + user.expectedReturn / 100);
+    fill(projectedValue >= 100 ? '#388E3C' : '#E53935');
+    text("Projected Value: $" + projectedValue.toFixed(0) + "M", x, metricY);
+
+    let marketProjected = 100 * (1 + market.expectedReturn / 100);
+    fill('#666');
+    text("  (Market: $" + marketProjected.toFixed(0) + "M)", x + 180, metricY);
+}
+
+function drawComparisonBars(x, y, user, market, rational) {
+    fill('#333');
+    textSize(14);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text("Portfolio Comparison", x, y);
+
+    let barStartX = x + 110;
+    let barMaxWidth = canvasWidth - barStartX - margin - 40;
+    let barH = 18;
+    let groupSpacing = 70;
+
+    let groups = [
+        { label: "Expected\nReturn (%)", key: 'expectedReturn', maxVal: 35, minVal: -20 },
+        { label: "Risk (%)", key: 'portfolioRisk', maxVal: 80, minVal: 0 },
+        { label: "Sharpe\nRatio", key: 'sharpe', maxVal: 1.5, minVal: -0.5 }
+    ];
+
+    let portfolios = [
+        { name: "Yours", data: user, clr: '#3F51B5' },
+        { name: "Market", data: market, clr: '#E53935' },
+        { name: "Rational", data: rational, clr: '#388E3C' }
+    ];
+
+    for (let g = 0; g < groups.length; g++) {
+        let gy = y + 24 + g * groupSpacing;
+        let grp = groups[g];
+
+        fill('#555');
+        textSize(11);
+        textAlign(RIGHT, TOP);
+        textStyle(NORMAL);
+        text(grp.label, barStartX - 8, gy);
+
+        let range = grp.maxVal - grp.minVal;
+
+        for (let p = 0; p < portfolios.length; p++) {
+            let by = gy + p * (barH + 3);
+            let val = portfolios[p].data[grp.key];
+            let barW = ((val - grp.minVal) / range) * barMaxWidth;
+            barW = Math.max(2, Math.min(barW, barMaxWidth));
+
+            fill(portfolios[p].clr);
+            noStroke();
+            rect(barStartX, by, barW, barH, 0, 3, 3, 0);
+
+            // Value label
+            fill(portfolios[p].clr);
+            textSize(10);
+            textAlign(LEFT, CENTER);
+            textStyle(BOLD);
+            let valStr = grp.key === 'sharpe' ? val.toFixed(2) : val.toFixed(1) + "%";
+            text(portfolios[p].name + ": " + valStr, barStartX + barW + 4, by + barH / 2);
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    let sliderWidth = canvasWidth - sliderLeftMargin - margin * 2;
+    let sliderY = drawHeight + 10;
+    let sliderSpacing = 24;
+
+    for (let i = 0; i < sliders.length; i++) {
+        sliders[i].position(sliderLeftMargin, sliderY + i * sliderSpacing);
+        sliders[i].size(sliderWidth);
+    }
+
+    let btnY = sliderY + categories.length * sliderSpacing + 4;
+    let btnWidth = 140;
+    let btnGap = 10;
+    let btnStartX = sliderLeftMargin;
+
+    resetRationalBtn.position(btnStartX, btnY);
+    setMarketBtn.position(btnStartX + btnWidth + btnGap, btnY);
+    randomizeBtn.position(btnStartX + (btnWidth + btnGap) * 2 + 20, btnY);
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>New Deal Programs — What They Did and What Survived</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// New Deal Programs — What They Did and What Survived
+// CANVAS_HEIGHT: 700
+// Chapter 14: The Roaring Twenties, Depression, and New Deal (1920–1941)
+// Bloom Level: Understand (L2) — Categorize programs by purpose & legacy
+//
+// Layout: drawHeight (640) + controlHeight (60) = 700
+// Three columns (Relief | Recovery | Reform) of clickable program cards.
+// Color border = current status: green (still exists), amber (modified /
+// successor exists), red (ended). Filter dropdown narrows by status.
+// Click any card for full detail panel; click again to close.
+
+let canvasWidth = 900;
+let drawHeight = 640;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+let filterSelect;
+let resetBtn;
+
+let selectedProgram = null;
+let hoveredProgram = null;
+
+// Status colors
+const COLOR_ACTIVE   = { r:  46, g: 125, b:  50 };   // green — still exists
+const COLOR_MODIFIED = { r: 215, g: 165, b:  35 };   // amber — modified/successor
+const COLOR_ENDED    = { r: 200, g:  60, b:  60 };   // red — ended
+
+// Category accent colors (column headers)
+const COLOR_RELIEF    = { r:  30, g:  90, b: 200 };  // blue
+const COLOR_RECOVERY  = { r: 180, g: 130, b:  30 };  // gold
+const COLOR_REFORM    = { r:  20, g: 130, b: 130 };  // teal
+
+const programs = [
+  // ---------- RELIEF ----------
+  {
+    id: 'ccc',
+    category: 'relief',
+    acronym: 'CCC',
+    name: 'Civilian Conservation Corps',
+    year: 1933,
+    status: 'modified',
+    short: 'Put 3 million young men to work on conservation projects.',
+    problem: 'Mass unemployment among young men (ages 18–25); deteriorating public lands and forests after decades of erosion and fire damage.',
+    howItWorked: 'Enrolled unmarried young men into Army-run camps where they planted trees, built trails, fought fires, and developed parks. Workers earned $30/month, with $25 sent home to families.',
+    scale: '~3 million enrollees over 9 years; planted 3 billion trees; built infrastructure in every U.S. national and state park.',
+    statusDetail: 'Disbanded 1942 as wartime mobilization absorbed unemployed labor. Spirit lives on in AmeriCorps (1993) and California Conservation Corps (1976).'
+  },
+  {
+    id: 'fera',
+    category: 'relief',
+    acronym: 'FERA',
+    name: 'Federal Emergency Relief Administration',
+    year: 1933,
+    status: 'modified',
+    short: 'First federal direct cash relief to states for the unemployed.',
+    problem: 'State and local relief funds had collapsed; up to 25% unemployment with no national safety net.',
+    howItWorked: 'Distributed $3.1 billion in grants (not loans) to states for direct cash and work relief. Run by Harry Hopkins, who insisted on cash payments and dignity for recipients.',
+    scale: 'Aided ~20 million Americans (1/6 of the population) at peak; $3.1B spent 1933–1935.',
+    statusDetail: 'Replaced by WPA (work) and Social Security (assistance) in 1935. Modern successors: TANF, SNAP, federal disaster relief.'
+  },
+  {
+    id: 'cwa',
+    category: 'relief',
+    acronym: 'CWA',
+    name: 'Civil Works Administration',
+    year: 1933,
+    status: 'ended',
+    short: 'Emergency winter jobs program, 4 million hired in 30 days.',
+    problem: 'The winter of 1933–34 threatened mass freezing and starvation; FERA cash relief was not enough.',
+    howItWorked: 'Hired the unemployed directly for short-term federal jobs — repairing roads, schools, airports — paying prevailing local wages. Started Nov 1933, ended Mar 1934.',
+    scale: '4 million workers in 30 days; built 40,000 schools, 500 airports, 255,000 miles of roads in 5 months.',
+    statusDetail: 'Closed in 1934 after FDR worried about creating permanent dependency. Functions absorbed into WPA (1935).'
+  },
+  {
+    id: 'wpa',
+    category: 'relief',
+    acronym: 'WPA',
+    name: 'Works Progress Administration',
+    year: 1935,
+    status: 'ended',
+    short: 'Largest New Deal agency; 8.5 million workers, infrastructure & arts.',
+    problem: 'Long-term unemployment persisted in 1935; FDR wanted work, not the dole.',
+    howItWorked: 'Hired the unemployed for public projects: roads, bridges, post offices, parks. Federal One employed artists, writers, actors, and musicians. Run by Harry Hopkins.',
+    scale: '8.5 million workers 1935–1943; built 650,000 miles of roads, 125,000 buildings, 8,000 parks. $13.4B spent.',
+    statusDetail: 'Ended 1943 — wartime full employment made it unnecessary. No direct successor; closest modern echoes are infrastructure stimulus bills (2009 ARRA, 2021 IIJA).'
+  },
+  {
+    id: 'pwa',
+    category: 'relief',
+    acronym: 'PWA',
+    name: 'Public Works Administration',
+    year: 1933,
+    status: 'ended',
+    short: 'Built large-scale infrastructure through private contractors.',
+    problem: 'Massive infrastructure deficit + unemployed construction industry. Needed to "prime the pump" through capital projects.',
+    howItWorked: 'Funded big projects (dams, bridges, hospitals, ships) by contracting private firms rather than hiring workers directly. Run by Harold Ickes with extreme care to prevent waste.',
+    scale: '$6 billion spent 1933–1939; built Hoover Dam completion, Lincoln Tunnel, USS Yorktown, Triborough Bridge, and 70% of new schools.',
+    statusDetail: 'Closed in 1944. Functions later carried by federal highway acts and Army Corps of Engineers civil works.'
+  },
+
+  // ---------- RECOVERY ----------
+  {
+    id: 'aaa',
+    category: 'recovery',
+    acronym: 'AAA',
+    name: 'Agricultural Adjustment Act',
+    year: 1933,
+    status: 'modified',
+    short: 'Paid farmers to cut production and raise crop prices.',
+    problem: 'Farm prices had collapsed 60% since 1929; overproduction kept prices below cost of production.',
+    howItWorked: 'Paid farmers to plow under crops and slaughter livestock to reduce supply. Funded by a tax on food processors. Original AAA struck down by Supreme Court (U.S. v. Butler, 1936); revised version passed 1938.',
+    scale: 'Slaughtered 6 million pigs in 1933; farm income rose 50% by 1936.',
+    statusDetail: 'The 1938 successor, plus Soil Conservation Act, evolved into modern farm subsidies (~$20B/year in 2024 farm bills).'
+  },
+  {
+    id: 'nra',
+    category: 'recovery',
+    acronym: 'NRA',
+    name: 'National Recovery Administration',
+    year: 1933,
+    status: 'ended',
+    short: 'Industry codes set wages, prices, and hours — STRUCK DOWN 1935.',
+    problem: 'Deflationary "race to the bottom" in wages and prices was deepening the depression.',
+    howItWorked: 'Wrote 557 industry codes setting minimum wages, maximum hours, and price floors. Companies signing the codes displayed the Blue Eagle logo. Voluntary in theory, enforced by public pressure.',
+    scale: 'Covered 22 million workers at peak; raised wages but also prices, slowing recovery.',
+    statusDetail: 'Unanimously struck down by Supreme Court in Schechter Poultry v. U.S. (1935) for unconstitutional delegation of legislative power. Wage/hour functions revived by Fair Labor Standards Act (1938) — still in effect.'
+  },
+  {
+    id: 'rfc',
+    category: 'recovery',
+    acronym: 'RFC',
+    name: 'Reconstruction Finance Corp.',
+    year: 1932,
+    status: 'ended',
+    short: 'Federal lender to banks, railroads, and businesses (Hoover-era; expanded by FDR).',
+    problem: 'Credit had frozen — solvent banks and businesses could not get loans to stay open.',
+    howItWorked: 'Made government loans to banks, insurance companies, railroads, and (under FDR) state/local governments. Bought preferred stock in banks to recapitalize them.',
+    scale: 'Lent $33 billion 1932–1957; recapitalized 6,000 banks; financed wartime industrial buildup.',
+    statusDetail: 'Disbanded in 1957 amid corruption scandals. Spirit revived in 2008 TARP bank rescue and 2020 CARES Act business loans.'
+  },
+  {
+    id: 'tva',
+    category: 'recovery',
+    acronym: 'TVA',
+    name: 'Tennessee Valley Authority',
+    year: 1933,
+    status: 'active',
+    short: 'Federal corporation that electrified the Tennessee Valley.',
+    problem: 'Tennessee Valley was the poorest region in the U.S. — 2% of farms had electricity, soil was eroded, floods destroyed crops yearly.',
+    howItWorked: 'Federal corporation built dams for flood control, hydroelectric power, and navigation. Sold cheap electricity, fertilized soil, replanted forests across 7 states.',
+    scale: 'Built 16 dams; electrified the region (3% in 1933 → 75% by 1945); served 10 million people.',
+    statusDetail: 'STILL OPERATING. Largest U.S. public power provider — serves 10 million customers across 7 states in 2024. A New Deal program that became permanent infrastructure.'
+  },
+
+  // ---------- REFORM ----------
+  {
+    id: 'fdic',
+    category: 'reform',
+    acronym: 'FDIC',
+    name: 'Federal Deposit Insurance Corp.',
+    year: 1933,
+    status: 'active',
+    short: 'Federal insurance for bank deposits — ended bank runs.',
+    problem: '9,000 banks failed 1929–1933; depositors lost $1.3 billion in savings; bank runs became self-fulfilling.',
+    howItWorked: 'Federal insurance on bank deposits up to a limit ($2,500 in 1934, now $250,000 in 2024). Funded by premiums paid by member banks.',
+    scale: 'Insures ~$10 trillion in deposits at 4,500 banks (2024). No insured depositor has lost a penny since 1934.',
+    statusDetail: 'STILL OPERATING — and arguably the most successful financial reform in U.S. history. Tested again successfully in 2008 and 2023 banking crises.'
+  },
+  {
+    id: 'glass',
+    category: 'reform',
+    acronym: 'G-S',
+    name: 'Glass-Steagall Act',
+    year: 1933,
+    status: 'modified',
+    short: 'Separated commercial and investment banking.',
+    problem: 'Commercial banks had speculated with depositors\' money in the 1920s stock bubble, then collapsed when it burst.',
+    howItWorked: 'Banned commercial banks (which take deposits) from also operating as investment banks (which underwrite securities). Created FDIC in same statute.',
+    scale: 'Reshaped U.S. banking for 66 years; J.P. Morgan split into Morgan Stanley (investment) and J.P. Morgan (commercial).',
+    statusDetail: 'Repealed in 1999 (Gramm-Leach-Bliley Act); many economists blame the repeal for enabling the 2008 financial crisis. Partial restoration in Dodd-Frank "Volcker Rule" (2010).'
+  },
+  {
+    id: 'sec',
+    category: 'reform',
+    acronym: 'SEC',
+    name: 'Securities & Exchange Commission',
+    year: 1934,
+    status: 'active',
+    short: 'Federal regulator of stock markets and corporate disclosure.',
+    problem: 'The 1929 crash exposed rampant fraud, insider trading, and stock manipulation; investors had no protection.',
+    howItWorked: 'Federal commission regulates stock exchanges, requires public companies to file audited financial statements, prosecutes insider trading and securities fraud. Joseph P. Kennedy was first chair.',
+    scale: 'Oversees ~$100 trillion in U.S. securities markets (2024); 4,500 employees.',
+    statusDetail: 'STILL OPERATING. Foundational regulator of U.S. capital markets. Continually updated (Sarbanes-Oxley 2002, Dodd-Frank 2010) but core mission unchanged.'
+  },
+  {
+    id: 'wagner',
+    category: 'reform',
+    acronym: 'NLRA',
+    name: 'Wagner Act / National Labor Relations Act',
+    year: 1935,
+    status: 'active',
+    short: 'Guaranteed workers\' right to unionize and bargain collectively.',
+    problem: 'Companies fired, blacklisted, and used violence to crush union organizing; no federal protection for collective bargaining.',
+    howItWorked: 'Established the right to form unions and bargain collectively. Created the National Labor Relations Board (NLRB) to supervise union elections and prosecute unfair labor practices.',
+    scale: 'Union membership rose from 11% (1934) to 35% (1954). NLRB still resolves ~20,000 cases/year.',
+    statusDetail: 'STILL IN EFFECT — though weakened by Taft-Hartley (1947) and decades of pro-management board interpretations. Union density now ~10%.'
+  },
+  {
+    id: 'ssa',
+    category: 'reform',
+    acronym: 'SSA',
+    name: 'Social Security Act',
+    year: 1935,
+    status: 'active',
+    short: 'Old-age pensions, unemployment insurance, aid to dependents.',
+    problem: 'Half of elderly Americans lived in poverty; no federal pension; no unemployment insurance; widows/orphans had only charity.',
+    howItWorked: 'Payroll tax (split employer/employee) funds three streams: old-age pensions (Social Security), federal-state unemployment insurance, and aid to dependent families. First checks paid 1940.',
+    scale: 'Pays ~$1.5 trillion/year to 67 million Americans (2024). Lifts 22 million out of poverty. Largest federal program.',
+    statusDetail: 'STILL OPERATING and the most enduring New Deal legacy. Expanded with Medicare (1965), disability insurance (1956), SSI (1972). The "third rail" of American politics.'
+  }
+];
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  filterSelect = createSelect();
+  filterSelect.option('All programs', 'all');
+  filterSelect.option('Still active today', 'active');
+  filterSelect.option('Modified / successor exists', 'modified');
+  filterSelect.option('Ended (no successor)', 'ended');
+  filterSelect.selected('all');
+  filterSelect.changed(() => { selectedProgram = null; });
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    filterSelect.selected('all');
+    selectedProgram = null;
+  });
+
+  positionControls();
+  describe('New Deal programs grouped into three columns: Relief, Recovery, Reform. Each program is a clickable card colored by current status (green = still exists, amber = modified/successor exists, red = ended). Filter by status; click any card for full details.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 18;
+  filterSelect.position(margin + 70, y);
+  filterSelect.style('font-size', '13px');
+  resetBtn.position(canvasWidth - margin - 60, y);
+}
+
+function statusColor(status) {
+  if (status === 'active')   return COLOR_ACTIVE;
+  if (status === 'modified') return COLOR_MODIFIED;
+  return COLOR_ENDED;
+}
+
+function categoryColor(cat) {
+  if (cat === 'relief')   return COLOR_RELIEF;
+  if (cat === 'recovery') return COLOR_RECOVERY;
+  return COLOR_REFORM;
+}
+
+function isFiltered(p) {
+  let f = filterSelect.value();
+  if (f === 'all') return false;
+  return p.status !== f;
+}
+
+function columnLayout() {
+  // Returns {colX:[3], colW, headerY, gridTopY, cardH, cardGap}
+  let topPad = 70;          // title area
+  let gridTop = topPad + 36; // column header band
+  let colGap = 14;
+  let colW = (canvasWidth - margin * 2 - colGap * 2) / 3;
+  let cardH = 56;
+  let cardGap = 8;
+  let colX = [
+    margin,
+    margin + colW + colGap,
+    margin + (colW + colGap) * 2
+  ];
+  return { colX, colW, headerY: topPad, gridTopY: gridTop + 24, cardH, cardGap };
+}
+
+function programCardRect(p) {
+  let layout = columnLayout();
+  let catList = programs.filter(q => q.category === p.category);
+  let idx = catList.indexOf(p);
+  let colIdx = (p.category === 'relief') ? 0 : (p.category === 'recovery') ? 1 : 2;
+  let x = layout.colX[colIdx];
+  let y = layout.gridTopY + idx * (layout.cardH + layout.cardGap);
+  return { x, y, w: layout.colW, h: layout.cardH };
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(248, 249, 251);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(220);
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+
+  // Title
+  fill(20, 50, 110);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('New Deal Programs: Relief · Recovery · Reform', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+  fill(90);
+  textSize(12);
+  text('Click any program card for details. Border color shows whether the program (or a successor) still exists today.',
+       canvasWidth / 2, 34);
+
+  // Column headers
+  drawColumnHeaders();
+
+  // Program cards
+  hoveredProgram = null;
+  for (let p of programs) drawProgramCard(p);
+
+  // Detail panel OR legend + summary
+  if (selectedProgram) {
+    drawDetailPanel(selectedProgram);
+  } else {
+    drawBottomPanel();
+  }
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text('Filter:', margin + 8, drawHeight + controlHeight / 2 + 2);
+
+  positionControls();
+}
+
+function drawColumnHeaders() {
+  let layout = columnLayout();
+  let headers = [
+    { label: 'RELIEF',   sub: 'Immediate aid for the suffering',    color: COLOR_RELIEF,   col: 0 },
+    { label: 'RECOVERY', sub: 'Restart the economic engine',        color: COLOR_RECOVERY, col: 1 },
+    { label: 'REFORM',   sub: 'Prevent another collapse',           color: COLOR_REFORM,   col: 2 }
+  ];
+  for (let h of headers) {
+    let x = layout.colX[h.col];
+    let w = layout.colW;
+    noStroke();
+    fill(h.color.r, h.color.g, h.color.b, 24);
+    rect(x, layout.headerY, w, 50, 6);
+    fill(h.color.r, h.color.g, h.color.b);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    textSize(14);
+    text(h.label, x + w / 2, layout.headerY + 6);
+    textStyle(NORMAL);
+    textSize(11);
+    fill(70);
+    text(h.sub, x + w / 2, layout.headerY + 26);
+  }
+}
+
+function drawProgramCard(p) {
+  let r = programCardRect(p);
+  let dimmed = isFiltered(p);
+  let alpha = dimmed ? 60 : 255;
+  let sc = statusColor(p.status);
+  let cc = categoryColor(p.category);
+
+  // Hover detection
+  let isHover = (mouseX >= r.x && mouseX <= r.x + r.w &&
+                 mouseY >= r.y && mouseY <= r.y + r.h && !dimmed);
+  if (isHover) hoveredProgram = p;
+  let isSelected = selectedProgram && selectedProgram.id === p.id;
+
+  // Card background
+  noStroke();
+  if (isSelected) {
+    fill(sc.r, sc.g, sc.b, dimmed ? 30 : 45);
+  } else if (isHover) {
+    fill(255, 255, 255, alpha);
+  } else {
+    fill(255, 255, 255, alpha);
+  }
+  stroke(sc.r, sc.g, sc.b, dimmed ? 60 : 230);
+  strokeWeight(isSelected ? 3 : 2);
+  rect(r.x, r.y, r.w, r.h, 6);
+  noStroke();
+
+  // Status dot
+  fill(sc.r, sc.g, sc.b, alpha);
+  ellipse(r.x + 12, r.y + 12, 8, 8);
+
+  // Acronym (large, left)
+  fill(cc.r, cc.g, cc.b, dimmed ? 80 : 255);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(15);
+  text(p.acronym, r.x + 26, r.y + 6);
+
+  // Year (right)
+  fill(120, 120, 120, dimmed ? 80 : 255);
+  textStyle(NORMAL);
+  textSize(11);
+  textAlign(RIGHT, TOP);
+  text(p.year, r.x + r.w - 8, r.y + 8);
+
+  // Full name (smaller, second line)
+  fill(40, 40, 40, dimmed ? 80 : 230);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  text(p.name, r.x + 26, r.y + 25, r.w - 32, 28);
+
+  textStyle(NORMAL);
+}
+
+function drawBottomPanel() {
+  // Combined: legend + summary statistic + tooltip area
+  let layout = columnLayout();
+  // Find lowest card bottom
+  let maxBottom = 0;
+  for (let p of programs) {
+    let r = programCardRect(p);
+    maxBottom = max(maxBottom, r.y + r.h);
+  }
+  let panelY = maxBottom + 16;
+  let panelH = drawHeight - panelY - 8;
+  if (panelH < 40) return;
+  let panelW = canvasWidth - margin * 2;
+
+  noStroke();
+  fill(252);
+  stroke(220);
+  strokeWeight(1);
+  rect(margin, panelY, panelW, panelH, 8);
+  noStroke();
+
+  // Hover tooltip takes priority over legend if hovering
+  if (hoveredProgram) {
+    drawHoverContent(hoveredProgram, panelY, panelW, panelH);
+  } else {
+    drawLegendAndSummary(panelY, panelW, panelH);
+  }
+}
+
+function drawHoverContent(p, panelY, panelW, panelH) {
+  let sc = statusColor(p.status);
+  noStroke();
+  fill(sc.r, sc.g, sc.b);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(13);
+  text(p.acronym + ' — ' + p.name + ' (' + p.year + ')', margin + 12, panelY + 8);
+  fill(60);
+  textStyle(NORMAL);
+  textSize(12);
+  text(p.short, margin + 12, panelY + 28, panelW - 24, panelH - 32);
+  fill(120);
+  textSize(11);
+  textAlign(RIGHT, BOTTOM);
+  text('Click for full detail', margin + panelW - 12, panelY + panelH - 6);
+}
+
+function drawLegendAndSummary(panelY, panelW, panelH) {
+  // Left: legend
+  let leftX = margin + 12;
+  fill(60);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Legend:', leftX, panelY + 8);
+  textStyle(NORMAL);
+
+  let legendItems = [
+    { color: COLOR_ACTIVE,   label: 'Still active today' },
+    { color: COLOR_MODIFIED, label: 'Modified or successor exists' },
+    { color: COLOR_ENDED,    label: 'Ended — no successor' }
+  ];
+  textSize(11.5);
+  for (let i = 0; i < legendItems.length; i++) {
+    let it = legendItems[i];
+    let y = panelY + 28 + i * 16;
+    fill(it.color.r, it.color.g, it.color.b);
+    ellipse(leftX + 6, y + 6, 10, 10);
+    fill(40);
+    textAlign(LEFT, TOP);
+    text(it.label, leftX + 18, y);
+  }
+
+  // Right: summary statistic
+  let rightX = margin + panelW * 0.55;
+  let active = programs.filter(p => p.status === 'active').length;
+  let modified = programs.filter(p => p.status === 'modified').length;
+  let ended = programs.filter(p => p.status === 'ended').length;
+  let total = programs.length;
+  let stillExists = active + modified;
+
+  fill(60);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Lasting Legacy:', rightX, panelY + 8);
+  textStyle(NORMAL);
+  fill(35);
+  textSize(12);
+  let summary =
+    stillExists + ' of ' + total + ' programs (or their successors) still operate today. ' +
+    active + ' run essentially unchanged; ' + modified + ' have been transformed by successors; ' +
+    ended + ' ended without a direct heir.';
+  text(summary, rightX, panelY + 28, panelW - (rightX - margin) - 14, panelH - 32);
+}
+
+function drawDetailPanel(p) {
+  // Detail panel occupies bottom area beneath the cards
+  let maxBottom = 0;
+  for (let q of programs) {
+    let r = programCardRect(q);
+    maxBottom = max(maxBottom, r.y + r.h);
+  }
+  let panelY = maxBottom + 16;
+  let panelH = drawHeight - panelY - 8;
+  let panelW = canvasWidth - margin * 2;
+  let sc = statusColor(p.status);
+  let cc = categoryColor(p.category);
+
+  noStroke();
+  fill(255);
+  stroke(sc.r, sc.g, sc.b);
+  strokeWeight(2);
+  rect(margin, panelY, panelW, panelH, 8);
+  noStroke();
+
+  // Title row
+  fill(cc.r, cc.g, cc.b);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(14);
+  text(p.acronym + ' — ' + p.name + '  (' + p.year + ')', margin + 12, panelY + 8);
+
+  // Status badge (right)
+  let statusLabel = (p.status === 'active') ? 'STILL ACTIVE'
+                  : (p.status === 'modified') ? 'MODIFIED / SUCCESSOR'
+                  : 'ENDED';
+  textAlign(RIGHT, TOP);
+  textStyle(BOLD);
+  textSize(11);
+  fill(sc.r, sc.g, sc.b);
+  text(statusLabel, margin + panelW - 12, panelY + 10);
+
+  // Close hint
+  fill(120);
+  textStyle(NORMAL);
+  textSize(10);
+  textAlign(RIGHT, TOP);
+  text('(click card again or Reset to close)', margin + panelW - 12, panelY + 26);
+
+  // Two-column body
+  let colW = (panelW - 30) / 2;
+  let leftX = margin + 12;
+  let rightX = margin + 22 + colW;
+  let bodyY = panelY + 42;
+  let lineH = 14;
+
+  textAlign(LEFT, TOP);
+  textSize(11.5);
+
+  let yL = bodyY;
+  yL = drawField(leftX,  yL,        colW, 'Problem addressed:', p.problem,      cc, lineH);
+  yL = drawField(leftX,  yL + 4,    colW, 'How it worked:',     p.howItWorked,  cc, lineH);
+
+  let yR = bodyY;
+  yR = drawField(rightX, yR,        colW, 'Scale:',             p.scale,        cc, lineH);
+  yR = drawField(rightX, yR + 4,    colW, 'Status today:',      p.statusDetail, sc, lineH);
+
+  textStyle(NORMAL);
+}
+
+function drawField(x, y, w, label, body, color, lineH) {
+  noStroke();
+  fill(color.r, color.g, color.b);
+  textStyle(BOLD);
+  textSize(11);
+  text(label, x, y);
+  fill(35);
+  textStyle(NORMAL);
+  textSize(11.5);
+  let bodyH = textHeightWrap(body, w, lineH);
+  text(body, x, y + 13, w, bodyH + 4);
+  return y + 13 + bodyH + 2;
+}
+
+function textHeightWrap(str, w, lineH) {
+  textSize(11.5);
+  let words = str.split(' ');
+  let line = '';
+  let lines = 1;
+  for (let word of words) {
+    let test = line + word + ' ';
+    if (textWidth(test) > w) {
+      lines++;
+      line = word + ' ';
+    } else {
+      line = test;
+    }
+  }
+  return lines * lineH;
+}
+
+function mousePressed() {
+  for (let p of programs) {
+    if (isFiltered(p)) continue;
+    let r = programCardRect(p);
+    if (mouseX >= r.x && mouseX <= r.x + r.w &&
+        mouseY >= r.y && mouseY <= r.y + r.h) {
+      if (selectedProgram && selectedProgram.id === p.id) {
+        selectedProgram = null;
+      } else {
+        selectedProgram = p;
+      }
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: explorer
+    sim-id: new-deal-programs
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to explore the major New Deal programs, what
+    problem each addressed, how it worked, and whether it survived to the
+    present — building a comprehensive understanding of the New Deal's
+    scope and lasting impact.
+
+    Bloom Level: Understand (L2)
+    Bloom Verb: Categorize
+
+    Learning Objective: Students categorize New Deal programs by their
+    purpose (relief, recovery, reform), identify the specific problem
+    each addressed, and determine which programs still exist today.
+
+    Canvas layout:
+    - Responsive width; height 700px (drawHeight 640 + controlHeight 60)
+    - Three columns: Relief | Recovery | Reform (FDR's framework)
+    - Each program a clickable card with acronym, full name, year
+    - Border color = current status: green (active), amber (modified /
+      successor exists), red (ended)
+
+    Programs by category:
+    Relief:   CCC, FERA, CWA, WPA, PWA
+    Recovery: AAA, NRA (struck down), RFC, TVA
+    Reform:   FDIC, Glass-Steagall, SEC, Wagner Act, Social Security Act
+
+    Detail panel (on click):
+    - Full name and year
+    - Problem addressed
+    - How it worked
+    - Scale (people / dollars)
+    - Current status today
+
+    Interactivity:
+    - Hover shows acronym + 1-line summary
+    - Filter by status: All / Active / Modified / Ended
+    - Click card for details, click again or Reset to close
+
+    Color scheme: blue (relief), gold (recovery), teal (reform);
+                  green/amber/red status borders.
+    -->
+</body>
+</html>

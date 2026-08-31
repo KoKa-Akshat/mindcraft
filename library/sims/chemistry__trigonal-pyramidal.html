@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sierpinski Triangles MicroSim using P5.js 1.11.10</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Sierpinski Triangles MicroSim
+// Demonstrates recursive fractal patterns through the Sierpinski triangle
+
+// Canvas dimensions - REQUIRED structure
+let canvasWidth = 600;              // Initial width (responsive)
+let drawHeight = 500;               // Drawing/simulation area height
+let controlHeight = 50;             // Controls area height
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;                    // Margin for visual elements
+let sliderLeftMargin = 150;         // Left margin for slider positioning
+let defaultTextSize = 16;           // Base text size
+
+// Simulation variables
+let recursionSlider;                // Slider to control recursion depth
+let currentDepth = 4;               // Current recursion depth
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Create recursion depth slider
+  recursionSlider = createSlider(0, 7, 4, 1);
+  recursionSlider.position(sliderLeftMargin, drawHeight + 15);
+  recursionSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  describe('Interactive visualization of Sierpinski triangles with adjustable recursion depth. Shows how a simple triangle subdivides into a complex fractal pattern through recursive subdivision.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Get current slider value
+  currentDepth = recursionSlider.value();
+
+  // Drawing area (light blue background)
+  fill('aliceblue');
+  rect(0, 0, width, drawHeight);
+
+  // Control area (white background)
+  fill('white');
+  rect(0, drawHeight, width, controlHeight);
+
+  // Place the title in the top center of the canvas
+  fill('black');
+  textSize(28);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text('Sierpinski Triangles', canvasWidth/2, 10);
+
+  // Return to default settings
+  stroke('black');
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+
+  // Calculate triangle dimensions
+  // Leave margin on all sides and room for title
+  let triangleSize = Math.min(canvasWidth - 2 * margin, drawHeight - 60);
+
+  // Define the three vertices of the main triangle (equilateral)
+  let x1 = canvasWidth / 2;
+  let y1 = 50 + margin;
+  let x2 = (canvasWidth - triangleSize) / 2;
+  let y2 = y1 + triangleSize * Math.sqrt(3) / 2;
+  let x3 = (canvasWidth + triangleSize) / 2;
+  let y3 = y1 + triangleSize * Math.sqrt(3) / 2;
+
+  // Draw the Sierpinski triangle
+  drawSierpinski(x1, y1, x2, y2, x3, y3, currentDepth);
+
+  // Draw control label and value
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text('Recursion Depth: ' + currentDepth, 10, drawHeight + 25);
+
+  // Show triangle count
+  let triangleCount = Math.pow(3, currentDepth);
+  fill('purple');
+  textSize(14);
+  text('Triangles: ' + triangleCount, canvasWidth - 150, drawHeight + 25);
+}
+
+/**
+ * Recursively draws Sierpinski triangles
+ * @param {number} x1, y1 - First vertex
+ * @param {number} x2, y2 - Second vertex
+ * @param {number} x3, y3 - Third vertex
+ * @param {number} depth - Current recursion depth
+ */
+function drawSierpinski(x1, y1, x2, y2, x3, y3, depth) {
+  if (depth === 0) {
+    // Base case: draw a filled triangle
+    fill(0, 100, 200, 150); // Blue with transparency
+    stroke(0, 50, 150);
+    strokeWeight(1);
+    triangle(x1, y1, x2, y2, x3, y3);
+  } else {
+    // Recursive case: find midpoints and draw three smaller triangles
+
+    // Calculate midpoints of each side
+    let mid1x = (x1 + x2) / 2;
+    let mid1y = (y1 + y2) / 2;
+
+    let mid2x = (x2 + x3) / 2;
+    let mid2y = (y2 + y3) / 2;
+
+    let mid3x = (x3 + x1) / 2;
+    let mid3y = (y3 + y1) / 2;
+
+    // Recursively draw three smaller triangles
+    // Top triangle
+    drawSierpinski(x1, y1, mid1x, mid1y, mid3x, mid3y, depth - 1);
+
+    // Bottom-left triangle
+    drawSierpinski(mid1x, mid1y, x2, y2, mid2x, mid2y, depth - 1);
+
+    // Bottom-right triangle
+    drawSierpinski(mid3x, mid3y, mid2x, mid2y, x3, y3, depth - 1);
+
+    // Note: The center triangle formed by the three midpoints is NOT drawn
+    // This creates the characteristic "holes" in the Sierpinski triangle
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+    // Reposition slider to match new width
+    if (typeof recursionSlider !== 'undefined') {
+      recursionSlider.size(canvasWidth - sliderLeftMargin - margin);
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

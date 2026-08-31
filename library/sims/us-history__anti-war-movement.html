@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Social Movements of the 1960s-70s — Strategies and Outcomes</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Social Movements of the 1960s-70s — Strategies and Outcomes
+// CANVAS_HEIGHT: 620
+// Chapter 18: Vietnam, Nixon, and Social Movements (1965-1975)
+// Bloom Level: Analyze (L4) — compare constituencies, strategies, and outcomes
+
+let canvasWidth = 900;
+let drawHeight = 560;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+// Five movements as cards
+const movements = [
+  {
+    id: 'civil-rights',
+    name: 'Civil Rights',
+    short: 'Civil Rights\nMovement',
+    color: [46, 139, 87],          // green
+    constituency: 'Black Americans across the South and urban North',
+    target: 'End legal segregation; secure voting rights and equal protection',
+    strategy: 'nonviolent',        // nonviolent direct action + legal
+    strategyLabel: 'Nonviolent direct action and legal challenges',
+    orgs: 'SCLC, SNCC, NAACP, CORE',
+    leaders: 'Martin Luther King Jr., Ella Baker, John Lewis',
+    victories: 'Civil Rights Act (1964), Voting Rights Act (1965), Fair Housing Act (1968)',
+    legislativeStrength: 'Strong',
+    cultural: 'Integration of public life, growth of Black political power, model for other movements',
+    setback: 'Assassination of Dr. King in 1968, urban unrest, white backlash and Nixon\'s "Southern Strategy"'
+  },
+  {
+    id: 'anti-war',
+    name: 'Anti-War',
+    short: 'Anti-War\n(Vietnam)',
+    color: [52, 101, 164],         // blue
+    constituency: 'Students, draft-age men, clergy, veterans',
+    target: 'End U.S. military involvement in Vietnam; end the draft',
+    strategy: 'protest',           // protest + electoral
+    strategyLabel: 'Protest, draft resistance, teach-ins, electoral pressure',
+    orgs: 'SDS, VVAW, Moratorium Committee',
+    leaders: 'Tom Hayden, John Kerry',
+    victories: 'Shifted public opinion; helped end the Selective Service draft (1973)',
+    legislativeStrength: 'Moderate',
+    cultural: 'Lasting distrust of government, generational rift, antiwar tradition in U.S. politics',
+    setback: 'Kent State shootings (1970); no immediate end to the war'
+  },
+  {
+    id: 'feminism',
+    name: 'Feminism',
+    short: 'Second-Wave\nFeminism',
+    color: [142, 68, 173],         // purple
+    constituency: 'Women across class and racial lines',
+    target: 'Workplace equality, reproductive rights, legal equality',
+    strategy: 'legal',             // legal + electoral + consciousness-raising
+    strategyLabel: 'Consciousness-raising, lobbying, legal challenges, electoral work',
+    orgs: 'NOW, NWPC',
+    leaders: 'Betty Friedan, Gloria Steinem, Bella Abzug',
+    victories: 'Title IX (1972), Roe v. Wade (1973), Equal Credit Opportunity Act (1974)',
+    legislativeStrength: 'Strong',
+    cultural: 'Greater workforce participation, new family models, lasting shift in gender norms',
+    setback: 'Equal Rights Amendment failed ratification (1972-82)'
+  },
+  {
+    id: 'aim',
+    name: 'AIM',
+    short: 'American Indian\nMovement',
+    color: [192, 57, 43],          // red
+    constituency: 'Urban and reservation Native Americans',
+    target: 'Treaty rights, self-determination, recognition of sovereignty',
+    strategy: 'occupation',        // occupations + legal advocacy
+    strategyLabel: 'Occupations and direct action (Alcatraz 1969-71, Wounded Knee 1973), legal advocacy',
+    orgs: 'AIM, NCAI',
+    leaders: 'Dennis Banks, Russell Means',
+    victories: 'Indian Civil Rights Act (1968), Indian Self-Determination Act (1975), increased federal attention to treaty rights',
+    legislativeStrength: 'Moderate',
+    cultural: 'Pan-Indian identity, public awareness of Native issues',
+    setback: 'FBI surveillance (COINTELPRO), prosecutions of movement leaders'
+  },
+  {
+    id: 'farmworkers',
+    name: 'Farmworkers',
+    short: 'United Farm\nWorkers',
+    color: [211, 84, 0],           // orange
+    constituency: 'Mexican-American and Filipino-American farmworkers',
+    target: 'Union recognition, fair wages, safer working conditions',
+    strategy: 'boycott',           // boycott + strikes + nonviolent direct action
+    strategyLabel: 'Boycotts (Delano grape boycott), strikes, nonviolent direct action',
+    orgs: 'UFW',
+    leaders: 'Cesar Chavez, Dolores Huerta, Larry Itliong',
+    victories: 'California Agricultural Labor Relations Act (1975)',
+    legislativeStrength: 'Limited (state only)',
+    cultural: 'Latino political organizing, national fair-trade consumer awareness',
+    setback: 'Farmworkers still excluded from much federal labor law (NLRA, FLSA)'
+  }
+];
+
+// Strategy filter buckets — each movement can match multiple
+const strategyBuckets = {
+  'nonviolent': ['civil-rights', 'farmworkers'],
+  'legal':      ['civil-rights', 'feminism', 'aim'],
+  'protest':    ['anti-war'],
+  'boycott':    ['farmworkers'],
+  'electoral':  ['anti-war', 'feminism'],
+  'occupation': ['aim']
+};
+
+// View modes
+const VIEW_OVERVIEW = 'overview';
+const VIEW_DETAIL = 'detail';
+const VIEW_COMPARE = 'compare';
+
+let viewMode = VIEW_OVERVIEW;
+let selectedMovement = null;
+let compareA = null;
+let compareB = null;
+let compareMode = false;
+let activeFilter = 'all';  // 'all' | 'nonviolent' | 'legal' | 'protest' | 'boycott' | 'electoral' | 'occupation' | 'legislative' | 'cultural'
+
+let filterAllBtn, filterStrategyBtn, filterOutcomeBtn, compareToggleBtn, resetBtn;
+let strategyChoice = null;   // when strategy filter is active
+let outcomeChoice = null;    // when outcome filter is active
+
+let hoveredCard = null;
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+    if (canvasWidth > 1100) canvasWidth = 1100;
+    if (canvasWidth < 600) canvasWidth = 600;
+  }
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  filterAllBtn = createButton('All');
+  filterStrategyBtn = createButton('By strategy');
+  filterOutcomeBtn = createButton('By outcome');
+  compareToggleBtn = createButton('Compare two');
+  resetBtn = createButton('Reset');
+
+  filterAllBtn.mousePressed(() => {
+    activeFilter = 'all';
+    strategyChoice = null;
+    outcomeChoice = null;
+  });
+  filterStrategyBtn.mousePressed(cycleStrategy);
+  filterOutcomeBtn.mousePressed(cycleOutcome);
+  compareToggleBtn.mousePressed(() => {
+    compareMode = !compareMode;
+    compareA = null;
+    compareB = null;
+    selectedMovement = null;
+    viewMode = VIEW_OVERVIEW;
+    compareToggleBtn.html(compareMode ? 'Compare: ON (pick 2)' : 'Compare two');
+  });
+  resetBtn.mousePressed(() => {
+    viewMode = VIEW_OVERVIEW;
+    selectedMovement = null;
+    compareA = null;
+    compareB = null;
+    compareMode = false;
+    activeFilter = 'all';
+    strategyChoice = null;
+    outcomeChoice = null;
+    compareToggleBtn.html('Compare two');
+  });
+
+  positionControls();
+  describe('Interactive comparison of five U.S. social movements active between 1965 and 1975: Civil Rights, Anti-War, Second-Wave Feminism, the American Indian Movement, and the United Farm Workers. Click a card to see details; use filters to highlight movements by strategy or outcome; turn on Compare two to view any two movements side by side.', LABEL);
+}
+
+function cycleStrategy() {
+  const order = ['nonviolent', 'legal', 'protest', 'boycott', 'electoral', 'occupation'];
+  if (activeFilter !== 'strategy') {
+    activeFilter = 'strategy';
+    strategyChoice = order[0];
+  } else {
+    let i = order.indexOf(strategyChoice);
+    i = (i + 1) % order.length;
+    strategyChoice = order[i];
+  }
+  outcomeChoice = null;
+}
+
+function cycleOutcome() {
+  if (activeFilter !== 'outcome') {
+    activeFilter = 'outcome';
+    outcomeChoice = 'legislative';
+  } else {
+    outcomeChoice = outcomeChoice === 'legislative' ? 'cultural' : 'legislative';
+  }
+  strategyChoice = null;
+}
+
+function positionControls() {
+  let y = drawHeight + 14;
+  filterAllBtn.position(10, y);
+  filterStrategyBtn.position(50, y);
+  filterOutcomeBtn.position(155, y);
+  compareToggleBtn.position(255, y);
+  resetBtn.position(canvasWidth - 70, y);
+}
+
+function isHighlighted(mov) {
+  if (activeFilter === 'all') return true;
+  if (activeFilter === 'strategy' && strategyChoice) {
+    return strategyBuckets[strategyChoice].includes(mov.id);
+  }
+  if (activeFilter === 'outcome' && outcomeChoice) {
+    if (outcomeChoice === 'legislative') {
+      return mov.legislativeStrength === 'Strong';
+    } else {
+      // cultural — all five had cultural impact, but emphasize ones whose
+      // primary legacy is cultural more than legislative
+      return mov.legislativeStrength !== 'Strong';
+    }
+  }
+  return true;
+}
+
+function cardLayout() {
+  let n = movements.length;
+  let gap = 10;
+  let totalGap = gap * (n + 1);
+  let cw = (canvasWidth - totalGap) / n;
+  let ch = 230;
+  let cy = 80;
+  let cards = [];
+  for (let i = 0; i < n; i++) {
+    let cx = gap + i * (cw + gap);
+    cards.push({ mov: movements[i], x: cx, y: cy, w: cw, h: ch });
+  }
+  return cards;
+}
+
+function draw() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+
+  // Background
+  noStroke();
+  fill('#f6f5f2');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawHeader();
+
+  if (viewMode === VIEW_OVERVIEW) {
+    drawOverview();
+  } else if (viewMode === VIEW_DETAIL && selectedMovement) {
+    drawDetail(selectedMovement);
+  } else if (viewMode === VIEW_COMPARE && compareA && compareB) {
+    drawCompare(compareA, compareB);
+  }
+
+  drawFilterStatus();
+  positionControls();
+}
+
+function drawHeader() {
+  noStroke();
+  fill(20, 40, 80);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('Social Movements of the 1960s-70s', canvasWidth / 2, 12);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(80);
+  text('Compare constituencies, strategies, and outcomes (1965-1975). Click a card for details.',
+       canvasWidth / 2, 38);
+}
+
+function drawFilterStatus() {
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textStyle(NORMAL);
+  textSize(11);
+  let msg = 'Filter: All movements';
+  if (activeFilter === 'strategy' && strategyChoice) {
+    msg = 'Filter: Strategy = ' + strategyChoice;
+  } else if (activeFilter === 'outcome' && outcomeChoice) {
+    msg = 'Filter: Outcome emphasis = ' + outcomeChoice;
+  }
+  if (compareMode) {
+    let picks = (compareA ? 1 : 0) + (compareB ? 1 : 0);
+    msg += '   |   Compare mode (' + picks + '/2 selected)';
+  }
+  text(msg, 10, drawHeight - 14);
+}
+
+function drawOverview() {
+  let cards = cardLayout();
+  hoveredCard = null;
+
+  for (let c of cards) {
+    let mov = c.mov;
+    let highlighted = isHighlighted(mov);
+    let dim = !highlighted;
+    let isPicked = compareMode && (compareA === mov || compareB === mov);
+
+    let baseAlpha = dim ? 70 : 230;
+    let strokeAlpha = dim ? 110 : 255;
+
+    // Card body
+    stroke(mov.color[0], mov.color[1], mov.color[2], strokeAlpha);
+    strokeWeight(isPicked ? 4 : 2);
+    fill(255, 255, 255, dim ? 180 : 250);
+    rect(c.x, c.y, c.w, c.h, 10);
+
+    // Header band
+    noStroke();
+    fill(mov.color[0], mov.color[1], mov.color[2], baseAlpha);
+    rect(c.x, c.y, c.w, 56, 10, 10, 0, 0);
+
+    // Title
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(14);
+    text(mov.short, c.x + c.w / 2, c.y + 28);
+
+    // Body summary
+    fill(dim ? 130 : 30);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    textSize(11);
+    text('Constituency', c.x + 10, c.y + 64);
+    textStyle(NORMAL);
+    textSize(11);
+    text(mov.constituency, c.x + 10, c.y + 78, c.w - 20, 36);
+
+    textStyle(BOLD);
+    text('Strategy', c.x + 10, c.y + 118);
+    textStyle(NORMAL);
+    text(mov.strategyLabel, c.x + 10, c.y + 132, c.w - 20, 40);
+
+    textStyle(BOLD);
+    text('Key win', c.x + 10, c.y + 176);
+    textStyle(NORMAL);
+    text(truncate(mov.victories, 90), c.x + 10, c.y + 190, c.w - 20, 32);
+
+    // Hover detection
+    if (mouseX >= c.x && mouseX <= c.x + c.w &&
+        mouseY >= c.y && mouseY <= c.y + c.h) {
+      hoveredCard = c;
+      cursor(HAND);
+    }
+
+    // Click hint
+    noStroke();
+    fill(dim ? 160 : 90);
+    textAlign(RIGHT, BOTTOM);
+    textStyle(ITALIC);
+    textSize(10);
+    let hint = compareMode ? 'click to pick' : 'click for detail';
+    text(hint, c.x + c.w - 8, c.y + c.h - 6);
+    textStyle(NORMAL);
+  }
+
+  if (!hoveredCard) cursor(ARROW);
+
+  // Legend strip below cards
+  drawLegend(325);
+}
+
+function truncate(s, n) {
+  if (s.length <= n) return s;
+  return s.slice(0, n - 1) + '...';
+}
+
+function drawLegend(yTop) {
+  noStroke();
+  fill(40);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Compare across all five movements:', 14, yTop);
+  textStyle(NORMAL);
+
+  let rowY = yTop + 22;
+  let labelW = 130;
+  let cellGap = 6;
+  let cellW = (canvasWidth - labelW - 28 - cellGap * 5) / 5;
+
+  const rows = [
+    { label: 'Primary strategy', key: 'strategyLabel' },
+    { label: 'Legislative reach', key: 'legislativeStrength' },
+    { label: 'Cultural impact', key: 'cultural' }
+  ];
+
+  for (let r of rows) {
+    fill(40);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    textSize(11);
+    text(r.label, 14, rowY + 6);
+    textStyle(NORMAL);
+
+    for (let i = 0; i < movements.length; i++) {
+      let mov = movements[i];
+      let x = 14 + labelW + i * (cellW + cellGap);
+      let highlighted = isHighlighted(mov);
+      let alpha = highlighted ? 220 : 90;
+
+      noStroke();
+      fill(mov.color[0], mov.color[1], mov.color[2], highlighted ? 30 : 12);
+      rect(x, rowY, cellW, 56, 4);
+      stroke(mov.color[0], mov.color[1], mov.color[2], alpha);
+      strokeWeight(1);
+      noFill();
+      rect(x, rowY, cellW, 56, 4);
+
+      noStroke();
+      fill(highlighted ? 30 : 130);
+      textAlign(LEFT, TOP);
+      textSize(10);
+      text(mov[r.key], x + 6, rowY + 6, cellW - 12, 48);
+    }
+
+    rowY += 62;
+  }
+}
+
+function drawDetail(mov) {
+  let x = 14, y = 70;
+  let w = canvasWidth - 28;
+  let h = drawHeight - 90;
+
+  stroke(mov.color[0], mov.color[1], mov.color[2]);
+  strokeWeight(3);
+  fill(255);
+  rect(x, y, w, h, 10);
+
+  noStroke();
+  fill(mov.color[0], mov.color[1], mov.color[2]);
+  rect(x, y, w, 50, 10, 10, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(18);
+  text(mov.name + ' Movement', x + 18, y + 25);
+
+  textAlign(RIGHT, CENTER);
+  textStyle(NORMAL);
+  textSize(11);
+  text('Click anywhere outside header to return', x + w - 14, y + 25);
+
+  drawDetailFields(mov, x + 18, y + 70, w - 36);
+}
+
+function drawDetailFields(mov, x, y, w) {
+  const fields = [
+    ['Constituency', mov.constituency],
+    ['Target of change', mov.target],
+    ['Primary strategy', mov.strategyLabel],
+    ['Key organizations', mov.orgs],
+    ['Key leaders', mov.leaders],
+    ['Legislative victories', mov.victories],
+    ['Legislative reach', mov.legislativeStrength],
+    ['Cultural impact', mov.cultural],
+    ['Limitations / setbacks', mov.setback]
+  ];
+
+  let cy = y;
+  textAlign(LEFT, TOP);
+  for (let f of fields) {
+    fill(mov.color[0], mov.color[1], mov.color[2]);
+    textStyle(BOLD);
+    textSize(12);
+    text(f[0], x, cy);
+    fill(30);
+    textStyle(NORMAL);
+    textSize(12);
+    let lines = ceil(textWidth(f[1]) / (w - 180)) || 1;
+    text(f[1], x + 170, cy, w - 170, 1000);
+    cy += max(22, 16 * lines + 8);
+  }
+}
+
+function drawCompare(a, b) {
+  let pad = 14;
+  let halfW = (canvasWidth - pad * 3) / 2;
+  drawComparePanel(a, pad, 70, halfW, drawHeight - 90);
+  drawComparePanel(b, pad * 2 + halfW, 70, halfW, drawHeight - 90);
+
+  // Top-right hint
+  noStroke();
+  fill(80);
+  textAlign(CENTER, TOP);
+  textStyle(ITALIC);
+  textSize(11);
+  text('Side-by-side comparison — click anywhere below the cards or press Reset to return.',
+       canvasWidth / 2, drawHeight - 30);
+  textStyle(NORMAL);
+}
+
+function drawComparePanel(mov, x, y, w, h) {
+  stroke(mov.color[0], mov.color[1], mov.color[2]);
+  strokeWeight(2);
+  fill(255);
+  rect(x, y, w, h, 10);
+
+  noStroke();
+  fill(mov.color[0], mov.color[1], mov.color[2]);
+  rect(x, y, w, 44, 10, 10, 0, 0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(15);
+  text(mov.name, x + w / 2, y + 22);
+
+  const fields = [
+    ['Constituency', mov.constituency],
+    ['Target', mov.target],
+    ['Strategy', mov.strategyLabel],
+    ['Orgs', mov.orgs],
+    ['Leaders', mov.leaders],
+    ['Victories', mov.victories],
+    ['Reach', mov.legislativeStrength],
+    ['Cultural', mov.cultural],
+    ['Setback', mov.setback]
+  ];
+
+  let cy = y + 58;
+  let labelW = 78;
+  textAlign(LEFT, TOP);
+  for (let f of fields) {
+    fill(mov.color[0], mov.color[1], mov.color[2]);
+    textStyle(BOLD);
+    textSize(11);
+    text(f[0], x + 10, cy);
+    fill(30);
+    textStyle(NORMAL);
+    textSize(11);
+    text(f[1], x + 10 + labelW, cy, w - 20 - labelW, 1000);
+    // Estimate height
+    let approxLines = ceil(f[1].length / 38);
+    cy += max(20, 13 * approxLines + 4);
+  }
+}
+
+function mousePressed() {
+  // Clicks on controls are handled by p5 buttons
+  if (mouseY > drawHeight) return;
+
+  if (viewMode === VIEW_DETAIL) {
+    // Click anywhere to return to overview
+    viewMode = VIEW_OVERVIEW;
+    selectedMovement = null;
+    return;
+  }
+  if (viewMode === VIEW_COMPARE) {
+    viewMode = VIEW_OVERVIEW;
+    return;
+  }
+
+  // Overview: click a card
+  let cards = cardLayout();
+  for (let c of cards) {
+    if (mouseX >= c.x && mouseX <= c.x + c.w &&
+        mouseY >= c.y && mouseY <= c.y + c.h) {
+      if (compareMode) {
+        // Pick up to two cards
+        if (compareA === c.mov) {
+          compareA = null;
+        } else if (compareB === c.mov) {
+          compareB = null;
+        } else if (!compareA) {
+          compareA = c.mov;
+        } else if (!compareB) {
+          compareB = c.mov;
+        } else {
+          // Replace B
+          compareB = c.mov;
+        }
+        if (compareA && compareB) {
+          viewMode = VIEW_COMPARE;
+        }
+      } else {
+        selectedMovement = c.mov;
+        viewMode = VIEW_DETAIL;
+      }
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: comparison
+    sim-id: social-movements-comparison
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to compare the social movements of the late 1960s
+    and early 1970s — Civil Rights, Anti-War, Second-Wave Feminism, AIM, and
+    the Farmworkers Movement — across their constituencies, strategies, and
+    legislative/cultural outcomes.
+
+    Bloom Level: Analyze (L4)
+    Bloom Verb: Compare
+
+    Canvas layout:
+    - Five movement cards in a row
+    - Each card shows constituency, primary strategy, key victory, cultural impact
+    - Click a card to expand into a full detail panel
+    - "Compare two" mode lets the student select two cards for side-by-side view
+
+    Interactivity:
+    - Strategy filter highlights movements by primary strategy type
+    - Outcome filter highlights legislative vs. cultural outcomes
+    - Side-by-side view: select any two movements for detailed comparison
+
+    Color scheme:
+    - Civil Rights = green, Anti-War = blue, Feminism = purple,
+      AIM = red, Farmworkers = orange
+    -->
+</body>
+</html>

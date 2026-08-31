@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Pre-Columbian Americas Interactive Map</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Pre-Columbian Americas Interactive Map
+// CANVAS_HEIGHT: 530
+// Chapter 2: Pre-Columbian Americas and European Contact
+// Bloom Level: Remember (L1) — click regions to identify civilizations
+
+let canvasWidth = 700;
+let drawHeight = 470;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+let selectedRegion = null;
+let hoveredRegion = null;
+let resetBtn;
+
+// Civilizations data
+const regions = [
+  {
+    id: 'iroquois',
+    name: 'Iroquois Confederacy',
+    dates: 'c. 1450 – present',
+    population: '~100,000 at contact',
+    location: 'Great Lakes / northeastern woodlands',
+    feature: 'Democratic confederacy of five (later six) nations; inspired aspects of U.S. constitutional thought. Longhouses, matrilineal clans, and oral legal tradition.',
+    contact: 'Contact with French (1534) and later Dutch/English traders; European diseases, fur trade, and colonial wars gradually fractured the Confederacy.',
+    r:57, g:73, b:171,
+    // Polygon points (as fractions of canvas width/height, mapped at draw time)
+    // Northeast quadrant of map
+    poly: [[0.52,0.16],[0.64,0.16],[0.66,0.28],[0.54,0.30],[0.50,0.24]]
+  },
+  {
+    id: 'mississippian',
+    name: 'Mississippian Culture',
+    dates: 'c. 800 – 1600 CE',
+    population: '~100,000–200,000 at peak',
+    location: 'Mississippi River valley',
+    feature: 'Cahokia (near present-day St. Louis) was North America\'s largest pre-Columbian city, with perhaps 20,000 inhabitants. Famous for platform mounds and far-reaching trade networks.',
+    contact: 'Hernando de Soto\'s 1539–42 expedition brought devastating disease; Mississippian culture collapsed before sustained European colonization.',
+    r:0, g:137, b:123,
+    poly: [[0.44,0.26],[0.56,0.26],[0.58,0.44],[0.44,0.46],[0.40,0.36]]
+  },
+  {
+    id: 'aztec',
+    name: 'Aztec Empire (Mexica)',
+    dates: 'c. 1300 – 1521 CE',
+    population: '~5–15 million',
+    location: 'Central Mexico (Valley of Mexico)',
+    feature: 'Tenochtitlán (pop. ~200,000) was larger than any European city at contact. Chinampas (floating gardens), monumental pyramids, sophisticated calendar, and extensive tribute networks.',
+    contact: 'Cortés conquered Tenochtitlán in 1521 with thousands of Indigenous allies. Smallpox (arrived 1520) killed much of the population before the final siege.',
+    r:230, g:81, b:0,
+    poly: [[0.32,0.48],[0.44,0.46],[0.46,0.60],[0.36,0.64],[0.28,0.56]]
+  },
+  {
+    id: 'inca',
+    name: 'Inca Empire (Tawantinsuyu)',
+    dates: 'c. 1400 – 1533 CE',
+    population: '~10–15 million',
+    location: 'Andean South America (Peru, Ecuador, Bolivia, parts of Chile/Argentina)',
+    feature: 'Largest empire in pre-Columbian Americas: 4,000-mile road network, llama caravans, sophisticated terrace farming, quipu knot records, and a system of mit\'a (labor taxation).',
+    contact: 'Pizarro captured Emperor Atahualpa in 1532; despite a room full of gold as ransom, Atahualpa was executed. Civil war (before conquest) and European disease enabled rapid collapse.',
+    r:46, g:125, b:50,
+    poly: [[0.28,0.62],[0.44,0.60],[0.46,0.82],[0.30,0.86],[0.22,0.74]]
+  },
+  {
+    id: 'pueblo',
+    name: 'Pueblo Cultures',
+    dates: 'c. 700 – present',
+    population: '~50,000 at contact',
+    location: 'Southwest desert (present-day New Mexico, Arizona, Colorado)',
+    feature: 'Multi-story adobe dwellings (some with hundreds of rooms), sophisticated irrigation, turquoise trade networks reaching Mexico City. Chaco Canyon was a major ceremonial center.',
+    contact: 'Spanish colonized New Mexico in 1598; the Pueblo Revolt of 1680 successfully expelled the Spanish for 12 years — the most successful Indigenous uprising in North American history.',
+    r:160, g:80, b:20,
+    poly: [[0.20,0.38],[0.34,0.36],[0.34,0.50],[0.20,0.52],[0.16,0.44]]
+  },
+  {
+    id: 'pacific',
+    name: 'Pacific Northwest Peoples',
+    dates: 'c. 3000 BCE – present',
+    population: '~150,000–200,000 at contact',
+    location: 'Pacific Northwest coast (present-day Oregon, Washington, British Columbia)',
+    feature: 'Complex hunter-gatherer societies with elaborate potlatch ceremonies (wealth redistribution), totem poles, plank houses, and salmon-based economies.',
+    contact: 'Relatively late contact: Russian fur traders in the 1740s, Spanish and British in the 1770s-80s. Maritime fur trade brought goods and devastating disease.',
+    r:100, g:50, b:150,
+    poly: [[0.14,0.14],[0.26,0.12],[0.28,0.28],[0.18,0.30],[0.12,0.22]]
+  }
+];
+
+// Map background outline (simplified Americas)
+// These are rough polygon points as fractions of (mapW, mapH)
+function getMapPoly() {
+  let mw = drawHeight * 0.65;  // map width
+  return [
+    // North America outline (simplified)
+    [0.18, 0.06], [0.45, 0.04], [0.62, 0.08], [0.70, 0.18],
+    [0.68, 0.28], [0.60, 0.30], [0.62, 0.38], [0.55, 0.46],
+    [0.48, 0.48], [0.46, 0.58], [0.50, 0.72],
+    // South America
+    [0.44, 0.60], [0.48, 0.62], [0.50, 0.80], [0.42, 0.96],
+    [0.28, 0.98], [0.20, 0.88], [0.20, 0.70], [0.26, 0.60],
+    [0.30, 0.50],
+    // Back up west coast
+    [0.16, 0.48], [0.10, 0.32], [0.12, 0.20], [0.18, 0.06]
+  ];
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function mapX(fx) { return margin + fx * (drawHeight * 0.62); }
+function mapY(fy) { return 30 + fy * (drawHeight - 40); }
+
+function regionContains(reg, mx, my) {
+  let pts = reg.poly.map(p => [mapX(p[0]), mapY(p[1])]);
+  // Ray casting
+  let inside = false;
+  for (let i = 0, j = pts.length-1; i < pts.length; j = i++) {
+    let xi=pts[i][0], yi=pts[i][1], xj=pts[j][0], yj=pts[j][1];
+    if (((yi>my) !== (yj>my)) && (mx < (xj-xi)*(my-yi)/(yj-yi)+xi)) inside = !inside;
+  }
+  return inside;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  resetBtn = createButton('Reset');
+  resetBtn.position(10, drawHeight + 12);
+  resetBtn.mousePressed(() => { selectedRegion = null; });
+
+  describe('Clickable map of pre-Columbian Americas showing locations of the Iroquois Confederacy, Mississippian Culture, Aztec Empire, Inca Empire, Pueblo cultures, and Pacific Northwest peoples.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  noStroke();
+  fill(30, 30, 120);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(16);
+  text('Pre-Columbian Americas — Major Civilizations', canvasWidth/2, 8);
+  textStyle(NORMAL);
+
+  // Ocean background in map area
+  let mapW = drawHeight * 0.65;
+  fill(180, 210, 240);
+  noStroke();
+  rect(margin, 28, mapW + margin, drawHeight - 30);
+
+  // Americas outline
+  let mapPts = getMapPoly();
+  fill(220, 210, 180);
+  stroke(150, 130, 100);
+  strokeWeight(1.5);
+  beginShape();
+  for (let p of mapPts) vertex(mapX(p[0]), mapY(p[1]));
+  endShape(CLOSE);
+
+  // Detect hover
+  hoveredRegion = null;
+  for (let reg of regions) {
+    if (regionContains(reg, mouseX, mouseY)) hoveredRegion = reg;
+  }
+
+  // Draw civilization regions
+  for (let reg of regions) {
+    let isSel = selectedRegion && selectedRegion.id === reg.id;
+    let isHov = hoveredRegion && hoveredRegion.id === reg.id;
+
+    fill(reg.r, reg.g, reg.b, isSel || isHov ? 210 : 150);
+    stroke(isSel ? 'white' : (isHov ? [249,168,37] : [reg.r-20, reg.g-20, reg.b-20]));
+    strokeWeight(isSel || isHov ? 2.5 : 1);
+    beginShape();
+    for (let p of reg.poly) vertex(mapX(p[0]), mapY(p[1]));
+    endShape(CLOSE);
+
+    // Region label on map
+    let cx = reg.poly.reduce((s,p)=>s+mapX(p[0]),0)/reg.poly.length;
+    let cy = reg.poly.reduce((s,p)=>s+mapY(p[1]),0)/reg.poly.length;
+    noStroke();
+    fill(255, 255, 255, 230);
+    textAlign(CENTER, CENTER);
+    textSize(9);
+    textStyle(BOLD);
+    let shortName = reg.name.split(' ')[0] + (reg.name.split(' ')[1] ? '\n'+reg.name.split(' ')[1] : '');
+    text(shortName, cx, cy);
+    textStyle(NORMAL);
+  }
+
+  // Info panel (right side)
+  let px = margin*2 + drawHeight*0.65 + margin;
+  let pw = canvasWidth - px - margin;
+
+  if (selectedRegion) {
+    let reg = selectedRegion;
+    fill(reg.r, reg.g, reg.b, 25);
+    stroke(reg.r, reg.g, reg.b);
+    strokeWeight(1.5);
+    rect(px, 30, pw, drawHeight - 38, 8);
+
+    noStroke();
+    fill(reg.r, reg.g, reg.b);
+    rect(px, 30, pw, 34, 8, 8, 0, 0);
+    fill(255);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    textSize(13);
+    text(reg.name, px+8, 47);
+
+    let y = 72;
+    let lh = 18;
+    let drawItem = (label, val) => {
+      fill(reg.r, reg.g, reg.b);
+      textStyle(BOLD);
+      textSize(11);
+      textAlign(LEFT, TOP);
+      text(label, px+8, y);
+      fill(40);
+      textStyle(NORMAL);
+      textSize(12);
+      text(val, px+8, y+13, pw-16, 40);
+      y += 16 + Math.ceil(val.length/38)*14;
+    };
+
+    drawItem('Dates:', reg.dates);
+    drawItem('Population:', reg.population);
+    drawItem('Region:', reg.location);
+    drawItem('Defining Feature:', reg.feature);
+    drawItem('European Contact:', reg.contact);
+
+  } else {
+    fill(220);
+    stroke(200);
+    strokeWeight(1);
+    rect(px, 30, pw, drawHeight - 38, 8);
+    noStroke();
+    fill(120);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+    textStyle(ITALIC);
+    text('Click a shaded region on the map to learn about that civilization.', px + pw/2, drawHeight/2, pw-16, 80);
+    textStyle(NORMAL);
+  }
+
+  // Legend
+  let ly = drawHeight - 90;
+  noStroke();
+  fill(50);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  textStyle(BOLD);
+  text('Click a region:', margin+2, ly);
+  textStyle(NORMAL);
+  for (let i = 0; i < regions.length; i++) {
+    let r = regions[i];
+    fill(r.r, r.g, r.b);
+    rect(margin+2, ly + 14 + i*14, 10, 10, 2);
+    fill(50);
+    textSize(10);
+    text(r.name, margin+16, ly + 14 + i*14);
+  }
+
+  // Control instructions
+  noStroke();
+  fill(80);
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text(selectedRegion ? 'Click another region or Reset to clear.' : 'Click a colored region to learn more.', 80, drawHeight + controlHeight/2);
+
+  resetBtn.position(10, drawHeight + 12);
+}
+
+function mousePressed() {
+  for (let reg of regions) {
+    if (regionContains(reg, mouseX, mouseY)) {
+      selectedRegion = (selectedRegion && selectedRegion.id === reg.id) ? null : reg;
+      return;
+    }
+  }
+  selectedRegion = null;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+</body>
+</html>

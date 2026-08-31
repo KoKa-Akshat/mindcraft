@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity vs Speed Comparison MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Velocity vs Speed Comparison MicroSim
+// Shows scenarios where speed and velocity differ
+
+let canvasWidth = 800;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+
+// Animation phases
+let animationPhase = 0;
+let scenarios;
+let selectedScenario = 0;
+let animationSpeed = 0.02;
+let isAnimating = true;
+
+// UI Controls
+let scenarioButtons = [];
+
+function setup() {
+    updateCanvasSize();
+    const canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+
+    // Define scenarios
+    scenarios = [
+        {
+            name: "Straight Forward",
+            speed: 10,
+            velocity: "+10",
+            velocitySign: "+",
+            note: "Speed and velocity magnitude are equal",
+            color: color(0, 150, 0),
+            type: "linear"
+        },
+        {
+            name: "Straight Backward",
+            speed: 10,
+            velocity: "-10",
+            velocitySign: "-",
+            note: "Speed positive, velocity negative",
+            color: color(220, 100, 0),
+            type: "linear-back"
+        },
+        {
+            name: "Circular Motion",
+            speed: 10,
+            velocity: "changing",
+            velocitySign: "~",
+            note: "Speed constant, velocity always changing direction",
+            color: color(0, 100, 200),
+            type: "circular"
+        },
+        {
+            name: "Stationary",
+            speed: 0,
+            velocity: "0",
+            velocitySign: "0",
+            note: "Both zero - no motion",
+            color: color(128, 128, 128),
+            type: "stationary"
+        },
+        {
+            name: "Round Trip",
+            speed: 15,
+            velocity: "0",
+            velocitySign: "0",
+            note: "Returns to start - average displacement is zero",
+            color: color(150, 50, 150),
+            type: "round-trip"
+        },
+        {
+            name: "Accelerating",
+            speed: "5→15",
+            velocity: "+5→+15",
+            velocitySign: "+",
+            note: "Both increasing - speeding up in positive direction",
+            color: color(200, 50, 50),
+            type: "accelerating"
+        }
+    ];
+
+    // Create scenario buttons
+    let buttonWidth = 120;
+    let startX = margin;
+    for (let i = 0; i < scenarios.length; i++) {
+        let btn = createButton(scenarios[i].name);
+        btn.position(startX + i * (buttonWidth + 5), drawHeight + 10);
+        btn.style('font-size', '12px');
+        btn.style('padding', '8px 4px');
+        btn.style('width', buttonWidth + 'px');
+        btn.mousePressed(() => {
+            selectedScenario = i;
+            animationPhase = 0;
+        });
+        scenarioButtons.push(btn);
+    }
+
+    describe('Comparison of speed and velocity in different motion scenarios. Speed is always positive while velocity includes direction.', LABEL);
+}
+
+function draw() {
+    updateCanvasSize();
+
+    // Background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control area
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('black');
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, TOP);
+    text('Velocity vs Speed: Understanding the Difference', canvasWidth / 2, 10);
+
+    // Draw main visualization area
+    let vizX = margin;
+    let vizY = 60;
+    let vizW = canvasWidth - 2 * margin;
+    let vizH = 280;
+
+    // Draw current scenario
+    drawScenario(scenarios[selectedScenario], vizX, vizY, vizW, vizH);
+
+    // Draw comparison table
+    drawComparisonTable(margin, vizY + vizH + 20, canvasWidth - 2 * margin, 180);
+
+    // Update animation
+    if (isAnimating) {
+        animationPhase += animationSpeed;
+        if (animationPhase > TWO_PI) animationPhase -= TWO_PI;
+    }
+
+    // Highlight selected button
+    for (let i = 0; i < scenarioButtons.length; i++) {
+        if (i === selectedScenario) {
+            scenarioButtons[i].style('background-color', '#4CAF50');
+            scenarioButtons[i].style('color', 'white');
+        } else {
+            scenarioButtons[i].style('background-color', '#f0f0f0');
+            scenarioButtons[i].style('color', 'black');
+        }
+    }
+}
+
+function drawScenario(scenario, x, y, w, h) {
+    // Scenario box
+    fill(255, 255, 255, 230);
+    stroke(200);
+    strokeWeight(1);
+    rect(x, y, w, h, 10);
+
+    // Scenario title
+    fill(0);
+    textSize(20);
+    textAlign(CENTER, TOP);
+    text('Scenario: ' + scenario.name, x + w / 2, y + 10);
+
+    // Animation area
+    let animX = x + 50;
+    let animY = y + 50;
+    let animW = w - 100;
+    let animH = h - 120;
+
+    // Draw track/path based on scenario type
+    stroke(200);
+    strokeWeight(1);
+    noFill();
+
+    let objectX, objectY;
+    let velocityAngle = 0;
+
+    switch (scenario.type) {
+        case "linear":
+            // Straight line track
+            line(animX, animY + animH / 2, animX + animW, animY + animH / 2);
+            // Object position
+            let progress = (sin(animationPhase) + 1) / 2;
+            objectX = animX + 50 + progress * (animW - 100);
+            objectY = animY + animH / 2;
+            velocityAngle = 0;
+            // Direction arrow
+            drawArrow(animX + 20, animY + animH / 2, animX + animW - 20, animY + animH / 2, scenario.color);
+            break;
+
+        case "linear-back":
+            // Straight line track
+            line(animX, animY + animH / 2, animX + animW, animY + animH / 2);
+            // Object moving backward
+            let progressBack = (sin(animationPhase) + 1) / 2;
+            objectX = animX + animW - 50 - progressBack * (animW - 100);
+            objectY = animY + animH / 2;
+            velocityAngle = PI;
+            // Direction arrow
+            drawArrow(animX + animW - 20, animY + animH / 2, animX + 20, animY + animH / 2, scenario.color);
+            break;
+
+        case "circular":
+            // Circular track
+            let centerX = animX + animW / 2;
+            let centerY = animY + animH / 2;
+            let radius = min(animW, animH) / 2 - 30;
+            ellipse(centerX, centerY, radius * 2, radius * 2);
+            // Object on circle
+            objectX = centerX + radius * cos(animationPhase);
+            objectY = centerY + radius * sin(animationPhase);
+            velocityAngle = animationPhase + HALF_PI;
+            break;
+
+        case "stationary":
+            // Just show stationary object
+            objectX = animX + animW / 2;
+            objectY = animY + animH / 2;
+            velocityAngle = 0;
+            // No track needed
+            break;
+
+        case "round-trip":
+            // Line with arrows both ways
+            line(animX, animY + animH / 2, animX + animW, animY + animH / 2);
+            let roundProgress = sin(animationPhase);
+            objectX = animX + animW / 2 + roundProgress * (animW / 2 - 50);
+            objectY = animY + animH / 2;
+            velocityAngle = roundProgress > 0 ? 0 : PI;
+            // Draw start marker
+            fill(0, 150, 0);
+            noStroke();
+            ellipse(animX + animW / 2, animY + animH / 2 - 20, 10, 10);
+            fill(0);
+            textSize(12);
+            textAlign(CENTER, BOTTOM);
+            text('Start/End', animX + animW / 2, animY + animH / 2 - 25);
+            break;
+
+        case "accelerating":
+            // Straight line with increasing spacing
+            line(animX, animY + animH / 2, animX + animW, animY + animH / 2);
+            let accelProgress = pow((sin(animationPhase) + 1) / 2, 2); // Quadratic for acceleration effect
+            objectX = animX + 50 + accelProgress * (animW - 100);
+            objectY = animY + animH / 2;
+            velocityAngle = 0;
+            // Draw speed indicators
+            for (let i = 0; i < 5; i++) {
+                let spacing = 20 + i * 15; // Increasing spacing
+                let markerX = animX + 50 + i * spacing;
+                if (markerX < animX + animW - 50) {
+                    stroke(150);
+                    line(markerX, animY + animH / 2 - 10, markerX, animY + animH / 2 + 10);
+                }
+            }
+            break;
+    }
+
+    // Draw the object
+    fill(scenario.color);
+    noStroke();
+    ellipse(objectX, objectY, 30, 30);
+
+    // Draw velocity vector (if moving)
+    if (scenario.type !== "stationary") {
+        let vecLen = scenario.type === "accelerating" ?
+            30 + 20 * pow((sin(animationPhase) + 1) / 2, 2) : 40;
+        stroke(220, 50, 50);
+        strokeWeight(3);
+        let vx = objectX + vecLen * cos(velocityAngle);
+        let vy = objectY + vecLen * sin(velocityAngle);
+        line(objectX, objectY, vx, vy);
+        // Arrowhead
+        fill(220, 50, 50);
+        noStroke();
+        push();
+        translate(vx, vy);
+        rotate(velocityAngle);
+        triangle(0, 0, -10, -5, -10, 5);
+        pop();
+
+        // Label
+        fill(220, 50, 50);
+        textSize(12);
+        textAlign(LEFT, CENTER);
+        text('velocity', vx + 5, vy);
+    }
+
+    // Info panel
+    fill(0);
+    textSize(14);
+    textAlign(LEFT, TOP);
+    let infoY = y + h - 60;
+
+    fill(scenario.color);
+    rect(x + 20, infoY, 15, 15, 3);
+    fill(0);
+    text('Speed: ' + scenario.speed + ' m/s', x + 45, infoY);
+
+    fill(220, 50, 50);
+    rect(x + 200, infoY, 15, 15, 3);
+    fill(0);
+    text('Velocity: ' + scenario.velocity + ' m/s', x + 225, infoY);
+
+    fill(80);
+    textSize(13);
+    textAlign(CENTER, TOP);
+    text(scenario.note, x + w / 2, infoY + 25);
+}
+
+function drawComparisonTable(x, y, w, h) {
+    // Table header
+    fill(50, 100, 150);
+    noStroke();
+    rect(x, y, w, 30);
+
+    fill(255);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text('Property', x + w * 0.15, y + 15);
+    text('Speed', x + w * 0.4, y + 15);
+    text('Velocity', x + w * 0.7, y + 15);
+
+    // Table rows
+    let rows = [
+        ['Type', 'Scalar (magnitude only)', 'Vector (magnitude + direction)'],
+        ['Sign', 'Always positive or zero', 'Can be positive, negative, or zero'],
+        ['Direction', 'No direction information', 'Includes direction information'],
+        ['Example', '30 m/s', '30 m/s East or -30 m/s']
+    ];
+
+    let rowHeight = (h - 30) / rows.length;
+    for (let i = 0; i < rows.length; i++) {
+        let rowY = y + 30 + i * rowHeight;
+        fill(i % 2 === 0 ? 245 : 255);
+        stroke(220);
+        rect(x, rowY, w, rowHeight);
+
+        fill(0);
+        noStroke();
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(rows[i][0], x + w * 0.15, rowY + rowHeight / 2);
+
+        fill(0, 100, 200);
+        text(rows[i][1], x + w * 0.4, rowY + rowHeight / 2);
+
+        fill(200, 50, 50);
+        text(rows[i][2], x + w * 0.7, rowY + rowHeight / 2);
+    }
+}
+
+function drawArrow(x1, y1, x2, y2, col) {
+    stroke(col);
+    strokeWeight(2);
+    line(x1, y1, x2, y2);
+
+    let angle = atan2(y2 - y1, x2 - x1);
+    fill(col);
+    noStroke();
+    push();
+    translate(x2, y2);
+    rotate(angle);
+    triangle(0, 0, -12, -6, -12, 6);
+    pop();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+
+    // Reposition buttons
+    let buttonWidth = 120;
+    let startX = margin;
+    for (let i = 0; i < scenarioButtons.length; i++) {
+        scenarioButtons[i].position(startX + i * (buttonWidth + 5), drawHeight + 10);
+    }
+}
+
+function updateCanvasSize() {
+    const container = document.querySelector('main');
+    if (container) {
+        canvasWidth = min(container.offsetWidth, 900);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

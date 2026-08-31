@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>AI in Warfare — From Semi-Autonomous to Fully Autonomous</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// AI in Warfare — From Semi-Autonomous to Fully Autonomous
+// CANVAS_HEIGHT: 720
+// Chapter 21: The Age of AI and Technology Power (2010–Present)
+// Bloom Level: Evaluate (L5) — assess ethical/strategic implications of weapons autonomy
+//
+// Layout: drawHeight (660) + controlHeight (60) = 720
+// Six spectrum positions, click to open detail panel.
+// Slider positions a hypothetical weapon system on the spectrum.
+// "Arguments for/against" toggle and "Legal status" overlay.
+
+let canvasWidth = 900;
+let drawHeight = 660;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+let selectedLevel = 0;        // 0..5 — which level's detail panel is shown
+let argMode = 'for';          // 'for' or 'against'
+let showLegal = false;
+let positionSlider;           // 0..100 — hypothetical weapon position
+let argToggleBtn;
+let legalCheckbox;
+let resetBtn;
+
+// Six autonomy levels along the spectrum
+const levels = [
+  {
+    num: 1,
+    name: 'Human In the Loop',
+    short: 'In the Loop',
+    desc: 'Human decides every targeting decision.',
+    examples: 'Traditional soldier or pilot; Reaper drone with remote pilot pulling the trigger.',
+    humanDecides: 'Target identification, engagement decision, abort/proceed.',
+    aiDecides: 'Sensor processing, flight stabilization, suggested targets only.',
+    ethics: 'Clear human accountability; speed limited by human cognition.',
+    law: 'Fully compliant with current Law of Armed Conflict (LOAC) and the principle of meaningful human control.',
+    advantage: 'Maximum accountability; mistakes traceable to a named decision-maker.',
+    disadvantage: 'Slower than adversaries with faster autonomy; vulnerable to comms jamming.',
+    argFor: 'Preserves moral agency; respects centuries of just-war tradition placing kill decisions on humans.',
+    argAgainst: 'Comms-dependent; in jammed environments human-in-the-loop weapons may be unable to function.',
+    treaties: 'CCW, Geneva Conventions, ICRC guidance — all clearly satisfied.'
+  },
+  {
+    num: 2,
+    name: 'Human On the Loop',
+    short: 'On the Loop',
+    desc: 'System selects targets; human can override within a time window.',
+    examples: 'Patriot missile defense, Aegis Combat System, Phalanx CIWS in Auto mode.',
+    humanDecides: 'Rules of engagement; abort within seconds-long override window.',
+    aiDecides: 'Target selection, engagement timing, prioritization.',
+    ethics: 'Human override may be theoretical when timeline is sub-second (e.g., counter-missile defense).',
+    law: 'Generally accepted for defensive systems against non-human targets (incoming missiles).',
+    advantage: 'Fast enough to defeat saturation attacks human operators could not track.',
+    disadvantage: 'Patriot fratricide incidents (2003) showed override windows can be too short.',
+    argFor: 'Necessary for defense against hypersonic and saturation threats; humans set the rules upstream.',
+    argAgainst: 'Override is often illusory under time pressure — automation bias makes operators rubber-stamp AI.',
+    treaties: 'Permitted under LOAC for clearly defensive, non-human-targeting roles.'
+  },
+  {
+    num: 3,
+    name: 'Human Over the Loop',
+    short: 'Over the Loop',
+    desc: 'Human sets parameters; system operates autonomously within them.',
+    examples: 'Current FPV attack drones with limited AI assist; loitering munitions like Switchblade.',
+    humanDecides: 'Mission parameters, target area, abort authority via comms.',
+    aiDecides: 'Navigation, terminal guidance, target lock within designated area.',
+    ethics: 'Distance between human decision and engagement grows; meaningful control questioned.',
+    law: 'Contested. Some interpretations of LOAC require closer human supervision.',
+    advantage: 'Effective in contested electromagnetic environments where comms may be lost.',
+    disadvantage: 'Civilian casualties harder to attribute; chain of command blurred.',
+    argFor: 'Reflects how humans already use mines and time-fuzed weapons — autonomy within bounds.',
+    argAgainst: 'Once launched the human cannot intervene; targeting errors propagate without recall.',
+    treaties: 'CCW Group of Governmental Experts has flagged these systems for review.'
+  },
+  {
+    num: 4,
+    name: 'Supervised Autonomy',
+    short: 'Supervised',
+    desc: 'Human can intervene; system operates autonomously unless overridden.',
+    examples: 'Emerging AI "wingman" drones (CCA program); collaborative combat aircraft prototypes.',
+    humanDecides: 'High-level mission goals; intervention authority.',
+    aiDecides: 'Tactical maneuvering, target prioritization, engagement timing.',
+    ethics: 'Automation bias is a serious concern — operators tend to trust AI even when it is wrong.',
+    law: 'Active diplomatic debate; no settled treaty interpretation.',
+    advantage: 'Force multiplier — one pilot supervises many drones; faster OODA loop.',
+    disadvantage: 'Operator cannot meaningfully supervise dozens of simultaneous engagements.',
+    argFor: 'Maintains human strategic control while accepting AI tactical speed.',
+    argAgainst: '"Supervision" of many fast agents reduces to post-hoc rationalization, not control.',
+    treaties: 'Subject of ongoing UN CCW negotiations on Lethal Autonomous Weapons Systems (LAWS).'
+  },
+  {
+    num: 5,
+    name: 'Narrow Autonomy',
+    short: 'Narrow',
+    desc: 'System autonomously selects and engages specific target types.',
+    examples: 'Hypothetical autonomous anti-drone systems; harbor-defense torpedoes against submarines only.',
+    humanDecides: 'Pre-mission target class definition; deployment release.',
+    aiDecides: 'Target identification, classification, engagement — all without further human input.',
+    ethics: 'Crosses the line many ethicists call the "delegation of life-and-death" to a machine.',
+    law: 'Considered unlawful by 30+ states pushing for a ban; defended by major powers.',
+    advantage: 'Effective against drone swarms and threats too fast for human reaction.',
+    disadvantage: 'Misclassification (a stretcher mistaken for a weapon) is unrecoverable.',
+    argFor: 'Narrow target class limits risk; comparable to existing sea mines.',
+    argAgainst: 'AI vision systems are brittle — adversarial examples can fool them; no judgment for ambiguous cases.',
+    treaties: 'Stop Killer Robots campaign; ICRC calls for prohibition; CCW negotiations stalled.'
+  },
+  {
+    num: 6,
+    name: 'Full Autonomy',
+    short: 'Full',
+    desc: 'System selects and engages any target without human approval.',
+    examples: 'Hypothetical only — banned by proposals from UN Secretary-General and ICRC.',
+    humanDecides: 'Activation only — possibly nothing else.',
+    aiDecides: 'All targeting, classification, engagement, and proportionality judgments.',
+    ethics: 'Most ethicists reject this level outright — no meaningful human control over killing.',
+    law: 'UN Secretary-General called for prohibition (2023); 30+ states demand a binding ban.',
+    advantage: 'Theoretical: maximum speed; survives total comms loss.',
+    disadvantage: 'Impossible to assign accountability; no moral agent in the loop; cascading failure modes.',
+    argFor: 'Some argue strategic stability if all sides have it — disputed and dangerous logic.',
+    argAgainst: 'Removes the human conscience from killing; violates Martens Clause (dictates of public conscience).',
+    treaties: 'Targeted by proposed CCW ban; opposed at UN by US, Russia, and others. No system fielded.'
+  }
+];
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  positionSlider = createSlider(0, 100, 25, 1);
+  positionSlider.parent(document.querySelector('main'));
+
+  argToggleBtn = createButton('Arguments: For ▶');
+  argToggleBtn.parent(document.querySelector('main'));
+  argToggleBtn.mousePressed(() => {
+    argMode = (argMode === 'for') ? 'against' : 'for';
+    argToggleBtn.html(argMode === 'for' ? 'Arguments: For ▶' : 'Arguments: Against ▶');
+  });
+
+  legalCheckbox = createCheckbox('Legal Status Overlay', false);
+  legalCheckbox.parent(document.querySelector('main'));
+  legalCheckbox.changed(() => { showLegal = legalCheckbox.checked(); });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => {
+    selectedLevel = 0;
+    argMode = 'for';
+    argToggleBtn.html('Arguments: For ▶');
+    showLegal = false;
+    legalCheckbox.checked(false);
+    positionSlider.value(25);
+  });
+
+  positionControls();
+  describe('Spectrum of weapons autonomy from human-controlled (green) to fully autonomous (red). Click any of the six levels to read its details, ethics, legal status, and arguments for or against.', LABEL);
+}
+
+function positionControls() {
+  // Two rows in the control area
+  positionSlider.position(margin + 280, drawHeight + 8);
+  positionSlider.size(canvasWidth - margin*2 - 280 - 10);
+
+  argToggleBtn.position(margin, drawHeight + 32);
+  legalCheckbox.position(margin + 180, drawHeight + 36);
+  resetBtn.position(canvasWidth - margin - 60, drawHeight + 32);
+}
+
+function spectrumGeometry() {
+  const left = margin + 30;
+  const right = canvasWidth - margin - 30;
+  const y = 110;
+  const w = right - left;
+  const segW = w / 6;
+  return { left, right, y, w, segW };
+}
+
+// Color stops along spectrum (green -> amber -> red)
+function levelColor(i) {
+  // i in 0..5
+  const stops = [
+    [46, 125, 50],    // 1: green
+    [104, 159, 56],   // 2: yellow-green
+    [205, 175, 30],   // 3: amber
+    [230, 145, 30],   // 4: orange
+    [200, 80, 40],    // 5: red-orange
+    [180, 30, 30]     // 6: deep red
+  ];
+  return stops[i];
+}
+
+function drawSpectrum() {
+  const g = spectrumGeometry();
+
+  // Header
+  noStroke();
+  fill(20, 40, 90);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(18);
+  text('AI in Warfare — Spectrum of Weapons Autonomy', canvasWidth/2, 14);
+  textStyle(NORMAL);
+  textSize(13);
+  fill(80);
+  text('Click a level to inspect ethics, law, and strategic tradeoffs.', canvasWidth/2, 38);
+
+  // End labels
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  textStyle(BOLD);
+  fill(46, 125, 50);
+  text('◀ Human Control', g.left, 62);
+  textAlign(RIGHT, CENTER);
+  fill(180, 30, 30);
+  text('Full Autonomy ▶', g.right, 62);
+  textStyle(NORMAL);
+
+  // Bar segments
+  for (let i = 0; i < 6; i++) {
+    const c = levelColor(i);
+    const x = g.left + i * g.segW;
+    const isSel = (selectedLevel === i);
+    if (isSel) {
+      stroke(20);
+      strokeWeight(3);
+    } else {
+      stroke(255);
+      strokeWeight(1);
+    }
+    fill(c[0], c[1], c[2]);
+    rect(x, g.y, g.segW, 60, i === 0 ? 8 : 0, i === 5 ? 8 : 0, i === 5 ? 8 : 0, i === 0 ? 8 : 0);
+
+    // Level number
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(20);
+    text('L' + (i+1), x + g.segW/2, g.y + 22);
+    textSize(11);
+    text(levels[i].short, x + g.segW/2, g.y + 46);
+    textStyle(NORMAL);
+  }
+
+  // Tick marks under bar
+  for (let i = 0; i <= 6; i++) {
+    const x = g.left + i * g.segW;
+    stroke(120);
+    strokeWeight(1);
+    line(x, g.y + 60, x, g.y + 68);
+  }
+
+  // Slider value marker — hypothetical weapon position
+  const sv = positionSlider.value();
+  const sx = g.left + (sv / 100) * g.w;
+  // Triangle pointer
+  noStroke();
+  fill(20, 40, 90);
+  triangle(sx - 8, g.y + 76, sx + 8, g.y + 76, sx, g.y + 68);
+  fill(20, 40, 90);
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Hypothetical weapon: ' + sv + '%', sx, g.y + 82);
+  textStyle(NORMAL);
+
+  // Which level does the slider position fall into?
+  const sliderLevel = constrain(floor(sv / 100 * 6), 0, 5);
+  textSize(11);
+  fill(60);
+  text('falls in Level ' + (sliderLevel+1) + ': ' + levels[sliderLevel].name, sx, g.y + 100);
+
+  // Legal-status overlay (above the bar)
+  if (showLegal) {
+    const legalColors = [
+      [46, 125, 50, 110],   // L1 lawful
+      [46, 125, 50, 110],   // L2 lawful (defensive)
+      [205, 175, 30, 130],  // L3 contested
+      [230, 145, 30, 140],  // L4 disputed
+      [200, 80, 40, 160],   // L5 prohibition urged
+      [180, 30, 30, 180]    // L6 ban proposed
+    ];
+    const legalLabels = ['LAWFUL', 'LAWFUL\n(defensive)', 'CONTESTED', 'DISPUTED', 'BAN URGED', 'BAN PROPOSED'];
+    for (let i = 0; i < 6; i++) {
+      const x = g.left + i * g.segW;
+      const c = legalColors[i];
+      noStroke();
+      fill(c[0], c[1], c[2], c[3]);
+      rect(x, g.y - 24, g.segW, 22);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textSize(9);
+      text(legalLabels[i], x + g.segW/2, g.y - 13);
+      textStyle(NORMAL);
+    }
+  }
+}
+
+function drawDetailPanel() {
+  const lv = levels[selectedLevel];
+  const py = 230;
+  const ph = 410;
+  const px = margin;
+  const pw = canvasWidth - margin*2;
+
+  // Panel background
+  const c = levelColor(selectedLevel);
+  fill(248, 250, 252);
+  stroke(c[0], c[1], c[2]);
+  strokeWeight(2);
+  rect(px, py, pw, ph, 10);
+
+  // Header strip
+  noStroke();
+  fill(c[0], c[1], c[2]);
+  rect(px, py, pw, 36, 10, 10, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(15);
+  text('Level ' + lv.num + ': ' + lv.name, px + 14, py + 18);
+  textAlign(RIGHT, CENTER);
+  textSize(12);
+  textStyle(NORMAL);
+  text(lv.desc, px + pw - 14, py + 18);
+
+  // Two-column body
+  const colY = py + 50;
+  const colW = (pw - 30) / 2;
+  const leftX = px + 14;
+  const rightX = px + 14 + colW + 16;
+
+  textAlign(LEFT, TOP);
+  textStyle(NORMAL);
+
+  // LEFT column
+  let y = colY;
+  drawField(leftX, y, colW, 'Example weapons systems', lv.examples, c);
+  y += 70;
+  drawField(leftX, y, colW, 'What the human decides', lv.humanDecides, c);
+  y += 64;
+  drawField(leftX, y, colW, 'What the AI decides', lv.aiDecides, c);
+  y += 64;
+  drawField(leftX, y, colW, 'Strategic advantage', lv.advantage, c);
+  y += 64;
+  drawField(leftX, y, colW, 'Strategic disadvantage', lv.disadvantage, c);
+
+  // RIGHT column
+  y = colY;
+  drawField(rightX, y, colW, 'Key ethical question', lv.ethics, c);
+  y += 70;
+  drawField(rightX, y, colW, 'International law', lv.law, c);
+  y += 70;
+  // Arguments for/against (toggled)
+  const argLabel = (argMode === 'for') ? 'Argument FOR this level' : 'Argument AGAINST this level';
+  const argText = (argMode === 'for') ? lv.argFor : lv.argAgainst;
+  const argColor = (argMode === 'for') ? [46, 125, 50] : [180, 30, 30];
+  drawField(rightX, y, colW, argLabel, argText, argColor);
+  y += 80;
+  // Treaties (only if legal overlay enabled, else show muted)
+  if (showLegal) {
+    drawField(rightX, y, colW, 'Applicable treaties / proposals', lv.treaties, c);
+  } else {
+    noStroke();
+    fill(140);
+    textStyle(ITALIC);
+    textSize(11);
+    text('Enable "Legal Status Overlay" to view applicable treaties.', rightX, y);
+    textStyle(NORMAL);
+  }
+}
+
+function drawField(x, y, w, label, body, color) {
+  noStroke();
+  fill(color[0], color[1], color[2]);
+  textStyle(BOLD);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  text(label.toUpperCase(), x, y);
+  fill(40);
+  textStyle(NORMAL);
+  textSize(12);
+  text(body, x, y + 16, w, 70);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background regions
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawSpectrum();
+  drawDetailPanel();
+
+  // Control labels
+  noStroke();
+  fill(60);
+  textAlign(LEFT, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text('Position a hypothetical weapon:', margin, drawHeight + 16);
+  textStyle(NORMAL);
+
+  positionControls();
+}
+
+function mousePressed() {
+  // Click on spectrum bar to select level
+  const g = spectrumGeometry();
+  if (mouseY >= g.y && mouseY <= g.y + 60 && mouseX >= g.left && mouseX <= g.left + g.w) {
+    const i = constrain(floor((mouseX - g.left) / g.segW), 0, 5);
+    selectedLevel = i;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+</body>
+</html>

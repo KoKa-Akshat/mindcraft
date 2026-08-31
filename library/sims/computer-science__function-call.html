@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Function Call Flow using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Function Call Flow MicroSim
+// CANVAS_HEIGHT: 500
+// Students trace a function call step by step: def stores the recipe,
+// the argument binds to the parameter, the body computes, and the
+// return value flows back to replace the call site.
+// Bloom level: Understand (explain, trace, infer) - step-through
+// pattern with hand-authored states, no continuous animation.
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 450;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// the program listing
+let programLines = [
+  'def double(n):',
+  '    return n * 2',
+  '',
+  'result = double(5)',
+  'print(result)',
+  'answer = double(7)',
+  'print(answer)'
+];
+
+// Hand-authored execution steps. Each step fully describes what to show:
+//   line: which program line the arrow points at
+//   machine: null, or {n, result} values inside the function machine
+//   vars: variables that exist so far {name: value}
+//   out: console lines printed so far
+//   flow: null | 'in' | 'out'  (argument flying in / return value flying back)
+//   note: plain-language explanation
+let steps = [
+  { line: 0, machine: { n: null, result: null }, vars: {}, out: [],
+    flow: null,
+    note: 'def STORES the recipe in the function machine. The body does NOT run yet — Python just remembers it.' },
+  { line: 3, machine: { n: 5, result: null }, vars: {}, out: [],
+    flow: 'in',
+    note: 'Python sees double(5) and jumps into the machine. The argument 5 is copied into the parameter n.' },
+  { line: 1, machine: { n: 5, result: 10 }, vars: {}, out: [],
+    flow: null,
+    note: 'The body runs: n * 2 is 5 * 2 = 10. The return statement sends 10 back out.' },
+  { line: 3, machine: { n: null, result: null }, vars: { result: '10' }, out: [],
+    flow: 'out',
+    note: 'The returned 10 replaces the call double(5), so result = 10. The machine is empty again.' },
+  { line: 4, machine: { n: null, result: null }, vars: { result: '10' }, out: ['10'],
+    flow: null,
+    note: 'print(result) reads the variable and prints 10.' },
+  { line: 5, machine: { n: 7, result: null }, vars: { result: '10' }, out: ['10'],
+    flow: 'in',
+    note: 'The SAME machine runs again with a different argument: this time n gets 7.' },
+  { line: 1, machine: { n: 7, result: 14 }, vars: { result: '10' }, out: ['10'],
+    flow: null,
+    note: 'The body computes n * 2 = 7 * 2 = 14 and returns it.' },
+  { line: 5, machine: { n: null, result: null }, vars: { result: '10', answer: '14' }, out: ['10'],
+    flow: 'out',
+    note: 'The returned 14 replaces double(7), so answer = 14.' },
+  { line: 6, machine: { n: null, result: null }, vars: { result: '10', answer: '14' }, out: ['10', '14'],
+    flow: null,
+    note: 'One recipe, two calls, two different results. That is why functions are reusable!' }
+];
+
+let step = -1; // -1 = not started
+
+let nextButton, prevButton, resetButton;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  nextButton = createButton('Next Step');
+  nextButton.parent(mainElement);
+  nextButton.position(10, drawHeight + 10);
+  nextButton.mousePressed(() => {
+    if (step < steps.length - 1) step += 1;
+  });
+
+  prevButton = createButton('Previous');
+  prevButton.parent(mainElement);
+  prevButton.position(105, drawHeight + 10);
+  prevButton.mousePressed(() => {
+    if (step > -1) step -= 1;
+  });
+
+  resetButton = createButton('Reset');
+  resetButton.parent(mainElement);
+  resetButton.position(195, drawHeight + 10);
+  resetButton.mousePressed(() => { step = -1; });
+
+  describe('Trace a Python function call step by step: the def statement stores the function, the argument binds to the parameter, the body computes, and the return value flows back to the call site.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Function Call Flow', canvasWidth / 2, 8);
+
+  let s = (step >= 0) ? steps[step] : null;
+
+  drawProgramPanel(s);
+  drawMachine(s);
+  drawVariablesAndOutput(s);
+  drawNotePanel(s);
+
+  // step counter in the control area
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  if (canvasWidth >= 500) {
+    let label = (step < 0) ? 'Click Next Step to begin'
+      : 'Step ' + (step + 1) + ' of ' + steps.length;
+    text(label, 280, drawHeight + 25);
+  }
+}
+
+// left panel: program listing with execution arrow
+function drawProgramPanel(s) {
+  let panelX = 15;
+  let panelY = 42;
+  let panelW = canvasWidth * 0.46 - 20;
+  let panelH = 240;
+
+  fill('white');
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('program.py', panelX + 10, panelY + 5);
+
+  textSize(defaultTextSize);
+  let lineHeight = 29;
+  for (let i = 0; i < programLines.length; i++) {
+    let y = panelY + 28 + i * lineHeight;
+    if (s && i === s.line) {
+      noStroke();
+      fill(255, 236, 179);
+      rect(panelX + 26, y - 4, panelW - 34, lineHeight - 4, 4);
+      fill('darkorange');
+      triangle(panelX + 6, y, panelX + 6, y + 16, panelX + 20, y + 8);
+    }
+    noStroke();
+    fill(i <= 1 ? 'darkgreen' : 'midnightblue'); // def block in green
+    textAlign(LEFT, TOP);
+    text(programLines[i], panelX + 32, y);
+  }
+}
+
+// right top: the function machine
+function drawMachine(s) {
+  let x = canvasWidth * 0.46 + 10;
+  let y = 52;
+  let w = canvasWidth * 0.54 - 25;
+  let h = 130;
+
+  let exists = s !== null; // machine exists from step 0 onward
+
+  stroke(exists ? 'darkgreen' : 200);
+  strokeWeight(exists ? 2 : 1);
+  fill(exists ? color(232, 245, 233) : color(245, 245, 245)); // pale green when stored
+  rect(x, y, w, h, 12);
+
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(14);
+  fill(exists ? 'darkgreen' : color(150));
+  text(exists ? 'function machine: double' : 'function machine: (empty)', x + 12, y + 8);
+
+  if (!exists) {
+    fill(150);
+    textSize(defaultTextSize);
+    text('Nothing stored yet.', x + 12, y + 40);
+    return;
+  }
+
+  // parameter slot
+  textSize(defaultTextSize);
+  fill('black');
+  text('parameter slot:', x + 12, y + 36);
+  let slotX = x + 140;
+  let slotY = y + 30;
+  stroke(s.machine.n !== null ? 'darkorange' : 160);
+  strokeWeight(s.machine.n !== null ? 3 : 1);
+  fill('white');
+  rect(slotX, slotY, 70, 28, 6);
+  noStroke();
+  fill('midnightblue');
+  textAlign(CENTER, CENTER);
+  text('n = ' + (s.machine.n !== null ? s.machine.n : '?'), slotX + 35, slotY + 14);
+
+  // body line
+  textAlign(LEFT, TOP);
+  fill('black');
+  text('body:', x + 12, y + 72);
+  fill('darkgreen');
+  let bodyText = 'return n * 2';
+  if (s.machine.result !== null) {
+    bodyText = 'return ' + s.machine.n + ' * 2  →  ' + s.machine.result;
+  }
+  text(bodyText, x + 65, y + 72);
+
+  // flow arrow between call site and machine
+  if (s.flow === 'in') {
+    drawFlowArrow(x - 42, y + 44, x - 6, y + 44, 'steelblue', String(s.machine.n));
+  } else if (s.flow === 'out') {
+    let backVal = (step === 3) ? '10' : '14';
+    drawFlowArrow(x - 6, y + 96, x - 42, y + 96, 'darkorange', backVal);
+  }
+}
+
+// a labeled arrow used for argument-in and return-value-out
+function drawFlowArrow(x1, y1, x2, y2, col, label) {
+  stroke(col);
+  strokeWeight(3);
+  line(x1, y1, x2, y2);
+  let dir = (x2 > x1) ? 1 : -1;
+  noStroke();
+  fill(col);
+  triangle(x2, y2 - 7, x2, y2 + 7, x2 + dir * 10, y2);
+  textAlign(CENTER, BOTTOM);
+  textSize(15);
+  text(label, (x1 + x2) / 2, y1 - 6);
+}
+
+// right bottom: variables and mini output console
+function drawVariablesAndOutput(s) {
+  let x = canvasWidth * 0.46 + 10;
+  let y = 190;
+  let w = canvasWidth * 0.54 - 25;
+
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('variables', x, y);
+
+  // variable boxes
+  let names = s ? Object.keys(s.vars) : [];
+  let boxW = 105;
+  let boxH = 52;
+  for (let i = 0; i < names.length; i++) {
+    let bx = x + i * (boxW + 14);
+    let by = y + 18;
+    let justSet = s && ((s.flow === 'out') && i === names.length - 1);
+    stroke(justSet ? 'darkorange' : 160);
+    strokeWeight(justSet ? 3 : 1);
+    fill('lemonchiffon');
+    rect(bx, by, boxW, boxH, 8);
+    noStroke();
+    fill('black');
+    textAlign(CENTER, TOP);
+    textSize(15);
+    text(names[i], bx + boxW / 2, by + 6);
+    textSize(18);
+    fill('midnightblue');
+    text(s.vars[names[i]], bx + boxW / 2, by + 27);
+  }
+  if (names.length === 0) {
+    fill(150);
+    textSize(defaultTextSize);
+    textAlign(LEFT, TOP);
+    text('(none yet)', x, y + 24);
+  }
+
+  // output console strip
+  let cy = y + 78;
+  fill(40);
+  stroke(200);
+  strokeWeight(1);
+  rect(x, cy, w, 40, 8);
+  noStroke();
+  fill(180);
+  textSize(13);
+  textAlign(LEFT, TOP);
+  text('Output:', x + 8, cy + 5);
+  fill(120, 255, 120);
+  textSize(defaultTextSize);
+  let outStr = (s && s.out.length > 0) ? s.out.join('   ') : '';
+  text(outStr, x + 70, cy + 12);
+}
+
+// bottom note panel
+function drawNotePanel(s) {
+  let panelX = 15;
+  let panelY = 315;
+  let panelW = canvasWidth - 30;
+  let panelH = 123;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize);
+  if (!s) {
+    fill('black');
+    text('A function is a reusable recipe. This program defines double() once and calls it twice.', panelX + 15, panelY + 14, panelW - 30, 50);
+    text('Predict: what two numbers will this program print?', panelX + 15, panelY + 60, panelW - 30, 40);
+  } else {
+    fill('darkorange');
+    text('Step ' + (step + 1) + ':', panelX + 15, panelY + 14);
+    fill('black');
+    text(s.note, panelX + 85, panelY + 14, panelW - 100, panelH - 24);
+    if (step === steps.length - 1) {
+      fill('green');
+      text('Trace complete. Were your two predictions right?', panelX + 15, panelY + 92, panelW - 30, 40);
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

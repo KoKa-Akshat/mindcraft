@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>World Biome Map using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// World Biome Map Interactive
+// CANVAS_HEIGHT: 505
+// Simplified world map showing 7 terrestrial biomes with hover info
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 460;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 15;
+let defaultTextSize = 14;
+
+let biomeSelect;
+let selectedBiome = 'All';
+let hoveredRegion = -1;
+
+let biomes = [
+  { name: 'Tropical Rainforest', color: '#1b5e20', tempRange: '20-34°C', precip: '200-450 cm/yr', organism: 'Toucan', abbr: 'TR' },
+  { name: 'Temperate Forest', color: '#4caf50', tempRange: '-30 to 30°C', precip: '75-150 cm/yr', organism: 'White-tailed Deer', abbr: 'TF' },
+  { name: 'Desert', color: '#f9a825', tempRange: '-10 to 50°C', precip: '<25 cm/yr', organism: 'Sidewinder Rattlesnake', abbr: 'DE' },
+  { name: 'Tundra', color: '#90caf9', tempRange: '-40 to 12°C', precip: '15-25 cm/yr', organism: 'Arctic Fox', abbr: 'TU' },
+  { name: 'Grassland', color: '#cddc39', tempRange: '-20 to 30°C', precip: '25-75 cm/yr', organism: 'Bison', abbr: 'GR' },
+  { name: 'Chaparral', color: '#827717', tempRange: '10-40°C', precip: '25-75 cm/yr', organism: 'Coyote', abbr: 'CH' },
+  { name: 'Taiga', color: '#00695c', tempRange: '-50 to 20°C', precip: '30-85 cm/yr', organism: 'Moose', abbr: 'TA' }
+];
+
+// Simplified world regions as lat/lon bands mapped to rectangles
+// Each region: { biomeIdx, x%, y%, w%, h% } as percent of map area
+let regions = [
+  // Tropical Rainforest
+  { b: 0, xp: 0.18, yp: 0.42, wp: 0.08, hp: 0.16 }, // Amazon
+  { b: 0, xp: 0.42, yp: 0.44, wp: 0.10, hp: 0.12 }, // Central Africa
+  { b: 0, xp: 0.68, yp: 0.44, wp: 0.10, hp: 0.12 }, // Southeast Asia
+  // Temperate Forest
+  { b: 1, xp: 0.14, yp: 0.22, wp: 0.12, hp: 0.12 }, // Eastern N. America
+  { b: 1, xp: 0.38, yp: 0.20, wp: 0.14, hp: 0.10 }, // Europe
+  { b: 1, xp: 0.72, yp: 0.22, wp: 0.08, hp: 0.10 }, // East Asia
+  // Desert
+  { b: 2, xp: 0.38, yp: 0.32, wp: 0.16, hp: 0.10 }, // Sahara
+  { b: 2, xp: 0.10, yp: 0.28, wp: 0.08, hp: 0.08 }, // SW N. America
+  { b: 2, xp: 0.58, yp: 0.32, wp: 0.08, hp: 0.08 }, // Arabian
+  { b: 2, xp: 0.30, yp: 0.60, wp: 0.06, hp: 0.06 }, // Patagonia
+  // Tundra
+  { b: 3, xp: 0.08, yp: 0.04, wp: 0.20, hp: 0.08 }, // N. Canada
+  { b: 3, xp: 0.40, yp: 0.04, wp: 0.30, hp: 0.06 }, // N. Russia
+  // Grassland
+  { b: 4, xp: 0.10, yp: 0.24, wp: 0.10, hp: 0.08 }, // Great Plains
+  { b: 4, xp: 0.42, yp: 0.56, wp: 0.08, hp: 0.08 }, // S. African Veld
+  { b: 4, xp: 0.56, yp: 0.22, wp: 0.12, hp: 0.08 }, // Central Asian Steppe
+  // Chaparral
+  { b: 5, xp: 0.04, yp: 0.28, wp: 0.06, hp: 0.06 }, // California
+  { b: 5, xp: 0.36, yp: 0.28, wp: 0.08, hp: 0.06 }, // Mediterranean
+  { b: 5, xp: 0.44, yp: 0.62, wp: 0.06, hp: 0.05 }, // S. Africa Cape
+  // Taiga
+  { b: 6, xp: 0.06, yp: 0.10, wp: 0.22, hp: 0.10 }, // Canada Boreal
+  { b: 6, xp: 0.40, yp: 0.10, wp: 0.35, hp: 0.10 }, // Siberian Taiga
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  biomeSelect = createSelect();
+  biomeSelect.parent(document.querySelector('main'));
+  biomeSelect.position(10, drawHeight + 5);
+  biomeSelect.option('All Biomes');
+  for (let b of biomes) {
+    biomeSelect.option(b.name);
+  }
+  biomeSelect.changed(() => { selectedBiome = biomeSelect.value(); });
+  biomeSelect.style('font-size', '14px');
+  biomeSelect.style('padding', '4px 8px');
+  biomeSelect.style('margin', '4px');
+  biomeSelect.style('border-radius', '4px');
+
+  describe('Simplified world map showing seven major terrestrial biomes with hover information', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  fill('#e3f2fd');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  fill('#01579b');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('World Biome Map', canvasWidth / 2, 6);
+  textStyle(NORMAL);
+
+  // Map area
+  let mapX = margin;
+  let mapY = 30;
+  let mapW = canvasWidth - 180;
+  let mapH = drawHeight - 50;
+
+  // Ocean background
+  fill('#b3e5fc');
+  stroke('#81d4fa');
+  strokeWeight(1);
+  rect(mapX, mapY, mapW, mapH, 4);
+
+  // Simplified continent outlines (very rough)
+  fill('#e8e0d4');
+  noStroke();
+  // N. America
+  beginShape();
+  vertex(mapX + mapW * 0.04, mapY + mapH * 0.12);
+  vertex(mapX + mapW * 0.25, mapY + mapH * 0.08);
+  vertex(mapX + mapW * 0.28, mapY + mapH * 0.22);
+  vertex(mapX + mapW * 0.22, mapY + mapH * 0.38);
+  vertex(mapX + mapW * 0.16, mapY + mapH * 0.42);
+  vertex(mapX + mapW * 0.12, mapY + mapH * 0.35);
+  vertex(mapX + mapW * 0.04, mapY + mapH * 0.20);
+  endShape(CLOSE);
+  // S. America
+  beginShape();
+  vertex(mapX + mapW * 0.18, mapY + mapH * 0.44);
+  vertex(mapX + mapW * 0.28, mapY + mapH * 0.42);
+  vertex(mapX + mapW * 0.30, mapY + mapH * 0.55);
+  vertex(mapX + mapW * 0.26, mapY + mapH * 0.72);
+  vertex(mapX + mapW * 0.20, mapY + mapH * 0.80);
+  vertex(mapX + mapW * 0.16, mapY + mapH * 0.60);
+  endShape(CLOSE);
+  // Africa
+  beginShape();
+  vertex(mapX + mapW * 0.38, mapY + mapH * 0.28);
+  vertex(mapX + mapW * 0.55, mapY + mapH * 0.28);
+  vertex(mapX + mapW * 0.56, mapY + mapH * 0.42);
+  vertex(mapX + mapW * 0.52, mapY + mapH * 0.65);
+  vertex(mapX + mapW * 0.44, mapY + mapH * 0.70);
+  vertex(mapX + mapW * 0.38, mapY + mapH * 0.55);
+  endShape(CLOSE);
+  // Europe + Asia
+  beginShape();
+  vertex(mapX + mapW * 0.36, mapY + mapH * 0.06);
+  vertex(mapX + mapW * 0.85, mapY + mapH * 0.06);
+  vertex(mapX + mapW * 0.82, mapY + mapH * 0.18);
+  vertex(mapX + mapW * 0.78, mapY + mapH * 0.28);
+  vertex(mapX + mapW * 0.68, mapY + mapH * 0.35);
+  vertex(mapX + mapW * 0.60, mapY + mapH * 0.28);
+  vertex(mapX + mapW * 0.38, mapY + mapH * 0.24);
+  endShape(CLOSE);
+  // Australia
+  beginShape();
+  vertex(mapX + mapW * 0.76, mapY + mapH * 0.58);
+  vertex(mapX + mapW * 0.88, mapY + mapH * 0.56);
+  vertex(mapX + mapW * 0.90, mapY + mapH * 0.68);
+  vertex(mapX + mapW * 0.80, mapY + mapH * 0.72);
+  endShape(CLOSE);
+  // SE Asia islands
+  rect(mapX + mapW * 0.70, mapY + mapH * 0.38, mapW * 0.12, mapH * 0.12, 3);
+
+  // Draw biome regions
+  hoveredRegion = -1;
+  for (let i = 0; i < regions.length; i++) {
+    let r = regions[i];
+    let b = biomes[r.b];
+    let rx = mapX + r.xp * mapW;
+    let ry = mapY + r.yp * mapH;
+    let rw = r.wp * mapW;
+    let rh = r.hp * mapH;
+
+    let isSelected = (selectedBiome === 'All Biomes' || selectedBiome === b.name);
+    let isHovered = (mouseX >= rx && mouseX <= rx + rw && mouseY >= ry && mouseY <= ry + rh);
+
+    if (isHovered) hoveredRegion = i;
+
+    let c = color(b.color);
+    if (!isSelected) c.setAlpha(40);
+    else if (isHovered) c.setAlpha(255);
+    else c.setAlpha(180);
+
+    fill(c);
+    stroke(isHovered ? '#fff' : b.color);
+    strokeWeight(isHovered ? 2 : 1);
+    rect(rx, ry, rw, rh, 3);
+
+    // Abbreviation label
+    if (isSelected && rw > 20) {
+      noStroke();
+      fill(255, 255, 255, isSelected ? 220 : 80);
+      textAlign(CENTER, CENTER);
+      textSize(max(9, min(11, rw / 4)));
+      text(b.abbr, rx + rw / 2, ry + rh / 2);
+    }
+  }
+
+  // Legend panel on the right
+  let legX = canvasWidth - 165;
+  let legY = 30;
+  let legW = 155;
+
+  fill('#ffffff');
+  stroke('#bdbdbd');
+  strokeWeight(1);
+  rect(legX, legY, legW, biomes.length * 28 + 35, 6);
+
+  noStroke();
+  fill('#3e2723');
+  textAlign(LEFT, TOP);
+  textSize(13);
+  textStyle(BOLD);
+  text('Biomes', legX + 8, legY + 6);
+  textStyle(NORMAL);
+
+  for (let i = 0; i < biomes.length; i++) {
+    let b = biomes[i];
+    let ly = legY + 28 + i * 28;
+    fill(b.color);
+    noStroke();
+    rect(legX + 8, ly, 14, 14, 3);
+    fill('#3e2723');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text(b.name, legX + 28, ly + 7);
+  }
+
+  // Hover info panel
+  if (hoveredRegion >= 0) {
+    let r = regions[hoveredRegion];
+    let b = biomes[r.b];
+    let px = legX;
+    let py = legY + biomes.length * 28 + 45;
+    let pw = legW;
+    let ph = 130;
+
+    fill('#ffffff');
+    stroke(b.color);
+    strokeWeight(2);
+    rect(px, py, pw, ph, 6);
+
+    noStroke();
+    fill(b.color);
+    textAlign(LEFT, TOP);
+    textSize(13);
+    textStyle(BOLD);
+    text(b.name, px + 8, py + 8);
+    textStyle(NORMAL);
+
+    fill('#3e2723');
+    textSize(11);
+    let ty = py + 28;
+    text('Temp: ' + b.tempRange, px + 8, ty);
+    ty += 18;
+    text('Precip: ' + b.precip, px + 8, ty);
+    ty += 18;
+    text('Key species:', px + 8, ty);
+    ty += 16;
+    fill('#5d4037');
+    textStyle(ITALIC);
+    text(b.organism, px + 12, ty);
+    textStyle(NORMAL);
+  }
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

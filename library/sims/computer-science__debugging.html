@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Debugging Decision Tree MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Debugging Decision Tree MicroSim
+// CANVAS_HEIGHT: 520
+// A clickable top-down debugging decision tree. Each node reveals a tip;
+// visited nodes get a checkmark. Reset clears infobox and checkmarks.
+
+let canvasWidth = 700;
+let drawHeight = 470;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let defaultTextSize = 16;
+
+let resetButton;
+let selected = -1;
+
+// nodes with fractional positions and tips; edges by index pairs
+let nodes = [
+  { label: "It's not working!", fx: 0.5, fy: 0.08, tip: 'Start every debugging session by stating the symptom clearly and calmly.' },
+  { label: 'Did it ever work before?', fx: 0.5, fy: 0.25, tip: 'Knowing whether it worked before splits "what changed" from "never wired right".' },
+  { label: 'What changed most recently?', fx: 0.22, fy: 0.45, tip: 'Root cause analysis: the newest change is the most likely culprit.' },
+  { label: 'Wiring or code?', fx: 0.74, fy: 0.45, tip: 'Divide and conquer: isolate whether the fault is hardware or software.' },
+  { label: 'Check wiring: power, ground, pins', fx: 0.58, fy: 0.66, tip: 'Verify power, ground, and that each wire is on the pin the code expects.' },
+  { label: 'Read the code aloud, line by line', fx: 0.88, fy: 0.66, tip: 'Rubber-duck debugging: explaining each line aloud exposes wrong assumptions.' },
+  { label: 'Test one small change at a time', fx: 0.5, fy: 0.86, tip: 'Change one thing, test, repeat — so you always know what fixed (or broke) it.' },
+];
+let edges = [[0, 1], [1, 2], [1, 3], [3, 4], [3, 5], [2, 6], [4, 6], [5, 6]];
+let visited = new Array(7).fill(false);
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  resetButton = createButton('Reset');
+  resetButton.position(10, drawHeight + 10);
+  resetButton.mousePressed(() => { selected = -1; visited = new Array(7).fill(false); });
+
+  describe('A clickable debugging decision tree that reveals a tip for each node and marks the branches a student has explored.', LABEL);
+}
+
+function nodeBox(n) {
+  textSize(12);
+  let w = max(textWidth(n.label) + 20, 110);
+  let h = 40;
+  return { x: n.fx * canvasWidth - w / 2, y: n.fy * drawHeight, w, h };
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('aliceblue'); stroke('silver'); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+  noStroke();
+
+  fill('black'); noStroke(); textAlign(CENTER, TOP); textSize(20);
+  text('Debugging Decision Tree', canvasWidth / 2, 6);
+
+  // Edges
+  for (let e of edges) {
+    let a = nodeBox(nodes[e[0]]), b = nodeBox(nodes[e[1]]);
+    let loop = (e[0] === 2 && e[1] === 6);
+    stroke('#aaa'); strokeWeight(1.5); noFill();
+    if (e[0] === 6 || e[1] === 6) {
+      line(a.x + a.w / 2, a.y + a.h, b.x + b.w / 2, b.y);
+    } else {
+      line(a.x + a.w / 2, a.y + a.h, b.x + b.w / 2, b.y);
+    }
+  }
+  // loop-back arrow from bottom node to root
+  let bottom = nodeBox(nodes[6]), root = nodeBox(nodes[0]);
+  stroke('#3F51B5'); strokeWeight(1.5); noFill();
+  bezier(bottom.x, bottom.y + bottom.h / 2, 10, drawHeight * 0.5, 10, drawHeight * 0.1, root.x, root.y + root.h / 2);
+  fill('#3F51B5'); noStroke(); triangle(root.x, root.y + root.h / 2, root.x - 8, root.y + root.h / 2 - 5, root.x - 8, root.y + root.h / 2 + 5);
+
+  // Nodes
+  let colors = ['#C2185B', '#3F51B5', '#D4AF37', '#3F51B5', '#2E7D32', '#2E7D32', '#FF9800'];
+  for (let i = 0; i < nodes.length; i++) {
+    let b = nodeBox(nodes[i]);
+    stroke(i === selected ? 'black' : 'silver'); strokeWeight(i === selected ? 3 : 1);
+    fill(colors[i]); rect(b.x, b.y, b.w, b.h, 8);
+    noStroke(); fill('white'); textAlign(CENTER, CENTER); textSize(12);
+    text(nodes[i].label, b.x + 4, b.y + b.h / 2, b.w - 8);
+    if (visited[i]) { noStroke(); fill('white'); textSize(14); text('✓', b.x + b.w - 10, b.y + 10); }
+  }
+
+  // Infobox
+  if (selected >= 0) {
+    fill(255, 255, 255, 245); stroke('gray'); strokeWeight(1);
+    rect(margin, drawHeight - 46, canvasWidth - 2 * margin, 36, 8);
+    noStroke(); fill('black'); textAlign(LEFT, CENTER); textSize(13);
+    text(nodes[selected].tip, margin + 10, drawHeight - 28, canvasWidth - 2 * margin - 20);
+  }
+
+  fill('gray'); noStroke(); textAlign(LEFT, CENTER); textSize(13);
+  text('Click any node to reveal a debugging tip.', 80, drawHeight + 25);
+}
+
+function mousePressed() {
+  if (mouseY > drawHeight) return;
+  for (let i = 0; i < nodes.length; i++) {
+    let b = nodeBox(nodes[i]);
+    if (mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h) {
+      selected = i; visited[i] = true; return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  canvasWidth = Math.floor(container.width);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

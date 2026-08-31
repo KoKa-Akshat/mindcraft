@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Revolutionary War Battles Map</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Revolutionary War Battles Map
+// CANVAS_HEIGHT: 600
+// Chapter 4: The American Revolution (1754-1783)
+// Bloom Level: Understand (L2) - Explain the strategic significance of battles
+//
+// Layout: drawHeight (540) + controlHeight (60) = 600
+// Simplified eastern seaboard from Maine to Georgia.
+// Stars mark battles (gold = American victory, red = British victory).
+// A brown tent icon marks the Valley Forge winter encampment.
+// "Show campaigns" toggle draws the Northern (1775-76) and
+// Southern (1780-81) campaign arrows. Clicking a marker opens a
+// detail panel with date, outcome, strategic significance, and
+// a "Why it mattered" connection to the broader war arc.
+
+let canvasWidth = 900;
+let drawHeight = 540;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 12;
+
+// Geographic projection bounds for the eastern seaboard
+const LON_MIN = -84.0;
+const LON_MAX = -66.0;
+const LAT_MIN = 31.0;
+const LAT_MAX = 45.5;
+
+// Map drawing area
+let mapTop = 50;
+let mapBottom = 524;
+let mapLeft = 12;
+let mapRight = 640;
+let panelLeft = 652;
+let panelRight = 888;
+
+// Controls
+let campaignsCheckbox;
+let labelsCheckbox;
+let resetBtn;
+
+let selectedBattle = null;
+let hoveredBattle = null;
+
+// Colors
+const C_OCEAN       = [218, 232, 244];
+const C_AMERICAN    = [212, 224, 238]; // contested / American light blue
+const C_BRITISH     = [240, 215, 215]; // British-influence light red (coastal cities)
+const C_COAST_LINE  = [60, 90, 130];
+const C_GOLD        = [230, 175, 35];
+const C_RED         = [200, 70, 70];
+const C_BROWN       = [140, 95, 55];
+const C_AMER_DARK   = [30, 70, 140];
+const C_BRIT_DARK   = [150, 50, 50];
+
+// Battle data (lon, lat approximate to real geography)
+const battles = [
+  {
+    id: 'bunkerhill', name: 'Bunker Hill',
+    lon: -71.06, lat: 42.38,
+    year: 1775, dateStr: 'June 17, 1775',
+    victor: 'british',
+    significance: 'British forces drove Patriot militia from the heights overlooking Boston, but suffered roughly 1,000 casualties (about half their attacking force). The costly victory showed that colonial militias would stand and fight against the British Army.',
+    connection: 'Why it mattered: ended any hope of a quick British police action and committed both sides to a real war.'
+  },
+  {
+    id: 'trenton', name: 'Trenton',
+    lon: -74.74, lat: 40.22,
+    year: 1776, dateStr: 'December 26, 1776',
+    victor: 'american',
+    significance: 'After a disastrous fall in New York and New Jersey, Washington crossed the icy Delaware on Christmas night and surprised a Hessian garrison at dawn. The victory and the follow-up at Princeton revived American morale and saved the Continental Army from disintegration.',
+    connection: 'Why it mattered: kept the Revolution alive through the winter of 1776-77.'
+  },
+  {
+    id: 'brandywine', name: 'Brandywine / Philadelphia',
+    lon: -75.50, lat: 39.87,
+    year: 1777, dateStr: 'September 11, 1777',
+    victor: 'british',
+    significance: 'General Howe outflanked Washington along Brandywine Creek and marched into Philadelphia, capturing the rebel capital. Congress fled, but the Continental Army escaped intact to fight on.',
+    connection: 'Why it mattered: capturing the capital did not end the war, exposing the limits of British strategy.'
+  },
+  {
+    id: 'saratoga', name: 'Saratoga',
+    lon: -73.65, lat: 43.00,
+    year: 1777, dateStr: 'September 19 - October 17, 1777',
+    victor: 'american',
+    significance: 'American forces under Gates and Arnold trapped General Burgoyne\'s invading army in upstate New York and forced its surrender. It was the first major American victory over a full British field army.',
+    connection: 'Why it mattered: persuaded France to enter the war as an American ally in 1778, transforming a colonial rebellion into a world war.'
+  },
+  {
+    id: 'valleyforge', name: 'Valley Forge',
+    lon: -75.45, lat: 40.10,
+    year: 1777, dateStr: 'December 1777 - June 1778',
+    victor: 'encampment',
+    significance: 'Washington\'s army wintered here in brutal cold, losing roughly 2,000 soldiers to disease and exposure. Under Baron von Steuben\'s drill, the survivors emerged as a disciplined professional force.',
+    connection: 'Why it mattered: forged the Continental Army that would eventually win at Yorktown.'
+  },
+  {
+    id: 'charleston', name: 'Charleston',
+    lon: -79.93, lat: 32.78,
+    year: 1780, dateStr: 'March 29 - May 12, 1780',
+    victor: 'british',
+    significance: 'British forces under Clinton besieged and captured Charleston, taking more than 5,000 American troops prisoner in the worst American defeat of the war. The fall of the South\'s largest port launched the British Southern Strategy.',
+    connection: 'Why it mattered: opened a new theater Britain hoped would rally Loyalists and end the war.'
+  },
+  {
+    id: 'cowpens', name: 'Cowpens',
+    lon: -81.81, lat: 35.13,
+    year: 1781, dateStr: 'January 17, 1781',
+    victor: 'american',
+    significance: 'Daniel Morgan used a layered defense of militia in front of regulars to lure Tarleton\'s British Legion into a double envelopment. The resulting rout destroyed a quarter of Cornwallis\'s mobile army.',
+    connection: 'Why it mattered: began the chain of southern setbacks that pushed Cornwallis into Virginia and toward Yorktown.'
+  },
+  {
+    id: 'yorktown', name: 'Yorktown',
+    lon: -76.51, lat: 37.24,
+    year: 1781, dateStr: 'September 28 - October 19, 1781',
+    victor: 'american', large: true,
+    significance: 'American and French troops under Washington and Rochambeau, with the French fleet blocking escape by sea, besieged Cornwallis\'s army on the Virginia peninsula. Cornwallis surrendered roughly 7,000 men, the second British army lost in the war.',
+    connection: 'Why it mattered: shattered British political will to keep fighting and led directly to the Treaty of Paris in 1783.'
+  }
+];
+
+// Reference cities (small dots, not battles)
+const cities = [
+  { name: 'Boston',       lon: -71.06, lat: 42.36 },
+  { name: 'New York',     lon: -74.01, lat: 40.71 },
+  { name: 'Philadelphia', lon: -75.17, lat: 39.95 },
+  { name: 'Baltimore',    lon: -76.61, lat: 39.29 },
+  { name: 'Norfolk',      lon: -76.29, lat: 36.85 },
+  { name: 'Wilmington NC',lon: -77.94, lat: 34.23 },
+  { name: 'Savannah',     lon: -81.10, lat: 32.08 }
+];
+
+// Simplified eastern coastline (Maine to Georgia, ocean side).
+// Used both to outline the land and to clip the British coastal shading.
+const coastPoints = [
+  [-67.0, 44.8],  // Down East Maine
+  [-68.8, 44.0],
+  [-69.5, 43.7],
+  [-70.2, 43.5],
+  [-70.6, 43.1],  // Portsmouth area
+  [-70.9, 42.6],  // Cape Ann
+  [-70.05,42.05], // Cape Cod tip area (simplified)
+  [-70.6, 41.7],
+  [-71.4, 41.5],  // Rhode Island
+  [-72.1, 41.3],  // CT coast
+  [-73.2, 41.0],
+  [-73.9, 40.6],  // NYC
+  [-74.05,40.5],
+  [-74.0, 39.5],  // NJ shore
+  [-74.5, 39.0],  // South Jersey
+  [-75.05,38.45], // Delaware Bay south side
+  [-75.5, 37.95], // Eastern Shore VA
+  [-75.95,37.20], // VA capes
+  [-76.0, 36.95], // Hampton Roads
+  [-75.75,35.85], // OBX north
+  [-75.55,35.20], // OBX south (Cape Hatteras simplified)
+  [-76.6, 34.65], // Beaufort NC
+  [-77.95,34.05], // Cape Fear
+  [-78.9, 33.85], // SC border
+  [-79.85,32.78], // Charleston
+  [-80.85,32.05], // SC/GA coast
+  [-81.50,30.70]  // GA/FL line (Savannah area)
+];
+
+// Inland boundary used to close the polygon for the land area.
+// Roughly follows the Appalachian crest from Georgia up to northern Maine.
+const inlandPoints = [
+  [-83.3, 30.7],  // SW corner (GA inland)
+  [-83.8, 32.5],
+  [-84.0, 34.5],
+  [-83.0, 35.5],
+  [-82.0, 36.5],
+  [-81.0, 37.5],
+  [-80.0, 38.5],
+  [-79.0, 39.7],
+  [-78.5, 40.5],
+  [-78.0, 41.5],
+  [-77.0, 42.3],
+  [-76.0, 43.0],
+  [-75.0, 44.0],
+  [-74.0, 44.7],
+  [-72.5, 45.2],
+  [-71.0, 45.3],
+  [-69.5, 45.3],
+  [-68.0, 45.2]
+];
+
+// British-controlled coastal zone (approximate, drawn as a band along the coast).
+// This is a simplified polygon hugging the coast inland by ~0.6-1.0 degrees.
+const britishBand = [
+  [-67.0, 44.8],
+  [-68.8, 44.0],
+  [-70.2, 43.5],
+  [-70.9, 42.6],
+  [-70.6, 41.7],
+  [-72.1, 41.3],
+  [-73.9, 40.6],
+  [-74.0, 39.5],
+  [-75.05,38.45],
+  [-75.95,37.20],
+  [-76.0, 36.95],
+  [-75.75,35.85],
+  [-75.55,35.20],
+  [-77.95,34.05],
+  [-79.85,32.78],
+  [-81.50,30.70],
+  // inland edge (offset west by ~0.8 deg)
+  [-82.3, 31.0],
+  [-81.0, 32.5],
+  [-80.6, 33.6],
+  [-79.6, 34.5],
+  [-78.5, 35.4],
+  [-77.5, 36.4],
+  [-77.0, 37.3],
+  [-76.6, 38.1],
+  [-76.0, 39.1],
+  [-75.5, 40.0],
+  [-74.6, 40.5],
+  [-73.5, 41.1],
+  [-72.5, 41.7],
+  [-71.5, 42.0],
+  [-70.5, 42.3],
+  [-69.8, 43.0],
+  [-68.5, 43.5],
+  [-67.5, 44.3]
+];
+
+// ---- Projection helpers ----
+function project(lon, lat) {
+  const w = mapRight - mapLeft;
+  const h = mapBottom - mapTop;
+  const x = mapLeft + ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * w;
+  const y = mapTop + (1 - (lat - LAT_MIN) / (LAT_MAX - LAT_MIN)) * h;
+  return { x, y };
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function recomputeMapBounds() {
+  mapLeft = 12;
+  mapRight = canvasWidth - 248;
+  panelLeft = canvasWidth - 236;
+  panelRight = canvasWidth - 12;
+  if (mapRight < 460) {
+    mapRight = canvasWidth - 12;
+    panelLeft = canvasWidth - 236;
+  }
+}
+
+function setup() {
+  updateCanvasSize();
+  recomputeMapBounds();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  campaignsCheckbox = createCheckbox(' Show campaign arrows', false);
+  labelsCheckbox    = createCheckbox(' Show city labels', true);
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(() => {
+    campaignsCheckbox.checked(false);
+    labelsCheckbox.checked(true);
+    selectedBattle = null;
+  });
+
+  positionControls();
+  describe('Simplified map of the eastern seaboard from Maine to Georgia showing eight major Revolutionary War sites. Gold stars are American victories, red stars are British victories, and a brown tent marks the Valley Forge winter encampment. Toggle the campaign overlay to see the Northern and Southern campaign arrows. Click any marker for date, outcome, strategic significance, and why it mattered.', LABEL);
+}
+
+function positionControls() {
+  const y1 = drawHeight + 18;
+  campaignsCheckbox.position(margin + 8, y1);
+  campaignsCheckbox.style('font-size', '12px');
+  labelsCheckbox.position(margin + 200, y1);
+  labelsCheckbox.style('font-size', '12px');
+  resetBtn.position(canvasWidth - 70, y1 - 4);
+}
+
+function draw() {
+  updateCanvasSize();
+  recomputeMapBounds();
+
+  // Background
+  noStroke();
+  fill(C_OCEAN[0], C_OCEAN[1], C_OCEAN[2]);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(220);
+  strokeWeight(1);
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+
+  // Title
+  fill(20, 50, 110);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(15);
+  text('Revolutionary War Battles: Geography of the War (1775-1781)',
+       (mapLeft + mapRight) / 2, 6);
+  textStyle(NORMAL);
+  textSize(11);
+  fill(80);
+  text('Click any marker for details. Toggle the campaign overlay to trace the Northern and Southern campaigns.',
+       (mapLeft + mapRight) / 2, 26);
+
+  // Land mass (contested / American light blue)
+  drawLandMass();
+
+  // British coastal band
+  drawBritishBand();
+
+  // Coastline stroke
+  drawCoastline();
+
+  // Campaign overlays
+  if (campaignsCheckbox.checked()) {
+    drawNorthernCampaign();
+    drawSouthernCampaign();
+  }
+
+  // City reference points
+  if (labelsCheckbox.checked()) drawCityLabels();
+
+  // Battle markers (and Valley Forge tent)
+  hoveredBattle = null;
+  for (const b of battles) drawBattle(b);
+
+  // Side panel — legend or detail
+  if (selectedBattle) drawDetailPanel(selectedBattle);
+  else drawLegend();
+
+  // Hover tooltip
+  if (hoveredBattle && (!selectedBattle || selectedBattle.id !== hoveredBattle.id)) {
+    drawHoverTooltip(hoveredBattle);
+  }
+
+  positionControls();
+}
+
+// ---- Drawing helpers ----
+
+function drawLandMass() {
+  // Close the polygon: coast (N -> S) then inland (S -> N back)
+  noStroke();
+  fill(C_AMERICAN[0], C_AMERICAN[1], C_AMERICAN[2]);
+  beginShape();
+  for (const pt of coastPoints) {
+    const p = project(pt[0], pt[1]);
+    vertex(p.x, p.y);
+  }
+  for (let i = inlandPoints.length - 1; i >= 0; i--) {
+    const pt = inlandPoints[i];
+    const p = project(pt[0], pt[1]);
+    vertex(p.x, p.y);
+  }
+  endShape(CLOSE);
+}
+
+function drawBritishBand() {
+  noStroke();
+  fill(C_BRITISH[0], C_BRITISH[1], C_BRITISH[2], 200);
+  beginShape();
+  for (const pt of britishBand) {
+    const p = project(pt[0], pt[1]);
+    vertex(p.x, p.y);
+  }
+  endShape(CLOSE);
+}
+
+function drawCoastline() {
+  noFill();
+  stroke(C_COAST_LINE[0], C_COAST_LINE[1], C_COAST_LINE[2]);
+  strokeWeight(1.3);
+  beginShape();
+  for (const pt of coastPoints) {
+    const p = project(pt[0], pt[1]);
+    vertex(p.x, p.y);
+  }
+  endShape();
+  // Inland border (faint)
+  stroke(180, 180, 175);
+  strokeWeight(0.8);
+  drawingContext.setLineDash([3, 4]);
+  beginShape();
+  for (const pt of inlandPoints) {
+    const p = project(pt[0], pt[1]);
+    vertex(p.x, p.y);
+  }
+  endShape();
+  drawingContext.setLineDash([]);
+  noStroke();
+}
+
+// ---- Campaign overlays ----
+
+function drawNorthernCampaign() {
+  // Northern campaign 1775-76: Boston -> New York -> Trenton -> Saratoga
+  const path = [
+    [-71.06, 42.36],  // Boston
+    [-74.01, 40.71],  // New York
+    [-74.74, 40.22],  // Trenton
+    [-73.65, 43.00]   // Saratoga
+  ];
+  for (let i = 0; i < path.length - 1; i++) {
+    drawArrow(path[i][0], path[i][1], path[i+1][0], path[i+1][1],
+              [30, 80, 160], 3, 10);
+  }
+  // Label
+  noStroke();
+  fill(30, 80, 160);
+  textStyle(BOLD);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  const lp = project(-74.6, 43.6);
+  text('Northern Campaign (1775-76)', lp.x, lp.y);
+  textStyle(NORMAL);
+}
+
+function drawSouthernCampaign() {
+  // Southern campaign 1780-81: Charleston -> Cowpens -> Yorktown
+  const path = [
+    [-79.93, 32.78],  // Charleston
+    [-81.81, 35.13],  // Cowpens
+    [-76.51, 37.24]   // Yorktown
+  ];
+  for (let i = 0; i < path.length - 1; i++) {
+    drawArrow(path[i][0], path[i][1], path[i+1][0], path[i+1][1],
+              [180, 60, 60], 3, 10);
+  }
+  noStroke();
+  fill(180, 60, 60);
+  textStyle(BOLD);
+  textSize(11);
+  textAlign(LEFT, TOP);
+  const lp = project(-82.0, 33.6);
+  text('Southern Campaign (1780-81)', lp.x, lp.y);
+  textStyle(NORMAL);
+}
+
+function drawArrow(lon1, lat1, lon2, lat2, color, weight, headSize) {
+  const a = project(lon1, lat1);
+  const b = project(lon2, lat2);
+  stroke(color[0], color[1], color[2], 220);
+  strokeWeight(weight);
+  line(a.x, a.y, b.x, b.y);
+  const ang = atan2(b.y - a.y, b.x - a.x);
+  push();
+  translate(b.x, b.y);
+  rotate(ang);
+  noStroke();
+  fill(color[0], color[1], color[2], 220);
+  triangle(0, 0, -headSize, -headSize * 0.55, -headSize, headSize * 0.55);
+  pop();
+  noStroke();
+}
+
+// ---- Cities ----
+
+function drawCityLabels() {
+  noStroke();
+  textSize(9);
+  textStyle(ITALIC);
+  textAlign(LEFT, CENTER);
+  for (const c of cities) {
+    const p = project(c.lon, c.lat);
+    fill(60);
+    ellipse(p.x, p.y, 3, 3);
+    fill(80);
+    push();
+    drawingContext.shadowColor = 'rgba(255,255,255,0.85)';
+    drawingContext.shadowBlur = 3;
+    text(c.name, p.x + 5, p.y - 5);
+    pop();
+  }
+  textStyle(NORMAL);
+}
+
+// ---- Battles ----
+
+function battleColor(b) {
+  if (b.victor === 'american')  return C_GOLD;
+  if (b.victor === 'british')   return C_RED;
+  if (b.victor === 'encampment')return C_BROWN;
+  return [240, 240, 240];
+}
+
+function drawBattle(b) {
+  const p = project(b.lon, b.lat);
+  const c = battleColor(b);
+  const r = b.large ? 12 : 9;
+
+  // Hover detection
+  const d = dist(mouseX, mouseY, p.x, p.y);
+  const isHover = d < r + 4;
+  if (isHover) hoveredBattle = b;
+  const isSelected = selectedBattle && selectedBattle.id === b.id;
+
+  push();
+  translate(p.x, p.y);
+  stroke(40);
+  strokeWeight(isSelected || isHover ? 2 : 1);
+  fill(c[0], c[1], c[2]);
+  if (b.victor === 'encampment') {
+    drawTent(0, 0, r);
+  } else {
+    drawStar(0, 0, r * 0.55, r, 5);
+  }
+  pop();
+  noStroke();
+
+  // Label
+  const labelOffsets = {
+    'bunkerhill':  { dx: 12, dy: -4 },
+    'trenton':     { dx: -10, dy: -10 },
+    'brandywine':  { dx: -12, dy: 10 },
+    'saratoga':    { dx: 12, dy: -2 },
+    'valleyforge': { dx: 12, dy: 8 },
+    'charleston':  { dx: -10, dy: 8 },
+    'cowpens':     { dx: -10, dy: -10 },
+    'yorktown':    { dx: 14, dy: 2 }
+  };
+  const off = labelOffsets[b.id] || { dx: 0, dy: -14 };
+  fill(20);
+  textAlign(off.dx < 0 ? RIGHT : (off.dx > 0 ? LEFT : CENTER),
+            off.dy < 0 ? BOTTOM : (off.dy > 0 ? TOP : CENTER));
+  textSize(10.5);
+  textStyle(isSelected ? BOLD : NORMAL);
+  push();
+  drawingContext.shadowColor = 'rgba(255,255,255,0.9)';
+  drawingContext.shadowBlur = 4;
+  text(b.name, p.x + off.dx, p.y + off.dy);
+  pop();
+  textStyle(NORMAL);
+}
+
+function drawStar(cx, cy, rInner, rOuter, points) {
+  beginShape();
+  const step = TWO_PI / (points * 2);
+  let a = -HALF_PI;
+  for (let i = 0; i < points * 2; i++) {
+    const r = (i % 2 === 0) ? rOuter : rInner;
+    vertex(cx + cos(a) * r, cy + sin(a) * r);
+    a += step;
+  }
+  endShape(CLOSE);
+}
+
+function drawTent(cx, cy, r) {
+  // Simple triangular tent shape with a pole and door
+  const w = r * 1.6;
+  const h = r * 1.6;
+  beginShape();
+  vertex(cx - w, cy + h * 0.5);
+  vertex(cx,     cy - h * 0.7);
+  vertex(cx + w, cy + h * 0.5);
+  endShape(CLOSE);
+  // small dark door triangle
+  noStroke();
+  fill(60, 40, 20);
+  triangle(cx - w * 0.25, cy + h * 0.5,
+           cx,            cy - h * 0.05,
+           cx + w * 0.25, cy + h * 0.5);
+}
+
+// ---- Side panel: legend ----
+
+function drawLegend() {
+  const x = panelLeft;
+  const y = mapTop;
+  const w = panelRight - panelLeft;
+  const h = mapBottom - mapTop;
+
+  noStroke();
+  fill(252);
+  stroke(220);
+  strokeWeight(1);
+  rect(x, y, w, h, 8);
+  noStroke();
+
+  fill(40);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(12);
+  text('Legend', x + 10, y + 10);
+  textStyle(NORMAL);
+
+  const swatchX = x + 12;
+  let yy = y + 32;
+  drawSwatch(swatchX, yy, C_AMERICAN, 'American/contested');  yy += 18;
+  drawSwatch(swatchX, yy, C_BRITISH,  'British coastal hold'); yy += 22;
+
+  fill(40);
+  textStyle(BOLD);
+  textSize(11);
+  text('Outcome', x + 10, yy); yy += 16;
+  textStyle(NORMAL);
+  drawStarSwatch(swatchX + 4, yy, C_GOLD, 'American victory'); yy += 16;
+  drawStarSwatch(swatchX + 4, yy, C_RED,  'British victory');  yy += 16;
+  drawTentSwatch(swatchX + 4, yy, C_BROWN,'Winter encampment'); yy += 24;
+
+  fill(40);
+  textStyle(BOLD);
+  textSize(11);
+  text('Campaigns', x + 10, yy); yy += 14;
+  textStyle(NORMAL);
+  textSize(10);
+  fill(30, 80, 160);
+  text('-> Northern 1775-76', x + 12, yy); yy += 13;
+  fill(180, 60, 60);
+  text('-> Southern 1780-81', x + 12, yy); yy += 20;
+
+  fill(70);
+  textSize(10);
+  textStyle(ITALIC);
+  text('Click any marker for the date, outcome, strategic significance, and why it mattered.',
+       x + 10, yy, w - 20);
+  textStyle(NORMAL);
+}
+
+function drawSwatch(x, y, color, label) {
+  noStroke();
+  fill(color[0], color[1], color[2]);
+  stroke(170);
+  strokeWeight(0.8);
+  rect(x, y, 18, 12, 2);
+  noStroke();
+  fill(40);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  text(label, x + 24, y + 6);
+}
+
+function drawStarSwatch(x, y, color, label) {
+  push();
+  translate(x + 8, y + 6);
+  stroke(40);
+  strokeWeight(1);
+  fill(color[0], color[1], color[2]);
+  drawStar(0, 0, 3.5, 7, 5);
+  pop();
+  noStroke();
+  fill(40);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  text(label, x + 22, y + 6);
+}
+
+function drawTentSwatch(x, y, color, label) {
+  push();
+  translate(x + 8, y + 6);
+  stroke(40);
+  strokeWeight(1);
+  fill(color[0], color[1], color[2]);
+  drawTent(0, 0, 6);
+  pop();
+  noStroke();
+  fill(40);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  text(label, x + 22, y + 6);
+}
+
+// ---- Side panel: detail ----
+
+function drawDetailPanel(b) {
+  const x = panelLeft;
+  const y = mapTop;
+  const w = panelRight - panelLeft;
+  const h = mapBottom - mapTop;
+  const c = battleColor(b);
+
+  noStroke();
+  fill(255);
+  stroke(c[0], c[1], c[2]);
+  strokeWeight(2);
+  rect(x, y, w, h, 8);
+  noStroke();
+
+  // Title
+  fill(c[0] * 0.7, c[1] * 0.7, c[2] * 0.7);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(13);
+  text(b.name, x + 10, y + 10, w - 20);
+
+  // Date
+  fill(60);
+  textStyle(NORMAL);
+  textSize(10.5);
+  text(b.dateStr, x + 10, y + 30, w - 20);
+
+  // Outcome banner
+  let outcomeTxt, vCol;
+  if (b.victor === 'american')        { outcomeTxt = 'American victory'; vCol = C_AMER_DARK; }
+  else if (b.victor === 'british')    { outcomeTxt = 'British victory';  vCol = C_BRIT_DARK; }
+  else if (b.victor === 'encampment') { outcomeTxt = 'Winter encampment (not a battle)'; vCol = C_BROWN; }
+  else                                { outcomeTxt = 'Draw';             vCol = [110, 110, 110]; }
+  fill(vCol[0], vCol[1], vCol[2]);
+  textStyle(BOLD);
+  textSize(11);
+  text(outcomeTxt, x + 10, y + 46);
+  textStyle(NORMAL);
+
+  let yy = y + 66;
+  yy = drawDetailField(x + 10, yy, w - 20, 'Strategic significance:', b.significance);
+  yy = drawDetailField(x + 10, yy, w - 20, 'Why it mattered:',         b.connection);
+
+  // Close hint
+  fill(120);
+  textStyle(ITALIC);
+  textSize(9.5);
+  textAlign(LEFT, BOTTOM);
+  text('Click again or press Reset to close.', x + 10, y + h - 8, w - 20);
+  textStyle(NORMAL);
+}
+
+function drawDetailField(x, y, w, label, body) {
+  noStroke();
+  fill(60);
+  textStyle(BOLD);
+  textSize(10.5);
+  textAlign(LEFT, TOP);
+  text(label, x, y);
+  textStyle(NORMAL);
+  fill(35);
+  textSize(10.5);
+  const lines = wrapLineCount(body, w);
+  text(body, x, y + 13, w, lines * 13 + 6);
+  return y + 16 + lines * 13;
+}
+
+function wrapLineCount(str, w) {
+  textSize(10.5);
+  const words = str.split(' ');
+  let line = '';
+  let lines = 1;
+  for (const word of words) {
+    const test = line + word + ' ';
+    if (textWidth(test) > w) { lines++; line = word + ' '; }
+    else { line = test; }
+  }
+  return lines;
+}
+
+// ---- Hover tooltip ----
+
+function drawHoverTooltip(b) {
+  const p = project(b.lon, b.lat);
+  const txt = b.year + ' - ' + b.name;
+  textSize(11);
+  const tw = textWidth(txt) + 14;
+  const th = 22;
+  let tx = p.x + 10;
+  let ty = p.y - th - 6;
+  if (tx + tw > mapRight - 4) tx = p.x - tw - 10;
+  if (ty < mapTop + 2) ty = p.y + 14;
+  noStroke();
+  fill(30, 40, 60, 235);
+  rect(tx, ty, tw, th, 5);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  text(txt, tx + 7, ty + th / 2);
+}
+
+// ---- Interaction ----
+
+function mousePressed() {
+  if (mouseY > drawHeight) return;
+  for (const b of battles) {
+    const p = project(b.lon, b.lat);
+    if (dist(mouseX, mouseY, p.x, p.y) < 14) {
+      if (selectedBattle && selectedBattle.id === b.id) selectedBattle = null;
+      else selectedBattle = b;
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  recomputeMapBounds();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: map
+    sim-id: revolutionary-war-battles
+    Library: p5.js
+    Status: Built
+
+    Purpose: Allow students to explore the geographic distribution of major
+    Revolutionary War battles, understand the strategic logic of each campaign,
+    and identify how the war's geography shaped its outcome.
+
+    Bloom Level: Understand (L2)
+    Bloom Verb: Explain
+
+    Learning Objective: Students explain the strategic significance of at least
+    three major Revolutionary War battles and describe how geography influenced
+    the war's outcome.
+
+    Canvas layout:
+    - Responsive width; height ~600px (drawHeight 540 + controlHeight 60)
+    - Simplified eastern seaboard map (Maine to Georgia)
+    - British-controlled coastal cities and contested interior shaded
+    - Battle sites as 5-point stars (gold = American win, red = British win)
+    - Valley Forge marked with a brown tent icon (winter encampment, not a battle)
+
+    Battles included:
+    Bunker Hill 1775, Trenton 1776, Brandywine/Philadelphia 1777,
+    Saratoga 1777, Valley Forge 1777-78, Charleston 1780,
+    Cowpens 1781, Yorktown 1781.
+
+    Click a battle: date, outcome, two-sentence strategic significance,
+    and a one-line "Why it mattered" connecting to the overall war arc.
+
+    Campaign overlay toggle draws:
+    - Northern campaign (1775-76): Boston > New York > Trenton/Princeton > Saratoga
+    - Southern campaign (1780-81): Charleston > inland > Cowpens > Yorktown
+    -->
+</body>
+</html>

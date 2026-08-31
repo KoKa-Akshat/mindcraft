@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variable Types Decision Tree</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: aliceblue;
+            padding: 10px 0;
+        }
+        .mermaid {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mermaid svg {
+            max-width: 100%;
+        }
+        #tooltip {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            max-width: 300px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            line-height: 1.4;
+        }
+        #tooltip.visible {
+            opacity: 1;
+        }
+        #tooltip .examples {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #555;
+            font-size: 13px;
+            color: #ccc;
+        }
+        .node {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mermaid">
+flowchart TD
+    Start{"What kind of<br/>variable is this?"}:::startNode
+    Math{"Can you do<br/>math with it?"}:::decisionNode
+    Numerical["NUMERICAL DATA"]:::numericalNode
+    Categorical["CATEGORICAL DATA"]:::categoricalNode
+    Decimal{"Can it be any value<br/>(including decimals)?"}:::decisionNode
+    Order{"Is there a<br/>meaningful order?"}:::decisionNode
+    Continuous["Continuous"]:::continuousNode
+    Discrete["Discrete"]:::discreteNode
+    Ordinal["Ordinal"]:::ordinalNode
+    Nominal["Nominal"]:::nominalNode
+
+    Start --> Math
+    Math -->|YES| Numerical
+    Math -->|NO| Categorical
+    Numerical --> Decimal
+    Categorical --> Order
+    Decimal -->|YES| Continuous
+    Decimal -->|NO| Discrete
+    Order -->|YES| Ordinal
+    Order -->|NO| Nominal
+
+    classDef startNode fill:#ffeaa7,stroke:#333,stroke-width:2px,color:#333,font-size:16px
+    classDef decisionNode fill:#fdcb6e,stroke:#333,stroke-width:2px,color:#333,font-size:16px
+    classDef numericalNode fill:#74b9ff,stroke:#333,stroke-width:2px,color:#333,font-size:16px
+    classDef categoricalNode fill:#55efc4,stroke:#333,stroke-width:2px,color:#333,font-size:16px
+    classDef continuousNode fill:#0984e3,stroke:#333,stroke-width:2px,color:#fff,font-size:16px
+    classDef discreteNode fill:#0984e3,stroke:#333,stroke-width:2px,color:#fff,font-size:16px
+    classDef ordinalNode fill:#00b894,stroke:#333,stroke-width:2px,color:#fff,font-size:16px
+    classDef nominalNode fill:#00b894,stroke:#333,stroke-width:2px,color:#fff,font-size:16px
+
+    linkStyle default stroke:#666,stroke-width:2px,font-size:14px
+        </div>
+        <div id="tooltip"></div>
+    </div>
+
+    <script>
+        // Tooltip data with descriptions and additional examples
+        const tooltips = {
+            'Start': {
+                description: 'Begin by examining the variable you want to classify.',
+                examples: []
+            },
+            'Math': {
+                description: 'Ask: Does it make sense to add, subtract, or average these values?',
+                examples: ['Temperature: Yes, 70 + 80 = 150 makes sense', 'ZIP codes: No, 90210 + 10001 is meaningless']
+            },
+            'Numerical': {
+                description: 'Data that represents quantities or measurements.',
+                examples: ['Age, Weight, Temperature', 'Test scores, Income, Distance']
+            },
+            'Categorical': {
+                description: 'Data that represents groups or categories.',
+                examples: ['Colors, Brands, Countries', 'Yes/No responses, Animal species']
+            },
+            'Decimal': {
+                description: 'Can the value take on any number in a range, including fractions and decimals?',
+                examples: ['Height can be 5.7, 5.71, 5.712...', 'Number of children is always whole: 0, 1, 2...']
+            },
+            'Order': {
+                description: 'Is there a natural ranking or sequence between categories?',
+                examples: ['Education level has order: High School < Bachelor < Master', 'Blood type has no order: A, B, AB, O']
+            },
+            'Continuous': {
+                description: 'Can take any value within a range, including decimals.',
+                examples: ['Height = 5.7 feet', 'Temperature = 98.6F', 'Time = 3.5 hours', 'Weight = 150.25 lbs']
+            },
+            'Discrete': {
+                description: 'Can only take specific, countable values (usually whole numbers).',
+                examples: ['Number of siblings = 2', 'Cars owned = 3', 'Students in class = 25', 'Goals scored = 4']
+            },
+            'Ordinal': {
+                description: 'Categories with a meaningful order or ranking.',
+                examples: ['Grade levels: Freshman < Senior', 'Satisfaction: Poor < Fair < Good < Excellent', 'Military rank', 'Education level']
+            },
+            'Nominal': {
+                description: 'Categories with no inherent order - just different groups.',
+                examples: ['Eye color: blue, brown, green', 'Blood type: A, B, AB, O', 'Country of birth', 'Favorite ice cream flavor']
+            }
+        };
+
+        const tooltip = document.getElementById('tooltip');
+
+        function setupTooltips() {
+            const nodes = document.querySelectorAll('.node');
+            nodes.forEach(node => {
+                const nodeId = node.id.replace('flowchart-', '').split('-')[0];
+                if (tooltips[nodeId]) {
+                    node.addEventListener('mouseenter', (e) => {
+                        const data = tooltips[nodeId];
+                        let html = data.description;
+                        if (data.examples.length > 0) {
+                            html += '<div class="examples"><strong>Examples:</strong><br>';
+                            html += data.examples.map(ex => '• ' + ex).join('<br>');
+                            html += '</div>';
+                        }
+                        tooltip.innerHTML = html;
+                        tooltip.classList.add('visible');
+                    });
+                    node.addEventListener('mousemove', (e) => {
+                        const x = e.pageX + 15;
+                        const y = e.pageY + 15;
+                        const tooltipRect = tooltip.getBoundingClientRect();
+                        const maxX = window.innerWidth - tooltipRect.width - 20;
+                        const maxY = window.innerHeight - tooltipRect.height - 20;
+                        tooltip.style.left = Math.min(x, maxX) + 'px';
+                        tooltip.style.top = Math.min(y, maxY) + 'px';
+                    });
+                    node.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('visible');
+                    });
+                }
+            });
+        }
+
+        // Robust polling approach - waits for Mermaid to finish rendering
+        function waitForMermaid() {
+            const mermaidDiv = document.querySelector('.mermaid');
+            const svg = mermaidDiv.querySelector('svg');
+            if (svg && document.querySelectorAll('.node').length > 0) {
+                setupTooltips();
+            } else {
+                setTimeout(waitForMermaid, 100);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(waitForMermaid, 100));
+        } else {
+            setTimeout(waitForMermaid, 100);
+        }
+    </script>
+</body>
+</html>

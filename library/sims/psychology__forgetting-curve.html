@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Forgetting Curve Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Forgetting Curve Simulator
+// Plots Ebbinghaus R = e^(-t/S) with baseline vs review curves
+
+let canvasWidth = 600;
+let drawHeight = 400;
+let controlHeight = 130;
+let canvasHeight = drawHeight + controlHeight;
+
+// Plot margins
+let plotLeft = 70;
+let plotRight = 40;
+let plotTop = 40;
+let plotBottom = 50;
+
+// Controls
+let strengthSlider, gainSlider, reviewSelect, areaCheckbox, resetBtn;
+
+// Defaults
+let defaultStrength = 3;
+let defaultGain = 2.0;
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+}
+
+function setup() {
+  updateCanvasSize();
+  canvasHeight = drawHeight + controlHeight;
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Arial');
+
+  // Controls
+  let yCtrl = drawHeight + 12;
+
+  // Row 1: Initial strength slider
+  let lbl1 = createDiv('Initial Strength (S): ');
+  lbl1.parent(document.querySelector('main'));
+  lbl1.style('font-size', '13px');
+  lbl1.style('display', 'inline-block');
+  lbl1.style('margin-left', '10px');
+  lbl1.style('margin-top', '8px');
+
+  strengthSlider = createSlider(1, 10, defaultStrength, 0.5);
+  strengthSlider.parent(document.querySelector('main'));
+  strengthSlider.style('width', '140px');
+  strengthSlider.style('display', 'inline-block');
+  strengthSlider.style('vertical-align', 'middle');
+
+  // Review interval dropdown
+  let lbl2 = createDiv('Review Schedule: ');
+  lbl2.parent(document.querySelector('main'));
+  lbl2.style('font-size', '13px');
+  lbl2.style('display', 'inline-block');
+  lbl2.style('margin-left', '20px');
+
+  reviewSelect = createSelect();
+  reviewSelect.parent(document.querySelector('main'));
+  reviewSelect.option('None');
+  reviewSelect.option('Daily');
+  reviewSelect.option('SM-2 Expanding');
+  reviewSelect.option('Leitner Doubling');
+  reviewSelect.selected('SM-2 Expanding');
+  reviewSelect.style('display', 'inline-block');
+
+  // Row 2
+  let br1 = createDiv('');
+  br1.parent(document.querySelector('main'));
+  br1.style('height', '6px');
+
+  let lbl3 = createDiv('Strength Gain per Review: ');
+  lbl3.parent(document.querySelector('main'));
+  lbl3.style('font-size', '13px');
+  lbl3.style('display', 'inline-block');
+  lbl3.style('margin-left', '10px');
+
+  gainSlider = createSlider(1.5, 3.0, defaultGain, 0.1);
+  gainSlider.parent(document.querySelector('main'));
+  gainSlider.style('width', '140px');
+  gainSlider.style('display', 'inline-block');
+  gainSlider.style('vertical-align', 'middle');
+
+  areaCheckbox = createCheckbox('Show area under curve', false);
+  areaCheckbox.parent(document.querySelector('main'));
+  areaCheckbox.style('font-size', '13px');
+  areaCheckbox.style('display', 'inline-block');
+  areaCheckbox.style('margin-left', '20px');
+
+  let br2 = createDiv('');
+  br2.parent(document.querySelector('main'));
+  br2.style('height', '6px');
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.style('margin-left', '10px');
+  resetBtn.mousePressed(resetDefaults);
+
+  describe('Interactive forgetting curve showing retention over time with and without review schedules');
+}
+
+function resetDefaults() {
+  strengthSlider.value(defaultStrength);
+  gainSlider.value(defaultGain);
+  reviewSelect.selected('SM-2 Expanding');
+  areaCheckbox.checked(false);
+}
+
+function getReviewDays(schedule) {
+  if (schedule === 'None') return [];
+  if (schedule === 'Daily') {
+    let days = [];
+    for (let d = 1; d <= 60; d++) days.push(d);
+    return days;
+  }
+  if (schedule === 'SM-2 Expanding') return [1, 3, 7, 14, 30];
+  if (schedule === 'Leitner Doubling') return [1, 2, 4, 8, 16, 32];
+  return [];
+}
+
+function retention(t, S) {
+  return Math.exp(-t / S);
+}
+
+function draw() {
+  background(255);
+
+  let S0 = strengthSlider.value();
+  let gain = gainSlider.value();
+  let schedule = reviewSelect.value();
+  let showArea = areaCheckbox.checked();
+
+  let maxDays = 60;
+  let pw = canvasWidth - plotLeft - plotRight;
+  let ph = drawHeight - plotTop - plotBottom;
+
+  // Drawing area background
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Plot background
+  fill(255);
+  noStroke();
+  rect(plotLeft, plotTop, pw, ph);
+
+  // Grid lines
+  stroke(230);
+  strokeWeight(0.5);
+  for (let i = 0; i <= 10; i++) {
+    let y = plotTop + ph - (i / 10) * ph;
+    line(plotLeft, y, plotLeft + pw, y);
+  }
+  for (let d = 0; d <= 60; d += 10) {
+    let x = plotLeft + (d / maxDays) * pw;
+    line(x, plotTop, x, plotTop + ph);
+  }
+
+  // Axes
+  stroke(80);
+  strokeWeight(1.5);
+  line(plotLeft, plotTop, plotLeft, plotTop + ph);
+  line(plotLeft, plotTop + ph, plotLeft + pw, plotTop + ph);
+
+  // Axis labels
+  noStroke();
+  fill(60);
+  textSize(12);
+  textAlign(CENTER, TOP);
+  for (let d = 0; d <= 60; d += 10) {
+    let x = plotLeft + (d / maxDays) * pw;
+    text(d, x, plotTop + ph + 5);
+  }
+  textAlign(RIGHT, CENTER);
+  for (let i = 0; i <= 10; i += 2) {
+    let y = plotTop + ph - (i / 10) * ph;
+    text((i / 10).toFixed(1), plotLeft - 8, y);
+  }
+
+  // Axis titles
+  textSize(13);
+  textAlign(CENTER, TOP);
+  fill(40);
+  text('Days Since Encoding', plotLeft + pw / 2, plotTop + ph + 25);
+
+  push();
+  translate(18, plotTop + ph / 2);
+  rotate(-HALF_PI);
+  textAlign(CENTER, BOTTOM);
+  text('Retention (R)', 0, 0);
+  pop();
+
+  // --- Compute baseline curve (no review) ---
+  let baselinePoints = [];
+  let step = 0.5;
+  for (let t = 0; t <= maxDays; t += step) {
+    let R = retention(t, S0);
+    baselinePoints.push({ t: t, R: R });
+  }
+
+  // --- Compute review curve ---
+  let reviewDays = getReviewDays(schedule);
+  let reviewPoints = [];
+  let currentS = S0;
+  let lastReviewDay = 0;
+  let reviewIdx = 0;
+  let segments = []; // each segment: { startDay, S, startR }
+
+  if (reviewDays.length > 0) {
+    segments.push({ startDay: 0, S: currentS, startR: 1.0 });
+    for (let ri = 0; ri < reviewDays.length; ri++) {
+      let rd = reviewDays[ri];
+      if (rd > maxDays) break;
+      // retention at review day from last segment
+      let lastSeg = segments[segments.length - 1];
+      let elapsed = rd - lastSeg.startDay;
+      let Ratrd = lastSeg.startR * retention(elapsed, lastSeg.S);
+      // After review, strength increases
+      currentS = lastSeg.S * gain;
+      segments.push({ startDay: rd, S: currentS, startR: Ratrd });
+    }
+    // Build points
+    for (let si = 0; si < segments.length; si++) {
+      let seg = segments[si];
+      let endDay = (si < segments.length - 1) ? segments[si + 1].startDay : maxDays;
+      for (let t = seg.startDay; t <= endDay; t += step) {
+        let elapsed = t - seg.startDay;
+        let R = seg.startR * retention(elapsed, seg.S);
+        reviewPoints.push({ t: t, R: R });
+      }
+    }
+  }
+
+  function toX(t) { return plotLeft + (t / maxDays) * pw; }
+  function toY(R) { return plotTop + ph - R * ph; }
+
+  // Draw area under curves if checked
+  if (showArea) {
+    // Baseline area
+    fill(255, 100, 100, 40);
+    noStroke();
+    beginShape();
+    vertex(toX(0), toY(0));
+    for (let p of baselinePoints) {
+      vertex(toX(p.t), toY(p.R));
+    }
+    vertex(toX(maxDays), toY(0));
+    endShape(CLOSE);
+
+    // Review area
+    if (reviewPoints.length > 0) {
+      fill(100, 100, 255, 40);
+      beginShape();
+      vertex(toX(0), toY(0));
+      for (let p of reviewPoints) {
+        vertex(toX(p.t), toY(p.R));
+      }
+      vertex(toX(reviewPoints[reviewPoints.length - 1].t), toY(0));
+      endShape(CLOSE);
+    }
+  }
+
+  // Draw baseline curve
+  noFill();
+  stroke(220, 60, 60);
+  strokeWeight(2.5);
+  beginShape();
+  for (let p of baselinePoints) {
+    vertex(toX(p.t), toY(p.R));
+  }
+  endShape();
+
+  // Draw review curve
+  if (reviewPoints.length > 0) {
+    stroke(60, 80, 220);
+    strokeWeight(2.5);
+    beginShape();
+    for (let p of reviewPoints) {
+      vertex(toX(p.t), toY(p.R));
+    }
+    endShape();
+
+    // Draw review day markers
+    noStroke();
+    fill(60, 80, 220);
+    for (let rd of reviewDays) {
+      if (rd > maxDays) break;
+      // Find the R at this day in review points
+      let closest = reviewPoints.reduce((a, b) =>
+        Math.abs(b.t - rd) < Math.abs(a.t - rd) ? b : a
+      );
+      ellipse(toX(rd), toY(closest.R), 7, 7);
+    }
+  }
+
+  // Day 30 marker line
+  stroke(100, 100, 100, 120);
+  strokeWeight(1);
+  drawingContext.setLineDash([4, 4]);
+  line(toX(30), plotTop, toX(30), plotTop + ph);
+  drawingContext.setLineDash([]);
+
+  noStroke();
+  fill(100);
+  textSize(10);
+  textAlign(CENTER, BOTTOM);
+  text('Day 30', toX(30), plotTop - 2);
+
+  // Legend
+  let legendX = plotLeft + pw - 180;
+  let legendY = plotTop + 15;
+  fill(255, 255, 255, 220);
+  stroke(200);
+  strokeWeight(1);
+  rect(legendX, legendY, 170, 52, 4);
+  noStroke();
+
+  // Baseline legend
+  stroke(220, 60, 60);
+  strokeWeight(2.5);
+  line(legendX + 10, legendY + 16, legendX + 35, legendY + 16);
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text('No Review (baseline)', legendX + 40, legendY + 16);
+
+  // Review legend
+  stroke(60, 80, 220);
+  strokeWeight(2.5);
+  line(legendX + 10, legendY + 36, legendX + 35, legendY + 36);
+  noStroke();
+  fill(60);
+  text('With Review', legendX + 40, legendY + 36);
+
+  // Title
+  noStroke();
+  fill(30);
+  textSize(15);
+  textAlign(CENTER, TOP);
+  text('Ebbinghaus Forgetting Curve: R = e^(-t/S)', canvasWidth / 2, 8);
+
+  // Info text
+  textSize(11);
+  textAlign(LEFT, TOP);
+  fill(80);
+  let baseR30 = retention(30, S0);
+  let infoY = plotTop + ph + 42;
+  text('S = ' + S0.toFixed(1) + ' days | Gain = ' + gain.toFixed(1) + 'x | Schedule: ' + schedule, plotLeft, infoY);
+
+  if (reviewPoints.length > 0) {
+    let reviewR30 = 0;
+    let closest30 = reviewPoints.reduce((a, b) =>
+      Math.abs(b.t - 30) < Math.abs(a.t - 30) ? b : a
+    );
+    reviewR30 = closest30.R;
+    fill(60);
+    text('At Day 30 -- Baseline: ' + (baseR30 * 100).toFixed(1) + '% | With Review: ' + (reviewR30 * 100).toFixed(1) + '%', plotLeft, infoY + 16);
+  } else {
+    fill(60);
+    text('At Day 30 -- Retention: ' + (baseR30 * 100).toFixed(1) + '%', plotLeft, infoY + 16);
+  }
+
+  // Control area background
+  noStroke();
+  fill(255);
+  // Controls are HTML elements below canvas
+}
+
+function windowResized() {
+  updateCanvasSize();
+  canvasHeight = drawHeight + controlHeight;
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

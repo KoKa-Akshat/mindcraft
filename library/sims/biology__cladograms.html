@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Interactive Cladogram Builder using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Interactive Cladogram Builder
+// Students drag species to branch tips and place trait markers
+// based on a character matrix
+
+let canvasWidth = 800;
+let drawHeight = 400;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+
+// Dataset: Vertebrate classification
+const datasets = [
+    {
+        name: 'Vertebrates',
+        species: ['Lamprey', 'Trout', 'Frog', 'Lizard', 'Pigeon', 'Mouse'],
+        traits: ['Vertebrae', 'Jaws', 'Four limbs', 'Amniotic egg', 'Feathers', 'Hair/Mammary'],
+        matrix: [
+            [1, 0, 0, 0, 0, 0], // Lamprey
+            [1, 1, 0, 0, 0, 0], // Trout
+            [1, 1, 1, 0, 0, 0], // Frog
+            [1, 1, 1, 1, 0, 0], // Lizard
+            [1, 1, 1, 1, 1, 0], // Pigeon
+            [1, 1, 1, 1, 0, 1]  // Mouse
+        ],
+        correctOrder: [0, 1, 2, 3, 4, 5], // Lamprey, Trout, Frog, Lizard, Pigeon, Mouse
+        outgroup: 0
+    },
+    {
+        name: 'Plants',
+        species: ['Moss', 'Fern', 'Pine', 'Lily', 'Oak', 'Sunflower'],
+        traits: ['Chloroplasts', 'Vascular tissue', 'Seeds', 'Flowers', 'Broad leaves', 'Composite flower'],
+        matrix: [
+            [1, 0, 0, 0, 0, 0], // Moss
+            [1, 1, 0, 0, 0, 0], // Fern
+            [1, 1, 1, 0, 0, 0], // Pine
+            [1, 1, 1, 1, 0, 0], // Lily
+            [1, 1, 1, 1, 1, 0], // Oak
+            [1, 1, 1, 1, 1, 1]  // Sunflower
+        ],
+        correctOrder: [0, 1, 2, 3, 4, 5], // Moss, Fern, Pine, Lily, Oak, Sunflower
+        outgroup: 0
+    }
+];
+
+let currentDataset = 0;
+let data;
+
+// Student's placement
+let placedSpecies = []; // array of {tipIndex, speciesIndex} or null for each tip
+let tipSlots = [];      // positions of the 6 branch tips
+
+// Dragging state
+let dragging = null;    // {type: 'species', index: speciesIdx} or null
+let dragX = 0, dragY = 0;
+
+// Feedback
+let checked = false;
+let score = 0;
+let showHints = false;
+
+// Species label positions (unplaced, in the pool)
+let speciesPool = [];
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    loadDataset(0);
+}
+
+function loadDataset(idx) {
+    currentDataset = idx;
+    data = datasets[idx];
+    placedSpecies = new Array(data.species.length).fill(-1); // tipIndex → speciesIndex
+    checked = false;
+    score = 0;
+    showHints = false;
+    computeLayout();
+}
+
+function computeLayout() {
+    let n = data.species.length;
+
+    // Three-column layout: matrix (left 28%), cladogram (center 47%), species pool (right 15%)
+    let treeX = canvasWidth * 0.30;
+    let treeW = canvasWidth * 0.42;
+    let treeY = 50;
+    let treeH = drawHeight * 0.7;
+
+    tipSlots = [];
+    let spacing = treeH / (n - 1);
+    for (let i = 0; i < n; i++) {
+        tipSlots.push({
+            x: treeX + treeW - 20,
+            y: treeY + i * spacing,
+            speciesIdx: -1
+        });
+    }
+
+    // Species pool positions (right side)
+    speciesPool = [];
+    let poolX = canvasWidth * 0.82;
+    let poolW = canvasWidth * 0.16;
+    let poolY = 55;
+    let poolSpacing = 32;
+    for (let i = 0; i < n; i++) {
+        speciesPool.push({
+            x: poolX,
+            y: poolY + i * poolSpacing,
+            w: poolW,
+            h: 24
+        });
+    }
+}
+
+function draw() {
+    // make the background aliceblue
+    fill('aliceblue');
+    // add a sliver border around both the drawing area and the controls area
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, canvasHeight);
+    // make the background of the drawing area white
+    fill('white');
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Draw the title at the top center
+    fill('black')
+    noStroke();
+    textSize(24);
+    textAlign(CENTER, TOP);
+    text('Cladogram Builder', canvasWidth / 2, 10);
+    textStyle(NORMAL);
+
+    drawCharacterMatrix();
+    drawCladogram();
+    drawSpeciesPool();
+    drawDragItem();
+    drawFeedback();
+    drawControls();
+}
+
+function drawCharacterMatrix() {
+    let mx = 10;
+    // Vertical spacing and dimensions for the matrix
+    let my = 100;
+    let cellW = 22;
+    let cellH = 20;
+    let labelW = 65;
+
+    // Title
+    fill(60);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Character Matrix', mx, my - 2);
+    textStyle(NORMAL);
+
+    my += 14;
+
+    // Trait headers (rotated)
+    push();
+    textSize(8);
+    fill(80);
+    for (let j = 0; j < data.traits.length; j++) {
+        let tx = mx + labelW + j * cellW + cellW / 2;
+        push();
+        translate(tx, my);
+        rotate(-HALF_PI * 0.7);
+        textAlign(LEFT, CENTER);
+        text(data.traits[j], -25, 15);
+        pop();
+    }
+    pop();
+
+    my += 35;
+
+    // Species rows
+    for (let i = 0; i < data.species.length; i++) {
+        // Species name
+        fill(60);
+        noStroke();
+        textSize(9);
+        textAlign(LEFT, CENTER);
+        let isOutgroup = (i === data.outgroup);
+        if (isOutgroup) {
+            textStyle(ITALIC);
+            text(data.species[i] + ' *', mx, my + i * cellH + cellH / 2);
+            textStyle(NORMAL);
+        } else {
+            text(data.species[i], mx, my + i * cellH + cellH / 2);
+        }
+
+        // Trait cells
+        for (let j = 0; j < data.traits.length; j++) {
+            let cx = mx + labelW + j * cellW;
+            let cy = my + i * cellH;
+
+            if (data.matrix[i][j]) {
+                fill(46, 204, 113, 150);
+            } else {
+                fill(240);
+            }
+            stroke(200);
+            strokeWeight(0.5);
+            rect(cx, cy, cellW - 1, cellH - 1, 2);
+
+            if (data.matrix[i][j]) {
+                fill(20, 120, 40);
+                noStroke();
+                textSize(10);
+                textAlign(CENTER, CENTER);
+                text('✓', cx + cellW / 2 - 1, cy + cellH / 2);
+            }
+        }
+    }
+
+    // Outgroup note
+    fill(120);
+    noStroke();
+    textSize(8);
+    textAlign(LEFT, TOP);
+    text('* = outgroup', mx, my + data.species.length * cellH + 4);
+}
+
+function drawCladogram() {
+    let n = data.species.length;
+    let treeX = canvasWidth * 0.30;
+    let treeW = canvasWidth * 0.42;
+
+    // Draw the tree structure (nested brackets)
+    stroke(80);
+    strokeWeight(2);
+
+    // Root
+    let rootX = treeX + 30;
+    let rootY = (tipSlots[0].y + tipSlots[n - 1].y) / 2;
+
+    // Main trunk
+    line(rootX, tipSlots[0].y, rootX, tipSlots[n - 1].y);
+
+    // Branch points and horizontal lines to tips
+    for (let i = 0; i < n; i++) {
+        let branchX;
+        if (i === 0) {
+            branchX = rootX; // Outgroup branches from root
+        } else {
+            // Each subsequent species branches further right
+            branchX = rootX + (i) * (treeW - 80) / n;
+        }
+
+        // Vertical segment for this branch point
+        if (i > 0 && i < n - 1) {
+            stroke(80);
+            strokeWeight(2);
+            line(branchX, tipSlots[i].y, branchX, tipSlots[n - 1].y);
+        }
+
+        // Horizontal line to tip
+        stroke(80);
+        strokeWeight(1.5);
+        line(branchX, tipSlots[i].y, tipSlots[i].x - 50, tipSlots[i].y);
+
+        // Trait markers at branch points (small colored diamonds)
+        if (i < data.traits.length && i > 0) {
+            let markerX = branchX - 5;
+            let markerY = tipSlots[i].y + 10;
+
+            fill(230, 126, 34);
+            noStroke();
+            push();
+            translate(markerX, markerY);
+            rotate(PI / 4);
+            rect(-5, -5, 10, 10);
+            pop();
+
+            fill(80);
+            noStroke();
+            textSize(7);
+            textAlign(LEFT, CENTER);
+            text(data.traits[i], markerX + 10, markerY);
+        } else if (i === 0) {
+            // First trait at root
+            let markerX = rootX - 15;
+            let markerY = rootY;
+
+            fill(230, 126, 34);
+            noStroke();
+            push();
+            translate(markerX, markerY);
+            rotate(PI / 4);
+            rect(-5, -5, 10, 10);
+            pop();
+
+            fill(80);
+            noStroke();
+            textSize(7);
+            textAlign(RIGHT, CENTER);
+            text(data.traits[0], markerX - 10, markerY);
+        }
+    }
+
+    // Draw tip slots (drop zones)
+    for (let i = 0; i < n; i++) {
+        let slot = tipSlots[i];
+
+        if (slot.speciesIdx >= 0) {
+            // Placed species
+            let sp = data.species[slot.speciesIdx];
+            let isCorrect = checked && slot.speciesIdx === data.correctOrder[i];
+            let isWrong = checked && slot.speciesIdx !== data.correctOrder[i];
+
+            fill(isCorrect ? [200, 255, 200] : (isWrong ? [255, 200, 200] : [220, 235, 250]));
+            stroke(isCorrect ? [46, 204, 113] : (isWrong ? [231, 76, 60] : [150, 180, 200]));
+            strokeWeight(1.5);
+            rect(slot.x - 45, slot.y - 12, 90, 24, 4);
+
+            fill(40);
+            noStroke();
+            textSize(10);
+            textAlign(CENTER, CENTER);
+            text(sp, slot.x, slot.y);
+
+            if (isCorrect) {
+                fill(46, 204, 113);
+                textSize(12);
+                text('✓', slot.x + 40, slot.y);
+            } else if (isWrong) {
+                fill(231, 76, 60);
+                textSize(12);
+                text('✗', slot.x + 40, slot.y);
+            }
+        } else {
+            // Empty slot
+            fill(255, 255, 240);
+            stroke(180);
+            strokeWeight(1);
+            drawingContext.setLineDash([4, 4]);
+            rect(slot.x - 45, slot.y - 12, 90, 24, 4);
+            drawingContext.setLineDash([]);
+
+            fill(160);
+            noStroke();
+            textSize(9);
+            textAlign(CENTER, CENTER);
+            text('Drop here', slot.x, slot.y);
+        }
+    }
+}
+
+function drawSpeciesPool() {
+    // Title
+    fill(60);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+
+    let poolHeaderY = speciesPool[0].y - 28;
+    text('Species', speciesPool[0].x, poolHeaderY);
+    textStyle(NORMAL);
+    fill(120);
+    textSize(8);
+    text('(drag to tree)', speciesPool[0].x, poolHeaderY + 14);
+
+    for (let i = 0; i < data.species.length; i++) {
+        // Check if already placed
+        let placed = false;
+        for (let j = 0; j < tipSlots.length; j++) {
+            if (tipSlots[j].speciesIdx === i) {
+                placed = true;
+                break;
+            }
+        }
+
+        if (placed) continue; // Don't show in pool
+        if (dragging && dragging.type === 'species' && dragging.index === i) continue;
+
+        let sp = speciesPool[i];
+        fill(100, 150, 220);
+        stroke(80, 120, 180);
+        strokeWeight(1);
+        rect(sp.x, sp.y, sp.w, sp.h, 4);
+
+        fill(255);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text(data.species[i], sp.x + sp.w / 2, sp.y + sp.h / 2);
+    }
+}
+
+function drawDragItem() {
+    if (!dragging) return;
+
+    if (dragging.type === 'species') {
+        fill(100, 150, 220, 200);
+        stroke(50, 100, 180);
+        strokeWeight(2);
+        rect(dragX - 45, dragY - 12, 90, 24, 4);
+
+        fill(255);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text(data.species[dragging.index], dragX, dragY);
+    }
+}
+
+function drawFeedback() {
+    if (!checked) return;
+
+    let fx = canvasWidth * 0.30;
+    let fy = drawHeight * 0.95;
+
+    fill(score === data.species.length ? [46, 204, 113] : [230, 126, 34]);
+    noStroke();
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(LEFT, CENTER);
+
+    if (score === data.species.length) {
+        text(`✓ Perfect! All ${score} species correctly placed!`, fx, fy);
+    } else {
+        text(`${score} of ${data.species.length} correct. Try swapping the red ones.`, fx, fy);
+    }
+    textStyle(NORMAL);
+
+    if (showHints && score < data.species.length) {
+        fill(100);
+        textSize(10);
+        textAlign(LEFT, TOP);
+        text('Hint: Count shared derived characters. More shared traits = closer on the tree.', fx, fy + 14);
+    }
+}
+
+function drawControls() {
+    let cy = drawHeight + 8;
+    let btnH = 28;
+    let bx = 15;
+
+    // Check button
+    let allPlaced = tipSlots.every(s => s.speciesIdx >= 0);
+    fill(allPlaced ? [46, 204, 113] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(bx, cy + 2, 70, btnH, 6);
+    fill(allPlaced ? 255 : 120);
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text('Check', bx + 35, cy + 2 + btnH / 2);
+
+    // Hint button
+    bx += 80;
+    fill(showHints ? [241, 196, 15] : [200, 200, 200]);
+    stroke(80);
+    strokeWeight(1);
+    rect(bx, cy + 2, 60, btnH, 6);
+    fill(showHints ? 40 : 80);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('Hints', bx + 30, cy + 2 + btnH / 2);
+
+    // Reset button
+    bx += 70;
+    fill(200, 100, 100);
+    stroke(80);
+    strokeWeight(1);
+    rect(bx, cy + 2, 60, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text('Reset', bx + 30, cy + 2 + btnH / 2);
+
+    // Dataset selector
+    bx += 80;
+    fill(80);
+    noStroke();
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text('Dataset:', bx, cy + 2 + btnH / 2);
+
+    bx += 55;
+    for (let i = 0; i < datasets.length; i++) {
+        let dw = textWidth(datasets[i].name) + 16;
+        fill(currentDataset === i ? [52, 152, 219] : [200, 200, 200]);
+        stroke(80);
+        strokeWeight(1);
+        rect(bx, cy + 2, dw, btnH, 6);
+        fill(currentDataset === i ? 255 : 60);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text(datasets[i].name, bx + dw / 2, cy + 2 + btnH / 2);
+        bx += dw + 6;
+    }
+
+    // Instructions
+    fill(100);
+    noStroke();
+    textSize(9);
+    textAlign(LEFT, CENTER);
+    text('Drag species from the right panel to the correct branch tips. Use the character matrix as a guide.', 15, cy + 48);
+}
+
+function mousePressed() {
+    let cy = drawHeight + 8;
+    let btnH = 28;
+
+    // Check button
+    let allPlaced = tipSlots.every(s => s.speciesIdx >= 0);
+    if (mouseX >= 15 && mouseX <= 85 && mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (allPlaced) {
+            checkAnswer();
+        }
+        return;
+    }
+
+    // Hint button
+    if (mouseX >= 95 && mouseX <= 155 && mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        showHints = !showHints;
+        return;
+    }
+
+    // Reset button
+    if (mouseX >= 165 && mouseX <= 225 && mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        loadDataset(currentDataset);
+        return;
+    }
+
+    // Dataset buttons (must match drawControls layout: 15 + 80 + 70 + 80 + 55 = 300)
+    let bx = 15 + 80 + 70 + 80 + 55;
+    for (let i = 0; i < datasets.length; i++) {
+        textSize(10);
+        let dw = textWidth(datasets[i].name) + 16;
+        if (mouseX >= bx && mouseX <= bx + dw && mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+            loadDataset(i);
+            return;
+        }
+        bx += dw + 6;
+    }
+
+    // Start dragging from pool
+    for (let i = 0; i < data.species.length; i++) {
+        let placed = tipSlots.some(s => s.speciesIdx === i);
+        if (placed) continue;
+
+        let sp = speciesPool[i];
+        if (mouseX >= sp.x && mouseX <= sp.x + sp.w &&
+            mouseY >= sp.y && mouseY <= sp.y + sp.h) {
+            dragging = { type: 'species', index: i };
+            dragX = mouseX;
+            dragY = mouseY;
+            checked = false;
+            return;
+        }
+    }
+
+    // Start dragging from a tip slot (to reposition)
+    for (let j = 0; j < tipSlots.length; j++) {
+        let slot = tipSlots[j];
+        if (slot.speciesIdx >= 0) {
+            if (mouseX >= slot.x - 45 && mouseX <= slot.x + 45 &&
+                mouseY >= slot.y - 12 && mouseY <= slot.y + 12) {
+                dragging = { type: 'species', index: slot.speciesIdx };
+                dragX = mouseX;
+                dragY = mouseY;
+                slot.speciesIdx = -1;
+                checked = false;
+                return;
+            }
+        }
+    }
+}
+
+function mouseDragged() {
+    if (dragging) {
+        dragX = mouseX;
+        dragY = mouseY;
+    }
+}
+
+function mouseReleased() {
+    if (!dragging) return;
+
+    // Check if dropped on a tip slot
+    let dropped = false;
+    for (let j = 0; j < tipSlots.length; j++) {
+        let slot = tipSlots[j];
+        if (dist(dragX, dragY, slot.x, slot.y) < 50) {
+            if (slot.speciesIdx < 0) {
+                slot.speciesIdx = dragging.index;
+                dropped = true;
+                break;
+            } else {
+                // Swap
+                let oldIdx = slot.speciesIdx;
+                slot.speciesIdx = dragging.index;
+                // Put old one back in pool (it will reappear)
+                dropped = true;
+                break;
+            }
+        }
+    }
+
+    dragging = null;
+}
+
+function checkAnswer() {
+    checked = true;
+    score = 0;
+    for (let i = 0; i < tipSlots.length; i++) {
+        if (tipSlots[i].speciesIdx === data.correctOrder[i]) {
+            score++;
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    computeLayout();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>The Advantage Gap</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// The Advantage Gap: Classical vs. Quantum Performance
+// A p5.js MicroSim comparing classical and quantum capabilities across domains
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+// Domain data
+let domains = [
+    {
+        name: "Cryptanalysis",
+        classical: 95,
+        quantum: 2,
+        classicalDetail: "Classical: Factored numbers with hundreds of digits (RSA-250, 829 bits, 2020)",
+        quantumDetail: "Quantum: Largest number factored is 21 (Shor's algorithm, 2012)",
+        gapNote: "Gap: ~40 orders of magnitude in problem size"
+    },
+    {
+        name: "Chemistry",
+        classical: 70,
+        quantum: 5,
+        classicalDetail: "Classical: Simulates molecules with dozens of electrons (DFT, CCSD(T))",
+        quantumDetail: "Quantum: Simulated H₂, LiH — a few electrons at most",
+        gapNote: "Gap: Classical handles industrially relevant molecules; quantum does not"
+    },
+    {
+        name: "Optimization",
+        classical: 85,
+        quantum: 8,
+        classicalDetail: "Classical: Near-optimal solutions for thousands of variables (Gurobi, CPLEX)",
+        quantumDetail: "Quantum: QAOA tested on problems with tens of variables",
+        gapNote: "Gap: No quantum speedup demonstrated over classical solvers"
+    },
+    {
+        name: "Machine Learning",
+        classical: 90,
+        quantum: 3,
+        classicalDetail: "Classical: State-of-the-art accuracy on all major benchmarks (GPT, ResNet)",
+        quantumDetail: "Quantum: No demonstrated improvement on any practical ML task",
+        gapNote: "Gap: Quantum ML remains entirely theoretical for real-world tasks"
+    },
+    {
+        name: "Search",
+        classical: 95,
+        quantum: 1,
+        classicalDetail: "Classical: Billions of records searched in milliseconds (Google, databases)",
+        quantumDetail: "Quantum: Grover's algorithm not demonstrated at any useful scale",
+        gapNote: "Gap: Grover's quadratic speedup negated by quantum overhead costs"
+    }
+];
+
+let hoveredDomain = -1;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("The Advantage Gap: Classical vs. Quantum Performance", canvasWidth / 2, margin / 2);
+
+    // Chart dimensions
+    let chartLeft = 140;
+    let chartRight = canvasWidth - margin * 2;
+    let chartWidth = chartRight - chartLeft;
+    let chartTop = 55;
+    let barGroupHeight = 70;
+    let barHeight = 18;
+    let barGap = 4;
+
+    // Commercially useful threshold line
+    let thresholdX = chartLeft + chartWidth * 0.60;
+    stroke('#CC0000');
+    strokeWeight(2);
+    drawingContext.setLineDash([8, 6]);
+    line(thresholdX, chartTop - 10, thresholdX, chartTop + domains.length * barGroupHeight + 5);
+    drawingContext.setLineDash([]);
+
+    // Threshold label
+    fill('#CC0000');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    text("Commercially", thresholdX, chartTop - 25);
+    text("Useful Threshold", thresholdX, chartTop - 13);
+
+    // Detect hover
+    hoveredDomain = -1;
+    for (let i = 0; i < domains.length; i++) {
+        let groupY = chartTop + i * barGroupHeight;
+        if (mouseX >= 0 && mouseX <= canvasWidth &&
+            mouseY >= groupY && mouseY < groupY + barGroupHeight) {
+            hoveredDomain = i;
+        }
+    }
+
+    // Draw bars for each domain
+    for (let i = 0; i < domains.length; i++) {
+        let d = domains[i];
+        let groupY = chartTop + i * barGroupHeight;
+        let isHovered = (hoveredDomain === i);
+
+        // Domain label
+        fill(isHovered ? '#1A237E' : '#333');
+        noStroke();
+        textSize(isHovered ? 15 : 14);
+        textAlign(RIGHT, CENTER);
+        textStyle(isHovered ? BOLD : NORMAL);
+        text(d.name, chartLeft - 10, groupY + barGroupHeight / 2 - 2);
+
+        // Classical bar (green)
+        let classicalWidth = (d.classical / 100) * chartWidth;
+        fill(isHovered ? '#2E7D32' : '#4CAF50');
+        noStroke();
+        rect(chartLeft, groupY + 8, classicalWidth, barHeight, 0, 4, 4, 0);
+
+        // Classical value label
+        fill('white');
+        textSize(11);
+        textAlign(RIGHT, CENTER);
+        textStyle(BOLD);
+        if (classicalWidth > 30) {
+            text(d.classical, chartLeft + classicalWidth - 6, groupY + 8 + barHeight / 2);
+        }
+
+        // Quantum bar (orange)
+        let quantumWidth = (d.quantum / 100) * chartWidth;
+        fill(isHovered ? '#E65100' : '#FF7043');
+        noStroke();
+        rect(chartLeft, groupY + 8 + barHeight + barGap, max(quantumWidth, 4), barHeight, 0, 4, 4, 0);
+
+        // Quantum value label
+        fill('#333');
+        textSize(11);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        text(d.quantum, chartLeft + max(quantumWidth, 4) + 5, groupY + 8 + barHeight + barGap + barHeight / 2);
+
+        // Gap indicator — red bracket region between quantum and classical bars
+        let gapStartX = chartLeft + quantumWidth;
+        let gapEndX = chartLeft + classicalWidth;
+        let gapY = groupY + 8 + barHeight + barGap + barHeight + 2;
+
+        if (gapEndX - gapStartX > 20) {
+            // Draw gap bracket
+            stroke('#D32F2F');
+            strokeWeight(1.5);
+            noFill();
+            let bracketY = gapY + 2;
+            line(gapStartX + 4, bracketY, gapEndX, bracketY);
+            line(gapStartX + 4, bracketY - 3, gapStartX + 4, bracketY + 3);
+            line(gapEndX, bracketY - 3, gapEndX, bracketY + 3);
+
+            // Gap label
+            fill('#D32F2F');
+            noStroke();
+            textSize(9);
+            textAlign(CENTER, TOP);
+            textStyle(ITALIC);
+            let gapLabel = "Gap: " + (d.classical - d.quantum) + " pts";
+            text(gapLabel, (gapStartX + gapEndX) / 2, bracketY + 4);
+        }
+    }
+
+    // Scale labels at bottom of chart area
+    let scaleY = chartTop + domains.length * barGroupHeight + 20;
+    fill('#666');
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, TOP);
+    textStyle(NORMAL);
+    for (let v = 0; v <= 100; v += 20) {
+        let xPos = chartLeft + (v / 100) * chartWidth;
+        text(v, xPos, scaleY);
+
+        // Tick marks
+        stroke('#CCC');
+        strokeWeight(1);
+        line(xPos, scaleY - 3, xPos, scaleY);
+    }
+    textSize(11);
+    fill('#666');
+    noStroke();
+    textAlign(CENTER, TOP);
+    text("Performance Score (0–100)", chartLeft + chartWidth / 2, scaleY + 16);
+
+    // Legend
+    let legendX = chartLeft;
+    let legendY = scaleY + 36;
+
+    // Classical legend
+    fill('#4CAF50');
+    noStroke();
+    rect(legendX, legendY, 16, 12, 2);
+    fill('#333');
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text("Classical Best Performance", legendX + 22, legendY + 6);
+
+    // Quantum legend
+    let qLegendX = legendX + 220;
+    fill('#FF7043');
+    noStroke();
+    rect(qLegendX, legendY, 16, 12, 2);
+    fill('#333');
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text("Quantum Best Performance", qLegendX + 22, legendY + 6);
+
+    // Hover detail tooltip
+    if (hoveredDomain >= 0) {
+        let d = domains[hoveredDomain];
+        let tooltipW = 460;
+        let tooltipH = 68;
+        let tooltipX = canvasWidth / 2 - tooltipW / 2;
+        let tooltipY = drawHeight - tooltipH - 10;
+
+        // Tooltip background
+        fill(255, 255, 255, 240);
+        stroke('#3F51B5');
+        strokeWeight(2);
+        rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+        // Tooltip text
+        fill('#333');
+        noStroke();
+        textSize(11);
+        textAlign(LEFT, TOP);
+        textStyle(NORMAL);
+        text(d.classicalDetail, tooltipX + 10, tooltipY + 8);
+        text(d.quantumDetail, tooltipX + 10, tooltipY + 24);
+        fill('#D32F2F');
+        textStyle(BOLD);
+        text(d.gapNote, tooltipX + 10, tooltipY + 44);
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Hover over a domain to see detailed comparisons", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

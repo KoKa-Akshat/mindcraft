@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Lactic Fermentation Explorer</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Lactic Acid Fermentation Explorer MicroSim
+// Focused single-path visualization with four stages, NADH arc, badges, organism chips, and responsive controls.
+
+let containerWidth;
+let canvasWidth = 760;
+const drawHeight = 690;
+const controlHeight = 120;
+const canvasHeight = drawHeight + controlHeight;
+const margin = 24;
+
+let startButton;
+let resetButton;
+let prevButton;
+let nextButton;
+let oxygenToggle;
+let delaySlider;
+const sliderRange = { min: 0, max: 100 };
+
+let isRunning = false;
+let currentStep = 0;
+let lastAdvance = 0;
+let autoDelay = 1800;
+let oxygenRestored = false;
+let selectedOrganism = '';
+
+const stages = [
+  { title: 'Step 1: Glucose enters cytosol', detail: 'Fuel molecule C6H12O6 arrives from bloodstream', color: '#fffaf1' },
+  { title: 'Step 2: Glycolysis (2 ATP + 2 NADH)', detail: 'Glucose splits into 2 pyruvate in cytosol', color: '#fff0d8' },
+  { title: 'Step 3: Pyruvate pool builds up', detail: 'Pyruvate waits for oxygen or fermentation', color: '#ffe5c2' },
+  { title: 'Step 4: Lactate formation', detail: 'NADH donates electrons, regenerating NAD+', color: '#ffdcb3' }
+];
+
+const steps = [
+  {
+    heading: '1. Sprinting pushes muscles into oxygen debt',
+    body: 'Glycolysis produces pyruvate and NADH faster than mitochondria can handle.',
+    highlights: [0]
+  },
+  {
+    heading: '2. NADH reduces pyruvate to lactate',
+    body: 'Electrons flow from NADH back to pyruvate, freeing NAD+ to keep glycolysis running.',
+    highlights: [1]
+  },
+  {
+    heading: '3. Lactate exits cell and travels to liver',
+    body: 'The Cori cycle and blood buffering prevent dangerous pH drops.',
+    highlights: [2]
+  },
+  {
+    heading: '4. Oxygen restored? Lactate converts back to pyruvate',
+    body: 'When oxygen returns, mitochondria oxidize NADH and lactate is recycled.',
+    highlights: [3]
+  }
+];
+
+const organisms = [
+  { name: 'Muscle Cell', fact: 'Fast-twitch fibers rely on lactic fermentation during sprints.', color: '#e6537c' },
+  { name: 'Red Blood Cell', fact: 'RBCs lack mitochondria, so fermentation is their sole ATP source.', color: '#c5299b' },
+  { name: 'Lactobacillus', fact: 'Fermenting Lactobacillus bacteria acidify yogurt and kimchi.', color: '#f28f3b' }
+];
+
+let layout;
+let simulationSpeedLabel = { x: 0, y: 0 };
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  startButton = createButton('Start Simulation');
+  startButton.removeAttribute('disabled');
+  startButton.mousePressed(toggleSimulation);
+  startButton.removeAttribute('disabled');
+
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(resetSimulation);
+
+  prevButton = createButton('Previous Step');
+  prevButton.mousePressed(() => changeStep(-1));
+
+  nextButton = createButton('Next Step');
+  nextButton.mousePressed(() => changeStep(1));
+
+  oxygenToggle = createCheckbox(' Show Oxygen Restored', false);
+  oxygenToggle.changed(() => {
+    oxygenRestored = oxygenToggle.checked();
+  });
+
+  const initialSliderValue = map(autoDelay, 4000, 800, sliderRange.min, sliderRange.max, true);
+  delaySlider = createSlider(sliderRange.min, sliderRange.max, initialSliderValue, 1);
+  delaySlider.input(() => {
+    autoDelay = map(delaySlider.value(), sliderRange.min, sliderRange.max, 4000, 800, true);
+  });
+
+  describe('Interactive lactic fermentation MicroSim with four stages, NADH arc, and organism fun facts.', LABEL);
+  updateControlPositions();
+  lastAdvance = millis();
+}
+
+function draw() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight, true);
+  layout = computeLayout();
+  background(255);
+
+  // Deck backgrounds
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  if (isRunning && millis() - lastAdvance >= autoDelay) {
+    advanceStep();
+  }
+
+  drawTitle();
+  drawModeStrip();
+  drawStages();
+  drawStepDetail();
+  drawNADHArc();
+  drawBadges();
+  drawOrganisms();
+  drawNarration();
+  drawControlsLabeling();
+}
+
+function drawTitle() {
+  const area = layout.title;
+  noStroke();
+  fill('#102a43');
+  textAlign(CENTER, TOP);
+  textSize(30);
+  text('Lactic Acid Fermentation Explorer', canvasWidth / 2, area.y);
+  textSize(15);
+  fill('#1f4b99');
+  text('Trace how muscle cells recycle NAD+ when oxygen is scarce', canvasWidth / 2, area.y + 32);
+}
+
+function drawModeStrip() {
+  const strip = layout.modeStrip;
+  stroke('#7ca7d6');
+  strokeWeight(1);
+  fill('#def1ff');
+  rect(strip.x, strip.y, strip.w, strip.h, 10);
+
+  const status = oxygenRestored ? 'Oxygen restored - ETC clearing NADH' : 'Oxygen debt - fermentation required';
+  const etcText = oxygenRestored ? 'Electron Transport Chain: ACTIVE' : 'Electron Transport Chain: STALLED';
+  noStroke();
+  fill('#0f1f2f');
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  text(status, strip.x + 16, strip.y + strip.h / 2 - 8);
+  textSize(12);
+  fill('#425468');
+  text(etcText, strip.x + 16, strip.y + strip.h / 2 + 10);
+}
+
+function drawStages() {
+  const boxArea = layout.stageArea;
+  const slotHeight = boxArea.h / stages.length;
+  const cardHeight = slotHeight - 16;
+  const cardWidth = boxArea.w - 20;
+  stages.forEach((stage, index) => {
+    const x = boxArea.x + 10;
+    const y = boxArea.y + index * slotHeight + 8;
+    stroke('#c28f40');
+    fill(stage.color);
+    rect(x, y, cardWidth, cardHeight, 12);
+    noStroke();
+    fill('#1b1b1b');
+    textAlign(LEFT, TOP);
+    textSize(14);
+    text(stage.title, x + 10, y + 8);
+    textSize(11);
+    fill('#4b4b4b');
+    text(stage.detail, x + 10, y + 28, cardWidth - 20, cardHeight - 32);
+    if (steps[currentStep].highlights.includes(index)) {
+      noFill();
+      stroke('#f97316');
+      strokeWeight(3);
+      rect(x - 4, y - 4, cardWidth + 8, cardHeight + 8, 14);
+      strokeWeight(1);
+    }
+    // down arrow between cards
+    if (index < stages.length - 1) {
+      stroke('#555');
+      strokeWeight(2);
+      const arrowX = x + cardWidth / 2;
+      const arrowTop = y + cardHeight;
+      line(arrowX, arrowTop, arrowX, arrowTop + 18);
+      drawArrowHead(arrowX, arrowTop + 18, HALF_PI);
+    }
+  });
+}
+
+function drawStepDetail() {
+  const area = layout.infoBox;
+  stroke('#7f6aa3');
+  fill('#f6f1ff');
+  rect(area.x, area.y, area.w, area.h, 16);
+  const step = steps[currentStep];
+  noStroke();
+  fill('#2d1f44');
+  textAlign(LEFT, TOP);
+  textSize(16);
+  text(step.heading, area.x + 16, area.y + 16, area.w - 32, 40);
+  textSize(13);
+  fill('#4a3c5f');
+  text(step.body, area.x + 16, area.y + 68, area.w - 32, area.h - 100);
+  // progress badges
+  fill('#51305a');
+  textAlign(LEFT, BOTTOM);
+  textSize(12);
+  text(`Step ${currentStep + 1} of ${steps.length}`, area.x + 16, area.y + area.h - 40);
+  const barY = area.y + area.h - 20;
+  const barWidth = area.w - 32;
+  fill('#dcc7ff');
+  rect(area.x + 16, barY, barWidth, 8, 4);
+  fill('#a374ff');
+  const progress = (currentStep + 1) / steps.length;
+  rect(area.x + 16, barY, barWidth * progress, 8, 4);
+}
+
+function drawNADHArc() {
+  const area = layout.nadh;
+  stroke('#a861c7');
+  fill('#f7e6ff');
+  rect(area.x, area.y, area.w, area.h, 10);
+  noStroke();
+  fill('#531b65');
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text('NADH ↺ NAD+', area.x + area.w / 2, area.y + area.h / 2);
+
+  // Draw curved arrow graphic
+  const startX = area.x + area.w * 0.2;
+  const startY = area.y + area.h + 8;
+  const endX = area.x + area.w * 0.8;
+  const endY = area.y + area.h + 8;
+  noFill();
+  stroke('#7b3fad');
+  strokeWeight(3);
+  bezier(startX, startY, startX + 40, startY - 30, endX - 40, startY - 30, endX, endY);
+  drawCurvedArrowHead(endX, endY, 0);
+  strokeWeight(1);
+}
+
+function drawBadges() {
+  const waste = layout.wasteBadge;
+  const atp = layout.atpBadge;
+  stroke('#d48b26');
+  fill('#ffeecf');
+  rect(waste.x, waste.y, waste.w, waste.h, 8);
+  fill('#7c2d12');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  text('Waste: Lactate', waste.x + 12, waste.y + waste.h / 2);
+
+  stroke('#d48b26');
+  fill('#fff5d9');
+  rect(atp.x, atp.y, atp.w, atp.h, 8);
+  noStroke();
+  fill('#5a3a07');
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  text('Net ATP: 2', atp.x + 12, atp.y + atp.h / 2);
+}
+
+function drawOrganisms() {
+  const area = layout.organisms;
+  stroke('#be73c1');
+  fill('#fdf2ff');
+  rect(area.x, area.y, area.w, area.h, 14);
+
+  const chipWidth = 150;
+  const spacing = (area.w - chipWidth * organisms.length) / (organisms.length + 1);
+  organisms.forEach((org, index) => {
+    const x = area.x + spacing * (index + 1) + chipWidth * index;
+    const y = area.y + 12;
+    stroke(selectedOrganism === org.name ? '#d97706' : '#0f172a');
+    fill(org.color);
+    rect(x, y, chipWidth, 28, 12);
+    noStroke();
+    fill('#fff');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(org.name, x + chipWidth / 2, y + 14);
+  });
+
+  if (selectedOrganism) {
+    fill('#0f172a');
+    textAlign(LEFT, TOP);
+    textSize(12);
+    const fact = organisms.find((o) => o.name === selectedOrganism)?.fact || '';
+    text(fact, area.x + 12, area.y + area.h - 24);
+  }
+}
+
+function drawNarration() {
+  const area = layout.narration;
+  stroke('#d0993d');
+  fill('#fff2d7');
+  rect(area.x, area.y, area.w, area.h, 12);
+  const status = oxygenRestored
+    ? 'Oxygen restored: mitochondria clearing lactate.'
+    : 'Oxygen debt: fermentation preventing ATP crash.';
+  noStroke();
+  fill('#7a341a');
+  textAlign(LEFT, CENTER);
+  textSize(13);
+  text(status, area.x + 16, area.y + area.h / 2);
+}
+
+function drawControlsLabeling() {
+  fill('#0f172a');
+  textAlign(LEFT, TOP);
+  textSize(12);
+  text(`Step delay: ${(autoDelay / 1000).toFixed(1)} s`, margin, drawHeight + 95);
+
+  if (simulationSpeedLabel) {
+    fill('#1f2937');
+    textAlign(LEFT, CENTER);
+    textSize(15);
+    text('Simulation Speed:', simulationSpeedLabel.x, simulationSpeedLabel.y);
+    textSize(12);
+    text('slower', simulationSpeedLabel.x + 130, simulationSpeedLabel.y + 17);
+    textAlign(RIGHT, CENTER);
+    text('faster', canvasWidth - margin, simulationSpeedLabel.y + 17);
+  }
+}
+
+function updateControlPositions() {
+  const rowY = drawHeight + 12;
+  let posX = margin;
+  posX = positionButton(startButton, posX, rowY);
+  posX = positionButton(resetButton, posX, rowY);
+  posX = positionButton(prevButton, posX, rowY);
+  posX = positionButton(nextButton, posX, rowY);
+
+  oxygenToggle.position(posX + 20, rowY + 8);
+
+  const sliderY = rowY + 60;
+  const sliderX = margin + 130;
+  delaySlider.position(sliderX, sliderY);
+  delaySlider.size(canvasWidth - sliderX - margin);
+
+  simulationSpeedLabel = {
+    x: margin,
+    y: sliderY + 6
+  };
+}
+
+function positionButton(btn, x, y) {
+  btn.position(x, y);
+  btn.style('height', '34px');
+  btn.style('width', 'auto');
+  btn.style('padding', '6px 5px');
+  btn.style('box-sizing', 'border-box');
+  const width = btn.elt.offsetWidth || 120;
+  return x + width + 12;
+}
+
+function computeLayout() {
+  const contentWidth = canvasWidth - margin * 2;
+  const leftWidth = contentWidth * 0.66;
+  const gap = 12;
+  const rightWidth = contentWidth - leftWidth - gap;
+  const stageHeight = 260;
+  const modeStripY = margin + 60;
+  const stageY = modeStripY + 46 + 12;
+  const nadhY = stageY + stageHeight + 20;
+  const wasteY = nadhY + 40 + 16;
+  const organismY = wasteY + 32 + 16;
+  const narrationY = organismY + 80 + 16;
+
+  return {
+    title: { y: margin },
+    modeStrip: { x: margin, y: modeStripY, w: contentWidth, h: 46 },
+    stageArea: { x: margin, y: stageY, w: leftWidth, h: stageHeight },
+    infoBox: { x: margin + leftWidth + gap, y: stageY, w: rightWidth, h: stageHeight },
+    nadh: { x: margin + 30, y: nadhY, w: contentWidth - 60, h: 40 },
+    wasteBadge: { x: margin + 10, y: wasteY, w: contentWidth / 2 - 20, h: 32 },
+    atpBadge: { x: margin + contentWidth / 2 + 10, y: wasteY, w: contentWidth / 2 - 20, h: 32 },
+    organisms: { x: margin, y: organismY, w: contentWidth, h: 80 },
+    narration: { x: margin, y: narrationY, w: contentWidth, h: 50 }
+  };
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  if (isRunning && currentStep === steps.length - 1) {
+    currentStep = 0;
+  }
+  lastAdvance = millis();
+  startButton.html(isRunning ? 'Pause Simulation' : 'Start Simulation');
+}
+
+function advanceStep() {
+  changeStep(1);
+}
+
+function changeStep(delta) {
+  const nextIndex = constrain(currentStep + delta, 0, steps.length - 1);
+  if (nextIndex !== currentStep) {
+    currentStep = nextIndex;
+    lastAdvance = millis();
+  } else if (delta > 0 && currentStep === steps.length - 1) {
+    isRunning = false;
+    startButton.html('Start Simulation');
+    startButton.attribute('disabled', 'true');
+  }
+}
+
+function resetSimulation() {
+  isRunning = false;
+  currentStep = 0;
+  lastAdvance = millis();
+  oxygenRestored = false;
+  oxygenToggle.checked(false);
+  selectedOrganism = '';
+  startButton.html('Start Simulation');
+  startButton.removeAttribute('disabled');
+}
+
+function mousePressed() {
+  if (layout) {
+    const boxArea = layout.stageArea;
+    const slotHeight = boxArea.h / stages.length;
+    const cardWidth = boxArea.w - 20;
+    for (let i = 0; i < stages.length; i++) {
+      const x = boxArea.x + 10;
+      const y = boxArea.y + i * slotHeight + 8;
+      const h = slotHeight - 16;
+      if (mouseX >= x && mouseX <= x + cardWidth && mouseY >= y && mouseY <= y + h) {
+        currentStep = i;
+        isRunning = false;
+        startButton.html('Start Simulation');
+        break;
+      }
+    }
+  }
+  const area = layout.organisms;
+  organisms.forEach((org, index) => {
+    const chipWidth = 150;
+    const spacing = (area.w - chipWidth * organisms.length) / (organisms.length + 1);
+    const x = area.x + spacing * (index + 1) + chipWidth * index;
+    const y = area.y + 32;
+    if (
+      mouseX >= x &&
+      mouseX <= x + chipWidth &&
+      mouseY >= area.y + 12 &&
+      mouseY <= area.y + 40
+    ) {
+      selectedOrganism = org.name;
+      isRunning = false;
+      startButton.html('Start Simulation');
+    }
+  });
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (!container) return;
+  const bounds = container.getBoundingClientRect();
+  containerWidth = Math.floor(bounds.width);
+  canvasWidth = containerWidth;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight, true);
+  updateControlPositions();
+}
+
+function drawArrowHead(x, y, angle) {
+  push();
+  translate(x, y);
+  rotate(angle);
+  fill('#555');
+  noStroke();
+  triangle(0, 0, -10, 4, -10, -4);
+  pop();
+}
+
+function drawCurvedArrowHead(x, y, angle) {
+  push();
+  translate(x, y);
+  rotate(angle);
+  fill('#7b3fad');
+  noStroke();
+  triangle(0, 0, -10, 4, -10, -4);
+  pop();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br />
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

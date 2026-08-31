@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Triangulation Measurement Technique</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    main { display: block; }
+  </style>
+</head>
+<body>
+  <main></main>
+  <script>// Triangulation Measurement Technique — Apply (L3)
+// CANVAS_HEIGHT: 600
+// Apply triangulation: drag an evidence item around a scaled room floor plan and
+// read the live straight-line distances from two fixed reference corners (A and B),
+// computed with the Pythagorean theorem. Record measurements to a log the way an
+// investigator fills in a sketch sheet.
+
+let canvasWidth = 900;
+const drawHeight = 548;
+const controlHeight = 52;
+let canvasHeight = drawHeight + controlHeight;
+const margin = 15;
+const defaultTextSize = 16;
+
+const BG = '#eef1f5';
+const ROOM = '#e4e7ec';
+const ROOM_E = '#9aa6b5';
+const GRID = '#d2d7df';
+const PANEL = '#ffffff';
+const PANEL_E = '#c8d2df';
+const INK = '#22303f';
+const SUB = '#62707f';
+const HEAD = '#1f3a5a';
+const GREEN = '#2e9e57';
+const ORANGE = '#e8730c';
+const BLUE = '#2f6fb0';
+
+let widthSlider, lengthSlider, recordBtn, clearBtn;
+let ex = 3, ey = 2.5;   // evidence position in meters from reference A (top-left)
+let dragging = false;
+let log = [];
+let itemCount = 0;
+let room = {};          // pixel geometry of the room, set in drawRoom
+
+function setup() {
+  updateCanvasSize();
+  const cnv = createCanvas(canvasWidth, canvasHeight);
+  cnv.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  widthSlider = createSlider(3, 10, 6, 0.5);
+  widthSlider.style('width', '120px');
+  lengthSlider = createSlider(3, 10, 5, 0.5);
+  lengthSlider.style('width', '120px');
+
+  recordBtn = createButton('Record Measurement');
+  recordBtn.mousePressed(recordMeasurement);
+  clearBtn = createButton('Clear Log');
+  clearBtn.mousePressed(() => { log = []; itemCount = 0; });
+
+  positionControls();
+}
+
+function positionControls() {
+  const by = drawHeight + 14;
+  widthSlider.position(margin + 70, by);
+  lengthSlider.position(margin + 280, by);
+  recordBtn.position(margin + 430, by - 2);
+  clearBtn.position(margin + 575, by - 2);
+}
+function updateCanvasSize() {
+  const c = document.querySelector('main');
+  if (c) canvasWidth = Math.max(800, Math.floor(c.getBoundingClientRect().width));
+}
+function windowResized() {
+  updateCanvasSize(); resizeCanvas(canvasWidth, canvasHeight); positionControls();
+}
+
+function roomDims() {
+  return { Wm: widthSlider.value(), Lm: lengthSlider.value() };
+}
+
+function distToA() { return Math.sqrt(ex * ex + ey * ey); }            // meters
+function distToB() { const { Wm } = roomDims(); return Math.sqrt((Wm - ex) ** 2 + ey * ey); }
+
+function recordMeasurement() {
+  itemCount++;
+  log.push({
+    n: itemCount,
+    a: Math.round(distToA() * 100),
+    b: Math.round(distToB() * 100),
+    x: Math.round(ex * 100),
+    y: Math.round(ey * 100)
+  });
+  if (log.length > 8) log.shift();
+}
+
+function draw() {
+  background(BG);
+  noStroke();
+  fill('#dde3ec'); rect(0, drawHeight, canvasWidth, controlHeight);
+
+  fill(HEAD); textAlign(LEFT, TOP); textSize(20); textStyle(BOLD);
+  text('Triangulation Measurement', margin, 8); textStyle(NORMAL);
+  fill(SUB); textSize(11.5);
+  text('Drag the evidence item; distances to corners A and B update live (Pythagorean theorem).',
+    margin, 33);
+
+  const areaW = (canvasWidth - 3 * margin) * 0.72;
+  drawRoom(margin, 54, areaW, drawHeight - 54 - margin);
+  drawPanel(margin * 2 + areaW, 54, canvasWidth - 3 * margin - areaW, drawHeight - 54 - margin);
+  drawControlLabels();
+}
+
+function drawRoom(ax, ay, aw, ah) {
+  const { Wm, Lm } = roomDims();
+  // clamp evidence into current room
+  ex = constrain(ex, 0, Wm); ey = constrain(ey, 0, Lm);
+
+  // fit room rect inside the area, keep meter aspect ratio
+  const pad = 46;
+  const scale = Math.min((aw - 2 * pad) / Wm, (ah - 2 * pad) / Lm);
+  const rw = scale * Wm, rh = scale * Lm;
+  const rx = ax + (aw - rw) / 2, ry = ay + (ah - rh) / 2 + 6;
+  room = { rx, ry, rw, rh, scale };
+
+  // room floor
+  fill(ROOM); stroke(ROOM_E); strokeWeight(2); rect(rx, ry, rw, rh, 3); noStroke();
+  // 1 m grid
+  stroke(GRID); strokeWeight(1);
+  for (let m = 1; m < Wm; m++) line(rx + m * scale, ry, rx + m * scale, ry + rh);
+  for (let m = 1; m < Lm; m++) line(rx, ry + m * scale, rx + rw, ry + m * scale);
+  noStroke();
+  // room size labels
+  fill(SUB); textAlign(CENTER, BOTTOM); textSize(11);
+  text(Wm.toFixed(1) + ' m', rx + rw / 2, ry - 6);
+  push(); translate(rx - 10, ry + rh / 2); rotate(-HALF_PI);
+  textAlign(CENTER, BOTTOM); text(Lm.toFixed(1) + ' m', 0, 0); pop();
+
+  // reference corners A (top-left) and B (top-right)
+  const A = { x: rx, y: ry }, B = { x: rx + rw, y: ry };
+  const E = { x: rx + ex * scale, y: ry + ey * scale };
+
+  // dashed measurement lines
+  stroke(BLUE); strokeWeight(1.5); drawingContext.setLineDash([6, 5]);
+  line(A.x, A.y, E.x, E.y); line(B.x, B.y, E.x, E.y);
+  drawingContext.setLineDash([]); noStroke();
+  // distance labels at midpoints
+  fill(BLUE); textSize(11.5); textStyle(BOLD);
+  labelDist((A.x + E.x) / 2, (A.y + E.y) / 2, Math.round(distToA() * 100) + ' cm');
+  labelDist((B.x + E.x) / 2, (B.y + E.y) / 2, Math.round(distToB() * 100) + ' cm');
+  textStyle(NORMAL);
+
+  // corners
+  drawRef(A.x, A.y, 'A');
+  drawRef(B.x, B.y, 'B');
+
+  // evidence item
+  fill(ORANGE); stroke('#fff'); strokeWeight(2); circle(E.x, E.y, dragging ? 20 : 16); noStroke();
+  fill('#fff'); textAlign(CENTER, CENTER); textSize(9); textStyle(BOLD);
+  text('E', E.x, E.y + 0.5); textStyle(NORMAL);
+  fill(INK); textAlign(CENTER, TOP); textSize(10.5);
+  text('(' + Math.round(ex * 100) + ', ' + Math.round(ey * 100) + ') cm', E.x, E.y + 13);
+}
+
+function labelDist(x, y, s) {
+  textAlign(CENTER, CENTER);
+  const w = textWidth(s) + 8;
+  fill(255, 255, 255, 220); noStroke(); rect(x - w / 2, y - 9, w, 16, 4);
+  fill(BLUE); text(s, x, y);
+}
+
+function drawRef(x, y, label) {
+  fill(GREEN); stroke('#fff'); strokeWeight(2); circle(x, y, 16); noStroke();
+  fill('#fff'); textAlign(CENTER, CENTER); textSize(10); textStyle(BOLD);
+  text(label, x, y + 0.5); textStyle(NORMAL);
+}
+
+function drawPanel(x, y, w, h) {
+  fill(PANEL); stroke(PANEL_E); strokeWeight(1); rect(x, y, w, h, 8); noStroke();
+  let cy = y + 12;
+  fill(HEAD); textAlign(LEFT, TOP); textSize(13.5); textStyle(BOLD);
+  text('Live Measurement', x + 12, cy); textStyle(NORMAL); cy += 22;
+
+  fill(GREEN); circle(x + 20, cy + 6, 12); fill(INK); textSize(11.5);
+  text('to A:  ' + Math.round(distToA() * 100) + ' cm', x + 32, cy); cy += 20;
+  fill(GREEN); circle(x + 20, cy + 6, 12); fill(INK);
+  text('to B:  ' + Math.round(distToB() * 100) + ' cm', x + 32, cy); cy += 20;
+  fill(SUB); textSize(10.5);
+  text('Coordinates from A: (' + Math.round(ex * 100) + ', ' +
+    Math.round(ey * 100) + ') cm', x + 12, cy); cy += 22;
+
+  stroke(PANEL_E); line(x + 12, cy, x + w - 12, cy); noStroke(); cy += 12;
+
+  fill(HEAD); textSize(13); textStyle(BOLD);
+  text('Measurement Log', x + 12, cy); textStyle(NORMAL); cy += 20;
+  // header
+  fill(SUB); textSize(10); textStyle(BOLD);
+  text('Item', x + 14, cy); text('A (cm)', x + 64, cy); text('B (cm)', x + 130, cy);
+  textStyle(NORMAL); cy += 4;
+  stroke(PANEL_E); line(x + 12, cy + 10, x + w - 12, cy + 10); noStroke(); cy += 16;
+
+  if (log.length === 0) {
+    fill(SUB); textSize(10.5);
+    text('Drag the item, then press', x + 14, cy);
+    text('"Record Measurement".', x + 14, cy + 14);
+  } else {
+    for (const r of log) {
+      fill(ORANGE); circle(x + 20, cy + 6, 11);
+      fill('#fff'); textAlign(CENTER, CENTER); textSize(8); textStyle(BOLD);
+      text(r.n, x + 20, cy + 6); textStyle(NORMAL);
+      fill(INK); textAlign(LEFT, TOP); textSize(11);
+      text('E' + r.n, x + 32, cy); text(r.a, x + 64, cy); text(r.b, x + 130, cy);
+      cy += 19;
+    }
+  }
+}
+
+function drawControlLabels() {
+  fill(SUB); textAlign(LEFT, CENTER); textSize(11);
+  const ly = drawHeight + 26;
+  const { Wm, Lm } = roomDims();
+  text('Width', margin, ly);
+  text(Wm.toFixed(1) + 'm', margin + 195, ly);
+  text('Length', margin + 232, ly);
+  text(Lm.toFixed(1) + 'm', margin + 405, ly);
+}
+
+function evidenceScreen() {
+  return { x: room.rx + ex * room.scale, y: room.ry + ey * room.scale };
+}
+
+function mousePressed() {
+  if (mouseY > drawHeight) return;
+  const e = evidenceScreen();
+  if (dist(mouseX, mouseY, e.x, e.y) <= 16) dragging = true;
+}
+function mouseDragged() {
+  if (!dragging) return;
+  const { Wm, Lm } = roomDims();
+  ex = constrain((mouseX - room.rx) / room.scale, 0, Wm);
+  ey = constrain((mouseY - room.ry) / room.scale, 0, Lm);
+}
+function mouseReleased() { dragging = false; }
+</script>
+  <p><a href="./index.md">Back to Documentation</a></p>
+</body>
+</html>

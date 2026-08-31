@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cognitive Bias Detective using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Cognitive Bias Detective MicroSim
+// CANVAS_HEIGHT: 585
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 540;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let claims = [];
+let biasTypes = [
+  'Confirmation Bias', 'Cherry-Picking', 'False Balance',
+  'Appeal to Nature', 'Ad Hominem', 'Slippery Slope', 'False Dichotomy'
+];
+let biasButtons = [];
+let currentClaim = 0;
+let score = 0;
+let streak = 0;
+let bestStreak = 0;
+let feedback = '';
+let feedbackTimer = 0;
+let feedbackCorrect = false;
+let answered = false;
+let difficultySelect;
+let nextBtn;
+
+function initClaims() {
+  claims = [
+    // Beginner
+    {
+      headline: '"All-Natural Pesticide Proven 100% Safe"',
+      source: 'OrganicLife Blog',
+      text: 'This pesticide is made entirely from natural ingredients, so it must be safe for the environment. After all, nature knows best!',
+      bias: 'Appeal to Nature',
+      hint: 'Natural does not automatically mean safe — arsenic and poison ivy are natural too.',
+      suspect: 'natural ingredients, so it must be safe',
+      difficulty: 'Beginner'
+    },
+    {
+      headline: '"Scientist\'s Climate Claims Dismissed"',
+      source: 'Daily Contrarian',
+      text: 'Dr. Rivera\'s climate study should be ignored because she once received a parking ticket and was late to a conference. Clearly not someone we can trust.',
+      bias: 'Ad Hominem',
+      hint: 'The argument attacks the person rather than the data.',
+      suspect: 'parking ticket and was late to a conference',
+      difficulty: 'Beginner'
+    },
+    {
+      headline: '"If We Ban Plastic Straws, All Business Will Fail"',
+      source: 'Industry Weekly',
+      text: 'Banning plastic straws is the first step. Next they\'ll ban all plastics, then packaging, and soon every business will be forced to close.',
+      bias: 'Slippery Slope',
+      hint: 'The argument assumes an extreme chain of events without evidence.',
+      suspect: 'Next they\'ll ban all plastics, then packaging',
+      difficulty: 'Beginner'
+    },
+    {
+      headline: '"Study Proves Deforestation Has No Impact"',
+      source: 'Timber Trade Monthly',
+      text: 'A 2019 study of one 5-acre plot showed no species loss after selective logging. This proves deforestation does not harm biodiversity.',
+      bias: 'Cherry-Picking',
+      hint: 'One tiny study is being used to dismiss a vast body of contrary evidence.',
+      suspect: 'one 5-acre plot',
+      difficulty: 'Beginner'
+    },
+    {
+      headline: '"Equal Debate: Scientists vs. Skeptics"',
+      source: 'Fair Views Network',
+      text: 'Tonight we give equal time to 1 climate skeptic and 1 climate scientist, because both sides deserve equal representation on whether warming is human-caused.',
+      bias: 'False Balance',
+      hint: '97% of scientists agree, but the format implies a 50-50 debate.',
+      suspect: 'equal time to 1 climate skeptic and 1 climate scientist',
+      difficulty: 'Beginner'
+    },
+    // Intermediate
+    {
+      headline: '"Renewable Energy Cannot Power Modern Life"',
+      source: 'Energy Realist Forum',
+      text: 'We must choose: either we keep fossil fuels and have a strong economy, or we switch to renewables and accept poverty. There is no middle ground.',
+      bias: 'False Dichotomy',
+      hint: 'The argument presents only two extreme options, ignoring mixed approaches.',
+      suspect: 'either we keep fossil fuels...or we switch to renewables and accept poverty',
+      difficulty: 'Intermediate'
+    },
+    {
+      headline: '"I Already Believed Pollution Was Low Here"',
+      source: 'Local Community Board',
+      text: 'Our neighborhood air quality study found PM2.5 at 11 μg/m³ on one sunny day. This confirms what I always felt — our air is perfectly clean year-round.',
+      bias: 'Confirmation Bias',
+      hint: 'One good reading is being used to confirm a pre-existing belief while ignoring variability.',
+      suspect: 'confirms what I always felt',
+      difficulty: 'Intermediate'
+    },
+    {
+      headline: '"Herbal Remedy Better Than Water Treatment"',
+      source: 'Nature\'s Way Magazine',
+      text: 'Why use chemical water purification when herbal filtration uses only plant-based materials? Plants have been filtering water for millions of years.',
+      bias: 'Appeal to Nature',
+      hint: 'Being plant-based doesn\'t guarantee effectiveness at removing pathogens.',
+      suspect: 'Plants have been filtering water for millions of years',
+      difficulty: 'Intermediate'
+    },
+    {
+      headline: '"One Warm Winter Proves Climate Models Wrong"',
+      source: 'Weather Watch Blog',
+      text: 'This winter was warmer than models predicted for our city, proving that climate predictions are unreliable and we should ignore them.',
+      bias: 'Cherry-Picking',
+      hint: 'One local season is being used to dismiss global long-term models.',
+      suspect: 'warmer than models predicted for our city',
+      difficulty: 'Intermediate'
+    },
+    {
+      headline: '"Environmentalist\'s Hypocrisy Exposed!"',
+      source: 'Gotcha News',
+      text: 'Environmental advocate caught driving an SUV! How can we trust anything she says about reducing emissions?',
+      bias: 'Ad Hominem',
+      hint: 'Personal behavior doesn\'t invalidate scientific arguments.',
+      suspect: 'caught driving an SUV',
+      difficulty: 'Intermediate'
+    },
+    // Expert
+    {
+      headline: '"Coral Reefs Actually Thriving, Says Report"',
+      source: 'Ocean Optimist Quarterly',
+      text: 'A survey of 3 reefs near a marine reserve showed 15% coral cover increase. Meanwhile, the report omits that 80% of surveyed reefs globally showed decline.',
+      bias: 'Cherry-Picking',
+      hint: 'The positive finding is highlighted while the broader negative trend is hidden.',
+      suspect: '3 reefs near a marine reserve',
+      difficulty: 'Expert'
+    },
+    {
+      headline: '"Any Regulation Will Destroy the Economy"',
+      source: 'Free Market Institute',
+      text: 'If we pass this emissions cap, factories will close, then unemployment will skyrocket, tax revenue will collapse, and civilization as we know it will end.',
+      bias: 'Slippery Slope',
+      hint: 'Each step in the chain is presented as inevitable without evidence.',
+      suspect: 'factories will close, then unemployment will skyrocket',
+      difficulty: 'Expert'
+    },
+    {
+      headline: '"Both Sides of Pesticide Safety Debate"',
+      source: 'Balanced Ag Report',
+      text: 'We interviewed one toxicologist who reviewed 200 studies and one farmer who disagrees based on experience. The science is clearly still divided.',
+      bias: 'False Balance',
+      hint: 'Expertise and evidence levels are vastly different but presented as equivalent.',
+      suspect: 'one toxicologist who reviewed 200 studies and one farmer',
+      difficulty: 'Expert'
+    },
+    {
+      headline: '"Protect Wilderness or Feed People — Pick One"',
+      source: 'AgriWorld Daily',
+      text: 'Conservation groups want to lock up farmland as wilderness. We face a simple choice: feed 8 billion people or let them starve for butterflies.',
+      bias: 'False Dichotomy',
+      hint: 'Sustainable agriculture shows conservation and food production can coexist.',
+      suspect: 'feed 8 billion people or let them starve',
+      difficulty: 'Expert'
+    },
+    {
+      headline: '"My Research Confirms Rising Fish Stocks"',
+      source: 'Dr. K. Fisher, Marine Blog',
+      text: 'After 10 years studying my local lake, I\'m confident fish populations are recovering everywhere. This matches my original hypothesis perfectly.',
+      bias: 'Confirmation Bias',
+      hint: 'Local observations are generalized globally and match a pre-existing hypothesis suspiciously well.',
+      suspect: 'matches my original hypothesis perfectly',
+      difficulty: 'Expert'
+    }
+  ];
+}
+
+function getFilteredClaims() {
+  let diff = difficultySelect.value();
+  if (diff === 'All') return claims;
+  return claims.filter(c => c.difficulty === diff);
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Cognitive bias detective game where students identify biases in environmental claims.', LABEL);
+
+  difficultySelect = createSelect();
+  difficultySelect.parent(document.querySelector('main'));
+  difficultySelect.option('All');
+  difficultySelect.option('Beginner');
+  difficultySelect.option('Intermediate');
+  difficultySelect.option('Expert');
+  difficultySelect.selected('All');
+  difficultySelect.changed(() => { currentClaim = 0; answered = false; feedback = ''; });
+
+  nextBtn = createButton('Next Claim →');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.mousePressed(() => {
+    let filtered = getFilteredClaims();
+    currentClaim = (currentClaim + 1) % filtered.length;
+    answered = false;
+    feedback = '';
+  });
+
+  // Bias type buttons
+  for (let i = 0; i < biasTypes.length; i++) {
+    let btn = createButton(biasTypes[i]);
+    btn.parent(document.querySelector('main'));
+    btn.style('font-size', '11px');
+    btn.style('margin', '2px');
+    let biasName = biasTypes[i];
+    btn.mousePressed(() => checkAnswer(biasName));
+    biasButtons.push(btn);
+  }
+
+  initClaims();
+}
+
+function checkAnswer(selected) {
+  if (answered) return;
+  answered = true;
+  let filtered = getFilteredClaims();
+  let claim = filtered[currentClaim % filtered.length];
+  if (selected === claim.bias) {
+    score++;
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    feedbackCorrect = true;
+    feedback = 'Correct! This is ' + claim.bias + '. ' + claim.hint;
+  } else {
+    streak = 0;
+    feedbackCorrect = false;
+    feedback = 'Not quite. The bias is ' + claim.bias + '. Hint: ' + claim.hint;
+  }
+  feedbackTimer = 300;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  let filtered = getFilteredClaims();
+  let claim = filtered[currentClaim % filtered.length];
+
+  // Background
+  fill('aliceblue');
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Score bar
+  fill(38, 70, 83);
+  noStroke();
+  rect(0, 0, canvasWidth, 35);
+  fill(255);
+  noStroke();
+  textSize(13);
+  textAlign(LEFT, CENTER);
+  text('Score: ' + score, 15, 17);
+  textAlign(CENTER, CENTER);
+  text('Streak: ' + streak + ' | Best: ' + bestStreak, canvasWidth / 2, 17);
+  textAlign(RIGHT, CENTER);
+  text('Claim ' + ((currentClaim % filtered.length) + 1) + '/' + filtered.length, canvasWidth - 15, 17);
+
+  // Claim card
+  let cardX = 15;
+  let cardY = 45;
+  let cardW = canvasWidth - 30;
+  let cardH = 200;
+
+  // Card shadow
+  fill(0, 0, 0, 30);
+  noStroke();
+  rect(cardX + 3, cardY + 3, cardW, cardH, 8);
+  // Card
+  fill(255);
+  rect(cardX, cardY, cardW, cardH, 8);
+
+  // Difficulty badge
+  let badgeColor = claim.difficulty === 'Beginner' ? color(42, 157, 143) :
+    claim.difficulty === 'Intermediate' ? color(233, 196, 106) : color(230, 57, 70);
+  fill(badgeColor);
+  noStroke();
+  rect(cardX + cardW - 90, cardY + 8, 80, 20, 10);
+  fill(255);
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  text(claim.difficulty, cardX + cardW - 50, cardY + 18);
+
+  // Source
+  noStroke();
+  fill(100);
+  textSize(10);
+  textAlign(LEFT, TOP);
+  text('Source: ' + claim.source, cardX + 15, cardY + 12);
+
+  // Headline
+  fill(38, 70, 83);
+  textSize(15);
+  textAlign(LEFT, TOP);
+  text(claim.headline, cardX + 15, cardY + 35, cardW - 30);
+
+  // Claim text
+  fill(60);
+  textSize(12);
+  text(claim.text, cardX + 15, cardY + 80, cardW - 30, cardH - 90);
+
+  // Suspect phrase highlight
+  if (answered && feedbackCorrect) {
+    // Highlight the suspect text area
+    fill(255, 209, 102, 60);
+    noStroke();
+    rect(cardX + 10, cardY + 75, cardW - 20, cardH - 85, 4);
+  }
+
+  // Feedback area
+  let fbY = cardY + cardH + 15;
+  if (feedback !== '') {
+    fill(feedbackCorrect ? color(42, 157, 143, 40) : color(230, 57, 70, 40));
+    noStroke();
+    rect(15, fbY, canvasWidth - 30, 80, 8);
+    fill(feedbackCorrect ? color(20, 80, 70) : color(150, 30, 30));
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text(feedback, 25, fbY + 10, canvasWidth - 50, 65);
+  }
+
+  // Bias toolkit label
+  let toolY = fbY + 90;
+  noStroke();
+  fill(38, 70, 83);
+  textSize(13);
+  textAlign(CENTER);
+  text('🔍 Bias Toolkit — Select the bias you detect:', canvasWidth / 2, toolY);
+
+  // Control area
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  positionControls();
+}
+
+function positionControls() {
+  let ox = canvasOffsetX();
+  let oy = canvasOffsetY();
+  // Row 1: select + next button
+  difficultySelect.position(ox + 10, oy + drawHeight + 5);
+  nextBtn.position(ox + 130, oy + drawHeight + 5);
+}
+
+function canvasOffsetX() {
+  return document.querySelector('main canvas').getBoundingClientRect().left;
+}
+function canvasOffsetY() {
+  return document.querySelector('main canvas').getBoundingClientRect().top;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

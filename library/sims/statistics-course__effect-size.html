@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Dilations with Different Scale Factors</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Dilations with Different Scale Factors
+// Shows enlargements and reductions
+
+let canvasWidth = 800;
+let drawHeight = 450;
+let canvasHeight = drawHeight;
+
+let selectedExample = 0;
+let animProgress = 1;
+let isAnimating = false;
+
+let examples = [
+  { k: 2, name: "k = 2", label: "Enlargement (k > 1)", type: "enlarge" },
+  { k: 0.5, name: "k = 0.5", label: "Reduction (0 < k < 1)", type: "reduce" },
+  { k: 1.5, name: "k = 1.5", label: "Moderate Enlargement", type: "enlarge" }
+];
+
+// Triangle in Q1
+let triangle = [
+  [1.5, 1],
+  [3, 1],
+  [2, 2.5]
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  describe('Diagram showing dilations with different scale factors', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+  background('#FFF8E1');
+
+  // Title
+  fill('#FF6F00');
+  textSize(18);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  text("Dilations: Changing Size While Preserving Shape", canvasWidth / 2, 10);
+  textStyle(NORMAL);
+
+  fill('#757575');
+  textSize(11);
+  text('Click a scale factor to animate', canvasWidth / 2, 35);
+
+  // Update animation
+  if (isAnimating) {
+    animProgress += 0.02;
+    if (animProgress >= 1) {
+      animProgress = 1;
+      isAnimating = false;
+    }
+  }
+
+  drawExampleButtons();
+  drawDilation(examples[selectedExample]);
+  drawNotRigidWarning();
+}
+
+function drawExampleButtons() {
+  let buttonWidth = 90;
+  let buttonHeight = 28;
+  let startX = canvasWidth / 2 - (examples.length * (buttonWidth + 10)) / 2;
+  let y = 55;
+
+  for (let i = 0; i < examples.length; i++) {
+    let x = startX + i * (buttonWidth + 10);
+
+    if (i === selectedExample) {
+      fill('#FF6F00');
+    } else {
+      fill('#FFE0B2');
+    }
+    noStroke();
+    rect(x, y, buttonWidth, buttonHeight, 5);
+
+    fill(i === selectedExample ? 'white' : '#E65100');
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(examples[i].name, x + buttonWidth / 2, y + buttonHeight / 2);
+  }
+}
+
+function drawDilation(ex) {
+  let gridSize = min(canvasWidth - 100, 300);
+  let cellSize = gridSize / 10;
+  let centerX = canvasWidth / 2;
+  let centerY = 260;
+
+  // Draw grid
+  stroke('#FFE0B2');
+  strokeWeight(1);
+  for (let i = -5; i <= 5; i++) {
+    let x = centerX + i * cellSize;
+    let y = centerY + i * cellSize;
+    line(x, centerY - 5 * cellSize, x, centerY + 5 * cellSize);
+    line(centerX - 5 * cellSize, y, centerX + 5 * cellSize, y);
+  }
+
+  // Draw axes
+  stroke('#424242');
+  strokeWeight(2);
+  line(centerX - 5 * cellSize, centerY, centerX + 5 * cellSize, centerY);
+  line(centerX, centerY - 5 * cellSize, centerX, centerY + 5 * cellSize);
+
+  // Center of dilation (origin)
+  fill('#E53935');
+  noStroke();
+  ellipse(centerX, centerY, 14, 14);
+
+  fill('#B71C1C');
+  textSize(10);
+  textAlign(LEFT, TOP);
+  text('Center', centerX + 10, centerY + 2);
+
+  // Calculate animated scale
+  let currentK = lerp(1, ex.k, animProgress);
+
+  // Draw radial lines
+  stroke('#9E9E9E');
+  strokeWeight(1);
+  setLineDash([4, 3]);
+
+  for (let v of triangle) {
+    // Line from origin through vertex
+    let endX = centerX + v[0] * ex.k * 1.2 * cellSize;
+    let endY = centerY - v[1] * ex.k * 1.2 * cellSize;
+    line(centerX, centerY, endX, endY);
+  }
+  setLineDash([]);
+
+  // Draw pre-image (blue)
+  let preVerts = triangle.map(p => [
+    centerX + p[0] * cellSize,
+    centerY - p[1] * cellSize
+  ]);
+
+  fill('#1565C0');
+  stroke('#0D47A1');
+  strokeWeight(2);
+  beginShape();
+  for (let v of preVerts) {
+    vertex(v[0], v[1]);
+  }
+  endShape(CLOSE);
+
+  // Draw image (green) - animated
+  let imageVerts = triangle.map(p => [
+    centerX + p[0] * currentK * cellSize,
+    centerY - p[1] * currentK * cellSize
+  ]);
+
+  if (animProgress < 1) {
+    fill(76, 175, 80, 180);
+    stroke(46, 125, 50, 180);
+  } else {
+    fill('#4CAF50');
+    stroke('#2E7D32');
+  }
+  strokeWeight(2);
+  beginShape();
+  for (let v of imageVerts) {
+    vertex(v[0], v[1]);
+  }
+  endShape(CLOSE);
+
+  // Distance measurements when complete
+  if (animProgress >= 1) {
+    // Show distance ratio on one side
+    let p1 = triangle[0];
+    let p2 = triangle[1];
+    let preDist = dist(p1[0], p1[1], p2[0], p2[1]);
+    let imgDist = preDist * ex.k;
+
+    fill('#0D47A1');
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text(`${preDist.toFixed(1)} units`,
+         (preVerts[0][0] + preVerts[1][0]) / 2,
+         preVerts[0][1] + 5);
+
+    fill('#2E7D32');
+    let finalVerts = triangle.map(p => [
+      centerX + p[0] * ex.k * cellSize,
+      centerY - p[1] * ex.k * cellSize
+    ]);
+    text(`${imgDist.toFixed(1)} units`,
+         (finalVerts[0][0] + finalVerts[1][0]) / 2,
+         finalVerts[0][1] + 5);
+
+    // Ratio label
+    fill('#E65100');
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text(`Ratio: ${ex.k}:1`, canvasWidth / 2, drawHeight - 85);
+  }
+
+  // Vertex labels
+  noStroke();
+  fill('#0D47A1');
+  textSize(11);
+  textStyle(BOLD);
+  text('A', preVerts[0][0] - 10, preVerts[0][1]);
+  text('B', preVerts[1][0] + 8, preVerts[1][1]);
+  text('C', preVerts[2][0], preVerts[2][1] - 12);
+
+  if (animProgress >= 1) {
+    fill('#2E7D32');
+    let finalVerts = triangle.map(p => [
+      centerX + p[0] * ex.k * cellSize,
+      centerY - p[1] * ex.k * cellSize
+    ]);
+    text("A'", finalVerts[0][0] - 10, finalVerts[0][1]);
+    text("B'", finalVerts[1][0] + 8, finalVerts[1][1]);
+    text("C'", finalVerts[2][0], finalVerts[2][1] - 12);
+  }
+  textStyle(NORMAL);
+
+  // Labels
+  fill('#424242');
+  textSize(14);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text(`D${ex.k}: Dilation with k = ${ex.k}`, canvasWidth / 2, drawHeight - 65);
+  textStyle(NORMAL);
+
+  fill('#757575');
+  textSize(12);
+  text(`(x, y) → (${ex.k}x, ${ex.k}y)`, canvasWidth / 2, drawHeight - 45);
+
+  // Type label
+  fill(ex.type === 'enlarge' ? '#2E7D32' : '#1565C0');
+  textSize(12);
+  text(ex.label, canvasWidth / 2, drawHeight - 25);
+}
+
+function drawNotRigidWarning() {
+  // Warning box
+  let boxW = 200;
+  let boxH = 35;
+  let boxX = canvasWidth - boxW - 20;
+  let boxY = 90;
+
+  fill('#FFEBEE');
+  stroke('#E53935');
+  strokeWeight(2);
+  rect(boxX, boxY, boxW, boxH, 5);
+
+  noStroke();
+  fill('#C62828');
+  textSize(11);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  text('⚠ NOT a rigid motion!', boxX + boxW / 2, boxY + 12);
+  textStyle(NORMAL);
+  textSize(10);
+  text('Size changes', boxX + boxW / 2, boxY + 25);
+}
+
+function mousePressed() {
+  let buttonWidth = 90;
+  let buttonHeight = 28;
+  let startX = canvasWidth / 2 - (examples.length * (buttonWidth + 10)) / 2;
+  let y = 55;
+
+  for (let i = 0; i < examples.length; i++) {
+    let x = startX + i * (buttonWidth + 10);
+    if (mouseX >= x && mouseX <= x + buttonWidth &&
+        mouseY >= y && mouseY <= y + buttonHeight) {
+      selectedExample = i;
+      animProgress = 0;
+      isAnimating = true;
+      return;
+    }
+  }
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = min(container.offsetWidth, 800);
+    canvasWidth = max(canvasWidth, 400);
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

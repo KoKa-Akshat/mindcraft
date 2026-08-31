@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Vertical vs. Horizontal Integration — Interactive Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Vertical vs. Horizontal Integration — Interactive Diagram
+// CANVAS_HEIGHT: 720
+// Chapter 10: The Gilded Age: Industrialization and Labor (1865–1890)
+// Bloom Level: Understand (L2) — Explain the difference between vertical
+// and horizontal integration and give a historical example of each.
+//
+// Layout: drawHeight (620) + controlHeight (100) = 720
+// Two panels side by side. Left panel: Vertical Integration as a chain of
+// stages (Carnegie Steel by default; toggleable to Amazon for the modern
+// parallel). Right panel: Horizontal Integration as a hub-and-spoke web
+// (Standard Oil by default; toggleable to Big Tech). Click any node to
+// read what it did, the strategic advantage, and a historical detail.
+// "Build" buttons advance one acquisition at a time so students see how
+// the empire was assembled. "Compare" highlights the structural
+// difference; "Advantages" / "Risks" toggle annotation overlays.
+
+let canvasWidth = 900;
+let drawHeight = 620;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+// ---- Color palette -------------------------------------------------------
+const COLOR_BG       = [255, 255, 255];
+const COLOR_PANEL_BG = [248, 250, 252];
+const COLOR_PANEL_BD = [200, 210, 220];
+
+// Vertical chain — shades of blue (deeper near finished product)
+const VERTICAL_BLUES = [
+  [187, 222, 251], // lightest -- raw inputs (iron ore)
+  [144, 202, 249],
+  [100, 181, 246],
+  [66, 165, 245],
+  [33, 150, 243],
+  [13, 71, 160]    // darkest -- finished product / distribution
+];
+
+// Horizontal web colors
+const COLOR_HUB        = [249, 168, 37];   // gold center
+const COLOR_ACQUIRED   = [255, 213, 79];   // gold (acquired refineries)
+const COLOR_INDEPEND   = [158, 158, 158];  // gray (independent competitor)
+const COLOR_ELIMINATED = [198, 40, 40];    // red (driven out)
+
+// ---- Examples ------------------------------------------------------------
+// Each integration mode has a "historical" and "modern" example.
+
+const verticalExamples = {
+  historical: {
+    title: 'Carnegie Steel (1890s)',
+    headline: 'Andrew Carnegie owned every step of steelmaking.',
+    chain: [
+      {
+        id: 'ore',
+        name: 'Iron Ore Mines',
+        sub: 'Mesabi Range, MN',
+        costPct: 18,
+        what: 'Raw iron ore — the basic input for all steel. Carnegie bought into the Mesabi Range in 1896 to lock in the richest hematite deposits in the world.',
+        advantage: 'Eliminates the supplier markup. No more paying ore brokers a premium per ton.',
+        history: 'Carnegie partnered with Henry Oliver, then bought him out, securing 75-year leases on hundreds of millions of tons of ore — at no royalty per ton mined.',
+        risk: 'Capital tied up in mines that depend on a single end-product (steel).',
+        modernNote: 'Like Amazon owning fulfillment centers instead of renting space.'
+      },
+      {
+        id: 'ships',
+        name: 'Great Lakes Ships',
+        sub: 'Pittsburgh Steamship Co.',
+        costPct: 8,
+        what: 'A fleet of ore boats moved Mesabi ore across Lake Superior to Lake Erie ports. Carnegie owned the boats outright.',
+        advantage: 'Shipping rates set internally — competitors paid 60-80¢ per ton; Carnegie paid cost.',
+        history: 'By 1900 the Pittsburgh Steamship Company operated 112 vessels — the largest commercial fleet on the Great Lakes.',
+        risk: 'Single-purpose assets. Idle in winter when the lakes freeze.',
+        modernNote: 'Like Amazon Prime Air — owning the freight planes that carry your own packages.'
+      },
+      {
+        id: 'rail',
+        name: 'Railroad Lines',
+        sub: 'Bessemer & Lake Erie RR',
+        costPct: 12,
+        what: 'Rail spurs from Lake Erie ports to Pittsburgh mills. Carnegie either owned them or had exclusive long-term rate contracts.',
+        advantage: 'Bypasses railroad cartels. Rebates from Pennsylvania RR cut shipping cost ~25%.',
+        history: 'The Bessemer & Lake Erie Railroad (built 1896-1900) gave Carnegie a 142-mile owned line linking ore docks to his Homestead and Edgar Thomson works.',
+        risk: 'Federal regulators (ICC) would later target rebates and exclusive contracts.',
+        modernNote: 'Like Amazon\'s own delivery vans replacing UPS/FedEx for last-mile.'
+      },
+      {
+        id: 'coal',
+        name: 'Coal & Coke',
+        sub: 'Frick Coke Company',
+        costPct: 16,
+        what: 'Coke (purified coal) is the fuel that turns iron ore into steel. Henry Clay Frick supplied 80% of the Connellsville coke field; Carnegie bought him in.',
+        advantage: 'Fuel cost stable; can\'t be squeezed by independent coke producers during a strike.',
+        history: 'Carnegie merged with Frick in 1882. The 1892 Homestead Strike was partly Frick\'s response to that fuel-cost pressure.',
+        risk: 'Concentrates labor disputes — one strike at the coke ovens halts the whole pipeline.',
+        modernNote: 'Like Apple controlling chip design instead of buying off-the-shelf processors.'
+      },
+      {
+        id: 'mills',
+        name: 'Steel Mills',
+        sub: 'Edgar Thomson, Homestead, Duquesne',
+        costPct: 30,
+        what: 'The actual blast furnaces, Bessemer converters, and rolling mills that turn ore into rails, beams, and plate.',
+        advantage: 'Carnegie reinvested every dollar in better technology; by 1900 his mills produced steel at half the cost of European rivals.',
+        history: 'Edgar Thomson Works (1875) was the first U.S. mill purpose-built for the Bessemer process. Cost to make a steel rail fell from $100/ton (1873) to $12/ton (1900).',
+        risk: 'Massive fixed cost; idle mills bleed money in a downturn.',
+        modernNote: 'Like Tesla\'s Gigafactories — vertically owning battery cell production.'
+      },
+      {
+        id: 'dist',
+        name: 'Distribution Network',
+        sub: 'Sales offices · Direct contracts',
+        costPct: 16,
+        what: 'Direct sales force selling rails to railroads, beams to skyscraper builders, plate to shipyards. No wholesalers in between.',
+        advantage: 'Captures the distributor margin and gathers market intelligence — Carnegie knew demand before competitors did.',
+        history: 'Carnegie pioneered the "scientific" sales force — engineers who could spec a customer\'s bridge while writing the contract.',
+        risk: 'Sales staff overhead survives even when orders dry up.',
+        modernNote: 'Like Apple Stores instead of selling only through Best Buy.'
+      }
+    ]
+  },
+  modern: {
+    title: 'Amazon (2020s)',
+    headline: 'Amazon owns most of its own e-commerce supply chain.',
+    chain: [
+      {
+        id: 'aws',
+        name: 'AWS Cloud',
+        sub: 'Data centers',
+        costPct: 12,
+        what: 'Amazon Web Services hosts Amazon.com itself — and most of its competitors.',
+        advantage: 'Compute cost is internal; AWS profits subsidize retail.',
+        history: 'AWS launched 2006; by 2023 it generated 70% of Amazon\'s operating income.',
+        risk: 'Antitrust scrutiny over self-preferencing.',
+        modernNote: 'The 21st-century equivalent of Carnegie owning his coal supply.'
+      },
+      {
+        id: 'ware',
+        name: 'Fulfillment Centers',
+        sub: '~110M sq ft, 1,500+ sites',
+        costPct: 18,
+        what: 'Warehouses where merchants\' goods are stored, picked, and packed.',
+        advantage: 'Two-day delivery is impossible without owning storage near customers.',
+        history: 'Amazon doubled warehouse capacity 2020-2022 — a $61B build-out.',
+        risk: 'Real estate cost stranded if demand falls (warehouse closures, 2022).',
+        modernNote: 'Like Carnegie\'s Mesabi mines — owning the input layer.'
+      },
+      {
+        id: 'air',
+        name: 'Amazon Air',
+        sub: '110+ cargo aircraft',
+        costPct: 8,
+        what: 'Cargo planes moving packages between fulfillment hubs.',
+        advantage: 'No more paying FedEx/UPS rate hikes during peak season.',
+        history: 'Amazon Air launched 2016 with 20 leased planes; 110+ by 2024.',
+        risk: 'Capacity sized for peak — half-empty in spring.',
+        modernNote: 'Like Carnegie\'s 112-ship Great Lakes fleet.'
+      },
+      {
+        id: 'van',
+        name: 'Delivery Vans (DSP)',
+        sub: '~150K Rivian + branded vans',
+        costPct: 14,
+        what: 'Last-mile delivery fleet operated by Delivery Service Partners.',
+        advantage: 'Cuts UPS/USPS handoff; Amazon now delivers ~70% of its own packages.',
+        history: 'Amazon ordered 100,000 Rivian electric vans in 2019 — first deliveries 2022.',
+        risk: 'Labor exposure: DSP drivers have unionized; lawsuits over working conditions.',
+        modernNote: 'Like Carnegie\'s Bessemer & Lake Erie Railroad.'
+      },
+      {
+        id: 'site',
+        name: 'Amazon.com Marketplace',
+        sub: 'The retail platform',
+        costPct: 28,
+        what: 'The website where customers buy and third-party merchants sell.',
+        advantage: 'Owns the customer relationship and the data on every purchase.',
+        history: '~38% of all U.S. e-commerce flows through Amazon.com (2023).',
+        risk: 'Antitrust: regulators argue Amazon self-preferences its own brands.',
+        modernNote: 'Like Carnegie\'s Edgar Thomson rolling mill — the central asset.'
+      },
+      {
+        id: 'prime',
+        name: 'Prime + Echo + Ring',
+        sub: 'Direct customer touchpoints',
+        costPct: 20,
+        what: 'Subscription, voice assistant, and home-security devices that lock customers in.',
+        advantage: 'Prime members spend 2× as much as non-members. Echo orders bypass Google Search.',
+        history: 'Prime launched 2005; ~200M global members by 2023.',
+        risk: 'Devices are loss leaders — only profitable via downstream purchases.',
+        modernNote: 'Like Carnegie\'s direct sales force — owning the customer connection.'
+      }
+    ]
+  }
+};
+
+const horizontalExamples = {
+  historical: {
+    title: 'Standard Oil (1882)',
+    headline: 'Rockefeller bought or crushed every refinery he could find.',
+    hub: { name: 'Standard Oil', sub: 'Cleveland HQ' },
+    // Each spoke is a competitor refinery. status: 'acquired' | 'eliminated' | 'independent'
+    spokes: [
+      { id: 's1',  name: 'Atlantic Refining',          status: 'acquired',   year: 1874, share: 4 },
+      { id: 's2',  name: 'Pratt & Co.',                status: 'acquired',   year: 1874, share: 3 },
+      { id: 's3',  name: 'Charles Pratt & Co.',        status: 'acquired',   year: 1874, share: 3 },
+      { id: 's4',  name: 'Sone & Fleming',             status: 'acquired',   year: 1875, share: 2 },
+      { id: 's5',  name: 'Devoe Manufacturing',        status: 'acquired',   year: 1875, share: 2 },
+      { id: 's6',  name: 'Eclipse Lubricating',        status: 'acquired',   year: 1876, share: 2 },
+      { id: 's7',  name: 'Acme Oil',                   status: 'acquired',   year: 1876, share: 3 },
+      { id: 's8',  name: 'Imperial Refining',          status: 'eliminated', year: 1877, share: 0 },
+      { id: 's9',  name: 'Bear Creek Refining',        status: 'eliminated', year: 1877, share: 0 },
+      { id: 's10', name: 'Pennsylvania Independents',  status: 'eliminated', year: 1878, share: 0 },
+      { id: 's11', name: 'Tidewater Pipe',             status: 'independent',year: 1879, share: 4 },
+      { id: 's12', name: 'Pure Oil Co.',               status: 'independent',year: 1895, share: 3 }
+    ],
+    facts: {
+      acquired:
+        'Acquired refineries kept their names but became Standard\'s. Rockefeller offered cash or Standard stock; nearly all who took stock became millionaires.',
+      eliminated:
+        'Refiners who refused to sell faced secret railroad rebate deals that gave Standard 30% lower freight. They could not match prices and went bankrupt.',
+      independent:
+        'A handful of independents survived by building their own pipelines (Tidewater, 1879) — bypassing the railroads that Standard controlled.'
+    },
+    advantage:
+      'By 1882 Standard refined 90% of all U.S. oil. With one buyer for crude and one seller of kerosene, Rockefeller set both prices.',
+    risk:
+      'A monopoly attracts regulators. The Sherman Antitrust Act (1890) was written with Standard in mind; the 1911 Supreme Court broke Standard into 34 companies (Exxon, Mobil, Chevron, Amoco — all descendants).',
+    history:
+      'In 1872 Rockefeller controlled ~10% of U.S. refining capacity. In 90 days during the "Cleveland Massacre" (Feb-Mar 1872) he absorbed 22 of 26 Cleveland competitors. By 1882, the Standard Oil Trust held 90% of U.S. refining.'
+  },
+  modern: {
+    title: 'Big Tech (2010s-2020s)',
+    headline: 'A few platforms acquired or copied every meaningful competitor.',
+    hub: { name: 'Meta / Google / Amazon', sub: 'Acquirers' },
+    spokes: [
+      { id: 's1',  name: 'Instagram → Meta',           status: 'acquired',   year: 2012, share: 12 },
+      { id: 's2',  name: 'WhatsApp → Meta',            status: 'acquired',   year: 2014, share: 9 },
+      { id: 's3',  name: 'YouTube → Google',           status: 'acquired',   year: 2006, share: 14 },
+      { id: 's4',  name: 'DoubleClick → Google',       status: 'acquired',   year: 2008, share: 6 },
+      { id: 's5',  name: 'Waze → Google',              status: 'acquired',   year: 2013, share: 3 },
+      { id: 's6',  name: 'Twitch → Amazon',            status: 'acquired',   year: 2014, share: 5 },
+      { id: 's7',  name: 'Ring → Amazon',              status: 'acquired',   year: 2018, share: 3 },
+      { id: 's8',  name: 'Vine (shut down)',           status: 'eliminated', year: 2017, share: 0 },
+      { id: 's9',  name: 'Path (shut down)',           status: 'eliminated', year: 2018, share: 0 },
+      { id: 's10', name: 'Parler / Truth Social',      status: 'eliminated', year: 2021, share: 0 },
+      { id: 's11', name: 'TikTok',                     status: 'independent',year: 2017, share: 8 },
+      { id: 's12', name: 'Snapchat',                   status: 'independent',year: 2011, share: 3 }
+    ],
+    facts: {
+      acquired:
+        'Meta paid $1B for Instagram (2012) and $19B for WhatsApp (2014). Google paid $1.65B for YouTube (2006). The targets kept their brands; the parent collected the data and the ad inventory.',
+      eliminated:
+        'Some rivals failed against the platform\'s scale (Vine\'s users moved to Instagram Reels). Others were de-platformed off app stores (Parler, 2021).',
+      independent:
+        'TikTok grew despite — and partly because of — being non-U.S. owned, sidestepping the Big Tech acquisition machine.'
+    },
+    advantage:
+      'Owning Instagram + WhatsApp + Facebook means Meta sees ~3 billion monthly users\' attention. Ad pricing power follows audience concentration.',
+    risk:
+      'FTC v. Meta (2020) seeks to unwind the Instagram and WhatsApp acquisitions on the same logic that broke up Standard Oil in 1911. EU Digital Markets Act (2024) imposes interoperability duties.',
+    history:
+      'Meta\'s "copy, acquire, or kill" memo (revealed in antitrust filings) shows Zuckerberg explicitly modeled the strategy: identify a rising rival, offer to buy, and if refused, clone the feature on Facebook to starve the competitor.'
+  }
+};
+
+// ---- State --------------------------------------------------------------
+let activeMode = 'compare';        // 'compare' | 'advantages' | 'risks'
+let useModern = false;             // historical (false) vs. modern (true)
+let buildStep = 0;                 // 0..N -- progressive build of acquisitions
+let selectedNode = null;           // { side: 'L'|'R', id: ... } or null
+
+// Buttons
+let modeCompareBtn, modeAdvantagesBtn, modeRisksBtn;
+let toggleModernBtn;
+let buildBtn, buildAllBtn, resetBtn;
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  modeCompareBtn = createButton('Compare');
+  modeCompareBtn.parent(document.querySelector('main'));
+  modeCompareBtn.mousePressed(() => { activeMode = 'compare'; });
+
+  modeAdvantagesBtn = createButton('Advantages');
+  modeAdvantagesBtn.parent(document.querySelector('main'));
+  modeAdvantagesBtn.mousePressed(() => { activeMode = 'advantages'; });
+
+  modeRisksBtn = createButton('Risks');
+  modeRisksBtn.parent(document.querySelector('main'));
+  modeRisksBtn.mousePressed(() => { activeMode = 'risks'; });
+
+  toggleModernBtn = createButton('Show Modern Parallel');
+  toggleModernBtn.parent(document.querySelector('main'));
+  toggleModernBtn.mousePressed(() => {
+    useModern = !useModern;
+    selectedNode = null;
+    buildStep = 0;
+    toggleModernBtn.html(useModern ? 'Show Historical' : 'Show Modern Parallel');
+  });
+
+  buildBtn = createButton('Build +1');
+  buildBtn.parent(document.querySelector('main'));
+  buildBtn.mousePressed(() => { buildStep = min(buildStep + 1, maxBuildSteps()); });
+
+  buildAllBtn = createButton('Build All');
+  buildAllBtn.parent(document.querySelector('main'));
+  buildAllBtn.mousePressed(() => { buildStep = maxBuildSteps(); });
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(() => {
+    buildStep = 0;
+    selectedNode = null;
+    activeMode = 'compare';
+    useModern = false;
+    toggleModernBtn.html('Show Modern Parallel');
+  });
+
+  positionControls();
+  describe(
+    'Side-by-side interactive diagrams of vertical and horizontal integration. Left panel shows Carnegie Steel as a top-to-bottom chain of stages: iron ore mines, Great Lakes ships, railroads, coal, steel mills, distribution. Right panel shows Standard Oil as a hub with twelve refineries radiating outward, color-coded as acquired (gold), eliminated (red), or independent (gray). Click any node to read its role, strategic advantage, and historical detail. Buttons toggle between Compare, Advantages, and Risks views, switch between the historical example and a modern parallel (Amazon vs. Big Tech), and progressively build the empire one acquisition at a time.',
+    LABEL
+  );
+}
+
+function maxBuildSteps() {
+  // Use whichever side has more nodes -- both reveal in lock-step.
+  const v = currentVertical().chain.length;
+  const h = currentHorizontal().spokes.length;
+  return max(v, h);
+}
+
+function currentVertical()  { return useModern ? verticalExamples.modern   : verticalExamples.historical; }
+function currentHorizontal(){ return useModern ? horizontalExamples.modern : horizontalExamples.historical; }
+
+// Layout decision: stack panels below 650px width (per spec)
+function isStacked() { return canvasWidth < 650; }
+
+function panelGeometry() {
+  const innerY = 70;
+  const innerH = drawHeight - innerY - 20;
+  if (isStacked()) {
+    const half = innerH / 2 - 6;
+    return {
+      L: { x: margin, y: innerY,           w: canvasWidth - margin * 2, h: half },
+      R: { x: margin, y: innerY + half + 12, w: canvasWidth - margin * 2, h: half }
+    };
+  }
+  const w = (canvasWidth - margin * 3) / 2;
+  return {
+    L: { x: margin,           y: innerY, w, h: innerH },
+    R: { x: margin * 2 + w,   y: innerY, w, h: innerH }
+  };
+}
+
+function positionControls() {
+  const row1y = drawHeight + 10;
+  const row2y = drawHeight + 50;
+
+  let x = margin;
+  modeCompareBtn.position(x, row1y);    modeCompareBtn.size(74, 26);    x += 82;
+  modeAdvantagesBtn.position(x, row1y); modeAdvantagesBtn.size(96, 26); x += 104;
+  modeRisksBtn.position(x, row1y);      modeRisksBtn.size(64, 26);      x += 72;
+
+  // Right side of row 1: toggle modern parallel
+  toggleModernBtn.size(170, 26);
+  toggleModernBtn.position(canvasWidth - margin - 170, row1y);
+
+  // Row 2: build controls
+  let x2 = margin;
+  buildBtn.position(x2, row2y);    buildBtn.size(74, 26);    x2 += 82;
+  buildAllBtn.position(x2, row2y); buildAllBtn.size(80, 26); x2 += 88;
+  resetBtn.size(64, 26);
+  resetBtn.position(canvasWidth - margin - 64, row2y);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  noStroke();
+  fill(COLOR_BG[0], COLOR_BG[1], COLOR_BG[2]);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill(COLOR_PANEL_BG[0], COLOR_PANEL_BG[1], COLOR_PANEL_BG[2]);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  drawHeader();
+
+  const g = panelGeometry();
+  drawVerticalPanel(g.L);
+  drawHorizontalPanel(g.R);
+
+  drawSelectedDetail();
+  drawControlLabels();
+  positionControls();
+}
+
+function drawHeader() {
+  noStroke();
+  fill(20, 40, 90);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(20);
+  text('Vertical vs. Horizontal Integration', canvasWidth / 2, 12);
+
+  textStyle(NORMAL);
+  textSize(12);
+  fill(80);
+  const sub = useModern
+    ? 'Modern parallel: Amazon (vertical) vs. Big Tech acquisitions (horizontal).'
+    : 'Historical example: Carnegie Steel (vertical) vs. Standard Oil (horizontal).';
+  text(sub + '   Click any node for detail. Use Build +1 to grow each empire one step.', canvasWidth / 2, 38);
+
+  // Mode banner
+  textSize(11);
+  fill(120);
+  let modeLabel;
+  if (activeMode === 'compare')         modeLabel = 'View: COMPARE — structural difference highlighted';
+  else if (activeMode === 'advantages') modeLabel = 'View: ADVANTAGES — why each strategy worked';
+  else                                   modeLabel = 'View: RISKS — why each strategy was vulnerable';
+  text(modeLabel, canvasWidth / 2, 54);
+}
+
+// ============================================================
+// LEFT PANEL — Vertical Integration (chain)
+// ============================================================
+function drawVerticalPanel(rect_) {
+  drawPanelFrame(rect_, 'VERTICAL INTEGRATION', currentVertical().title, [13, 71, 160]);
+
+  const ex = currentVertical();
+  const visible = min(buildStep, ex.chain.length);
+  const innerX = rect_.x + 10;
+  const innerY = rect_.y + 60;
+  const innerW = rect_.w - 20;
+  const innerH = rect_.h - 70;
+
+  // Each stage occupies a slot; show all slots faded, draw filled up to buildStep
+  const n = ex.chain.length;
+  const slotH = innerH / n;
+  const nodeH = min(slotH - 14, 56);
+
+  for (let i = 0; i < n; i++) {
+    const stage = ex.chain[i];
+    const isVisible = i < visible;
+    const y = innerY + i * slotH + slotH / 2;
+    const blue = VERTICAL_BLUES[min(i, VERTICAL_BLUES.length - 1)];
+
+    // Connector arrow from previous (drawn before node so it sits behind)
+    if (i > 0) {
+      const prevY = innerY + (i - 1) * slotH + slotH / 2 + nodeH / 2;
+      const thisY = y - nodeH / 2;
+      stroke(isVisible ? 60 : 200);
+      strokeWeight(isVisible ? 2 : 1);
+      line(innerX + innerW / 2, prevY, innerX + innerW / 2, thisY - 6);
+      // arrowhead
+      noStroke();
+      fill(isVisible ? 60 : 200);
+      triangle(
+        innerX + innerW / 2,       thisY,
+        innerX + innerW / 2 - 6,   thisY - 8,
+        innerX + innerW / 2 + 6,   thisY - 8
+      );
+    }
+
+    // Node bubble
+    const nodeW = min(innerW - 20, 360);
+    const nodeX = innerX + innerW / 2 - nodeW / 2;
+    const nodeY = y - nodeH / 2;
+
+    if (isVisible) {
+      fill(blue[0], blue[1], blue[2]);
+      stroke(20, 50, 110);
+      strokeWeight(1.6);
+    } else {
+      fill(245, 248, 252);
+      stroke(210);
+      strokeWeight(1);
+    }
+    rect(nodeX, nodeY, nodeW, nodeH, 8);
+
+    // Selection ring
+    if (selectedNode && selectedNode.side === 'L' && selectedNode.id === stage.id) {
+      noFill();
+      stroke(255, 152, 0);
+      strokeWeight(3);
+      rect(nodeX - 3, nodeY - 3, nodeW + 6, nodeH + 6, 10);
+    }
+
+    // Label
+    noStroke();
+    const textColor = isVisible
+      ? (i >= 4 ? 255 : 20)   // dark text on light blue, white on dark blue
+      : 160;
+    fill(textColor);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    textSize(13);
+    text(stage.name, nodeX + 12, nodeY + nodeH / 2 - 8);
+    textStyle(NORMAL);
+    textSize(10);
+    text(stage.sub, nodeX + 12, nodeY + nodeH / 2 + 8);
+
+    // Cost percentage chip on the right
+    if (isVisible) {
+      const chipW = 56, chipH = 22;
+      const chipX = nodeX + nodeW - chipW - 10;
+      const chipY = nodeY + nodeH / 2 - chipH / 2;
+      noStroke();
+      fill(255, 255, 255, 220);
+      rect(chipX, chipY, chipW, chipH, 11);
+      fill(20, 50, 110);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textSize(11);
+      text('~' + stage.costPct + '% cost', chipX + chipW / 2, chipY + chipH / 2);
+      textStyle(NORMAL);
+    }
+
+    // Save hit-rect for click handling
+    stage._hit = { x: nodeX, y: nodeY, w: nodeW, h: nodeH, visible: isVisible };
+  }
+
+  // Annotation overlay
+  drawVerticalAnnotation(rect_, ex);
+}
+
+function drawVerticalAnnotation(rect_, ex) {
+  if (activeMode === 'compare') return;
+  const txt = activeMode === 'advantages'
+    ? 'ADVANTAGE: Independence from suppliers and distributors. Cost control across the whole chain. Quality and timing guaranteed.'
+    : 'RISK: Massive capital tied up in single-purpose assets. A weak step (labor strike, tech change) breaks the whole chain.';
+  const bx = rect_.x + 10;
+  const by = rect_.y + rect_.h - 38;
+  const bw = rect_.w - 20;
+  noStroke();
+  fill(activeMode === 'advantages' ? color(46, 125, 50, 230) : color(198, 40, 40, 230));
+  rect(bx, by, bw, 28, 6);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text(txt, bx + 10, by + 14, bw - 20);
+  textStyle(NORMAL);
+}
+
+// ============================================================
+// RIGHT PANEL — Horizontal Integration (hub & spokes)
+// ============================================================
+function drawHorizontalPanel(rect_) {
+  drawPanelFrame(rect_, 'HORIZONTAL INTEGRATION', currentHorizontal().title, [249, 168, 37]);
+
+  const ex = currentHorizontal();
+  const visible = min(buildStep, ex.spokes.length);
+
+  const innerX = rect_.x + 10;
+  const innerY = rect_.y + 50;
+  const innerW = rect_.w - 20;
+  const innerH = rect_.h - 100;
+  const cx = innerX + innerW / 2;
+  const cy = innerY + innerH / 2;
+
+  // Compute hub radius and spoke radius -- shrink if panel is small
+  const minDim = min(innerW, innerH);
+  const hubR = max(28, minDim * 0.10);
+  const ringR = max(60, minDim * 0.40);
+
+  // Spoke positions on a circle
+  const n = ex.spokes.length;
+  for (let i = 0; i < n; i++) {
+    const angle = -PI / 2 + (TWO_PI * i) / n;
+    const sx = cx + cos(angle) * ringR;
+    const sy = cy + sin(angle) * ringR;
+    ex.spokes[i]._x = sx;
+    ex.spokes[i]._y = sy;
+  }
+
+  // Draw spoke connectors first
+  for (let i = 0; i < n; i++) {
+    const sp = ex.spokes[i];
+    const isVisible = i < visible;
+    if (sp.status === 'independent') {
+      // No line for independents (they didn't join)
+      continue;
+    }
+    if (!isVisible) continue;
+    stroke(sp.status === 'acquired' ? color(255, 193, 7, 200) : color(198, 40, 40, 180));
+    strokeWeight(sp.status === 'eliminated' ? 1.4 : 2);
+    if (sp.status === 'eliminated') drawingContext.setLineDash([4, 4]);
+    line(cx, cy, sp._x, sp._y);
+    drawingContext.setLineDash([]);
+  }
+
+  // Draw spoke nodes
+  for (let i = 0; i < n; i++) {
+    const sp = ex.spokes[i];
+    const isVisible = i < visible;
+    let fillCol;
+    if (!isVisible) fillCol = [240, 240, 240];
+    else if (sp.status === 'acquired')   fillCol = COLOR_ACQUIRED;
+    else if (sp.status === 'eliminated') fillCol = COLOR_ELIMINATED;
+    else                                 fillCol = COLOR_INDEPEND;
+
+    fill(fillCol[0], fillCol[1], fillCol[2]);
+    stroke(60);
+    strokeWeight(1.2);
+    const r = 16;
+    ellipse(sp._x, sp._y, r * 2, r * 2);
+    sp._r = r;
+
+    // Selection ring
+    if (selectedNode && selectedNode.side === 'R' && selectedNode.id === sp.id) {
+      noFill();
+      stroke(33, 150, 243);
+      strokeWeight(3);
+      ellipse(sp._x, sp._y, r * 2 + 8, r * 2 + 8);
+    }
+
+    // Label outside the ring
+    if (isVisible) {
+      const lx = cx + cos(angleOfSpoke(i, n)) * (ringR + 22);
+      const ly = cy + sin(angleOfSpoke(i, n)) * (ringR + 22);
+      noStroke();
+      fill(40);
+      textSize(10);
+      const isLeftSide = lx < cx;
+      textAlign(isLeftSide ? RIGHT : LEFT, CENTER);
+      // Truncate long labels
+      const lbl = sp.name.length > 28 ? sp.name.slice(0, 26) + '…' : sp.name;
+      text(lbl, lx, ly);
+    }
+  }
+
+  // Draw hub LAST so it sits on top
+  fill(COLOR_HUB[0], COLOR_HUB[1], COLOR_HUB[2]);
+  stroke(140, 90, 0);
+  strokeWeight(2);
+  ellipse(cx, cy, hubR * 2, hubR * 2);
+  noStroke();
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(min(13, hubR * 0.36));
+  text(ex.hub.name, cx, cy - 4);
+  textStyle(NORMAL);
+  textSize(min(10, hubR * 0.28));
+  text(ex.hub.sub, cx, cy + 10);
+
+  // Market share readout under hub
+  const acquiredCount   = ex.spokes.filter((s, i) => i < visible && s.status === 'acquired').length;
+  const eliminatedCount = ex.spokes.filter((s, i) => i < visible && s.status === 'eliminated').length;
+  const indepCount      = ex.spokes.filter((s, i) => i < visible && s.status === 'independent').length;
+
+  // Approximate market share (acquired spokes contribute, eliminated free up share)
+  const acquiredShare = ex.spokes
+    .filter((s, i) => i < visible && s.status === 'acquired')
+    .reduce((sum, s) => sum + (s.share || 0), 0);
+  // Hub starts at 10% (Rockefeller had 10% in 1872)
+  const baseShare = 10;
+  const eliminationBonus = eliminatedCount * 4; // assumed share absorbed
+  const totalShare = min(95, baseShare + acquiredShare + eliminationBonus);
+
+  // Bottom info bar
+  const barX = innerX, barY = rect_.y + rect_.h - 38;
+  const barW = innerW;
+  noStroke();
+  fill(255, 248, 225);
+  stroke(255, 193, 7);
+  strokeWeight(1);
+  rect(barX, barY, barW, 28, 6);
+  noStroke();
+  fill(120, 80, 0);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text('Market share: ' + totalShare + '%', barX + 10, barY + 14);
+  textStyle(NORMAL);
+  fill(60);
+  text(
+    'Acquired: ' + acquiredCount + '   Eliminated: ' + eliminatedCount + '   Independent: ' + indepCount,
+    barX + 130, barY + 14
+  );
+
+  // Annotation overlay
+  drawHorizontalAnnotation(rect_);
+}
+
+function angleOfSpoke(i, n) {
+  return -PI / 2 + (TWO_PI * i) / n;
+}
+
+function drawHorizontalAnnotation(rect_) {
+  if (activeMode === 'compare') return;
+  const txt = activeMode === 'advantages'
+    ? 'ADVANTAGE: Pricing power. Owning the market means you set the price for both buyers (crude) and sellers (kerosene).'
+    : 'RISK: Antitrust regulators. Standard Oil broken into 34 firms (1911). FTC v. Meta (2020) follows the same playbook.';
+  const bx = rect_.x + 10;
+  const by = rect_.y + 28;
+  const bw = rect_.w - 20;
+  noStroke();
+  fill(activeMode === 'advantages' ? color(46, 125, 50, 230) : color(198, 40, 40, 230));
+  rect(bx, by, bw, 24, 6);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text(txt, bx + 10, by + 12, bw - 20);
+  textStyle(NORMAL);
+}
+
+// ============================================================
+// Selection detail (overlays bottom area when a node is selected)
+// ============================================================
+function drawSelectedDetail() {
+  if (!selectedNode) {
+    // Default footer hint
+    noStroke();
+    fill(120);
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    textStyle(ITALIC);
+    text(
+      'Click any blue stage on the left or any spoke on the right to read details. Use "Build +1" to grow the empire one acquisition at a time.',
+      canvasWidth / 2, drawHeight - 12
+    );
+    textStyle(NORMAL);
+    return;
+  }
+
+  // Detail card overlay
+  const cardW = min(560, canvasWidth - margin * 2);
+  const cardH = 190;
+  const cx = canvasWidth / 2 - cardW / 2;
+  const cy = drawHeight / 2 - cardH / 2;
+
+  noStroke();
+  fill(0, 0, 0, 90);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill(255);
+  stroke(33, 150, 243);
+  strokeWeight(2);
+  rect(cx, cy, cardW, cardH, 10);
+
+  let info = null;
+  let title = '';
+  let subtitle = '';
+  if (selectedNode.side === 'L') {
+    const ex = currentVertical();
+    const stage = ex.chain.find(s => s.id === selectedNode.id);
+    if (stage) {
+      title = stage.name;
+      subtitle = stage.sub + '   ·   ~' + stage.costPct + '% of total cost';
+      info = stage;
+    }
+  } else {
+    const ex = currentHorizontal();
+    const sp = ex.spokes.find(s => s.id === selectedNode.id);
+    if (sp) {
+      title = sp.name;
+      subtitle = ({
+        acquired:    'Status: ACQUIRED ('   + sp.year + ')',
+        eliminated:  'Status: ELIMINATED (' + sp.year + ')',
+        independent: 'Status: INDEPENDENT (' + sp.year + ')'
+      })[sp.status];
+      info = {
+        what: ex.facts[sp.status],
+        advantage: ex.advantage,
+        history: ex.history,
+        risk: ex.risk
+      };
+    }
+  }
+
+  if (!info) return;
+
+  // Header
+  noStroke();
+  fill(33, 150, 243);
+  rect(cx, cy, cardW, 36, 10, 10, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(14);
+  text(title, cx + 12, cy + 18);
+  textAlign(RIGHT, CENTER);
+  textStyle(NORMAL);
+  textSize(11);
+  text('×  click to close', cx + cardW - 12, cy + 18);
+
+  // Body
+  fill(60);
+  textAlign(LEFT, TOP);
+  textStyle(NORMAL);
+  textSize(11);
+  text(subtitle, cx + 12, cy + 42);
+
+  let yy = cy + 62;
+  fill(13, 71, 160);
+  textStyle(BOLD);
+  textSize(11);
+  text('WHAT IT DID', cx + 12, yy);
+  yy += 14;
+  fill(30);
+  textStyle(NORMAL);
+  textSize(12);
+  text(info.what, cx + 12, yy, cardW - 24, 36);
+  yy += 38;
+
+  fill(46, 125, 50);
+  textStyle(BOLD);
+  textSize(11);
+  text('STRATEGIC ADVANTAGE', cx + 12, yy);
+  yy += 14;
+  fill(30);
+  textStyle(NORMAL);
+  textSize(12);
+  text(info.advantage, cx + 12, yy, cardW - 24, 24);
+  yy += 26;
+
+  fill(120, 80, 0);
+  textStyle(BOLD);
+  textSize(11);
+  text('HISTORICAL DETAIL', cx + 12, yy);
+  yy += 14;
+  fill(30);
+  textStyle(NORMAL);
+  textSize(11);
+  text(info.history, cx + 12, yy, cardW - 24, 36);
+}
+
+// ============================================================
+// Panel frame helper
+// ============================================================
+function drawPanelFrame(rect_, label, title, accentColor) {
+  fill(COLOR_PANEL_BG[0], COLOR_PANEL_BG[1], COLOR_PANEL_BG[2]);
+  stroke(COLOR_PANEL_BD[0], COLOR_PANEL_BD[1], COLOR_PANEL_BD[2]);
+  strokeWeight(1.4);
+  rect(rect_.x, rect_.y, rect_.w, rect_.h, 10);
+
+  // Label strip
+  noStroke();
+  fill(accentColor[0], accentColor[1], accentColor[2]);
+  rect(rect_.x, rect_.y, rect_.w, 28, 10, 10, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text(label, rect_.x + 12, rect_.y + 14);
+  textAlign(RIGHT, CENTER);
+  textStyle(NORMAL);
+  textSize(11);
+  text(title, rect_.x + rect_.w - 12, rect_.y + 14);
+  textStyle(NORMAL);
+}
+
+// ============================================================
+// Controls labels
+// ============================================================
+function drawControlLabels() {
+  noStroke();
+  fill(60);
+  textAlign(LEFT, BOTTOM);
+  textStyle(BOLD);
+  textSize(11);
+  text('View Mode:', margin, drawHeight + 8);
+  text('Build:', margin, drawHeight + 48);
+  textStyle(NORMAL);
+
+  // Highlight active mode button with a small underline
+  let activeIdx = activeMode === 'compare' ? 0 : (activeMode === 'advantages' ? 1 : 2);
+  const xs = [margin, margin + 82, margin + 82 + 104];
+  const ws = [74, 96, 64];
+  noStroke();
+  fill(33, 150, 243);
+  rect(xs[activeIdx], drawHeight + 38, ws[activeIdx], 3);
+
+  // Step indicator
+  textAlign(RIGHT, BOTTOM);
+  textSize(11);
+  fill(80);
+  text('Step ' + buildStep + ' / ' + maxBuildSteps(), canvasWidth - margin - 80, drawHeight + 48);
+}
+
+// ============================================================
+// Mouse interaction
+// ============================================================
+function mousePressed() {
+  // Outside drawing area? bail
+  if (mouseY > drawHeight) return;
+
+  // If a detail card is open, a click anywhere inside the canvas dismisses it
+  if (selectedNode) {
+    selectedNode = null;
+    return;
+  }
+
+  // Test left panel (vertical chain hits)
+  const exV = currentVertical();
+  for (const stage of exV.chain) {
+    const h = stage._hit;
+    if (h && h.visible &&
+        mouseX >= h.x && mouseX <= h.x + h.w &&
+        mouseY >= h.y && mouseY <= h.y + h.h) {
+      selectedNode = { side: 'L', id: stage.id };
+      return;
+    }
+  }
+
+  // Test right panel (horizontal spokes)
+  const exH = currentHorizontal();
+  const visible = min(buildStep, exH.spokes.length);
+  for (let i = 0; i < visible; i++) {
+    const sp = exH.spokes[i];
+    const r = sp._r || 16;
+    const dx = mouseX - sp._x, dy = mouseY - sp._y;
+    if (dx * dx + dy * dy <= (r + 2) * (r + 2)) {
+      selectedNode = { side: 'R', id: sp.id };
+      return;
+    }
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+    <!--
+    SPECIFICATION (from chapter index.md):
+
+    Type: infographic
+    sim-id: integration-strategies
+    Library: p5.js
+    Status: Built
+
+    Purpose: Help students understand and distinguish between vertical and
+    horizontal integration through interactive diagrams that use Carnegie
+    Steel and Standard Oil as concrete examples, with a modern parallel to
+    Amazon and Big Tech.
+
+    Bloom Level: Understand (L2)
+    Bloom Verb: Explain
+
+    Learning Objective: Students explain the difference between vertical
+    and horizontal integration and give a historical example of each.
+
+    Left panel — Vertical Integration (Carnegie Steel chain):
+      Iron Ore Mines -> Great Lakes Ships -> Railroad Lines -> Coal/Coke
+      -> Steel Mills -> Distribution Network. Each node shows ~% of total
+      cost it represented and a strategic-advantage detail on click.
+
+    Right panel — Horizontal Integration (Standard Oil hub & spokes):
+      Standard Oil hub with 12 refineries radiating outward — gold = acquired,
+      red = eliminated, gray = independent. Market-share readout grows as
+      the empire is assembled.
+
+    Toggle to "Modern Parallel" swaps Carnegie -> Amazon (vertical) and
+    Standard Oil -> Big Tech acquisitions (horizontal).
+
+    Compare / Advantages / Risks buttons annotate each diagram.
+    Build +1 / Build All / Reset progressively grow the empire.
+    -->
+</body>
+</html>

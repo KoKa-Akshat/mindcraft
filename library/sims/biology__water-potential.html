@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Osmosis and Water Potential Simulator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>(function (global) {
+  const Map = {
+    A: 'ᴬ',
+    B: 'ᴮ',
+    C: '꜀',
+    D: 'ᴅ',
+    E: 'ᴱ',
+    G: 'ᴳ',
+    H: 'ᴴ',
+    I: 'ᴵ',
+    J: 'ᴶ',
+    K: 'ᴷ',
+    L: 'ᴸ',
+    M: 'ᴹ',
+    N: 'ᴺ',
+    O: 'ᴼ',
+    P: 'ᴾ',
+    R: 'ᴿ',
+    S: 'ˢ',
+    T: 'ᵀ',
+    U: 'ᵁ',
+    V: 'ⱽ',
+    W: 'ʷ',
+    X: 'ˣ',
+    Y: 'ʸ',
+    Z: 'ᶻ',
+    a: 'ᵃ',
+    b: 'ᵇ',
+    d: 'ᵈ',
+    e: 'ᵉ',
+    g: 'ᵍ',
+    h: 'ʰ',
+    i: 'ᶦ',
+    j: 'ʲ',
+    k: 'ᵏ',
+    l: 'ˡ',
+    m: 'ᵐ',
+    n: 'ⁿ',
+    o: 'ᵒ',
+    p: 'ᵖ',
+    r: 'ʳ',
+    s: 'ˢ',
+    t: 'ᵗ',
+    u: 'ᵘ',
+    v: 'ᵛ',
+    w: 'ʷ',
+    x: 'ˣ',
+    y: 'ʸ',
+    z: 'ᶻ',
+    '+': '⁺',
+    '-': '⁻',
+    '0': '⁰',
+    '1': '¹',
+    '2': '²',
+    '3': '³',
+    '4': '⁴',
+    '5': '⁵',
+    '6': '⁶',
+    '7': '⁷',
+    '8': '⁸',
+    '9': '⁹'
+  };
+
+  function convertSuperscriptOption(str) {
+    return str.replace(/\^([A-Za-z0-9+\-])/g, (_, ch) => MAP[ch] || ch);
+  }
+
+  function buildSuperscriptTokens(str, baseSize) {
+    const tokens = [];
+    const size = baseSize || 16;
+    let totalWidth = 0;
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '^' && i + 1 < str.length) {
+        const supChar = str[i + 1];
+        textSize(size * 0.75);
+        const width = textWidth(supChar);
+        tokens.push({ text: supChar, isSup: true, width });
+        totalWidth += width;
+        i += 2;
+      } else {
+        textSize(size);
+        const width = textWidth(str[i]);
+        tokens.push({ text: str[i], isSup: false, width });
+        totalWidth += width;
+        i++;
+      }
+    }
+    textSize(size);
+    return { tokens, totalWidth };
+  }
+
+  function drawSuperscriptText(str, x, y, baseSize, align = 'left', metrics = null) {
+    const size = baseSize || 16;
+    const tokenData = metrics || buildSuperscriptTokens(str, size);
+    const tokens = tokenData.tokens;
+    const totalWidth = tokenData.totalWidth;
+
+    let cursor = x;
+    if (align === 'center') cursor -= totalWidth / 2;
+    else if (align === 'right') cursor -= totalWidth;
+
+    push();
+    textAlign(LEFT, CENTER);
+    noStroke();
+    for (const token of tokens) {
+      if (token.isSup) {
+        textSize(size * 0.75);
+        text(token.text, cursor, y - size * 0.45);
+      } else {
+        textSize(size);
+        text(token.text, cursor, y);
+      }
+      cursor += token.width;
+    }
+    pop();
+    textSize(size);
+  }
+
+  global.SuperscriptText = {
+    convertSuperscriptOption,
+    buildSuperscriptTokens,
+    drawSuperscriptText
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+    <script>// Osmosis and Water Potential Simulator
+// Visualizes solute potentials, pressure potentials, and tonicity-driven water flow
+
+let canvasWidth = 760;
+let drawHeight = 370;
+let controlHeight = 240;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+let sliderLeftMargin = 300;
+
+let internalSlider, externalSlider, temperatureSlider;
+let cellModeSelect, startPauseButton, equilibrateButton;
+let isRunning = false;
+let equilibriumAnimating = false;
+let equilibriumProgress = 0;
+let equilibriumSnapshot = null;
+let stage4State = null;
+
+const R_CONSTANT = 0.008314; // MPa·L·mol⁻¹·K⁻¹
+const I_CONSTANT = 1.0; // Dissociation factor (default assumption)
+
+let leftWater = [];
+let rightWater = [];
+let flowParticles = [];
+let flowAccumulator = 0;
+let soluteLeft = [];
+let soluteRight = [];
+
+let leftChamberRect = {};
+let rightChamberRect = {};
+let membraneRect = {};
+let annotationRect = {};
+let gaugeRect = {};
+
+let cellVolume = 1.0;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  internalSlider = createSlider(0, 1.0, 0.3, 0.01);
+  internalSlider.parent(document.querySelector('main'));
+
+  externalSlider = createSlider(0, 1.0, 0.3, 0.01);
+  externalSlider.parent(document.querySelector('main'));
+
+  temperatureSlider = createSlider(273, 313, 298, 1);
+  temperatureSlider.parent(document.querySelector('main'));
+
+  cellModeSelect = createSelect();
+  cellModeSelect.parent(document.querySelector('main'));
+  cellModeSelect.option('Animal cell');
+  cellModeSelect.option('Plant cell');
+  cellModeSelect.selected('Animal cell');
+  cellModeSelect.style('width', '150px');
+  cellModeSelect.style('font-size', '14px');
+
+  startPauseButton = createButton('Start Animation');
+  startPauseButton.parent(document.querySelector('main'));
+  startPauseButton.mousePressed(toggleAnimation);
+
+  equilibrateButton = createButton('Equilibrate');
+  equilibrateButton.parent(document.querySelector('main'));
+  equilibrateButton.mousePressed(triggerEquilibration);
+
+  positionControls();
+
+  describe(
+    'Two-chamber osmosis simulator showing cell interior and extracellular solution with sliders for internal/external solute concentration, temperature, and a toggle for animal or plant cell modes along with net water flow arrows',
+    LABEL
+  );
+}
+
+function draw() {
+  updateCanvasSize();
+  background(255);
+
+  if (equilibriumAnimating && equilibriumSnapshot) {
+    equilibriumProgress = min(1, equilibriumProgress + (deltaTime / 1000) * 0.4);
+    const eased = easeOutCubic(equilibriumProgress);
+    const newInternal = lerp(
+      equilibriumSnapshot.internalStart,
+      equilibriumSnapshot.equalValue,
+      eased
+    );
+    const newExternal = lerp(
+      equilibriumSnapshot.externalStart,
+      equilibriumSnapshot.equalValue,
+      eased
+    );
+    internalSlider.value(newInternal);
+    externalSlider.value(newExternal);
+    if (equilibriumProgress >= 1) {
+      equilibriumAnimating = false;
+      stage4State = {
+        concentration: equilibriumSnapshot.equalValue,
+        temperature: temperatureSlider.value(),
+      };
+    }
+  }
+
+  if (
+    stage4State &&
+    (abs(internalSlider.value() - stage4State.concentration) > 0.02 ||
+      abs(externalSlider.value() - stage4State.concentration) > 0.02)
+  ) {
+    stage4State = null;
+  }
+
+  const stats = computeCurrentStats();
+  computeLayout();
+  drawBackgroundLayers();
+
+  updateParticles();
+  drawChambers(stats);
+  spawnFlowParticles(stats);
+  drawFlowParticles();
+  drawMembrane(stats);
+  drawStagePanel(stats);
+  drawControls(stats);
+}
+
+function computeCurrentStats() {
+  const internalConc = Number(internalSlider.value());
+  const externalConc = Number(externalSlider.value());
+  const temperature = Number(temperatureSlider.value());
+  const isPlant = cellModeSelect.value() === 'Plant cell';
+
+  const psiSInternal = computeSolutePotential(internalConc, temperature);
+  const psiSExternal = computeSolutePotential(externalConc, temperature);
+
+  const targetVolume = 1 + constrain((internalConc - externalConc) * 0.45, -0.28, 0.28);
+  const lerpRate = isRunning ? 0.05 : 0.015;
+  cellVolume = lerp(cellVolume, targetVolume, lerpRate);
+
+  const psiPInternal = isPlant ? max(0, (cellVolume - 1) * 2.2) : 0;
+  const psiCell = psiSInternal + psiPInternal;
+  const psiExternal = psiSExternal;
+  const netPsi = psiExternal - psiCell;
+
+  return {
+    internalConc,
+    externalConc,
+    temperature,
+    isPlant,
+    psiSInternal,
+    psiSExternal,
+    psiPInternal,
+    psiCell,
+    psiExternal,
+    netPsi,
+    tonicity: getTonicity(externalConc, internalConc),
+  };
+}
+
+function drawBackgroundLayers() {
+  noStroke();
+  fill('#f0f8ff');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('#ffffff');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  fill(0);
+  textAlign(LEFT, CENTER);
+  textSize(22);
+  noStroke();
+  text('Osmosis and Water Potential Simulator', margin, 32);
+  textSize(14);
+  fill('#455a64');
+  noStroke();
+  text(
+    'Adjust concentrations and temperature to predict water movement across a semipermeable membrane.',
+    margin,
+    60
+  );
+}
+
+function drawChambers(stats) {
+  // Left chamber background
+  stroke('#1976d2');
+  strokeWeight(2);
+  fill(230, 245, 255);
+  rect(leftChamberRect.x, leftChamberRect.y, leftChamberRect.width, leftChamberRect.height, 12);
+
+  // Right chamber background
+  stroke('#2e7d32');
+  fill(220, 245, 225);
+  rect(
+    rightChamberRect.x,
+    rightChamberRect.y,
+    rightChamberRect.width,
+    rightChamberRect.height,
+    12
+  );
+
+  drawTurgorGauge(stats);
+  drawCellRepresentation(stats);
+
+  drawSoluteParticles(soluteLeft, stats.internalConc, leftChamberRect);
+  drawSoluteParticles(soluteRight, stats.externalConc, rightChamberRect);
+  drawWaterParticles(leftWater, leftChamberRect);
+  drawWaterParticles(rightWater, rightChamberRect);
+
+  const labelY = leftChamberRect.y - 18;
+  noStroke();
+  textSize(15);
+  textAlign(LEFT, CENTER);
+  fill('#0d47a1');
+  text(`Ψ_cell = ${formatPsi(stats.psiCell)} MPa`, leftChamberRect.x + 10, labelY);
+  fill('#1b5e20');
+  text(`Ψ_ext = ${formatPsi(stats.psiExternal)} MPa`, rightChamberRect.x + 10, labelY);
+}
+
+function drawMembrane(stats) {
+  stroke('#ffb300');
+  strokeWeight(2);
+  fill(255, 253, 231, 210);
+  rect(
+    membraneRect.x,
+    membraneRect.y,
+    membraneRect.width,
+    membraneRect.height,
+    6
+  );
+  stroke('#f9a825');
+  const dash = 9;
+  const gap = 6;
+  for (let y = membraneRect.y + 6; y < membraneRect.y + membraneRect.height - 6; y += dash + gap) {
+    line(
+      membraneRect.x + 2,
+      y,
+      membraneRect.x + membraneRect.width - 2,
+      min(y + dash, membraneRect.y + membraneRect.height - 6)
+    );
+  }
+  drawFlowArrow(stats);
+}
+
+function drawFlowArrow(stats) {
+  const net = stats.netPsi;
+  const magnitude = abs(net);
+  if (magnitude < 0.02) return;
+  const arrowLength = map(constrain(magnitude, 0, 1.2), 0, 1.2, 0, min(150, leftChamberRect.width * 0.5));
+  const centerY = membraneRect.y + membraneRect.height / 2;
+  const direction = net > 0 ? -1 : 1; // Positive net means water enters cell (arrow left)
+  const startX = direction === -1 ? membraneRect.x + membraneRect.width + 6 : membraneRect.x - 6;
+  const endX = startX + direction * arrowLength;
+
+  stroke('#00b0ff');
+  strokeWeight(8);
+  strokeCap(ROUND);
+  line(startX, centerY, endX, centerY);
+  fill('#00b0ff');
+  noStroke();
+  if (direction === -1) {
+    triangle(endX, centerY, endX + 16, centerY - 8, endX + 16, centerY + 8);
+  } else {
+    triangle(endX, centerY, endX - 16, centerY - 8, endX - 16, centerY + 8);
+  }
+}
+
+function drawStagePanel(stats) {
+  stroke('#5d4037');
+  strokeWeight(1.5);
+  fill('#fff3e0');
+  rect(annotationRect.x, annotationRect.y, annotationRect.width, annotationRect.height, 12);
+
+  const stageTexts = buildStageTexts(stats);
+  const cellHeight = annotationRect.height / stageTexts.length;
+  textAlign(LEFT, TOP);
+  textSize(13);
+
+  for (let i = 0; i < stageTexts.length; i++) {
+    const topY = annotationRect.y + i * cellHeight;
+    fill(i === stageTexts.length - 1 && stage4State ? '#1b5e20' : '#37474f');
+    textStyle(BOLD);
+    noStroke();
+    text(stageTexts[i].title, annotationRect.x + 12, topY + 8);
+    textStyle(NORMAL);
+    fill('#37474f');
+    noStroke();
+    text(stageTexts[i].body, annotationRect.x + 12, topY + 28, annotationRect.width - 24, cellHeight - 32);
+  }
+}
+
+function buildStageTexts(stats) {
+  const tonicityText =
+    stats.tonicity === 'isotonic'
+      ? 'Solutions are isotonic. Net water exchange is balanced.'
+      : stats.tonicity === 'hypotonic'
+      ? 'External solution is hypotonic: water enters the cell.'
+      : 'External solution is hypertonic: water exits the cell.';
+
+  const stage1 = {
+    title: 'Stage 1: Concentrations',
+    body: `Inside: ${stats.internalConc.toFixed(2)} mol/L\nOutside: ${stats.externalConc.toFixed(
+      2
+    )} mol/L\n${tonicityText}`,
+  };
+  const stage2 = {
+    title: 'Stage 2: Solute Potential',
+    body: `Ψs(cell) = ${formatPsi(stats.psiSInternal)} MPa\nΨs(ext) = ${formatPsi(
+      stats.psiSExternal
+    )} MPa`,
+  };
+  const stage3 = {
+    title: 'Stage 3: Net Water Potential',
+    body: `Ψcell = ${formatPsi(stats.psiCell)} MPa\nΨext = ${formatPsi(
+      stats.psiExternal
+    )} MPa\nΔΨ = ${formatPsi(stats.netPsi)} MPa → ${getFlowDirection(stats.netPsi)}`,
+  };
+  const stage4 = stage4State
+    ? {
+        title: 'Stage 4: Equilibrium Reached',
+        body: `Equilibrated concentration: ${stage4State.concentration.toFixed(
+          2
+        )} mol/L\nNet ΔΨ ≈ 0 MPa. Water molecules cross evenly.`,
+      }
+    : {
+        title: 'Stage 4: Equilibrate',
+        body: 'Press "Equilibrate" to visualize membranes equalizing until ΔΨ ≈ 0 MPa.',
+      };
+
+  return [stage1, stage2, stage3, stage4];
+}
+
+function drawControls(stats) {
+  positionControls();
+  const sliderY = drawHeight + 18;
+  const rowSpacing = 44;
+  const labelX = sliderLeftMargin - 12;
+
+  textAlign(RIGHT, CENTER);
+  textSize(14);
+  fill('#263238');
+
+  const internalText = `Internal solute concentration — ${stats.internalConc.toFixed(2)} mol/L`;
+  const externalText = `External solute concentration — ${stats.externalConc.toFixed(2)} mol/L`;
+  const tempC = stats.temperature - 273;
+  const tempF = tempC * (9 / 5) + 32;
+  const tempText = `Temperature — ${tempF.toFixed(0)}°F (${tempC.toFixed(0)}°C)`;
+
+  noStroke();
+  text(internalText, labelX, sliderY);
+  noStroke();
+  text(externalText, labelX, sliderY + rowSpacing);
+  noStroke();
+  text(tempText, labelX, sliderY + rowSpacing * 2);
+  noStroke();
+  text(`Cell type`, labelX, sliderY + rowSpacing * 2.8);
+
+  const warningY = drawHeight + 29;
+  if (!stats.isPlant && stats.internalConc - stats.externalConc > 0.5) {
+    fill('#c62828');
+    textAlign(RIGHT, CENTER);
+    noStroke();
+    text('Warning: Animal cell in lytic range! Huge influx risk.', canvasWidth - margin, warningY);
+  }
+
+  fill('#37474f');
+  textAlign(LEFT, CENTER);
+  const infoY = drawHeight + controlHeight - 60;
+  noStroke();
+  text(`Ψs(cell): ${formatPsi(stats.psiSInternal)} MPa`, sliderLeftMargin, infoY);
+  noStroke();
+  text(`Ψs(ext): ${formatPsi(stats.psiSExternal)} MPa`, sliderLeftMargin, infoY + 18);
+  noStroke();
+  text(`Ψp(cell): ${formatPsi(stats.psiPInternal)} MPa`, sliderLeftMargin + 240, infoY);
+  noStroke();
+  text(`ΔΨ: ${formatPsi(stats.netPsi)} MPa (${getFlowDirection(stats.netPsi)})`, sliderLeftMargin + 240, infoY + 18);
+}
+
+function drawCellRepresentation(stats) {
+  const cx = leftChamberRect.x + leftChamberRect.width * 0.55;
+  const cy = leftChamberRect.y + leftChamberRect.height * 0.55;
+  const baseRadius = min(leftChamberRect.width, leftChamberRect.height) * 0.28;
+  const radius = baseRadius * cellVolume;
+
+  if (stats.isPlant) {
+    stroke('#2e7d32');
+    strokeWeight(6);
+    noFill();
+    rect(
+      leftChamberRect.x + 8,
+      leftChamberRect.y + 8,
+      leftChamberRect.width - 16,
+      leftChamberRect.height - 16,
+      18
+    );
+  }
+
+  stroke('#0277bd');
+  strokeWeight(3);
+  fill(185, 220, 255, 200);
+  ellipse(cx, cy, radius * 2, radius * 2);
+
+  if (stats.isPlant && stats.externalConc > stats.internalConc + 0.05) {
+    stroke('#ef6c00');
+    strokeWeight(2);
+    noFill();
+    ellipse(cx, cy, radius * 2.2, radius * 2.2);
+    fill('#ef6c00');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    noStroke();
+    text('Plasmolysis', cx, cy + radius + 18);
+  } else if (!stats.isPlant && stats.internalConc - stats.externalConc > 0.4) {
+    fill('#c62828');
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    noStroke();
+    text('Cell swelling', cx, cy + radius + 12);
+  }
+}
+
+function drawTurgorGauge(stats) {
+  const gaugeHeight = gaugeRect.height;
+  stroke('#00695c');
+  strokeWeight(1.5);
+  fill(stats.isPlant ? '#e8f5e9' : '#eceff1');
+  rect(gaugeRect.x, gaugeRect.y, gaugeRect.width, gaugeRect.height, 8);
+
+  if (stats.isPlant) {
+    const level = constrain(stats.psiPInternal / 1.5, 0, 1);
+    fill(76, 175, 80, 200);
+    noStroke();
+    const filledHeight = gaugeHeight * level;
+    rect(
+      gaugeRect.x + 4,
+      gaugeRect.y + gaugeHeight - filledHeight - 4,
+      gaugeRect.width - 8,
+      filledHeight,
+      6
+    );
+    fill('#2e7d32');
+    textAlign(CENTER, TOP);
+    textSize(12);
+    noStroke();
+    text('Turgor', gaugeRect.x + gaugeRect.width / 2, gaugeRect.y - 16);
+  } else {
+    fill('#607d8b');
+    textAlign(CENTER, TOP);
+    textSize(12);
+    noStroke();
+    text('Membrane', gaugeRect.x + gaugeRect.width / 2, gaugeRect.y - 16);
+  }
+}
+
+function drawWaterParticles(list, rect) {
+  if (list.length === 0) {
+    const count = 45;
+    for (let i = 0; i < count; i++) {
+      list.push(generateWaterParticle(rect));
+    }
+  }
+  noStroke();
+  fill(64, 169, 242, 180);
+  for (const p of list) {
+    if (isRunning) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx += random(-0.04, 0.04);
+      p.vy += random(-0.04, 0.04);
+    }
+    confineParticle(p, rect);
+    circle(p.x, p.y, 5);
+  }
+}
+
+function generateWaterParticle(rect) {
+  return {
+    x: random(rect.x + 6, rect.x + rect.width - 6),
+    y: random(rect.y + 6, rect.y + rect.height - 6),
+    vx: random(-0.5, 0.5),
+    vy: random(-0.5, 0.5),
+  };
+}
+
+function drawSoluteParticles(list, concentration, rect) {
+  const target = Math.round(map(concentration, 0, 1, 6, 30));
+  while (list.length < target) {
+    list.push(generateSoluteParticle(rect));
+  }
+  while (list.length > target) {
+    list.pop();
+  }
+
+  noStroke();
+  fill('#c62828');
+  for (const p of list) {
+    if (isRunning) {
+      p.offset += 0.02 + random(-0.01, 0.01);
+    }
+    const wobbleRadius = 3;
+    const drawX = p.x + cos(p.offset) * wobbleRadius;
+    const drawY = p.y + sin(p.offset) * wobbleRadius;
+    const radius = map(concentration, 0, 1, 4, 9);
+    circle(drawX, drawY, radius);
+  }
+}
+
+function generateSoluteParticle(rect) {
+  return {
+    x: random(rect.x + 15, rect.x + rect.width - 15),
+    y: random(rect.y + 20, rect.y + rect.height - 20),
+    offset: random(TWO_PI),
+  };
+}
+
+function updateParticles() {
+  confineList(leftWater, leftChamberRect);
+  confineList(rightWater, rightChamberRect);
+  confineSolutes(soluteLeft, leftChamberRect);
+  confineSolutes(soluteRight, rightChamberRect);
+
+  updateFlowParticles();
+}
+
+function confineList(list, rect) {
+  for (const p of list) {
+    confineParticle(p, rect);
+  }
+}
+
+function confineSolutes(list, rect) {
+  for (const p of list) {
+    p.x = constrain(p.x, rect.x + 10, rect.x + rect.width - 10);
+    p.y = constrain(p.y, rect.y + 10, rect.y + rect.height - 10);
+  }
+}
+
+function confineParticle(p, rect) {
+  if (p.x < rect.x + 4 || p.x > rect.x + rect.width - 4) {
+    p.vx *= -1;
+    p.x = constrain(p.x, rect.x + 4, rect.x + rect.width - 4);
+  }
+  if (p.y < rect.y + 4 || p.y > rect.y + rect.height - 4) {
+    p.vy *= -1;
+    p.y = constrain(p.y, rect.y + 4, rect.y + rect.height - 4);
+  }
+}
+
+function updateFlowParticles() {
+  for (let i = flowParticles.length - 1; i >= 0; i--) {
+    const f = flowParticles[i];
+    f.x += f.vx;
+    f.y += sin(f.life * 0.2) * 0.4;
+    f.life += 1;
+    f.alpha -= 4;
+    if (f.alpha <= 0 || f.x < leftChamberRect.x || f.x > rightChamberRect.x + rightChamberRect.width) {
+      flowParticles.splice(i, 1);
+    }
+  }
+}
+
+function spawnFlowParticles(stats) {
+  const intensity = map(constrain(abs(stats.netPsi), 0, 1.5), 0, 1.5, 0, 4);
+  flowAccumulator += intensity;
+  while (flowAccumulator >= 1) {
+    const dir = stats.netPsi > 0 ? -1 : 1;
+    const startX =
+      dir === -1 ? membraneRect.x + membraneRect.width + 4 : membraneRect.x - 4;
+    const startY = random(membraneRect.y + 10, membraneRect.y + membraneRect.height - 10);
+    flowParticles.push({
+      x: startX,
+      y: startY,
+      vx: dir * random(1.2, 2.2),
+      life: 0,
+      alpha: 200,
+    });
+    flowAccumulator -= 1;
+  }
+}
+
+function drawFlowParticles() {
+  noStroke();
+  for (const f of flowParticles) {
+    fill(33, 150, 243, f.alpha);
+    circle(f.x, f.y, 4);
+  }
+}
+
+function computeLayout() {
+  const gap = 14;
+  const titleReserve = 70;
+  const chamberTop = titleReserve + 30;
+  const chamberHeight = drawHeight - chamberTop - 20;
+  const pad = margin;
+
+  const annotationWidth = constrain(Math.round(canvasWidth * 0.2), 120, 260);
+  const annotationX = canvasWidth - pad - annotationWidth;
+  const layoutStart = pad;
+  const layoutEnd = annotationX - gap;
+  const layoutWidth = layoutEnd - layoutStart;
+  const membraneWidth = constrain(Math.round(canvasWidth * 0.015), 10, 20);
+  const chamberArea = layoutWidth - membraneWidth - 2 * gap;
+
+  const minLeft = min(220, chamberArea * 0.55);
+  const minRight = min(180, chamberArea * 0.45);
+  let leftWidth = max(minLeft, chamberArea * 0.56);
+  let rightWidth = chamberArea - leftWidth;
+  if (rightWidth < minRight) {
+    rightWidth = minRight;
+    leftWidth = chamberArea - rightWidth;
+  }
+  if (leftWidth < minLeft * 0.8) {
+    leftWidth = max(chamberArea * 0.45, minLeft * 0.8);
+    rightWidth = chamberArea - leftWidth;
+  }
+
+  leftChamberRect = {
+    x: layoutStart,
+    y: chamberTop,
+    width: leftWidth,
+    height: chamberHeight,
+  };
+  membraneRect = {
+    x: leftChamberRect.x + leftChamberRect.width + gap,
+    y: chamberTop,
+    width: membraneWidth,
+    height: chamberHeight,
+  };
+  rightChamberRect = {
+    x: membraneRect.x + membraneRect.width + gap,
+    y: chamberTop,
+    width: rightWidth,
+    height: chamberHeight,
+  };
+
+  annotationRect = {
+    x: annotationX,
+    y: chamberTop,
+    width: annotationWidth,
+    height: chamberHeight,
+  };
+
+  gaugeRect = {
+    x: leftChamberRect.x + 12,
+    y: chamberTop + 22,
+    width: min(60, leftChamberRect.width * 0.16),
+    height: chamberHeight - 40,
+  };
+}
+
+function computeSolutePotential(concentration, temperature) {
+  return -I_CONSTANT * concentration * R_CONSTANT * temperature;
+}
+
+function formatPsi(value) {
+  return nf(value, 1, 2);
+}
+
+function getTonicity(external, internal) {
+  if (abs(external - internal) < 0.02) return 'isotonic';
+  return external < internal ? 'hypotonic' : 'hypertonic';
+}
+
+function getFlowDirection(netPsi) {
+  if (abs(netPsi) < 0.02) return 'balanced exchange';
+  return netPsi > 0 ? 'into cell' : 'out of cell';
+}
+
+function toggleAnimation() {
+  isRunning = !isRunning;
+  startPauseButton.html(isRunning ? 'Pause Animation' : 'Resume Animation');
+}
+
+function triggerEquilibration() {
+  equilibriumSnapshot = {
+    internalStart: internalSlider.value(),
+    externalStart: externalSlider.value(),
+    equalValue: (internalSlider.value() + externalSlider.value()) / 2,
+  };
+  equilibriumProgress = 0;
+  equilibriumAnimating = true;
+  stage4State = null;
+}
+
+function positionControls() {
+  const sliderWidth = canvasWidth - sliderLeftMargin - margin;
+  const rowSpacing = 44;
+  internalSlider.position(sliderLeftMargin, drawHeight + 6);
+  internalSlider.size(sliderWidth);
+  externalSlider.position(sliderLeftMargin, drawHeight + 6 + rowSpacing);
+  externalSlider.size(sliderWidth);
+  temperatureSlider.position(sliderLeftMargin, drawHeight + 6 + rowSpacing * 2);
+  temperatureSlider.size(sliderWidth);
+  cellModeSelect.position(sliderLeftMargin, drawHeight + 6 + rowSpacing * 2.8);
+
+  startPauseButton.position(margin, drawHeight + controlHeight - 32);
+  equilibrateButton.position(margin + 170, drawHeight + controlHeight - 32);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  const bounds = container.getBoundingClientRect();
+  const newWidth = bounds.width;
+  const newHeight = drawHeight + controlHeight;
+
+  if (newWidth !== canvasWidth || newHeight !== canvasHeight) {
+    canvasWidth = newWidth;
+    canvasHeight = newHeight;
+    if (window._renderer) {
+      resizeCanvas(canvasWidth, canvasHeight);
+    }
+  }
+}
+
+function easeOutCubic(t) {
+  return 1 - pow(1 - t, 3);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

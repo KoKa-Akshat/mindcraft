@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Hype Cycle Journey Interactive Timeline using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Hype Cycle Journey - A Deer's Journey Through 5 Phases
+// Step-through visualization of hype cycle with deer allegory
+// MicroSim version 2026.03
+
+// Canvas dimensions
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 420;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Controls
+let prevButton, nextButton, resetButton2;
+
+// State
+let currentPhase = 1;
+let totalPhases = 5;
+
+// Animation counters
+let userCount = 0;
+let userCountTarget = 100;
+let vcBarHeight = 0;
+let headlineIndex = 0;
+let headlineTimer = 0;
+let appIndex = 0;
+let appTimer = 0;
+
+// Phase data
+let phaseNames = [
+  '',
+  'Technology Trigger',
+  'Peak of Inflated Expectations',
+  'Trough of Disillusionment',
+  'Slope of Enlightenment',
+  'Plateau of Productivity'
+];
+
+let deerStates = [
+  '',
+  'Standing in the road',
+  'Dazzled by headlights',
+  'Realizes it is a truck',
+  'Steps aside cautiously',
+  'Crosses road safely'
+];
+
+let peakHeadlines = [
+  '"AI Replaces All Jobs by 2025"',
+  '"AI Cures Cancer, Solves Climate"',
+  '"Every Company Is Now an AI Company"',
+  '"AGI Is 18 Months Away"',
+  '"AI-Powered Toothbrush Raises $40M"'
+];
+
+let troughHeadlines = [
+  '"ChatGPT Can\'t Count to Ten"',
+  '"AI Hallucinates Legal Citations"',
+  '"Self-Driving Car Confused by Rain"',
+  '"AI Resume Screener Rejects All Applicants"',
+  '"Chatbot Tells User to Eat Glue"'
+];
+
+let slopeApps = [
+  'Code autocompletion',
+  'Medical image screening',
+  'Language translation',
+  'Fraud detection',
+  'Document summarization'
+];
+
+let plateauApps = [
+  'Spam filter',
+  'Spell check',
+  'Search ranking',
+  'Product recommendations',
+  'Route optimization'
+];
+
+// Hype curve points (normalized 0-1 for x and y)
+let hypeCurvePoints = [
+  {x: 0.0, y: 0.85},
+  {x: 0.05, y: 0.75},
+  {x: 0.1, y: 0.55},
+  {x: 0.15, y: 0.30},
+  {x: 0.2, y: 0.12},
+  {x: 0.25, y: 0.05},
+  {x: 0.3, y: 0.12},
+  {x: 0.35, y: 0.25},
+  {x: 0.4, y: 0.40},
+  {x: 0.5, y: 0.60},
+  {x: 0.55, y: 0.70},
+  {x: 0.6, y: 0.75},
+  {x: 0.65, y: 0.72},
+  {x: 0.7, y: 0.60},
+  {x: 0.75, y: 0.50},
+  {x: 0.8, y: 0.42},
+  {x: 0.85, y: 0.38},
+  {x: 0.9, y: 0.36},
+  {x: 0.95, y: 0.35},
+  {x: 1.0, y: 0.35}
+];
+
+// Phase regions on the curve (approximate x ranges)
+let phaseRegions = [
+  null,
+  {start: 0.0, end: 0.12, peakIdx: 0},    // Trigger
+  {start: 0.12, end: 0.30, peakIdx: 5},    // Peak
+  {start: 0.30, end: 0.55, peakIdx: 9},    // Trough
+  {start: 0.55, end: 0.80, peakIdx: 13},   // Slope
+  {start: 0.80, end: 1.0, peakIdx: 18}     // Plateau
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  prevButton = createButton('Previous Phase');
+  prevButton.position(10, drawHeight + 12);
+  prevButton.mousePressed(prevPhase);
+
+  nextButton = createButton('Next Phase');
+  nextButton.position(120, drawHeight + 12);
+  nextButton.mousePressed(nextPhase);
+
+  resetButton2 = createButton('Reset');
+  resetButton2.position(220, drawHeight + 12);
+  resetButton2.mousePressed(resetSim2);
+
+  describe('Step-through visualization of a deer journey through 5 hype cycle phases from technology trigger to plateau of productivity', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Drawing area
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area
+  fill('white');
+  stroke('silver');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Update button states
+  if (currentPhase <= 1) prevButton.attribute('disabled', '');
+  else prevButton.removeAttribute('disabled');
+  if (currentPhase >= totalPhases) nextButton.attribute('disabled', '');
+  else nextButton.removeAttribute('disabled');
+
+  // Phase indicator
+  noStroke();
+  fill(60);
+  textSize(14);
+  textAlign(RIGHT, TOP);
+  text('Phase ' + currentPhase + '/' + totalPhases, canvasWidth - 15, 12);
+
+  // Phase title
+  textAlign(LEFT, TOP);
+  textSize(16);
+  fill(30);
+  text(phaseNames[currentPhase], 15, 12);
+
+  // Draw hype curve at top
+  drawHypeCurve();
+
+  // Draw phase content below curve
+  let contentY = 190;
+  switch(currentPhase) {
+    case 1: drawTriggerPhase(contentY); break;
+    case 2: drawPeakPhase(contentY); break;
+    case 3: drawTroughPhase(contentY); break;
+    case 4: drawSlopePhase(contentY); break;
+    case 5: drawPlateauPhase(contentY); break;
+  }
+
+  // Deer state at bottom
+  drawDeerState();
+}
+
+function drawHypeCurve() {
+  let curveLeft = 30;
+  let curveRight = canvasWidth - 30;
+  let curveTop = 40;
+  let curveBottom = 170;
+  let curveW = curveRight - curveLeft;
+  let curveH = curveBottom - curveTop;
+
+  // Draw faded curve
+  stroke(180);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let p of hypeCurvePoints) {
+    let px = curveLeft + p.x * curveW;
+    let py = curveTop + p.y * curveH;
+    curveVertex(px, py);
+  }
+  // Duplicate first and last for curveVertex
+  endShape();
+
+  // Draw as connected lines for reliability
+  stroke(180);
+  strokeWeight(2);
+  for (let i = 0; i < hypeCurvePoints.length - 1; i++) {
+    let x1 = curveLeft + hypeCurvePoints[i].x * curveW;
+    let y1 = curveTop + hypeCurvePoints[i].y * curveH;
+    let x2 = curveLeft + hypeCurvePoints[i+1].x * curveW;
+    let y2 = curveTop + hypeCurvePoints[i+1].y * curveH;
+    line(x1, y1, x2, y2);
+  }
+
+  // Highlight current phase segment
+  let region = phaseRegions[currentPhase];
+  stroke('coral');
+  strokeWeight(4);
+  for (let i = 0; i < hypeCurvePoints.length - 1; i++) {
+    let p1 = hypeCurvePoints[i];
+    let p2 = hypeCurvePoints[i+1];
+    if (p1.x >= region.start && p2.x <= region.end) {
+      let x1 = curveLeft + p1.x * curveW;
+      let y1 = curveTop + p1.y * curveH;
+      let x2 = curveLeft + p2.x * curveW;
+      let y2 = curveTop + p2.y * curveH;
+      line(x1, y1, x2, y2);
+    }
+  }
+
+  // Phase dot
+  let dotP = hypeCurvePoints[region.peakIdx];
+  let dotX = curveLeft + dotP.x * curveW;
+  let dotY = curveTop + dotP.y * curveH;
+  fill('coral');
+  noStroke();
+  ellipse(dotX, dotY, 12, 12);
+
+  // Y-axis label
+  push();
+  noStroke();
+  fill(120);
+  textSize(11);
+  textAlign(CENTER, CENTER);
+  translate(14, (curveTop + curveBottom) / 2);
+  rotate(-HALF_PI);
+  text('Hype', 0, 0);
+  pop();
+
+  // Phase labels along bottom of curve
+  noStroke();
+  textSize(9);
+  fill(150);
+  textAlign(CENTER, TOP);
+  let phaseLabelsShort = ['Trigger', 'Peak', 'Trough', 'Slope', 'Plateau'];
+  for (let i = 1; i <= 5; i++) {
+    let r = phaseRegions[i];
+    let midX = curveLeft + ((r.start + r.end) / 2) * curveW;
+    fill(i === currentPhase ? color('coral') : color(150));
+    text(phaseLabelsShort[i-1], midX, curveBottom + 4);
+  }
+}
+
+function drawTriggerPhase(y) {
+  // Headline
+  noStroke();
+  fill(30);
+  textSize(15);
+  textAlign(CENTER, TOP);
+  text('ChatGPT launches November 2022', canvasWidth/2, y);
+
+  // Growing user count
+  if (userCount < userCountTarget) {
+    userCount += 1.5;
+    if (userCount > userCountTarget) userCount = userCountTarget;
+  }
+
+  // User count display
+  let countY = y + 35;
+  fill(60);
+  textSize(13);
+  textAlign(CENTER, TOP);
+  text('Users in first 2 months:', canvasWidth/2, countY);
+
+  textSize(36);
+  fill('coral');
+  textAlign(CENTER, TOP);
+  text(Math.floor(userCount) + 'M', canvasWidth/2, countY + 22);
+
+  // Growth bar
+  let barW = canvasWidth * 0.6;
+  let barX = (canvasWidth - barW) / 2;
+  let barY = countY + 75;
+  fill(230);
+  noStroke();
+  rect(barX, barY, barW, 20, 4);
+  fill('gold');
+  rect(barX, barY, barW * (userCount / userCountTarget), 20, 4);
+
+  noStroke();
+  fill(100);
+  textSize(11);
+  textAlign(CENTER, TOP);
+  text('Fastest app to 100 million users in history', canvasWidth/2, barY + 28);
+}
+
+function drawPeakPhase(y) {
+  // Animate headlines appearing
+  headlineTimer++;
+  if (headlineTimer > 30 && headlineIndex < peakHeadlines.length - 1) {
+    headlineIndex++;
+    headlineTimer = 0;
+  }
+
+  // VC funding bar
+  if (vcBarHeight < 200) vcBarHeight += 3;
+
+  // Headlines
+  noStroke();
+  textSize(14);
+  textAlign(CENTER, TOP);
+  for (let i = 0; i <= headlineIndex; i++) {
+    let alpha = map(i, 0, peakHeadlines.length - 1, 255, 120);
+    fill(30, alpha);
+    text(peakHeadlines[i], canvasWidth/2, y + i * 24);
+  }
+
+  // VC bar on the right
+  let barX = canvasWidth - 80;
+  let barBottom = drawHeight - 50;
+  let barW = 40;
+  fill(230);
+  noStroke();
+  rect(barX, barBottom - 200, barW, 200, 4);
+  fill('gold');
+  rect(barX, barBottom - vcBarHeight, barW, vcBarHeight, 4);
+
+  fill(80);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('VC $$$', barX + barW/2, barBottom + 4);
+  textAlign(CENTER, BOTTOM);
+  text('$' + Math.floor(vcBarHeight / 2) + 'B', barX + barW/2, barBottom - vcBarHeight - 4);
+}
+
+function drawTroughPhase(y) {
+  headlineTimer++;
+  if (headlineTimer > 35 && headlineIndex < troughHeadlines.length - 1) {
+    headlineIndex++;
+    headlineTimer = 0;
+  }
+
+  noStroke();
+  textSize(14);
+  textAlign(CENTER, TOP);
+  for (let i = 0; i <= headlineIndex; i++) {
+    fill(150, 30, 30);
+    text(troughHeadlines[i], canvasWidth/2, y + i * 24);
+  }
+
+  // Falling bar
+  let barX = canvasWidth - 80;
+  let barBottom = drawHeight - 50;
+  let barW = 40;
+  let fallTarget = 60;
+  if (vcBarHeight > fallTarget) vcBarHeight -= 2;
+
+  fill(230);
+  noStroke();
+  rect(barX, barBottom - 200, barW, 200, 4);
+  fill('coral');
+  rect(barX, barBottom - vcBarHeight, barW, vcBarHeight, 4);
+
+  fill(80);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('VC $$$', barX + barW/2, barBottom + 4);
+  textAlign(CENTER, BOTTOM);
+  text('$' + Math.floor(vcBarHeight / 2) + 'B', barX + barW/2, barBottom - vcBarHeight - 4);
+}
+
+function drawSlopePhase(y) {
+  appTimer++;
+  if (appTimer > 40 && appIndex < slopeApps.length - 1) {
+    appIndex++;
+    appTimer = 0;
+  }
+
+  noStroke();
+  fill(80);
+  textSize(14);
+  textAlign(CENTER, TOP);
+  text('Realistic applications emerge:', canvasWidth/2, y);
+
+  for (let i = 0; i <= appIndex; i++) {
+    let appY = y + 30 + i * 32;
+    // Checkmark box
+    fill('mediumseagreen');
+    noStroke();
+    rect(canvasWidth/2 - 150, appY, 24, 24, 4);
+    fill(255);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text('\u2713', canvasWidth/2 - 138, appY + 12);
+
+    // App name
+    fill(40);
+    textSize(15);
+    textAlign(LEFT, CENTER);
+    text(slopeApps[i], canvasWidth/2 - 115, appY + 12);
+  }
+}
+
+function drawPlateauPhase(y) {
+  let cx = canvasWidth/2 + 30;
+  noStroke();
+  fill(80);
+  textSize(14);
+  textAlign(CENTER, TOP);
+  text('Boring but useful — the tools that actually stuck:', cx, y);
+
+  for (let i = 0; i < plateauApps.length; i++) {
+    let appY = y + 30 + i * 32;
+    // Muted box
+    fill(220);
+    noStroke();
+    rect(cx - 150, appY, 300, 26, 4);
+
+    fill(80);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text(plateauApps[i], cx, appY + 13);
+  }
+
+  // Observation
+  fill(120);
+  textSize(12);
+  textAlign(CENTER, TOP);
+  text('Nobody writes breathless headlines about spam filters.', cx, y + 30 + plateauApps.length * 32 + 10);
+  text('That is how you know they work.', cx, y + 30 + plateauApps.length * 32 + 28);
+}
+
+function drawDeerState() {
+  let deerY = drawHeight - 30;
+
+  // Deer emoji and state
+  noStroke();
+  textSize(24);
+  textAlign(LEFT, CENTER);
+
+  // Simple deer representation
+  let deerEmojis = ['', '\uD83E\uDD8C', '\uD83E\uDD8C', '\uD83E\uDD8C', '\uD83E\uDD8C', '\uD83E\uDD8C'];
+  text(deerEmojis[currentPhase], 15, deerY);
+
+  fill(80);
+  textSize(13);
+  textAlign(LEFT, CENTER);
+  text('Deer status: ' + deerStates[currentPhase], 48, deerY);
+}
+
+function prevPhase() {
+  if (currentPhase > 1) {
+    currentPhase--;
+    resetPhaseState();
+  }
+}
+
+function nextPhase() {
+  if (currentPhase < totalPhases) {
+    currentPhase++;
+    resetPhaseState();
+  }
+}
+
+function resetSim2() {
+  currentPhase = 1;
+  resetPhaseState();
+}
+
+function resetPhaseState() {
+  userCount = 0;
+  vcBarHeight = 0;
+  headlineIndex = 0;
+  headlineTimer = 0;
+  appIndex = 0;
+  appTimer = 0;
+
+  // Set initial VC bar for trough phase (starts high, falls)
+  if (currentPhase === 3) {
+    vcBarHeight = 200;
+  }
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

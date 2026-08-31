@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Treaty of Versailles — Fourteen Points vs. Actual Outcome</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Treaty of Versailles — Fourteen Points vs. Actual Outcome
+// CANVAS_HEIGHT: 700
+// Chapter 13: U.S. Imperialism and World War I (1898-1920)
+// Bloom Level: Evaluate (L5) — click rows to compare promise with outcome
+
+let canvasWidth = 920;
+let drawHeight = 620;
+let controlHeight = 80;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 12;
+
+let scrollY = 0;
+let maxScroll = 0;
+let selectedRow = null;
+let hoveredRow = -1;
+let showWhatIf = false;
+let whatIfBtn, resetBtn;
+
+// Outcome categories
+// honored = green, partial = amber, abandoned = red
+const COLOR_HONORED  = { r:  46, g: 139, b:  87 }; // sea green
+const COLOR_PARTIAL  = { r: 217, g: 158, b:  36 }; // amber
+const COLOR_ABANDON  = { r: 183, g:  48, b:  48 }; // red
+const COLOR_LEFT     = { r:  26, g:  58, b: 108 }; // navy for points
+const COLOR_RIGHT    = { r: 120, g:  85, b:  20 }; // antique gold for treaty
+
+const rows = [
+  {
+    n: 1,
+    title: 'Open covenants of peace',
+    pointText: 'Open covenants of peace, openly arrived at; diplomacy shall proceed frankly and in the public view.',
+    outcomeShort: 'League established, but secret talks preceded treaty',
+    outcomeLong: 'The League of Nations Covenant was adopted as Part I of the treaty, but the major terms of the treaty itself were hammered out in closed-door meetings of the "Big Four" (Wilson, Lloyd George, Clemenceau, Orlando) at Paris.',
+    why: 'Clemenceau and Lloyd George insisted on private bargaining to secure national interests. Wilson accepted secret negotiations to keep the conference moving.',
+    verdict: 'Public diplomacy lost out to backroom deals — a pattern that recurred throughout the interwar period.',
+    status: 'partial'
+  },
+  {
+    n: 2,
+    title: 'Absolute freedom of the seas',
+    pointText: 'Absolute freedom of navigation upon the seas, outside territorial waters, alike in peace and in war.',
+    outcomeShort: 'British naval supremacy preserved; clause omitted',
+    outcomeLong: 'No freedom-of-the-seas provision was included in the final treaty. Britain refused even to discuss limits on its naval blockade powers.',
+    why: 'Lloyd George viewed the Royal Navy and the right of blockade as Britain\'s decisive weapon in any future war and would not yield on the point.',
+    verdict: 'Naval rivalries continued; the issue resurfaced in U.S.-British tensions and in U-boat warfare debates leading into WWII.',
+    status: 'abandoned'
+  },
+  {
+    n: 3,
+    title: 'Removal of economic barriers',
+    pointText: 'The removal, so far as possible, of all economic barriers and the establishment of an equality of trade conditions among all the nations consenting to the peace.',
+    outcomeShort: 'Treaty silent on trade; tariffs retained',
+    outcomeLong: 'The treaty contained no general free-trade provisions. Within a few years the U.S. Fordney-McCumber (1922) and Smoot-Hawley (1930) tariffs raised barriers further.',
+    why: 'European states wanted tariff protection to rebuild war-damaged industries; the U.S. Congress was strongly protectionist.',
+    verdict: 'Rising trade barriers helped turn the 1929 crash into a global Great Depression.',
+    status: 'abandoned'
+  },
+  {
+    n: 4,
+    title: 'Reduction of armaments',
+    pointText: 'Adequate guarantees given and taken that national armaments will be reduced to the lowest point consistent with domestic safety.',
+    outcomeShort: 'Only Germany disarmed; great powers kept their forces',
+    outcomeLong: 'Germany was capped at a 100,000-man army with no air force, tanks, or U-boats. France, Britain, and the U.S. faced no comparable limits in the treaty itself.',
+    why: 'France demanded a permanently weak Germany. Britain and the U.S. were unwilling to disarm without binding security guarantees.',
+    verdict: 'One-sided disarmament fed German grievances and made later Nazi rearmament politically potent.',
+    status: 'partial'
+  },
+  {
+    n: 5,
+    title: 'Impartial adjustment of colonial claims',
+    pointText: 'A free, open-minded, and absolutely impartial adjustment of all colonial claims, giving equal weight to the interests of the populations concerned.',
+    outcomeShort: 'Mandate system preserved colonial control',
+    outcomeLong: 'Former German and Ottoman colonies were redistributed as League "mandates" to Britain, France, Japan, and others. Indigenous voices were largely excluded.',
+    why: 'European empires refused to relinquish colonies; the mandate system was a face-saving relabeling.',
+    verdict: 'Anti-colonial leaders (Ho Chi Minh, among others) were turned away from Paris, deepening grievances that fueled later independence movements.',
+    status: 'abandoned'
+  },
+  {
+    n: 6,
+    title: 'Evacuation of Russian territory',
+    pointText: 'The evacuation of all Russian territory and a settlement that will secure for Russia an unhampered opportunity for the independent determination of her own political development.',
+    outcomeShort: 'Russia excluded; Allies intervened in civil war',
+    outcomeLong: 'Bolshevik Russia was not invited to Paris. Allied troops, including U.S. forces at Archangel and Vladivostok, intervened on the side of the Whites in the Russian Civil War (1918-1920).',
+    why: 'The Allies refused to recognize the Bolshevik government and hoped to reverse the 1917 revolution.',
+    verdict: 'Soviet leaders cited the intervention for decades as proof of Western hostility, helping to fix Cold War attitudes.',
+    status: 'partial'
+  },
+  {
+    n: 7,
+    title: 'Belgium evacuated and restored',
+    pointText: 'Belgium, the whole world will agree, must be evacuated and restored, without any attempt to limit the sovereignty which she enjoys in common with all other free nations.',
+    outcomeShort: 'Belgium restored; reparations awarded',
+    outcomeLong: 'German troops withdrew, Belgian sovereignty was fully restored, and Belgium received reparations and the small districts of Eupen and Malmedy.',
+    why: 'All Allied powers agreed on this point; Belgian neutrality had been the casus belli for Britain in 1914.',
+    verdict: 'A clear success — and a rare point on which Wilson, Clemenceau, and Lloyd George fully agreed.',
+    status: 'honored'
+  },
+  {
+    n: 8,
+    title: 'France restored; Alsace-Lorraine returned',
+    pointText: 'All French territory should be freed and the invaded portions restored, and the wrong done to France by Prussia in 1871 in the matter of Alsace-Lorraine should be righted.',
+    outcomeShort: 'Alsace-Lorraine returned to France',
+    outcomeLong: 'Alsace-Lorraine, lost in 1871, was returned to France. The Saar coal basin was placed under French economic control for fifteen years, with a plebiscite to follow.',
+    why: 'Restoring Alsace-Lorraine was a non-negotiable French war aim; Wilson endorsed it from the start.',
+    verdict: 'Honored as written — but the Saar provisions and the Rhineland occupation went further than the Fourteen Points specified.',
+    status: 'honored'
+  },
+  {
+    n: 9,
+    title: 'Italian borders on national lines',
+    pointText: 'A readjustment of the frontiers of Italy should be effected along clearly recognizable lines of nationality.',
+    outcomeShort: 'Italy gained territory; Fiume dispute soured the peace',
+    outcomeLong: 'Italy received the South Tyrol, Trentino, Trieste, and Istria, but was denied Fiume and the Dalmatian coast that the secret 1915 Treaty of London had promised.',
+    why: 'Wilson opposed claims that violated nationality lines; Italian PM Orlando walked out of the conference in protest.',
+    verdict: 'The "mutilated victory" narrative fueled Italian nationalism — and Mussolini\'s rise just three years later.',
+    status: 'partial'
+  },
+  {
+    n: 10,
+    title: 'Autonomy for Austria-Hungary',
+    pointText: 'The peoples of Austria-Hungary, whose place among the nations we wish to see safeguarded and assured, should be accorded the freest opportunity of autonomous development.',
+    outcomeShort: 'Empire dissolved; new states left large minorities',
+    outcomeLong: 'Austria-Hungary broke apart into Austria, Hungary, Czechoslovakia, and parts of Yugoslavia, Poland, and Romania. Each new state contained substantial ethnic minorities.',
+    why: 'Events outpaced Wilson: the empire collapsed in October 1918 before the conference convened. Border lines were drawn by Allied commissions with imperfect data.',
+    verdict: 'Self-determination became a slogan, but the messy ethnic map gave Hitler his pretexts in Austria, the Sudetenland, and beyond.',
+    status: 'partial'
+  },
+  {
+    n: 11,
+    title: 'Balkan states evacuated and secured',
+    pointText: 'Romania, Serbia, and Montenegro should be evacuated; occupied territories restored; Serbia accorded free and secure access to the sea.',
+    outcomeShort: 'Yugoslavia created, but disputes continued',
+    outcomeLong: 'Serbia, Montenegro, and former Habsburg South Slav lands were combined into the Kingdom of Serbs, Croats, and Slovenes (later Yugoslavia). Romania gained Transylvania.',
+    why: 'Allied support for Serbia and the South Slav National Council pushed unification. Border disputes with Italy, Bulgaria, and Hungary were settled by commissions, not plebiscites.',
+    verdict: 'Yugoslavia held together until 1941, then again until 1991 — but ethnic tensions that the treaty left unresolved erupted in the 1990s Balkan wars.',
+    status: 'partial'
+  },
+  {
+    n: 12,
+    title: 'Ottoman sovereignty and the Dardanelles',
+    pointText: 'The Turkish portions of the Ottoman Empire should be assured a secure sovereignty; other nationalities under Turkish rule assured undoubted security of life and autonomous development; the Dardanelles permanently opened.',
+    outcomeShort: 'Empire partitioned; mandates established',
+    outcomeLong: 'The Treaty of Sevres (1920) dismembered the Ottoman Empire into British and French mandates (Iraq, Palestine, Syria, Lebanon) and proposed Greek and Armenian zones. Turkish nationalists under Mustafa Kemal repudiated it; the Treaty of Lausanne (1923) replaced it.',
+    why: 'Britain and France had pre-arranged the partition in the secret Sykes-Picot Agreement (1916). Wilson\'s ideas of Arab and Armenian self-rule were brushed aside.',
+    verdict: 'The borders drawn in 1920 set the political map of the modern Middle East — and many of its conflicts.',
+    status: 'partial'
+  },
+  {
+    n: 13,
+    title: 'Independent Poland with sea access',
+    pointText: 'An independent Polish state should be erected which should include the territories inhabited by indisputably Polish populations, and which should be assured a free and secure access to the sea.',
+    outcomeShort: 'Poland reestablished with the Danzig corridor',
+    outcomeLong: 'Poland reappeared on the map after more than a century of partition. The "Polish Corridor" gave it access to the Baltic; Danzig (Gdansk) became a Free City under League supervision.',
+    why: 'Polish independence had broad Allied support; the corridor was a compromise between giving Poland a port and avoiding outright annexation of a German-majority city.',
+    verdict: 'Honored — but the corridor cut East Prussia off from Germany and became Hitler\'s pretext for invading Poland in 1939.',
+    status: 'honored'
+  },
+  {
+    n: 14,
+    title: 'A general association of nations',
+    pointText: 'A general association of nations must be formed under specific covenants for the purpose of affording mutual guarantees of political independence and territorial integrity to great and small states alike.',
+    outcomeShort: 'League of Nations created — U.S. Senate refused to join',
+    outcomeLong: 'The Covenant of the League of Nations was Part I of the treaty. But the U.S. Senate, led by Henry Cabot Lodge, rejected ratification in 1919 and 1920. The U.S. never joined the institution Wilson designed.',
+    why: 'Lodge\'s "reservationists" feared Article X (collective security) committed the U.S. to foreign wars without congressional consent. Wilson refused compromise. Both sides held firm.',
+    verdict: 'U.S. absence weakened the League and helped enable the failures of the 1930s — Manchuria, Ethiopia, the Rhineland — that led to WWII.',
+    status: 'partial'
+  },
+  {
+    n: 15,
+    title: 'Article 231 — War Guilt clause (added)',
+    pointText: 'Not in the Fourteen Points. Added by France and Britain over Wilson\'s objection.',
+    outcomeShort: 'Germany forced to accept sole guilt for the war',
+    outcomeLong: 'Article 231 of the treaty assigned Germany and her allies "responsibility for causing all the loss and damage" of the war, providing the legal basis for reparations later set at 132 billion gold marks.',
+    why: 'France and Belgium demanded reparations to rebuild devastated regions; the war-guilt clause was the legal hook. Wilson agreed reluctantly to keep the treaty whole.',
+    verdict: 'The Kriegsschuldluge ("war-guilt lie") became a rallying cry for German nationalists and a central grievance exploited by the Nazi Party.',
+    status: 'abandoned'
+  }
+];
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  whatIfBtn = createButton('Show "What if?" counterfactual');
+  resetBtn  = createButton('Clear selection');
+
+  whatIfBtn.mousePressed(() => {
+    showWhatIf = !showWhatIf;
+    whatIfBtn.html(showWhatIf ? 'Hide "What if?" counterfactual' : 'Show "What if?" counterfactual');
+  });
+  resetBtn.mousePressed(() => { selectedRow = null; });
+
+  positionControls();
+  describe('Comparison table of Wilson\'s Fourteen Points against the Treaty of Versailles outcome for each point. Each row shows the original point, the actual outcome, and a color-coded status badge. Click a row to read the full text, the reasons for compromise, and the historical verdict. A summary bar reports the totals (2 honored, 9 partial, 3 abandoned). A toggle reveals a What-if counterfactual paragraph.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  whatIfBtn.position(margin, y);
+  resetBtn.position(margin, y + 34);
+}
+
+// ----- helpers -----
+function statusColor(s) {
+  if (s === 'honored')   return COLOR_HONORED;
+  if (s === 'partial')   return COLOR_PARTIAL;
+  return COLOR_ABANDON;
+}
+function statusLabel(s) {
+  if (s === 'honored')   return 'HONORED';
+  if (s === 'partial')   return 'PARTIAL';
+  return 'ABANDONED';
+}
+function clampScroll() {
+  if (scrollY < 0) scrollY = 0;
+  if (scrollY > maxScroll) scrollY = maxScroll;
+}
+
+// Layout constants
+const HEADER_H = 56;
+const SUMMARY_H = 60;
+const ROW_H = 64;
+
+function listArea() {
+  // returns x,y,w,h of the scrollable list region
+  let panelOpen = selectedRow !== null || showWhatIf;
+  let totalW = canvasWidth - margin * 2;
+  let listW = panelOpen ? Math.floor(totalW * 0.58) : totalW;
+  return {
+    x: margin,
+    y: HEADER_H,
+    w: listW,
+    h: drawHeight - HEADER_H - SUMMARY_H
+  };
+}
+function panelArea() {
+  let totalW = canvasWidth - margin * 2;
+  let listW = Math.floor(totalW * 0.58);
+  let panelX = margin + listW + 8;
+  return {
+    x: panelX,
+    y: HEADER_H,
+    w: canvasWidth - margin - panelX,
+    h: drawHeight - HEADER_H - SUMMARY_H
+  };
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Background
+  background(248, 249, 250);
+
+  drawHeader();
+  drawList();
+  if (selectedRow !== null) drawDetailPanel();
+  else if (showWhatIf) drawWhatIfPanel();
+  drawSummary();
+
+  // Bottom control strip background
+  noStroke();
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke(220);
+  line(0, drawHeight, canvasWidth, drawHeight);
+
+  positionControls();
+}
+
+function drawHeader() {
+  noStroke();
+  fill(COLOR_LEFT.r, COLOR_LEFT.g, COLOR_LEFT.b);
+  rect(0, 0, canvasWidth, HEADER_H);
+
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(16);
+  text('Wilson\'s Fourteen Points  vs.  Treaty of Versailles (1919)', margin, HEADER_H / 2 - 8);
+  textStyle(NORMAL);
+  textSize(11);
+  fill(220, 225, 240);
+  text('Click any row for details. Color badge: green = honored, amber = partial, red = abandoned.', margin, HEADER_H / 2 + 12);
+}
+
+function drawList() {
+  const L = listArea();
+
+  // List background
+  noStroke();
+  fill(255);
+  rect(L.x, L.y, L.w, L.h, 6);
+  stroke(220);
+  noFill();
+  rect(L.x, L.y, L.w, L.h, 6);
+
+  // Column headers
+  noStroke();
+  fill(245, 247, 252);
+  rect(L.x + 1, L.y + 1, L.w - 2, 26);
+  fill(COLOR_LEFT.r, COLOR_LEFT.g, COLOR_LEFT.b);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(12);
+  text('Fourteen Points', L.x + 36, L.y + 13);
+  fill(COLOR_RIGHT.r, COLOR_RIGHT.g, COLOR_RIGHT.b);
+  text('Treaty Outcome', L.x + Math.floor(L.w * 0.5) + 4, L.y + 13);
+  textStyle(NORMAL);
+
+  // Clip area for scroll
+  push();
+  // p5 doesn't have native clipping in 2D mode in all versions; emulate by checking row visibility
+  let rowsStartY = L.y + 28;
+  let visibleH = L.h - 28;
+  let totalRowsH = rows.length * ROW_H;
+  maxScroll = Math.max(0, totalRowsH - visibleH);
+  clampScroll();
+
+  hoveredRow = -1;
+  for (let i = 0; i < rows.length; i++) {
+    let r = rows[i];
+    let rowY = rowsStartY + i * ROW_H - scrollY;
+    if (rowY + ROW_H < rowsStartY || rowY > L.y + L.h) continue;
+
+    // Hit-test only against visible portion
+    let visTop = Math.max(rowY, rowsStartY);
+    let visBot = Math.min(rowY + ROW_H, L.y + L.h);
+    let inside = mouseX >= L.x && mouseX <= L.x + L.w && mouseY >= visTop && mouseY <= visBot;
+    if (inside) hoveredRow = i;
+
+    drawRow(r, L.x, rowY, L.w, i, hoveredRow === i);
+  }
+
+  // Mask top and bottom outside the visible row region
+  noStroke();
+  fill(255);
+  rect(L.x + 1, L.y + 1, L.w - 2, 26);                 // re-cover under headers
+  rect(L.x + 1, L.y + L.h - 1, L.w - 2, 1);
+
+  // Scrollbar
+  if (maxScroll > 0) {
+    let trackX = L.x + L.w - 8;
+    let trackY = rowsStartY;
+    let trackH = visibleH;
+    fill(235);
+    rect(trackX, trackY, 6, trackH, 3);
+    let thumbH = Math.max(24, trackH * (visibleH / totalRowsH));
+    let thumbY = trackY + (scrollY / maxScroll) * (trackH - thumbH);
+    fill(170);
+    rect(trackX, thumbY, 6, thumbH, 3);
+  }
+
+  pop();
+}
+
+function drawRow(r, x, y, w, idx, isHover) {
+  const isSel = selectedRow === idx;
+  const c = statusColor(r.status);
+
+  // Row background
+  noStroke();
+  if (isSel)        fill(c.r, c.g, c.b, 38);
+  else if (isHover) fill(245, 247, 252);
+  else              fill(idx % 2 === 0 ? 255 : 252);
+  rect(x + 1, y, w - 2, ROW_H - 4);
+
+  // Left border accent
+  fill(c.r, c.g, c.b);
+  rect(x + 1, y, 4, ROW_H - 4);
+
+  // Number circle
+  fill(COLOR_LEFT.r, COLOR_LEFT.g, COLOR_LEFT.b);
+  let cx = x + 22, cy = y + (ROW_H - 4) / 2;
+  ellipse(cx, cy, 26, 26);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(11);
+  text(r.n, cx, cy + 1);
+
+  // Point title (left half)
+  let leftX = x + 40;
+  let midX = x + Math.floor(w * 0.5);
+  let rightX = x + w - 100; // leave space for badge
+  noStroke();
+  fill(30);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(12);
+  text(r.title, leftX, y + 18, midX - leftX - 8, 18);
+
+  textStyle(NORMAL);
+  textSize(11);
+  fill(90);
+  text(truncate(r.pointText, 80), leftX, y + 38, midX - leftX - 8, 20);
+
+  // Outcome (right half)
+  fill(30);
+  textStyle(BOLD);
+  textSize(12);
+  text(r.outcomeShort, midX, y + 18, rightX - midX - 8, 36);
+
+  // Status badge
+  let bw = 88, bh = 22;
+  let bx = x + w - bw - 14;
+  let by = y + (ROW_H - 4) / 2 - bh / 2;
+  fill(c.r, c.g, c.b);
+  rect(bx, by, bw, bh, 11);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(10);
+  text(statusLabel(r.status), bx + bw / 2, by + bh / 2);
+  textStyle(NORMAL);
+
+  // Bottom divider
+  stroke(235);
+  line(x + 8, y + ROW_H - 4, x + w - 8, y + ROW_H - 4);
+  noStroke();
+}
+
+function truncate(s, n) {
+  if (s.length <= n) return s;
+  return s.substring(0, n - 1) + '...';
+}
+
+function drawDetailPanel() {
+  const P = panelArea();
+  const r = rows[selectedRow];
+  const c = statusColor(r.status);
+
+  noStroke();
+  fill(255);
+  rect(P.x, P.y, P.w, P.h, 6);
+  stroke(c.r, c.g, c.b);
+  strokeWeight(2);
+  noFill();
+  rect(P.x, P.y, P.w, P.h, 6);
+  strokeWeight(1);
+
+  // Title bar
+  noStroke();
+  fill(c.r, c.g, c.b);
+  rect(P.x, P.y, P.w, 40, 6, 6, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text('Point ' + (r.n <= 14 ? r.n : '231') + ': ' + r.title, P.x + 12, P.y + 20, P.w - 110, 24);
+
+  // Status pill in title bar
+  let pw = 90, ph = 22;
+  let px = P.x + P.w - pw - 10;
+  let py = P.y + 9;
+  fill(255);
+  rect(px, py, pw, ph, 11);
+  fill(c.r, c.g, c.b);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(10);
+  text(statusLabel(r.status), px + pw / 2, py + ph / 2);
+  textStyle(NORMAL);
+
+  // Body
+  let bx = P.x + 14;
+  let bw = P.w - 28;
+  let by = P.y + 52;
+
+  fill(COLOR_LEFT.r, COLOR_LEFT.g, COLOR_LEFT.b);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textSize(11);
+  text('Wilson\'s text:', bx, by);
+  by += 16;
+  fill(40);
+  textStyle(NORMAL);
+  textSize(11);
+  text(r.pointText, bx, by, bw, 200);
+  by += measureBlock(r.pointText, bw, 11);
+
+  by += 8;
+  fill(COLOR_RIGHT.r, COLOR_RIGHT.g, COLOR_RIGHT.b);
+  textStyle(BOLD);
+  textSize(11);
+  text('What the treaty did:', bx, by);
+  by += 16;
+  fill(40);
+  textStyle(NORMAL);
+  textSize(11);
+  text(r.outcomeLong, bx, by, bw, 240);
+  by += measureBlock(r.outcomeLong, bw, 11);
+
+  by += 8;
+  fill(c.r, c.g, c.b);
+  textStyle(BOLD);
+  textSize(11);
+  text('Why it was compromised:', bx, by);
+  by += 16;
+  fill(40);
+  textStyle(NORMAL);
+  textSize(11);
+  text(r.why, bx, by, bw, 200);
+  by += measureBlock(r.why, bw, 11);
+
+  by += 8;
+  fill(30);
+  textStyle(BOLD);
+  textSize(11);
+  text('Historical verdict:', bx, by);
+  by += 16;
+  fill(60);
+  textStyle(ITALIC);
+  textSize(11);
+  text(r.verdict, bx, by, bw, 200);
+  textStyle(NORMAL);
+
+  // Close hint
+  fill(150);
+  textAlign(RIGHT, BOTTOM);
+  textSize(10);
+  text('Click row again or "Clear selection" to close', P.x + P.w - 8, P.y + P.h - 6);
+}
+
+// Rough estimator: returns approximate vertical pixels a wrapped text block consumes.
+function measureBlock(s, w, fontSize) {
+  // Approximate average character width
+  let avgChar = fontSize * 0.55;
+  let charsPerLine = Math.max(10, Math.floor(w / avgChar));
+  let lines = Math.ceil(s.length / charsPerLine);
+  return lines * (fontSize + 4);
+}
+
+function drawWhatIfPanel() {
+  const P = panelArea();
+
+  noStroke();
+  fill(255);
+  rect(P.x, P.y, P.w, P.h, 6);
+  stroke(80, 80, 160);
+  strokeWeight(2);
+  noFill();
+  rect(P.x, P.y, P.w, P.h, 6);
+  strokeWeight(1);
+
+  noStroke();
+  fill(80, 80, 160);
+  rect(P.x, P.y, P.w, 40, 6, 6, 0, 0);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text('"What if?" — U.S. joins the League of Nations', P.x + 12, P.y + 20);
+  textStyle(NORMAL);
+
+  let bx = P.x + 14;
+  let bw = P.w - 28;
+  let by = P.y + 52;
+
+  fill(40);
+  textAlign(LEFT, TOP);
+  textSize(11);
+  textStyle(BOLD);
+  text('Counterfactual scenario', bx, by); by += 18;
+  textStyle(NORMAL);
+  text('Imagine the U.S. Senate ratifies the Treaty of Versailles in 1919, and the United States takes its seat in the League of Nations alongside Britain and France.',
+    bx, by, bw, 200);
+  by += 70;
+
+  textStyle(BOLD);
+  fill(COLOR_LEFT.r, COLOR_LEFT.g, COLOR_LEFT.b);
+  text('Likely effects:', bx, by); by += 18;
+  fill(40);
+  textStyle(NORMAL);
+  let bullets = [
+    '- Article X collective-security guarantees gain credibility with U.S. backing.',
+    '- Japan\'s 1931 invasion of Manchuria meets coordinated economic pressure, not symbolic protest.',
+    '- Italy\'s 1935 attack on Ethiopia draws real sanctions, including oil.',
+    '- Germany faces a unified Anglo-French-American response to the 1936 Rhineland remilitarization.',
+    '- The U.S. is drawn into European security earlier, reshaping isolationist politics in the 1920s and 1930s.'
+  ];
+  for (let b of bullets) {
+    text(b, bx, by, bw, 60);
+    by += measureBlock(b, bw, 11) + 2;
+  }
+
+  by += 4;
+  textStyle(BOLD);
+  fill(COLOR_PARTIAL.r, COLOR_PARTIAL.g, COLOR_PARTIAL.b);
+  text('Limits of the counterfactual:', bx, by); by += 18;
+  fill(40);
+  textStyle(NORMAL);
+  text('League membership alone would not have erased the treaty\'s harshest terms — reparations, war guilt, and the redrawn borders that fueled German and Italian grievance.',
+    bx, by, bw, 200);
+}
+
+function drawSummary() {
+  // Count outcomes (excluding War Guilt as a separate column)
+  let honored = 0, partial = 0, abandoned = 0;
+  for (let i = 0; i < 14; i++) {
+    if (rows[i].status === 'honored')  honored++;
+    else if (rows[i].status === 'partial') partial++;
+    else abandoned++;
+  }
+
+  const y = drawHeight - SUMMARY_H;
+  noStroke();
+  fill(245, 247, 252);
+  rect(0, y, canvasWidth, SUMMARY_H);
+  stroke(220);
+  line(0, y, canvasWidth, y);
+
+  let segW = (canvasWidth - margin * 2) / 4;
+  drawSummaryCell(margin + segW * 0,     y + 8, segW - 8, SUMMARY_H - 16, COLOR_HONORED, honored,   'Honored',          'Belgium, Alsace-Lorraine, Poland');
+  drawSummaryCell(margin + segW * 1,     y + 8, segW - 8, SUMMARY_H - 16, COLOR_PARTIAL, partial,   'Partial',          'Most self-determination points');
+  drawSummaryCell(margin + segW * 2,     y + 8, segW - 8, SUMMARY_H - 16, COLOR_ABANDON, abandoned, 'Abandoned',        'Seas, free trade, colonies');
+  drawSummaryCell(margin + segW * 3,     y + 8, segW - 8, SUMMARY_H - 16, COLOR_ABANDON, 1,         'Added by Allies',  'Article 231: War Guilt');
+}
+
+function drawSummaryCell(x, y, w, h, c, count, label, sub) {
+  noStroke();
+  fill(255);
+  rect(x, y, w, h, 6);
+  stroke(c.r, c.g, c.b);
+  strokeWeight(2);
+  noFill();
+  rect(x, y, w, h, 6);
+  strokeWeight(1);
+
+  noStroke();
+  fill(c.r, c.g, c.b);
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD);
+  textSize(24);
+  text(count, x + 12, y + h / 2);
+
+  fill(50);
+  textSize(12);
+  textStyle(BOLD);
+  text(label, x + 48, y + 12);
+  fill(110);
+  textSize(10);
+  textStyle(NORMAL);
+  text(sub, x + 48, y + 28, w - 56, h - 32);
+}
+
+// ----- input -----
+function mousePressed() {
+  // If click hit a row, toggle selection
+  if (hoveredRow >= 0) {
+    if (selectedRow === hoveredRow) selectedRow = null;
+    else selectedRow = hoveredRow;
+    return;
+  }
+  // Click outside list closes the panel
+  const P = panelArea();
+  let panelOpen = selectedRow !== null || showWhatIf;
+  let insidePanel = panelOpen && mouseX >= P.x && mouseX <= P.x + P.w && mouseY >= P.y && mouseY <= P.y + P.h;
+  if (selectedRow !== null && !insidePanel) {
+    // Don't auto-close on every miss — keep panel open until user toggles row or hits clear
+  }
+}
+
+function mouseWheel(event) {
+  const L = listArea();
+  if (mouseX >= L.x && mouseX <= L.x + L.w && mouseY >= L.y && mouseY <= L.y + L.h) {
+    scrollY += event.delta;
+    clampScroll();
+    return false;
+  }
+  return true;
+}
+
+function keyPressed() {
+  if (keyCode === DOWN_ARROW) { scrollY += 40; clampScroll(); }
+  else if (keyCode === UP_ARROW) { scrollY -= 40; clampScroll(); }
+  else if (keyCode === PAGE_DOWN) { scrollY += 200; clampScroll(); }
+  else if (keyCode === PAGE_UP)   { scrollY -= 200; clampScroll(); }
+  else if (keyCode === ESCAPE)    { selectedRow = null; }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+
+<!--
+SPECIFICATION (from chapter index.md):
+
+Type: comparison
+sim-id: versailles-comparison
+Library: p5.js
+Status: Built
+
+Purpose: Allow students to compare Wilson's Fourteen Points with the actual
+Treaty of Versailles provisions, identifying which points were honored, which
+were modified, and which were abandoned.
+
+Bloom Level: Evaluate (L5)
+Bloom Verb: Compare
+
+Learning Objective: Students evaluate the extent to which the Treaty of
+Versailles fulfilled Wilson's Fourteen Points, and assess what the gap between
+promise and outcome reveals about the constraints on idealistic diplomacy.
+
+Canvas layout:
+- Responsive width; total height approximately 700px
+- Two-column scrollable list: Fourteen Points (left) and Treaty of Versailles
+  outcome (right); each row is clickable
+- Color-coded outcome badge: green (honored), amber (modified), red (abandoned)
+- Detail panel shows original text, treaty provision, why it was compromised,
+  and a historical verdict
+- Summary bar with counts: 2 honored / 9 partial / 3 abandoned (plus War Guilt)
+- "What if?" toggle reveals a counterfactual paragraph imagining U.S. League
+  membership
+-->
+</body>
+</html>

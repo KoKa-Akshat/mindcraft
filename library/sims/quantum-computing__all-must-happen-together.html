@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Joint Probability Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Joint Probability Calculator
+// Shows how the probability of multiple independent breakthroughs compounds
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 450;
+let controlHeight = 180;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Breakthrough data
+let breakthroughs = [
+    { name: "Error rates < 10\u207B\u2076", defaultProb: 15 },
+    { name: "Scalable architecture (1M+ qubits)", defaultProb: 20 },
+    { name: "Practical error correction", defaultProb: 25 },
+    { name: "Useful algorithm found", defaultProb: 30 },
+    { name: "Economically competitive", defaultProb: 10 }
+];
+
+let sliders = [];
+let sliderLabels = [];
+
+// Colors for each breakthrough bar
+let barColors = ['#C62828', '#E65100', '#F9A825', '#2E7D32', '#1565C0'];
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    textFont('Arial');
+
+    // Create sliders
+    let sliderWidth = max(120, canvasWidth - sliderLeftMargin - 80);
+    for (let i = 0; i < breakthroughs.length; i++) {
+        let sy = drawHeight + 10 + i * 34;
+        let s = createSlider(1, 100, breakthroughs[i].defaultProb, 1);
+        s.position(sliderLeftMargin, sy);
+        s.size(sliderWidth);
+        s.parent(document.querySelector('main'));
+        s.input(redraw);
+        sliders.push(s);
+    }
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Joint Probability Calculator", canvasWidth / 2, 10);
+
+    // Subtitle
+    textSize(12);
+    textStyle(ITALIC);
+    fill('#666');
+    text("P(all breakthroughs succeed) = P\u2081 \u00D7 P\u2082 \u00D7 P\u2083 \u00D7 P\u2084 \u00D7 P\u2085", canvasWidth / 2, 34);
+
+    // Compute probabilities
+    let probs = [];
+    for (let i = 0; i < sliders.length; i++) {
+        probs.push(sliders[i].value() / 100);
+    }
+
+    // Compute running products for funnel
+    let runningProducts = [];
+    let cumulative = 1;
+    for (let i = 0; i < probs.length; i++) {
+        cumulative *= probs[i];
+        runningProducts.push(cumulative);
+    }
+    let jointProb = cumulative;
+
+    // Layout for funnel visualization
+    let funnelLeft = margin + 10;
+    let funnelMaxWidth = canvasWidth * 0.5 - margin;
+    let funnelTop = 60;
+    let funnelBarHeight = 50;
+    let funnelGap = 8;
+
+    // Draw funnel bars
+    textStyle(NORMAL);
+    for (let i = 0; i < probs.length; i++) {
+        let y = funnelTop + i * (funnelBarHeight + funnelGap);
+
+        // The bar width represents the running product
+        let barWidth = runningProducts[i] * funnelMaxWidth;
+        // Ensure minimum visible width
+        barWidth = max(barWidth, 3);
+
+        // Background track
+        fill(230);
+        noStroke();
+        rect(funnelLeft, y, funnelMaxWidth, funnelBarHeight, 4);
+
+        // Filled bar
+        fill(barColors[i]);
+        rect(funnelLeft, y, barWidth, funnelBarHeight, 4);
+
+        // Label: breakthrough name
+        fill('#333');
+        textSize(11);
+        textAlign(LEFT, TOP);
+        textStyle(BOLD);
+        text(breakthroughs[i].name, funnelLeft + 6, y + 4);
+
+        // Probability value on the bar
+        textStyle(NORMAL);
+        textSize(10);
+        let pctText;
+        if (i === 0) {
+            pctText = "P = " + (probs[i] * 100).toFixed(0) + "%";
+        } else {
+            let rp = runningProducts[i] * 100;
+            if (rp >= 1) {
+                pctText = "Cumulative: " + rp.toFixed(2) + "%";
+            } else if (rp >= 0.01) {
+                pctText = "Cumulative: " + rp.toFixed(4) + "%";
+            } else {
+                pctText = "Cumulative: " + rp.toExponential(2) + "%";
+            }
+        }
+        fill('#555');
+        textAlign(LEFT, BOTTOM);
+        text(pctText, funnelLeft + 6, y + funnelBarHeight - 4);
+
+        // Individual probability on the right
+        fill('#888');
+        textSize(10);
+        textAlign(RIGHT, CENTER);
+        text("P" + (i + 1) + " = " + (probs[i] * 100).toFixed(0) + "%", funnelLeft + funnelMaxWidth - 6, y + funnelBarHeight / 2);
+    }
+
+    // Connector lines between bars (funnel narrowing)
+    stroke('#999');
+    strokeWeight(1);
+    for (let i = 0; i < probs.length - 1; i++) {
+        let y1 = funnelTop + i * (funnelBarHeight + funnelGap) + funnelBarHeight;
+        let y2 = funnelTop + (i + 1) * (funnelBarHeight + funnelGap);
+        let w1 = max(runningProducts[i] * funnelMaxWidth, 3);
+        let w2 = max(runningProducts[i + 1] * funnelMaxWidth, 3);
+        // Left edge connector
+        line(funnelLeft, y1, funnelLeft, y2);
+        // Right edge connector (shows narrowing)
+        line(funnelLeft + w1, y1, funnelLeft + w2, y2);
+    }
+
+    // Right panel: Result display
+    let resultX = canvasWidth * 0.55;
+    let resultW = canvasWidth * 0.45 - margin;
+    let resultCenterX = resultX + resultW / 2;
+
+    // Result box
+    noStroke();
+    fill(255, 255, 255, 200);
+    stroke('#3F51B5');
+    strokeWeight(2);
+    rect(resultX, funnelTop, resultW, 160, 8);
+
+    // Joint probability header
+    noStroke();
+    fill('#333');
+    textSize(14);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Joint Probability", resultCenterX, funnelTop + 12);
+
+    // Joint probability value with color coding
+    let jointPct = jointProb * 100;
+    if (jointPct < 1) {
+        fill('#C62828'); // Red
+    } else if (jointPct < 10) {
+        fill('#E65100'); // Orange
+    } else {
+        fill('#2E7D32'); // Green
+    }
+    textSize(28);
+    textStyle(BOLD);
+    let displayPct;
+    if (jointPct >= 1) {
+        displayPct = jointPct.toFixed(2) + "%";
+    } else if (jointPct >= 0.001) {
+        displayPct = jointPct.toFixed(4) + "%";
+    } else {
+        displayPct = jointPct.toExponential(2) + "%";
+    }
+    text(displayPct, resultCenterX, funnelTop + 38);
+
+    // "1 in N" translation
+    fill('#555');
+    textSize(16);
+    textStyle(NORMAL);
+    let oneInN;
+    if (jointProb > 0) {
+        oneInN = Math.round(1 / jointProb);
+    } else {
+        oneInN = Infinity;
+    }
+    let oddsText;
+    if (oneInN === Infinity || oneInN > 1e12) {
+        oddsText = "That's less than 1 in a trillion";
+    } else {
+        oddsText = "That's 1 in " + oneInN.toLocaleString();
+    }
+    text(oddsText, resultCenterX, funnelTop + 80);
+
+    // Formula display
+    fill('#888');
+    textSize(11);
+    textStyle(ITALIC);
+    let formulaParts = [];
+    for (let i = 0; i < probs.length; i++) {
+        formulaParts.push((probs[i] * 100).toFixed(0) + "%");
+    }
+    text(formulaParts.join(" \u00D7 "), resultCenterX, funnelTop + 110);
+    textSize(10);
+    text("= " + displayPct, resultCenterX, funnelTop + 128);
+
+    // Comparison callouts
+    noStroke();
+    fill(255, 255, 255, 200);
+    stroke('#999');
+    strokeWeight(1);
+    let compY = funnelTop + 180;
+    rect(resultX, compY, resultW, 110, 6);
+
+    noStroke();
+    fill('#333');
+    textSize(12);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("For Comparison", resultCenterX, compY + 8);
+
+    textSize(10);
+    textStyle(NORMAL);
+    fill('#555');
+    let compItems = [
+        "Lightning strike (lifetime): 1 in 15,300",
+        "Dealt a royal flush: 1 in 649,740",
+        "State lottery jackpot: 1 in 13,000,000"
+    ];
+    for (let i = 0; i < compItems.length; i++) {
+        text(compItems[i], resultCenterX, compY + 30 + i * 22);
+    }
+
+    // Arrow pointing to current result in context
+    fill('#C62828');
+    textStyle(BOLD);
+    textSize(10);
+    text("Your estimate: 1 in " + oneInN.toLocaleString(), resultCenterX, compY + 30 + compItems.length * 22);
+
+    // Insight text at bottom of draw area
+    fill('#333');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, BOTTOM);
+    textStyle(ITALIC);
+    if (jointPct < 0.01) {
+        text("Even with generous individual estimates, the joint probability is vanishingly small.", canvasWidth / 2, drawHeight - 10);
+    } else if (jointPct < 1) {
+        text("Less than 1% chance all breakthroughs succeed. Does the math check out?", canvasWidth / 2, drawHeight - 10);
+    } else if (jointPct < 10) {
+        text("Single-digit probability requires extraordinary optimism about every factor.", canvasWidth / 2, drawHeight - 10);
+    } else {
+        text("These estimates assume very high confidence in every breakthrough.", canvasWidth / 2, drawHeight - 10);
+    }
+
+    // Slider labels in control region
+    noStroke();
+    textStyle(NORMAL);
+    textSize(11);
+    textAlign(RIGHT, CENTER);
+    for (let i = 0; i < breakthroughs.length; i++) {
+        let sy = drawHeight + 10 + i * 34 + 8;
+        fill('#333');
+        text(breakthroughs[i].name, sliderLeftMargin - 8, sy);
+
+        // Value label after slider
+        fill('#C62828');
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        let sliderRight = sliderLeftMargin + sliders[0].width;
+        text(sliders[i].value() + "%", sliderRight + 8, sy);
+        textStyle(NORMAL);
+        textAlign(RIGHT, CENTER);
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    // Reposition sliders
+    let sliderWidth = max(120, canvasWidth - sliderLeftMargin - 80);
+    for (let i = 0; i < sliders.length; i++) {
+        let sy = drawHeight + 10 + i * 34;
+        sliders[i].position(sliderLeftMargin, sy);
+        sliders[i].size(sliderWidth);
+    }
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

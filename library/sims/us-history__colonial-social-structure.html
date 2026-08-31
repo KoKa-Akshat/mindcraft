@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Colonial Society Structure MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <script>// Colonial Society Structure MicroSim
+// CANVAS_HEIGHT: 530
+// Chapter 3: Colonial America (1607–1754)
+// Bloom Level: Understand (L2) — clickable social pyramid with regional comparison
+
+let canvasWidth = 700;
+let drawHeight = 470;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 14;
+
+let selectedLayer = null;
+let hoveredLayer = null;
+let regionIdx = 0;
+let regionBtns = [];
+
+const regions = ['New England', 'Middle Colonies', 'Southern Colonies'];
+const regionColors = [
+  [21, 101, 192],    // blue - New England
+  [46, 125, 50],     // green - Middle
+  [230, 81, 0]       // amber - Southern
+];
+
+// Social layers per region [top to bottom]
+const layers = {
+  'New England': [
+    { name:'Puritan Clergy & Magistrates', pct:'~5%',
+      rights:'Highest social authority; church and civic leadership intertwined. Owned significant land and determined community moral standards.',
+      occupations:'Ministers, magistrates, town selectmen',
+      note:'In New England, religious standing was as important as economic standing — making this region distinctive from others.' },
+    { name:'Merchant & Landowner Elite', pct:'~10%',
+      rights:'Property rights, voting rights (as church members), full legal standing.',
+      occupations:'Merchants, large farmers, shipbuilders, lawyers',
+      note:'New England\'s trade economy made merchants powerful; they often blurred with the clergy as community leaders.' },
+    { name:'Yeoman Farmers & Artisans', pct:'~60%',
+      rights:'Voting rights (if church members and property holders), right to sue/be sued, jury service.',
+      occupations:'Small farmers, blacksmiths, carpenters, shopkeepers, fishermen',
+      note:'The backbone of New England society — town meetings gave them meaningful political voice, unusual in the colonial world.' },
+    { name:'Indentured Servants', pct:'~15%',
+      rights:'Contractual rights only; typically 4–7 years of service in exchange for passage, then freedom.',
+      occupations:'Farm laborers, domestic servants, apprentices',
+      note:'New England used fewer indentured servants than the Chesapeake; many were local poor rather than immigrants.' },
+    { name:'Enslaved Africans', pct:'~2–4%',
+      rights:'No legal rights; property under law. Slavery existed in New England but was smaller-scale than the South.',
+      occupations:'Domestic servants, farm laborers, skilled trades (some)',
+      note:'By 1750, ~5,000 enslaved people in New England. The Puritan theology of equality created some moral unease, but not abolition.' }
+  ],
+  'Middle Colonies': [
+    { name:'Merchant & Professional Elite', pct:'~5%',
+      rights:'Full property and legal rights; dominated urban commerce, banking, and law.',
+      occupations:'Merchants, lawyers, doctors, large landowners',
+      note:'Philadelphia and New York City were major ports — the merchant elite was cosmopolitan, diverse in religion and background.' },
+    { name:'Prosperous Farmers & Skilled Artisans', pct:'~20%',
+      rights:'Property and voting rights; religious freedom (unlike New England).',
+      occupations:'Grain farmers, millers, printers, craftspeople, traders',
+      note:'The Middle Colonies were the "breadbasket" — wheat and grain farmers formed a prosperous middle class without the sharp inequality of the South.' },
+    { name:'Small Farmers & Laborers', pct:'~45%',
+      rights:'Voting rights if landowners; remarkable religious tolerance across Quaker, Lutheran, Dutch Reformed, Anglican, and Catholic communities.',
+      occupations:'Tenant farmers, laborers, servants, small shop owners',
+      note:'Greater ethnic and religious diversity than other regions — German, Dutch, Swedish, Scots-Irish immigrants shaped a pluralistic society.' },
+    { name:'Indentured Servants', pct:'~20%',
+      rights:'Contractual rights only; some received land grants upon completing service.',
+      occupations:'Farm laborers, domestic servants, assistants',
+      note:'The Middle Colonies drew heavily on German and Scots-Irish indentured servants; many successfully transitioned to small farming.' },
+    { name:'Enslaved Africans', pct:'~7–10%',
+      rights:'No legal rights. Slavery existed but was less central to the economy than in the South.',
+      occupations:'Domestic servants, farm laborers, urban skilled trades',
+      note:'New York City had a significant enslaved population. The 1712 and 1741 slave uprisings in New York show that resistance was constant.' }
+  ],
+  'Southern Colonies': [
+    { name:'Planter Elite (Gentry)', pct:'~5%',
+      rights:'Full property/legal rights; controlled colonial legislatures; defined "genteel" colonial culture.',
+      occupations:'Tobacco, rice, and indigo planters; lawyers; colonial officials',
+      note:'Virginia\'s House of Burgesses was dominated by this elite — they valued English gentry culture, horse racing, and elaborate plantation houses.' },
+    { name:'Merchant & Professional Class', pct:'~8%',
+      rights:'Full property and legal rights; dependent on the planter economy.',
+      occupations:'Merchants, lawyers, doctors, factors (agents for British merchants)',
+      note:'A smaller merchant class than the North — the Southern economy was export-driven rather than commerce-centered.' },
+    { name:'Yeoman Farmers', pct:'~25%',
+      rights:'Voting rights if property-owning; aspirational toward planter status.',
+      occupations:'Small tobacco farmers (Virginia), subsistence farmers (Carolinas backcountry)',
+      note:'Bacon\'s Rebellion (1676) reflected yeoman frustration with the planter elite\'s monopoly on land and political power.' },
+    { name:'Indentured Servants', pct:'~10% (declining)',
+      rights:'Contractual rights only. After serving, many found no available good land.',
+      occupations:'Tobacco field workers, domestic servants',
+      note:'Indentured servitude declined after Bacon\'s Rebellion — planters turned to enslaved Africans to avoid having to give freed servants land.' },
+    { name:'Enslaved Africans', pct:'~40–50% in Chesapeake/Carolina',
+      rights:'No legal rights — treated as property under the 1705 Virginia Slave Code.',
+      occupations:'Tobacco, rice, and indigo field labor; skilled trades; domestic service',
+      note:'By 1750, Virginia and South Carolina had majority-Black populations. The scale of slavery here shaped all of Southern society and culture.' }
+  ]
+};
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) canvasWidth = container.offsetWidth;
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  for (let i = 0; i < regions.length; i++) {
+    let btn = createButton(regions[i]);
+    btn.mousePressed(((idx) => () => { regionIdx = idx; selectedLayer = null; hoveredLayer = null; })(i));
+    regionBtns.push(btn);
+  }
+
+  positionControls();
+  describe('Interactive social pyramid of colonial America. Switch between New England, Middle Colonies, and Southern regions. Click a social layer to learn about rights, occupations, and historical context.', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  let x = 10;
+  for (let i = 0; i < regionBtns.length; i++) {
+    regionBtns[i].position(x, y);
+    x += 200;
+  }
+}
+
+function getPyramidLayers() {
+  let layerData = layers[regions[regionIdx]];
+  let n = layerData.length;
+  let pyramidW = min(canvasWidth * 0.42, 280);
+  let pyramidH = drawHeight - 80;
+  let cx = pyramidW / 2 + margin*2;
+  let topY = 55;
+  let result = [];
+
+  for (let i = 0; i < n; i++) {
+    let t = i / n;
+    let b = (i+1) / n;
+    let topWidth = pyramidW * 0.15 + pyramidW * 0.85 * t;
+    let botWidth = pyramidW * 0.15 + pyramidW * 0.85 * b;
+    let y1 = topY + pyramidH * t;
+    let y2 = topY + pyramidH * b;
+    result.push({ x1: cx - topWidth/2, x2: cx + topWidth/2, x3: cx + botWidth/2, x4: cx - botWidth/2, y1, y2, data: layerData[i], idx: i });
+  }
+  return result;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  let col = regionColors[regionIdx];
+  let pyLayers = getPyramidLayers();
+
+  // Title
+  noStroke();
+  fill(col[0], col[1], col[2]);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(16);
+  text('Colonial Society — ' + regions[regionIdx], canvasWidth/2, 8);
+  textStyle(NORMAL);
+  fill(80);
+  textSize(12);
+  text('Click a layer to explore rights, occupations, and regional differences', canvasWidth/2, 28);
+
+  // Detect hover
+  hoveredLayer = null;
+  for (let l of pyLayers) {
+    if (pointInTrapezoid(mouseX, mouseY, l)) hoveredLayer = l.idx;
+  }
+
+  // Draw pyramid layers
+  for (let l of pyLayers) {
+    let isHov = hoveredLayer === l.idx;
+    let isSel = selectedLayer === l.idx;
+    // Layer color - gradient from gold (elite) to dark brown (enslaved)
+    let t = l.idx / (pyLayers.length - 1);
+    let lr = lerp(220, 80, t), lg = lerp(170, 40, t), lb = lerp(30, 10, t);
+
+    fill(lr, lg, lb, isSel || isHov ? 230 : 180);
+    stroke(isSel ? 'white' : (isHov ? [249,168,37] : 100));
+    strokeWeight(isSel ? 2.5 : 1);
+    quad(l.x1, l.y1, l.x2, l.y1, l.x3, l.y2, l.x4, l.y2);
+
+    noStroke();
+    fill(255, 255, isSel ? 255 : 200);
+    textAlign(CENTER, CENTER);
+    textStyle(isSel ? BOLD : NORMAL);
+    textSize(min(13, (l.y2-l.y1)*0.35));
+    let bw = (l.x2-l.x1)*0.9;
+    text(l.data.name + '\n(' + l.data.pct + ')', (l.x1+l.x2)/2 - bw/2, l.y1+2, bw, l.y2-l.y1-4);
+    textStyle(NORMAL);
+  }
+
+  // Info panel
+  let px = margin*2 + min(canvasWidth*0.42, 280) + margin*2 + 4;
+  let pw = canvasWidth - px - margin;
+  let ph = drawHeight - 50;
+
+  if (selectedLayer !== null) {
+    let ld = layers[regions[regionIdx]][selectedLayer];
+    fill(col[0], col[1], col[2], 20);
+    stroke(col[0], col[1], col[2]);
+    strokeWeight(1.5);
+    rect(px, 44, pw, ph, 8);
+
+    noStroke();
+    fill(col[0], col[1], col[2]);
+    rect(px, 44, pw, 32, 8, 8, 0, 0);
+    fill(255);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    textSize(12);
+    text(ld.name, px+8, 60);
+
+    let y = 84;
+    let drawSec = (label, text2) => {
+      noStroke();
+      fill(col[0], col[1], col[2]);
+      textStyle(BOLD);
+      textSize(12);
+      textAlign(LEFT, TOP);
+      text(label, px+8, y);
+      y += 15;
+      fill(40);
+      textStyle(NORMAL);
+      textSize(12);
+      text(text2, px+8, y, pw-16, 80);
+      y += Math.min(80, text2.length/40 * 14) + 8;
+      stroke(220); line(px+8, y, px+pw-8, y); noStroke();
+      y += 8;
+    };
+
+    drawSec('Legal Rights & Status:', ld.rights);
+    drawSec('Typical Occupations:', ld.occupations);
+    drawSec('Regional Context:', ld.note);
+    drawSec('% of Population:', ld.pct + ' of colonial population');
+
+    fill(150);
+    textAlign(RIGHT, BOTTOM);
+    textSize(10);
+    text('Click another layer to compare', px+pw-6, 44+ph-4);
+  } else {
+    fill(220);
+    stroke(200);
+    strokeWeight(1);
+    rect(px, 44, pw, ph, 8);
+    noStroke();
+    fill(120);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+    textStyle(ITALIC);
+    text('Click a pyramid layer to see the legal rights, occupations, and regional context for that social group.', px+10, 44+ph/2-40, pw-20, 80);
+    textStyle(NORMAL);
+  }
+
+  // Region color tabs
+  for (let i = 0; i < regions.length; i++) {
+    let rc = regionColors[i];
+    fill(rc[0], rc[1], rc[2], i === regionIdx ? 200 : 80);
+    noStroke();
+    rect(margin + i*120, drawHeight - 22, 115, 18, 4, 4, 0, 0);
+    fill(i === regionIdx ? 255 : 60);
+    textAlign(CENTER, CENTER);
+    textSize(10);
+    textStyle(i === regionIdx ? BOLD : NORMAL);
+    text(regions[i], margin + i*120 + 57, drawHeight - 13);
+    textStyle(NORMAL);
+  }
+
+  positionControls();
+}
+
+function pointInTrapezoid(mx, my, l) {
+  if (my < l.y1 || my > l.y2) return false;
+  let t = (my - l.y1) / (l.y2 - l.y1);
+  let left  = lerp(l.x1, l.x4, t);
+  let right = lerp(l.x2, l.x3, t);
+  return mx > left && mx < right;
+}
+
+function mousePressed() {
+  let pyLayers = getPyramidLayers();
+  for (let l of pyLayers) {
+    if (pointInTrapezoid(mouseX, mouseY, l)) {
+      selectedLayer = selectedLayer === l.idx ? null : l.idx;
+      return;
+    }
+  }
+  if (mouseX > margin*2 + min(canvasWidth*0.42,280) + margin*2 + 4) {
+    selectedLayer = null;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/><a href=".">Back to Documentation</a>
+</body>
+</html>

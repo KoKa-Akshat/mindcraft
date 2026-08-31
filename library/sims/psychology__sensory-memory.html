@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Multisensory Flavor Perception Map MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Multisensory Flavor Perception Map - Food Science MicroSim
+// CANVAS_HEIGHT: 640
+// A brain in the center receives 6 sensory channels (Taste, Orthonasal Smell,
+// Retronasal Smell, Texture, Temperature, Vision). Eight food cards at the
+// bottom let students see the per-channel intensity profile. Three "Block"
+// toggles let students silence senses and see how much each contributes to
+// the overall perceived flavor richness.
+
+// ----- Layout constants -----
+let canvasWidth = 760;
+let drawHeight = 540;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 10;
+let defaultTextSize = 14;
+
+// Layout bands (within drawHeight)
+let titleY = 26;
+let brainTopY = 82;             // pushed down so legend has clear room
+let brainAreaH = 268;           // brain + radiating channels live here
+let resultY = brainTopY + brainAreaH + 8;   // 358
+let resultH = 70;
+let cardsTopY = resultY + resultH + 8;       // 436
+let cardsH = 88;
+
+// Brain geometry (computed in setup/resize)
+let brainCx, brainCy;
+let brainRX = 70;   // ellipse x radius
+let brainRY = 55;   // ellipse y radius
+
+// Colors (book palette)
+const COLOR_BG       = '#f1f8e9';
+const COLOR_PANEL_BG = '#ffffff';
+const COLOR_BORDER   = '#bdbdbd';
+const COLOR_TITLE    = '#1b5e20';
+const COLOR_PRIMARY  = '#2e7d32';   // green - low intensity
+const COLOR_YELLOW   = '#fdd835';   // medium intensity
+const COLOR_RED      = '#e53935';   // high intensity
+const COLOR_ACCENT   = '#f57c00';   // accent / highlight
+const COLOR_TEXT     = '#212121';
+const COLOR_MUTED    = '#616161';
+const COLOR_BRAIN    = '#f8bbd0';   // pinkish
+const COLOR_BRAIN_STROKE = '#ad7a8a';
+const COLOR_BLOCKED  = '#cfd8dc';   // gray when channel disabled
+const COLOR_CARD_BG  = '#ffffff';
+const COLOR_CARD_SEL = '#fff3e0';   // soft orange tint on selected card
+
+// ----- Sensory channel definitions -----
+// Each channel originates somewhere around the brain (angle in degrees,
+// 0 = right, 90 = down, 180 = left, 270 = up). The "label" is what we
+// show at the outer endpoint.
+const channels = [
+  { key: 'ortho',   label: 'Orthonasal Smell', short: 'Ortho', angle: -110, group: 'smell' },
+  { key: 'retro',   label: 'Retronasal Smell', short: 'Retro', angle: -70,  group: 'smell' },
+  { key: 'vision',  label: 'Vision',           short: 'Vision', angle: 180, group: 'vision' },
+  { key: 'temp',    label: 'Temperature',      short: 'Temp',  angle: 0,    group: 'temp' },
+  { key: 'taste',   label: 'Taste (Tongue)',   short: 'Taste', angle: 110,  group: 'taste' },
+  { key: 'texture', label: 'Texture / Touch',  short: 'Texture', angle: 70, group: 'texture' }
+];
+
+// Weight of each channel toward total perceived flavor richness.
+// Smell (ortho + retro) ~50%, Taste ~30%, Texture ~10%, Temp+Vision ~10%.
+// Stored per-channel max (when intensity = 3 / max).
+const channelWeights = {
+  ortho:   20,
+  retro:   30,
+  taste:   30,
+  texture: 10,
+  temp:     5,
+  vision:   5
+};
+// Total = 100.
+
+// ----- Food profiles (intensities 0-3) -----
+const foods = [
+  { id: 'strawberry',  label: 'Strawberry',   emoji: 'STR', accent: '#e53935',
+    profile: { taste: 2, ortho: 2, retro: 3, texture: 2, temp: 1, vision: 3 } },
+  { id: 'coffee',      label: 'Coffee',       emoji: 'COF', accent: '#5d4037',
+    profile: { taste: 2, ortho: 3, retro: 3, texture: 1, temp: 3, vision: 1 } },
+  { id: 'chip',        label: 'Potato Chip',  emoji: 'CHP', accent: '#fbc02d',
+    profile: { taste: 2, ortho: 1, retro: 2, texture: 3, temp: 1, vision: 1 } },
+  { id: 'sushi',       label: 'Sushi',        emoji: 'SUS', accent: '#ec407a',
+    profile: { taste: 2, ortho: 1, retro: 2, texture: 2, temp: 1, vision: 3 } },
+  { id: 'icecream',    label: 'Vanilla Ice Cream', emoji: 'ICE', accent: '#fff3e0',
+    profile: { taste: 2, ortho: 1, retro: 3, texture: 3, temp: 3, vision: 2 } },
+  { id: 'hotsauce',    label: 'Hot Sauce',    emoji: 'HOT', accent: '#d84315',
+    profile: { taste: 3, ortho: 2, retro: 2, texture: 1, temp: 3, vision: 3 } },
+  { id: 'parmesan',    label: 'Aged Parmesan', emoji: 'PAR', accent: '#f9a825',
+    profile: { taste: 3, ortho: 3, retro: 3, texture: 2, temp: 1, vision: 1 } },
+  { id: 'sparkling',   label: 'Sparkling Water', emoji: 'SPK', accent: '#90caf9',
+    profile: { taste: 1, ortho: 0, retro: 0, texture: 3, temp: 2, vision: 1 } }
+];
+
+let currentFood = foods[4];   // default: vanilla ice cream so students see a rich profile
+
+// ----- Block toggles -----
+let blockSmell = false;
+let blockTaste = false;
+let blockTexture = false;
+
+// Buttons
+let blockSmellBtn, blockTasteBtn, blockTextureBtn, resetBtn;
+
+// Layout for food cards (computed in updateCanvasSize)
+let cardX0, cardW, cardH, cardGap;
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').parentElement;
+  if (container) {
+    const w = container.clientWidth;
+    if (w && w > 320) {
+      canvasWidth = Math.min(w - 20, 900);
+    }
+  }
+  brainCx = canvasWidth / 2;
+  brainCy = brainTopY + brainAreaH / 2;
+  // Food cards: 8 cards in one row across canvas.
+  cardGap = 6;
+  const totalGap = cardGap * (foods.length + 1);
+  cardW = Math.floor((canvasWidth - totalGap) / foods.length);
+  cardW = Math.max(60, Math.min(cardW, 100));
+  cardH = cardsH;
+  cardX0 = Math.floor((canvasWidth - (cardW * foods.length + cardGap * (foods.length - 1))) / 2);
+}
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI');
+  textSize(defaultTextSize);
+
+  // Block toggle buttons
+  blockSmellBtn = createButton('Block Smell');
+  blockSmellBtn.mousePressed(() => { blockSmell = !blockSmell; updateButtonStyles(); });
+
+  blockTasteBtn = createButton('Block Taste');
+  blockTasteBtn.mousePressed(() => { blockTaste = !blockTaste; updateButtonStyles(); });
+
+  blockTextureBtn = createButton('Block Texture');
+  blockTextureBtn.mousePressed(() => { blockTexture = !blockTexture; updateButtonStyles(); });
+
+  resetBtn = createButton('Reset');
+  resetBtn.mousePressed(onReset);
+
+  positionControls();
+  updateButtonStyles();
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function positionControls() {
+  const ctrlY = drawHeight + 20;
+  // four buttons evenly spread
+  const btns = [blockSmellBtn, blockTasteBtn, blockTextureBtn, resetBtn];
+  const btnW = 130;
+  const gap = 12;
+  const totalW = btnW * btns.length + gap * (btns.length - 1);
+  let x = Math.floor((canvasWidth - totalW) / 2);
+  for (const b of btns) {
+    b.position(x, ctrlY);
+    b.size(btnW, 32);
+    x += btnW + gap;
+  }
+}
+
+function updateButtonStyles() {
+  styleToggle(blockSmellBtn, blockSmell);
+  styleToggle(blockTasteBtn, blockTaste);
+  styleToggle(blockTextureBtn, blockTexture);
+  // Reset button - always neutral
+  resetBtn.style('background-color', '#eceff1');
+  resetBtn.style('color', '#212121');
+  resetBtn.style('border', '1px solid #90a4ae');
+  resetBtn.style('border-radius', '6px');
+  resetBtn.style('font-weight', '600');
+  resetBtn.style('cursor', 'pointer');
+}
+
+function styleToggle(btn, isActive) {
+  if (isActive) {
+    btn.style('background-color', COLOR_RED);
+    btn.style('color', '#ffffff');
+    btn.style('border', '1px solid #b71c1c');
+  } else {
+    btn.style('background-color', COLOR_PRIMARY);
+    btn.style('color', '#ffffff');
+    btn.style('border', '1px solid #1b5e20');
+  }
+  btn.style('border-radius', '6px');
+  btn.style('font-weight', '600');
+  btn.style('cursor', 'pointer');
+}
+
+function onReset() {
+  currentFood = foods[4];
+  blockSmell = false;
+  blockTaste = false;
+  blockTexture = false;
+  updateButtonStyles();
+}
+
+function draw() {
+  background(COLOR_BG);
+  drawChannels();
+  drawBrain();
+  drawResultPanel();
+  drawFoodCards();
+  drawLegend();
+  // Title drawn LAST so it sits on top of any radiating channel lines.
+  drawTitle();
+}
+
+function drawTitle() {
+  push();
+  // Opaque background band so radiating channels don't bleed through.
+  noStroke();
+  fill(COLOR_BG);
+  rect(0, 0, canvasWidth, 48);
+
+  noStroke();
+  fill(COLOR_TITLE);
+  textSize(18);
+  textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('Multisensory Flavor Perception Map', canvasWidth / 2, 8);
+  textStyle(NORMAL);
+  textSize(12);
+  fill(COLOR_MUTED);
+  text('Click a food card. Toggle Block buttons to see how each sense contributes.',
+       canvasWidth / 2, 30);
+  pop();
+}
+
+// Endpoint of a channel line (outer end, away from brain)
+function channelEndpoint(ch) {
+  const a = radians(ch.angle);
+  const len = 150;
+  // Start just outside brain ellipse on the angle
+  const startX = brainCx + cos(a) * (brainRX + 4);
+  const startY = brainCy + sin(a) * (brainRY + 4);
+  const endX   = brainCx + cos(a) * (brainRX + len);
+  const endY   = brainCy + sin(a) * (brainRY + len);
+  return { startX, startY, endX, endY, a };
+}
+
+function channelIsActive(ch) {
+  if (blockSmell && ch.group === 'smell') return false;
+  if (blockTaste && ch.group === 'taste') return false;
+  if (blockTexture && ch.group === 'texture') return false;
+  return true;
+}
+
+function intensityColor(level, active) {
+  if (!active || level <= 0) return color(COLOR_BLOCKED);
+  if (level === 1) return color(COLOR_PRIMARY);
+  if (level === 2) return color(COLOR_YELLOW);
+  return color(COLOR_RED);
+}
+
+function intensityLabel(level) {
+  if (level <= 0) return 'none';
+  if (level === 1) return 'low';
+  if (level === 2) return 'med';
+  return 'high';
+}
+
+function drawChannels() {
+  for (const ch of channels) {
+    const p = channelEndpoint(ch);
+    const level = currentFood.profile[ch.key] || 0;
+    const active = channelIsActive(ch);
+    const col = intensityColor(level, active);
+    const sw = active ? (2 + level * 2.5) : 2;   // line width grows with intensity
+
+    push();
+    stroke(col);
+    strokeWeight(sw);
+    // Draw line from outer endpoint INTO the brain edge
+    line(p.endX, p.endY, p.startX, p.startY);
+    // Arrowhead pointing into brain
+    drawArrowhead(p.startX, p.startY, p.a, col, active ? 9 : 6);
+    pop();
+
+    // Outer label box
+    drawChannelLabel(ch, p, level, active);
+  }
+}
+
+function drawArrowhead(x, y, angleRad, col, size) {
+  push();
+  translate(x, y);
+  rotate(angleRad);
+  noStroke();
+  fill(col);
+  triangle(0, 0, -size, -size * 0.55, -size, size * 0.55);
+  pop();
+}
+
+function drawChannelLabel(ch, p, level, active) {
+  // Position label slightly past the outer endpoint
+  const a = p.a;
+  const lx = p.endX + cos(a) * 8;
+  const ly = p.endY + sin(a) * 8;
+
+  // Determine text alignment based on which side of brain
+  let hAlign = CENTER, vAlign = CENTER;
+  if (cos(a) > 0.3) hAlign = LEFT;
+  else if (cos(a) < -0.3) hAlign = RIGHT;
+  if (sin(a) > 0.3) vAlign = TOP;
+  else if (sin(a) < -0.3) vAlign = BOTTOM;
+
+  push();
+  noStroke();
+  textSize(12);
+  textAlign(hAlign, vAlign);
+  // Background pill for readability
+  const txt = ch.label;
+  const intensityTxt = active ? intensityLabel(level).toUpperCase() : 'BLOCKED';
+  const w1 = textWidth(txt);
+  textStyle(BOLD);
+  const w2 = textWidth(intensityTxt);
+  textStyle(NORMAL);
+  const pillW = Math.max(w1, w2) + 14;
+  const pillH = 34;
+  let px = lx, py = ly;
+  if (hAlign === LEFT)  px = lx;
+  if (hAlign === RIGHT) px = lx - pillW;
+  if (hAlign === CENTER) px = lx - pillW / 2;
+  if (vAlign === TOP)    py = ly;
+  if (vAlign === BOTTOM) py = ly - pillH;
+  if (vAlign === CENTER) py = ly - pillH / 2;
+
+  // Clamp inside canvas
+  px = constrain(px, 4, canvasWidth - pillW - 4);
+  py = constrain(py, brainTopY - 4, brainTopY + brainAreaH - pillH);
+
+  // Pill background
+  const bgCol = active ? color(255, 255, 255, 235) : color(236, 239, 241, 235);
+  fill(bgCol);
+  stroke(active ? intensityColor(level, true) : color(COLOR_BLOCKED));
+  strokeWeight(1.5);
+  rect(px, py, pillW, pillH, 6);
+
+  // Label text
+  noStroke();
+  fill(active ? COLOR_TEXT : COLOR_MUTED);
+  textAlign(CENTER, TOP);
+  text(txt, px + pillW / 2, py + 3);
+
+  // Intensity badge
+  textStyle(BOLD);
+  fill(active ? intensityColor(level, true) : color(COLOR_MUTED));
+  text(intensityTxt, px + pillW / 2, py + 18);
+  textStyle(NORMAL);
+  pop();
+}
+
+function drawBrain() {
+  push();
+  // Soft shadow
+  noStroke();
+  fill(0, 0, 0, 25);
+  ellipse(brainCx + 2, brainCy + 3, brainRX * 2, brainRY * 2);
+
+  // Brain body
+  fill(COLOR_BRAIN);
+  stroke(COLOR_BRAIN_STROKE);
+  strokeWeight(2);
+  ellipse(brainCx, brainCy, brainRX * 2, brainRY * 2);
+
+  // Central groove (line down middle)
+  noFill();
+  stroke(COLOR_BRAIN_STROKE);
+  strokeWeight(1.5);
+  bezier(brainCx, brainCy - brainRY + 4,
+         brainCx - 6, brainCy - brainRY / 2,
+         brainCx + 6, brainCy + brainRY / 2,
+         brainCx, brainCy + brainRY - 4);
+
+  // A few squiggles to suggest gyri
+  strokeWeight(1);
+  for (let i = -2; i <= 2; i++) {
+    const yy = brainCy + i * 12;
+    bezier(brainCx - brainRX * 0.7, yy,
+           brainCx - brainRX * 0.2, yy - 6,
+           brainCx + brainRX * 0.2, yy + 6,
+           brainCx + brainRX * 0.7, yy);
+  }
+
+  // Label
+  noStroke();
+  fill(COLOR_TEXT);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(13);
+  text('FLAVOR', brainCx, brainCy - 6);
+  textSize(11);
+  textStyle(NORMAL);
+  text('(perception)', brainCx, brainCy + 8);
+  pop();
+}
+
+// ----- Compute % flavor richness -----
+function computeRichness(food, smellOff, tasteOff, textureOff) {
+  let total = 0;
+  let maxTotal = 0;
+  for (const ch of channels) {
+    const w = channelWeights[ch.key];
+    maxTotal += w;
+    let active = true;
+    if (smellOff && ch.group === 'smell') active = false;
+    if (tasteOff && ch.group === 'taste') active = false;
+    if (textureOff && ch.group === 'texture') active = false;
+    if (!active) continue;
+    const level = food.profile[ch.key] || 0;
+    total += (level / 3) * w;
+  }
+  return Math.round((total / maxTotal) * 100);
+}
+
+function drawResultPanel() {
+  // Background card spanning lower-mid area
+  const px = margin;
+  const py = resultY;
+  const pw = canvasWidth - margin * 2;
+  const ph = resultH;
+
+  push();
+  noStroke();
+  fill(COLOR_PANEL_BG);
+  stroke(COLOR_BORDER);
+  strokeWeight(1);
+  rect(px, py, pw, ph, 8);
+
+  noStroke();
+  fill(COLOR_TITLE);
+  textStyle(BOLD);
+  textSize(13);
+  textAlign(LEFT, TOP);
+  text('Perceived Flavor Intensity — ' + currentFood.label,
+       px + 12, py + 8);
+
+  // Current state line
+  const baseline   = computeRichness(currentFood, false, false, false);
+  const current    = computeRichness(currentFood, blockSmell, blockTaste, blockTexture);
+  const noSmell    = computeRichness(currentFood, true,  false, false);
+  const noTaste    = computeRichness(currentFood, false, true,  false);
+  const noTexture  = computeRichness(currentFood, false, false, true);
+
+  // Show baseline + current (if different) + per-block deltas
+  textStyle(NORMAL);
+  textSize(12);
+  fill(COLOR_TEXT);
+
+  const line1 = `All senses on: ${baseline}% flavor richness`;
+  let line2;
+  if (blockSmell || blockTaste || blockTexture) {
+    const blocked = [];
+    if (blockSmell)   blocked.push('Smell');
+    if (blockTaste)   blocked.push('Taste');
+    if (blockTexture) blocked.push('Texture');
+    line2 = `With ${blocked.join(' + ')} BLOCKED: ${current}%   (loss of ${baseline - current} points)`;
+  } else {
+    line2 = `Try blocking a sense: no smell ${noSmell}%   ·   no taste ${noTaste}%   ·   no texture ${noTexture}%`;
+  }
+
+  text(line1, px + 12, py + 28);
+  // Highlight the second line
+  if (blockSmell || blockTaste || blockTexture) {
+    fill(COLOR_RED);
+    textStyle(BOLD);
+  } else {
+    fill(COLOR_MUTED);
+  }
+  text(line2, px + 12, py + 48);
+  pop();
+}
+
+function drawFoodCards() {
+  for (let i = 0; i < foods.length; i++) {
+    const f = foods[i];
+    const x = cardX0 + i * (cardW + cardGap);
+    const y = cardsTopY;
+    const isSel = (f.id === currentFood.id);
+
+    push();
+    // Card background
+    stroke(isSel ? COLOR_ACCENT : COLOR_BORDER);
+    strokeWeight(isSel ? 3 : 1);
+    fill(isSel ? COLOR_CARD_SEL : COLOR_CARD_BG);
+    rect(x, y, cardW, cardH, 6);
+
+    // Color swatch top
+    noStroke();
+    fill(f.accent);
+    rect(x + 6, y + 6, cardW - 12, 22, 4);
+
+    // Label
+    fill(COLOR_TEXT);
+    textAlign(CENTER, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    // wrap label if too long: split on space
+    const words = f.label.split(' ');
+    if (words.length === 1 || textWidth(f.label) < cardW - 8) {
+      text(f.label, x + cardW / 2, y + 34);
+    } else {
+      text(words[0], x + cardW / 2, y + 34);
+      text(words.slice(1).join(' '), x + cardW / 2, y + 48);
+    }
+
+    // Intensity dots row at bottom
+    textStyle(NORMAL);
+    textSize(8);
+    fill(COLOR_MUTED);
+    textAlign(CENTER, BOTTOM);
+    text('click to select', x + cardW / 2, y + cardH - 6);
+    pop();
+  }
+}
+
+function drawLegend() {
+  // Compact legend along the LEFT side below title, where channels don't reach.
+  const lx = margin + 4;
+  const ly = 52;
+  push();
+  noStroke();
+  textSize(11);
+  textAlign(LEFT, CENTER);
+
+  // Background pill for readability
+  const items = [
+    { c: COLOR_PRIMARY, l: 'low' },
+    { c: COLOR_YELLOW,  l: 'med' },
+    { c: COLOR_RED,     l: 'high' },
+    { c: COLOR_BLOCKED, l: 'blocked' }
+  ];
+  // Measure pill width
+  let pillW = 70; // "Intensity:"
+  for (const it of items) pillW += 16 + textWidth(it.l) + 8;
+  pillW += 6;
+  fill(255, 255, 255, 220);
+  stroke(COLOR_BORDER);
+  strokeWeight(1);
+  rect(lx, ly, pillW, 22, 6);
+
+  noStroke();
+  fill(COLOR_MUTED);
+  text('Intensity:', lx + 6, ly + 11);
+
+  let x = lx + 6 + 60;
+  for (const it of items) {
+    fill(it.c);
+    rect(x, ly + 5, 12, 12, 2);
+    fill(COLOR_TEXT);
+    text(it.l, x + 16, ly + 11);
+    x += 16 + textWidth(it.l) + 8;
+  }
+  pop();
+}
+
+function mousePressed() {
+  // Food card clicks
+  for (let i = 0; i < foods.length; i++) {
+    const x = cardX0 + i * (cardW + cardGap);
+    const y = cardsTopY;
+    if (mouseX >= x && mouseX <= x + cardW &&
+        mouseY >= y && mouseY <= y + cardH) {
+      currentFood = foods[i];
+      return;
+    }
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

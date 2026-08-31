@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>ATP Yield Calculator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>(function (global) {
+  const Map = {
+    A: 'ᴬ',
+    B: 'ᴮ',
+    C: '꜀',
+    D: 'ᴅ',
+    E: 'ᴱ',
+    G: 'ᴳ',
+    H: 'ᴴ',
+    I: 'ᴵ',
+    J: 'ᴶ',
+    K: 'ᴷ',
+    L: 'ᴸ',
+    M: 'ᴹ',
+    N: 'ᴺ',
+    O: 'ᴼ',
+    P: 'ᴾ',
+    R: 'ᴿ',
+    S: 'ˢ',
+    T: 'ᵀ',
+    U: 'ᵁ',
+    V: 'ⱽ',
+    W: 'ʷ',
+    X: 'ˣ',
+    Y: 'ʸ',
+    Z: 'ᶻ',
+    a: 'ᵃ',
+    b: 'ᵇ',
+    d: 'ᵈ',
+    e: 'ᵉ',
+    g: 'ᵍ',
+    h: 'ʰ',
+    i: 'ᶦ',
+    j: 'ʲ',
+    k: 'ᵏ',
+    l: 'ˡ',
+    m: 'ᵐ',
+    n: 'ⁿ',
+    o: 'ᵒ',
+    p: 'ᵖ',
+    r: 'ʳ',
+    s: 'ˢ',
+    t: 'ᵗ',
+    u: 'ᵘ',
+    v: 'ᵛ',
+    w: 'ʷ',
+    x: 'ˣ',
+    y: 'ʸ',
+    z: 'ᶻ',
+    '+': '⁺',
+    '-': '⁻',
+    '0': '⁰',
+    '1': '¹',
+    '2': '²',
+    '3': '³',
+    '4': '⁴',
+    '5': '⁵',
+    '6': '⁶',
+    '7': '⁷',
+    '8': '⁸',
+    '9': '⁹'
+  };
+
+  function convertSuperscriptOption(str) {
+    return str.replace(/\^([A-Za-z0-9+\-])/g, (_, ch) => MAP[ch] || ch);
+  }
+
+  function buildSuperscriptTokens(str, baseSize) {
+    const tokens = [];
+    const size = baseSize || 16;
+    let totalWidth = 0;
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '^' && i + 1 < str.length) {
+        const supChar = str[i + 1];
+        textSize(size * 0.75);
+        const width = textWidth(supChar);
+        tokens.push({ text: supChar, isSup: true, width });
+        totalWidth += width;
+        i += 2;
+      } else {
+        textSize(size);
+        const width = textWidth(str[i]);
+        tokens.push({ text: str[i], isSup: false, width });
+        totalWidth += width;
+        i++;
+      }
+    }
+    textSize(size);
+    return { tokens, totalWidth };
+  }
+
+  function drawSuperscriptText(str, x, y, baseSize, align = 'left', metrics = null) {
+    const size = baseSize || 16;
+    const tokenData = metrics || buildSuperscriptTokens(str, size);
+    const tokens = tokenData.tokens;
+    const totalWidth = tokenData.totalWidth;
+
+    let cursor = x;
+    if (align === 'center') cursor -= totalWidth / 2;
+    else if (align === 'right') cursor -= totalWidth;
+
+    push();
+    textAlign(LEFT, CENTER);
+    noStroke();
+    for (const token of tokens) {
+      if (token.isSup) {
+        textSize(size * 0.75);
+        text(token.text, cursor, y - size * 0.45);
+      } else {
+        textSize(size);
+        text(token.text, cursor, y);
+      }
+      cursor += token.width;
+    }
+    pop();
+    textSize(size);
+  }
+
+  global.SuperscriptText = {
+    convertSuperscriptOption,
+    buildSuperscriptTokens,
+    drawSuperscriptText
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+    <script>// ATP Yield Calculator MicroSim
+// Implements interactive table + pie chart for ATP contributions across stages
+// Responsive layout follows MicroSim p5.js template conventions
+
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 450;
+let controlHeight = 150;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+
+const margin = 20;
+const sliderLeftMargin = 340;
+const defaultTextSize = 16;
+
+let nadhSlider;
+let fadSlider;
+let modeButton;
+let showPieLabelsCheckbox;
+
+let isClassicMode = false;
+let hoveredStage = null;
+let cachedTableWidth = 0;
+
+const stageBlueprint = [
+  {
+    id: 'gly',
+    name: 'Glycolysis',
+    substrate: 2,
+    nadh: 2,
+    fadh: 0,
+    color: '#F4D03F',
+    summary: 'Cytosol: Glucose → pyruvate + 2 ATP + 2 NADH. Sets up fuel for mitochondria.'
+  },
+  {
+    id: 'pdh',
+    name: 'Pyruvate Oxidation',
+    substrate: 0,
+    nadh: 2,
+    fadh: 0,
+    color: '#EB984E',
+    summary: 'Mitochondrial matrix: Each pyruvate → acetyl-CoA + NADH + CO₂.'
+  },
+  {
+    id: 'krebs',
+    name: 'Citric Acid Cycle',
+    substrate: 2,
+    nadh: 6,
+    fadh: 2,
+    color: '#C0392B',
+    summary: 'Matrix: Oxidizes acetyl-CoA fully, producing NADH, FADH₂, and substrate-level ATP.'
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+
+  textFont('Arial');
+
+  modeButton = createButton('Switch to Classic (~38 ATP)');
+  modeButton.position(10, drawHeight + 5);
+  modeButton.mousePressed(toggleMode);
+
+  nadhSlider = createSlider(1.5, 3.0, 2.5, 0.1);
+  nadhSlider.position(sliderLeftMargin, drawHeight + 5);
+  nadhSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  fadSlider = createSlider(1.0, 2.0, 1.5, 0.1);
+  fadSlider.position(sliderLeftMargin, drawHeight + 45);
+  fadSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  showPieLabelsCheckbox = createCheckbox('Show pie labels', true);
+  showPieLabelsCheckbox.position(10, drawHeight + 85);
+
+  describe(
+    'Calculator showing ATP yield from glycolysis, pyruvate oxidation, and the citric acid cycle with sliders for NADH and FADH2 conversion factors plus a pie chart summary',
+    LABEL
+  );
+}
+
+function draw() {
+  updateCanvasSize();
+  drawRegions();
+  const data = computeStageTotals();
+  drawTitle();
+  drawTable(data);
+  drawPieChart(data);
+  drawHoverText(data);
+  drawControlsInfo();
+}
+
+function drawRegions() {
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+}
+
+function drawTitle() {
+  fill('#111');
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(28);
+  text('ATP Yield Calculator', margin, margin - 5);
+
+  textSize(16);
+  textAlign(LEFT, TOP);
+  const modeLabel = isClassicMode
+    ? 'Classic textbook assumption (3 ATP/NADH, 2 ATP/FADH₂)'
+    : 'Modern bioenergetics (2.5 ATP/NADH, 1.5 ATP/FADH₂)';
+  text(modeLabel, margin, margin + 28);
+
+  textSize(14);
+  text(
+    'Hover a row to review where it occurs in cellular respiration.',
+    margin,
+    margin + 50
+  );
+}
+
+function drawTable(data) {
+  const tableLeft = margin;
+  const tableTop = margin + 80;
+  const tableWidth = canvasWidth * 0.6;
+  const rowHeight = 60;
+  const headerHeight = 32;
+  const columns = [
+    { label: 'Stage', width: tableWidth * 0.32 },
+    { label: 'Substrate ATP', width: tableWidth * 0.18 },
+    { label: 'NADH → ATP', width: tableWidth * 0.18 },
+    { label: 'FADH₂ → ATP', width: tableWidth * 0.18 },
+    { label: 'Stage Total', width: tableWidth * 0.14 }
+  ];
+
+  // Header
+  fill('#154360');
+  noStroke();
+  rect(tableLeft, tableTop, tableWidth, headerHeight, 8, 8, 0, 0);
+  fill('white');
+  textAlign(CENTER, CENTER);
+  textSize(15);
+  let x = tableLeft;
+  columns.forEach((col) => {
+    text(col.label, x + col.width / 2, tableTop + headerHeight / 2);
+    x += col.width;
+  });
+
+  hoveredStage = null;
+  // Rows
+  data.stages.forEach((stage, index) => {
+    const y = tableTop + headerHeight + index * rowHeight;
+    const isHovered = mouseX >= tableLeft && mouseX <= tableLeft + tableWidth && mouseY >= y && mouseY <= y + rowHeight;
+
+    fill(isHovered ? 'rgba(244, 208, 63, 0.25)' : 'white');
+    stroke('#D5D8DC');
+    rect(tableLeft, y, tableWidth, rowHeight);
+
+    fill('#111');
+    noStroke();
+    textAlign(LEFT, CENTER);
+    textSize(defaultTextSize);
+    let textX = tableLeft + 10;
+    text(stage.name, textX, y + rowHeight / 2);
+
+    textAlign(CENTER, CENTER);
+    text(stage.substrateATP.toFixed(1), tableLeft + columns[0].width + columns[1].width / 2, y + rowHeight / 2);
+    text(stage.nadhATP.toFixed(1), tableLeft + columns[0].width + columns[1].width + columns[2].width / 2, y + rowHeight / 2);
+    text(stage.fadhATP.toFixed(1), tableLeft + columns[0].width + columns[1].width + columns[2].width + columns[3].width / 2, y + rowHeight / 2);
+    text(stage.totalATP.toFixed(1), tableLeft + tableWidth - columns[4].width / 2, y + rowHeight / 2);
+
+    if (isHovered) {
+      hoveredStage = stage;
+    }
+  });
+
+  cachedTableWidth = tableWidth;
+  // Total row
+  const totalY = tableTop + headerHeight + data.stages.length * rowHeight;
+  fill('#154360');
+  rect(tableLeft, totalY, tableWidth, rowHeight, 0, 0, 8, 8);
+  fill('white');
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text('Grand Total', tableLeft + 10, totalY + rowHeight / 2);
+  textAlign(CENTER, CENTER);
+  text(
+    data.totalATP.toFixed(1),
+    tableLeft + tableWidth - columns[4].width / 2,
+    totalY + rowHeight / 2
+  );
+}
+
+function drawPieChart(data) {
+  const tableWidth = cachedTableWidth || canvasWidth * 0.6;
+  const rightSpace = max(0, canvasWidth - (2 * margin + tableWidth));
+  const widthLimitedRadius = rightSpace / 2;
+  const baseRadius = min(canvasWidth * 0.2, 170);
+  let pieRadius = min(baseRadius, widthLimitedRadius, 170);
+  if (widthLimitedRadius >= 70) {
+    pieRadius = max(pieRadius, 70);
+  }
+  const centerX = canvasWidth - pieRadius - margin;
+  const centerY = margin + 170;
+  const totalValue = data.stages.reduce((sum, stage) => sum + stage.totalATP, 0);
+
+  let startAngle = -HALF_PI;
+  data.stages.forEach((stage) => {
+    const angle = totalValue > 0 ? (stage.totalATP / totalValue) * TWO_PI : 0;
+    fill(stage.color);
+    stroke('white');
+    strokeWeight(2);
+    arc(centerX, centerY, pieRadius * 2, pieRadius * 2, startAngle, startAngle + angle, PIE);
+
+    if (showPieLabelsCheckbox.checked()) {
+      const mid = startAngle + angle / 2;
+      let labelDistance = pieRadius + 20;
+      if (stage.id === 'krebs') {
+        labelDistance = max(pieRadius * 0.5, labelDistance - 80);
+      } else if (stage.id === 'pdh') {
+        labelDistance = max(pieRadius * 0.55, labelDistance - 70);
+      } else if (stage.id === 'gly') {
+        labelDistance = max(pieRadius * 0.6, labelDistance - 60);
+      }
+      const labelX = centerX + cos(mid) * labelDistance;
+      const labelY = centerY + sin(mid) * labelDistance;
+      noStroke();
+      fill(stage.id === 'krebs' ? 'white' : '#111');
+      textAlign(CENTER, CENTER);
+      textSize(14);
+      text(`${stage.name}\n${stage.totalATP.toFixed(1)} ATP`, labelX, labelY);
+    }
+    startAngle += angle;
+  });
+
+  noStroke();
+  fill('#111');
+  textAlign(CENTER, TOP);
+  textSize(16);
+  text('Proportion of ATP per stage', centerX, centerY + pieRadius + 12);
+}
+
+function drawHoverText(data) {
+  const infoLeft = margin;
+  const infoTop = drawHeight - 70;
+  fill('#1B2631');
+  rect(infoLeft, infoTop, canvasWidth - margin * 2, 60, 10);
+
+  noStroke();
+  fill('white');
+  textAlign(LEFT, TOP);
+  textSize(14);
+  const textContent = hoveredStage
+    ? `${hoveredStage.name}: ${hoveredStage.summary}`
+    : 'Move your cursor over a row to see where that stage occurs and why its ATP contribution matters.';
+  text(textContent, infoLeft + 12, infoTop + 10, canvasWidth - margin * 3, 50);
+
+  // Total summary
+  fill('#111');
+  textAlign(RIGHT, TOP);
+  textSize(18);
+  const message = `Net ATP ≈ ${data.totalATP.toFixed(1)} per glucose`;
+  text(message, canvasWidth - margin, margin + 15);
+}
+
+function drawControlsInfo() {
+  fill('#111');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text(`NADH conversion factor: ${nadhSlider.value().toFixed(1)} ATP per NADH`, 10, drawHeight + 20);
+  text(`FADH₂ conversion factor: ${fadSlider.value().toFixed(1)} ATP per FADH₂`, 10, drawHeight + 60);
+}
+
+function computeStageTotals() {
+  const nadhFactor = nadhSlider.value();
+  const fadFactor = fadSlider.value();
+
+  const stages = stageBlueprint.map((stage) => {
+    const nadhATP = stage.nadh * nadhFactor;
+    const fadhATP = stage.fadh * fadFactor;
+    const totalATP = stage.substrate + nadhATP + fadhATP;
+    return {
+      ...stage,
+      substrateATP: stage.substrate,
+      nadhATP,
+      fadhATP,
+      totalATP
+    };
+  });
+
+  const totalATP = stages.reduce((sum, s) => sum + s.totalATP, 0);
+
+  return { stages, totalATP };
+}
+
+function toggleMode() {
+  isClassicMode = !isClassicMode;
+  if (isClassicMode) {
+    nadhSlider.value(3.0);
+    fadSlider.value(2.0);
+    modeButton.html('Switch to Modern (~32 ATP)');
+  } else {
+    nadhSlider.value(2.5);
+    fadSlider.value(1.5);
+    modeButton.html('Switch to Classic (~38 ATP)');
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  nadhSlider.size(canvasWidth - sliderLeftMargin - margin);
+  fadSlider.size(canvasWidth - sliderLeftMargin - margin);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

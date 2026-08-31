@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collisions Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+    <script>// Collisions Simulation
+// Inspired by https://vislupus.github.io/p5-simulations/collision.html
+// Modified by Dan McCreary
+// The inspiration for many of these simulations comes from the brilliant work of
+// Daniel Shiffman and his incredible YouTube channel, The Coding Train.
+
+// Canvas dimensions
+let canvasWidth = 950;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 20;
+
+// Simulation state
+let running = false;
+let startButton;
+
+// Simulation parameters
+let particles = [];
+let numParticles = 30;
+let vel = 5;
+let numParticlesSlider, velocitySlider;
+
+// Collision visualization
+let collisionEvents = [];
+let collisionDuration = 200; // milliseconds
+
+function updateCanvasSize() {
+    canvasWidth = windowWidth;
+    positionControls();
+}
+
+function setup() {
+    updateCanvasSize();
+    createCanvas(canvasWidth, canvasHeight);
+
+    // Create Start/Pause button
+    startButton = createButton('Start');
+    startButton.mousePressed(toggleSimulation);
+    startButton.style('font-size', '16px');
+    startButton.style('padding', '4px 12px');
+    startButton.style('cursor', 'pointer');
+
+    // Create sliders
+    numParticlesSlider = createSlider(5, 100, 30, 1);
+    velocitySlider = createSlider(1, 15, 5, 0.5);
+
+    positionControls();
+    initParticles();
+}
+
+function initParticles() {
+    particles = [];
+    collisionEvents = [];
+    numParticles = numParticlesSlider.value();
+    vel = velocitySlider.value();
+
+    for (let i = 0; i < numParticles; i++) {
+        let x = random(50, canvasWidth - 50);
+        let y = random(50, drawHeight - 50);
+        let vx = random(-vel, vel);
+        let vy = random(-vel, vel);
+        let m = random(10, 150);
+        particles[i] = new Particle(x, y, m, i, vx, vy);
+    }
+}
+
+function drawCollisionArrow(x1, y1, x2, y2) {
+    // Draw line between collision points
+    stroke('red');
+    strokeWeight(2);
+    line(x1, y1, x2, y2);
+
+    // Draw arrowhead at midpoint pointing along collision normal
+    let midX = (x1 + x2) / 2;
+    let midY = (y1 + y2) / 2;
+    let angle = atan2(y2 - y1, x2 - x1);
+
+    push();
+    translate(midX, midY);
+    rotate(angle);
+    fill('red');
+    noStroke();
+    let arrowSize = 8;
+    triangle(arrowSize, 0, -arrowSize, arrowSize / 2, -arrowSize, -arrowSize / 2);
+    pop();
+}
+
+function drawActiveCollisions() {
+    let currentTime = millis();
+
+    // Remove expired collisions and draw active ones
+    collisionEvents = collisionEvents.filter(event => {
+        let age = currentTime - event.time;
+        if (age < collisionDuration) {
+            // Calculate fade based on age
+            let alpha = map(age, 0, collisionDuration, 255, 50);
+            stroke(255, 0, 0, alpha);
+            strokeWeight(2);
+            line(event.x1, event.y1, event.x2, event.y2);
+
+            // Draw arrowhead
+            let midX = (event.x1 + event.x2) / 2;
+            let midY = (event.y1 + event.y2) / 2;
+            let angle = atan2(event.y2 - event.y1, event.x2 - event.x1);
+
+            push();
+            translate(midX, midY);
+            rotate(angle);
+            fill(255, 0, 0, alpha);
+            noStroke();
+            let arrowSize = 8;
+            triangle(arrowSize, 0, -arrowSize, arrowSize / 2, -arrowSize, -arrowSize / 2);
+            pop();
+
+            // Draw collision point
+            noStroke();
+            fill(0, 102, 255, alpha);
+            ellipse(event.collisionX, event.collisionY, 10);
+
+            return true; // Keep this event
+        }
+        return false; // Remove expired event
+    });
+}
+
+function positionControls() {
+    if (!startButton || !numParticlesSlider) return;
+
+    let controlsY = drawHeight;
+    let buttonWidth = 80;
+    let sliderWidth = 150;
+    let startX = margin + buttonWidth + 20;
+
+    // Button position
+    startButton.position(margin, controlsY + 8);
+
+    // Sliders
+    numParticlesSlider.position(startX + 80, controlsY + 12);
+    numParticlesSlider.size(sliderWidth);
+    velocitySlider.position(startX + 340, controlsY + 12);
+    velocitySlider.size(sliderWidth);
+}
+
+function toggleSimulation() {
+    running = !running;
+    startButton.html(running ? 'Pause' : 'Start');
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
+function draw() {
+    // Drawing area (aliceblue background)
+    fill('aliceblue');
+    stroke('silver');
+    rect(0, 0, width, drawHeight);
+
+    // Controls background
+    fill('white');
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Check if particle count changed
+    if (numParticlesSlider.value() !== numParticles) {
+        initParticles();
+    }
+
+    // Update velocity limit from slider
+    vel = velocitySlider.value();
+
+    for (let [i, p] of particles.entries()) {
+        p.collide();
+        if (running) {
+            p.update();
+        }
+        p.edges();
+        p.show();
+    }
+
+    // Draw collision arrows that persist for 100ms
+    drawActiveCollisions();
+
+    // Draw title over drawing area
+    fill('black');
+    noStroke();
+    textSize(24);
+    textAlign(LEFT, TOP);
+    text("Elastic Collisions Simulation", margin, 10);
+
+    // Draw particle count
+    textSize(15);
+    textAlign(RIGHT, TOP);
+    fill('black');
+    text(`Particles: ${particles.length}`, canvasWidth - margin, 10);
+
+    // Draw slider labels
+    fill('black');
+    noStroke();
+    textSize(16);
+    textAlign(LEFT, CENTER);
+
+    let controlsY = drawHeight + 10;
+    let buttonWidth = 80;
+    let startX = margin + buttonWidth;
+
+    text(`Particles: ${numParticlesSlider.value()}`, startX, controlsY + 12);
+    text(`Velocity: ${velocitySlider.value().toFixed(1)}`, startX + 260, controlsY + 12);
+}
+
+
+class Particle {
+    constructor(x, y, m, id, vx, vy) {
+        this.pos = createVector(x, y);
+        this.vel = createVector(vx, vy);
+        this.acc = createVector(0, 0);
+        this.id = id;
+        this.mass = m;
+        this.r = sqrt(this.mass) * 2;
+    }
+
+    drawArrow(showColor, size, f) {
+        if (f.x != 0 || f.y != 0) {
+            push();
+            stroke(color(showColor));
+            fill(color(showColor));
+            translate(this.pos.x, this.pos.y);
+            line(0, 0, f.x * size, f.y * size);
+            rotate(f.heading());
+            translate(f.mag() * size, 0);
+            let arrowSize = 7;
+            triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+            pop();
+        }
+    }
+
+    update() {
+        this.vel.add(this.acc);
+        this.pos.add(this.vel);
+        this.acc.set(0, 0);
+
+        if (this.vel.x !== 0 || this.vel.y !== 0 && this.vel.y !== 1) {
+            this.drawArrow('blue', 5, this.vel);
+        }
+    }
+
+    edges() {
+        if (this.pos.x <= this.r || this.pos.x >= canvasWidth - this.r) {
+            this.vel.x = -this.vel.x;
+        }
+
+        if (this.pos.x > canvasWidth - this.r) {
+            this.pos.x = canvasWidth - this.r;
+        }
+
+        if (this.pos.x < this.r) {
+            this.pos.x = this.r;
+        }
+
+        if (this.pos.y <= this.r || this.pos.y >= drawHeight - this.r) {
+            this.vel.y = -this.vel.y;
+        }
+
+        if (this.pos.y > drawHeight - this.r) {
+            this.pos.y = drawHeight - this.r;
+        }
+
+        if (this.pos.y < this.r) {
+            this.pos.y = this.r;
+        }
+    }
+
+    collide() {
+        for (var i = this.id + 1; i < numParticles; i++) {
+            if (this.pos.x + this.r + particles[i].r > particles[i].pos.x &&
+                this.pos.x < particles[i].pos.x + this.r + particles[i].r &&
+                this.pos.y + this.r + particles[i].r > particles[i].pos.y &&
+                this.pos.y < particles[i].pos.y + this.r + particles[i].r) {
+
+                let distance = dist(this.pos.x, this.pos.y, particles[i].pos.x, particles[i].pos.y);
+                let minDist = particles[i].r + this.r;
+
+                if (distance <= minDist) {
+                    // Collision point
+                    let collisionPointX = ((this.pos.x * particles[i].r) + (particles[i].pos.x * this.r)) / (this.r + particles[i].r);
+                    let collisionPointY = ((this.pos.y * particles[i].r) + (particles[i].pos.y * this.r)) / (this.r + particles[i].r);
+
+                    // Store collision event for visualization
+                    collisionEvents.push({
+                        x1: this.pos.x,
+                        y1: this.pos.y,
+                        x2: particles[i].pos.x,
+                        y2: particles[i].pos.y,
+                        collisionX: collisionPointX,
+                        collisionY: collisionPointY,
+                        time: millis()
+                    });
+
+                    let overlap = 0.5 * (distance - this.r - particles[i].r);
+
+                    this.pos.x -= overlap * (this.pos.x - particles[i].pos.x) / distance;
+                    this.pos.y -= overlap * (this.pos.y - particles[i].pos.y) / distance;
+
+                    particles[i].pos.x += overlap * (this.pos.x - particles[i].pos.x) / distance;
+                    particles[i].pos.y += overlap * (this.pos.y - particles[i].pos.y) / distance;
+
+                    // https://ericleong.me/research/circle-circle/
+                    let dx = particles[i].pos.x - this.pos.x;
+                    let dy = particles[i].pos.y - this.pos.y;
+
+                    let dvx = this.vel.x - particles[i].vel.x;
+                    let dvy = this.vel.y - particles[i].vel.y;
+
+                    // Normal
+                    let nx = dx / minDist;
+                    let ny = dy / minDist;
+
+                    let p = 2 * (nx * dvx + ny * dvy) / (this.mass + particles[i].mass);
+
+                    this.vel.x -= p * particles[i].mass * nx;
+                    this.vel.y -= p * particles[i].mass * ny;
+                    this.vel.limit(vel);
+
+                    particles[i].vel.x += p * this.mass * nx;
+                    particles[i].vel.y += p * this.mass * ny;
+                    particles[i].vel.limit(vel);
+                }
+            }
+        }
+    }
+
+    // Draw particle
+    show() {
+        stroke('black');
+        strokeWeight(1);
+        // fill the circle
+        fill(color(50, 50, 200, 80));
+        circle(this.pos.x, this.pos.y, this.r * 2);
+    }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Elastic Collisions Documentation</a>
+</body>
+</html>

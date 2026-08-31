@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Intercepts and Graphing Interactive Practice using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Intercepts and Graphing Interactive Practice — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "intercepts-and-graphing-interactive-practice",
+  "title": "Intercepts and Graphing Interactive Practice",
+  "kind": "coordinate",
+  "objective": "Help students find intercepts algebraically and use them to graph linear equations",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Slope / x-value",
+  "bLabel": "Intercept / y-value",
+  "choices": [
+    "Linear",
+    "Quadratic",
+    "Vertical"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Help students find intercepts algebraically and use them to graph linear equations
+//
+//     Canvas layout (900x650px):
+//     - Left side (450x650): Coordinate grid
+//     - Right side (450x650): Work area and controls
+//
+//     Visual elements in graph area:
+//     - Coordinate plane from -10 to 10 on both axes
+//     - Line graphed based on current equation
+//     - X-intercept marked with red dot and label
+//     - Y-intercept marked with blue dot and label
+//     - Both intercepts connected by the line
+//     - Grid lines for accurate reading
+//
+//     Work area (right side):
+//     - Current equation displayed: e.g., "$y = 3x - 6$"
+//     - Step-by-step solution section:
+//
+//       **Finding y-intercept:**
+//       - "Set $x = 0$"
+//       - Substitution step shown
+//       - Result: "y-intercept = (0, b)"
+//
+//       **Finding x-intercept:**
+//       - "Set $y = 0$"
+//       - Equation to solve shown
+//       - Solution steps
+//       - Result: "x-intercept = (a, 0)"
+//
+//     - Student input section:
+//       - "Y-intercept: (" [0] "," [input box] ")"
+//       - "X-intercept: (" [input box] "," [0] ")"
+//       - Button: "Check Intercepts"
+//       - Feedback message area (green for correct, red for incorrect)
+//
+//     Interactive controls:
+//     - Dropdown: "Equation type"
+//       Options:
+//       1. Slope-intercept form: $y = mx + b$
+//       2. Standard form: $Ax + By = C$
+//       3. Random
+//     - Button: "New Problem"
+//     - Button: "Show Solution" (toggles step-by-step work)
+//     - Checkbox: "Show intercepts on graph"
+//     - Checkbox: "Show line"
+//     - Slider: "Viewing window" (adjusts zoom)
+//     - Display: "Score: X/Y correct"
+//
+//     Default parameters:
+//     - Equation: $y = 2x - 4$
+//     - Show intercepts: On
+//     - Show line: On
+//     - Viewing window: -10 to 10
+//
+//     Behavior:
+//     - When "New Problem" clicked:
+//       - Generate random linear equation
+//       - Clear student inputs
+//       - Update graph
+//       - Hide solution initially
+//     - When student enters intercepts and clicks "Check":
+//       - Verify both intercepts are correct
+//       - If correct: Show green "Correct!" and increment score
+//       - If incorrect: Show red "Not quite" and highlight which intercept is wrong
+//       - Automatically generate new problem after 2 seconds if correct
+//     - "Show Solution" reveals step-by-step algebraic work
+//     - Graph updates in real-time with equation changes
+//     - Intercept markers pulse to draw attention
+//
+//     Problem generation:
+//     - For slope-intercept: $y = mx + b$ where $m \in [-5, 5]$, $b \in [-10, 10]$, both integers
+//     - For standard form: $Ax + By = C$ where $A, B, C$ are integers, ensure both intercepts exist
+//     - Avoid trivial cases like $y = 0$ or $x = 0$
+//
+//     Implementation notes:
+//     - Use p5.js for rendering
+//     - Calculate intercepts programmatically from equation
+//     - Plot line using two-point method
+//     - Validate student inputs with tolerance of 0.01 for rounding
+//     - Use MathJax or KaTeX for equation rendering
+//     - Provide hints if student struggles (after 2 wrong attempts)
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Range Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Range Explorer MicroSim
+// CANVAS_HEIGHT: 480
+// Students adjust start, stop, and step sliders and instantly see which
+// numbers range() generates on a number line. The stop value renders as
+// a hollow "not included" dot. Challenge mode asks students to produce
+// a target set of numbers.
+// Bloom level: Apply (use, execute, solve) - parameter sliders with
+// immediate feedback and practice challenges.
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 330;
+let controlHeight = 150; // three slider rows + one row of checkbox/button
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 140;
+let defaultTextSize = 16;
+
+let startSlider, stopSlider, stepSlider;
+let backwardCheckbox, challengeButton;
+
+// challenge targets: each is an achievable [start, stop, step] (positive step)
+let challengeBank = [
+  [3, 12, 3],   // 3 6 9
+  [0, 10, 2],   // 0 2 4 6 8
+  [1, 10, 2],   // 1 3 5 7 9
+  [5, 9, 1],    // 5 6 7 8
+  [0, 20, 5],   // 0 5 10 15
+  [2, 15, 4],   // 2 6 10 14
+  [4, 17, 6],   // 4 10 16
+  [7, 16, 4]    // 7 11 15
+];
+let challengeTarget = null; // array of target numbers, or null
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  startSlider = createSlider(0, 10, 2, 1);
+  startSlider.parent(mainElement);
+  startSlider.position(sliderLeftMargin, drawHeight + 10);
+  startSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  stopSlider = createSlider(1, 20, 12, 1);
+  stopSlider.parent(mainElement);
+  stopSlider.position(sliderLeftMargin, drawHeight + 45);
+  stopSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  stepSlider = createSlider(1, 5, 3, 1);
+  stepSlider.parent(mainElement);
+  stepSlider.position(sliderLeftMargin, drawHeight + 80);
+  stepSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  backwardCheckbox = createCheckbox(' count backward (negative step)', false);
+  backwardCheckbox.parent(mainElement);
+  backwardCheckbox.position(10, drawHeight + 115);
+
+  challengeButton = createButton('New Challenge');
+  challengeButton.parent(mainElement);
+  challengeButton.position(290, drawHeight + 113);
+  challengeButton.mousePressed(newChallenge);
+
+  describe('Adjust start, stop, and step sliders to see which numbers Python\'s range() generates on a number line. The stop value is drawn as a hollow dot because it is never included. Challenge mode asks you to light up a target set of numbers.', LABEL);
+}
+
+function newChallenge() {
+  let pick = challengeBank[Math.floor(random(challengeBank.length))];
+  challengeTarget = rangeValues(pick[0], pick[1], pick[2]);
+  backwardCheckbox.checked(false);
+}
+
+// compute the numbers range(start, stop, step) produces
+function rangeValues(start, stop, step) {
+  let vals = [];
+  if (step > 0) {
+    for (let v = start; v < stop; v += step) vals.push(v);
+  } else if (step < 0) {
+    for (let v = start; v > stop; v += step) vals.push(v);
+  }
+  return vals;
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  let start = startSlider.value();
+  let stop = stopSlider.value();
+  let step = backwardCheckbox.checked() ? -stepSlider.value() : stepSlider.value();
+  let values = rangeValues(start, stop, step);
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Range Explorer', canvasWidth / 2, 8);
+
+  // the code readout
+  let code = 'range(' + start + ', ' + stop + (Math.abs(step) !== 1 || step < 0 ? ', ' + step : '') + ')';
+  textSize(22);
+  fill('midnightblue');
+  text(code, canvasWidth / 2, 46);
+  textSize(17);
+  fill(values.length > 0 ? 'darkgreen' : color(170, 60, 60));
+  let listText = values.length > 0 ? values.join('   ') : 'no numbers at all!';
+  text(listText, canvasWidth / 2, 80);
+
+  drawNumberLine(start, stop, step, values);
+  drawExplanation(start, stop, step, values);
+
+  // slider labels and values
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  text('Start: ' + start, 15, drawHeight + 20);
+  text('Stop: ' + stop, 15, drawHeight + 55);
+  text('Step: ' + Math.abs(step), 15, drawHeight + 90);
+}
+
+function drawNumberLine(start, stop, step, values) {
+  let y = 165;
+  let x0 = 45;
+  let x1 = canvasWidth - 45;
+  let spacing = (x1 - x0) / 20;
+
+  // baseline
+  stroke(120);
+  strokeWeight(2);
+  line(x0, y, x1, y);
+
+  // ticks and labels
+  for (let v = 0; v <= 20; v++) {
+    let x = x0 + v * spacing;
+    stroke(120);
+    strokeWeight(1);
+    line(x, y - 5, x, y + 5);
+    noStroke();
+    fill(100);
+    textAlign(CENTER, TOP);
+    textSize(12);
+    text(v, x, y + 10);
+  }
+
+  // challenge target rings (draw first, under the value dots)
+  if (challengeTarget) {
+    for (let v of challengeTarget) {
+      if (v >= 0 && v <= 20) {
+        let x = x0 + v * spacing;
+        noFill();
+        stroke('seagreen');
+        strokeWeight(3);
+        circle(x, y - 26, 24);
+      }
+    }
+  }
+
+  // generated values as filled dots
+  for (let v of values) {
+    if (v >= 0 && v <= 20) {
+      let x = x0 + v * spacing;
+      noStroke();
+      fill('steelblue');
+      circle(x, y - 26, 17);
+      fill('white');
+      textAlign(CENTER, CENTER);
+      textSize(11);
+      text(v, x, y - 26);
+    }
+  }
+
+  // the stop value: hollow dot with label
+  if (stop >= 0 && stop <= 20) {
+    let x = x0 + stop * spacing;
+    noFill();
+    stroke('darkorange');
+    strokeWeight(2.5);
+    circle(x, y - 26, 17);
+    noStroke();
+    fill('darkorange');
+    textAlign(CENTER, BOTTOM);
+    textSize(13);
+    text('stop — not included', x, y - 44);
+  }
+
+  // start marker
+  if (start >= 0 && start <= 20) {
+    let x = x0 + start * spacing;
+    noStroke();
+    fill('steelblue');
+    textAlign(CENTER, TOP);
+    textSize(13);
+    text('start', x, y + 26);
+  }
+}
+
+function drawExplanation(start, stop, step, values) {
+  let panelX = 15;
+  let panelY = 215;
+  let panelW = canvasWidth - 30;
+  let panelH = 100;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize);
+
+  // challenge status line
+  if (challengeTarget) {
+    let matched = values.length === challengeTarget.length &&
+      values.every((v, idx) => v === challengeTarget[idx]);
+    if (matched) {
+      fill('darkgreen');
+      text('Challenge solved! You lit up exactly ' + challengeTarget.join(', ') + '. Click New Challenge for another.', panelX + 14, panelY + 10, panelW - 28, 44);
+    } else {
+      fill('seagreen');
+      text('Challenge: set the sliders so the blue dots land exactly on the green rings (' + challengeTarget.join(', ') + ').', panelX + 14, panelY + 10, panelW - 28, 44);
+    }
+  } else {
+    fill('black');
+    text('Count with me: begin at start, add the step each hop, and STOP before reaching stop.', panelX + 14, panelY + 10, panelW - 28, 44);
+  }
+
+  // always-true fact line at the bottom
+  fill(90);
+  textSize(14);
+  if (values.length === 0) {
+    text('Empty range: with step ' + step + ', start ' + start + ' can never move toward stop ' + stop + '.', panelX + 14, panelY + 62, panelW - 28, 34);
+  } else {
+    text('This range produces ' + values.length + ' number' + (values.length === 1 ? '' : 's') + ' — so a for loop would run ' + values.length + ' time' + (values.length === 1 ? '' : 's') + '.', panelX + 14, panelY + 62, panelW - 28, 34);
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  startSlider.size(canvasWidth - sliderLeftMargin - margin);
+  stopSlider.size(canvasWidth - sliderLeftMargin - margin);
+  stepSlider.size(canvasWidth - sliderLeftMargin - margin);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

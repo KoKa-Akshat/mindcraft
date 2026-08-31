@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>GPT Qualification Scorecard</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// GPT Qualification Scorecard
+// Evaluates whether quantum computing qualifies as a General Purpose Technology
+// GPT = "General Purpose Technology"
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 550;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// GPT criteria
+let criteria = [
+    { name: "Pervasiveness", desc: "Used across many sectors" },
+    { name: "Improvement", desc: "Gets better continuously" },
+    { name: "Innovation Spawning", desc: "Enables new products/processes" },
+    { name: "Complementary R&D", desc: "Drives related R&D" },
+    { name: "Productivity Gains", desc: "Measurable economic impact" }
+];
+
+// Technology data: scores 0-5 for each criterion
+let technologies = [
+    {
+        name: "Electricity",
+        color: "#4CAF50",
+        scores: [5, 5, 5, 5, 5],
+        total: 25,
+        visible: true,
+        details: [
+            "Powers every sector from agriculture to finance",
+            "Continuous gains: generation, transmission, storage",
+            "Enabled radio, TV, computing, refrigeration, etc.",
+            "Massive complementary infrastructure investment",
+            "Productivity revolution: factories, lighting, transport"
+        ]
+    },
+    {
+        name: "Internet",
+        color: "#2196F3",
+        scores: [5, 5, 5, 5, 4],
+        total: 24,
+        visible: true,
+        details: [
+            "Used in virtually every industry worldwide",
+            "Bandwidth, latency, protocols improve continuously",
+            "E-commerce, social media, cloud, streaming, IoT",
+            "Trillions invested in telecom, data centers, software",
+            "Solow paradox debate; strong but debated GDP impact"
+        ]
+    },
+    {
+        name: "Transistor",
+        color: "#9C27B0",
+        scores: [5, 5, 5, 5, 5],
+        total: 25,
+        visible: true,
+        details: [
+            "In every electronic device across all industries",
+            "Moore's Law: 60+ years of exponential improvement",
+            "Enabled computers, phones, internet, AI, space travel",
+            "Drove semiconductor fabs, EDA tools, chip design R&D",
+            "Largest productivity driver of the 20th century"
+        ]
+    },
+    {
+        name: "Quantum Computing",
+        color: "#FF7043",
+        scores: [1, 2, 1, 3, 0],
+        total: 7,
+        visible: true,
+        details: [
+            "Limited to niche research labs; zero commercial sectors",
+            "Slow, inconsistent progress; error rates remain high",
+            "No new products or processes enabled to date",
+            "Billions in R&D, but mostly speculative investment",
+            "Zero demonstrated productivity gains in any industry"
+        ]
+    }
+];
+
+let hoveredCell = { row: -1, col: -1 };
+let buttonRects = [];
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("GPT Qualification Scorecard", canvasWidth / 2, 8);
+
+    textSize(12);
+    textStyle(NORMAL);
+    fill('#666');
+    text("GPT = General Purpose Technology", canvasWidth / 2, 30);
+
+    // Layout
+    let tableTop = 52;
+    let tableLeft = margin;
+    let radarCenterX;
+    let radarCenterY;
+    let radarRadius;
+
+    // Determine layout based on width
+    let tableWidth, tableRight;
+    if (canvasWidth > 620) {
+        tableWidth = canvasWidth * 0.55;
+        tableRight = tableLeft + tableWidth;
+        radarCenterX = tableRight + (canvasWidth - tableRight) / 2;
+        radarCenterY = tableTop + 180;
+        radarRadius = min((canvasWidth - tableRight) / 2 - 30, 130);
+    } else {
+        tableWidth = canvasWidth - margin * 2;
+        tableRight = tableLeft + tableWidth;
+        radarCenterX = canvasWidth / 2;
+        radarCenterY = 400;
+        radarRadius = 80;
+    }
+
+    // Draw the table
+    drawScorecardTable(tableLeft, tableTop, tableWidth);
+
+    // Draw the radar chart
+    if (canvasWidth > 620) {
+        drawRadarChart(radarCenterX, radarCenterY, radarRadius);
+    } else {
+        drawRadarChart(radarCenterX, radarCenterY, radarRadius);
+    }
+
+    // Draw toggle buttons in control region
+    drawToggleButtons();
+
+    // Draw tooltip if hovering
+    drawTooltip();
+}
+
+function drawScorecardTable(tableX, tableY, tableW) {
+    let headerHeight = 60;
+    let rowHeight = 32;
+    let nameColWidth = min(130, tableW * 0.25);
+    let scoreColWidth = (tableW - nameColWidth - 60) / criteria.length;
+    let totalColWidth = 60;
+
+    // Header row
+    fill('#3F51B5');
+    noStroke();
+    rect(tableX, tableY, tableW, headerHeight, 4, 4, 0, 0);
+
+    // Header labels
+    fill('white');
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Technology", tableX + nameColWidth / 2, tableY + headerHeight / 2);
+
+    for (let c = 0; c < criteria.length; c++) {
+        let cx = tableX + nameColWidth + c * scoreColWidth + scoreColWidth / 2;
+        // Word wrap criterion name
+        let words = criteria[c].name.split(' ');
+        if (words.length > 1) {
+            textSize(10);
+            text(words[0], cx, tableY + headerHeight / 2 - 8);
+            text(words.slice(1).join(' '), cx, tableY + headerHeight / 2 + 6);
+        } else {
+            textSize(10);
+            text(criteria[c].name, cx, tableY + headerHeight / 2);
+        }
+    }
+    text("Total", tableX + nameColWidth + criteria.length * scoreColWidth + totalColWidth / 2, tableY + headerHeight / 2);
+
+    // Criterion descriptions (small text under header)
+    textSize(7);
+    textStyle(NORMAL);
+    fill(220);
+    for (let c = 0; c < criteria.length; c++) {
+        let cx = tableX + nameColWidth + c * scoreColWidth + scoreColWidth / 2;
+        text(criteria[c].desc, cx, tableY + headerHeight - 8);
+    }
+
+    // Data rows
+    hoveredCell = { row: -1, col: -1 };
+    for (let r = 0; r < technologies.length; r++) {
+        let tech = technologies[r];
+        let ry = tableY + headerHeight + r * rowHeight;
+
+        // Row background - alternate
+        fill(r % 2 === 0 ? 255 : 245);
+        noStroke();
+        if (r === technologies.length - 1) {
+            rect(tableX, ry, tableW, rowHeight, 0, 0, 4, 4);
+        } else {
+            rect(tableX, ry, tableW, rowHeight);
+        }
+
+        // Highlight quantum computing row
+        if (tech.name === "Quantum Computing") {
+            fill(255, 235, 230);
+            if (r === technologies.length - 1) {
+                rect(tableX, ry, tableW, rowHeight, 0, 0, 4, 4);
+            } else {
+                rect(tableX, ry, tableW, rowHeight);
+            }
+        }
+
+        // Technology name
+        fill(tech.color);
+        textSize(12);
+        textAlign(LEFT, CENTER);
+        textStyle(BOLD);
+        text(tech.name, tableX + 8, ry + rowHeight / 2);
+
+        // Score cells
+        for (let c = 0; c < criteria.length; c++) {
+            let cellX = tableX + nameColWidth + c * scoreColWidth;
+            let cellY = ry;
+            let score = tech.scores[c];
+
+            // Detect hover
+            if (mouseX >= cellX && mouseX < cellX + scoreColWidth &&
+                mouseY >= cellY && mouseY < cellY + rowHeight) {
+                hoveredCell = { row: r, col: c };
+            }
+
+            let isHovered = (hoveredCell.row === r && hoveredCell.col === c);
+
+            // Cell color based on score
+            let cellColor = getScoreColor(score);
+            if (isHovered) {
+                fill(red(cellColor) * 0.85, green(cellColor) * 0.85, blue(cellColor) * 0.85);
+            } else {
+                fill(cellColor);
+            }
+            stroke(255);
+            strokeWeight(1);
+            rect(cellX + 2, cellY + 2, scoreColWidth - 4, rowHeight - 4, 3);
+
+            // Score text
+            fill(score <= 1 ? 'white' : '#333');
+            noStroke();
+            textSize(14);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text(score + "/5", cellX + scoreColWidth / 2, cellY + rowHeight / 2);
+        }
+
+        // Total
+        let totalX = tableX + nameColWidth + criteria.length * scoreColWidth;
+        fill('#333');
+        noStroke();
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(tech.total + "/25", totalX + totalColWidth / 2, ry + rowHeight / 2);
+    }
+
+    // Draw thin border around table
+    noFill();
+    stroke('#999');
+    strokeWeight(1);
+    let totalTableHeight = headerHeight + technologies.length * rowHeight;
+    rect(tableX, tableY, tableW, totalTableHeight, 4);
+}
+
+function drawRadarChart(cx, cy, radius) {
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("GPT Profile Comparison", cx, cy - radius - 35);
+
+    let numAxes = criteria.length;
+    let angleStep = TWO_PI / numAxes;
+    let startAngle = -HALF_PI; // Start from top
+
+    // Draw grid rings
+    for (let ring = 1; ring <= 5; ring++) {
+        let ringRadius = (ring / 5) * radius;
+        stroke(200);
+        strokeWeight(0.5);
+        noFill();
+        beginShape();
+        for (let i = 0; i < numAxes; i++) {
+            let angle = startAngle + i * angleStep;
+            vertex(cx + cos(angle) * ringRadius, cy + sin(angle) * ringRadius);
+        }
+        endShape(CLOSE);
+
+        // Ring labels
+        if (ring % 2 === 1 || ring === 5) {
+            fill(180);
+            noStroke();
+            textSize(8);
+            textAlign(LEFT, CENTER);
+            text(ring, cx + 3, cy - ringRadius);
+        }
+    }
+
+    // Draw axes
+    for (let i = 0; i < numAxes; i++) {
+        let angle = startAngle + i * angleStep;
+        let ax = cx + cos(angle) * radius;
+        let ay = cy + sin(angle) * radius;
+
+        stroke(180);
+        strokeWeight(0.5);
+        line(cx, cy, ax, ay);
+
+        // Axis labels
+        let labelDist = radius + 18;
+        let lx = cx + cos(angle) * labelDist;
+        let ly = cy + sin(angle) * labelDist;
+
+        fill('#555');
+        noStroke();
+        textSize(9);
+        textStyle(NORMAL);
+        textAlign(CENTER, CENTER);
+
+        // Adjust alignment based on position
+        if (abs(cos(angle)) < 0.3) {
+            textAlign(CENTER, sin(angle) < 0 ? BOTTOM : TOP);
+        } else {
+            textAlign(cos(angle) > 0 ? LEFT : RIGHT, CENTER);
+        }
+
+        let shortNames = ["Pervasive", "Improves", "Innovates", "R&D", "Productivity"];
+        text(shortNames[i], lx, ly);
+    }
+
+    // Draw technology polygons (back to front, least visible last)
+    for (let t = technologies.length - 1; t >= 0; t--) {
+        let tech = technologies[t];
+        if (!tech.visible) continue;
+
+        let techColor = color(tech.color);
+
+        // Fill polygon
+        fill(red(techColor), green(techColor), blue(techColor), 40);
+        stroke(techColor);
+        strokeWeight(2);
+        beginShape();
+        for (let i = 0; i < numAxes; i++) {
+            let angle = startAngle + i * angleStep;
+            let r = (tech.scores[i] / 5) * radius;
+            vertex(cx + cos(angle) * r, cy + sin(angle) * r);
+        }
+        endShape(CLOSE);
+
+        // Draw vertices
+        noStroke();
+        fill(techColor);
+        for (let i = 0; i < numAxes; i++) {
+            let angle = startAngle + i * angleStep;
+            let r = (tech.scores[i] / 5) * radius;
+            ellipse(cx + cos(angle) * r, cy + sin(angle) * r, 6, 6);
+        }
+    }
+}
+
+function drawToggleButtons() {
+    buttonRects = [];
+    let btnY = drawHeight + 10;
+    let btnHeight = 28;
+    let btnSpacing = 10;
+    let totalBtnWidth = 0;
+
+    // Calculate total width
+    textSize(11);
+    for (let t = 0; t < technologies.length; t++) {
+        totalBtnWidth += textWidth(technologies[t].name) + 30;
+    }
+    totalBtnWidth += (technologies.length - 1) * btnSpacing;
+
+    let btnX = (canvasWidth - totalBtnWidth) / 2;
+
+    for (let t = 0; t < technologies.length; t++) {
+        let tech = technologies[t];
+        let btnW = textWidth(tech.name) + 30;
+
+        // Button background
+        if (tech.visible) {
+            fill(tech.color);
+        } else {
+            fill(200);
+        }
+        stroke(150);
+        strokeWeight(1);
+        rect(btnX, btnY, btnW, btnHeight, 4);
+
+        // Button text
+        fill(tech.visible ? 'white' : '#666');
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        textStyle(tech.visible ? BOLD : NORMAL);
+        text(tech.name, btnX + btnW / 2, btnY + btnHeight / 2);
+
+        buttonRects.push({ x: btnX, y: btnY, w: btnW, h: btnHeight, index: t });
+        btnX += btnW + btnSpacing;
+    }
+}
+
+function drawTooltip() {
+    if (hoveredCell.row < 0 || hoveredCell.col < 0) return;
+
+    let tech = technologies[hoveredCell.row];
+    let detail = tech.details[hoveredCell.col];
+    let criterion = criteria[hoveredCell.col].name;
+    let score = tech.scores[hoveredCell.col];
+
+    let tooltipText = tech.name + " - " + criterion + " (" + score + "/5): " + detail;
+
+    textSize(11);
+    let tooltipW = min(textWidth(tooltipText) + 24, canvasWidth - 40);
+    let tooltipH = 32;
+    let tooltipX = constrain(mouseX - tooltipW / 2, 10, canvasWidth - tooltipW - 10);
+    let tooltipY = drawHeight - tooltipH - 10;
+
+    // Background
+    fill(255, 255, 255, 245);
+    stroke('#3F51B5');
+    strokeWeight(2);
+    rect(tooltipX, tooltipY, tooltipW, tooltipH, 6);
+
+    // Text
+    fill('#333');
+    noStroke();
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(NORMAL);
+    text(tooltipText, tooltipX + 12, tooltipY + tooltipH / 2);
+}
+
+function getScoreColor(score) {
+    if (score >= 4) return color(76, 175, 80);    // Green
+    if (score >= 2) return color(255, 193, 7);     // Yellow/amber
+    return color(211, 47, 47);                      // Red
+}
+
+function mousePressed() {
+    for (let i = 0; i < buttonRects.length; i++) {
+        let b = buttonRects[i];
+        if (mouseX >= b.x && mouseX <= b.x + b.w &&
+            mouseY >= b.y && mouseY <= b.y + b.h) {
+            technologies[b.index].visible = !technologies[b.index].visible;
+            redraw();
+            return;
+        }
+    }
+}
+
+function mouseMoved() {
+    redraw();
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

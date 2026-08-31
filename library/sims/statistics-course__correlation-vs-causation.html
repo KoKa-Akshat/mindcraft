@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Correlation vs. Causation Challenge using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Correlation vs. Causation Challenge - p5.js
+// CANVAS_HEIGHT: 525
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 480;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let scenarios = [];
+let currentScenario = 0;
+let score = 0;
+let answered = false;
+let selectedAnswer = -1;
+let buttons = [];
+let nextBtn;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+  describe('Correlation vs Causation interactive challenge', LABEL);
+
+  scenarios = [
+    {
+      titleA: 'CO₂ Emissions (Gt/yr)', titleB: 'Global Temp Anomaly (°C)',
+      dataA: [20,21,22,23,24,25,27,29,31,33,35,37],
+      dataB: [0.1,0.15,0.2,0.22,0.3,0.35,0.45,0.55,0.65,0.75,0.85,1.0],
+      correct: 3, // True causal
+      explanation: 'TRUE CAUSAL: CO₂ traps infrared radiation (greenhouse effect). This mechanism is well-established physics confirmed by lab experiments, ice cores, and climate models.'
+    },
+    {
+      titleA: 'Organic Food Sales ($B)', titleB: 'Autism Diagnoses (per 10k)',
+      dataA: [1,2,3,5,7,10,14,18,22,27,32,38],
+      dataB: [5,7,10,14,20,30,42,55,65,80,95,110],
+      correct: 2, // Confounding
+      explanation: 'CONFOUNDING VARIABLE: Both increased over time due to unrelated trends. Organic food grew with health awareness; autism diagnoses grew with improved screening criteria. Time is the confounding variable.'
+    },
+    {
+      titleA: 'Firefighters at Scene', titleB: 'Fire Damage ($)',
+      dataA: [5,8,12,3,20,15,7,25,10,30,18,35],
+      dataB: [10,30,60,5,100,70,20,120,40,150,80,180],
+      correct: 2, // Confounding
+      explanation: 'CONFOUNDING VARIABLE: Fire size causes BOTH more firefighters to respond AND more damage. Larger fires need more fighters and cause more destruction independently.'
+    },
+    {
+      titleA: 'DDT Use (tons/yr)', titleB: 'Peregrine Falcon Pop.',
+      dataA: [0,5,20,40,60,80,70,50,30,10,2,0],
+      dataB: [400,380,300,200,120,60,80,150,250,320,370,390],
+      correct: 0, // A causes B
+      explanation: 'A CAUSES B: DDT accumulates in falcon eggshells making them too thin to survive incubation. When DDT was banned, populations recovered - a natural experiment confirming causation.'
+    },
+    {
+      titleA: 'Ice Cream Sales', titleB: 'Drowning Deaths',
+      dataA: [10,12,20,35,50,60,55,40,25,15,10,8],
+      dataB: [2,3,5,8,12,15,14,10,6,3,2,1],
+      correct: 2, // Confounding
+      explanation: 'CONFOUNDING VARIABLE: Summer heat causes both more ice cream purchases and more swimming (hence more drowning). Temperature is the confounding variable.'
+    },
+    {
+      titleA: 'Wetland Area (km²)', titleB: 'Flood Damage ($M)',
+      dataA: [500,450,400,350,300,250,200,150,120,100,80,60],
+      dataB: [10,15,20,30,40,55,70,90,110,130,155,180],
+      correct: 0, // A causes B (inverse)
+      explanation: 'A CAUSES B (inverse): Wetlands act as natural sponges absorbing floodwater. Destroying wetlands removes this buffer, directly increasing flood severity downstream.'
+    },
+    {
+      titleA: 'Shark Attacks per Year', titleB: 'Beach Visitors (millions)',
+      dataA: [30,35,40,45,50,55,60,65,70,75,80,85],
+      dataB: [100,120,140,160,180,200,220,240,260,280,300,320],
+      correct: 1, // B causes A
+      explanation: 'B CAUSES A: More people in the water means more encounters with sharks. The shark population didn\'t change much - the human exposure did.'
+    },
+    {
+      titleA: 'Deforestation Rate', titleB: 'Soil Erosion Rate',
+      dataA: [5,10,15,25,30,40,50,55,60,65,70,75],
+      dataB: [2,5,10,18,25,35,48,55,62,68,74,80],
+      correct: 0, // A causes B
+      explanation: 'A CAUSES B: Tree roots hold soil in place and canopy reduces rain impact. Removing trees directly exposes soil to erosion by wind and water.'
+    }
+  ];
+
+  nextBtn = createButton('Next Scenario →');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.position(10, drawHeight + 5);
+  nextBtn.mousePressed(nextScenario);
+  nextBtn.style('font-size','14px');
+  nextBtn.style('padding','6px 16px');
+  nextBtn.style('cursor','pointer');
+  nextBtn.hide();
+}
+
+function draw() {
+  updateCanvasSize();
+  background(255);
+
+  // Draw area
+  fill('aliceblue'); stroke('silver'); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area
+  fill('white'); noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  let sc = scenarios[currentScenario];
+
+  // Title bar
+  fill('#264653'); noStroke();
+  rect(0, 0, canvasWidth, 36);
+  fill(255); textSize(14); textAlign(LEFT, CENTER);
+  text('Score: ' + score + '/' + scenarios.length, 10, 18);
+  textAlign(CENTER, CENTER);
+  text('Scenario ' + (currentScenario+1) + ' of ' + scenarios.length, canvasWidth/2, 18);
+  textAlign(RIGHT, CENTER);
+  text('Correlation vs Causation', canvasWidth - 10, 18);
+
+  // Scatter plot
+  let plotL = 70, plotR = canvasWidth - 30, plotT = 55, plotB = 250;
+  let plotW = plotR - plotL, plotH = plotB - plotT;
+
+  stroke('#ccc'); strokeWeight(1); fill(255);
+  rect(plotL, plotT, plotW, plotH);
+
+  // Axes labels
+  noStroke(); fill('#264653'); textSize(12); textAlign(CENTER, CENTER);
+  text(sc.titleA, plotL + plotW/2, plotB + 20);
+  push();
+  translate(plotL - 40, plotT + plotH/2);
+  rotate(-HALF_PI);
+  text(sc.titleB, 0, 0);
+  pop();
+
+  // Data points and trend line
+  let minA = min(sc.dataA), maxA = max(sc.dataA);
+  let minB = min(sc.dataB), maxB = max(sc.dataB);
+  let rangeA = maxA - minA || 1, rangeB = maxB - minB || 1;
+
+  // Trend line
+  let sumX=0,sumY=0,sumXY=0,sumXX=0,n=sc.dataA.length;
+  for (let i=0; i<n; i++) {
+    let px = (sc.dataA[i]-minA)/rangeA;
+    let py = (sc.dataB[i]-minB)/rangeB;
+    sumX+=px; sumY+=py; sumXY+=px*py; sumXX+=px*px;
+  }
+  let slope = (n*sumXY - sumX*sumY)/(n*sumXX - sumX*sumX);
+  let intercept = (sumY - slope*sumX)/n;
+  stroke('#e63946'); strokeWeight(2);
+  let y0 = intercept, y1 = slope + intercept;
+  line(plotL, plotB - y0*plotH, plotR, plotB - y1*plotH);
+
+  // Points
+  noStroke();
+  for (let i=0; i<n; i++) {
+    let px = plotL + ((sc.dataA[i]-minA)/rangeA)*plotW;
+    let py = plotB - ((sc.dataB[i]-minB)/rangeB)*plotH;
+    fill(70, 130, 180, 200);
+    ellipse(px, py, 10, 10);
+  }
+
+  // Correlation coefficient
+  let r = computeR(sc.dataA, sc.dataB);
+  noStroke(); fill('#264653'); textSize(12); textAlign(LEFT, TOP);
+  text('r = ' + nf(r, 1, 3), plotL + 5, plotT + 5);
+
+  // Answer choices
+  let choiceY = 275;
+  let choices = ['A causes B', 'B causes A', 'Both caused by C\n(confounding)', 'True causal\nrelationship'];
+  let choiceW = (canvasWidth - 40) / 4;
+
+  for (let i=0; i<4; i++) {
+    let cx = 10 + i * (choiceW + 7);
+    let isHover = mouseX > cx && mouseX < cx+choiceW && mouseY > choiceY && mouseY < choiceY+55;
+
+    if (answered) {
+      if (i === sc.correct) { fill('#90be6d'); }
+      else if (i === selectedAnswer && i !== sc.correct) { fill('#e76f51'); }
+      else { fill('#e0e0e0'); }
+    } else {
+      fill(isHover ? '#bde0fe' : '#f0f4f8');
+    }
+
+    stroke('#264653'); strokeWeight(1);
+    rect(cx, choiceY, choiceW, 55, 6);
+    noStroke(); fill('#264653'); textSize(11); textAlign(CENTER, CENTER);
+    text(choices[i], cx + choiceW/2, choiceY + 28);
+  }
+
+  // Explanation
+  if (answered) {
+    fill('#f8f9fa'); stroke('#2a9d8f'); strokeWeight(2);
+    rect(10, 345, canvasWidth-20, drawHeight - 355, 8);
+    noStroke(); fill('#264653'); textSize(12); textAlign(LEFT, TOP);
+    text(sc.explanation, 20, 355, canvasWidth-40, drawHeight - 365);
+  }
+
+  // Bottom info
+  noStroke(); fill('#264653'); textSize(12); textAlign(CENTER, CENTER);
+  text('Click an answer choice above for each scenario', canvasWidth/2, drawHeight + controlHeight/2);
+}
+
+function mousePressed() {
+  if (answered) return;
+  let sc = scenarios[currentScenario];
+  let choiceY = 275;
+  let choiceW = (canvasWidth - 40) / 4;
+
+  for (let i=0; i<4; i++) {
+    let cx = 10 + i * (choiceW + 7);
+    if (mouseX > cx && mouseX < cx+choiceW && mouseY > choiceY && mouseY < choiceY+55) {
+      selectedAnswer = i;
+      answered = true;
+      if (i === sc.correct) score++;
+      nextBtn.show();
+      break;
+    }
+  }
+}
+
+function nextScenario() {
+  currentScenario++;
+  if (currentScenario >= scenarios.length) {
+    currentScenario = 0;
+    score = 0;
+  }
+  answered = false;
+  selectedAnswer = -1;
+  nextBtn.hide();
+}
+
+function computeR(a, b) {
+  let n = a.length;
+  let sa=0,sb=0,sab=0,sa2=0,sb2=0;
+  for (let i=0;i<n;i++) { sa+=a[i]; sb+=b[i]; sab+=a[i]*b[i]; sa2+=a[i]*a[i]; sb2+=b[i]*b[i]; }
+  let num = n*sab - sa*sb;
+  let den = Math.sqrt((n*sa2-sa*sa)*(n*sb2-sb*sb));
+  return den === 0 ? 0 : num/den;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

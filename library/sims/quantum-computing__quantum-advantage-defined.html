@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Radar chart comparing quantum computing hardware platforms across multiple performance dimensions.">
+    <meta name="schema" content="platform-comparison-radar">
+    <title>QC Hardware Platform Comparison</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>QC Hardware Platform Comparison</h2>
+        <div id="toggle-buttons" class="toggle-group"></div>
+        <div class="chart-wrapper">
+            <canvas id="radarChart"></canvas>
+        </div>
+    </div>
+    <script>
+// QC Hardware Platform Comparison — Radar Chart (Chart.js 4.4.0)
+
+const labels = [
+    "Qubit Count",
+    "Gate Fidelity",
+    "Coherence Time",
+    "Gate Speed",
+    "Connectivity",
+    "Scalability Prospect",
+    "Operating Cost",
+    "Maturity / Ecosystem"
+];
+
+const platforms = [
+    {
+        label: "Superconducting (Google / IBM)",
+        data: [9, 7, 3, 9, 2, 6, 3, 9],
+        color: "rgba(54, 108, 226, 1)",
+        bg:    "rgba(54, 108, 226, 0.15)"
+    },
+    {
+        label: "Trapped Ion (IonQ / Quantinuum)",
+        data: [3, 9, 9, 3, 8, 4, 5, 7],
+        color: "rgba(46, 160, 67, 1)",
+        bg:    "rgba(46, 160, 67, 0.15)"
+    },
+    {
+        label: "Photonic (Xanadu / PsiQuantum)",
+        data: [4, 3, 5, 8, 6, 5, 8, 5],
+        color: "rgba(237, 137, 54, 1)",
+        bg:    "rgba(237, 137, 54, 0.15)"
+    },
+    {
+        label: "Topological (Microsoft)",
+        data: [0, 0, 0, 0, 0, 7, 3, 2],
+        color: "rgba(163, 54, 226, 1)",
+        bg:    "rgba(163, 54, 226, 0.12)"
+    },
+    {
+        label: "Neutral Atom (QuEra)",
+        data: [7, 7, 8, 5, 7, 6, 6, 4],
+        color: "rgba(210, 50, 50, 1)",
+        bg:    "rgba(210, 50, 50, 0.15)"
+    },
+    {
+        label: "Required for Advantage",
+        data: [9, 9, 8, 7, 8, 9, 5, 8],
+        color: "rgba(130, 130, 130, 1)",
+        bg:    "rgba(130, 130, 130, 0.05)",
+        borderDash: [6, 4],
+        pointRadius: 2,
+        isReference: true
+    }
+];
+
+// Build datasets for Chart.js
+function buildDatasets() {
+    return platforms.map(function (p) {
+        return {
+            label: p.label,
+            data: p.data,
+            borderColor: p.color,
+            backgroundColor: p.bg,
+            borderWidth: p.isReference ? 2 : 2.5,
+            borderDash: p.borderDash || [],
+            pointRadius: p.pointRadius !== undefined ? p.pointRadius : 3,
+            pointBackgroundColor: p.color,
+            pointBorderColor: "#fff",
+            pointBorderWidth: 1,
+            fill: true
+        };
+    });
+}
+
+// Create chart
+const ctx = document.getElementById("radarChart").getContext("2d");
+
+const radarChart = new Chart(ctx, {
+    type: "radar",
+    data: {
+        labels: labels,
+        datasets: buildDatasets()
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            r: {
+                min: 0,
+                max: 10,
+                ticks: {
+                    stepSize: 2,
+                    backdropColor: "transparent",
+                    font: { size: 10 }
+                },
+                pointLabels: {
+                    font: { size: 11, weight: "600" },
+                    color: "#444"
+                },
+                grid: {
+                    color: "rgba(0, 0, 0, 0.08)"
+                },
+                angleLines: {
+                    color: "rgba(0, 0, 0, 0.10)"
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        var platform = context.dataset.label;
+                        var axis = labels[context.dataIndex];
+                        var value = context.raw;
+                        var refValue = platforms[5].data[context.dataIndex];
+                        var gap = refValue - value;
+                        var gapStr = gap > 0
+                            ? " (gap to threshold: " + gap + ")"
+                            : gap === 0
+                                ? " (meets threshold)"
+                                : " (exceeds threshold by " + Math.abs(gap) + ")";
+                        return platform + ": " + value + "/10" + gapStr;
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Toggle buttons
+var btnContainer = document.getElementById("toggle-buttons");
+
+platforms.forEach(function (p, i) {
+    var btn = document.createElement("button");
+    btn.className = "toggle-btn active";
+    btn.textContent = p.label.split("(")[0].trim();
+    btn.style.borderColor = p.color;
+    btn.style.color = p.color;
+
+    btn.addEventListener("click", function () {
+        var meta = radarChart.getDatasetMeta(i);
+        meta.hidden = !meta.hidden;
+        btn.className = meta.hidden ? "toggle-btn inactive" : "toggle-btn active";
+        radarChart.update();
+    });
+
+    btnContainer.appendChild(btn);
+});
+
+</script>
+</body>
+</html>

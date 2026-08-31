@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Hype Parallels: Historical Comparisons</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>
+// Hype Parallels: Historical Comparisons
+// A p5.js MicroSim comparing quantum computing hype to historical technology hype cycles
+
+// Standard template variables
+let containerWidth;
+let canvasWidth;
+let drawHeight = 500;
+let controlHeight = 50;
+let canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+// Red flag patterns shared across hype episodes
+let redFlagPatterns = [
+    "Vague timelines",
+    "Authority endorsement",
+    "Suppression of skeptics",
+    "Media amplification",
+    "Claims outpace results",
+    "Sunk cost justification"
+];
+
+// Technology hype data
+let technologies = [
+    {
+        name: "Cold Fusion",
+        year: "1989",
+        claim: "Unlimited clean energy at room temperature",
+        investment: "$100M+ globally",
+        redFlags: [true, true, true, true, true, false],
+        outcome: "Debunked",
+        status: "failed",
+        details: "Fleischmann & Pons announced fusion in a jar. Hundreds of labs failed to replicate. " +
+                 "University of Utah invested heavily in patents before peer review. " +
+                 "Skeptics were dismissed as closed-minded. Within 18 months the scientific consensus was clear: no fusion."
+    },
+    {
+        name: "AI Winter 1",
+        year: "1970s",
+        claim: "Human-level AI by 1980",
+        investment: "$300M+ (DARPA, UK)",
+        redFlags: [true, true, true, true, true, true],
+        outcome: "AI Winter",
+        status: "failed",
+        details: "Herbert Simon predicted machines would match human intelligence within 20 years (1957). " +
+                 "The Lighthill Report (1973) found AI had failed to achieve its ambitious goals. " +
+                 "Funding collapsed. Researchers rebranded their work to avoid the term 'AI' for a decade."
+    },
+    {
+        name: "Dot-com Bubble",
+        year: "1999",
+        claim: "New economy rules -- profits don't matter",
+        investment: "$5T+ market cap",
+        redFlags: [true, true, false, true, true, true],
+        outcome: "Crash (-78% NASDAQ)",
+        status: "failed",
+        details: "Companies with no revenue reached billion-dollar valuations. " +
+                 "Alan Greenspan warned of 'irrational exuberance' but was ignored. " +
+                 "Analysts who raised concerns were fired or sidelined. " +
+                 "NASDAQ lost 78% of its value from peak to trough (2000-2002)."
+    },
+    {
+        name: "Theranos",
+        year: "2014",
+        claim: "Complete blood tests from a single drop",
+        investment: "$700M raised, $9B valuation",
+        redFlags: [true, true, true, true, true, false],
+        outcome: "Fraud (criminal conviction)",
+        status: "fraud",
+        details: "Elizabeth Holmes claimed revolutionary blood testing technology. " +
+                 "Board included Henry Kissinger, George Shultz, Jim Mattis. " +
+                 "Whistleblowers were threatened with lawsuits. " +
+                 "The technology never worked. Holmes convicted of fraud in 2022."
+    },
+    {
+        name: "Quantum Computing",
+        year: "2019-now",
+        claim: "Solve currently unsolvable problems",
+        investment: "$40B+ globally",
+        redFlags: [true, true, true, true, true, true],
+        outcome: "???",
+        status: "unknown",
+        details: "Claims of 'quantum advantage' on problems nobody needs solved. " +
+                 "Timelines perpetually 5-10 years away since the 1990s. " +
+                 "Skeptical physicists marginalized; funding depends on optimism. " +
+                 "No commercially useful quantum computation demonstrated to date."
+    }
+];
+
+let expandedRow = -1;
+let expandedHeight = 90;
+let collapsedRowHeight = 60;
+let headerHeight = 55;
+
+function updateCanvasSize() {
+    containerWidth = document.querySelector('main').offsetWidth;
+    canvasWidth = containerWidth;
+    canvasHeight = drawHeight + controlHeight;
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(document.querySelector('main'));
+    noLoop();
+    textFont('Arial');
+}
+
+function getRowY(index) {
+    let y = headerHeight;
+    for (let i = 0; i < index; i++) {
+        y += (i === expandedRow) ? collapsedRowHeight + expandedHeight : collapsedRowHeight;
+    }
+    return y;
+}
+
+function getTotalContentHeight() {
+    let h = headerHeight;
+    for (let i = 0; i < technologies.length; i++) {
+        h += (i === expandedRow) ? collapsedRowHeight + expandedHeight : collapsedRowHeight;
+    }
+    return h;
+}
+
+function draw() {
+    // Draw region background
+    fill('aliceblue');
+    stroke('silver');
+    strokeWeight(1);
+    rect(0, 0, canvasWidth, drawHeight);
+
+    // Control region background
+    fill('white');
+    noStroke();
+    rect(0, drawHeight, canvasWidth, controlHeight);
+
+    // Title
+    fill('#333');
+    noStroke();
+    textSize(defaultTextSize + 2);
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    text("Hype Parallels: Historical Comparisons", canvasWidth / 2, 8);
+
+    // Subtitle
+    textSize(11);
+    textStyle(ITALIC);
+    fill('#666');
+    text("Click a row to expand details", canvasWidth / 2, 30);
+
+    // Column headers
+    let cols = getColumnPositions();
+    textSize(11);
+    textStyle(BOLD);
+    fill('#3F51B5');
+    textAlign(LEFT, CENTER);
+    text("Technology", cols.name + 4, headerHeight - 12);
+    text("Year", cols.year + 4, headerHeight - 12);
+    text("Claim", cols.claim + 4, headerHeight - 12);
+    text("Investment", cols.invest + 4, headerHeight - 12);
+    text("Red Flags", cols.flags + 4, headerHeight - 12);
+    text("Outcome", cols.outcome + 4, headerHeight - 12);
+
+    // Header underline
+    stroke('#3F51B5');
+    strokeWeight(2);
+    line(margin, headerHeight - 2, canvasWidth - margin, headerHeight - 2);
+
+    // Draw rows
+    for (let i = 0; i < technologies.length; i++) {
+        let t = technologies[i];
+        let rowY = getRowY(i);
+        let isExpanded = (expandedRow === i);
+        let thisRowHeight = isExpanded ? collapsedRowHeight + expandedHeight : collapsedRowHeight;
+
+        // Row background
+        let bgColor = getStatusColor(t.status, 40);
+        fill(bgColor);
+        noStroke();
+        rect(margin, rowY, canvasWidth - margin * 2, thisRowHeight, 4);
+
+        // Row border
+        stroke(getStatusColor(t.status, 150));
+        strokeWeight(1);
+        noFill();
+        rect(margin, rowY, canvasWidth - margin * 2, thisRowHeight, 4);
+
+        // Status indicator bar on left
+        fill(getStatusColor(t.status, 200));
+        noStroke();
+        rect(margin, rowY, 5, thisRowHeight, 4, 0, 0, 4);
+
+        // Row text
+        let textY = rowY + collapsedRowHeight / 2;
+        fill('#333');
+        noStroke();
+        textSize(12);
+        textStyle(BOLD);
+        textAlign(LEFT, CENTER);
+        text(t.name, cols.name + 10, textY);
+
+        textStyle(NORMAL);
+        textSize(11);
+        text(t.year, cols.year + 4, textY);
+
+        // Truncate claim to fit column
+        let claimWidth = cols.invest - cols.claim - 10;
+        drawTruncatedText(t.claim, cols.claim + 4, textY, claimWidth);
+
+        textSize(10);
+        text(t.investment, cols.invest + 4, textY);
+
+        // Red flag indicators (dots)
+        drawRedFlagDots(t.redFlags, cols.flags + 4, textY);
+
+        // Outcome
+        textSize(11);
+        textStyle(BOLD);
+        fill(getStatusColor(t.status, 200));
+        text(t.outcome, cols.outcome + 4, textY);
+
+        // Expanded details
+        if (isExpanded) {
+            let detailY = rowY + collapsedRowHeight + 5;
+            fill('#333');
+            noStroke();
+            textSize(11);
+            textStyle(NORMAL);
+            textAlign(LEFT, TOP);
+
+            // Wrap details text
+            let detailX = margin + 20;
+            let detailW = canvasWidth - margin * 2 - 40;
+            drawWrappedText(t.details, detailX, detailY, detailW, 14);
+
+            // Red flag labels
+            let flagLabelY = detailY + 58;
+            textSize(9);
+            textStyle(BOLD);
+            fill('#3F51B5');
+            text("Matching red flags:", detailX, flagLabelY);
+
+            textStyle(NORMAL);
+            let flagX = detailX + 110;
+            for (let f = 0; f < redFlagPatterns.length; f++) {
+                if (t.redFlags[f]) {
+                    fill('#D32F2F');
+                    text("\u2713 " + redFlagPatterns[f], flagX, flagLabelY);
+                    flagX += textWidth("\u2713 " + redFlagPatterns[f]) + 15;
+                    if (flagX > canvasWidth - margin * 2 - 60) {
+                        flagX = detailX + 110;
+                        flagLabelY += 13;
+                    }
+                }
+            }
+        }
+    }
+
+    // Pattern Match Score
+    let scoreY = getTotalContentHeight() + 15;
+    if (scoreY + 50 < drawHeight) {
+        drawPatternScore(scoreY);
+    }
+
+    // Footer instruction in control region
+    fill('#888');
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(ITALIC);
+    text("Click any row to expand details  |  Color: Red = failed/fraud, Yellow = unknown/pending", canvasWidth / 2, drawHeight + controlHeight / 2);
+}
+
+function getColumnPositions() {
+    let usable = canvasWidth - margin * 2;
+    return {
+        name: margin,
+        year: margin + usable * 0.16,
+        claim: margin + usable * 0.24,
+        invest: margin + usable * 0.52,
+        flags: margin + usable * 0.66,
+        outcome: margin + usable * 0.84
+    };
+}
+
+function getStatusColor(status, alpha) {
+    if (status === "failed") return color(211, 47, 47, alpha);   // Red
+    if (status === "fraud") return color(183, 28, 28, alpha);     // Dark red
+    if (status === "unknown") return color(255, 193, 7, alpha);   // Yellow/amber
+    return color(158, 158, 158, alpha);                            // Gray
+}
+
+function drawRedFlagDots(flags, x, y) {
+    let dotSize = 8;
+    let dotGap = 12;
+    for (let i = 0; i < flags.length; i++) {
+        if (flags[i]) {
+            fill('#D32F2F');
+        } else {
+            fill('#E0E0E0');
+        }
+        noStroke();
+        ellipse(x + i * dotGap + dotSize / 2, y, dotSize, dotSize);
+    }
+    // Count
+    let count = flags.filter(f => f).length;
+    fill('#333');
+    textSize(10);
+    textStyle(BOLD);
+    textAlign(LEFT, CENTER);
+    text(count + "/6", x + 6 * dotGap + 4, y);
+}
+
+function drawTruncatedText(txt, x, y, maxW) {
+    textSize(11);
+    textStyle(NORMAL);
+    textAlign(LEFT, CENTER);
+    if (textWidth(txt) > maxW) {
+        while (textWidth(txt + "...") > maxW && txt.length > 0) {
+            txt = txt.substring(0, txt.length - 1);
+        }
+        txt += "...";
+    }
+    text(txt, x, y);
+}
+
+function drawWrappedText(txt, x, y, maxW, lineH) {
+    let words = txt.split(' ');
+    let currentLine = '';
+    let currentY = y;
+    for (let i = 0; i < words.length; i++) {
+        let testLine = currentLine + (currentLine === '' ? '' : ' ') + words[i];
+        if (textWidth(testLine) > maxW && currentLine !== '') {
+            text(currentLine, x, currentY);
+            currentLine = words[i];
+            currentY += lineH;
+        } else {
+            currentLine = testLine;
+        }
+    }
+    if (currentLine !== '') {
+        text(currentLine, x, currentY);
+    }
+}
+
+function drawPatternScore(y) {
+    // Count QC red flags
+    let qcFlags = technologies[4].redFlags;
+    let qcCount = qcFlags.filter(f => f).length;
+
+    // Count average for failed technologies
+    let failedCounts = [];
+    for (let i = 0; i < 4; i++) {
+        failedCounts.push(technologies[i].redFlags.filter(f => f).length);
+    }
+    let avgFailed = failedCounts.reduce((a, b) => a + b, 0) / failedCounts.length;
+
+    // Draw score box
+    let boxW = min(500, canvasWidth - margin * 4);
+    let boxX = (canvasWidth - boxW) / 2;
+    let boxH = 40;
+
+    fill(255, 248, 225);
+    stroke('#FF7043');
+    strokeWeight(2);
+    rect(boxX, y, boxW, boxH, 6);
+
+    // Score text
+    fill('#333');
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Pattern Match Score: Quantum Computing matches " + qcCount + " of 6 red flag patterns", canvasWidth / 2, y + 13);
+
+    textSize(11);
+    textStyle(NORMAL);
+    fill('#666');
+    text("Historical failures averaged " + avgFailed.toFixed(1) + " of 6 red flags  |  QC matches " + qcCount + " of 6", canvasWidth / 2, y + 30);
+}
+
+function mousePressed() {
+    // Check which row was clicked
+    for (let i = 0; i < technologies.length; i++) {
+        let rowY = getRowY(i);
+        let thisRowHeight = (expandedRow === i) ? collapsedRowHeight + expandedHeight : collapsedRowHeight;
+        if (mouseX >= margin && mouseX <= canvasWidth - margin &&
+            mouseY >= rowY && mouseY <= rowY + thisRowHeight) {
+            expandedRow = (expandedRow === i) ? -1 : i;
+            redraw();
+            return;
+        }
+    }
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+    redraw();
+}
+
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

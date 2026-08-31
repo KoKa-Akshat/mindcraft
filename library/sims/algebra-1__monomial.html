@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Classification Game</title>
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <!-- p5.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #canvas-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        /* Hidden div for KaTeX rendering */
+        #katex-render {
+            position: absolute;
+            visibility: hidden;
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="canvas-container"></div>
+        <div id="katex-render"></div>
+    </main>
+    <script>// Polynomial Classification Game
+// CANVAS_HEIGHT: 600
+// A p5.js interactive quiz for classifying algebraic expressions
+
+let data;
+let currentExpression;
+let expressionQueue = [];
+let expressionIndex = 0;
+
+// Game state
+let score = 0;
+let streak = 0;
+let level = 1;
+let totalAnswered = 0;
+let correctAnswers = 0;
+let hintsUsed = 0;
+let hintActive = false;
+let showTermsActive = false;
+let challengeMode = false;
+let timerValue = 15;
+let timerMax = 15;
+let timerRunning = false;
+
+// UI state
+let gameState = 'playing'; // 'playing', 'feedback', 'levelComplete', 'gameOver'
+let feedbackMessage = '';
+let feedbackCorrect = false;
+let feedbackTimer = 0;
+let mathImage = null;
+let termImages = [];
+
+// Animation
+let flashAlpha = 0;
+let flashColor;
+
+// Layout
+const canvasWidth = 900;
+const canvasHeight = 600;
+
+// Regions
+const topAreaY = 0;
+const topAreaHeight = 150;
+const middleAreaY = 150;
+const middleAreaHeight = 300;
+const bottomAreaY = 450;
+const bottomAreaHeight = 150;
+
+// Buttons
+let categoryButtons = [];
+let showTermsButton;
+let hintButton;
+let nextButton;
+let challengeToggle;
+
+// Colors
+const colors = {
+    background: '#f8fafc',
+    topArea: '#e2e8f0',
+    middleArea: '#ffffff',
+    bottomArea: '#f1f5f9',
+    text: '#1e293b',
+    textLight: '#64748b',
+    correct: '#22c55e',
+    incorrect: '#ef4444',
+    monomial: '#4CAF50',
+    binomial: '#2196F3',
+    trinomial: '#9C27B0',
+    notPolynomial: '#FF5722',
+    buttonHover: '#e2e8f0',
+    streakGold: '#f59e0b'
+};
+
+// Term colors for visualization
+const termColors = ['#ef4444', '#3b82f6', '#22c55e', '#f59e0b'];
+
+function preload() {
+    data = loadJSON('data.json');
+}
+
+function setup() {
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('canvas-container');
+    textFont('Segoe UI, Arial, sans-serif');
+
+    initializeGame();
+    createButtons();
+
+    describe('An interactive polynomial classification game where students identify expressions as monomials, binomials, trinomials, or non-polynomials.');
+}
+
+function initializeGame() {
+    // Shuffle and prepare expressions for current level
+    let levelExpressions = data.expressions.filter(e => e.level === level);
+    expressionQueue = shuffleArray([...levelExpressions]);
+    expressionIndex = 0;
+
+    if (expressionQueue.length > 0) {
+        loadExpression(expressionQueue[0]);
+    }
+}
+
+function loadExpression(expr) {
+    currentExpression = expr;
+    hintActive = false;
+    showTermsActive = false;
+    termImages = [];
+
+    // Reset timer for challenge mode
+    if (challengeMode) {
+        timerValue = timerMax;
+        timerRunning = true;
+    }
+
+    // Render main expression with KaTeX
+    renderMathExpression(expr.latex, (img) => {
+        mathImage = img;
+    });
+
+    // Pre-render term images
+    expr.terms.forEach((term, i) => {
+        renderMathExpression(term, (img) => {
+            termImages[i] = img;
+        }, termColors[i % termColors.length]);
+    });
+}
+
+function renderMathExpression(latex, callback, color = colors.text) {
+    // Use KaTeX to render to HTML, then capture as image
+    const katexDiv = document.getElementById('katex-render');
+    katexDiv.style.color = color;
+
+    try {
+        katex.render(latex, katexDiv, {
+            throwOnError: false,
+            displayMode: true
+        });
+
+        // Use html2canvas approach - create image from rendered KaTeX
+        // For simplicity, we'll draw text representation for now
+        // and use a placeholder approach
+        setTimeout(() => {
+            callback({
+                latex: latex,
+                color: color,
+                width: katexDiv.offsetWidth,
+                height: katexDiv.offsetHeight
+            });
+        }, 50);
+    } catch (e) {
+        callback({
+            latex: latex,
+            color: color,
+            width: 100,
+            height: 40
+        });
+    }
+}
+
+function createButtons() {
+    categoryButtons = [];
+
+    // Category button dimensions
+    const btnWidth = 180;
+    const btnHeight = 60;
+    const btnSpacing = 20;
+    const totalWidth = (btnWidth * 4) + (btnSpacing * 3);
+    const startX = (canvasWidth - totalWidth) / 2;
+    const btnY = middleAreaY + 180;
+
+    data.categories.forEach((cat, i) => {
+        categoryButtons.push({
+            x: startX + i * (btnWidth + btnSpacing),
+            y: btnY,
+            width: btnWidth,
+            height: btnHeight,
+            id: cat.id,
+            label: cat.label,
+            description: cat.description,
+            color: cat.color,
+            hover: false
+        });
+    });
+
+    // Utility buttons
+    showTermsButton = {
+        x: canvasWidth/2 - 180,
+        y: middleAreaY + 260,
+        width: 140,
+        height: 40,
+        label: 'Show Terms',
+        hover: false
+    };
+
+    hintButton = {
+        x: canvasWidth/2 + 40,
+        y: middleAreaY + 260,
+        width: 140,
+        height: 40,
+        label: 'Hint (-3 pts)',
+        hover: false
+    };
+
+    nextButton = {
+        x: canvasWidth/2 - 70,
+        y: bottomAreaY + 90,
+        width: 140,
+        height: 45,
+        label: 'Next',
+        hover: false,
+        visible: false
+    };
+
+    challengeToggle = {
+        x: canvasWidth - 170,
+        y: topAreaY + 15,
+        width: 150,
+        height: 35,
+        label: 'Challenge Mode',
+        hover: false,
+        active: false
+    };
+}
+
+function draw() {
+    background(colors.background);
+
+    // Draw regions
+    drawTopArea();
+    drawMiddleArea();
+    drawBottomArea();
+
+    // Draw flash effect
+    if (flashAlpha > 0) {
+        fill(red(flashColor), green(flashColor), blue(flashColor), flashAlpha);
+        noStroke();
+        rect(0, 0, canvasWidth, canvasHeight);
+        flashAlpha -= 8;
+    }
+
+    // Update timer in challenge mode
+    if (challengeMode && timerRunning && gameState === 'playing') {
+        if (frameCount % 60 === 0) {
+            timerValue--;
+            if (timerValue <= 0) {
+                handleTimeout();
+            }
+        }
+    }
+
+    // Update feedback timer
+    if (gameState === 'feedback' && feedbackTimer > 0) {
+        feedbackTimer--;
+        if (feedbackTimer <= 0 && !nextButton.visible) {
+            nextButton.visible = true;
+        }
+    }
+
+    updateButtonHovers();
+}
+
+function drawTopArea() {
+    // Background
+    fill(colors.topArea);
+    noStroke();
+    rect(0, topAreaY, canvasWidth, topAreaHeight);
+
+    // Level indicator
+    fill(colors.text);
+    textSize(16);
+    textAlign(LEFT, TOP);
+    let levelInfo = data.levels.find(l => l.level === level);
+    text(`Level ${level}: ${levelInfo ? levelInfo.name : ''}`, 20, 20);
+
+    if (levelInfo) {
+        fill(colors.textLight);
+        textSize(13);
+        text(levelInfo.description, 20, 42);
+    }
+
+    // Score display
+    textAlign(RIGHT, TOP);
+    fill(colors.text);
+    textSize(24);
+    text(`Score: ${score}`, canvasWidth - 20, 20);
+
+    // Streak display
+    if (streak >= 3) {
+        fill(colors.streakGold);
+        textSize(16);
+        let multiplier = streak >= data.config.streakThreshold ? ` (×${data.config.streakMultiplier})` : '';
+        text(`Streak: ${streak}${multiplier}`, canvasWidth - 20, 50);
+    }
+
+    // Challenge mode toggle
+    drawChallengeToggle();
+
+    // Timer (challenge mode)
+    if (challengeMode) {
+        drawTimer();
+    }
+
+    // Expression display
+    textAlign(CENTER, CENTER);
+    fill(colors.text);
+    textSize(14);
+    text('Classify this expression:', canvasWidth/2, topAreaY + 80);
+
+    // Draw the math expression
+    drawMathExpression(canvasWidth/2, topAreaY + 115);
+}
+
+function drawMathExpression(x, y) {
+    if (!currentExpression) return;
+
+    // Draw expression using LaTeX-style rendering
+    textAlign(CENTER, CENTER);
+    textSize(36);
+    textStyle(ITALIC);
+    fill(colors.text);
+
+    // Simple text representation (KaTeX renders in HTML overlay)
+    let displayText = formatLatexForDisplay(currentExpression.latex);
+    text(displayText, x, y);
+    textStyle(NORMAL);
+}
+
+function formatLatexForDisplay(latex) {
+    // Convert LaTeX to readable text
+    return latex
+        .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)')
+        .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
+        .replace(/\\sqrt/g, '√')
+        .replace(/\^{([^}]+)}/g, '^$1')
+        .replace(/\^\{([^}]+)\}/g, '^$1')
+        .replace(/\\pi/g, 'π')
+        .replace(/\\cdot/g, '·')
+        .replace(/\\/g, '');
+}
+
+function drawMiddleArea() {
+    // Background
+    fill(colors.middleArea);
+    noStroke();
+    rect(0, middleAreaY, canvasWidth, middleAreaHeight);
+
+    // Show terms visualization
+    if (showTermsActive && currentExpression) {
+        drawTermsVisualization();
+    }
+
+    // Draw category buttons (only if not in feedback showing correct)
+    if (gameState === 'playing' || gameState === 'feedback') {
+        categoryButtons.forEach(btn => drawCategoryButton(btn));
+    }
+
+    // Draw utility buttons (only during playing)
+    if (gameState === 'playing') {
+        drawUtilityButton(showTermsButton);
+        drawUtilityButton(hintButton);
+    }
+
+    // Draw hint text if active
+    if (hintActive && currentExpression) {
+        fill(colors.textLight);
+        textSize(14);
+        textAlign(CENTER, CENTER);
+        textStyle(ITALIC);
+        text(`Hint: ${currentExpression.hint}`, canvasWidth/2, middleAreaY + 140);
+        textStyle(NORMAL);
+    }
+}
+
+function drawTermsVisualization() {
+    let terms = currentExpression.terms;
+    let termWidth = 120;
+    let spacing = 30;
+    let totalWidth = terms.length * termWidth + (terms.length - 1) * spacing;
+    let startX = (canvasWidth - totalWidth) / 2;
+    let y = middleAreaY + 60;
+
+    // Draw each term in a colored box
+    terms.forEach((term, i) => {
+        let x = startX + i * (termWidth + spacing);
+        let col = color(termColors[i % termColors.length]);
+
+        // Term box
+        fill(red(col), green(col), blue(col), 30);
+        stroke(col);
+        strokeWeight(2);
+        rect(x, y, termWidth, 50, 8);
+
+        // Term text
+        noStroke();
+        fill(termColors[i % termColors.length]);
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        textStyle(ITALIC);
+        text(formatLatexForDisplay(term), x + termWidth/2, y + 25);
+        textStyle(NORMAL);
+
+        // Plus/minus between terms
+        if (i < terms.length - 1) {
+            fill(colors.textLight);
+            textSize(24);
+            text('+', x + termWidth + spacing/2, y + 25);
+        }
+    });
+
+    // Term count label
+    fill(colors.text);
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text(`${terms.length} term${terms.length !== 1 ? 's' : ''}`, canvasWidth/2, y + 60);
+}
+
+function drawCategoryButton(btn) {
+    let isDisabled = gameState === 'feedback';
+    let isCorrect = gameState === 'feedback' && btn.id === currentExpression.correctAnswer;
+    let isSelected = gameState === 'feedback' && feedbackCorrect && btn.id === currentExpression.correctAnswer;
+
+    // Button background
+    if (isCorrect && gameState === 'feedback') {
+        fill(colors.correct);
+    } else if (btn.hover && !isDisabled) {
+        fill(btn.color + '40'); // 25% opacity
+    } else {
+        fill(255);
+    }
+
+    stroke(btn.color);
+    strokeWeight(isCorrect ? 3 : 2);
+    rect(btn.x, btn.y, btn.width, btn.height, 10);
+
+    // Button text
+    noStroke();
+    fill(isCorrect ? 255 : btn.color);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(btn.label, btn.x + btn.width/2, btn.y + btn.height/2 - 8);
+
+    textStyle(NORMAL);
+    textSize(12);
+    fill(isCorrect ? 255 : colors.textLight);
+    text(`(${btn.description})`, btn.x + btn.width/2, btn.y + btn.height/2 + 12);
+}
+
+function drawUtilityButton(btn) {
+    fill(btn.hover ? colors.buttonHover : 255);
+    stroke(colors.textLight);
+    strokeWeight(1);
+    rect(btn.x, btn.y, btn.width, btn.height, 6);
+
+    noStroke();
+    fill(colors.text);
+    textSize(14);
+    textAlign(CENTER, CENTER);
+    text(btn.label, btn.x + btn.width/2, btn.y + btn.height/2);
+}
+
+function drawChallengeToggle() {
+    let btn = challengeToggle;
+
+    fill(btn.active ? colors.streakGold : (btn.hover ? colors.buttonHover : 255));
+    stroke(btn.active ? colors.streakGold : colors.textLight);
+    strokeWeight(btn.active ? 2 : 1);
+    rect(btn.x, btn.y, btn.width, btn.height, 6);
+
+    noStroke();
+    fill(btn.active ? 255 : colors.text);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text(btn.label, btn.x + btn.width/2, btn.y + btn.height/2);
+}
+
+function drawTimer() {
+    let x = canvasWidth - 100;
+    let y = topAreaY + 70;
+    let radius = 25;
+
+    // Timer circle background
+    stroke(colors.textLight);
+    strokeWeight(4);
+    noFill();
+    circle(x, y, radius * 2);
+
+    // Timer arc
+    let progress = timerValue / timerMax;
+    let timerColor = progress > 0.3 ? colors.correct : colors.incorrect;
+    stroke(timerColor);
+    strokeWeight(4);
+    arc(x, y, radius * 2, radius * 2, -HALF_PI, -HALF_PI + TWO_PI * progress);
+
+    // Timer text
+    noStroke();
+    fill(timerColor);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(timerValue, x, y);
+    textStyle(NORMAL);
+}
+
+function drawBottomArea() {
+    // Background
+    fill(colors.bottomArea);
+    noStroke();
+    rect(0, bottomAreaY, canvasWidth, bottomAreaHeight);
+
+    // Progress indicator
+    let progress = `${totalAnswered} answered | ${correctAnswers} correct`;
+    fill(colors.textLight);
+    textSize(14);
+    textAlign(LEFT, TOP);
+    text(progress, 20, bottomAreaY + 15);
+
+    // Hints used
+    if (hintsUsed > 0) {
+        text(`Hints used: ${hintsUsed}`, 20, bottomAreaY + 35);
+    }
+
+    // Feedback message
+    if (gameState === 'feedback' && feedbackMessage) {
+        drawFeedback();
+    }
+
+    // Next button
+    if (nextButton.visible) {
+        drawNextButton();
+    }
+}
+
+function drawFeedback() {
+    let icon = feedbackCorrect ? '✓' : '✗';
+    let iconColor = feedbackCorrect ? colors.correct : colors.incorrect;
+
+    // Icon
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(iconColor);
+    text(icon, canvasWidth/2, bottomAreaY + 10);
+
+    // Message
+    textSize(14);
+    fill(colors.text);
+    textAlign(CENTER, TOP);
+
+    // Word wrap the explanation
+    let explanation = currentExpression.explanation;
+    let maxWidth = canvasWidth - 100;
+    let lines = wrapText(explanation, maxWidth);
+
+    let y = bottomAreaY + 45;
+    lines.forEach(line => {
+        text(line, canvasWidth/2, y);
+        y += 20;
+    });
+}
+
+function wrapText(txt, maxWidth) {
+    let words = txt.split(' ');
+    let lines = [];
+    let currentLine = '';
+
+    words.forEach(word => {
+        let testLine = currentLine + (currentLine ? ' ' : '') + word;
+        if (textWidth(testLine) > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+        } else {
+            currentLine = testLine;
+        }
+    });
+
+    if (currentLine) {
+        lines.push(currentLine);
+    }
+
+    return lines.slice(0, 3); // Limit to 3 lines
+}
+
+function drawNextButton() {
+    let btn = nextButton;
+
+    fill(btn.hover ? '#3b82f6' : '#2563eb');
+    noStroke();
+    rect(btn.x, btn.y, btn.width, btn.height, 8);
+
+    fill(255);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(btn.label, btn.x + btn.width/2, btn.y + btn.height/2);
+    textStyle(NORMAL);
+}
+
+function updateButtonHovers() {
+    // Update hover states
+    categoryButtons.forEach(btn => {
+        btn.hover = isMouseOverRect(btn.x, btn.y, btn.width, btn.height);
+    });
+
+    showTermsButton.hover = isMouseOverRect(showTermsButton.x, showTermsButton.y, showTermsButton.width, showTermsButton.height);
+    hintButton.hover = isMouseOverRect(hintButton.x, hintButton.y, hintButton.width, hintButton.height);
+    nextButton.hover = isMouseOverRect(nextButton.x, nextButton.y, nextButton.width, nextButton.height);
+    challengeToggle.hover = isMouseOverRect(challengeToggle.x, challengeToggle.y, challengeToggle.width, challengeToggle.height);
+
+    // Update cursor
+    let isOverButton = categoryButtons.some(b => b.hover) ||
+                       showTermsButton.hover ||
+                       hintButton.hover ||
+                       (nextButton.visible && nextButton.hover) ||
+                       challengeToggle.hover;
+    cursor(isOverButton ? HAND : ARROW);
+}
+
+function isMouseOverRect(x, y, w, h) {
+    return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
+}
+
+function mousePressed() {
+    // Challenge toggle
+    if (challengeToggle.hover) {
+        challengeMode = !challengeMode;
+        challengeToggle.active = challengeMode;
+        if (challengeMode) {
+            timerValue = timerMax;
+            timerRunning = true;
+        } else {
+            timerRunning = false;
+        }
+        return;
+    }
+
+    // During playing state
+    if (gameState === 'playing') {
+        // Category buttons
+        categoryButtons.forEach(btn => {
+            if (btn.hover) {
+                handleAnswer(btn.id);
+            }
+        });
+
+        // Show terms button
+        if (showTermsButton.hover) {
+            showTermsActive = !showTermsActive;
+        }
+
+        // Hint button
+        if (hintButton.hover && !hintActive) {
+            hintActive = true;
+            hintsUsed++;
+            score = max(0, score - data.config.hintCost);
+        }
+    }
+
+    // Next button
+    if (gameState === 'feedback' && nextButton.visible && nextButton.hover) {
+        goToNextExpression();
+    }
+}
+
+function handleAnswer(answerId) {
+    timerRunning = false;
+    gameState = 'feedback';
+    feedbackTimer = 90; // 1.5 seconds before next button appears
+    nextButton.visible = false;
+
+    let correct = answerId === currentExpression.correctAnswer;
+    feedbackCorrect = correct;
+    totalAnswered++;
+
+    if (correct) {
+        correctAnswers++;
+        streak++;
+
+        // Calculate points
+        let points = hintActive ? data.config.pointsWithHint : data.config.pointsCorrect;
+
+        // Apply streak multiplier
+        if (streak >= data.config.streakThreshold) {
+            points *= data.config.streakMultiplier;
+        }
+
+        score += points;
+
+        // Encouraging message
+        let messages = data.encouragingMessages.correct;
+        feedbackMessage = messages[floor(random(messages.length))];
+
+        // Flash effect
+        flashColor = color(colors.correct);
+        flashAlpha = 100;
+    } else {
+        streak = 0;
+
+        // Encouraging message
+        let messages = data.encouragingMessages.incorrect;
+        feedbackMessage = messages[floor(random(messages.length))];
+
+        // Flash effect
+        flashColor = color(colors.incorrect);
+        flashAlpha = 100;
+    }
+}
+
+function handleTimeout() {
+    timerRunning = false;
+    gameState = 'feedback';
+    feedbackCorrect = false;
+    feedbackTimer = 90;
+    nextButton.visible = false;
+    totalAnswered++;
+    streak = 0;
+
+    feedbackMessage = "Time's up! Remember to think quickly in challenge mode.";
+
+    flashColor = color(colors.incorrect);
+    flashAlpha = 100;
+}
+
+function goToNextExpression() {
+    expressionIndex++;
+    nextButton.visible = false;
+    gameState = 'playing';
+
+    // Check if level complete
+    if (expressionIndex >= expressionQueue.length) {
+        // Try to advance to next level
+        if (level < 4) {
+            level++;
+            initializeGame();
+        } else {
+            // Game complete - restart from level 1 with harder questions
+            gameState = 'gameOver';
+            showEndScreen();
+            return;
+        }
+    } else {
+        loadExpression(expressionQueue[expressionIndex]);
+    }
+}
+
+function showEndScreen() {
+    // Calculate percentage
+    let percentage = totalAnswered > 0 ? (correctAnswers / totalAnswered) * 100 : 0;
+
+    // Find performance message
+    let perfMessage;
+    let perfData = data.endScreen.performanceMessages;
+
+    if (percentage >= perfData.excellent.threshold) {
+        perfMessage = perfData.excellent;
+    } else if (percentage >= perfData.good.threshold) {
+        perfMessage = perfData.good;
+    } else if (percentage >= perfData.fair.threshold) {
+        perfMessage = perfData.fair;
+    } else {
+        perfMessage = perfData.needsWork;
+    }
+
+    // Draw end screen overlay
+    background(colors.background);
+
+    // Title
+    fill(colors.text);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(perfMessage.message, canvasWidth/2, 80);
+
+    textStyle(NORMAL);
+    textSize(18);
+    fill(colors.textLight);
+    text(perfMessage.subMessage, canvasWidth/2, 120);
+
+    // Stats
+    textSize(20);
+    fill(colors.text);
+    text(`Final Score: ${score}`, canvasWidth/2, 180);
+    text(`Accuracy: ${percentage.toFixed(0)}% (${correctAnswers}/${totalAnswered})`, canvasWidth/2, 210);
+
+    // Tips
+    fill(colors.textLight);
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text(data.endScreen.tipsTitle, canvasWidth/2, 270);
+
+    textSize(14);
+    let tipY = 300;
+    data.endScreen.tips.slice(0, 4).forEach(tip => {
+        text('• ' + tip, canvasWidth/2, tipY);
+        tipY += 25;
+    });
+
+    // Play again button
+    let playAgainBtn = {
+        x: canvasWidth/2 - 80,
+        y: 480,
+        width: 160,
+        height: 50
+    };
+
+    let overPlayAgain = isMouseOverRect(playAgainBtn.x, playAgainBtn.y, playAgainBtn.width, playAgainBtn.height);
+
+    fill(overPlayAgain ? '#3b82f6' : '#2563eb');
+    noStroke();
+    rect(playAgainBtn.x, playAgainBtn.y, playAgainBtn.width, playAgainBtn.height, 10);
+
+    fill(255);
+    textSize(18);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text('Play Again', canvasWidth/2, playAgainBtn.y + playAgainBtn.height/2);
+    textStyle(NORMAL);
+
+    // Handle play again click
+    if (overPlayAgain && mouseIsPressed) {
+        resetGame();
+    }
+}
+
+function resetGame() {
+    score = 0;
+    streak = 0;
+    level = 1;
+    totalAnswered = 0;
+    correctAnswers = 0;
+    hintsUsed = 0;
+    hintActive = false;
+    showTermsActive = false;
+    gameState = 'playing';
+    nextButton.visible = false;
+
+    initializeGame();
+}
+
+function shuffleArray(array) {
+    let shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        let j = floor(random(i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Keyboard shortcuts
+function keyPressed() {
+    if (gameState === 'playing') {
+        // Number keys for categories
+        if (key === '1') handleAnswer('monomial');
+        if (key === '2') handleAnswer('binomial');
+        if (key === '3') handleAnswer('trinomial');
+        if (key === '4') handleAnswer('not-polynomial');
+
+        // T for show terms
+        if (key === 't' || key === 'T') {
+            showTermsActive = !showTermsActive;
+        }
+
+        // H for hint
+        if ((key === 'h' || key === 'H') && !hintActive) {
+            hintActive = true;
+            hintsUsed++;
+            score = max(0, score - data.config.hintCost);
+        }
+    }
+
+    // Space or Enter for next
+    if (gameState === 'feedback' && nextButton.visible) {
+        if (key === ' ' || keyCode === ENTER) {
+            goToNextExpression();
+        }
+    }
+}
+</script>
+</body>
+</html>

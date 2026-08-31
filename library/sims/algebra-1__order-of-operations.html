@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Expression Evaluator using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Expression Evaluator MicroSim
+// CANVAS_HEIGHT: 420
+// Students watch an arithmetic expression collapse one operation at a
+// time in the exact order Python evaluates it. A precedence ladder
+// shows which rank of operator is running at each step.
+// Bloom level: Understand/Apply (interpret, execute, predict) -
+// step-through reduction, no continuous animation.
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 370;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// precedence ladder, highest first; `level` in each step points here
+let ladder = ['( )', '**', '*  /  //  %', '+  -'];
+
+// Hand-authored reduction sequences.
+// Each step: expr (current form), hl [startChar, endChar] of the part
+// evaluated NEXT (null when finished), level (ladder index), note.
+let programs = {
+  '2 + 3 * 4': [
+    { expr: '2 + 3 * 4', hl: [4, 9], level: 2,
+      note: 'Multiplication outranks addition, so Python computes 3 * 4 first — even though the + comes first when reading left to right.' },
+    { expr: '2 + 12', hl: [0, 6], level: 3,
+      note: 'Only addition is left: 2 + 12.' },
+    { expr: '14', hl: null, level: null,
+      note: 'The answer is 14 — not 20! Order of operations decided the result.' }
+  ],
+  '(2 + 3) * 4': [
+    { expr: '(2 + 3) * 4', hl: [0, 7], level: 0,
+      note: 'Parentheses always run first: 2 + 3 becomes 5.' },
+    { expr: '5 * 4', hl: [0, 5], level: 2,
+      note: 'Now the multiplication runs.' },
+    { expr: '20', hl: null, level: null,
+      note: 'Compare with 2 + 3 * 4 = 14. The parentheses changed the answer to 20!' }
+  ],
+  '10 - 4 - 3': [
+    { expr: '10 - 4 - 3', hl: [0, 6], level: 3,
+      note: 'Operators with the SAME rank run left to right: 10 - 4 goes first.' },
+    { expr: '6 - 3', hl: [0, 5], level: 3,
+      note: 'Then 6 - 3.' },
+    { expr: '3', hl: null, level: null,
+      note: 'Left to right matters: if Python did the right side first, 10 - (4 - 3) would be 9.' }
+  ],
+  '2 ** 3 * 2': [
+    { expr: '2 ** 3 * 2', hl: [0, 6], level: 1,
+      note: 'Exponents outrank multiplication: 2 ** 3 means 2 × 2 × 2 = 8.' },
+    { expr: '8 * 2', hl: [0, 5], level: 2,
+      note: 'Then the multiplication.' },
+    { expr: '16', hl: null, level: null,
+      note: 'Exponents first, then multiply: 16.' }
+  ],
+  '17 // 5 + 17 % 5': [
+    { expr: '17 // 5 + 17 % 5', hl: [0, 7], level: 2,
+      note: 'Integer division // has the same rank as *, so it runs before +. 17 // 5 = 3 (the remainder is thrown away).' },
+    { expr: '3 + 17 % 5', hl: [4, 10], level: 2,
+      note: 'Modulo % also outranks +. 17 % 5 = 2 (the leftover after making groups of 5).' },
+    { expr: '3 + 2', hl: [0, 5], level: 3,
+      note: 'Finally the addition.' },
+    { expr: '5', hl: null, level: null,
+      note: 'Quotient plus remainder: 3 + 2 = 5. // and % are a matched pair!' }
+  ]
+};
+
+let programNames = ['2 + 3 * 4', '(2 + 3) * 4', '10 - 4 - 3', '2 ** 3 * 2', '17 // 5 + 17 % 5'];
+let currentProgram = '2 + 3 * 4';
+let step = 0; // always shows a valid state; step 0 = full expression
+
+let nextButton, prevButton, resetButton, programSelect;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  nextButton = createButton('Next Step');
+  nextButton.parent(mainElement);
+  nextButton.position(10, drawHeight + 10);
+  nextButton.mousePressed(() => {
+    if (step < programs[currentProgram].length - 1) step += 1;
+  });
+
+  prevButton = createButton('Previous');
+  prevButton.parent(mainElement);
+  prevButton.position(105, drawHeight + 10);
+  prevButton.mousePressed(() => {
+    if (step > 0) step -= 1;
+  });
+
+  resetButton = createButton('Reset');
+  resetButton.parent(mainElement);
+  resetButton.position(195, drawHeight + 10);
+  resetButton.mousePressed(() => { step = 0; });
+
+  programSelect = createSelect();
+  programSelect.parent(mainElement);
+  programSelect.position(265, drawHeight + 10);
+  for (let name of programNames) {
+    programSelect.option(name);
+  }
+  programSelect.changed(() => {
+    currentProgram = programSelect.value();
+    step = 0;
+  });
+
+  describe('Watch a Python arithmetic expression collapse one operation at a time in the order Python evaluates it, with a precedence ladder showing which operator rank runs at each step.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Expression Evaluator', canvasWidth / 2, 8);
+
+  let s = programs[currentProgram][step];
+
+  drawExpression(s);
+  drawLadder(s);
+  drawNotePanel(s);
+}
+
+// the big expression with the next-to-run part highlighted
+function drawExpression(s) {
+  let y = 95;
+  textSize(34);
+  let exprW = textWidth(s.expr);
+  let startX = (canvasWidth - exprW) / 2;
+
+  // highlight rectangle behind the sub-expression that runs next
+  if (s.hl) {
+    let hx = startX + textWidth(s.expr.slice(0, s.hl[0]));
+    let hw = textWidth(s.expr.slice(s.hl[0], s.hl[1]));
+    noStroke();
+    fill(255, 236, 179);
+    rect(hx - 5, y - 26, hw + 10, 52, 8);
+    // small "next" arrow under the highlight
+    fill('darkorange');
+    triangle(hx + hw / 2 - 7, y + 38, hx + hw / 2 + 7, y + 38, hx + hw / 2, y + 28);
+  }
+
+  noStroke();
+  fill(s.hl ? 'midnightblue' : 'darkgreen');
+  textAlign(LEFT, CENTER);
+  text(s.expr, startX, y);
+
+  // final-answer badge
+  if (!s.hl) {
+    textSize(15);
+    fill('darkgreen');
+    textAlign(CENTER, TOP);
+    text('final answer', canvasWidth / 2, y + 32);
+  }
+  textSize(defaultTextSize);
+}
+
+// the precedence ladder with the active rank highlighted
+function drawLadder(s) {
+  let panelW = Math.min(canvasWidth - 30, 560);
+  let panelX = (canvasWidth - panelW) / 2;
+  let panelY = 165;
+  let rowH = 26;
+  let panelH = 22 + ladder.length * rowH;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('order of operations (highest first)', panelX + 12, panelY + 5);
+
+  textSize(defaultTextSize);
+  for (let i = 0; i < ladder.length; i++) {
+    let ry = panelY + 24 + i * rowH;
+    if (s.level === i) {
+      noStroke();
+      fill(255, 236, 179);
+      rect(panelX + 8, ry - 2, panelW - 16, rowH - 4, 5);
+    }
+    noStroke();
+    fill(s.level === i ? 'black' : color(110));
+    textAlign(LEFT, TOP);
+    text((i + 1) + '.  ' + ladder[i], panelX + 16, ry);
+    if (s.level === i) {
+      fill('darkorange');
+      textAlign(RIGHT, TOP);
+      text('← running now', panelX + panelW - 14, ry);
+    }
+  }
+}
+
+// bottom note panel
+function drawNotePanel(s) {
+  let panelX = 15;
+  let panelY = 300;
+  let panelW = canvasWidth - 30;
+  let panelH = 58;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill('black');
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize);
+  text(s.note, panelX + 14, panelY + 10, panelW - 28, panelH - 16);
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

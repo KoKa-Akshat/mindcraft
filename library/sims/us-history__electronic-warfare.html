@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Anatomy of an Information Warfare Campaign using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Information Warfare Campaign Anatomy - Step-through Pipeline
+// CANVAS_HEIGHT: 510
+let drawHeight = 450;
+let controlHeight = 60;
+let canvasHeight = 510;
+
+let stages = [
+  {name: "1. Research", desc: "Identify target audience vulnerabilities", tactics: "Social media analysis, polling data", biases: "Confirmation bias, Cultural bias"},
+  {name: "2. Create Content", desc: "Produce misleading but believable material", tactics: "Deepfakes, out-of-context clips, fake experts", biases: "Authority bias"},
+  {name: "3. Seed", desc: "Place content in fringe communities", tactics: "Bot networks, fake accounts, forums", biases: "Bandwagon effect"},
+  {name: "4. Amplify", desc: "Spread content to mainstream platforms", tactics: "Astroturfing, coordinated sharing, hashtag hijacking", biases: "Availability heuristic"},
+  {name: "5. Exploit", desc: "Trigger emotional reactions and sharing", tactics: "Outrage bait, fear appeals, us-vs-them framing", biases: "Framing effect, Groupthink"},
+  {name: "6. Sustain", desc: "Maintain narrative despite fact-checking", tactics: "Moving goalposts, whataboutism, flooding", biases: "Belief perseverance"}
+];
+
+let stageColors = [];
+let revealedCount = 0;
+let selectedStage = -1;
+let prevBtn, nextBtn, resetBtn;
+let useTwoRows = false;
+let canvas;
+
+function setup() {
+  updateCanvasSize();
+  canvas = createCanvas(containerWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // Generate color gradient from lightcoral to coral
+  let c1 = color(240, 128, 128); // lightcoral
+  let c2 = color(255, 127, 80);  // coral
+  for (let i = 0; i < 6; i++) {
+    stageColors.push(lerpColor(c1, c2, i / 5));
+  }
+
+  // Controls
+  prevBtn = createButton('Previous');
+  prevBtn.parent(document.querySelector('main'));
+  prevBtn.mousePressed(goPrev);
+
+  nextBtn = createButton('Next');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.mousePressed(goNext);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(doReset);
+
+  describe('Step-by-step diagram showing 6 stages of an information warfare campaign with tactics and biases exploited at each stage.');
+}
+
+function draw() {
+  // Draw area
+  noStroke();
+  fill('aliceblue');
+  rect(0, 0, width, drawHeight);
+
+  // Control area
+  fill('silver');
+  rect(0, drawHeight, width, controlHeight);
+
+  // Position controls
+  let btnY = drawHeight + 15;
+  let btnSpacing = 10;
+  let totalBtnWidth = prevBtn.width + nextBtn.width + resetBtn.width + btnSpacing * 2;
+  let btnX = (width - totalBtnWidth) / 2;
+  prevBtn.position(canvas.position().x + btnX, canvas.position().y + btnY);
+  nextBtn.position(canvas.position().x + btnX + prevBtn.width + btnSpacing, canvas.position().y + btnY);
+  resetBtn.position(canvas.position().x + btnX + prevBtn.width + nextBtn.width + btnSpacing * 2, canvas.position().y + btnY);
+
+  // Style buttons
+  styleButton(prevBtn);
+  styleButton(nextBtn);
+  styleButton(resetBtn);
+
+  // Determine layout
+  useTwoRows = width < 700;
+
+  let margin = 20;
+  let boxGap = 12;
+  let arrowSize = 18;
+
+  if (useTwoRows) {
+    drawTwoRowLayout(margin, boxGap, arrowSize);
+  } else {
+    drawOneRowLayout(margin, boxGap, arrowSize);
+  }
+
+  // Draw detail panel if a stage is selected and revealed
+  if (selectedStage >= 0 && selectedStage < revealedCount) {
+    drawDetailPanel();
+  }
+
+  // Title
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('Anatomy of an Information Warfare Campaign', width / 2, 10);
+  textStyle(NORMAL);
+
+  // Progress indicator
+  textSize(12);
+  fill(100);
+  textAlign(CENTER, TOP);
+  text('Stage ' + revealedCount + ' of 6 revealed', width / 2, 34);
+}
+
+function drawOneRowLayout(margin, boxGap, arrowSize) {
+  let topY = 55;
+  let boxH = 80;
+  let totalGaps = 5 * (boxGap + arrowSize);
+  let availW = width - margin * 2 - totalGaps;
+  let boxW = availW / 6;
+  boxW = min(boxW, 140);
+
+  let totalWidth = boxW * 6 + totalGaps;
+  let startX = (width - totalWidth) / 2;
+
+  for (let i = 0; i < 6; i++) {
+    let x = startX + i * (boxW + boxGap + arrowSize);
+    let revealed = i < revealedCount;
+
+    // Draw arrow before box (except first)
+    if (i > 0 && i <= revealedCount) {
+      let ax = x - arrowSize + 2;
+      let ay = topY + boxH / 2;
+      stroke(120);
+      strokeWeight(2);
+      line(ax - arrowSize + 8, ay, ax + 4, ay);
+      // Arrowhead
+      fill(120);
+      noStroke();
+      triangle(ax + 4, ay - 5, ax + 4, ay + 5, ax + 12, ay);
+    }
+
+    drawStageBox(x, topY, boxW, boxH, i, revealed);
+  }
+}
+
+function drawTwoRowLayout(margin, boxGap, arrowSize) {
+  let topY = 55;
+  let boxH = 70;
+  let rowGap = 30;
+  let totalGaps = 2 * (boxGap + arrowSize);
+  let availW = width - margin * 2 - totalGaps;
+  let boxW = availW / 3;
+  boxW = min(boxW, 150);
+
+  for (let row = 0; row < 2; row++) {
+    let totalWidth = boxW * 3 + totalGaps;
+    let startX = (width - totalWidth) / 2;
+    let y = topY + row * (boxH + rowGap);
+
+    for (let col = 0; col < 3; col++) {
+      let i = row * 3 + col;
+      let x = startX + col * (boxW + boxGap + arrowSize);
+      let revealed = i < revealedCount;
+
+      // Draw arrow
+      if (col > 0 && i <= revealedCount) {
+        let ax = x - arrowSize + 2;
+        let ay = y + boxH / 2;
+        stroke(120);
+        strokeWeight(2);
+        line(ax - arrowSize + 8, ay, ax + 4, ay);
+        fill(120);
+        noStroke();
+        triangle(ax + 4, ay - 5, ax + 4, ay + 5, ax + 12, ay);
+      }
+
+      // Draw down-arrow between rows
+      if (row === 1 && col === 0 && revealedCount > 3) {
+        let ax = startX + 2 * (boxW + boxGap + arrowSize) + boxW / 2;
+        let ay1 = topY + boxH + 4;
+        let ay2 = y - 4;
+        stroke(120);
+        strokeWeight(2);
+        // Curved arrow from end of row 1 down to start of row 2
+        line(ax, ay1, ax, (ay1 + ay2) / 2);
+        line(ax, (ay1 + ay2) / 2, startX + boxW / 2, (ay1 + ay2) / 2);
+        line(startX + boxW / 2, (ay1 + ay2) / 2, startX + boxW / 2, ay2);
+        fill(120);
+        noStroke();
+        let tipY = ay2;
+        triangle(startX + boxW / 2 - 5, tipY, startX + boxW / 2 + 5, tipY, startX + boxW / 2, tipY + 8);
+      }
+
+      drawStageBox(x, y, boxW, boxH, i, revealed);
+    }
+  }
+}
+
+function drawStageBox(x, y, w, h, index, revealed) {
+  let isSelected = selectedStage === index;
+
+  if (revealed) {
+    // Shadow
+    noStroke();
+    fill(0, 0, 0, 30);
+    rect(x + 3, y + 3, w, h, 8);
+
+    // Box
+    let c = stageColors[index];
+    if (isSelected) {
+      stroke(50);
+      strokeWeight(3);
+    } else {
+      stroke(150);
+      strokeWeight(1);
+    }
+    fill(c);
+    rect(x, y, w, h, 8);
+
+    // Text
+    noStroke();
+    fill(40);
+    textAlign(CENTER, CENTER);
+    textSize(constrain(w / 10, 10, 13));
+    textStyle(BOLD);
+    text(stages[index].name, x + w / 2, y + h / 3);
+    textStyle(NORMAL);
+    textSize(constrain(w / 12, 8, 10));
+    fill(60);
+
+    // Wrap description
+    let descLines = wrapText(stages[index].desc, w - 12);
+    for (let li = 0; li < descLines.length; li++) {
+      text(descLines[li], x + w / 2, y + h / 2 + 8 + li * 12);
+    }
+  } else {
+    // Unrevealed box
+    noStroke();
+    fill(0, 0, 0, 15);
+    rect(x + 2, y + 2, w, h, 8);
+
+    stroke(180);
+    strokeWeight(1);
+    fill(230);
+    rect(x, y, w, h, 8);
+
+    noStroke();
+    fill(160);
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text('?', x + w / 2, y + h / 2);
+  }
+}
+
+function drawDetailPanel() {
+  let s = stages[selectedStage];
+  let panelY = useTwoRows ? 240 : 170;
+  let panelH = drawHeight - panelY - 15;
+  let panelX = 30;
+  let panelW = width - 60;
+
+  // Panel shadow
+  noStroke();
+  fill(0, 0, 0, 25);
+  rect(panelX + 3, panelY + 3, panelW, panelH, 10);
+
+  // Panel background
+  stroke(180);
+  strokeWeight(1);
+  fill(255);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  // Color accent bar
+  noStroke();
+  fill(stageColors[selectedStage]);
+  rect(panelX, panelY, 8, panelH, 10, 0, 0, 10);
+
+  let tx = panelX + 24;
+  let ty = panelY + 20;
+  let maxTextW = panelW - 48;
+
+  // Stage name
+  noStroke();
+  fill(40);
+  textAlign(LEFT, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text(s.name, tx, ty);
+  textStyle(NORMAL);
+
+  // Description
+  ty += 28;
+  fill(60);
+  textSize(13);
+  text(s.desc, tx, ty);
+
+  // Tactics section
+  ty += 32;
+  fill(stageColors[selectedStage]);
+  textSize(13);
+  textStyle(BOLD);
+  text('Tactics:', tx, ty);
+  textStyle(NORMAL);
+  fill(60);
+  ty += 18;
+  let tacticsLines = wrapText(s.tactics, maxTextW);
+  for (let li = 0; li < tacticsLines.length; li++) {
+    text(tacticsLines[li], tx + 10, ty + li * 16);
+  }
+  ty += tacticsLines.length * 16 + 10;
+
+  // Biases section
+  fill(180, 60, 60);
+  textSize(13);
+  textStyle(BOLD);
+  text('Biases Exploited:', tx, ty);
+  textStyle(NORMAL);
+  fill(60);
+  ty += 18;
+  let biasLines = wrapText(s.biases, maxTextW);
+  for (let li = 0; li < biasLines.length; li++) {
+    text(biasLines[li], tx + 10, ty + li * 16);
+  }
+
+  // Click hint
+  ty = panelY + panelH - 20;
+  fill(160);
+  textSize(10);
+  textAlign(RIGHT, BOTTOM);
+  text('Click a revealed stage to view its details', panelX + panelW - 15, ty);
+}
+
+function wrapText(txt, maxW) {
+  let words = txt.split(' ');
+  let lines = [];
+  let current = '';
+  for (let w of words) {
+    let test = current ? current + ' ' + w : w;
+    if (textWidth(test) > maxW && current) {
+      lines.push(current);
+      current = w;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
+function mousePressed() {
+  if (mouseY > drawHeight || mouseY < 50) return;
+
+  let margin = 20;
+  let boxGap = 12;
+  let arrowSize = 18;
+
+  if (useTwoRows) {
+    let topY = 55;
+    let boxH = 70;
+    let rowGap = 30;
+    let totalGaps = 2 * (boxGap + arrowSize);
+    let availW = width - margin * 2 - totalGaps;
+    let boxW = min(availW / 3, 150);
+    let totalWidth = boxW * 3 + totalGaps;
+    let startX = (width - totalWidth) / 2;
+
+    for (let row = 0; row < 2; row++) {
+      let y = topY + row * (boxH + rowGap);
+      for (let col = 0; col < 3; col++) {
+        let i = row * 3 + col;
+        let x = startX + col * (boxW + boxGap + arrowSize);
+        if (i < revealedCount && mouseX >= x && mouseX <= x + boxW && mouseY >= y && mouseY <= y + boxH) {
+          selectedStage = (selectedStage === i) ? -1 : i;
+          return;
+        }
+      }
+    }
+  } else {
+    let topY = 55;
+    let boxH = 80;
+    let totalGaps = 5 * (boxGap + arrowSize);
+    let availW = width - margin * 2 - totalGaps;
+    let boxW = min(availW / 6, 140);
+    let totalWidth = boxW * 6 + totalGaps;
+    let startX = (width - totalWidth) / 2;
+
+    for (let i = 0; i < 6; i++) {
+      let x = startX + i * (boxW + boxGap + arrowSize);
+      if (i < revealedCount && mouseX >= x && mouseX <= x + boxW && mouseY >= topY && mouseY <= topY + boxH) {
+        selectedStage = (selectedStage === i) ? -1 : i;
+        return;
+      }
+    }
+  }
+}
+
+function goNext() {
+  if (revealedCount < 6) {
+    revealedCount++;
+    selectedStage = revealedCount - 1;
+  }
+}
+
+function goPrev() {
+  if (revealedCount > 0) {
+    revealedCount--;
+    if (selectedStage >= revealedCount) {
+      selectedStage = revealedCount > 0 ? revealedCount - 1 : -1;
+    }
+  }
+}
+
+function doReset() {
+  revealedCount = 0;
+  selectedStage = -1;
+}
+
+function styleButton(btn) {
+  btn.style('font-size', '14px');
+  btn.style('padding', '6px 16px');
+  btn.style('background', 'white');
+  btn.style('border', '1px solid #ccc');
+  btn.style('border-radius', '4px');
+  btn.style('cursor', 'pointer');
+}
+
+let containerWidth;
+
+function updateCanvasSize() {
+  const mainEl = document.querySelector('main');
+  containerWidth = mainEl ? mainEl.clientWidth : 800;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

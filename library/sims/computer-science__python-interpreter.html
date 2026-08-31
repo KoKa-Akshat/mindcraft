@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Code Stepper using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Code Stepper MicroSim
+// CANVAS_HEIGHT: 450
+// Students step through a short Python program one line at a time,
+// watching the interpreter's execution arrow move top to bottom and
+// output appear in the console one line per step.
+// Bloom level: Understand (explain, predict, trace) - step-through pattern,
+// no continuous animation.
+// MicroSim template version 2026.03
+
+// global variables for width and height
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 400;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Each program is a list of lines. Each line has:
+//   text: the Python source text
+//   out:  the string printed when this line runs (null if nothing prints)
+//   note: a short explanation shown when the arrow is on this line
+let programs = {
+  'Hello Program': [
+    { text: '# My first program',        out: null, note: 'A comment — Python skips this line.' },
+    { text: 'print("Hello!")',           out: 'Hello!', note: 'print() sends text to the output.' },
+    { text: 'print("I am Python.")',     out: 'I am Python.', note: 'The next line runs after the one above.' },
+    { text: '',                          out: null, note: 'A blank line — nothing to do here.' },
+    { text: 'print("Goodbye!")',         out: 'Goodbye!', note: 'The last line runs last. Top to bottom!' }
+  ],
+  'Comments Everywhere': [
+    { text: '# Comments start with #',   out: null, note: 'A comment — Python skips this line.' },
+    { text: 'print("Step 1")',           out: 'Step 1', note: 'This line really runs.' },
+    { text: '# print("Step 2")',         out: null, note: 'This print is inside a comment — skipped!' },
+    { text: 'print("Step 3")',           out: 'Step 3', note: 'So "Step 2" never appears.' },
+    { text: '# The end',                 out: null, note: 'Comments can go anywhere.' }
+  ],
+  'Python Does Math': [
+    { text: 'print(2 + 3)',              out: '5', note: 'Python computes 2 + 3 first, then prints 5.' },
+    { text: 'print("2 + 3")',            out: '2 + 3', note: 'Quotes make it text — no math happens.' },
+    { text: 'print(10 * 4)',             out: '40', note: 'The * symbol means multiply.' },
+    { text: 'print("Done!")',            out: 'Done!', note: 'Every line runs exactly once, in order.' }
+  ]
+};
+
+let programNames = ['Hello Program', 'Comments Everywhere', 'Python Does Math'];
+let currentProgram = 'Hello Program';
+// step is the index of the line the arrow is on; -1 means not started
+let step = -1;
+
+// controls
+let nextButton, prevButton, resetButton, programSelect;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textSize(defaultTextSize);
+
+  nextButton = createButton('Next Step');
+  nextButton.parent(mainElement);
+  nextButton.position(10, drawHeight + 10);
+  nextButton.mousePressed(stepForward);
+
+  prevButton = createButton('Previous');
+  prevButton.parent(mainElement);
+  prevButton.position(105, drawHeight + 10);
+  prevButton.mousePressed(stepBack);
+
+  resetButton = createButton('Reset');
+  resetButton.parent(mainElement);
+  resetButton.position(195, drawHeight + 10);
+  resetButton.mousePressed(resetProgram);
+
+  programSelect = createSelect();
+  programSelect.parent(mainElement);
+  programSelect.position(265, drawHeight + 10);
+  for (let name of programNames) {
+    programSelect.option(name);
+  }
+  programSelect.changed(changeProgram);
+
+  describe('Step through a short Python program one line at a time. An arrow shows which line the interpreter runs next, and output appears in a console panel one line per step.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // drawing region background
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // control region background
+  fill('white');
+  rect(0, drawHeight, canvasWidth, canvasHeight - drawHeight);
+
+  // title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Code Stepper', canvasWidth / 2, 8);
+
+  let lines = programs[currentProgram];
+
+  drawProgramPanel(lines);
+  drawConsolePanel(lines);
+  drawNotePanel(lines);
+
+  // step counter in the control region
+  fill('black');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  // only show the status label when there is room to the right of the select
+  if (canvasWidth >= 640) {
+    let stepLabel;
+    if (step < 0) {
+      stepLabel = 'Click Next Step to run the first line';
+    } else if (step >= lines.length - 1) {
+      stepLabel = 'Program finished';
+    } else {
+      stepLabel = 'On line ' + (step + 1) + ' of ' + lines.length;
+    }
+    text(stepLabel, 430, drawHeight + 25);
+  }
+}
+
+// left panel: the program listing with the execution arrow
+function drawProgramPanel(lines) {
+  let panelX = 15;
+  let panelY = 45;
+  let panelW = canvasWidth * 0.52 - 25;
+  let panelH = 210;
+
+  fill('white');
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill(100);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('program.py', panelX + 10, panelY + 6);
+
+  textSize(defaultTextSize);
+  let lineHeight = 30;
+  for (let i = 0; i < lines.length; i++) {
+    let y = panelY + 30 + i * lineHeight;
+    // highlight the current line
+    if (i === step) {
+      noStroke();
+      fill(255, 236, 179); // soft amber highlight
+      rect(panelX + 28, y - 4, panelW - 36, lineHeight - 4, 4);
+    }
+    // execution arrow
+    if (i === step) {
+      fill('darkorange');
+      noStroke();
+      triangle(panelX + 8, y, panelX + 8, y + 16, panelX + 22, y + 8);
+    }
+    // line text: comments in gray, code in dark blue
+    noStroke();
+    if (lines[i].text.trim().startsWith('#') || lines[i].text.trim() === '') {
+      fill('gray');
+    } else {
+      fill('midnightblue');
+    }
+    textAlign(LEFT, TOP);
+    text(lines[i].text, panelX + 34, y);
+  }
+}
+
+// right panel: the output console, one line per executed print
+function drawConsolePanel(lines) {
+  let panelX = canvasWidth * 0.52 + 5;
+  let panelY = 45;
+  let panelW = canvasWidth * 0.48 - 20;
+  let panelH = 210;
+
+  fill(40); // dark console
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill(180);
+  textAlign(LEFT, TOP);
+  textSize(14);
+  text('Output', panelX + 10, panelY + 6);
+
+  textSize(defaultTextSize);
+  fill(120, 255, 120); // console green
+  let outY = panelY + 30;
+  for (let i = 0; i <= step && i < lines.length; i++) {
+    if (lines[i].out !== null) {
+      text(lines[i].out, panelX + 12, outY);
+      outY += 26;
+    }
+  }
+  if (step < 0) {
+    fill(150);
+    text('(nothing yet)', panelX + 12, outY);
+  }
+}
+
+// bottom panel: a plain-language note about the current line
+function drawNotePanel(lines) {
+  let panelX = 15;
+  let panelY = 270;
+  let panelW = canvasWidth - 30;
+  let panelH = 115;
+
+  fill(255, 255, 255, 230);
+  stroke(200);
+  rect(panelX, panelY, panelW, panelH, 10);
+
+  noStroke();
+  fill('black');
+  textAlign(LEFT, TOP);
+  textSize(defaultTextSize);
+  if (step < 0) {
+    text('Python runs a program one line at a time, from top to bottom.', panelX + 15, panelY + 12, panelW - 30, panelH - 20);
+    text('Before you click Next Step, predict: what will the output be?', panelX + 15, panelY + 40, panelW - 30, panelH - 50);
+  } else {
+    fill('darkorange');
+    text('Line ' + (step + 1) + ':', panelX + 15, panelY + 12);
+    fill('black');
+    text(lines[step].note, panelX + 80, panelY + 12, panelW - 95, panelH - 20);
+    if (step >= lines.length - 1) {
+      fill('green');
+      text('Program finished. Was the output what you predicted?', panelX + 15, panelY + 44);
+    }
+  }
+}
+
+function stepForward() {
+  let lines = programs[currentProgram];
+  if (step < lines.length - 1) {
+    step += 1;
+  }
+}
+
+function stepBack() {
+  if (step > -1) {
+    step -= 1;
+  }
+}
+
+function resetProgram() {
+  step = -1;
+}
+
+function changeProgram() {
+  currentProgram = programSelect.value();
+  step = -1;
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

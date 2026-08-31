@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Water as Universal Solvent Explorer MicroSim using P5.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Water as Universal Solvent Explorer - Food Science MicroSim
+// CANVAS_HEIGHT: 560
+// Students drag substance cards into "Dissolves" or "Does Not Dissolve" zones,
+// learning that water (polar) dissolves polar and ionic substances but not nonpolar fats.
+
+// ----- Layout constants -----
+let canvasWidth = 760;
+let drawHeight = 500;
+let controlHeight = 60;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 15;
+let titleY = 22;
+let subtitleY = 44;
+
+// Panel geometry (recomputed in updateLayout)
+let leftPanelX, leftPanelW;       // water tank
+let centerPanelX, centerPanelW;   // card tray
+let rightPanelX, rightPanelW;     // result zones
+let panelTopY = 60;
+let panelBottomY;                  // = drawHeight - 15
+
+// Result zones split
+let dissolveZoneBottomY;           // y where dissolve zone ends and "does not" begins
+
+// Palette
+const COLOR_BG = '#f1f8e9';
+const COLOR_PANEL_BG = '#ffffff';
+const COLOR_PRIMARY = '#2e7d32';   // green - correct
+const COLOR_ACCENT = '#f57c00';    // orange - does-not-dissolve zone
+const COLOR_WATER = '#1e88e5';     // water blue
+const COLOR_WATER_LIGHT = '#bbdefb';
+const COLOR_INK = '#1b3a1d';
+const COLOR_MUTED = '#5b6b5d';
+const COLOR_CARD_BG = '#fffde7';
+const COLOR_CARD_BORDER = '#bdbdbd';
+const COLOR_ERR = '#c62828';
+
+// ----- Substance data -----
+// dissolves: true if dissolves in water
+// reason: short why
+// hint: shown if student drops in wrong zone
+const SUBSTANCES = [
+  { id: 'salt', name: 'Salt', emoji: 'NaCl', dissolves: true,
+    type: 'ionic',
+    reason: 'Salt is ionic - water pulls Na+ and Cl- apart.',
+    hint: 'Try again: salt is ionic (Na+Cl-). Water tugs the ions apart.' },
+  { id: 'sugar', name: 'Sugar', emoji: 'C12H22O11', dissolves: true,
+    type: 'polar',
+    reason: 'Sugar is polar - its -OH groups hydrogen-bond with water.',
+    hint: 'Try again: sugar has many polar -OH groups that love water.' },
+  { id: 'oil', name: 'Olive Oil', emoji: 'fat', dissolves: false,
+    type: 'nonpolar',
+    reason: 'Olive oil is nonpolar - it cannot interact with polar water.',
+    hint: 'Try again: oils are nonpolar fats. They float, not mix.' },
+  { id: 'vitc', name: 'Vitamin C', emoji: 'C6H8O6', dissolves: true,
+    type: 'polar',
+    reason: 'Vitamin C is polar with many -OH groups - it dissolves in water.',
+    hint: 'Try again: vitamin C (ascorbic acid) is polar and water-loving.' },
+  { id: 'butter', name: 'Butter', emoji: 'fat', dissolves: false,
+    type: 'nonpolar',
+    reason: 'Butter is mostly nonpolar fat - it melts, but does not dissolve.',
+    hint: 'Try again: butter is mostly fat. Fats are nonpolar.' }
+];
+
+// ----- Runtime state -----
+let cards = [];           // {sub, x, y, w, h, homeX, homeY, placed, zone, shakeT, hintT, hintMsg, animT}
+let draggingCard = null;
+let dragOffsetX = 0, dragOffsetY = 0;
+let waterMolecules = []; // background animation
+let resetButton;
+let allCorrectTime = 0;  // ms when all 5 placed correctly
+
+// Card dims
+const CARD_W = 110;
+const CARD_H = 60;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  textFont('Segoe UI, Arial, sans-serif');
+
+  updateLayout();
+
+  // Initialize water molecule animation in left tank
+  for (let i = 0; i < 14; i++) {
+    waterMolecules.push(makeWaterMol());
+  }
+
+  layoutCards();
+
+  // Reset button
+  resetButton = createButton('Reset');
+  resetButton.position(canvasWidth - 80, drawHeight + 15);
+  resetButton.mousePressed(resetAll);
+  resetButton.parent(document.querySelector('main'));
+  styleButton(resetButton);
+
+  describe('Drag substance cards into the Dissolves or Does Not Dissolve zone to learn which foods dissolve in water and why.', LABEL);
+}
+
+function styleButton(btn) {
+  btn.style('background', COLOR_PRIMARY);
+  btn.style('color', 'white');
+  btn.style('border', 'none');
+  btn.style('padding', '8px 18px');
+  btn.style('border-radius', '6px');
+  btn.style('font-size', '14px');
+  btn.style('font-weight', '600');
+  btn.style('cursor', 'pointer');
+}
+
+function updateLayout() {
+  panelBottomY = drawHeight - 15;
+  // Left panel = water tank ~40% of width
+  leftPanelX = margin;
+  leftPanelW = Math.floor((canvasWidth - 2 * margin) * 0.38);
+  // Center panel = card tray ~17%
+  centerPanelX = leftPanelX + leftPanelW + 10;
+  centerPanelW = Math.floor((canvasWidth - 2 * margin) * 0.18);
+  if (centerPanelW < 130) centerPanelW = 130;
+  // Right panel = remaining
+  rightPanelX = centerPanelX + centerPanelW + 10;
+  rightPanelW = canvasWidth - margin - rightPanelX;
+  // Split right vertically
+  dissolveZoneBottomY = panelTopY + Math.floor((panelBottomY - panelTopY) / 2);
+}
+
+function layoutCards() {
+  cards = [];
+  const startY = panelTopY + 25;
+  const gap = 8;
+  // 5 cards stacked vertically in center tray
+  for (let i = 0; i < SUBSTANCES.length; i++) {
+    const w = centerPanelW - 14;
+    const h = CARD_H;
+    const x = centerPanelX + (centerPanelW - w) / 2;
+    const y = startY + i * (h + gap);
+    cards.push({
+      sub: SUBSTANCES[i],
+      x: x, y: y, w: w, h: h,
+      homeX: x, homeY: y,
+      placed: false,
+      zone: null,        // 'dissolves' | 'doesnot'
+      correct: false,
+      shakeT: 0,
+      hintT: 0,
+      hintMsg: '',
+      animT: 0           // for breaking-apart animation (0..1)
+    });
+  }
+}
+
+// ----- Water molecule helper -----
+function makeWaterMol() {
+  return {
+    x: random(leftPanelX + 20, leftPanelX + leftPanelW - 20),
+    y: random(panelTopY + 25, panelBottomY - 20),
+    vx: random(-0.25, 0.25),
+    vy: random(-0.25, 0.25),
+    angle: random(TWO_PI),
+    spin: random(-0.005, 0.005),
+    size: random(14, 18)
+  };
+}
+
+function draw() {
+  background(COLOR_BG);
+
+  drawTitle();
+  drawLeftPanel();
+  drawCenterPanel();
+  drawRightPanel();
+
+  // Update + draw water molecules (background of left panel, with clip via panel bg)
+  updateWaterMolecules();
+  drawWaterMolecules();
+
+  // Draw cards on top
+  drawCards();
+
+  // Drag preview (dragging card on top of everything)
+  if (draggingCard) {
+    drawCard(draggingCard, true);
+  }
+
+  // Summary overlay if all correct
+  if (allCorrectCount() === SUBSTANCES.length) {
+    if (allCorrectTime === 0) allCorrectTime = millis();
+    drawSummary();
+  } else {
+    allCorrectTime = 0;
+  }
+
+  // Bottom strip background for button area
+  noStroke();
+  fill(255);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+  stroke('#e0e0e0');
+  line(0, drawHeight, canvasWidth, drawHeight);
+  noStroke();
+  fill(COLOR_MUTED);
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  text('Drag each card into a zone. Goal: classify all 5 correctly.',
+       margin, drawHeight + controlHeight / 2);
+}
+
+function drawTitle() {
+  noStroke();
+  fill(COLOR_PRIMARY);
+  textAlign(CENTER, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('Water as Universal Solvent - Drag to Classify',
+       canvasWidth / 2, titleY - 8);
+  textStyle(NORMAL);
+  fill(COLOR_MUTED);
+  textSize(12);
+  text('Like dissolves like: polar water dissolves polar / ionic substances, not nonpolar ones.',
+       canvasWidth / 2, subtitleY - 2);
+}
+
+function drawLeftPanel() {
+  // panel bg (water-tinted)
+  noStroke();
+  fill(COLOR_WATER_LIGHT);
+  rect(leftPanelX, panelTopY, leftPanelW, panelBottomY - panelTopY, 10);
+  // border
+  noFill();
+  stroke(COLOR_WATER);
+  strokeWeight(2);
+  rect(leftPanelX, panelTopY, leftPanelW, panelBottomY - panelTopY, 10);
+  // label
+  noStroke();
+  fill(COLOR_WATER);
+  textAlign(CENTER, TOP);
+  textSize(13);
+  textStyle(BOLD);
+  text('Water (H2O) - polar solvent', leftPanelX + leftPanelW / 2, panelTopY + 6);
+  textStyle(NORMAL);
+
+  // Hero water molecule legend with delta- / delta+ labels in the corner
+  const heroX = leftPanelX + 42;
+  const heroY = panelBottomY - 50;
+  drawWaterMol(heroX, heroY, 30, 0, true);
+  noStroke();
+  fill(COLOR_INK);
+  textSize(9);
+  textAlign(LEFT, TOP);
+  textStyle(ITALIC);
+  text('Bent shape =\npolar molecule', heroX + 26, heroY - 10);
+  textStyle(NORMAL);
+}
+
+function drawCenterPanel() {
+  noStroke();
+  fill(COLOR_PANEL_BG);
+  rect(centerPanelX, panelTopY, centerPanelW, panelBottomY - panelTopY, 10);
+  noFill();
+  stroke('#cfd8dc');
+  strokeWeight(1);
+  rect(centerPanelX, panelTopY, centerPanelW, panelBottomY - panelTopY, 10);
+  noStroke();
+  fill(COLOR_INK);
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Substances', centerPanelX + centerPanelW / 2, panelTopY + 6);
+  textStyle(NORMAL);
+}
+
+function drawRightPanel() {
+  const x = rightPanelX;
+  const w = rightPanelW;
+  const yTop = panelTopY;
+  const ySplit = dissolveZoneBottomY;
+  const yBot = panelBottomY;
+
+  // Top zone: Dissolves (water blue) - hover highlight if dragging
+  const overDissolve = draggingCard && pointInZone(mouseX, mouseY, 'dissolves');
+  noStroke();
+  fill(overDissolve ? '#90caf9' : '#e3f2fd');
+  rect(x, yTop, w, ySplit - yTop, 10, 10, 0, 0);
+  noFill();
+  stroke(COLOR_WATER);
+  strokeWeight(overDissolve ? 3 : 2);
+  rect(x, yTop, w, ySplit - yTop, 10, 10, 0, 0);
+  noStroke();
+  fill(COLOR_WATER);
+  textAlign(LEFT, TOP);
+  textSize(15);
+  textStyle(BOLD);
+  text('Dissolves in Water', x + 12, yTop + 8);
+  textSize(20);
+  text('✓', x + w - 30, yTop + 6);
+  textStyle(NORMAL);
+
+  // Bottom zone: Does Not Dissolve (orange)
+  const overNot = draggingCard && pointInZone(mouseX, mouseY, 'doesnot');
+  noStroke();
+  fill(overNot ? '#ffcc80' : '#ffe0b2');
+  rect(x, ySplit, w, yBot - ySplit, 0, 0, 10, 10);
+  noFill();
+  stroke(COLOR_ACCENT);
+  strokeWeight(overNot ? 3 : 2);
+  rect(x, ySplit, w, yBot - ySplit, 0, 0, 10, 10);
+  noStroke();
+  fill(COLOR_ACCENT);
+  textAlign(LEFT, TOP);
+  textSize(15);
+  textStyle(BOLD);
+  text('Does Not Dissolve', x + 12, ySplit + 8);
+  textSize(20);
+  text('✗', x + w - 30, ySplit + 6);
+  textStyle(NORMAL);
+}
+
+function pointInZone(px, py, which) {
+  if (px < rightPanelX || px > rightPanelX + rightPanelW) return false;
+  if (which === 'dissolves') {
+    return py >= panelTopY && py <= dissolveZoneBottomY;
+  } else {
+    return py >= dissolveZoneBottomY && py <= panelBottomY;
+  }
+}
+
+// ----- Water molecule animation -----
+function updateWaterMolecules() {
+  for (let m of waterMolecules) {
+    m.x += m.vx;
+    m.y += m.vy;
+    m.angle += m.spin;
+    // bounce within tank
+    if (m.x < leftPanelX + 18 || m.x > leftPanelX + leftPanelW - 18) m.vx *= -1;
+    if (m.y < panelTopY + 26 || m.y > panelBottomY - 18) m.vy *= -1;
+  }
+}
+
+function drawWaterMolecules() {
+  for (let m of waterMolecules) {
+    drawWaterMol(m.x, m.y, m.size, m.angle, false);
+  }
+}
+
+// Draws a bent H2O molecule: central O (red-ish) with two H (white) at ~104.5deg.
+// labelMode: if true, show partial charge labels (used in correct-anim only when small);
+function drawWaterMol(cx, cy, size, angle, showLabels) {
+  push();
+  translate(cx, cy);
+  rotate(angle);
+  const oR = size * 0.45;
+  const hR = size * 0.28;
+  const bondLen = size * 0.62;
+  const halfBond = radians(52); // half of 104.5
+
+  // Bonds
+  stroke(COLOR_WATER);
+  strokeWeight(1.4);
+  const h1x = cos(-HALF_PI - halfBond) * bondLen;
+  const h1y = sin(-HALF_PI - halfBond) * bondLen;
+  const h2x = cos(-HALF_PI + halfBond) * bondLen;
+  const h2y = sin(-HALF_PI + halfBond) * bondLen;
+  line(0, 0, h1x, h1y);
+  line(0, 0, h2x, h2y);
+
+  // O atom
+  noStroke();
+  fill(COLOR_WATER);
+  ellipse(0, 0, oR * 2, oR * 2);
+  // H atoms
+  fill('#ffffff');
+  stroke(COLOR_WATER);
+  strokeWeight(1);
+  ellipse(h1x, h1y, hR * 2, hR * 2);
+  ellipse(h2x, h2y, hR * 2, hR * 2);
+
+  if (showLabels) {
+    noStroke();
+    fill(COLOR_ERR);
+    textSize(9);
+    textAlign(CENTER, CENTER);
+    // delta- on O
+    text('δ-', 0, -oR - 5);
+    fill('#0d47a1');
+    // delta+ on H atoms
+    text('δ+', h1x, h1y + hR + 6);
+    text('δ+', h2x, h2y + hR + 6);
+  }
+  pop();
+}
+
+// ----- Cards -----
+function drawCards() {
+  for (let c of cards) {
+    if (c === draggingCard) continue;
+    drawCard(c, false);
+  }
+}
+
+function drawCard(c, isDragging) {
+  push();
+  let x = c.x, y = c.y;
+  // Shake offset if wrong
+  if (c.shakeT > 0) {
+    const t = c.shakeT;
+    x += sin(frameCount * 0.9) * 4 * (t / 30);
+    c.shakeT--;
+  }
+
+  // If placed correctly and recently, play breaking-apart animation
+  if (c.correct && c.animT < 1) {
+    c.animT = Math.min(1, c.animT + 0.025);
+  }
+
+  // Card body
+  let bgCol = COLOR_CARD_BG;
+  let borderCol = COLOR_CARD_BORDER;
+  if (c.placed && c.correct) {
+    bgCol = '#e8f5e9';
+    borderCol = COLOR_PRIMARY;
+  }
+  if (isDragging) {
+    // shadow
+    noStroke();
+    fill(0, 0, 0, 35);
+    rect(x + 3, y + 4, c.w, c.h, 8);
+  }
+  stroke(borderCol);
+  strokeWeight(c.placed && c.correct ? 2.5 : 1.5);
+  fill(bgCol);
+  rect(x, y, c.w, c.h, 8);
+
+  // Name
+  noStroke();
+  fill(COLOR_INK);
+  textAlign(CENTER, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text(c.sub.name, x + c.w / 2, y + 8);
+  textStyle(NORMAL);
+  textSize(10);
+  fill(COLOR_MUTED);
+  text(c.sub.emoji, x + c.w / 2, y + 26);
+
+  // Type pill
+  let pillColor = '#90a4ae';
+  if (c.sub.type === 'ionic') pillColor = '#7b1fa2';
+  else if (c.sub.type === 'polar') pillColor = COLOR_WATER;
+  else if (c.sub.type === 'nonpolar') pillColor = COLOR_ACCENT;
+  noStroke();
+  fill(pillColor);
+  const pillW = 64, pillH = 14;
+  rect(x + (c.w - pillW) / 2, y + c.h - pillH - 5, pillW, pillH, 7);
+  fill(255);
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  text(c.sub.type, x + c.w / 2, y + c.h - pillH / 2 - 5);
+
+  // Check or X badge for placed
+  if (c.placed && c.correct) {
+    fill(COLOR_PRIMARY);
+    noStroke();
+    ellipse(x + c.w - 12, y + 12, 18, 18);
+    fill(255);
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('✓', x + c.w - 12, y + 12);
+    textStyle(NORMAL);
+  }
+
+  pop();
+
+  // Breaking-apart animation overlay (small fragments drifting)
+  if (c.placed && c.correct && c.animT < 1) {
+    drawBreakingAnim(c);
+  }
+
+  // Hint bubble for wrong attempts
+  if (c.hintT > 0) {
+    drawHintBubble(c);
+    c.hintT--;
+  }
+
+  // Show explanation under correctly placed cards
+  if (c.placed && c.correct) {
+    drawExplanation(c);
+  }
+}
+
+function drawBreakingAnim(c) {
+  // Show 3-4 fragments drifting outward and tiny water molecules approaching
+  const cx = c.x + c.w / 2;
+  const cy = c.y + c.h / 2;
+  const t = c.animT;
+  push();
+  // Fragments
+  const fragCount = c.sub.type === 'ionic' ? 4 : 4;
+  for (let i = 0; i < fragCount; i++) {
+    const ang = (TWO_PI * i) / fragCount;
+    const r = 18 + t * 25;
+    const fx = cx + cos(ang) * r;
+    const fy = cy + sin(ang) * r;
+    noStroke();
+    if (c.sub.type === 'ionic') {
+      // alternate Na+ / Cl-
+      fill(i % 2 === 0 ? '#7b1fa2' : '#43a047');
+      ellipse(fx, fy, 12, 12);
+      fill(255);
+      textSize(8);
+      textAlign(CENTER, CENTER);
+      text(i % 2 === 0 ? 'Na+' : 'Cl-', fx, fy);
+    } else {
+      fill(COLOR_WATER);
+      ellipse(fx, fy, 10, 10);
+    }
+    // small water molecule next to fragment
+    drawWaterMol(fx + 10, fy - 8, 10, ang, false);
+  }
+  pop();
+}
+
+function drawHintBubble(c) {
+  const bx = c.x;
+  const by = c.y - 32;
+  const bw = c.w + 60;
+  push();
+  noStroke();
+  fill(255, 235, 238);
+  stroke(COLOR_ERR);
+  strokeWeight(1.5);
+  rect(bx, by, bw, 26, 6);
+  noStroke();
+  fill(COLOR_ERR);
+  textSize(10);
+  textAlign(LEFT, CENTER);
+  text(c.hintMsg, bx + 8, by + 13);
+  pop();
+}
+
+function drawExplanation(c) {
+  // Draw a small caption line under the card if there's room within zone
+  const tx = c.x + 4;
+  const ty = c.y + c.h + 3;
+  // Only draw if within right panel zone
+  if (ty + 14 > panelBottomY) return;
+  push();
+  noStroke();
+  fill(COLOR_PRIMARY);
+  textSize(9.5);
+  textAlign(LEFT, TOP);
+  // Word-wrap manually within card-ish width
+  wrapText(c.sub.reason, tx, ty, c.w + 60, 11);
+  pop();
+}
+
+function wrapText(str, x, y, maxW, lineH) {
+  const words = str.split(' ');
+  let line = '';
+  let yy = y;
+  for (let w of words) {
+    const test = line.length ? line + ' ' + w : w;
+    if (textWidth(test) > maxW) {
+      text(line, x, yy);
+      line = w;
+      yy += lineH;
+    } else {
+      line = test;
+    }
+  }
+  if (line.length) text(line, x, yy);
+}
+
+function allCorrectCount() {
+  let n = 0;
+  for (let c of cards) if (c.placed && c.correct) n++;
+  return n;
+}
+
+function drawSummary() {
+  // Translucent overlay banner across the bottom of the drawing area
+  push();
+  noStroke();
+  fill(46, 125, 50, 235);
+  const bw = Math.min(640, canvasWidth - 40);
+  const bx = (canvasWidth - bw) / 2;
+  const by = panelTopY + 30;
+  const bh = panelBottomY - by - 30;
+  rect(bx, by, bw, bh, 12);
+
+  fill(255);
+  textAlign(CENTER, TOP);
+  textSize(20);
+  textStyle(BOLD);
+  text('All 5 classified! Rule: Like Dissolves Like', bx + bw / 2, by + 14);
+  textStyle(NORMAL);
+
+  textSize(13);
+  textAlign(LEFT, TOP);
+  let lx = bx + 24;
+  let ly = by + 52;
+  fill(255);
+  text('Water is polar - it dissolves things that are also polar or ionic:', lx, ly);
+  ly += 22;
+
+  // Dissolves list
+  fill('#c8e6c9');
+  textStyle(BOLD);
+  text('Dissolves (polar / ionic):', lx, ly);
+  textStyle(NORMAL);
+  fill(255);
+  ly += 18;
+  text('  Salt (ionic)  -  Sugar (polar)  -  Vitamin C (polar)', lx, ly);
+  ly += 28;
+
+  fill('#ffe0b2');
+  textStyle(BOLD);
+  text('Does NOT dissolve (nonpolar fats):', lx, ly);
+  textStyle(NORMAL);
+  fill(255);
+  ly += 18;
+  text('  Olive Oil  -  Butter', lx, ly);
+  ly += 28;
+
+  fill('#fff');
+  textSize(12);
+  textStyle(ITALIC);
+  text('Press Reset to try again.', lx, ly);
+  textStyle(NORMAL);
+  pop();
+}
+
+// ----- Interaction -----
+function mousePressed() {
+  // pick a card from top to bottom; only unplaced cards are draggable
+  for (let i = cards.length - 1; i >= 0; i--) {
+    const c = cards[i];
+    if (c.placed) continue;
+    if (mouseX >= c.x && mouseX <= c.x + c.w &&
+        mouseY >= c.y && mouseY <= c.y + c.h) {
+      draggingCard = c;
+      dragOffsetX = mouseX - c.x;
+      dragOffsetY = mouseY - c.y;
+      return;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (draggingCard) {
+    draggingCard.x = mouseX - dragOffsetX;
+    draggingCard.y = mouseY - dragOffsetY;
+  }
+}
+
+function mouseReleased() {
+  if (!draggingCard) return;
+  const c = draggingCard;
+  draggingCard = null;
+
+  // Determine drop zone
+  let zone = null;
+  if (pointInZone(mouseX, mouseY, 'dissolves')) zone = 'dissolves';
+  else if (pointInZone(mouseX, mouseY, 'doesnot')) zone = 'doesnot';
+
+  if (!zone) {
+    // Return to home with small bounce
+    c.x = c.homeX;
+    c.y = c.homeY;
+    return;
+  }
+
+  const correct = (zone === 'dissolves' && c.sub.dissolves) ||
+                  (zone === 'doesnot' && !c.sub.dissolves);
+
+  if (correct) {
+    c.placed = true;
+    c.correct = true;
+    c.zone = zone;
+    c.animT = 0;
+    // Snap card to a slot within the chosen zone
+    snapToZone(c, zone);
+  } else {
+    // Shake + hint, return to home
+    c.shakeT = 30;
+    c.hintT = 180;
+    c.hintMsg = c.sub.hint;
+    c.x = c.homeX;
+    c.y = c.homeY;
+  }
+}
+
+function snapToZone(c, zone) {
+  // Count how many cards already in this zone
+  const others = cards.filter(o => o !== c && o.placed && o.zone === zone);
+  // Arrange in a small grid: 2 columns
+  const cols = 2;
+  const slotW = (rightPanelW - 20) / cols;
+  const slotH = c.h + 30; // leave room for explanation under
+  const i = others.length;
+  const col = i % cols;
+  const row = Math.floor(i / cols);
+  const zoneTop = (zone === 'dissolves') ? panelTopY + 32 : dissolveZoneBottomY + 32;
+  c.x = rightPanelX + 10 + col * slotW + (slotW - c.w) / 2;
+  c.y = zoneTop + row * slotH;
+}
+
+function resetAll() {
+  layoutCards();
+  draggingCard = null;
+  allCorrectTime = 0;
+  for (let c of cards) {
+    c.placed = false;
+    c.correct = false;
+    c.zone = null;
+    c.shakeT = 0;
+    c.hintT = 0;
+    c.animT = 0;
+  }
+}
+
+// ----- Responsive -----
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  updateLayout();
+  // re-init water molecules within new bounds
+  waterMolecules = [];
+  for (let i = 0; i < 14; i++) waterMolecules.push(makeWaterMol());
+  // re-layout cards: keep placed where they are conceptually
+  const wasPlaced = cards.map(c => ({ placed: c.placed, correct: c.correct, zone: c.zone, animT: c.animT }));
+  layoutCards();
+  for (let i = 0; i < cards.length; i++) {
+    const s = wasPlaced[i];
+    if (s && s.placed) {
+      cards[i].placed = s.placed;
+      cards[i].correct = s.correct;
+      cards[i].zone = s.zone;
+      cards[i].animT = s.animT;
+      snapToZone(cards[i], s.zone);
+    }
+  }
+  if (resetButton) resetButton.position(canvasWidth - 80, drawHeight + 15);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+    if (canvasWidth < 400) canvasWidth = 400;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

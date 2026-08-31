@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Emotion Regulation Strategy Selector MicroSim</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script>// Emotion Regulation Strategy Selector - MicroSim (match strategy to scenario)
+// CANVAS_HEIGHT: 484
+// Grades 9-12, Apply (L3): students apply the most appropriate emotion-management
+// strategy (paced breathing, cognitive reframing, deliberate pause, grounding) to
+// realistic emotionally charged scenarios.
+
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 432;
+let controlHeight = 52;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 16;
+
+let nextButton;
+let resetButton;
+
+let strategies = [
+  { name: 'Paced Breathing', desc: 'Slow, even breaths to calm the body.' },
+  { name: 'Cognitive Reframing', desc: 'Rethink the situation more accurately.' },
+  { name: 'Deliberate Pause', desc: 'Wait before reacting.' },
+  { name: 'Grounding', desc: 'Focus on the senses to feel present.' }
+];
+// best = index; accept = also-reasonable; why
+let scenarios = [
+  { s: 'You feel humiliated right after being corrected in front of the class.', best: 1, accept: [2], why: 'Reframing ("one mistake isn\'t the whole story") targets the shame directly.' },
+  { s: 'Your heart is racing with panic right before a hard conversation.', best: 0, accept: [3], why: 'Paced breathing calms the physical panic response first.' },
+  { s: 'You are furious and about to fire off an angry text.', best: 2, accept: [0], why: 'A deliberate pause prevents a reaction you would regret.' },
+  { s: 'You feel overwhelmed and disconnected during a stressful moment.', best: 3, accept: [0], why: 'Grounding brings you back to the present when you feel unreal.' },
+  { s: 'You keep replaying a worst-case story in your head before a test.', best: 1, accept: [0], why: 'Reframing challenges the catastrophic thought.' },
+  { s: 'You feel a sudden surge of anger during a game.', best: 0, accept: [2], why: 'Breathing lowers the arousal so you can think.' },
+  { s: 'You feel frozen and unsure in a tense group discussion.', best: 3, accept: [2], why: 'Grounding steadies you enough to re-engage.' },
+  { s: 'You want to snap back at a rude comment.', best: 2, accept: [1], why: 'A pause gives space to choose a better response.' }
+];
+
+let idx = 0;
+let picked = -1;
+let doneCount = 0;
+let cardRects = [];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  nextButton = createButton('Next Scenario');
+  nextButton.mousePressed(next);
+  resetButton = createButton('Reset');
+  resetButton.mousePressed(() => { idx = 0; picked = -1; doneCount = 0; });
+  positionControls();
+  describe('An emotionally intense scenario with four strategy cards — paced breathing, ' +
+    'cognitive reframing, deliberate pause, and grounding. Students select the best-fit ' +
+    'strategy and see why it fits, with a running count.', LABEL);
+}
+
+function positionControls() {
+  nextButton.position(10, drawHeight + 12);
+  resetButton.position(150, drawHeight + 12);
+}
+
+function draw() {
+  updateCanvasSize();
+  fill('aliceblue'); stroke('silver'); strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white'); rect(0, drawHeight, canvasWidth, controlHeight);
+  noStroke();
+
+  fill('black'); textAlign(CENTER, TOP); textSize(17);
+  text('Emotion Regulation Strategy Selector', canvasWidth / 2, 6);
+
+  // scenario (left)
+  let cw = canvasWidth * 0.44;
+  fill('lightcyan'); stroke('cadetblue'); strokeWeight(1.5);
+  rect(margin, 34, cw, 200, 10);
+  noStroke(); fill('teal'); textAlign(LEFT, TOP); textSize(12);
+  text('Scenario ' + (idx + 1) + ' of ' + scenarios.length, margin + 10, 44);
+  fill('black'); textSize(15);
+  text(scenarios[idx].s, margin + 10, 66, cw - 20, 160);
+
+  // strategy cards (right)
+  cardRects = [];
+  let sx = margin + cw + 12, sw = canvasWidth - sx - margin;
+  let sy0 = 34, sh = 46, gap = 6;
+  for (let i = 0; i < 4; i++) {
+    let y = sy0 + i * (sh + gap);
+    cardRects.push({ x: sx, y: y, w: sw, h: sh, i: i });
+    let hover = pointInRect(mouseX, mouseY, { x: sx, y: y, w: sw, h: sh });
+    let chosen = picked === i;
+    let good = picked >= 0 && (i === scenarios[idx].best || scenarios[idx].accept.includes(i));
+    strokeWeight(chosen ? 3 : 1.5);
+    if (picked >= 0) stroke(good ? 'seagreen' : 'gray'); else stroke('mediumpurple');
+    fill(chosen ? (good ? 'honeydew' : 'linen') : (hover ? 'lavender' : 'white'));
+    rect(sx, y, sw, sh, 7);
+    noStroke(); fill('indigo'); textAlign(LEFT, TOP); textSize(12);
+    text(strategies[i].name, sx + 8, y + 5, sw - 16, 16);
+    fill('dimgray'); textSize(10); text(strategies[i].desc, sx + 8, y + 22, sw - 16, 22);
+  }
+  cursor(picked < 0 && overAny() ? HAND : ARROW);
+
+  // feedback
+  let fy = 240;
+  fill('white'); stroke('silver'); strokeWeight(1); rect(margin, fy, cw, drawHeight - fy - 10, 8);
+  noStroke(); textAlign(LEFT, TOP); textSize(12);
+  if (picked < 0) { fill('dimgray'); text('Which strategy fits best?', margin + 8, fy + 8, cw - 16, 40); }
+  else {
+    let best = picked === scenarios[idx].best;
+    let ok = best || scenarios[idx].accept.includes(picked);
+    fill(ok ? 'seagreen' : 'darkgoldenrod');
+    text((best ? '✓ Best fit. ' : (ok ? '✓ Reasonable. ' : 'A different one fits better. ')) + scenarios[idx].why,
+      margin + 8, fy + 8, cw - 16, 120);
+  }
+  fill('navy'); textAlign(LEFT, TOP); textSize(12);
+  text('Completed: ' + doneCount + ' / ' + scenarios.length, margin + cw + 20, 250);
+}
+
+function overAny() { for (let r of cardRects) if (pointInRect(mouseX, mouseY, r)) return true; return false; }
+function pointInRect(px, py, r) { return px >= r.x && px <= r.x + r.w && py >= r.y && py <= r.y + r.h; }
+
+function mousePressed() {
+  if (picked >= 0) return;
+  for (let r of cardRects) if (pointInRect(mouseX, mouseY, r)) { picked = r.i; doneCount++; return; }
+}
+
+function next() { idx = (idx + 1) % scenarios.length; picked = -1; }
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Bandwidth, Latency, Throughput</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script>// Bandwidth, Latency, Throughput - p5.js
+// Animated pipe metaphor with sliders for bandwidth, latency, packet loss
+// CANVAS_HEIGHT: 600
+
+let canvasWidth = 720;
+let drawHeight = 380;
+let controlHeight = 220;
+let canvasHeight = drawHeight + controlHeight;
+
+// State
+let bandwidthMbps = 100;
+let latencyMs = 30;
+let lossPct = 0;
+let tcpMode = false;
+
+// Packet model
+let packets = []; // each: { x, sentAt }
+let lastSpawn = 0;
+let arrivedCount = 0;
+let arrivedTimestamps = [];
+
+let bwSlider, latSlider, lossSlider, tcpToggle, presetSel;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  // UI
+  let yC = drawHeight + 12;
+  bwSlider = createSlider(0, 5, 2, 1);
+  bwSlider.position(140, yC);
+  bwSlider.style('width', '180px');
+  bwSlider.parent(document.querySelector('main'));
+  bwSlider.input(() => updatePreset(null));
+
+  latSlider = createSlider(0, 4, 1, 1);
+  latSlider.position(140, yC + 35);
+  latSlider.style('width', '180px');
+  latSlider.parent(document.querySelector('main'));
+  latSlider.input(() => updatePreset(null));
+
+  lossSlider = createSlider(0, 50, 0, 1);
+  lossSlider.position(140, yC + 70);
+  lossSlider.style('width', '180px');
+  lossSlider.parent(document.querySelector('main'));
+  lossSlider.input(() => updatePreset(null));
+
+  tcpToggle = createCheckbox(' TCP collapse on long+lossy paths', false);
+  tcpToggle.position(20, yC + 105);
+  tcpToggle.parent(document.querySelector('main'));
+  tcpToggle.changed(() => tcpMode = tcpToggle.checked());
+
+  presetSel = createSelect();
+  presetSel.position(140, yC + 140);
+  presetSel.parent(document.querySelector('main'));
+  presetSel.option('— custom —');
+  presetSel.option('LAN');
+  presetSel.option('Same-region cloud');
+  presetSel.option('Coast-to-coast');
+  presetSel.option('Trans-Pacific');
+  presetSel.option('Satellite link');
+  presetSel.changed(() => applyPreset(presetSel.value()));
+  applyPreset('Coast-to-coast');
+
+  describe('Animated bandwidth/latency/throughput visualization with adjustable sliders.', LABEL);
+}
+
+function applyPreset(name) {
+  if (name === 'LAN') { bwSlider.value(4); latSlider.value(0); lossSlider.value(0); }
+  else if (name === 'Same-region cloud') { bwSlider.value(3); latSlider.value(0); lossSlider.value(0); }
+  else if (name === 'Coast-to-coast') { bwSlider.value(3); latSlider.value(2); lossSlider.value(2); }
+  else if (name === 'Trans-Pacific') { bwSlider.value(2); latSlider.value(3); lossSlider.value(5); }
+  else if (name === 'Satellite link') { bwSlider.value(1); latSlider.value(4); lossSlider.value(10); }
+  syncFromSliders();
+}
+function updatePreset(_) { presetSel.selected('— custom —'); syncFromSliders(); }
+
+function syncFromSliders() {
+  // Map bw 0..5 to {1, 10, 100, 1000, 10000} log-ish
+  const bwTable = [1, 10, 100, 1000, 5000, 10000];
+  bandwidthMbps = bwTable[bwSlider.value()];
+  // Map latency 0..4 to {1, 10, 30, 80, 250}
+  const latTable = [1, 10, 30, 80, 250];
+  latencyMs = latTable[latSlider.value()];
+  lossPct = lossSlider.value() / 10; // 0-5%
+}
+
+function draw() {
+  updateCanvasSize();
+  background('#fafbfc');
+
+  // Title
+  noStroke();
+  fill('#1a3a6c');
+  textSize(15); textStyle(BOLD); textAlign(CENTER, TOP);
+  text('Bandwidth, Latency, and Throughput', canvasWidth / 2, 10);
+  textStyle(NORMAL);
+
+  // Pipe geometry
+  const pipeY = 150;
+  const pipeStartX = 80;
+  const pipeEndX = canvasWidth - 200;
+  const pipeWidth = pipeEndX - pipeStartX;
+  // Pipe height scales with bandwidth (log)
+  const pipeH = map(log(bandwidthMbps), log(1), log(10000), 12, 60);
+
+  // Draw sender / receiver labels
+  fill('#37474F'); noStroke(); textSize(11); textAlign(CENTER, CENTER);
+  rect(20, pipeY - 25, 60, 50, 6);
+  fill('white'); text('Sender', 50, pipeY);
+  fill('#37474F');
+  rect(pipeEndX + 20, pipeY - 25, 60, 50, 6);
+  fill('white'); text('Receiver', pipeEndX + 50, pipeY);
+
+  // Pipe
+  push();
+  translate(pipeStartX, pipeY);
+  noFill();
+  stroke('#90A4AE'); strokeWeight(2);
+  rect(0, -pipeH / 2, pipeWidth, pipeH, 4);
+  // Subtle stripes
+  stroke(220); strokeWeight(1);
+  for (let x = 10; x < pipeWidth; x += 20) line(x, -pipeH / 2 + 2, x, pipeH / 2 - 2);
+  pop();
+
+  // Spawn packets at sender. Spawn rate = bandwidth (cap to ~30/sec for animation)
+  const targetRate = Math.min(30, bandwidthMbps / 50);
+  const spawnInterval = 1000 / Math.max(1, targetRate);
+  if (millis() - lastSpawn > spawnInterval) {
+    if (random(100) > lossPct) {
+      packets.push({ x: 0, sentAt: millis(), arrived: false });
+    }
+    lastSpawn = millis();
+  }
+
+  // Animate packets
+  // Packet speed: pipe_width / latency (in seconds)
+  const latencySec = latencyMs / 1000;
+  const speedPxPerFrame = (pipeWidth / latencySec) / 60;
+
+  // TCP collapse approximation — when on, throughput drops on high-latency lossy paths
+  const tcpFactor = tcpMode ? Math.min(1, 1 / (1 + latencyMs * Math.sqrt(lossPct + 0.001) * 0.05)) : 1;
+
+  // Move packets, drop some
+  for (let p of packets) {
+    p.x += speedPxPerFrame * (tcpMode ? tcpFactor : 1);
+    if (p.x >= pipeWidth && !p.arrived) {
+      p.arrived = true;
+      arrivedCount++;
+      arrivedTimestamps.push(millis());
+    }
+  }
+  packets = packets.filter(p => p.x < pipeWidth + 30);
+
+  // Draw packets
+  push();
+  translate(pipeStartX, pipeY);
+  noStroke();
+  for (let p of packets) {
+    fill(p.x < 30 ? '#FF7043' : '#43A047'); // queued (coral) at entrance
+    rect(p.x, -3, 6, 6, 1);
+  }
+  pop();
+
+  // Throughput meter (packets/sec over last 1 second)
+  const now = millis();
+  arrivedTimestamps = arrivedTimestamps.filter(t => now - t < 1000);
+  const throughputPps = arrivedTimestamps.length;
+
+  // Right-side panel
+  push();
+  translate(pipeEndX + 110, pipeY + 90);
+  fill('#1a3a6c'); noStroke();
+  textSize(11); textAlign(CENTER, CENTER); textStyle(BOLD);
+  text('Throughput', 0, -50);
+  textStyle(NORMAL);
+  // Meter
+  noFill(); stroke('#1a3a6c'); strokeWeight(1.5);
+  rect(-40, -35, 80, 16, 2);
+  noStroke();
+  fill('#C2185B');
+  rect(-40, -35, map(throughputPps, 0, 30, 0, 80), 16);
+  fill('#212121');
+  textSize(13); textStyle(BOLD);
+  text(throughputPps + ' pkt/s', 0, -8);
+  textStyle(NORMAL); textSize(10); fill('#555');
+  text('(simulated)', 0, 8);
+  pop();
+
+  // Numbers
+  fill('#37474F'); noStroke();
+  textSize(11); textAlign(LEFT, TOP);
+  text('Bandwidth: ' + (bandwidthMbps >= 1000 ? (bandwidthMbps / 1000) + ' Gbps' : bandwidthMbps + ' Mbps'), 20, drawHeight - 70);
+  text('Latency: ' + latencyMs + ' ms', 20, drawHeight - 55);
+  text('Loss: ' + lossPct.toFixed(1) + '%', 20, drawHeight - 40);
+  if (tcpMode) text('TCP collapse factor: ' + tcpFactor.toFixed(2), 20, drawHeight - 25);
+
+  // Slider labels
+  fill('#212121'); textSize(11);
+  text('Bandwidth:', 20, drawHeight + 14);
+  text('Latency:', 20, drawHeight + 49);
+  text('Packet loss:', 20, drawHeight + 84);
+  text('Preset:', 20, drawHeight + 154);
+
+  // Footer guidance
+  fill('#555'); textSize(10);
+  text("Long-latency, lossy paths can\'t use full bandwidth even though the pipe is wide.", 20, drawHeight + 195);
+}
+
+function windowResized() { updateCanvasSize(); resizeCanvas(canvasWidth, canvasHeight); }
+function updateCanvasSize() {
+  const c = document.querySelector('main');
+  if (c) canvasWidth = c.offsetWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Documentation</a>
+</body>
+</html>

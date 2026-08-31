@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Conservation Policy Timeline using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Conservation Policy Timeline MicroSim
+// CANVAS_HEIGHT: 495
+// Understand: Summarize evolution of conservation policy
+let containerWidth;
+let canvasWidth = 400;
+let drawHeight = 450;
+let controlHeight = 45;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 25;
+let sliderLeftMargin = 160;
+let defaultTextSize = 16;
+
+let policies = [];
+let scrollOffset = 0;
+let selectedPolicy = -1;
+let filterSelect;
+let quizToggle;
+let quizMode = false;
+let revealedInQuiz = {};
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
+  textSize(defaultTextSize);
+
+  policies = [
+    { year: 1963, name: 'Clean Air Act', type: 'US', color: '#457b9d',
+      provisions: 'Set national air quality standards', threats: ['Pollution'],
+      effectiveness: 4 },
+    { year: 1969, name: 'NEPA', type: 'US', color: '#457b9d',
+      provisions: 'Required environmental impact statements for federal projects', threats: ['Habitat Loss'],
+      effectiveness: 4 },
+    { year: 1972, name: 'Clean Water Act', type: 'US', color: '#457b9d',
+      provisions: 'Regulated pollutant discharges into US waters', threats: ['Pollution'],
+      effectiveness: 4 },
+    { year: 1973, name: 'Endangered Species Act', type: 'US', color: '#457b9d',
+      provisions: 'Protected threatened species and their habitats', threats: ['Habitat Loss', 'Overexploitation'],
+      effectiveness: 5 },
+    { year: 1975, name: 'CITES', type: 'International', color: '#2a9d8f',
+      provisions: 'Regulated international wildlife trade', threats: ['Overexploitation'],
+      effectiveness: 4 },
+    { year: 1987, name: 'Montreal Protocol', type: 'International', color: '#2a9d8f',
+      provisions: 'Phased out ozone-depleting substances', threats: ['Pollution'],
+      effectiveness: 5 },
+    { year: 1992, name: 'CBD (Rio)', type: 'International', color: '#2a9d8f',
+      provisions: 'Framework for biodiversity conservation worldwide', threats: ['Habitat Loss', 'Invasive Species'],
+      effectiveness: 3 },
+    { year: 1997, name: 'Kyoto Protocol', type: 'International', color: '#2a9d8f',
+      provisions: 'First binding greenhouse gas reduction targets', threats: ['Pollution', 'Habitat Loss'],
+      effectiveness: 2 },
+    { year: 2005, name: 'EU Emissions Trading', type: 'Economic', color: '#f4a261',
+      provisions: 'Cap-and-trade system for carbon emissions in Europe', threats: ['Pollution'],
+      effectiveness: 3 },
+    { year: 2010, name: 'Aichi Targets', type: 'International', color: '#2a9d8f',
+      provisions: '20 biodiversity targets for 2020 under CBD', threats: ['Habitat Loss', 'Overexploitation'],
+      effectiveness: 2 },
+    { year: 2015, name: 'Paris Agreement', type: 'International', color: '#2a9d8f',
+      provisions: 'Limit warming to 1.5-2\u00B0C above pre-industrial levels', threats: ['Pollution', 'Habitat Loss'],
+      effectiveness: 3 },
+    { year: 2022, name: 'Kunming-Montreal Framework', type: 'International', color: '#2a9d8f',
+      provisions: 'Protect 30% of land and sea by 2030', threats: ['Habitat Loss', 'Overexploitation'],
+      effectiveness: 3 }
+  ];
+
+  filterSelect = createSelect();
+  filterSelect.parent(document.querySelector('main'));
+  filterSelect.position(10, drawHeight + 5);
+  filterSelect.option('All Types');
+  filterSelect.option('U.S. Law');
+  filterSelect.option('International Treaty');
+  filterSelect.option('Economic Mechanism');
+  filterSelect.changed(() => { selectedPolicy = -1; });
+
+  quizToggle = createCheckbox(' Quiz Mode', false);
+  quizToggle.parent(document.querySelector('main'));
+  quizToggle.position(200, drawHeight + 5);
+  quizToggle.changed(() => {
+    quizMode = quizToggle.checked();
+    revealedInQuiz = {};
+    selectedPolicy = -1;
+  });
+
+  describe('Conservation Policy Timeline: scroll and click to explore policies', LABEL);
+}
+
+function getFilteredPolicies() {
+  let filter = filterSelect.value();
+  if (filter === 'All Types') return policies;
+  if (filter === 'U.S. Law') return policies.filter(p => p.type === 'US');
+  if (filter === 'International Treaty') return policies.filter(p => p.type === 'International');
+  if (filter === 'Economic Mechanism') return policies.filter(p => p.type === 'Economic');
+  return policies;
+}
+
+function draw() {
+  updateCanvasSize();
+  background(245);
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Title
+  noStroke();
+  fill('#264653');
+  textSize(16);
+  textAlign(CENTER, TOP);
+  text('Conservation Policy Timeline', canvasWidth / 2, 6);
+
+  let filtered = getFilteredPolicies();
+
+  // Timeline parameters
+  let tlY = 100;
+  let tlLeft = margin + 30;
+  let nodeSpacing = max(80, (canvasWidth - 2 * margin - 60) / max(1, filtered.length - 1));
+  let totalW = nodeSpacing * (filtered.length - 1);
+
+  // Clamp scroll
+  let maxScroll = max(0, totalW - (canvasWidth - 2 * margin - 60));
+  scrollOffset = constrain(scrollOffset, 0, maxScroll);
+
+  // Species decline trend line (background)
+  stroke('#e63946');
+  strokeWeight(1);
+  noFill();
+  beginShape();
+  for (let i = 0; i < filtered.length; i++) {
+    let x = tlLeft + i * nodeSpacing - scrollOffset;
+    let declineY = map(i, 0, filtered.length - 1, tlY - 40, tlY - 15);
+    vertex(x, declineY);
+  }
+  endShape();
+  noStroke();
+  fill('#e63946');
+  textSize(9);
+  textAlign(LEFT, BOTTOM);
+  text('Species decline trend', tlLeft + 5, tlY - 42);
+
+  // Timeline line
+  stroke('#264653');
+  strokeWeight(2);
+  line(tlLeft - 10 - scrollOffset * 0, tlY, tlLeft + totalW - scrollOffset + 10, tlY);
+
+  // Year labels and nodes
+  for (let i = 0; i < filtered.length; i++) {
+    let p = filtered[i];
+    let x = tlLeft + i * nodeSpacing - scrollOffset;
+
+    if (x < -20 || x > canvasWidth + 20) continue;
+
+    // Vertical tick
+    stroke(p.color);
+    strokeWeight(2);
+    line(x, tlY - 8, x, tlY + 8);
+
+    // Node circle
+    let isSelected = (selectedPolicy === i);
+    fill(isSelected ? '#264653' : p.color);
+    noStroke();
+    circle(x, tlY, isSelected ? 18 : 12);
+
+    // Year label
+    fill('#264653');
+    textSize(10);
+    textAlign(CENTER, TOP);
+    text(p.year, x, tlY + 14);
+
+    // Name label (hidden in quiz mode unless revealed)
+    if (!quizMode || revealedInQuiz[i]) {
+      textSize(9);
+      textAlign(CENTER, BOTTOM);
+      push();
+      translate(x, tlY - 15);
+      rotate(-PI / 6);
+      text(p.name, 0, 0);
+      pop();
+    } else {
+      textSize(9);
+      textAlign(CENTER, BOTTOM);
+      fill('#adb5bd');
+      text('???', x, tlY - 15);
+    }
+  }
+
+  // Legend
+  noStroke();
+  let legendY = 30;
+  let types = [
+    { label: 'U.S. Law', col: '#457b9d' },
+    { label: 'International', col: '#2a9d8f' },
+    { label: 'Economic', col: '#f4a261' }
+  ];
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  let lx = margin;
+  for (let t of types) {
+    fill(t.col);
+    circle(lx + 6, legendY, 10);
+    fill('#264653');
+    text(t.label, lx + 15, legendY);
+    lx += textWidth(t.label) + 30;
+  }
+
+  // Detail panel
+  if (selectedPolicy >= 0 && selectedPolicy < filtered.length) {
+    let p = filtered[selectedPolicy];
+    let panelY = 140;
+    let panelH = drawHeight - panelY - 10;
+
+    fill(255, 255, 255, 240);
+    stroke('silver');
+    strokeWeight(1);
+    rect(margin, panelY, canvasWidth - 2 * margin, panelH, 8);
+
+    noStroke();
+    fill(p.color);
+    textSize(18);
+    textAlign(LEFT, TOP);
+    text(p.name + ' (' + p.year + ')', margin + 15, panelY + 12);
+
+    fill('#6c757d');
+    textSize(11);
+    text('Type: ' + (p.type === 'US' ? 'U.S. Law' : p.type === 'International' ? 'International Treaty' : 'Economic Mechanism'), margin + 15, panelY + 38);
+
+    fill('#264653');
+    textSize(13);
+    text('Key Provisions:', margin + 15, panelY + 60);
+    textSize(12);
+    text(p.provisions, margin + 15, panelY + 78);
+
+    text('HIPPO Threats Addressed:', margin + 15, panelY + 105);
+    textSize(12);
+    fill('#2d6a4f');
+    text(p.threats.join(', '), margin + 15, panelY + 123);
+
+    // Effectiveness stars
+    fill('#264653');
+    textSize(13);
+    text('Effectiveness:', margin + 15, panelY + 150);
+    textSize(16);
+    let starX = margin + 130;
+    for (let s = 0; s < 5; s++) {
+      fill(s < p.effectiveness ? '#f4a261' : '#ddd');
+      text('\u2605', starX + s * 20, panelY + 148);
+    }
+  } else {
+    // Instructions
+    noStroke();
+    fill('#6c757d');
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Click a policy node on the timeline to see details', canvasWidth / 2, 250);
+    textSize(11);
+    text('Drag left/right to scroll the timeline', canvasWidth / 2, 275);
+  }
+
+  // Control area
+  fill('white');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, drawHeight, canvasWidth, controlHeight);
+}
+
+function mousePressed() {
+  let filtered = getFilteredPolicies();
+  let tlY = 100;
+  let tlLeft = margin + 30;
+  let nodeSpacing = max(80, (canvasWidth - 2 * margin - 60) / max(1, filtered.length - 1));
+
+  for (let i = 0; i < filtered.length; i++) {
+    let x = tlLeft + i * nodeSpacing - scrollOffset;
+    if (dist(mouseX, mouseY, x, tlY) < 15) {
+      if (quizMode) {
+        revealedInQuiz[i] = true;
+      }
+      selectedPolicy = (selectedPolicy === i) ? -1 : i;
+      return;
+    }
+  }
+}
+
+let lastMouseX = 0;
+let isDragging = false;
+
+function mousePressed() {
+  lastMouseX = mouseX;
+  isDragging = false;
+
+  let filtered = getFilteredPolicies();
+  let tlY = 100;
+  let tlLeft = margin + 30;
+  let nodeSpacing = max(80, (canvasWidth - 2 * margin - 60) / max(1, filtered.length - 1));
+
+  for (let i = 0; i < filtered.length; i++) {
+    let x = tlLeft + i * nodeSpacing - scrollOffset;
+    if (dist(mouseX, mouseY, x, tlY) < 15) {
+      if (quizMode) revealedInQuiz[i] = true;
+      selectedPolicy = (selectedPolicy === i) ? -1 : i;
+      return;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (mouseY < drawHeight) {
+    scrollOffset -= (mouseX - lastMouseX);
+    lastMouseX = mouseX;
+    isDragging = true;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

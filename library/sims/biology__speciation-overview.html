@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Speciation Pathways Comparison using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Speciation Pathways Comparison
+// Side-by-side step-through of allopatric vs sympatric speciation
+
+let canvasWidth = 800;
+let drawHeight = 380;
+let controlHeight = 100;
+let canvasHeight = drawHeight + controlHeight;
+
+let currentStep = 0;
+const totalSteps = 5;
+let quizMode = false;
+let quizAnswer = null;
+let quizRevealed = false;
+
+const alloSteps = [
+    {
+        title: 'Ancestral Population',
+        desc: 'A single interbreeding population of organisms occupies a continuous habitat. Gene flow occurs freely among all individuals.',
+        geneFlow: true
+    },
+    {
+        title: 'Geographic Barrier Forms',
+        desc: 'A geographic barrier (mountain range, river, glacier, or ocean) divides the population into two isolated groups. Gene flow is cut off.',
+        geneFlow: false
+    },
+    {
+        title: 'Independent Evolution',
+        desc: 'The two isolated populations experience different selective pressures, genetic drift, and mutations. Over many generations, they diverge genetically and phenotypically.',
+        geneFlow: false
+    },
+    {
+        title: 'Reproductive Isolation Develops',
+        desc: 'The populations accumulate enough genetic differences that they can no longer interbreed successfully — prezygotic or postzygotic barriers have evolved.',
+        geneFlow: false
+    },
+    {
+        title: 'Two Distinct Species',
+        desc: 'Even if the geographic barrier is removed, the populations cannot interbreed. They are now separate species. Example: Darwin\'s finches on the Galapagos Islands.',
+        geneFlow: false
+    }
+];
+
+const symSteps = [
+    {
+        title: 'Single Population',
+        desc: 'A single population occupies one habitat with no geographic separation. All individuals can potentially interbreed.',
+        geneFlow: true
+    },
+    {
+        title: 'Polyploidy or Niche Shift',
+        desc: 'A chromosomal change (polyploidy in plants) or behavioral/ecological shift creates a subgroup that cannot breed with the original population, despite living in the same area.',
+        geneFlow: false
+    },
+    {
+        title: 'Assortative Mating',
+        desc: 'Individuals with the new trait preferentially mate with each other (assortative mating). Two gene pools begin forming within the same geographic area.',
+        geneFlow: false
+    },
+    {
+        title: 'Divergence Within Habitat',
+        desc: 'The two groups specialize on different resources or microhabitats. Natural selection reinforces the differences, widening the gap between them.',
+        geneFlow: false
+    },
+    {
+        title: 'Two Sympatric Species',
+        desc: 'Reproductive isolation is complete. Two species coexist in the same habitat. Example: cichlid fishes in African lakes, apple maggot flies.',
+        geneFlow: false
+    }
+];
+
+function updateCanvasSize() {
+    let container = select('main');
+    if (container) {
+        let w = container.elt.getBoundingClientRect().width;
+        if (w > 50) canvasWidth = w;
+    }
+}
+
+function setup() {
+    updateCanvasSize();
+    let canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent(select('main'));
+    textFont('Arial');
+}
+
+function draw() {
+    background('#F0F8FF');
+
+    let halfW = canvasWidth / 2 - 8;
+
+    // Panel titles
+    fill(60);
+    noStroke();
+    textSize(13);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('Allopatric Speciation', halfW / 2 + 4, 6);
+    text('Sympatric Speciation', canvasWidth / 2 + halfW / 2 + 4, 6);
+    textStyle(NORMAL);
+
+    // Divider line
+    stroke(180);
+    strokeWeight(1);
+    line(canvasWidth / 2, 4, canvasWidth / 2, drawHeight);
+
+    // Draw both panels
+    drawPanel(8, 24, halfW - 4, drawHeight * 0.55, alloSteps[currentStep], 'allo');
+    drawPanel(canvasWidth / 2 + 8, 24, halfW - 4, drawHeight * 0.55, symSteps[currentStep], 'sym');
+
+    // Description panels
+    drawDescPanel(8, drawHeight * 0.6, halfW - 4, drawHeight * 0.38, alloSteps[currentStep], [52, 152, 219]);
+    drawDescPanel(canvasWidth / 2 + 8, drawHeight * 0.6, halfW - 4, drawHeight * 0.38, symSteps[currentStep], [155, 89, 182]);
+
+    // Quiz overlay
+    if (quizMode && !quizRevealed) {
+        drawQuizOverlay();
+    }
+
+    drawControls();
+}
+
+function drawPanel(px, py, pw, ph, stepData, type) {
+    // Background
+    fill(type === 'allo' ? [240, 248, 255] : [248, 240, 255]);
+    stroke(200);
+    strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    let cx = px + pw / 2;
+    let cy = py + ph / 2;
+    let r = min(pw, ph) * 0.18;
+
+    if (type === 'allo') {
+        drawAlloScene(px, py, pw, ph, currentStep, r);
+    } else {
+        drawSymScene(px, py, pw, ph, currentStep, r);
+    }
+
+    // Gene flow indicator
+    let gfY = py + ph - 20;
+    fill(stepData.geneFlow ? [46, 204, 113] : [231, 76, 60]);
+    noStroke();
+    textSize(10);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text(stepData.geneFlow ? '✓ Gene flow' : '✗ No gene flow', cx, gfY);
+    textStyle(NORMAL);
+}
+
+function drawAlloScene(px, py, pw, ph, step, r) {
+    let cx = px + pw / 2;
+    let cy = py + ph * 0.45;
+    let popR = r * 1.2;
+
+    if (step === 0) {
+        // Single population
+        drawPopulation(cx, cy, popR, [52, 152, 219], [52, 152, 219], 12);
+        fill(60);
+        noStroke();
+        textSize(9);
+        textAlign(CENTER, TOP);
+        text('Single population', cx, cy + popR + 5);
+    } else if (step === 1) {
+        // Barrier forming
+        drawPopulation(cx - popR * 1.2, cy, popR * 0.8, [52, 152, 219], [52, 152, 219], 6);
+        drawPopulation(cx + popR * 1.2, cy, popR * 0.8, [52, 152, 219], [52, 152, 219], 6);
+
+        // Mountain barrier
+        fill(139, 119, 101);
+        stroke(100, 80, 60);
+        strokeWeight(2);
+        triangle(cx, cy - popR, cx - popR * 0.5, cy + popR * 0.5, cx + popR * 0.5, cy + popR * 0.5);
+        // Snow cap
+        fill(240);
+        noStroke();
+        triangle(cx, cy - popR, cx - popR * 0.15, cy - popR * 0.5, cx + popR * 0.15, cy - popR * 0.5);
+
+        fill(100, 80, 60);
+        textSize(8);
+        textAlign(CENTER, TOP);
+        text('Barrier', cx, cy + popR * 0.6);
+    } else if (step === 2) {
+        // Diverging populations
+        drawPopulation(cx - popR * 1.4, cy, popR * 0.8, [52, 152, 219], [41, 128, 185], 6);
+        drawPopulation(cx + popR * 1.4, cy, popR * 0.8, [52, 152, 219], [230, 126, 34], 6);
+
+        // Barrier
+        fill(139, 119, 101, 180);
+        noStroke();
+        rect(cx - 4, cy - popR, 8, popR * 2, 2);
+
+        // Divergence arrows
+        stroke(200, 100, 100);
+        strokeWeight(1.5);
+        drawArrow(cx - popR * 0.5, cy - popR * 0.8, cx - popR * 1.2, cy - popR * 0.5);
+        drawArrow(cx + popR * 0.5, cy - popR * 0.8, cx + popR * 1.2, cy - popR * 0.5);
+
+        fill(80);
+        noStroke();
+        textSize(8);
+        text('Pop A', cx - popR * 1.4, cy + popR + 5);
+        text('Pop B', cx + popR * 1.4, cy + popR + 5);
+    } else if (step === 3) {
+        // Reproductively isolated
+        drawPopulation(cx - popR * 1.4, cy, popR * 0.8, [41, 128, 185], [41, 128, 185], 6);
+        drawPopulation(cx + popR * 1.4, cy, popR * 0.8, [230, 126, 34], [230, 126, 34], 6);
+
+        // X between them
+        fill(231, 76, 60);
+        noStroke();
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        text('✗', cx, cy);
+
+        fill(80);
+        textSize(8);
+        textAlign(CENTER, TOP);
+        text('Cannot\ninterbreed', cx, cy + 14);
+    } else {
+        // Two species
+        drawPopulation(cx - popR * 1.4, cy, popR * 0.9, [41, 128, 185], [41, 128, 185], 7);
+        drawPopulation(cx + popR * 1.4, cy, popR * 0.9, [230, 126, 34], [230, 126, 34], 7);
+
+        fill(41, 128, 185);
+        noStroke();
+        textSize(10);
+        textStyle(BOLD);
+        textAlign(CENTER, TOP);
+        text('Species A', cx - popR * 1.4, cy + popR + 5);
+        fill(230, 126, 34);
+        text('Species B', cx + popR * 1.4, cy + popR + 5);
+        textStyle(NORMAL);
+    }
+}
+
+function drawSymScene(px, py, pw, ph, step, r) {
+    let cx = px + pw / 2;
+    let cy = py + ph * 0.45;
+    let popR = r * 1.2;
+
+    if (step === 0) {
+        drawPopulation(cx, cy, popR, [155, 89, 182], [155, 89, 182], 12);
+        fill(60);
+        noStroke();
+        textSize(9);
+        textAlign(CENTER, TOP);
+        text('Single population', cx, cy + popR + 5);
+    } else if (step === 1) {
+        // Mixed population with some polyploid individuals
+        drawMixedPopulation(cx, cy, popR, 0.3);
+
+        fill(80);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, TOP);
+        text('Polyploid mutants\nappear (larger)', cx, cy + popR + 5);
+    } else if (step === 2) {
+        // Assortative mating - two clusters within one circle
+        drawMixedPopulation(cx, cy, popR, 0.4);
+
+        // Mating preference arrows
+        stroke(200, 100, 100, 150);
+        strokeWeight(1);
+        drawingContext.setLineDash([3, 3]);
+        ellipse(cx - popR * 0.4, cy, popR * 0.9, popR * 0.9);
+        ellipse(cx + popR * 0.4, cy, popR * 0.9, popR * 0.9);
+        drawingContext.setLineDash([]);
+
+        fill(80);
+        noStroke();
+        textSize(8);
+        textAlign(CENTER, TOP);
+        text('Like mates\nwith like', cx, cy + popR + 5);
+    } else if (step === 3) {
+        // Two groups specializing
+        drawPopulation(cx - popR * 0.8, cy, popR * 0.7, [155, 89, 182], [155, 89, 182], 5);
+        drawPopulation(cx + popR * 0.8, cy, popR * 0.7, [46, 204, 113], [46, 204, 113], 5);
+
+        // Same habitat indicator
+        noFill();
+        stroke(180);
+        strokeWeight(1);
+        drawingContext.setLineDash([4, 4]);
+        ellipse(cx, cy, popR * 3.2, popR * 2.2);
+        drawingContext.setLineDash([]);
+
+        fill(120);
+        noStroke();
+        textSize(7);
+        textAlign(CENTER, BOTTOM);
+        text('Same habitat', cx, cy - popR * 1.2);
+
+        fill(80);
+        textSize(8);
+        textAlign(CENTER, TOP);
+        text('Resource\nspecialization', cx, cy + popR + 5);
+    } else {
+        // Two sympatric species
+        drawPopulation(cx - popR * 0.9, cy, popR * 0.8, [155, 89, 182], [155, 89, 182], 6);
+        drawPopulation(cx + popR * 0.9, cy, popR * 0.8, [46, 204, 113], [46, 204, 113], 6);
+
+        // Same habitat
+        noFill();
+        stroke(180);
+        strokeWeight(1);
+        drawingContext.setLineDash([4, 4]);
+        ellipse(cx, cy, popR * 3.5, popR * 2.4);
+        drawingContext.setLineDash([]);
+
+        fill(155, 89, 182);
+        noStroke();
+        textSize(10);
+        textStyle(BOLD);
+        textAlign(CENTER, TOP);
+        text('Species A', cx - popR * 0.9, cy + popR + 5);
+        fill(46, 204, 113);
+        text('Species B', cx + popR * 0.9, cy + popR + 5);
+        textStyle(NORMAL);
+    }
+}
+
+function drawPopulation(cx, cy, r, innerCol, outerCol, n) {
+    // Draw cluster of individuals as small circles
+    fill(outerCol[0], outerCol[1], outerCol[2], 40);
+    stroke(outerCol[0], outerCol[1], outerCol[2], 80);
+    strokeWeight(1);
+    ellipse(cx, cy, r * 2, r * 2);
+
+    // Individual dots
+    fill(innerCol[0], innerCol[1], innerCol[2]);
+    noStroke();
+    let dotR = max(3, r * 0.15);
+    for (let i = 0; i < n; i++) {
+        let angle = (i / n) * TWO_PI + 0.3;
+        let dist = r * 0.3 + (i % 3) * r * 0.2;
+        let dx = cx + cos(angle) * dist;
+        let dy = cy + sin(angle) * dist;
+        ellipse(dx, dy, dotR * 2, dotR * 2);
+    }
+}
+
+function drawMixedPopulation(cx, cy, r, polyFraction) {
+    // Background circle
+    fill(155, 89, 182, 30);
+    stroke(155, 89, 182, 60);
+    strokeWeight(1);
+    ellipse(cx, cy, r * 2, r * 2);
+
+    let n = 14;
+    for (let i = 0; i < n; i++) {
+        let angle = (i / n) * TWO_PI + 0.5;
+        let dist = r * 0.3 + (i % 3) * r * 0.2;
+        let dx = cx + cos(angle) * dist;
+        let dy = cy + sin(angle) * dist;
+
+        let isPoly = i < n * polyFraction;
+        if (isPoly) {
+            fill(46, 204, 113);
+            noStroke();
+            ellipse(dx, dy, 10, 10); // Larger = polyploid
+        } else {
+            fill(155, 89, 182);
+            noStroke();
+            ellipse(dx, dy, 6, 6);
+        }
+    }
+}
+
+function drawArrow(x1, y1, x2, y2) {
+    line(x1, y1, x2, y2);
+    let angle = atan2(y2 - y1, x2 - x1);
+    let aLen = 6;
+    line(x2, y2, x2 - aLen * cos(angle - 0.4), y2 - aLen * sin(angle - 0.4));
+    line(x2, y2, x2 - aLen * cos(angle + 0.4), y2 - aLen * sin(angle + 0.4));
+}
+
+function drawDescPanel(px, py, pw, ph, stepData, col) {
+    fill(255, 252, 248);
+    stroke(200);
+    strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    // Step title
+    fill(col[0], col[1], col[2]);
+    noStroke();
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text(stepData.title, px + 8, py + 6);
+    textStyle(NORMAL);
+
+    // Description (word wrap)
+    fill(60);
+    textSize(10);
+    textLeading(14);
+    let words = stepData.desc.split(' ');
+    let line = '';
+    let ly = py + 24;
+    let maxW = pw - 16;
+    for (let w of words) {
+        let test = line + w + ' ';
+        if (textWidth(test) > maxW) {
+            text(line, px + 8, ly);
+            line = w + ' ';
+            ly += 14;
+        } else {
+            line = test;
+        }
+    }
+    text(line, px + 8, ly);
+}
+
+function drawQuizOverlay() {
+    // Gene flow quiz for current step
+    let panelW = 260;
+    let panelH = 80;
+    let panelX = canvasWidth / 2 - panelW / 2;
+    let panelY = drawHeight * 0.35;
+
+    fill(240, 240, 255, 240);
+    stroke(100, 100, 200);
+    strokeWeight(2);
+    rect(panelX, panelY, panelW, panelH, 8);
+
+    fill(60);
+    noStroke();
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('Is gene flow still occurring?', panelX + panelW / 2, panelY + 18);
+    textStyle(NORMAL);
+
+    // Yes/No buttons
+    let btnW = 60;
+    let btnH = 26;
+    let btnY = panelY + 38;
+
+    fill(46, 204, 113);
+    stroke(150);
+    strokeWeight(1);
+    rect(panelX + panelW / 2 - btnW - 10, btnY, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    text('Yes', panelX + panelW / 2 - btnW / 2 - 10, btnY + btnH / 2);
+
+    fill(231, 76, 60);
+    stroke(150);
+    strokeWeight(1);
+    rect(panelX + panelW / 2 + 10, btnY, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    text('No', panelX + panelW / 2 + 10 + btnW / 2, btnY + btnH / 2);
+
+    if (quizAnswer !== null) {
+        let correct = quizAnswer === alloSteps[currentStep].geneFlow;
+        fill(correct ? [46, 204, 113] : [231, 76, 60]);
+        textSize(11);
+        textStyle(BOLD);
+        text(correct ? '✓ Correct!' : '✗ Check the step description', panelX + panelW / 2, btnY + btnH + 14);
+        textStyle(NORMAL);
+    }
+}
+
+function drawControls() {
+    let cy = drawHeight + 8;
+
+    // Step counter
+    fill(60);
+    noStroke();
+    textSize(13);
+    textAlign(LEFT, CENTER);
+    text(`Step ${currentStep + 1} of ${totalSteps}`, 15, cy + 15);
+
+    let btnW = 80;
+    let btnH = 30;
+
+    // Previous
+    let prevX = canvasWidth * 0.22;
+    fill(currentStep > 0 ? [100, 150, 220] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(prevX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('◀ Previous', prevX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Next
+    let nextX = prevX + btnW + 10;
+    fill(currentStep < totalSteps - 1 ? [46, 204, 113] : [180, 180, 180]);
+    stroke(80);
+    strokeWeight(1);
+    rect(nextX, cy + 2, btnW, btnH, 6);
+    fill(255);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    text('Next ▶', nextX + btnW / 2, cy + 2 + btnH / 2);
+
+    // Quiz toggle
+    let qx = nextX + btnW + 20;
+    fill(quizMode ? [46, 204, 113] : [200, 200, 200]);
+    stroke(80);
+    strokeWeight(1);
+    rect(qx, cy + 2, 95, btnH, 6);
+    fill(quizMode ? 255 : 60);
+    noStroke();
+    textSize(11);
+    textAlign(CENTER, CENTER);
+    text(quizMode ? '✓ Quiz Mode' : 'Quiz Mode', qx + 47, cy + 2 + btnH / 2);
+
+    // Progress dots
+    let dotY = cy + 50;
+    let dotSpacing = 22;
+    let dotsX = canvasWidth / 2 - (totalSteps - 1) * dotSpacing / 2;
+
+    for (let i = 0; i < totalSteps; i++) {
+        let dx = dotsX + i * dotSpacing;
+        if (i === currentStep) {
+            fill(52, 152, 219);
+            noStroke();
+            ellipse(dx, dotY, 14, 14);
+            fill(255);
+            textSize(9);
+            textAlign(CENTER, CENTER);
+            text(i + 1, dx, dotY);
+        } else if (i < currentStep) {
+            fill(46, 204, 113);
+            noStroke();
+            ellipse(dx, dotY, 10, 10);
+        } else {
+            fill(200);
+            noStroke();
+            ellipse(dx, dotY, 10, 10);
+        }
+    }
+
+    // Key difference note
+    fill(100);
+    textSize(9);
+    textAlign(CENTER, CENTER);
+    let note = currentStep === 0 ? 'Both pathways start with a single interbreeding population.' :
+               currentStep === 1 ? 'Key difference: physical barrier (allo) vs. genetic change (sym).' :
+               currentStep === 4 ? 'Result is the same: two reproductively isolated species.' :
+               'Compare: geographic isolation vs. same-habitat divergence.';
+    text(note, canvasWidth / 2, dotY + 18);
+}
+
+function mousePressed() {
+    let cy = drawHeight + 8;
+    let btnH = 30;
+    let btnW = 80;
+
+    let prevX = canvasWidth * 0.22;
+    let nextX = prevX + btnW + 10;
+    let qx = nextX + btnW + 20;
+
+    // Previous
+    if (mouseX >= prevX && mouseX <= prevX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep > 0) {
+            currentStep--;
+            resetQuiz();
+        }
+    }
+
+    // Next
+    if (mouseX >= nextX && mouseX <= nextX + btnW &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        if (currentStep < totalSteps - 1) {
+            currentStep++;
+            resetQuiz();
+        }
+    }
+
+    // Quiz toggle
+    if (mouseX >= qx && mouseX <= qx + 95 &&
+        mouseY >= cy + 2 && mouseY <= cy + 2 + btnH) {
+        quizMode = !quizMode;
+        resetQuiz();
+    }
+
+    // Quiz answer buttons
+    if (quizMode && !quizRevealed) {
+        let panelW = 260;
+        let panelX = canvasWidth / 2 - panelW / 2;
+        let panelY = drawHeight * 0.35;
+        let qBtnW = 60;
+        let qBtnH = 26;
+        let qBtnY = panelY + 38;
+
+        // Yes
+        if (mouseX >= panelX + panelW / 2 - qBtnW - 10 && mouseX <= panelX + panelW / 2 - 10 &&
+            mouseY >= qBtnY && mouseY <= qBtnY + qBtnH) {
+            quizAnswer = true;
+            setTimeout(() => { quizRevealed = true; }, 1500);
+        }
+
+        // No
+        if (mouseX >= panelX + panelW / 2 + 10 && mouseX <= panelX + panelW / 2 + 10 + qBtnW &&
+            mouseY >= qBtnY && mouseY <= qBtnY + qBtnH) {
+            quizAnswer = false;
+            setTimeout(() => { quizRevealed = true; }, 1500);
+        }
+    }
+}
+
+function resetQuiz() {
+    quizAnswer = null;
+    quizRevealed = false;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

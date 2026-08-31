@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltage Divider Calculator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+    main { display: block; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<main>
+<script>
+// ── Voltage Divider Calculator MicroSim ──────────────────────────────────────
+// Dual mode: A) Find Vout  B) Find R2 for target Vout
+// Self-contained: no circuit-lib dependency
+
+const CW = 720, CH = 540;
+const SCHEM_W = 360;
+const PANEL_X = SCHEM_W;
+const CTRL_Y  = 390;
+
+const C_BG     = [245, 248, 252];
+const C_CTRL   = [225, 230, 238];
+const C_PANEL  = [238, 242, 250];
+const C_ACCENT = [0,   100, 180];
+const C_WARN   = [200,  50,  30];
+const C_OK     = [30,  140,  60];
+const C_HL     = [255, 200,   0];
+
+let mode = 'findVout';
+let isAnimating = false;
+let animTime = 0;
+
+let tVin = map(12, 1, 24, 0, 1);
+let tR1  = invLogR(10000);
+let tR2  = invLogR(10000);
+let tVt  = 0.5;
+
+let Vin, R1v, R2v, Vout, ratio, R2_required, Vtarget, warningMsg;
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+function logR(t)    { return Math.pow(10, 2 + t * 3); }
+function invLogR(R) { return (Math.log10(R) - 2) / 3; }
+function fmtR(r)    { return r >= 1000 ? (r/1000).toFixed(r>=10000?0:1)+'kΩ' : Math.round(r)+'Ω'; }
+function fmtV(v)    { return v.toFixed(2)+'V'; }
+
+// ── slider geometry ───────────────────────────────────────────────────────────
+const SLX = PANEL_X + 158;
+const SLW = 140;
+const SLH = 10;
+const SLR = 8;
+const SL_VIN = CTRL_Y + 22;
+const SL_R1  = CTRL_Y + 56;
+const SL_R2  = CTRL_Y + 90;
+const SL_VT  = CTRL_Y + 124;
+
+const BM_X = PANEL_X + 8,  BM_Y = CTRL_Y + 158, BM_W = 200, BM_H = 28;
+const BA_X = PANEL_X + 8,  BA_Y = CTRL_Y + 194, BA_W = 92,  BA_H = 26;
+const BR_X = PANEL_X + 108,BR_Y = CTRL_Y + 194, BR_W = 92,  BR_H = 26;
+
+let dragging = null;
+
+// ── p5 ────────────────────────────────────────────────────────────────────────
+function setup() {
+  createCanvas(CW, CH).parent('main');
+  textFont('Arial');
+}
+
+function draw() {
+  if (isAnimating) animTime += deltaTime;
+  recalc();
+  background(...C_BG);
+  drawSchematic();
+  drawCalcPanel();
+  drawSliders();
+  drawButtons();
+}
+
+function recalc() {
+  Vin     = map(tVin, 0, 1, 1, 24);
+  R1v     = logR(tR1);
+  R2v     = logR(tR2);
+  Vtarget = map(tVt, 0, 1, 0.1, Vin * 0.99);
+  if (mode === 'findVout') {
+    Vout        = Vin * R2v / (R1v + R2v);
+    ratio       = R2v / (R1v + R2v);
+    R2_required = null;
+    warningMsg  = null;
+  } else {
+    Vout        = Vtarget;
+    ratio       = Vtarget / Vin;
+    R2_required = R1v * Vtarget / (Vin - Vtarget);
+    warningMsg  = R2_required < 10 ? 'R2 too small (< 10Ω)' :
+                  R2_required > 10e6 ? 'R2 too large (> 10MΩ)' : null;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// DRAWING PRIMITIVES
+// ════════════════════════════════════════════════════════════════════════════
+
+function drawBatterySchematic(cx, cy, h) {
+  // 3-cell vertical battery, + at top
+  const lw = 3;
+  const cellSpacing = h / 3;
+  const longW = 28, shortW = 16;
+
+  // White background to erase underlying wire
+  noStroke(); fill(255);
+  rect(cx - 20, cy - h/2, 40, h);
+
+  stroke(0); strokeWeight(lw);
+  // Top lead
+  line(cx, cy - h/2 - 8, cx, cy - h/2);
+  // Bottom lead
+  line(cx, cy + h/2, cx, cy + h/2 + 8);
+
+  // 3 cells (alternating long/short plates)
+  for (let i = 0; i < 3; i++) {
+    const py = cy - h/2 + i * cellSpacing + cellSpacing/2;
+    if (i % 2 === 0) {
+      // long plate (positive)
+      strokeWeight(lw);
+      line(cx - longW/2, py, cx + longW/2, py);
+    } else {
+      // short plate (negative)
+      strokeWeight(lw * 0.6);
+      line(cx - shortW/2, py, cx + shortW/2, py);
+    }
+    // Connector between plates
+    if (i < 2) {
+      strokeWeight(lw * 0.7);
+      line(cx, py, cx, cy - h/2 + (i+1)*cellSpacing + cellSpacing/2);
+    }
+  }
+}
+
+function drawResistorV(x, y, w, h, label, labelRight) {
+  // Vertical zigzag resistor centered at (x, y), size w×h
+  const peaks = 6;
+  const bodyTop = y - h/2;
+  const bodyBot = y + h/2;
+  const amplitude = w * 0.38;
+  const lw = 2.5;
+
+  // White background rect to mask wire behind
+  noStroke(); fill(255);
+  rect(x - w/2 - 1, bodyTop - 2, w + 2, h + 4);
+
+  stroke(0); strokeWeight(lw);
+  // Lead wires
+  line(x, y - h/2 - 12, x, bodyTop);
+  line(x, bodyBot, x, y + h/2 + 12);
+
+  // Zigzag body
+  beginShape();
+  noFill();
+  vertex(x, bodyTop);
+  const segH = h / peaks;
+  for (let i = 0; i < peaks; i++) {
+    const py1 = bodyTop + i * segH + segH / 2;
+    const px1 = (i % 2 === 0) ? x + amplitude : x - amplitude;
+    vertex(px1, py1);
+    vertex(x, bodyTop + (i + 1) * segH);
+  }
+  endShape();
+
+  // Label
+  fill(40); noStroke(); textSize(11); textAlign(labelRight ? LEFT : RIGHT);
+  text(label, labelRight ? x + w/2 + 4 : x - w/2 - 4, y - 4);
+}
+
+function drawGroundSymbol(cx, y) {
+  stroke(0); strokeWeight(2);
+  line(cx - 14, y,    cx + 14, y);
+  line(cx -  9, y+6,  cx +  9, y+6);
+  line(cx -  4, y+12, cx +  4, y+12);
+}
+
+function animWire(x1, y1, x2, y2, spd) {
+  const dotSpacing = 20;
+  const speed = spd || 0.06;
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.sqrt(dx*dx + dy*dy);
+  const nx = dx/len, ny = dy/len;
+  const offset = (animTime * speed * 60 / 1000) % dotSpacing;
+
+  stroke(0); strokeWeight(2.5);
+  line(x1, y1, x2, y2);
+
+  noStroke(); fill(220, 30, 30);
+  for (let d = offset; d < len; d += dotSpacing) {
+    circle(x1 + nx*d, y1 + ny*d, 5);
+  }
+}
+
+function staticWire(x1, y1, x2, y2) {
+  stroke(0); strokeWeight(2.5); line(x1, y1, x2, y2);
+}
+
+function wire(x1, y1, x2, y2) {
+  if (isAnimating) animWire(x1, y1, x2, y2);
+  else staticWire(x1, y1, x2, y2);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SCHEMATIC PANEL
+// ════════════════════════════════════════════════════════════════════════════
+function drawSchematic() {
+  fill(255); noStroke(); rect(0, 0, SCHEM_W, CH);
+
+  fill(30); noStroke(); textSize(14); textAlign(CENTER);
+  text('Voltage Divider', SCHEM_W/2, 24);
+
+  const MX   = SCHEM_W/2 - 10;
+  const TOP  = 52;
+  const BOT  = CTRL_Y - 18;
+  const MID  = (TOP + BOT) / 2;
+  const BATX = MX - 80;
+  const WIRX = MX + 50;
+  const BATH = 70;
+
+  const R_H   = 64;
+  const R1_CY = (TOP + MID) / 2;
+  const R2_CY = (MID + BOT) / 2;
+
+  // Battery
+  drawBatterySchematic(BATX, MID, BATH);
+
+  // + / − labels
+  fill(180, 30, 30); noStroke(); textSize(13); textAlign(LEFT);
+  text('+', BATX + 20, MID - BATH/2 - 2);
+  fill(30, 30, 180);
+  text('−', BATX + 20, MID + BATH/2 + 14);
+
+  // Vin label
+  fill(...C_ACCENT); textSize(11); textAlign(CENTER);
+  text('Vin = '+fmtV(Vin), BATX, MID - BATH/2 - 18);
+
+  // Top wire: battery top → top rail → WIRX top
+  wire(BATX, MID - BATH/2 - 8, BATX, TOP);
+  wire(BATX, TOP, WIRX, TOP);
+  wire(WIRX, TOP, WIRX, R1_CY - R_H/2 - 12);
+
+  // R1
+  drawResistorV(WIRX, R1_CY, 28, R_H, 'R1', false);
+  fill(60); noStroke(); textSize(10); textAlign(RIGHT);
+  text(fmtR(R1v), WIRX - 18, R1_CY + 4);
+
+  // Wire between R1 bot and R2 top (through MID tap)
+  wire(WIRX, R1_CY + R_H/2 + 12, WIRX, R2_CY - R_H/2 - 12);
+
+  // Output tap at MID
+  const TAP_X = WIRX + 60;
+  wire(WIRX, MID, TAP_X, MID);
+
+  // Tap node highlight
+  noFill(); stroke(...C_HL); strokeWeight(3);
+  circle(WIRX, MID, 14);
+
+  // Vout label
+  fill(mode === 'findVout' ? color(...C_OK) : color(...C_ACCENT));
+  noStroke(); textSize(12); textAlign(LEFT);
+  text('Vout = '+fmtV(Vout), TAP_X + 6, MID + 5);
+
+  // R2
+  const r2label = mode === 'findVout' ? 'R2' : 'R2?';
+  drawResistorV(WIRX, R2_CY, 28, R_H, r2label, false);
+  fill(60); noStroke(); textSize(10); textAlign(RIGHT);
+  if (mode === 'findVout') {
+    text(fmtR(R2v), WIRX - 18, R2_CY + 4);
+  } else {
+    const rr = R2_required;
+    const ok = rr && rr >= 10 && rr <= 10e6;
+    fill(ok ? color(...C_OK) : color(...C_WARN));
+    text(ok ? fmtR(rr) : '?', WIRX - 18, R2_CY + 4);
+  }
+
+  // Bottom wire: R2 bot → bottom rail → battery bottom
+  wire(WIRX, R2_CY + R_H/2 + 12, WIRX, BOT);
+  wire(WIRX, BOT, BATX, BOT);
+  wire(BATX, BOT, BATX, MID + BATH/2 + 8);
+
+  // Ground
+  drawGroundSymbol(BATX, BOT);
+
+  // Voltage bar
+  drawVoltageBar(MX + 110, TOP, BOT, Vin, Vout);
+
+  // Formula
+  fill(60); noStroke(); textSize(10); textAlign(CENTER);
+  text('Vout = Vin × R2 / (R1 + R2)', SCHEM_W/2, CTRL_Y - 6);
+}
+
+function drawVoltageBar(x, top, bot, vin, vout) {
+  const bw = 14;
+  const totalH = bot - top;
+  const voutH  = (vout / vin) * totalH;
+  fill(210); noStroke(); rect(x, top, bw, totalH, 3);
+  fill(...C_ACCENT); rect(x, top + (totalH - voutH), bw, voutH, 3);
+  fill(30); noStroke(); textSize(9); textAlign(LEFT);
+  text('Vin',  x + bw + 4, top + 9);
+  fill(...C_ACCENT);
+  text('Vout', x + bw + 4, top + totalH - voutH + 9);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// CALCULATOR PANEL
+// ════════════════════════════════════════════════════════════════════════════
+function drawCalcPanel() {
+  fill(...C_PANEL); noStroke();
+  rect(PANEL_X, 0, CW - PANEL_X, CTRL_Y);
+
+  fill(30); noStroke(); textSize(14); textAlign(CENTER);
+  text('Calculator', PANEL_X + (CW - PANEL_X)/2, 24);
+
+  const LX = PANEL_X + 12;
+  const VX = CW - 12;
+  let y = 46;
+
+  function row(label, val, col) {
+    fill(80); noStroke(); textSize(11); textAlign(LEFT); text(label, LX, y);
+    fill(col[0],col[1],col[2]); textAlign(RIGHT); text(val, VX, y);
+    y += 22;
+  }
+
+  row('Vin',  fmtV(Vin),  [30,30,30]);
+  row('R1',   fmtR(R1v),  [30,30,30]);
+
+  if (mode === 'findVout') {
+    row('R2', fmtR(R2v), [30,30,30]);
+    y += 4;
+    stroke(180); strokeWeight(1); line(LX, y-6, VX, y-6); noStroke();
+    row('Ratio R2/(R1+R2)', (ratio*100).toFixed(1)+'%', [...C_ACCENT]);
+    fill(80); textSize(13); textAlign(LEFT); textStyle(BOLD); text('Vout', LX, y); textStyle(NORMAL);
+    fill(...C_OK); textSize(16); textAlign(RIGHT); text(fmtV(Vout), VX, y);
+    y += 30;
+  } else {
+    row('Target Vout', fmtV(Vtarget), [...C_ACCENT]);
+    y += 4;
+    stroke(180); strokeWeight(1); line(LX, y-6, VX, y-6); noStroke();
+    row('Ratio needed', (ratio*100).toFixed(1)+'%', [...C_ACCENT]);
+    const ok = R2_required && R2_required >= 10 && R2_required <= 10e6;
+    fill(80); textSize(13); textAlign(LEFT); textStyle(BOLD); text('R2 required', LX, y); textStyle(NORMAL);
+    fill(ok ? color(...C_OK) : color(...C_WARN));
+    textSize(ok ? 16 : 12); textAlign(RIGHT);
+    text(R2_required ? fmtR(R2_required) : '—', VX, y);
+    y += ok ? 30 : 18;
+    if (warningMsg) { fill(...C_WARN); textSize(10); textAlign(LEFT); text('⚠ '+warningMsg, LX, y); y += 16; }
+  }
+
+  // Current & power
+  const Reff = (mode === 'findVout') ? R1v + R2v : R1v + (R2_required || R2v);
+  const I = Vin / Reff;
+  const ImA = I * 1000, IuA = I * 1e6;
+  const Istr = IuA < 1000 ? IuA.toFixed(1)+'µA' : ImA.toFixed(2)+'mA';
+  const Ptot = Vin * I;
+  const PmW  = Ptot * 1000;
+
+  const cy2 = CTRL_Y - 54;
+  stroke(200); strokeWeight(1); line(LX, cy2, VX, cy2); noStroke();
+  fill(80); textSize(10); textAlign(LEFT); text('Current  I = Vin/(R1+R2)', LX, cy2+14);
+  fill(100); textAlign(RIGHT); text(Istr, VX, cy2+14);
+  fill(80); textSize(10); textAlign(LEFT); text('Total power dissipation', LX, cy2+28);
+  fill(100); textAlign(RIGHT);
+  text(PmW < 1 ? (Ptot*1e6).toFixed(1)+'µW' : PmW.toFixed(2)+'mW', VX, cy2+28);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLIDERS
+// ════════════════════════════════════════════════════════════════════════════
+function drawSliders() {
+  fill(...C_CTRL); noStroke();
+  rect(PANEL_X, CTRL_Y, CW - PANEL_X, CH - CTRL_Y);
+  stroke(180); strokeWeight(1); line(0, CTRL_Y, SCHEM_W, CTRL_Y); noStroke();
+
+  const r2active = mode === 'findVout';
+  const vtactive = mode === 'findR2';
+  drawSlider('Vin', SL_VIN, tVin, fmtV(Vin), true);
+  drawSlider('R1',  SL_R1,  tR1,  fmtR(R1v), true);
+  drawSlider('R2',  SL_R2,  tR2,  fmtR(R2v), r2active);
+  drawSlider('Target Vout', SL_VT, tVt, fmtV(Vtarget), vtactive);
+}
+
+function drawSlider(label, cy, t, valStr, active) {
+  fill(active ? 50 : 140); noStroke(); textSize(11); textAlign(RIGHT);
+  text(label+':', SLX - 6, cy + 4);
+  fill(active ? color(...C_ACCENT) : color(160)); textAlign(LEFT);
+  text(valStr, SLX + SLW + 8, cy + 4);
+
+  fill(active ? [160,175,195] : [195,200,205]); noStroke();
+  rect(SLX, cy - SLH/2, SLW, SLH, 3);
+  if (active) { fill(...C_ACCENT); rect(SLX, cy - SLH/2, t*SLW, SLH, 3); }
+
+  const tx = SLX + t*SLW;
+  fill(active ? 255 : 210);
+  stroke(active ? color(...C_ACCENT) : color(170)); strokeWeight(2);
+  circle(tx, cy, SLR*2);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// BUTTONS
+// ════════════════════════════════════════════════════════════════════════════
+function drawButtons() {
+  const mLabel = mode === 'findVout' ? '▶ Find Vout  |  Find R2 for target'
+                                     : 'Find Vout  |  ▶ Find R2 for target';
+  drawBtn(BM_X, BM_Y, BM_W, BM_H, mLabel, [60,80,120], 255, 10);
+  drawBtn(BA_X, BA_Y, BA_W, BA_H, isAnimating ? 'Stop' : 'Start',
+          isAnimating ? [160,40,40] : [40,120,60], 255, 11);
+  drawBtn(BR_X, BR_Y, BR_W, BR_H, 'Reset', [80,80,100], 255, 11);
+}
+
+function drawBtn(x, y, w, h, label, bg, fg, sz) {
+  fill(...bg); noStroke(); rect(x, y, w, h, 5);
+  fill(fg); textSize(sz); textAlign(CENTER); noStroke();
+  text(label, x+w/2, y+h/2+4);
+}
+
+function inBtn(mx, my, x, y, w, h) {
+  return mx>=x && mx<=x+w && my>=y && my<=y+h;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// INTERACTION
+// ════════════════════════════════════════════════════════════════════════════
+function mousePressed() {
+  if (inBtn(mouseX,mouseY, BM_X,BM_Y,BM_W,BM_H)) { mode = mode==='findVout'?'findR2':'findVout'; return; }
+  if (inBtn(mouseX,mouseY, BA_X,BA_Y,BA_W,BA_H)) { isAnimating = !isAnimating; return; }
+  if (inBtn(mouseX,mouseY, BR_X,BR_Y,BR_W,BR_H)) { resetSim(); return; }
+  grabSlider(mouseX, mouseY);
+}
+
+function mouseDragged() {
+  if (!dragging) return;
+  const raw = constrain((mouseX - SLX) / SLW, 0, 1);
+  if (dragging === 'Vin') tVin = raw;
+  if (dragging === 'R1')  tR1  = raw;
+  if (dragging === 'R2' && mode === 'findVout') tR2 = raw;
+  if (dragging === 'Vt' && mode === 'findR2')   tVt = raw;
+}
+
+function mouseReleased() { dragging = null; }
+
+function grabSlider(mx, my) {
+  const sliders = [
+    {id:'Vin', cy:SL_VIN, t:tVin, active:true},
+    {id:'R1',  cy:SL_R1,  t:tR1,  active:true},
+    {id:'R2',  cy:SL_R2,  t:tR2,  active:mode==='findVout'},
+    {id:'Vt',  cy:SL_VT,  t:tVt,  active:mode==='findR2'},
+  ];
+  for (const s of sliders) {
+    if (!s.active) continue;
+    const tx = SLX + s.t * SLW;
+    if (dist(mx, my, tx, s.cy) <= SLR + 4 ||
+        (my >= s.cy - SLH && my <= s.cy + SLH && mx >= SLX && mx <= SLX + SLW)) {
+      dragging = s.id;
+      const raw = constrain((mx - SLX) / SLW, 0, 1);
+      if (s.id==='Vin') tVin = raw;
+      if (s.id==='R1')  tR1  = raw;
+      if (s.id==='R2')  tR2  = raw;
+      if (s.id==='Vt')  tVt  = raw;
+      return;
+    }
+  }
+}
+
+function resetSim() {
+  tVin = map(12, 1, 24, 0, 1);
+  tR1  = invLogR(10000);
+  tR2  = invLogR(10000);
+  tVt  = 0.5;
+  isAnimating = false;
+  animTime = 0;
+  mode = 'findVout';
+}
+</script>
+</main>
+</body>
+</html>

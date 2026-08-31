@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var __EMBEDDED_FETCH_DATA__={"data.json": "{\n  \"nodes\": [\n    {\n      \"id\": 1,\n      \"label\": \"Media\\nCoverage\",\n      \"title\": \"Journalists amplify quantum computing announcements, often without technical scrutiny, creating an impression of imminent breakthroughs.\",\n      \"category\": \"reinforcing\",\n      \"x\": 0,\n      \"y\": -200\n    },\n    {\n      \"id\": 2,\n      \"label\": \"Public\\nExcitement\",\n      \"title\": \"Widespread media coverage generates public enthusiasm and a sense that quantum computing will transform industries soon.\",\n      \"category\": \"reinforcing\",\n      \"x\": 175,\n      \"y\": -100\n    },\n    {\n      \"id\": 3,\n      \"label\": \"Political\\nPressure\",\n      \"title\": \"Excited constituents and industry lobbying push politicians to fund quantum initiatives to avoid falling behind rival nations.\",\n      \"category\": \"reinforcing\",\n      \"x\": 175,\n      \"y\": 100\n    },\n    {\n      \"id\": 4,\n      \"label\": \"Government &\\nCorporate Funding\",\n      \"title\": \"Political pressure and FOMO drive billions in public and private investment into quantum computing programs.\",\n      \"category\": \"reinforcing\",\n      \"x\": 0,\n      \"y\": 200\n    },\n    {\n      \"id\": 5,\n      \"label\": \"Publications &\\nPress Releases\",\n      \"title\": \"Funded labs produce papers and press releases announcing progress, often framed as breakthroughs regardless of practical significance.\",\n      \"category\": \"reinforcing\",\n      \"x\": -175,\n      \"y\": 100\n    },\n    {\n      \"id\": 6,\n      \"label\": \"Bold\\nClaims\",\n      \"title\": \"Press releases are distilled into bold, quotable claims about quantum supremacy, advantage, or commercial timelines.\",\n      \"category\": \"reinforcing\",\n      \"x\": -175,\n      \"y\": -100\n    },\n    {\n      \"id\": 7,\n      \"label\": \"Skeptical\\nAnalysis\",\n      \"title\": \"Independent researchers and analysts examine claims critically, checking whether reported results have commercial relevance.\",\n      \"category\": \"balancing\",\n      \"x\": 350,\n      \"y\": 0\n    },\n    {\n      \"id\": 8,\n      \"label\": \"Failed\\nPredictions\",\n      \"title\": \"Over time, bold predictions that do not materialize accumulate as evidence against hype-driven timelines.\",\n      \"category\": \"balancing\",\n      \"x\": -350,\n      \"y\": 0\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"r1\",\n      \"from\": 1,\n      \"to\": 2,\n      \"label\": \"+\",\n      \"title\": \"Amplifies: Media coverage increases public excitement about quantum computing breakthroughs.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"amplifies\"\n    },\n    {\n      \"id\": \"r2\",\n      \"from\": 2,\n      \"to\": 3,\n      \"label\": \"+\",\n      \"title\": \"Triggers: Public excitement creates political pressure to fund quantum programs and not fall behind.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"triggers\"\n    },\n    {\n      \"id\": \"r3\",\n      \"from\": 3,\n      \"to\": 4,\n      \"label\": \"+\",\n      \"title\": \"Funds: Political pressure drives government and corporate funding decisions.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"funds\"\n    },\n    {\n      \"id\": \"r4\",\n      \"from\": 4,\n      \"to\": 5,\n      \"label\": \"+\",\n      \"title\": \"Produces: Funding generates research output packaged as publications and press releases.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"produces\"\n    },\n    {\n      \"id\": \"r5\",\n      \"from\": 5,\n      \"to\": 6,\n      \"label\": \"+\",\n      \"title\": \"Generates: Press releases are distilled into bold, quotable claims about quantum milestones.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"generates\"\n    },\n    {\n      \"id\": \"r6\",\n      \"from\": 6,\n      \"to\": 1,\n      \"label\": \"+\",\n      \"title\": \"Amplifies: Bold claims become the raw material for the next round of media coverage.\",\n      \"loop\": \"reinforcing\",\n      \"mechanism\": \"amplifies\"\n    },\n    {\n      \"id\": \"b1\",\n      \"from\": 6,\n      \"to\": 8,\n      \"label\": \"-\",\n      \"title\": \"Generates: Bold claims that fail to materialize become entries in the record of failed predictions.\",\n      \"loop\": \"balancing\",\n      \"mechanism\": \"generates\"\n    },\n    {\n      \"id\": \"b2\",\n      \"from\": 8,\n      \"to\": 7,\n      \"label\": \"-\",\n      \"title\": \"Enables: A track record of failed predictions provides material for skeptical analysis.\",\n      \"loop\": \"balancing\",\n      \"mechanism\": \"enables\"\n    },\n    {\n      \"id\": \"b3\",\n      \"from\": 7,\n      \"to\": 2,\n      \"label\": \"-\",\n      \"title\": \"Dampens: Skeptical analysis reduces public excitement by exposing the gap between claims and reality.\",\n      \"loop\": \"balancing\",\n      \"mechanism\": \"dampens\"\n    }\n  ],\n  \"categories\": {\n    \"reinforcing\": {\n      \"color\": \"#3F51B5\",\n      \"label\": \"Hype Loop (Reinforcing)\"\n    },\n    \"balancing\": {\n      \"color\": \"#607D8B\",\n      \"label\": \"Reality Check (Balancing)\"\n    }\n  }\n}\n"};var __origFetch=window.fetch?window.fetch.bind(window):null;window.fetch=function(url,opts){if(Object.prototype.hasOwnProperty.call(__EMBEDDED_FETCH_DATA__,url)){return Promise.resolve(new Response(__EMBEDDED_FETCH_DATA__[url]));}if(__origFetch)return __origFetch(url,opts);return Promise.reject(new Error('no fetch available for '+url));};})();</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hype Reinforcement Loop</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+#network {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background: rgba(240, 248, 255, 0.9);
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+#legend {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    min-width: 160px;
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-edge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.legend-line {
+    width: 20px;
+    height: 3px;
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 2px;
+}
+
+.legend-instructions {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
+    line-height: 1.4;
+}
+
+#right-panel {
+    position: absolute;
+    top: 55px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 12px 16px;
+    width: 250px;
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+#panel-title {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+#panel-body {
+    color: #555;
+}
+
+#panel-body .loop-path {
+    margin-top: 8px;
+    padding-left: 0;
+    list-style: none;
+}
+
+#panel-body .loop-path li {
+    padding: 3px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+#panel-body .loop-path li:last-child {
+    border-bottom: none;
+}
+
+.loop-arrow {
+    font-weight: bold;
+    margin: 0 4px;
+}
+
+.loop-arrow.positive {
+    color: #FF7043;
+}
+
+.loop-arrow.negative {
+    color: #607D8B;
+}
+
+#loop-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    pointer-events: none;
+    text-align: center;
+}
+
+#loop-label .loop-r {
+    font-size: 36px;
+    font-weight: bold;
+    color: rgba(255, 112, 67, 0.35);
+    line-height: 1;
+}
+
+#loop-label .loop-subtitle {
+    font-size: 11px;
+    color: rgba(255, 112, 67, 0.45);
+    margin-top: 2px;
+}
+</style>
+</head>
+<body>
+    <div id="title">Hype Reinforcement Loop</div>
+
+    <div id="legend">
+        <div class="legend-title">Loop Types</div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #3F51B5;"></span> Hype Loop Node
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background: #607D8B;"></span> Balancing Node
+        </div>
+        <div class="legend-edge">
+            <span class="legend-line" style="background: #FF7043;"></span> Reinforcing (+)
+        </div>
+        <div class="legend-edge">
+            <span class="legend-line" style="background: #607D8B;"></span> Balancing (-)
+        </div>
+        <div class="legend-instructions">Click a node to highlight its loop path.<br>Click empty space to reset.</div>
+    </div>
+
+    <div id="right-panel">
+        <div id="panel-title">Hype Reinforcement Loop</div>
+        <div id="panel-body">Click on any node to see its role in the hype cycle. The reinforcing loop (orange arrows) shows how hype amplifies itself. The balancing loop (gray arrows) shows how reality can dampen the cycle.</div>
+    </div>
+
+    <div id="loop-label">
+        <div class="loop-r">R</div>
+        <div class="loop-subtitle">Reinforcing Loop</div>
+    </div>
+
+    <div id="network"></div>
+
+    <script>// Hype Reinforcement Loop — vis-network causal loop diagram
+// Reinforcing loop (R): Media Coverage -> Public Excitement -> Political Pressure
+//   -> Funding -> Publications -> Bold Claims -> Media Coverage
+// Balancing loop (B): Bold Claims -> Failed Predictions -> Skeptical Analysis -> Public Excitement (dampens)
+
+let network = null;
+let graphData = null;
+let allNodes = null;
+let allEdges = null;
+
+// Define loop membership for highlight on click
+const reinforcingNodeIds = [1, 2, 3, 4, 5, 6];
+const reinforcingEdgeIds = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'];
+const balancingNodeIds = [6, 8, 7, 2];
+const balancingEdgeIds = ['b1', 'b2', 'b3'];
+
+// Pulse animation state
+let pulseIndex = 0;
+let pulseInterval = null;
+
+fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        graphData = data;
+        initNetwork(data);
+    })
+    .catch(err => console.error('Failed to load data.json:', err));
+
+function initNetwork(data) {
+    const container = document.getElementById('network');
+    const categoryColors = data.categories;
+
+    // Build vis-network nodes
+    const nodeArray = data.nodes.map(n => {
+        const cat = categoryColors[n.category];
+        return {
+            id: n.id,
+            label: n.label,
+            title: n.title,
+            x: n.x * 1.4,
+            y: n.y * 1.1,
+            fixed: { x: true, y: true },
+            color: {
+                background: cat.color,
+                border: darkenColor(cat.color, 0.25),
+                highlight: {
+                    background: lightenColor(cat.color, 0.2),
+                    border: darkenColor(cat.color, 0.4)
+                },
+                hover: {
+                    background: lightenColor(cat.color, 0.15),
+                    border: darkenColor(cat.color, 0.35)
+                }
+            },
+            font: {
+                color: '#fff',
+                size: 13,
+                face: 'Arial',
+                strokeWidth: 2,
+                strokeColor: 'rgba(0,0,0,0.5)',
+                multi: true
+            },
+            shape: 'box',
+            borderRadius: 8,
+            size: 30,
+            borderWidth: 2,
+            shadow: {
+                enabled: true,
+                color: 'rgba(0,0,0,0.15)',
+                size: 6,
+                x: 2,
+                y: 2
+            },
+            margin: 10,
+            category: n.category
+        };
+    });
+
+    // Build vis-network edges
+    const edgeArray = data.edges.map(e => {
+        const isReinforcing = e.loop === 'reinforcing';
+        const edgeColor = isReinforcing ? '#FF7043' : '#607D8B';
+        return {
+            id: e.id,
+            from: e.from,
+            to: e.to,
+            label: e.label,
+            title: e.title,
+            arrows: { to: { enabled: true, scaleFactor: 0.9 } },
+            color: {
+                color: edgeColor,
+                highlight: isReinforcing ? '#E64A19' : '#455A64',
+                hover: isReinforcing ? '#E64A19' : '#455A64'
+            },
+            width: isReinforcing ? 3 : 2.5,
+            hoverWidth: 0.5,
+            selectionWidth: 1.5,
+            smooth: {
+                type: 'curvedCW',
+                roundness: isReinforcing ? 0.2 : 0.3
+            },
+            font: {
+                size: 16,
+                color: isReinforcing ? '#E64A19' : '#455A64',
+                strokeWidth: 3,
+                strokeColor: 'rgba(240,248,255,0.9)',
+                align: 'middle',
+                bold: true
+            },
+            loop: e.loop,
+            mechanism: e.mechanism
+        };
+    });
+
+    allNodes = new vis.DataSet(nodeArray);
+    allEdges = new vis.DataSet(edgeArray);
+
+    const options = {
+        interaction: {
+            zoomView: false,
+            dragView: false,
+            dragNodes: false,
+            hover: true,
+            tooltipDelay: 200
+        },
+        physics: {
+            enabled: false
+        },
+        nodes: {
+            chosen: true
+        },
+        edges: {
+            chosen: true
+        }
+    };
+
+    network = new vis.Network(container, { nodes: allNodes, edges: allEdges }, options);
+
+    // Click handler: highlight loop path
+    network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+            stopPulse();
+            highlightNode(params.nodes[0]);
+        } else {
+            resetHighlight();
+            resetPanel();
+            startPulse();
+        }
+    });
+
+    // Start the pulse animation
+    startPulse();
+}
+
+function highlightNode(nodeId) {
+    const node = allNodes.get(nodeId);
+    if (!node) return;
+
+    // Determine which loops this node belongs to
+    const inReinforcing = reinforcingNodeIds.includes(nodeId);
+    const inBalancing = balancingNodeIds.includes(nodeId);
+
+    // Collect all nodes and edges to highlight
+    const highlightNodeSet = new Set();
+    const highlightEdgeSet = new Set();
+
+    if (inReinforcing) {
+        reinforcingNodeIds.forEach(id => highlightNodeSet.add(id));
+        reinforcingEdgeIds.forEach(id => highlightEdgeSet.add(id));
+    }
+    if (inBalancing) {
+        balancingNodeIds.forEach(id => highlightNodeSet.add(id));
+        balancingEdgeIds.forEach(id => highlightEdgeSet.add(id));
+    }
+
+    // Dim unconnected nodes
+    const nodeUpdates = allNodes.get().map(n => {
+        if (highlightNodeSet.has(n.id)) {
+            return { id: n.id, opacity: 1.0 };
+        } else {
+            return { id: n.id, opacity: 0.15 };
+        }
+    });
+    allNodes.update(nodeUpdates);
+
+    // Highlight loop edges, dim others
+    const edgeUpdates = allEdges.get().map(e => {
+        const isHighlighted = highlightEdgeSet.has(e.id);
+        const isReinforcing = e.loop === 'reinforcing';
+        const activeColor = isReinforcing ? '#FF7043' : '#607D8B';
+        return {
+            id: e.id,
+            color: isHighlighted
+                ? { color: activeColor, highlight: activeColor }
+                : { color: 'rgba(153,153,153,0.12)', highlight: 'rgba(153,153,153,0.12)' },
+            width: isHighlighted ? 4 : 0.5,
+            font: {
+                size: 16,
+                color: isHighlighted ? (isReinforcing ? '#E64A19' : '#455A64') : 'rgba(0,0,0,0.05)',
+                strokeWidth: 3,
+                strokeColor: 'rgba(240,248,255,0.9)',
+                align: 'middle',
+                bold: true
+            }
+        };
+    });
+    allEdges.update(edgeUpdates);
+
+    // Update right panel
+    updatePanel(nodeId, inReinforcing, inBalancing);
+}
+
+function resetHighlight() {
+    const nodeUpdates = allNodes.get().map(n => ({
+        id: n.id,
+        opacity: 1.0
+    }));
+    allNodes.update(nodeUpdates);
+
+    const edgeUpdates = allEdges.get().map(e => {
+        const isReinforcing = e.loop === 'reinforcing';
+        const edgeColor = isReinforcing ? '#FF7043' : '#607D8B';
+        return {
+            id: e.id,
+            color: {
+                color: edgeColor,
+                highlight: isReinforcing ? '#E64A19' : '#455A64',
+                hover: isReinforcing ? '#E64A19' : '#455A64'
+            },
+            width: isReinforcing ? 3 : 2.5,
+            font: {
+                size: 16,
+                color: isReinforcing ? '#E64A19' : '#455A64',
+                strokeWidth: 3,
+                strokeColor: 'rgba(240,248,255,0.9)',
+                align: 'middle',
+                bold: true
+            }
+        };
+    });
+    allEdges.update(edgeUpdates);
+}
+
+function updatePanel(nodeId, inReinforcing, inBalancing) {
+    const node = allNodes.get(nodeId);
+    const panelTitle = document.getElementById('panel-title');
+    const panelBody = document.getElementById('panel-body');
+
+    const label = node.label.replace('\n', ' ');
+    panelTitle.textContent = label;
+
+    let html = `<p>${node.title}</p>`;
+
+    if (inReinforcing) {
+        html += '<p style="margin-top:10px;font-weight:bold;font-size:12px;color:#E64A19;">Reinforcing Loop (R):</p>';
+        html += '<ul class="loop-path">';
+        const loopLabels = ['Media Coverage', 'Public Excitement', 'Political Pressure',
+                           'Gov\'t & Corp. Funding', 'Publications & Press Releases', 'Bold Claims'];
+        for (let i = 0; i < 6; i++) {
+            const isCurrent = reinforcingNodeIds[i] === nodeId;
+            html += `<li>${isCurrent ? '<strong>' : ''}${loopLabels[i]}${isCurrent ? '</strong>' : ''} <span class="loop-arrow positive">+</span></li>`;
+        }
+        html += '</ul>';
+        html += '<p style="font-size:11px;color:#888;margin-top:4px;">Each element amplifies the next, creating a self-reinforcing hype cycle.</p>';
+    }
+
+    if (inBalancing) {
+        html += '<p style="margin-top:10px;font-weight:bold;font-size:12px;color:#455A64;">Balancing Loop (B):</p>';
+        html += '<ul class="loop-path">';
+        const balLabels = ['Bold Claims', 'Failed Predictions', 'Skeptical Analysis', 'Public Excitement'];
+        const balSigns = ['-', '-', '-'];
+        for (let i = 0; i < 4; i++) {
+            const isCurrent = balancingNodeIds[i] === nodeId;
+            html += `<li>${isCurrent ? '<strong>' : ''}${balLabels[i]}${isCurrent ? '</strong>' : ''}`;
+            if (i < 3) html += ` <span class="loop-arrow negative">${balSigns[i]}</span>`;
+            html += '</li>';
+        }
+        html += '</ul>';
+        html += '<p style="font-size:11px;color:#888;margin-top:4px;">Reality eventually dampens the hype cycle through accumulated evidence.</p>';
+    }
+
+    panelBody.innerHTML = html;
+}
+
+function resetPanel() {
+    document.getElementById('panel-title').textContent = 'Hype Reinforcement Loop';
+    document.getElementById('panel-body').textContent = 'Click on any node to see its role in the hype cycle. The reinforcing loop (orange arrows) shows how hype amplifies itself. The balancing loop (gray arrows) shows how reality can dampen the cycle.';
+}
+
+// Pulse animation: sequentially highlight reinforcing loop edges
+function startPulse() {
+    if (pulseInterval) return;
+    pulseIndex = 0;
+    pulseInterval = setInterval(() => {
+        if (!allEdges) return;
+        // Reset previous edge
+        const prevIndex = (pulseIndex - 1 + reinforcingEdgeIds.length) % reinforcingEdgeIds.length;
+        const prevEdgeId = reinforcingEdgeIds[prevIndex];
+        allEdges.update({
+            id: prevEdgeId,
+            width: 3
+        });
+
+        // Pulse current edge
+        const currentEdgeId = reinforcingEdgeIds[pulseIndex];
+        allEdges.update({
+            id: currentEdgeId,
+            width: 5
+        });
+
+        pulseIndex = (pulseIndex + 1) % reinforcingEdgeIds.length;
+    }, 1000);
+}
+
+function stopPulse() {
+    if (pulseInterval) {
+        clearInterval(pulseInterval);
+        pulseInterval = null;
+        // Reset all reinforcing edges to normal width
+        reinforcingEdgeIds.forEach(id => {
+            allEdges.update({ id: id, width: 3 });
+        });
+    }
+}
+
+// Color utility functions
+function darkenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.round(rgb.r * (1 - amount))}, ${Math.round(rgb.g * (1 - amount))}, ${Math.round(rgb.b * (1 - amount))})`;
+}
+
+function lightenColor(hex, amount) {
+    const rgb = hexToRgb(hex);
+    return `rgb(${Math.min(255, Math.round(rgb.r + (255 - rgb.r) * amount))}, ${Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount))}, ${Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount))})`;
+}
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+}
+</script>
+</body>
+</html>

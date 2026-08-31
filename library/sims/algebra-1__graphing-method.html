@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Interactive Line Graphing Practice using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Interactive Line Graphing Practice — generated from the chapter specification
+// CANVAS_HEIGHT: 600
+// Layout: drawHeight 480 + controlHeight 120 = 600; iframe height is 602.
+// Shared runtime setup calls updateCanvasSize() before createCanvas().
+// Shared runtime uses canvas.parent(document.querySelector('main')).
+window.MICROSIM_CONFIG = {
+  "id": "interactive-line-graphing-practice",
+  "title": "Interactive Line Graphing Practice",
+  "kind": "coordinate",
+  "objective": "Practice graphing linear equations using all three methods (intercepts, slope-intercept, table of values)",
+  "actionLabel": "Check / Explain",
+  "aMin": -5,
+  "aMax": 5,
+  "aDefault": 2,
+  "aStep": 1,
+  "bMin": -5,
+  "bMax": 5,
+  "bDefault": 1,
+  "bStep": 1,
+  "aLabel": "Slope / x-value",
+  "bLabel": "Intercept / y-value",
+  "choices": [
+    "Linear",
+    "Quadratic",
+    "Vertical"
+  ]
+};
+document.write('<script src="../algebra-microsim-runtime.js"><\/script>');
+
+// Original specification retained for maintainers:
+// Type: microsim
+//
+//     Learning objective: Practice graphing linear equations using all three methods (intercepts, slope-intercept, table of values)
+//
+//     Canvas layout (1000x750px):
+//     - Left side (600x750): Large coordinate grid
+//     - Right side (400x750): Method selection and work area
+//
+//     Visual elements in graph area:
+//     - Coordinate plane from -10 to 10 on both axes
+//     - Grid lines for precision
+//     - Points plotted by student (draggable)
+//     - Solution line (can be shown/hidden)
+//     - Student's attempted line (drawn by connecting their points)
+//     - Feedback overlay showing accuracy
+//
+//     Control panel (right side):
+//
+//     **Problem Display:**
+//     - "Graph this equation:"
+//     - Equation shown in large font (e.g., "$2x + 3y = 12$" or "$y = -3x + 5$")
+//     - Dropdown: "Choose graphing method"
+//       Options:
+//       1. Intercepts method
+//       2. Slope-intercept method
+//       3. Table of values
+//       4. My choice (student decides)
+//
+//     **Method-Specific Work Areas:**
+//
+//     **If "Intercepts method" selected:**
+//     - Work area:
+//       - "Find x-intercept (set y = 0):"
+//       - Calculation space
+//       - "x-intercept = (" [input] ", 0)"
+//       - "Find y-intercept (set x = 0):"
+//       - Calculation space
+//       - "y-intercept = (0," [input] ")"
+//     - Button: "Show intercepts on graph"
+//     - Instructions: "Plot both intercepts, then draw line"
+//
+//     **If "Slope-intercept method" selected:**
+//     - Work area:
+//       - "Convert to y = mx + b form:"
+//       - Calculation space
+//       - "Slope m = " [input]
+//       - "Y-intercept b = " [input]
+//       - "Starting point: (0, b)"
+//       - "Rise = " [input] ", Run = " [input]
+//     - Button: "Show y-intercept and slope triangle"
+//     - Instructions: "Plot y-intercept, use slope to find second point"
+//
+//     **If "Table of values" selected:**
+//     - Work area:
+//       - Table with columns: x | y | Plot?
+//       - Pre-filled x-values: -2, -1, 0, 1, 2 (editable)
+//       - Input fields for y-values
+//       - Checkboxes to select which points to plot
+//     - Button: "Calculate all y-values"
+//     - Button: "Plot checked points"
+//
+//     **Graphing Tools:**
+//     - "Add point" mode: Click on graph to add point
+//     - "Move point" mode: Drag existing points
+//     - "Draw line" button: Connects plotted points with line
+//     - "Erase" button: Clear student work
+//     - "Show solution" toggle: Display correct line
+//     - "Check my work" button: Verify accuracy
+//
+//     **Feedback Section:**
+//     - Accuracy meter: "Your line matches: [%]"
+//     - Specific feedback:
+//       - "✓ Your y-intercept is correct!"
+//       - "✗ Your slope is too steep. Try making the run larger."
+//       - "Almost! Your line is slightly off. Check your calculations."
+//     - Score: "Problems correct: X/Y"
+//
+//     **Additional Controls:**
+//     - Button: "New problem" (random equation)
+//     - Dropdown: "Difficulty"
+//       Options:
+//       1. Easy (integer slope and intercepts)
+//       2. Medium (fractional slopes)
+//       3. Hard (requires form conversion)
+//     - Dropdown: "Equation form"
+//       Options:
+//       1. Slope-intercept
+//       2. Standard form
+//       3. Point-slope form
+//       4. Mixed (random)
+//     - Checkbox: "Show grid numbers"
+//     - Checkbox: "Snap to grid" (points snap to integer coordinates)
+//     - Button: "Hint" (provides guided help based on selected method)
+//
+//     Default parameters:
+//     - Equation: $y = 2x - 3$
+//     - Method: Slope-intercept
+//     - Difficulty: Easy
+//     - Snap to grid: On
+//
+//     Behavior:
+//
+//     **When problem is presented:**
+//     - Display equation prominently
+//     - Clear graph of previous work
+//     - Activate selected method's work area
+//     - Hide solution line initially
+//
+//     **When student uses intercepts method:**
+//     - They enter calculated intercepts in input fields
+//     - "Show intercepts" button plots those points on graph
+//     - They click "Add point" and click graph to add points
+//     - They click "Draw line" to connect points
+//     - "Check my work" compares their line to solution
+//
+//     **When student uses slope-intercept method:**
+//     - They convert equation and enter m and b values
+//     - System validates their conversion
+//     - "Show y-intercept and slope triangle" highlights starting point and slope visualization
+//     - They plot points using the slope guidance
+//     - They draw line and check accuracy
+//
+//     **When student uses table method:**
+//     - They enter y-values for given x-values
+//     - "Calculate all" auto-fills correct values (can toggle to check work)
+//     - They select which points to plot
+//     - "Plot checked points" adds those to graph
+//     - They draw line through points
+//
+//     **Accuracy checking:**
+//     - Compare student's line to solution using several sample points
+//     - Calculate percentage match based on:
+//       - Slope accuracy (±0.1 tolerance)
+//       - Intercept accuracy (±0.3 tolerance)
+//       - Overall fit (sample multiple points along line)
+//     - Provide specific feedback on what's wrong:
+//       - "Your slope is correct, but y-intercept is off by 2 units"
+//       - "Your line is parallel to the solution (same slope) but shifted"
+//
+//     **Hint system:**
+//     - First hint: Reminds student of method steps
+//     - Second hint: Shows first calculation step
+//     - Third hint: Reveals one key value (intercept or slope)
+//     - Fourth hint: Shows complete solution
+//
+//     **Progressive difficulty:**
+//     - Easy: $y = 2x + 3$, $y = -x + 5$ (integer slope in slope-intercept form)
+//     - Medium: $2x + 3y = 12$, $y = \frac{3}{4}x - 2$ (fractional slopes or standard form)
+//     - Hard: $5x - 3y = 15$, $y - 4 = -\frac{2}{3}(x + 1)$ (requires conversion, fractional slopes)
+//
+//     Implementation notes:
+//     - Use p5.js for coordinate plane and interactive elements
+//     - Implement click and drag for point placement
+//     - Calculate line equation from two student points
+//     - Compare lines by checking slope and y-intercept
+//     - Use MathJax or KaTeX for equation rendering
+//     - Store solution as slope and y-intercept internally
+//     - Provide visual feedback with color coding (green = correct, yellow = close, red = incorrect)
+//     - Animate "solution reveal" by gradually fading in correct line
+//     - Track time spent and number of hints used for each problem
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

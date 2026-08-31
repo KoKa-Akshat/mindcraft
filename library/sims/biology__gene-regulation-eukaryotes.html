@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Eukaryotic Gene Regulation Layers using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Eukaryotic Gene Regulation Layers MicroSim
+// Infographic showing five regulatory checkpoints with flow animation controls
+
+let containerWidth;
+let canvasWidth = 780;
+const drawHeight = 400;
+const controlHeight = 80;
+const canvasHeight = drawHeight + controlHeight;
+
+const margin = 24;
+const sliderLeftMargin = 240;
+const defaultTextSize = 16;
+
+const layerHeight = 44;
+const layerGap = 8;
+const bottomMargin = 20;
+const layerStartY = 108;
+const layerExpansion = 16;
+const detailPanelRatio = 0.32;
+
+const titleRectY = 10;
+const titleRectHeight = 54;
+const timelineY = 80;
+const timelineHeight = 18;
+
+let startButton;
+let flowSpeedSlider;
+
+let isFlowing = false;
+let flowIndex = 0;
+let lastFlowChange = 0;
+let flowSpeed = 4.0; // seconds per layer
+
+let layerRects = [];
+let selectedLayer = 0;
+let detailPanelRect = null;
+
+const layers = [
+  {
+    name: 'Chromatin Level',
+    detailTitle: 'Chromatin Level',
+    color: '#8F63FF',
+    summary: 'Histone modifications loosen or tighten chromatin.',
+    detail: 'Acetylation opens chromatin for transcription, while methylation plus HDACs keep genes silent until signals arrive.'
+  },
+  {
+    name: 'Transcriptional Level',
+    detailTitle: 'Transcriptional Level',
+    color: '#4E86FF',
+    summary: 'Enhancers, promoters, and transcription factors set initiation rates.',
+    detail: 'Activator complexes recruit RNA polymerase at the promoter; repressors on silencers prevent initiation when signals are absent.'
+  },
+  {
+    name: 'Post-Transcriptional Level',
+    detailTitle: 'Post-Transcriptional\nLevel',
+    color: '#36CFC5',
+    summary: 'RNA processing and splicing choose which exons remain.',
+    detail: 'Alternative splicing and RNA editing build different mRNAs, while capping and poly-A tails control export and stability.'
+  },
+  {
+    name: 'Translational Level',
+    detailTitle: 'Translational Level',
+    color: '#FF9B42',
+    summary: 'miRNAs or repressor proteins block ribosomes.',
+    detail: 'miRNA-RISC complexes bind complementary sequences to stall translation or degrade the mRNA before ribosomes finish.'
+  },
+  {
+    name: 'Post-Translational Level',
+    detailTitle: 'Post-Translational\nLevel',
+    color: '#B7743B',
+    summary: 'Protein folding, modification, and degradation finalize activity.',
+    detail: 'Chaperones fold proteins, phosphorylation toggles activity, and ubiquitin tags send proteins to the proteasome for breakdown.'
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  const mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  textFont('Arial');
+  textSize(defaultTextSize);
+
+  startButton = createButton('Start Flow');
+  startButton.position(12, drawHeight + 8);
+  startButton.size(160, 36);
+  startButton.mousePressed(toggleFlow);
+
+  flowSpeedSlider = createSlider(20, 80, 40, 1);
+  flowSpeedSlider.position(sliderLeftMargin, drawHeight + 45);
+  flowSpeedSlider.size(canvasWidth - sliderLeftMargin - margin);
+
+  describe('Layered eukaryotic gene regulation infographic with clickable bands, a persistent detail panel, and a Start/Pause flow animation plus flow speed slider.', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  flowSpeed = flowSpeedSlider.value() / 10;
+  updateFlowState();
+
+  drawTitleAndPrompt();
+  drawFlowTimeline();
+
+  computeLayerRects();
+  drawLayers();
+  drawDetailPanel();
+  drawControlLabels();
+}
+
+function drawTitleAndPrompt() {
+  noStroke();
+  fill('#1F1F1F');
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text('Eukaryotic Gene Regulation Layers', canvasWidth / 2, titleRectY + titleRectHeight / 2);
+
+  textAlign(CENTER, TOP);
+  textSize(16);
+  fill('#333333');
+  text(
+    'Click a layer to view details • Use Start Flow to trace the checkpoints',
+    canvasWidth / 2,
+    titleRectY + titleRectHeight - 8
+  );
+}
+
+function drawFlowTimeline() {
+  const timelineWidth = canvasWidth - margin * 2;
+  const timelineX = margin;
+  const timelineNodeSpacing = timelineWidth / (layers.length - 1);
+
+  noStroke();
+  fill('#FFF2B5');
+  rect(timelineX, timelineY, timelineWidth, timelineHeight, 12);
+
+  const midY = timelineY + timelineHeight / 2;
+  stroke('#C69A23');
+  strokeWeight(3);
+  line(timelineX + 12, midY, timelineX + timelineWidth - 12, midY);
+
+  const pulse = 0.5 + 0.5 * sin(millis() / 300);
+
+  for (let i = 0; i < layers.length; i++) {
+    const nodeX = timelineX + i * timelineNodeSpacing;
+    const nodeY = midY;
+    fill(layers[i].color);
+    stroke('#333333');
+    strokeWeight(1);
+    const radius = flowIndex === i ? 14 + pulse * 3 : 12;
+    circle(nodeX, nodeY, radius);
+  }
+}
+
+function drawLayers() {
+  if (layerRects.length === 0) {
+    return;
+  }
+
+  for (let i = 0; i < layers.length; i++) {
+    const rectObj = layerRects[i];
+    const active = rectObj.active;
+    const isSelected = rectObj.isSelected;
+
+    stroke('#2F2F2F');
+    strokeWeight(isSelected ? 4 : 1);
+    const baseColor = color(layers[i].color);
+    const displayColor = active ? lerpColor(baseColor, color('#FFFFFF'), 0.15) : baseColor;
+    fill(displayColor);
+    rect(rectObj.x, rectObj.y, rectObj.w, rectObj.h, 14);
+
+    if (active) {
+      noStroke();
+      const gradientTop = color(255, 255, 255, 60);
+      const gradientBottom = color(255, 255, 255, 0);
+      for (let p = 0; p < rectObj.h; p++) {
+        const inter = map(p, 0, rectObj.h, 0, 1);
+        const gradColor = lerpColor(gradientTop, gradientBottom, inter);
+        stroke(gradColor);
+        line(rectObj.x, rectObj.y + p, rectObj.x + rectObj.w, rectObj.y + p);
+      }
+      noStroke();
+    }
+
+    noStroke();
+    fill('#0F0F0F');
+    textAlign(LEFT, TOP);
+    textSize(20);
+    text(layers[i].name, rectObj.x + 16, rectObj.y + 8);
+
+    textSize(13);
+    fill('#111111');
+    text(layers[i].summary, rectObj.x + 16, rectObj.y + 30);
+
+    drawLayerIcon(i, rectObj);
+  }
+
+  drawFlowSpine(layerRects[0].x - 16);
+}
+
+function drawDetailPanel() {
+  if (!detailPanelRect) {
+    return;
+  }
+  const panel = detailPanelRect;
+  const layer = layers[selectedLayer];
+
+  stroke('#555555');
+  strokeWeight(1);
+  fill('#FBFBFF');
+  rect(panel.x, panel.y, panel.w, panel.h, 16);
+
+  noStroke();
+  fill('#111111');
+  textAlign(LEFT, TOP);
+  textSize(22);
+  text(layer.detailTitle || layer.name, panel.x + 16, panel.y + 20);
+
+  textSize(14);
+  fill('#222222');
+  text(layer.detail, panel.x + 16, panel.y + 70, panel.w - 32, panel.h - 94);
+}
+
+function drawLayerIcon(index, rectObj) {
+  push();
+  const iconY = rectObj.y + rectObj.h / 2;
+  const iconX = rectObj.x + rectObj.w - 60;
+  noStroke();
+  fill(255, 255, 255, 160);
+
+  switch (index) {
+    case 0:
+      // Chromatin level icon
+      // Draw four horizontal circles representing nucleosomes, with a purple color for chromatin level
+      fill('purple');
+      for (let i = 0; i < 4; i++) {
+        circle(iconX + i * 18 - 15, iconY, 18);
+      }
+      break;
+    case 1:
+      // Transcriptional regulation icon
+      // draw a white speech bubble with a small tail pointing to the left
+      // representing transcriptional regulation
+      const rx = iconX + 15;
+      const ry = iconY - 5;
+      fill(255, 255, 255, 180);
+      rect(rx - 30, ry - 12, 60, 24, 6);
+      fill(0, 0, 0, 60);
+      triangle(rx - 50, ry - 6, rx - 30, ry - 12, rx - 30, ry + 12);
+      break;
+    case 2:
+      // Post-transcriptional regulation icon
+      // a curved arrow looping back on itself, representing splicing and RNA processing
+      const tx = iconX + 20;
+      const ty = iconY - 5;
+      stroke(255);
+      strokeWeight(2);
+      noFill();
+      bezier(tx - 20, ty - 10, tx - 10, ty - 20, tx + 10, ty + 20, tx + 20, ty + 10);
+      line(tx - 25, ty, tx + 25, ty);
+      break;
+    case 3:
+      // Translational regulation icon
+      // a white rectangle with a small vertical line on top representing 
+      // a ribosome, with a cyan color for translational level
+      const lx = iconX + 30;
+      fill(255, 255, 255, 220);
+      ellipse(lx, iconY, 50, 28);
+      fill(0, 0, 0, 80);
+      rect(lx - 10, iconY - 16, 20, 32, 6);
+      break;
+    case 4:
+    default:
+      // Post-translational regulation icon
+      // a white rectangle with a small circle on top representing a protein, with a brown
+      // color for post-translational level, and a small yellow circle representing
+      // ubiquitin tagging for degradation
+      fill(255, 255, 255, 140);
+      rect(iconX + 10, iconY - 12, 40, 24, 8);
+      fill('yellow ');
+      circle(iconX + 40, iconY, 12);
+      textAlign(CENTER, CENTER);
+      textSize(12);
+      fill('#6B3F15');
+      text('Ub', iconX + 40, iconY);
+      textSize(defaultTextSize);
+      break;
+  }
+  pop();
+}
+
+function drawFlowSpine(xPosition) {
+  stroke('#555555');
+  strokeWeight(3);
+  const topY = layerRects.length ? layerRects[0].y - 8 : layerStartY - 8;
+  const bottomY = layerRects.length
+    ? layerRects[layerRects.length - 1].y + layerRects[layerRects.length - 1].h + 8
+    : layerStartY + layers.length * (layerHeight + layerGap) - layerGap;
+  line(xPosition, topY, xPosition, bottomY);
+
+  const pulse = 0.5 + 0.5 * sin(millis() / 250);
+  for (let i = 0; i < layers.length; i++) {
+    const rectObj = layerRects.length ? layerRects[i] : null;
+    const y = rectObj ? rectObj.y + rectObj.h / 2 : layerStartY + i * (layerHeight + layerGap) + layerHeight / 2;
+    fill(i <= flowIndex ? '#FFD24C' : '#CCCCCC');
+    noStroke();
+    const radius = flowIndex === i ? 12 + pulse * 2 : 10;
+    circle(xPosition, y, radius);
+  }
+}
+
+function drawControlLabels() {
+  noStroke();
+  fill('#111111');
+  textAlign(LEFT, CENTER);
+  textSize(defaultTextSize);
+  const labelText = 'Flow Speed (sec per layer): ' + flowSpeed.toFixed(1);
+  text(labelText, 20, drawHeight + 55);
+}
+
+function computeLayerRects() {
+  const panelWidth = max(220, canvasWidth * detailPanelRatio);
+  const layerX = margin / 2;
+  const gapBetween = 20;
+  const availableWidth = canvasWidth - panelWidth - layerX - gapBetween - margin;
+  const layerWidth = max(220, availableWidth);
+  const detailX = layerX + layerWidth + gapBetween;
+
+  let currentY = layerStartY;
+  layerRects = [];
+
+  for (let i = 0; i < layers.length; i++) {
+    const isSelected = selectedLayer === i;
+    const isFlowLayer = flowIndex === i;
+    const active = isSelected || isFlowLayer;
+    const height = layerHeight + (isSelected ? layerExpansion : 0);
+
+    layerRects.push({
+      x: layerX,
+      y: currentY,
+      w: layerWidth,
+      h: height,
+      active,
+      isSelected
+    });
+
+    const spacing =
+      i === layers.length - 1 ? max(bottomMargin - (isSelected ? layerExpansion : 0), 0) : layerGap;
+    currentY += height + spacing;
+  }
+
+  const panelTop = layerStartY - 8;
+  const panelHeight = drawHeight - panelTop - 12;
+  detailPanelRect = {
+    x: detailX,
+    y: panelTop,
+    w: panelWidth,
+    h: panelHeight
+  };
+}
+
+function mousePressed() {
+  if (mouseY < 0 || mouseY > drawHeight || layerRects.length === 0) {
+    return;
+  }
+
+  for (let i = 0; i < layerRects.length; i++) {
+    const rectObj = layerRects[i];
+    if (
+      mouseX >= rectObj.x &&
+      mouseX <= rectObj.x + rectObj.w &&
+      mouseY >= rectObj.y &&
+      mouseY <= rectObj.y + rectObj.h
+    ) {
+      selectedLayer = i;
+      return;
+    }
+  }
+}
+
+function toggleFlow() {
+  isFlowing = !isFlowing;
+  startButton.html(isFlowing ? 'Pause Flow' : 'Start Flow');
+  lastFlowChange = millis();
+  if (isFlowing) {
+    selectedLayer = flowIndex;
+  }
+}
+
+function updateFlowState() {
+  if (!isFlowing) {
+    return;
+  }
+  const now = millis();
+  const interval = flowSpeed * 1000;
+  if (now - lastFlowChange >= interval) {
+    flowIndex = (flowIndex + 1) % layers.length;
+    lastFlowChange = now;
+    selectedLayer = flowIndex;
+  }
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  flowSpeedSlider.position(sliderLeftMargin, drawHeight + 45);
+  flowSpeedSlider.size(canvasWidth - sliderLeftMargin - margin);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

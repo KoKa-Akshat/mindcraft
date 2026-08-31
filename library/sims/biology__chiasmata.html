@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Crossing Over Visualization using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Crossing Over Visualization MicroSim
+// Bloom Level: Understand (L2) - explain how crossing over generates recombinant chromatids
+// Step-through with concrete allele data and predict-before-reveal
+// Canvas: responsive width x 500 height
+
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 460;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 12;
+
+// State
+let currentStage = 0;
+let totalStages = 5;
+let doubleCrossover = false;
+let showPrediction = false;
+let predictionRevealed = false;
+
+// Buttons
+let prevBtn, nextBtn, doubleBtn;
+
+// Colors
+const MATERNAL = '#E8A0BF';
+const MATERNAL_DARK = '#C77DA0';
+const PATERNAL = '#7FB3D8';
+const PATERNAL_DARK = '#5A8FB8';
+const CENTROMERE = '#666';
+
+// Gene loci
+const loci = ['A', 'B', 'C', 'D'];
+const lociLower = ['a', 'b', 'c', 'd'];
+
+// Stage descriptions
+const stageInfo = [
+  {
+    title: 'Stage 1: Homologous Chromosomes',
+    desc: 'Two homologous chromosomes before replication. The maternal chromosome (pink) carries dominant alleles A-B-C-D. The paternal chromosome (blue) carries recessive alleles a-b-c-d. Each chromosome is a single chromatid.'
+  },
+  {
+    title: 'Stage 2: DNA Replication (Tetrad)',
+    desc: 'Each chromosome replicates, producing two identical sister chromatids joined at the centromere. The four chromatids together form a tetrad (bivalent). Sister chromatids are genetically identical at this point.'
+  },
+  {
+    title: 'Stage 3: Chiasma Formation',
+    desc: 'During prophase I, non-sister chromatids from homologous chromosomes physically cross over at a chiasma (X-shaped point). Here, a chiasma forms between loci B and C, where DNA segments will be exchanged.'
+  },
+  {
+    title: 'Stage 4: After Crossing Over',
+    desc: 'The crossed-over segments have been exchanged. Two chromatids are now recombinant — they carry new allele combinations (A-B-c-d and a-b-C-D) that did not exist in either parent. The other two remain parental types.'
+  },
+  {
+    title: 'Stage 5: Separated Chromatids',
+    desc: 'After meiosis I and II, the four chromatids separate into four individual gametes. Two are parental type (unchanged) and two are recombinant type (carrying novel allele combinations from crossing over).'
+  }
+];
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, canvasHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+
+  prevBtn = createButton('Previous');
+  prevBtn.parent(mainElement);
+  prevBtn.mousePressed(() => {
+    if (currentStage > 0) {
+      currentStage--;
+      showPrediction = false;
+      predictionRevealed = false;
+    }
+    updateButtonStates();
+  });
+
+  nextBtn = createButton('Next Step');
+  nextBtn.parent(mainElement);
+  nextBtn.mousePressed(() => {
+    if (currentStage === 2 && !predictionRevealed) {
+      // Show prediction prompt before advancing to stage 4
+      showPrediction = true;
+      return;
+    }
+    if (currentStage < totalStages - 1) {
+      currentStage++;
+      showPrediction = false;
+      predictionRevealed = false;
+    }
+    updateButtonStates();
+  });
+
+  doubleBtn = createButton('Double Crossover: OFF');
+  doubleBtn.parent(mainElement);
+  doubleBtn.mousePressed(() => {
+    doubleCrossover = !doubleCrossover;
+    doubleBtn.html(doubleCrossover ? 'Double Crossover: ON' : 'Double Crossover: OFF');
+    doubleBtn.style('background-color', doubleCrossover ? '#FFE0B2' : '');
+  });
+
+  positionControls();
+  updateButtonStates();
+  describe('Step-through crossing over visualization showing how alleles are exchanged between homologous chromosomes during prophase I');
+}
+
+function draw() {
+  updateCanvasSize();
+  background('aliceblue');
+
+  // Drawing region border
+  stroke('silver');
+  strokeWeight(1);
+  noFill();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control region
+  fill('white');
+  noStroke();
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Title
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Crossing Over During Prophase I', canvasWidth / 2, 4);
+  textStyle(NORMAL);
+
+  // Stage indicator
+  drawStageIndicator();
+
+  // Draw the current stage
+  switch (currentStage) {
+    case 0: drawStage1(); break;
+    case 1: drawStage2(); break;
+    case 2: drawStage3(); break;
+    case 3: drawStage4(); break;
+    case 4: drawStage5(); break;
+  }
+
+  // Info panel at bottom
+  drawInfoPanel();
+
+  // Prediction overlay
+  if (showPrediction && !predictionRevealed) {
+    drawPredictionPrompt();
+  }
+}
+
+// ---- STAGE INDICATOR ----
+function drawStageIndicator() {
+  let indicatorY = 24;
+  let dotSpacing = 30;
+  let startX = canvasWidth / 2 - (totalStages - 1) * dotSpacing / 2;
+
+  for (let i = 0; i < totalStages; i++) {
+    let dx = startX + i * dotSpacing;
+    if (i === currentStage) {
+      fill('#1565C0');
+      noStroke();
+      ellipse(dx, indicatorY, 14, 14);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textSize(9);
+      textStyle(BOLD);
+      text(i + 1, dx, indicatorY);
+      textStyle(NORMAL);
+    } else if (i < currentStage) {
+      fill('#4CAF50');
+      noStroke();
+      ellipse(dx, indicatorY, 12, 12);
+      fill(255);
+      textSize(8);
+      textAlign(CENTER, CENTER);
+      text('\u2713', dx, indicatorY);
+    } else {
+      fill(220);
+      noStroke();
+      ellipse(dx, indicatorY, 12, 12);
+      fill(150);
+      textSize(8);
+      textAlign(CENTER, CENTER);
+      text(i + 1, dx, indicatorY);
+    }
+
+    // Connecting line
+    if (i < totalStages - 1) {
+      stroke(i < currentStage ? '#4CAF50' : 220);
+      strokeWeight(2);
+      line(dx + 7, indicatorY, dx + dotSpacing - 7, indicatorY);
+    }
+  }
+}
+
+// ---- CHROMOSOME DRAWING HELPERS ----
+function drawChromatid(x, y, w, h, segments, isStriped) {
+  // segments is an array of {color, allele} for each locus
+  let segW = w / segments.length;
+
+  for (let i = 0; i < segments.length; i++) {
+    let sx = x + i * segW;
+    let seg = segments[i];
+
+    if (isStriped && seg.striped) {
+      // Draw striped pattern for recombinant segments
+      fill(seg.color);
+      stroke(seg.color === MATERNAL ? MATERNAL_DARK : PATERNAL_DARK);
+      strokeWeight(1);
+      rect(sx, y, segW, h, i === 0 ? 6 : 0, i === segments.length - 1 ? 6 : 0,
+           i === segments.length - 1 ? 6 : 0, i === 0 ? 6 : 0);
+
+      // Diagonal stripes
+      let otherColor = seg.color === MATERNAL ? PATERNAL : MATERNAL;
+      stroke(otherColor);
+      strokeWeight(1.5);
+      for (let s = -h; s < segW + h; s += 5) {
+        let lx1 = max(sx, sx + s);
+        let ly1 = max(y, y + (sx + s - lx1));
+        let lx2 = min(sx + segW, sx + s + h);
+        let ly2 = min(y + h, y + h - (lx2 - sx - s));
+        if (lx1 < sx + segW && lx2 > sx) {
+          line(lx1, ly1, lx2, ly2);
+        }
+      }
+    } else {
+      fill(seg.color);
+      stroke(seg.color === MATERNAL ? MATERNAL_DARK : PATERNAL_DARK);
+      strokeWeight(1);
+      rect(sx, y, segW, h, i === 0 ? 6 : 0, i === segments.length - 1 ? 6 : 0,
+           i === segments.length - 1 ? 6 : 0, i === 0 ? 6 : 0);
+    }
+
+    // Allele label
+    noStroke();
+    fill(30);
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    textStyle(BOLD);
+    text(seg.allele, sx + segW / 2, y + h / 2);
+    textStyle(NORMAL);
+  }
+}
+
+function maternalSegs() {
+  return loci.map(a => ({ color: MATERNAL, allele: a }));
+}
+
+function paternalSegs() {
+  return lociLower.map(a => ({ color: PATERNAL, allele: a }));
+}
+
+// ---- STAGE 1: Two homologous chromosomes ----
+function drawStage1() {
+  let cy = 120;
+  let chromW = canvasWidth * 0.45;
+  let chromH = 28;
+  let cx = canvasWidth / 2 - chromW / 2;
+  let gap = 50;
+
+  // Labels
+  noStroke();
+  fill(MATERNAL_DARK);
+  textAlign(LEFT, BOTTOM);
+  textSize(11);
+  textStyle(BOLD);
+  text('Maternal Chromosome', cx, cy - 6);
+  textStyle(NORMAL);
+
+  drawChromatid(cx, cy, chromW, chromH, maternalSegs(), false);
+
+  fill(PATERNAL_DARK);
+  textAlign(LEFT, BOTTOM);
+  textSize(11);
+  textStyle(BOLD);
+  text('Paternal Chromosome', cx, cy + gap + chromH - 6);
+  textStyle(NORMAL);
+
+  drawChromatid(cx, cy + gap + chromH, chromW, chromH, paternalSegs(), false);
+
+  // Locus labels above
+  let segW = chromW / 4;
+  noStroke();
+  fill(100);
+  textAlign(CENTER, BOTTOM);
+  textSize(9);
+  for (let i = 0; i < 4; i++) {
+    text('Locus ' + (i + 1), cx + i * segW + segW / 2, cy - 20);
+  }
+
+  // Homologous pair bracket
+  stroke(100);
+  strokeWeight(1);
+  noFill();
+  let bracketX = cx + chromW + 14;
+  line(bracketX, cy, bracketX + 8, cy);
+  line(bracketX + 8, cy, bracketX + 8, cy + gap + chromH * 2);
+  line(bracketX, cy + gap + chromH * 2, bracketX + 8, cy + gap + chromH * 2);
+  noStroke();
+  fill(100);
+  textAlign(LEFT, CENTER);
+  textSize(10);
+  text('Homologous\npair (2n)', bracketX + 14, cy + (gap + chromH * 2) / 2);
+}
+
+// ---- STAGE 2: Tetrad after replication ----
+function drawStage2() {
+  let cy = 80;
+  let chromW = canvasWidth * 0.45;
+  let chromH = 22;
+  let cx = canvasWidth / 2 - chromW / 2;
+  let sisterGap = 6;
+  let homologGap = 30;
+
+  // Maternal sister chromatids
+  noStroke();
+  fill(MATERNAL_DARK);
+  textAlign(LEFT, BOTTOM);
+  textSize(10);
+  textStyle(BOLD);
+  text('Maternal sister chromatids', cx, cy - 4);
+  textStyle(NORMAL);
+
+  drawChromatid(cx, cy, chromW, chromH, maternalSegs(), false);
+  drawChromatid(cx, cy + chromH + sisterGap, chromW, chromH, maternalSegs(), false);
+
+  // Centromere for maternal
+  let centX = cx + chromW / 2;
+  fill(CENTROMERE);
+  noStroke();
+  ellipse(centX, cy + chromH + sisterGap / 2, 10, chromH * 2 + sisterGap + 4);
+
+  // Paternal sister chromatids
+  let patY = cy + chromH * 2 + sisterGap + homologGap;
+  fill(PATERNAL_DARK);
+  textAlign(LEFT, BOTTOM);
+  textSize(10);
+  textStyle(BOLD);
+  text('Paternal sister chromatids', cx, patY - 4);
+  textStyle(NORMAL);
+
+  drawChromatid(cx, patY, chromW, chromH, paternalSegs(), false);
+  drawChromatid(cx, patY + chromH + sisterGap, chromW, chromH, paternalSegs(), false);
+
+  // Centromere for paternal
+  fill(CENTROMERE);
+  noStroke();
+  ellipse(centX, patY + chromH + sisterGap / 2, 10, chromH * 2 + sisterGap + 4);
+
+  // Tetrad label
+  stroke(100);
+  strokeWeight(1);
+  noFill();
+  let bracketX = cx + chromW + 14;
+  let topY = cy;
+  let botY = patY + chromH * 2 + sisterGap;
+  line(bracketX, topY, bracketX + 8, topY);
+  line(bracketX + 8, topY, bracketX + 8, botY);
+  line(bracketX, botY, bracketX + 8, botY);
+  noStroke();
+  fill(100);
+  textAlign(LEFT, CENTER);
+  textSize(10);
+  text('Tetrad\n(4 chromatids)', bracketX + 14, (topY + botY) / 2);
+
+  // Chromatid labels
+  fill(80);
+  textSize(9);
+  textAlign(RIGHT, CENTER);
+  text('1', cx - 6, cy + chromH / 2);
+  text('2', cx - 6, cy + chromH + sisterGap + chromH / 2);
+  text('3', cx - 6, patY + chromH / 2);
+  text('4', cx - 6, patY + chromH + sisterGap + chromH / 2);
+}
+
+// ---- STAGE 3: Chiasma formation ----
+function drawStage3() {
+  let cy = 70;
+  let chromW = canvasWidth * 0.45;
+  let chromH = 22;
+  let cx = canvasWidth / 2 - chromW / 2;
+  let sisterGap = 6;
+
+  // The inner two chromatids cross between B and C
+  let segW = chromW / 4;
+  let crossX = cx + segW * 2; // Between B and C
+  let crossX2 = doubleCrossover ? cx + segW : -1; // Between A and B for double
+
+  // Draw outer maternal chromatid (1) - straight
+  drawChromatid(cx, cy, chromW, chromH, maternalSegs(), false);
+
+  // Draw inner maternal chromatid (2) - will cross
+  let innerMatY = cy + chromH + sisterGap;
+
+  // Draw inner paternal chromatid (3) - will cross
+  let innerPatY = innerMatY + chromH + 16;
+
+  // Draw outer paternal chromatid (4) - straight
+  let outerPatY = innerPatY + chromH + sisterGap;
+  drawChromatid(cx, outerPatY, chromW, chromH, paternalSegs(), false);
+
+  // For the crossing chromatids, draw in segments
+  // Maternal inner (2): A-B are maternal, then crosses, C-D depend on crossover
+  // Before crossover point: maternal colors
+  // After crossover point: still maternal (exchange hasn't happened yet, just touching)
+
+  // Draw the inner chromatids with the X crossing
+  // Left of chiasma: normal
+  let leftW = crossX - cx;
+  let rightW = cx + chromW - crossX;
+
+  // Inner maternal (chromatid 2)
+  let matSegsLeft = [];
+  let matSegsRight = [];
+  for (let i = 0; i < 4; i++) {
+    let locusX = cx + i * segW;
+    if (locusX + segW <= crossX) {
+      matSegsLeft.push({ color: MATERNAL, allele: loci[i] });
+    } else if (locusX >= crossX) {
+      matSegsRight.push({ color: MATERNAL, allele: loci[i] });
+    }
+  }
+
+  // Inner paternal (chromatid 3)
+  let patSegsLeft = [];
+  let patSegsRight = [];
+  for (let i = 0; i < 4; i++) {
+    let locusX = cx + i * segW;
+    if (locusX + segW <= crossX) {
+      patSegsLeft.push({ color: PATERNAL, allele: lociLower[i] });
+    } else if (locusX >= crossX) {
+      patSegsRight.push({ color: PATERNAL, allele: lociLower[i] });
+    }
+  }
+
+  // Draw the X cross
+  // Maternal inner left half
+  if (matSegsLeft.length > 0) {
+    drawChromatid(cx, innerMatY, leftW, chromH, matSegsLeft, false);
+  }
+
+  // Paternal inner left half
+  if (patSegsLeft.length > 0) {
+    drawChromatid(cx, innerPatY, leftW, chromH, patSegsLeft, false);
+  }
+
+  // Cross region - draw X shape
+  stroke('#FF5722');
+  strokeWeight(3);
+  // Maternal inner crosses down to paternal position
+  line(crossX - 4, innerMatY + chromH / 2, crossX + 4, innerPatY + chromH / 2);
+  // Paternal inner crosses up to maternal position
+  line(crossX - 4, innerPatY + chromH / 2, crossX + 4, innerMatY + chromH / 2);
+
+  // Chiasma label
+  noStroke();
+  fill('#FF5722');
+  textAlign(CENTER, BOTTOM);
+  textSize(10);
+  textStyle(BOLD);
+  text('Chiasma', crossX, innerMatY - 4);
+  textStyle(NORMAL);
+
+  // Right halves (after the chiasma, the chromatids swap vertical positions)
+  // Maternal continues at paternal position on the right
+  if (matSegsRight.length > 0) {
+    drawChromatid(crossX, innerPatY, rightW, chromH, matSegsRight, false);
+  }
+
+  // Paternal continues at maternal position on the right
+  if (patSegsRight.length > 0) {
+    drawChromatid(crossX, innerMatY, rightW, chromH, patSegsRight, false);
+  }
+
+  // Double crossover
+  if (doubleCrossover && crossX2 > 0) {
+    noStroke();
+    fill('#FF9800');
+    textAlign(CENTER, TOP);
+    textSize(9);
+    textStyle(BOLD);
+    text('2nd Chiasma', crossX2, outerPatY + chromH + 8);
+    textStyle(NORMAL);
+
+    stroke('#FF9800');
+    strokeWeight(2);
+    line(crossX2, innerMatY - 4, crossX2, outerPatY + chromH + 4);
+  }
+
+  // Centromeres
+  fill(CENTROMERE);
+  noStroke();
+  let centX = cx + chromW / 2;
+  ellipse(cx + 4, (cy + innerMatY + chromH) / 2, 8, cy + chromH + sisterGap + chromH - cy + 8);
+  ellipse(cx + 4, (innerPatY + outerPatY + chromH) / 2, 8, outerPatY + chromH - innerPatY + 8);
+
+  // Labels
+  fill(80);
+  textSize(9);
+  textAlign(RIGHT, CENTER);
+  text('1', cx - 6, cy + chromH / 2);
+  text('2', cx - 6, innerMatY + chromH / 2);
+  text('3', cx - 6, innerPatY + chromH / 2);
+  text('4', cx - 6, outerPatY + chromH / 2);
+}
+
+// ---- STAGE 4: After crossing over ----
+function drawStage4() {
+  let cy = 70;
+  let chromW = canvasWidth * 0.45;
+  let chromH = 24;
+  let cx = canvasWidth / 2 - chromW / 2;
+  let gap = 14;
+
+  let chromatids;
+  if (doubleCrossover) {
+    // Double crossover between A-B and B-C: B segment swaps back
+    chromatids = [
+      { label: 'Chromatid 1 (Parental)', type: 'Parental',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: MATERNAL, allele: 'B' },
+          { color: MATERNAL, allele: 'C' },
+          { color: MATERNAL, allele: 'D' }
+        ]},
+      { label: 'Chromatid 2 (Recombinant)', type: 'Recombinant',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: PATERNAL, allele: 'b', striped: true },
+          { color: MATERNAL, allele: 'C' },
+          { color: MATERNAL, allele: 'D' }
+        ]},
+      { label: 'Chromatid 3 (Recombinant)', type: 'Recombinant',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: MATERNAL, allele: 'B', striped: true },
+          { color: PATERNAL, allele: 'c' },
+          { color: PATERNAL, allele: 'd' }
+        ]},
+      { label: 'Chromatid 4 (Parental)', type: 'Parental',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: PATERNAL, allele: 'b' },
+          { color: PATERNAL, allele: 'c' },
+          { color: PATERNAL, allele: 'd' }
+        ]}
+    ];
+  } else {
+    // Single crossover between B and C
+    chromatids = [
+      { label: 'Chromatid 1 (Parental)', type: 'Parental',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: MATERNAL, allele: 'B' },
+          { color: MATERNAL, allele: 'C' },
+          { color: MATERNAL, allele: 'D' }
+        ]},
+      { label: 'Chromatid 2 (Recombinant)', type: 'Recombinant',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: MATERNAL, allele: 'B' },
+          { color: PATERNAL, allele: 'c', striped: true },
+          { color: PATERNAL, allele: 'd', striped: true }
+        ]},
+      { label: 'Chromatid 3 (Recombinant)', type: 'Recombinant',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: PATERNAL, allele: 'b' },
+          { color: MATERNAL, allele: 'C', striped: true },
+          { color: MATERNAL, allele: 'D', striped: true }
+        ]},
+      { label: 'Chromatid 4 (Parental)', type: 'Parental',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: PATERNAL, allele: 'b' },
+          { color: PATERNAL, allele: 'c' },
+          { color: PATERNAL, allele: 'd' }
+        ]}
+    ];
+  }
+
+  for (let i = 0; i < 4; i++) {
+    let c = chromatids[i];
+    let yPos = cy + i * (chromH + gap);
+
+    // Label
+    noStroke();
+    let labelColor = c.type === 'Parental' ? '#1565C0' : '#E65100';
+    fill(labelColor);
+    textAlign(LEFT, CENTER);
+    textSize(10);
+    textStyle(BOLD);
+    text(c.label, cx, yPos - 8);
+    textStyle(NORMAL);
+
+    // Type badge
+    let badgeX = cx + chromW + 10;
+    let badgeColor = c.type === 'Parental' ? '#E3F2FD' : '#FFF3E0';
+    let badgeBorder = c.type === 'Parental' ? '#1565C0' : '#E65100';
+    fill(badgeColor);
+    stroke(badgeBorder);
+    strokeWeight(1);
+    rect(badgeX, yPos - 2, 80, chromH + 4, 12);
+    noStroke();
+    fill(badgeBorder);
+    textAlign(CENTER, CENTER);
+    textSize(10);
+    textStyle(BOLD);
+    text(c.type, badgeX + 40, yPos + chromH / 2);
+    textStyle(NORMAL);
+
+    drawChromatid(cx, yPos, chromW, chromH, c.segs, true);
+  }
+}
+
+// ---- STAGE 5: Four separated chromatids ----
+function drawStage5() {
+  let chromW = canvasWidth * 0.18;
+  let chromH = 26;
+  let startY = 60;
+  let gapX = 16;
+  let totalW = 4 * chromW + 3 * gapX;
+  let startX = canvasWidth / 2 - totalW / 2;
+
+  let gametes;
+  if (doubleCrossover) {
+    gametes = [
+      { alleles: 'A-B-C-D', type: 'Parental', segs: maternalSegs() },
+      { alleles: 'A-b-C-D', type: 'Recombinant',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: PATERNAL, allele: 'b', striped: true },
+          { color: MATERNAL, allele: 'C' },
+          { color: MATERNAL, allele: 'D' }
+        ]},
+      { alleles: 'a-B-c-d', type: 'Recombinant',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: MATERNAL, allele: 'B', striped: true },
+          { color: PATERNAL, allele: 'c' },
+          { color: PATERNAL, allele: 'd' }
+        ]},
+      { alleles: 'a-b-c-d', type: 'Parental', segs: paternalSegs() }
+    ];
+  } else {
+    gametes = [
+      { alleles: 'A-B-C-D', type: 'Parental', segs: maternalSegs() },
+      { alleles: 'A-B-c-d', type: 'Recombinant',
+        segs: [
+          { color: MATERNAL, allele: 'A' },
+          { color: MATERNAL, allele: 'B' },
+          { color: PATERNAL, allele: 'c', striped: true },
+          { color: PATERNAL, allele: 'd', striped: true }
+        ]},
+      { alleles: 'a-b-C-D', type: 'Recombinant',
+        segs: [
+          { color: PATERNAL, allele: 'a' },
+          { color: PATERNAL, allele: 'b' },
+          { color: MATERNAL, allele: 'C', striped: true },
+          { color: MATERNAL, allele: 'D', striped: true }
+        ]},
+      { alleles: 'a-b-c-d', type: 'Parental', segs: paternalSegs() }
+    ];
+  }
+
+  // Gamete label
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Four Resulting Gametes', canvasWidth / 2, startY - 16);
+  textStyle(NORMAL);
+
+  for (let i = 0; i < 4; i++) {
+    let g = gametes[i];
+    let gx = startX + i * (chromW + gapX);
+
+    // Gamete circle
+    let circY = startY + 60;
+    let circR = min(chromW * 0.8, 80);
+    fill(g.type === 'Parental' ? '#E3F2FD' : '#FFF3E0');
+    stroke(g.type === 'Parental' ? '#1565C0' : '#E65100');
+    strokeWeight(2);
+    ellipse(gx + chromW / 2, circY + circR / 2 + 10, circR, circR);
+
+    // Draw chromatid inside circle
+    let innerW = chromW * 0.85;
+    let innerX = gx + (chromW - innerW) / 2;
+    drawChromatid(innerX, circY + circR / 2, innerW, 18, g.segs, true);
+
+    // Allele string
+    noStroke();
+    fill(50);
+    textAlign(CENTER, TOP);
+    textSize(10);
+    textStyle(BOLD);
+    text(g.alleles, gx + chromW / 2, circY + circR + 16);
+    textStyle(NORMAL);
+
+    // Type label
+    let typeColor = g.type === 'Parental' ? '#1565C0' : '#E65100';
+    fill(typeColor);
+    textSize(10);
+    textStyle(BOLD);
+    text(g.type, gx + chromW / 2, circY + circR + 32);
+    textStyle(NORMAL);
+
+    // Gamete number
+    fill(100);
+    textSize(9);
+    text('Gamete ' + (i + 1), gx + chromW / 2, startY);
+  }
+
+  // Summary
+  noStroke();
+  fill(50);
+  textAlign(CENTER, TOP);
+  textSize(11);
+  let summaryY = startY + 180;
+  text('Result: 2 Parental gametes + 2 Recombinant gametes = 50% recombination frequency',
+       canvasWidth / 2, summaryY);
+}
+
+// ---- INFO PANEL ----
+function drawInfoPanel() {
+  let info = stageInfo[currentStage];
+  let panelY = drawHeight - 90;
+  let panelH = 82;
+  let panelX = margin + 4;
+  let panelW = canvasWidth - margin * 2 - 8;
+
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 6);
+
+  noStroke();
+  fill('#1565C0');
+  textAlign(LEFT, TOP);
+  textSize(11);
+  textStyle(BOLD);
+  text(info.title, panelX + 10, panelY + 6);
+  textStyle(NORMAL);
+
+  fill(60);
+  textSize(10);
+  text(info.desc, panelX + 10, panelY + 22, panelW - 20);
+}
+
+// ---- PREDICTION PROMPT ----
+function drawPredictionPrompt() {
+  // Semi-transparent overlay
+  fill(0, 0, 0, 120);
+  noStroke();
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Prediction box
+  let bw = 420;
+  let bh = 180;
+  let bx = canvasWidth / 2 - bw / 2;
+  let by = drawHeight / 2 - bh / 2 - 20;
+
+  fill(255);
+  stroke('#FF9800');
+  strokeWeight(3);
+  rect(bx, by, bw, bh, 10);
+
+  noStroke();
+  fill('#E65100');
+  textAlign(CENTER, TOP);
+  textSize(16);
+  textStyle(BOLD);
+  text('Predict Before You See!', bx + bw / 2, by + 14);
+  textStyle(NORMAL);
+
+  fill(50);
+  textSize(12);
+  text('A chiasma formed between loci B and C.', bx + bw / 2, by + 42);
+  textSize(11);
+
+  fill(30);
+  textStyle(BOLD);
+  text('Which alleles will each recombinant', bx + bw / 2, by + 68);
+  text('chromatid carry?', bx + bw / 2, by + 84);
+  textStyle(NORMAL);
+
+  fill(80);
+  textSize(10);
+  text('Think about which segments swap...', bx + bw / 2, by + 108);
+  text('then click "Reveal Answer" below.', bx + bw / 2, by + 124);
+
+  // Reveal button
+  let rbw = 140;
+  let rbh = 30;
+  let rbx = bx + bw / 2 - rbw / 2;
+  let rby = by + bh - 40;
+  let isHover = mouseX > rbx && mouseX < rbx + rbw && mouseY > rby && mouseY < rby + rbh;
+
+  fill(isHover ? '#E65100' : '#FF9800');
+  noStroke();
+  rect(rbx, rby, rbw, rbh, 6);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text('Reveal Answer', rbx + rbw / 2, rby + rbh / 2);
+  textStyle(NORMAL);
+
+  if (isHover && mouseIsPressed) {
+    predictionRevealed = true;
+    showPrediction = false;
+    currentStage = 3;
+    updateButtonStates();
+  }
+}
+
+// ---- BUTTON STATE ----
+function updateButtonStates() {
+  if (currentStage === 0) {
+    prevBtn.attribute('disabled', '');
+  } else {
+    prevBtn.removeAttribute('disabled');
+  }
+  if (currentStage === totalStages - 1) {
+    nextBtn.attribute('disabled', '');
+  } else {
+    nextBtn.removeAttribute('disabled');
+  }
+
+  // Update next button text for prediction
+  if (currentStage === 2 && !predictionRevealed) {
+    nextBtn.html('Predict & Reveal');
+  } else {
+    nextBtn.html('Next Step');
+  }
+}
+
+// ---- CONTROLS ----
+function positionControls() {
+  let y = drawHeight + 8;
+  prevBtn.position(margin, y);
+  nextBtn.position(margin + 80, y);
+  doubleBtn.position(margin + 180, y);
+}
+
+// ---- RESPONSIVE ----
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, canvasHeight);
+  positionControls();
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Krebs Cycle Explorer using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Krebs Cycle Explorer MicroSim
+// Interactive step-through of the 8 reactions of the Krebs (citric acid) cycle
+// Students click "Step Forward" to advance through each reaction and see
+// products accumulate in a running tally panel.
+// MicroSim template version 2026.02
+
+// ---- layout globals ----
+let containerWidth;
+let canvasWidth = 760;
+let drawHeight = 610;
+let controlHeight = 40;
+let canvasHeight = drawHeight + controlHeight;
+let containerHeight = canvasHeight;
+let margin = 20;
+let sliderLeftMargin = 160;
+let defaultTextSize = 14;
+
+// ---- cycle data ----
+const intermediates = [
+  { name: 'Oxaloacetate', carbons: 4, highlight: true },
+  { name: 'Citrate',      carbons: 6 },
+  { name: 'Isocitrate',   carbons: 6 },
+  { name: '\u03B1-Ketoglutarate', carbons: 5 },
+  { name: 'Succinyl-CoA', carbons: 4 },
+  { name: 'Succinate',    carbons: 4 },
+  { name: 'Fumarate',     carbons: 4 },
+  { name: 'Malate',       carbons: 4 }
+];
+
+// Products generated on the arrow FROM index i TO index (i+1)%8
+// Each entry: { co2, nadh, fadh2, atp }
+const reactions = [
+  { co2: 0, nadh: 0, fadh2: 0, atp: 0 }, // OAA → Citrate (condensation with Acetyl-CoA)
+  { co2: 0, nadh: 0, fadh2: 0, atp: 0 }, // Citrate → Isocitrate (isomerisation)
+  { co2: 1, nadh: 1, fadh2: 0, atp: 0 }, // Isocitrate → α-KG (oxidative decarb)
+  { co2: 1, nadh: 1, fadh2: 0, atp: 0 }, // α-KG → Succinyl-CoA (oxidative decarb)
+  { co2: 0, nadh: 0, fadh2: 0, atp: 1 }, // Succinyl-CoA → Succinate (substrate-level phosph)
+  { co2: 0, nadh: 0, fadh2: 1, atp: 0 }, // Succinate → Fumarate (oxidation)
+  { co2: 0, nadh: 0, fadh2: 0, atp: 0 }, // Fumarate → Malate (hydration)
+  { co2: 0, nadh: 1, fadh2: 0, atp: 0 }  // Malate → OAA (oxidation)
+];
+
+const reactionDescriptions = [
+  'Acetyl-CoA (2C) combines with Oxaloacetate (4C) to form Citrate (6C). CoA is released.',
+  'Citrate is rearranged to Isocitrate by the enzyme aconitase.',
+  'Isocitrate is oxidized to \u03B1-Ketoglutarate. CO\u2082 is released and NAD\u207A is reduced to NADH.',
+  '\u03B1-Ketoglutarate is oxidized to Succinyl-CoA. CO\u2082 is released and NAD\u207A is reduced to NADH.',
+  'Succinyl-CoA is converted to Succinate. GTP (=ATP) is produced by substrate-level phosphorylation.',
+  'Succinate is oxidized to Fumarate. FAD is reduced to FADH\u2082.',
+  'Fumarate is hydrated to form Malate.',
+  'Malate is oxidized to regenerate Oxaloacetate. NAD\u207A is reduced to NADH.'
+];
+
+// ---- state ----
+let currentStep = -1; // -1 = nothing highlighted yet
+let tally = { co2: 0, nadh: 0, fadh2: 0, atp: 0 };
+let perGlucoseMode = false;
+let animating = false;
+let animTimer = 0;
+let selectedNode = -1; // node clicked for info
+
+// ---- buttons ----
+let stepBtn, runBtn, resetBtn, glucoseBtn;
+
+// ---- geometry helpers ----
+let cx, cy, radius; // cycle center and radius
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  var mainElement = document.querySelector('main');
+  canvas.parent(mainElement);
+  textFont('Arial');
+
+  // Create control buttons
+  stepBtn = createButton('Step Forward');
+  stepBtn.parent(mainElement);
+  stepBtn.position(10, drawHeight + 8);
+  stepBtn.mousePressed(stepForward);
+
+  runBtn = createButton('Run Full Cycle');
+  runBtn.parent(mainElement);
+  runBtn.position(120, drawHeight + 8);
+  runBtn.mousePressed(runFullCycle);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(mainElement);
+  resetBtn.position(250, drawHeight + 8);
+  resetBtn.mousePressed(resetCycle);
+
+  glucoseBtn = createButton('\u00D72 for glucose');
+  glucoseBtn.parent(mainElement);
+  glucoseBtn.position(320, drawHeight + 8);
+  glucoseBtn.mousePressed(toggleGlucose);
+
+  describe('Interactive Krebs cycle explorer showing 8 intermediates in a circular pathway with step-through animation and running tally of products', LABEL);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Drawing area
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, canvasWidth, drawHeight);
+
+  // Control area
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Compute cycle geometry
+  let cycleAreaWidth = canvasWidth - 200; // reserve right side for tally
+  cx = cycleAreaWidth / 2;
+  cy = drawHeight / 2 + 10;
+  radius = min(cycleAreaWidth, drawHeight) * 0.32;
+
+  // Title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(24);
+  text('Krebs Cycle Explorer', cx, 12);
+
+  // Hint text to the right of the title
+  textSize(12);
+  fill('#888');
+  textAlign(LEFT, TOP);
+  text('Click on a step to see details', cx + 160, 18);
+
+  // Draw Acetyl-CoA input arrow
+  drawAcetylCoAArrow();
+
+  // Draw arrows between nodes
+  for (let i = 0; i < 8; i++) {
+    drawReactionArrow(i);
+  }
+
+  // Draw product badges on arrows
+  for (let i = 0; i < 8; i++) {
+    drawProductBadges(i);
+  }
+
+  // Draw nodes
+  for (let i = 0; i < 8; i++) {
+    drawNode(i);
+  }
+
+  // Draw tally panel
+  drawTallyPanel();
+
+  // Draw info panel for selected node
+  if (selectedNode >= 0) {
+    drawInfoPanel();
+  }
+
+  // Draw reaction description at bottom of cycle area
+  if (currentStep >= 0) {
+    drawReactionDescription();
+  }
+
+  // Handle animation
+  if (animating) {
+    animTimer++;
+    if (animTimer > 40) {
+      animTimer = 0;
+      stepForward();
+      if (currentStep === -1) {
+        animating = false;
+      }
+    }
+  }
+}
+
+// Node box dimensions (used by drawing and arrow intersection)
+const boxW = 110;
+const boxH = 42;
+
+function getNodeAngle(i) {
+  // Clockwise from top: OAA at 12 o'clock, Citrate at ~1:30, etc.
+  return -HALF_PI + (TWO_PI * i) / 8;
+}
+
+// Per-node x nudges to avoid overlapping arrows/badges
+const nodeNudgeX = [0, 0, 30, 0, 0, 0, -30, 0];
+
+function getNodePos(i) {
+  let angle = getNodeAngle(i);
+  return {
+    x: cx + radius * cos(angle) + nodeNudgeX[i],
+    y: cy + radius * sin(angle)
+  };
+}
+
+// Find where a ray from box center in direction (dx,dy) exits the box edge
+function boxEdgePoint(bx, by, dx, dy) {
+  if (dx === 0 && dy === 0) return { x: bx, y: by };
+  let halfW = boxW / 2 + 2; // small padding
+  let halfH = boxH / 2 + 2;
+  let sx = (dx > 0) ? halfW / dx : (dx < 0) ? -halfW / dx : 99999;
+  let sy = (dy > 0) ? halfH / dy : (dy < 0) ? -halfH / dy : 99999;
+  let s = min(sx, sy);
+  return { x: bx + dx * s, y: by + dy * s };
+}
+
+function drawNode(i) {
+  let pos = getNodePos(i);
+  let inter = intermediates[i];
+  let isActive = (currentStep >= 0 && (i === currentStep || i === (currentStep + 1) % 8));
+  let isSelected = (i === selectedNode);
+
+  // Shadow / highlight
+  if (isActive) {
+    fill(255, 230, 100, 180);
+    noStroke();
+    rect(pos.x - boxW/2 - 3, pos.y - boxH/2 - 3, boxW + 6, boxH + 6, 12);
+  }
+
+  // Node fill
+  if (inter.highlight) {
+    fill('#FFD700'); // gold for OAA
+  } else if (isSelected) {
+    fill('#B3E5FC');
+  } else {
+    fill(255);
+  }
+  stroke(isActive ? '#FF8F00' : '#555');
+  strokeWeight(isActive ? 2.5 : 1.5);
+  rect(pos.x - boxW/2, pos.y - boxH/2, boxW, boxH, 8);
+
+  // Text
+  fill('black');
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(11);
+  text(inter.name, pos.x, pos.y - 7);
+  textSize(10);
+  fill('#666');
+  text('(' + inter.carbons + 'C)', pos.x, pos.y + 10);
+}
+
+function drawReactionArrow(i) {
+  let fromPos = getNodePos(i);
+  let toPos = getNodePos((i + 1) % 8);
+
+  let isActive = (currentStep === i);
+  let isCompleted = false;
+  if (currentStep >= 0) {
+    if (i < currentStep) isCompleted = true;
+  }
+
+  // Control point on the circle at the midpoint angle, pushed outward
+  // This guarantees all arrows bow outward and curve clockwise
+  let angleFrom = getNodeAngle(i);
+  let angleTo = getNodeAngle((i + 1) % 8);
+  // Handle wrap-around (node 7 → node 0): angleTo would be less than angleFrom
+  if (angleTo < angleFrom) angleTo += TWO_PI;
+  let midAngle = (angleFrom + angleTo) / 2;
+  // Less bow for arrows into/out of OAA (top) and Succinyl-CoA (bottom)
+  let bowRadius = (i === 0 || i === 7 || i === 3 || i === 4) ? radius + 15 : radius + 45;
+  let cpx = cx + bowRadius * cos(midAngle);
+  let cpy = cy + bowRadius * sin(midAngle);
+
+  // Start point: where the arrow leaves the source box
+  let startEdge;
+  if (i === 0) {
+    // OAA → Citrate: leave from center of right edge
+    startEdge = { x: fromPos.x + boxW/2 + 2, y: fromPos.y };
+  } else if (i === 4) {
+    // Succinyl-CoA → Succinate: leave from center of right edge
+    startEdge = { x: fromPos.x + boxW/2 + 2, y: fromPos.y };
+  } else {
+    startEdge = boxEdgePoint(fromPos.x, fromPos.y, cpx - fromPos.x, cpy - fromPos.y);
+  }
+  // End point: where the arrow arrives at the destination box
+  let endEdge;
+  if (i === 7) {
+    // Malate → OAA: arrive at center of left edge
+    endEdge = { x: toPos.x - boxW/2 - 2, y: toPos.y };
+  } else if (i === 3) {
+    // α-KG → Succinyl-CoA: arrive at center of left edge
+    endEdge = { x: toPos.x - boxW/2 - 2, y: toPos.y };
+  } else {
+    endEdge = boxEdgePoint(toPos.x, toPos.y, cpx - toPos.x, cpy - toPos.y);
+  }
+
+  // Set color/weight
+  let arrowColor;
+  let sw;
+  if (isActive) {
+    arrowColor = color('#FF8F00');
+    sw = 3;
+  } else if (isCompleted) {
+    arrowColor = color('#4CAF50');
+    sw = 2.5;
+  } else {
+    arrowColor = color('#999');
+    sw = 2;
+  }
+
+  // Draw curved arrow body using quadratic bezier
+  stroke(arrowColor);
+  strokeWeight(sw);
+  noFill();
+  strokeCap(ROUND);
+  beginShape();
+  vertex(startEdge.x, startEdge.y);
+  quadraticVertex(cpx, cpy, endEdge.x, endEdge.y);
+  endShape();
+
+  // Filled arrowhead at the tip
+  // Tangent at end of quadratic bezier = direction from control point to end point
+  let tangentX = endEdge.x - cpx;
+  let tangentY = endEdge.y - cpy;
+  let tLen = sqrt(tangentX * tangentX + tangentY * tangentY);
+  tangentX /= tLen;
+  tangentY /= tLen;
+
+  let headLen = isActive ? 14 : 11;
+  let headHalf = 0.42;
+  let angle = atan2(tangentY, tangentX);
+
+  fill(arrowColor);
+  noStroke();
+  triangle(
+    endEdge.x, endEdge.y,
+    endEdge.x - headLen * cos(angle - headHalf), endEdge.y - headLen * sin(angle - headHalf),
+    endEdge.x - headLen * cos(angle + headHalf), endEdge.y - headLen * sin(angle + headHalf)
+  );
+}
+
+function drawProductBadges(i) {
+  let r = reactions[i];
+  if (r.co2 === 0 && r.nadh === 0 && r.fadh2 === 0 && r.atp === 0) return;
+
+  let fromPos = getNodePos(i);
+  let toPos = getNodePos((i + 1) % 8);
+
+  // Replicate the control-point math from drawReactionArrow
+  let angleFrom = getNodeAngle(i);
+  let angleTo = getNodeAngle((i + 1) % 8);
+  if (angleTo < angleFrom) angleTo += TWO_PI;
+  let midAngle = (angleFrom + angleTo) / 2;
+  let bowRadius = radius + 45;
+  let cpx = cx + bowRadius * cos(midAngle);
+  let cpy = cy + bowRadius * sin(midAngle);
+
+  let startEdge = boxEdgePoint(fromPos.x, fromPos.y, cpx - fromPos.x, cpy - fromPos.y);
+  let endEdge = boxEdgePoint(toPos.x, toPos.y, cpx - toPos.x, cpy - toPos.y);
+
+  // Quadratic bezier at t=0.5: B = 0.25*P0 + 0.5*CP + 0.25*P1
+  let curveMidX = 0.25 * startEdge.x + 0.5 * cpx + 0.25 * endEdge.x;
+  let curveMidY = 0.25 * startEdge.y + 0.5 * cpy + 0.25 * endEdge.y;
+
+  // Offset further outward from center for readability
+  let outX = curveMidX - cx;
+  let outY = curveMidY - cy;
+  let outLen = sqrt(outX * outX + outY * outY);
+  let badgeX = curveMidX + (outX / outLen) * 26;
+  let badgeY = curveMidY + (outY / outLen) * 26;
+
+  let badges = [];
+  if (r.co2 > 0) badges.push({ label: 'CO\u2082', color: '#EF5350' });
+  if (r.nadh > 0) badges.push({ label: 'NADH', color: '#4A90D9' });
+  if (r.fadh2 > 0) badges.push({ label: 'FADH\u2082', color: '#FF9800' });
+  if (r.atp > 0) badges.push({ label: 'ATP', color: '#4CAF50' });
+
+  let spacing = 18;
+  let startY = badgeY - (badges.length - 1) * spacing / 2;
+
+  // Dim if step not yet reached
+  let dimmed = (currentStep < 0 || i > currentStep);
+
+  for (let b = 0; b < badges.length; b++) {
+    let bx = badgeX;
+    let by = startY + b * spacing;
+    let badge = badges[b];
+
+    if (dimmed) {
+      fill(red(color(badge.color)), green(color(badge.color)), blue(color(badge.color)), 80);
+    } else {
+      fill(badge.color);
+    }
+    noStroke();
+    let tw = textWidth(badge.label);
+    // Pill shape
+    rectMode(CENTER);
+    rect(bx, by, max(tw + 12, 42), 16, 8);
+    rectMode(CORNER);
+
+    fill(dimmed ? color(255, 255, 255, 150) : 255);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(9);
+    text(badge.label, bx, by - 1);
+  }
+}
+
+function drawAcetylCoAArrow() {
+  // Arrow coming from top-left toward OAA→Citrate junction
+  let oaaPos = getNodePos(0);
+  let citPos = getNodePos(1);
+  let junctionX = (oaaPos.x + citPos.x) / 2;
+  let junctionY = (oaaPos.y + citPos.y) / 2;
+
+  let startX = junctionX - 70;
+  // the placement of the label
+  let startY = junctionY - 75;
+
+  // Shorten the arrow so it stops before overlapping the OAA box
+  // subtract 68 to move the center of the Oxaloaacetate box
+  let tipX = junctionX - 68;
+  let tipY = junctionY - 50;
+
+  stroke('#8E24AA');
+  strokeWeight(2);
+  line(startX, startY, tipX, tipY);
+
+  // Filled arrowhead
+  let angle = atan2(tipY - startY, tipX - startX);
+  fill('#8E24AA');
+  noStroke();
+  triangle(
+    tipX, tipY,
+    tipX - 12 * cos(angle - 0.42), tipY - 12 * sin(angle - 0.42),
+    tipX - 12 * cos(angle + 0.42), tipY - 12 * sin(angle + 0.42)
+  );
+
+  // Label — moved up 20px
+  fill('#8E24AA');
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text('Acetyl-CoA', startX - 8, startY - 22);
+  textSize(10);
+  textStyle(NORMAL);
+  text('(2C)', startX - 8, startY - 8);
+}
+
+function drawTallyPanel() {
+  let panelX = canvasWidth - 185;
+  let panelY = 70;
+  let panelW = 170;
+  let panelH = 220;
+
+  // Panel background
+  fill(255, 255, 255, 230);
+  stroke('#ccc');
+  strokeWeight(1);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  // Title
+  fill('black');
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  let titleText = perGlucoseMode ? 'Products (per glucose)' : 'Products (per turn)';
+  text(titleText, panelX + panelW/2, panelY + 10);
+  textStyle(NORMAL);
+
+  let mult = perGlucoseMode ? 2 : 1;
+  let items = [
+    { label: 'CO\u2082', value: tally.co2 * mult, color: '#EF5350' },
+    { label: 'NADH', value: tally.nadh * mult, color: '#4A90D9' },
+    { label: 'FADH\u2082', value: tally.fadh2 * mult, color: '#FF9800' },
+    { label: 'ATP (GTP)', value: tally.atp * mult, color: '#4CAF50' }
+  ];
+
+  let startY = panelY + 38;
+  let rowH = 36;
+
+  for (let i = 0; i < items.length; i++) {
+    let iy = startY + i * rowH;
+    let item = items[i];
+
+    // Color swatch
+    fill(item.color);
+    noStroke();
+    rect(panelX + 12, iy, 14, 14, 3);
+
+    // Label
+    fill('black');
+    textAlign(LEFT, TOP);
+    textSize(13);
+    text(item.label, panelX + 32, iy);
+
+    // Value
+    textAlign(RIGHT, TOP);
+    textSize(18);
+    textStyle(BOLD);
+    text(item.value, panelX + panelW - 15, iy - 2);
+    textStyle(NORMAL);
+  }
+
+  // Expected totals
+  let expectedY = startY + items.length * rowH + 8;
+  fill('#888');
+  textAlign(LEFT, TOP);
+  textSize(10);
+  let expMult = perGlucoseMode ? 2 : 1;
+  text('Expected: ' + (2 * expMult) + ' CO\u2082, ' + (3 * expMult) + ' NADH', panelX + 12, expectedY);
+  text((1 * expMult) + ' FADH\u2082, ' + (1 * expMult) + ' ATP', panelX + 12, expectedY + 14);
+}
+
+// Draw info panel for selected node that shows the step
+// where it's produced and consumed, and its role in the cycle
+function drawInfoPanel() {
+  let inter = intermediates[selectedNode];
+  let panelX = canvasWidth - 185;
+  let panelY = 300;
+  let panelW = 170;
+  let panelH = 90;
+
+  // Panel background fill with white
+  fill('white');
+  stroke('#90CAF9');
+  strokeWeight(1.5);
+  rect(panelX, panelY, panelW, panelH, 8);
+
+  fill('#1565C0');
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text(inter.name, panelX + 10, panelY + 10);
+  textStyle(NORMAL);
+
+  fill('#333');
+  textSize(11);
+  text('Carbons: ' + inter.carbons, panelX + 10, panelY + 28);
+
+  // Role description
+  textSize(10);
+  fill('#555');
+  let roles = [
+    'Entry/exit point.\nAccepts Acetyl-CoA.',
+    'First product of\nthe cycle (6C).',
+    'Isomer of citrate.\nNext step: oxidation.',
+    '5-carbon intermediate.\nCO\u2082 released here.',
+    'High-energy thioester.\nDrives ATP synthesis.',
+    'Product of substrate-\nlevel phosphorylation.',
+    '4-carbon intermediate.\nFADH\u2082 produced before.',
+    'Hydrated fumarate.\nOxidized back to OAA.'
+  ];
+  text(roles[selectedNode], panelX + 10, panelY + 44);
+}
+
+function drawReactionDescription() {
+  let descY = drawHeight - 48;
+  let descW = canvasWidth - 210;
+
+  fill(255, 255, 240, 230);
+  stroke('#FFD54F');
+  strokeWeight(1);
+  rect(10, descY, descW, 38, 6);
+
+  fill('#333');
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  let stepLabel = 'Step ' + (currentStep + 1) + '/8: ';
+  text(stepLabel + reactionDescriptions[currentStep], 18, descY + 19);
+}
+
+// ---- interaction ----
+function stepForward() {
+  if (currentStep < 7) {
+    currentStep++;
+    // Accumulate products for this step
+    let r = reactions[currentStep];
+    tally.co2 += r.co2;
+    tally.nadh += r.nadh;
+    tally.fadh2 += r.fadh2;
+    tally.atp += r.atp;
+  } else {
+    // Cycle complete, reset step indicator
+    currentStep = -1;
+    animating = false;
+  }
+}
+
+function runFullCycle() {
+  if (animating) {
+    animating = false;
+    return;
+  }
+  resetCycle();
+  animating = true;
+  animTimer = 0;
+  stepForward(); // start first step immediately
+}
+
+function resetCycle() {
+  currentStep = -1;
+  tally = { co2: 0, nadh: 0, fadh2: 0, atp: 0 };
+  animating = false;
+  selectedNode = -1;
+}
+
+function toggleGlucose() {
+  perGlucoseMode = !perGlucoseMode;
+  glucoseBtn.html(perGlucoseMode ? '\u00D71 per turn' : '\u00D72 for glucose');
+}
+
+function mousePressed() {
+  // Check if a node box was clicked (rectangular hit test)
+  for (let i = 0; i < 8; i++) {
+    let pos = getNodePos(i);
+    if (mouseX >= pos.x - boxW/2 && mouseX <= pos.x + boxW/2 &&
+        mouseY >= pos.y - boxH/2 && mouseY <= pos.y + boxH/2) {
+      selectedNode = (selectedNode === i) ? -1 : i;
+      return;
+    }
+  }
+  // Click elsewhere dismisses info
+  if (selectedNode >= 0) {
+    selectedNode = -1;
+  }
+}
+
+// ---- responsiveness ----
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <div id="return-link" style="display:none; padding: 8px 16px;">
+        <a href=".">← Return to Lesson Plan</a>
+    </div>
+    <script>
+        if (window.self === window.top) {
+            document.getElementById('return-link').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

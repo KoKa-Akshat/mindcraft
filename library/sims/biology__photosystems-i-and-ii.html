@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Light-Dependent Reactions (Z-Scheme) using p5.js</title>
+    <style>
+        body { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script>// Light-Dependent Reactions (Z-Scheme) — Step-Through MicroSim
+// Students trace electron flow from water through PSII, ETC, PSI to NADPH
+
+let canvasWidth = 400;
+let drawHeight = 420;
+let controlHeight = 50;
+let canvasHeight = drawHeight + controlHeight;
+let margin = 25;
+let defaultTextSize = 16;
+
+// Step state
+let currentStep = 0;
+let totalSteps = 6;
+let isPlaying = false;
+let lastAdvanceTime = 0;
+let playInterval = 2500; // ms between auto-advances
+
+// Buttons
+let prevBtn, nextBtn, playBtn, resetBtn;
+
+// Electron carrier data: name, x-fraction, energy (V), color
+// Energy axis: -1.5V top to +1.0V bottom (y maps to energy)
+let carriers = [
+  { id: 'H2O',   label: 'H\u2082O/O\u2082', xf: 0.06, energy: 0.82,  color: [100, 149, 237] },
+  { id: 'P680',  label: 'P680',              xf: 0.12, energy: 0.82,  color: [60, 179, 113] },
+  { id: 'P680s', label: 'P680*',             xf: 0.18, energy: -0.80, color: [60, 179, 113] },
+  { id: 'PQ',    label: 'PQ',                xf: 0.26, energy: 0.00,  color: [255, 165, 0] },
+  { id: 'Cytb6f',label: 'Cyt b6f',           xf: 0.34, energy: 0.15,  color: [220, 100, 100] },
+  { id: 'PC',    label: 'PC',                xf: 0.42, energy: 0.37,  color: [147, 112, 219] },
+  { id: 'P700',  label: 'P700',              xf: 0.48, energy: 0.43,  color: [34, 139, 34] },
+  { id: 'P700s', label: 'P700*',             xf: 0.54, energy: -1.30, color: [34, 139, 34] },
+  { id: 'Fd',    label: 'Fd',                xf: 0.62, energy: -0.45, color: [205, 133, 63] },
+  { id: 'NADPH', label: 'NADP\u207A/NADPH',  xf: 0.70, energy: -0.32, color: [70, 130, 180] }
+];
+
+// Steps define which carriers are highlighted and what description is shown
+let steps = [
+  {
+    title: 'Step 1: Photon Hits PSII',
+    desc: 'A photon of light is absorbed by Photosystem II (P680). The energy excites an electron to a higher energy level (P680*).',
+    highlight: [0, 1, 2],
+    photon: 1, // index of carrier receiving photon
+    equation: '2H\u2082O \u2192 4H\u207A + 4e\u207B + O\u2082'
+  },
+  {
+    title: 'Step 2: Electron to PQ, Water Splits',
+    desc: 'The excited electron transfers to plastoquinone (PQ). Water is split to replace the lost electron, releasing O\u2082 and H\u207A into the lumen.',
+    highlight: [2, 3],
+    equation: 'P680* \u2192 PQ (e\u207B transfer)'
+  },
+  {
+    title: 'Step 3: Electron Through Cyt b6f',
+    desc: 'The electron passes through the cytochrome b6f complex. This pumps H\u207A ions from stroma into the thylakoid lumen, building the proton gradient.',
+    highlight: [3, 4, 5],
+    equation: 'PQ \u2192 Cyt b6f \u2192 PC (H\u207A pumped)'
+  },
+  {
+    title: 'Step 4: Second Photon Hits PSI',
+    desc: 'The electron arrives at PSI (P700) via plastocyanin (PC). A second photon excites it to a very high energy level (P700*).',
+    highlight: [5, 6, 7],
+    photon: 6,
+    equation: 'PC \u2192 P700 \u2192 P700* (photon)'
+  },
+  {
+    title: 'Step 5: NADPH Formed',
+    desc: 'The high-energy electron passes through ferredoxin (Fd) to NADP\u207A reductase, which combines 2e\u207B + H\u207A + NADP\u207A to form NADPH in the stroma.',
+    highlight: [7, 8, 9],
+    equation: 'NADP\u207A + 2e\u207B + H\u207A \u2192 NADPH'
+  },
+  {
+    title: 'Step 6: ATP Synthase',
+    desc: 'The proton gradient drives H\u207A through ATP synthase (chemiosmosis). The energy from proton flow synthesizes ATP from ADP + P\u1d62 in the stroma.',
+    highlight: [],
+    equation: 'ADP + P\u1d62 \u2192 ATP',
+    atpStep: true
+  }
+];
+
+// Proton count in lumen (accumulates)
+let protonCount = 0;
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  prevBtn = createButton('Previous');
+  prevBtn.parent(document.querySelector('main'));
+  prevBtn.mousePressed(prevStep);
+
+  nextBtn = createButton('Next Step');
+  nextBtn.parent(document.querySelector('main'));
+  nextBtn.mousePressed(nextStep);
+
+  playBtn = createButton('Play All');
+  playBtn.parent(document.querySelector('main'));
+  playBtn.mousePressed(togglePlay);
+
+  resetBtn = createButton('Reset');
+  resetBtn.parent(document.querySelector('main'));
+  resetBtn.mousePressed(resetSim);
+
+  positionControls();
+  updateButtonStates();
+  describe('Interactive Z-scheme diagram showing electron flow through the light-dependent reactions of photosynthesis', LABEL);
+}
+
+function positionControls() {
+  let y = drawHeight + 12;
+  prevBtn.position(10, y);
+  nextBtn.position(90, y);
+  playBtn.position(175, y);
+  resetBtn.position(255, y);
+}
+
+function draw() {
+  updateCanvasSize();
+
+  // Backgrounds
+  fill('aliceblue');
+  stroke('silver');
+  rect(0, 0, canvasWidth, drawHeight);
+  fill('white');
+  rect(0, drawHeight, canvasWidth, controlHeight);
+
+  // Handle auto-play
+  if (isPlaying && millis() - lastAdvanceTime > playInterval) {
+    if (currentStep < totalSteps - 1) {
+      nextStep();
+    } else {
+      isPlaying = false;
+      playBtn.html('Play All');
+      updateButtonStates();
+    }
+    lastAdvanceTime = millis();
+  }
+
+  // Layout regions
+  let graphTop = 30;
+  let graphBottom = 280;
+  let graphLeft = 60;
+  let graphRight = canvasWidth * 0.72;
+  let panelLeft = canvasWidth * 0.73;
+  let panelWidth = canvasWidth * 0.26;
+
+  let membraneTop = 295;
+  let membraneBottom = 450;
+  let lumenTop = 340;
+  let stromaBottom = membraneTop + 10;
+
+  // Title
+  noStroke();
+  fill(0);
+  textSize(20);
+  textAlign(CENTER, TOP);
+  text('Light-Dependent Reactions (Z-Scheme)', (graphLeft + graphRight) / 2, 5);
+
+  // Y-axis (energy)
+  drawEnergyAxis(graphLeft, graphTop, graphBottom);
+
+  // Draw Z-scheme path
+  drawZScheme(graphLeft, graphRight, graphTop, graphBottom);
+
+  // Draw thylakoid membrane schematic
+  drawMembrane(graphLeft, graphRight, membraneTop, membraneBottom, lumenTop);
+
+  // Draw info panel
+  drawInfoPanel(panelLeft, graphTop, panelWidth);
+
+  // Control labels
+  noStroke();
+  fill(80);
+  textSize(14);
+  textAlign(LEFT, CENTER);
+  text('Step ' + (currentStep + 1) + '/' + totalSteps, 330, drawHeight + 25);
+}
+
+function drawEnergyAxis(left, top, bottom) {
+  stroke(80);
+  strokeWeight(1);
+  line(left - 5, top, left - 5, bottom);
+
+  // Tick marks and labels
+  noStroke();
+  fill(60);
+  textSize(11);
+  textAlign(RIGHT, CENTER);
+
+  let energyValues = [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0];
+  for (let ev of energyValues) {
+    let y = energyToY(ev, top, bottom);
+    stroke(80);
+    line(left - 10, y, left - 5, y);
+    noStroke();
+    text(ev.toFixed(1), left - 12, y);
+  }
+
+  // Axis label (rotated)
+  push();
+  translate(12, (top + bottom) / 2);
+  rotate(-HALF_PI);
+  textSize(11);
+  textAlign(CENTER, CENTER);
+  fill(60);
+  noStroke();
+  text('Reduction Potential (V)', 0, 0);
+  pop();
+}
+
+function energyToY(energy, top, bottom) {
+  // energy -1.5 maps to top, +1.0 maps to bottom
+  return map(energy, -1.5, 1.0, top, bottom);
+}
+
+// this function draws the Z-scheme diagram with carriers as nodes and electron flow as arrows
+function drawZScheme(left, right, top, bottom) {
+  let step = steps[currentStep];
+  let highlightSet = new Set(step.highlight);
+  let xShift = -15; // shift carrier path left without moving axis
+
+  // Draw all connections first (faded)
+  strokeWeight(2);
+  for (let i = 0; i < carriers.length - 1; i++) {
+    let c1 = carriers[i];
+    let c2 = carriers[i + 1];
+    let x1 = left + c1.xf * (right - left) / 0.72 + xShift;
+    let y1 = energyToY(c1.energy, top, bottom);
+    let x2 = left + c2.xf * (right - left) / 0.72 + xShift;
+    let y2 = energyToY(c2.energy, top, bottom);
+
+    let isActive = highlightSet.has(i) && highlightSet.has(i + 1);
+    if (isActive) {
+      stroke(255, 100, 50);
+      strokeWeight(3);
+    } else {
+      stroke(180);
+      strokeWeight(1.5);
+    }
+    line(x1, y1, x2, y2);
+
+    // Arrow head on active segments
+    if (isActive) {
+      let angle = atan2(y2 - y1, x2 - x1);
+      let mx = (x1 + x2) / 2;
+      let my = (y1 + y2) / 2;
+      push();
+      translate(mx, my);
+      rotate(angle);
+      fill(255, 100, 50);
+      noStroke();
+      triangle(0, 0, -8, -4, -8, 4);
+      pop();
+    }
+  }
+
+  // Draw carrier nodes
+  for (let i = 0; i < carriers.length; i++) {
+    let c = carriers[i];
+    let x = left + c.xf * (right - left) / 0.72 + xShift;
+    let y = energyToY(c.energy, top, bottom);
+    let isHighlighted = highlightSet.has(i);
+
+    // Node circle
+    if (isHighlighted) {
+      fill(c.color[0], c.color[1], c.color[2]);
+      stroke(0);
+      strokeWeight(2);
+      ellipse(x, y, 14, 14);
+    } else {
+      fill(c.color[0], c.color[1], c.color[2], 120);
+      stroke(150);
+      strokeWeight(1);
+      ellipse(x, y, 10, 10);
+    }
+
+    // Label
+    noStroke();
+    fill(isHighlighted ? 0 : 120);
+    textSize(isHighlighted ? 12 : 10);
+    textAlign(CENTER, BOTTOM);
+    text(c.label, x, y - 10);
+  }
+
+  // Photon arrows (lightning bolt icons)
+  if (step.photon !== undefined) {
+    let c = carriers[step.photon];
+    let x = left + c.xf * (right - left) / 0.72 + xShift;
+    let y = energyToY(c.energy, top, bottom);
+    drawPhotonArrow(x - 15, y + 30, x - 5, y + 5);
+  }
+}
+
+function drawPhotonArrow(x1, y1, x2, y2) {
+  // Wavy yellow arrow representing photon
+  stroke(255, 200, 0);
+  strokeWeight(3);
+  let steps_n = 6;
+  let prevX = x1, prevY = y1;
+  for (let i = 1; i <= steps_n; i++) {
+    let t = i / steps_n;
+    let nx = lerp(x1, x2, t);
+    let ny = lerp(y1, y2, t);
+    let offset = sin(t * PI * 3) * 5;
+    nx += offset;
+    line(prevX, prevY, nx, ny);
+    prevX = nx;
+    prevY = ny;
+  }
+  // Arrow tip
+  fill(255, 200, 0);
+  noStroke();
+  push();
+  translate(x2, y2);
+  let a = atan2(y2 - y1, x2 - x1);
+  rotate(a);
+  triangle(0, 0, -8, -5, -8, 5);
+  pop();
+
+  // Label
+  noStroke();
+  fill(200, 150, 0);
+  textSize(10);
+  textAlign(CENTER, TOP);
+  text('photon', x1 - 5, y1 + 5);
+}
+
+function drawMembrane(left, right, top, bottom, lumenY) {
+  let memX = 10;
+  let memW = canvasWidth * 0.72 - memX;
+
+  // Stroma label
+  noStroke();
+  fill(100, 160, 100, 60);
+  rect(memX, top, memW, lumenY - top);
+  fill(60, 120, 60);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  noStroke();
+  text('STROMA', memX + 5, top + 3);
+
+  // Thylakoid membrane (two lines)
+  // Brown lines with label
+  stroke(139, 90, 43);
+  strokeWeight(3);
+  line(memX, lumenY, memX + memW, lumenY);
+  line(memX, lumenY + 60, memX + memW, lumenY + 60);
+
+  noStroke();
+  fill(139, 90, 43);
+  textSize(10);
+  textAlign(RIGHT, CENTER);
+  text('membrane', memX + memW - 10, lumenY + 30);
+
+  // Lumen
+  fill(173, 216, 230, 80);
+  noStroke();
+  rect(memX, lumenY, memW, 60);
+  fill(30, 80, 150);
+  textSize(12);
+  textAlign(LEFT, CENTER);
+  noStroke();
+  text('LUMEN', memX + 5, lumenY + 30);
+
+  // Draw embedded complexes
+  let complexes = [
+    { name: 'PSII', xf: 0.15, color: [60, 179, 113] },
+    { name: 'Cyt b6f', xf: 0.38, color: [220, 100, 100] },
+    { name: 'PSI', xf: 0.58, color: [34, 139, 34] },
+    { name: 'ATP\nsynthase', xf: 0.80, color: [180, 120, 200] }
+  ];
+
+  for (let cx of complexes) {
+    let x = memX + cx.xf * memW;
+    let w = 50;
+    let h = 70;
+    fill(cx.color[0], cx.color[1], cx.color[2], 180);
+    stroke(cx.color[0] - 30, cx.color[1] - 30, cx.color[2] - 30);
+    strokeWeight(1);
+    rect(x - w / 2, lumenY - 5, w, h, 4);
+    noStroke();
+    fill(255);
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text(cx.name, x, lumenY + 30);
+  }
+
+  // Proton arrows into lumen (at Cyt b6f and water splitting)
+  if (currentStep >= 1) {
+    drawProtonArrow(memX + 0.15 * memW, lumenY - 10, lumenY + 15);
+  }
+  if (currentStep >= 2) {
+    drawProtonArrow(memX + 0.38 * memW, lumenY - 10, lumenY + 15);
+  }
+
+  // ATP production arrow
+  if (currentStep >= 5) {
+    let atpX = memX + 0.80 * memW;
+    stroke(180, 120, 200);
+    strokeWeight(2);
+    line(atpX, lumenY - 5, atpX, lumenY - 25);
+    noStroke();
+    fill(180, 50, 200);
+    textSize(12);
+    textAlign(CENTER, BOTTOM);
+    text('ATP', atpX, lumenY - 27);
+  }
+
+  // NADPH label in stroma
+  if (currentStep >= 4) {
+    let nadphX = memX + 0.65 * memW;
+    noStroke();
+    fill(70, 130, 180);
+    textSize(12);
+    textAlign(CENTER, TOP);
+    text('NADPH', nadphX, top + 18);
+  }
+
+  // Proton count
+  if (currentStep >= 1) {
+    protonCount = currentStep >= 2 ? 6 : 2;
+    noStroke();
+    fill(30, 80, 150);
+    textSize(20);
+    textAlign(RIGHT, CENTER);
+    text('H\u207A: ' + protonCount, memX + memW - 15, lumenY + 50);
+  }
+
+  // Below membrane region
+  fill(200, 230, 200, 40);
+  noStroke();
+  rect(memX, lumenY + 60, memW, bottom - lumenY - 60);
+}
+
+function drawProtonArrow(x, y1, y2) {
+  stroke(30, 80, 150);
+  strokeWeight(2);
+  line(x + 20, y1, x + 20, y2);
+  noStroke();
+  fill(30, 80, 150);
+  triangle(x + 20, y2, x + 16, y2 - 6, x + 24, y2 - 6);
+  textSize(9);
+  textAlign(CENTER, BOTTOM);
+  text('H\u207A', x + 20, y1 - 2);
+}
+
+function drawInfoPanel(x, y, w) {
+  let step = steps[currentStep];
+
+  // Panel background
+  fill('white');
+  stroke('gray');
+  strokeWeight(1);
+  // make the height be fixed based on the longest possible text (step 3)
+  // so it does not jump around as you advance steps
+  rect(x, y, w, 270, 8);
+
+  noStroke();
+  let px = x + 8;
+  let py = y + 12;
+  let pw = w - 16;
+
+  // Step title (wrapped using p5 text box)
+  fill(30, 60, 120);
+  textSize(14);
+  textAlign(LEFT, TOP);
+  textStyle(BOLD);
+  textLeading(18);
+  text(step.title, px, py, pw);
+  py += wrappedTextHeight(step.title, pw, 14, 18);
+  textStyle(NORMAL);
+  py += 4;
+
+  // Description (wrapped using p5 text box)
+  fill(50);
+  textSize(12);
+  textLeading(16);
+  text(step.desc, px, py, pw);
+  py += wrappedTextHeight(step.desc, pw, 12, 16);
+  py += 10;
+
+  // Equation
+  if (step.equation) {
+    fill(150, 50, 50);
+    textSize(12);
+    textStyle(BOLD);
+    text(step.equation, px, py);
+    textStyle(NORMAL);
+    py += 20;
+  }
+
+  // Summary tallies
+  py += 5;
+  fill(80);
+  textSize(11);
+  textLeading(15);
+  textStyle(BOLD);
+  text('Products so far:', px, py);
+  textStyle(NORMAL);
+  py += 16;
+
+  let o2 = currentStep >= 1 ? 'O\u2082: released' : 'O\u2082: -';
+  let nadph = currentStep >= 4 ? 'NADPH: formed' : 'NADPH: -';
+  let atp = currentStep >= 5 ? 'ATP: produced' : 'ATP: -';
+  let hplus = currentStep >= 1 ? 'H\u207A gradient: building' : 'H\u207A gradient: -';
+
+  fill(60);
+  textSize(11);
+  for (let line_text of [o2, hplus, nadph, atp]) {
+    text(line_text, px + 5, py);
+    py += 15;
+  }
+}
+
+// Estimate the height of wrapped text given a max width, text size, and leading
+function wrappedTextHeight(txt, maxW, size, leading) {
+  push();
+  textSize(size);
+  let words = txt.split(' ');
+  let line = '';
+  let lines = 1;
+  for (let w of words) {
+    let test = line + w + ' ';
+    if (textWidth(test) > maxW && line.length > 0) {
+      lines++;
+      line = w + ' ';
+    } else {
+      line = test;
+    }
+  }
+  pop();
+  return lines * leading;
+}
+
+
+function updateButtonStates() {
+  if (currentStep === 0) prevBtn.attribute('disabled', '');
+  else prevBtn.removeAttribute('disabled');
+
+  if (currentStep >= totalSteps - 1 && !isPlaying) nextBtn.attribute('disabled', '');
+  else nextBtn.removeAttribute('disabled');
+
+  if (currentStep >= totalSteps - 1 && !isPlaying) playBtn.attribute('disabled', '');
+  else playBtn.removeAttribute('disabled');
+
+  if (currentStep === 0 && !isPlaying) resetBtn.attribute('disabled', '');
+  else resetBtn.removeAttribute('disabled');
+}
+
+function nextStep() {
+  if (currentStep < totalSteps - 1) {
+    currentStep++;
+  }
+  updateButtonStates();
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+  }
+  updateButtonStates();
+}
+
+function togglePlay() {
+  isPlaying = !isPlaying;
+  if (isPlaying) {
+    playBtn.html('Pause');
+    lastAdvanceTime = millis();
+  } else {
+    playBtn.html('Play All');
+  }
+  updateButtonStates();
+}
+
+function resetSim() {
+  currentStep = 0;
+  protonCount = 0;
+  isPlaying = false;
+  playBtn.html('Play All');
+  updateButtonStates();
+}
+
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(canvasWidth, canvasHeight);
+  positionControls();
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main');
+  if (container) {
+    canvasWidth = container.offsetWidth;
+  }
+}
+</script>
+</head>
+<body>
+    <main></main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>
