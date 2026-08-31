@@ -18,24 +18,24 @@
 <meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..680;1,9..144,340..680&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --field:#070f0c; --field-1:#0a1612; --field-2:#0e1e18;
     --edge:rgba(245,245,244,.09); --edge-soft:rgba(245,245,244,.05);
-    --chalk:#f5f5f4; --chalk-dim:rgba(245,245,244,.68); --chalk-faint:rgba(245,245,244,.42);
+    --chalk:#f6f5f0; --chalk-dim:rgba(246,245,240,.68); --chalk-faint:rgba(246,245,240,.42);
     --lime:#c4f547; --lime-ink:#0a1006;
     --stakes:#c1121f; --stakes-soft:#e0394a; --stakes-dim:rgba(224,57,74,.14);
     --gold:#f5d348; --gold-deep:#d3a900;
-    --cream:#ffffff; --cream-2:#f5f5f3; --paper:#fffdf7;
-    --ink:#143a2e; --ink-soft:rgba(20,58,46,.72); --ink-faint:rgba(20,58,46,.48);
-    --leaf:#247a4d; --leaf2:#5fb779;
+    --cream:#fdfbf5; --cream-2:#f5f2e9; --paper:#fffdf7; --card:#fffefa;
+    --ink:#12352a; --ink-soft:rgba(18,53,42,.72); --ink-faint:rgba(18,53,42,.48);
+    --leaf:#1f7548; --leaf2:#5fb779;
     --grid-line:rgba(95,183,121,.09);
     --shadow:0 30px 90px rgba(0,0,0,.5);
     --ease:cubic-bezier(.16,1,.3,1);
     --sans:"Inter",system-ui,sans-serif;
-    --disp:"Space Grotesk","Inter",sans-serif;
-    --serif:"Source Serif 4",Georgia,serif;
+    --disp:"Fraunces",Georgia,serif;
+    --serif:"Fraunces",Georgia,serif;
     --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -70,29 +70,30 @@
     mask-image: radial-gradient(ellipse 60% 55% at 50% 18%, #000 0%, transparent 72%);
   }
   section{position:relative; padding:clamp(84px,10vw,140px) 0;}
-  h1,h2,h3{font-family:var(--disp); font-weight:700; letter-spacing:-.03em; line-height:1.05; text-wrap:balance;}
+  h1,h2,h3{font-family:var(--disp); font-weight:600; letter-spacing:-.014em; line-height:1.06; text-wrap:balance;}
+  h1 em, h2 em, h3 em{font-style:italic; font-weight:520;}
+  ::selection{background:rgba(196,245,71,.85); color:var(--lime-ink);}
   .kicker{
     display:flex; align-items:center; gap:10px; margin-bottom:20px;
     font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-faint);
   }
   .kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px rgba(196,245,71,.7); flex:none;}
-  .h2{font-size:clamp(34px,4.6vw,58px); max-width:20ch;}
+  .kicker i{font-style:normal; color:var(--lime); letter-spacing:.1em;}
+  .stage-desk .kicker i{color:var(--leaf);}
+  .h2{font-size:clamp(36px,4.8vw,62px); max-width:22ch;}
   .lede{margin-top:18px; font-size:clamp(16px,1.6vw,19px); font-weight:400; line-height:1.62; color:var(--chalk-dim); max-width:60ch;}
-  .jesse-caption{margin-top:6px; margin-bottom:-6px; font-style:italic; font-size:15px; color:var(--leaf2);}
   .lede strong{color:var(--chalk); font-weight:600;}
   .serif{font-family:var(--serif); font-style:italic; font-weight:500;}
-  .aside{
-    margin-top:14px; font-family:var(--serif); font-style:italic; font-size:clamp(14px,1.4vw,17px);
-    color:var(--chalk-faint);
-  }
 
-  /* cream stage override, same trick the live site uses */
+  /* warm paper stage override, same trick the live site uses. Paper, not
+     screen-white: the light sections should feel like the page of a workbook
+     the dark sections are the chalkboard of. */
   .stage-desk{
-    --field:#ffffff; --field-1:#ffffff; --field-2:#fafaf8;
-    --edge:rgba(20,58,46,.14); --edge-soft:rgba(20,58,46,.07);
-    --chalk:#143a2e; --chalk-dim:rgba(20,58,46,.72); --chalk-faint:rgba(20,58,46,.5);
-    --shadow:0 20px 54px rgba(20,58,46,.1);
-    --grid-line:rgba(20,58,46,.09);
+    --field:#fdfbf5; --field-1:#faf7ef; --field-2:#f5f2e9;
+    --edge:rgba(18,53,42,.14); --edge-soft:rgba(18,53,42,.07);
+    --chalk:#12352a; --chalk-dim:rgba(18,53,42,.74); --chalk-faint:rgba(18,53,42,.52);
+    --shadow:0 20px 54px rgba(18,53,42,.1);
+    --grid-line:rgba(18,53,42,.08);
     background:var(--field); color:var(--chalk);
   }
   .stage-desk .kicker::before{background:var(--leaf); box-shadow:none;}
@@ -110,26 +111,37 @@
      first section on the page, nothing dark sits above it either, so that
      fade was painting an equally pointless black band at the very top of
      the site on every load. Off too. */
-  #top::before, #top::after, #desk::before{content:none;}
+  /* The census band between them is dark, so the hero's bottom edge and the
+     desk's top edge now DO meet dark and keep their fades. Only the very top
+     of the page still has nothing dark above it. */
+  #top::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    min-height:52px; padding:0 26px; border-radius:14px; border:1px solid var(--edge);
+    min-height:52px; padding:0 28px; border-radius:999px; border:1px solid var(--edge);
     font-size:13.5px; font-weight:600; letter-spacing:.01em; cursor:pointer;
     background:transparent; color:var(--chalk);
     transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, border-color .2s;
   }
   .btn:hover{transform:translateY(-2px);}
   .btn:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:3px;}
-  .btn.primary{background:var(--lime); color:var(--lime-ink); border-color:var(--lime); box-shadow:0 16px 36px rgba(196,245,71,.18);}
-  .btn.primary:hover{box-shadow:0 20px 46px rgba(196,245,71,.28);}
+  .btn.primary{background:var(--lime); color:var(--lime-ink); border-color:var(--lime); box-shadow:0 14px 32px rgba(150,200,40,.28);}
+  .btn.primary:hover{box-shadow:0 18px 42px rgba(150,200,40,.38);}
   .btn.soft{background:rgba(245,245,244,.04);}
   .btn.soft:hover{background:rgba(245,245,244,.09);}
-  .stage-desk .btn.soft{background:rgba(20,58,46,.045);}
-  .stage-desk .btn.soft:hover{background:rgba(20,58,46,.09);}
+  .stage-desk .btn.soft{background:rgba(18,53,42,.045);}
+  .stage-desk .btn.soft:hover{background:rgba(18,53,42,.09);}
 
   .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
   .reveal.in{opacity:1; transform:none;}
+  /* grids of cards land as a small cascade rather than one slab */
+  .in > .sim-card{animation:cardIn .7s var(--ease) both;}
+  .in > .sim-card:nth-child(2){animation-delay:.08s;}
+  .in > .sim-card:nth-child(3){animation-delay:.16s;}
+  .in > .sim-card:nth-child(4){animation-delay:.1s;}
+  .in > .sim-card:nth-child(5){animation-delay:.18s;}
+  .in > .sim-card:nth-child(6){animation-delay:.26s;}
+  @keyframes cardIn{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;}}
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
     html{scroll-behavior:auto;}
@@ -171,59 +183,120 @@
   .mascot-menu a:hover{background:rgba(245,245,244,.08);}
   .mascot-menu a.join{background:var(--lime); color:var(--lime-ink); text-align:center; margin-top:2px;}
   .mascot-menu a.join:hover{background:#d8ff72;}
-  /* ---------- hero ---------- */
-  /* light stage, same cream-stage variable trick as .stage-desk, so the dark
-     graph showcase slotted in as the third section reads as a real beat of
-     contrast right after it, not two dark sections running together. */
+  /* ---------- hero ----------
+     Editorial, left aligned, on warm paper. The old version centered a
+     typewriter headline in a lot of open air; this one composes the page
+     like the first spread of a field guide: kicker, a two-line Fraunces
+     headline whose accent word gets a hand-drawn marker underline, one
+     honest lead, two CTAs, and the schools as a quiet credit line at the
+     bottom. The constellation canvas stays behind everything as atmosphere. */
   .hero{
     min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(95,183,121,.16), transparent 60%),
-      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.10), transparent 55%),
-      linear-gradient(180deg,#ffffff 0%,#fafaf8 55%,#ffffff 100%);
+      radial-gradient(ellipse 60% 50% at 82% 12%, rgba(95,183,121,.14), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 4% 92%, rgba(196,245,71,.12), transparent 55%),
+      linear-gradient(180deg,#fdfbf5 0%,#faf7ef 55%,#fdfbf5 100%);
   }
-  .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none; transition:transform .2s linear;}
-  .hero-stage{position:relative; z-index:2; width:100%; max-width:1040px; margin:0 auto; padding:clamp(70px,9vh,110px) clamp(20px,4vw,48px) 0; text-align:center;}
-  .hero h1{color:var(--chalk); font-size:clamp(22px,7vw,88px); white-space:nowrap; animation:rise .9s .05s var(--ease) both;}
-  .hero h1 em{font-style:normal; color:var(--lime);}
-  .type-cursor{display:inline-block; width:.05em; margin-left:.05em; color:var(--lime); animation:blinkCursor .9s step-end infinite;}
-  @keyframes blinkCursor{50%{opacity:0;}}
-  .hero .sub{margin-top:14px; font-family:var(--disp); font-size:clamp(19px,2.4vw,27px); font-weight:500; color:var(--chalk-dim); animation:rise .9s .1s var(--ease) both;}
+  .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.38; pointer-events:none; transition:transform .2s linear;}
+  .hero-stage{
+    position:relative; z-index:2; width:100%; max-width:1180px; margin:0 auto;
+    padding:clamp(86px,11vh,130px) clamp(20px,4vw,48px) clamp(36px,5vh,56px); text-align:left;
+  }
+  .hero-kicker{
+    display:flex; align-items:center; gap:10px; margin-bottom:clamp(18px,3vh,30px);
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-faint); animation:rise .9s .05s var(--ease) both;
+  }
+  .hero-kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--leaf); flex:none;}
+  .hero h1{
+    color:var(--chalk); font-size:clamp(46px,9vw,122px); line-height:1.0; letter-spacing:-.022em;
+    font-weight:600;
+  }
+  /* line-mask reveal: each line rises out of its own overflow-hidden row.
+     The bottom padding matters: the marker underline hangs .16em below the
+     baseline, and overflow clips at the PADDING edge, so without this the
+     swash gets guillotined down to a sliver. The pre-reveal translate is
+     pushed past the padded region so no glyph tops peek through the slot
+     while the line waits. */
+  .hero h1 .hl{display:block; overflow:hidden; padding-bottom:.22em; margin-bottom:-.22em;}
+  .hero h1 .hl > span{display:inline-block; transform:translateY(140%); animation:lineUp 1s var(--ease) forwards;}
+  .hero h1 .hl:nth-child(2) > span{animation-delay:.12s;}
+  @keyframes lineUp{to{transform:none;}}
+  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); position:relative; white-space:nowrap;}
+  /* the marker underline draws itself once the lines have landed */
+  .hero h1 em svg{
+    position:absolute; left:-.02em; right:-.04em; bottom:-.16em; width:calc(100% + .06em); height:.22em;
+    overflow:visible; pointer-events:none;
+  }
+  .hero h1 em svg path{
+    fill:none; stroke:var(--lime); stroke-width:14; stroke-linecap:round;
+    stroke-dasharray:520; stroke-dashoffset:520; animation:drawSwash .7s .95s ease-out forwards;
+  }
+  @keyframes drawSwash{to{stroke-dashoffset:0;}}
   .hero .lead{
-    margin:22px auto 0; max-width:54ch; font-size:clamp(15.5px,1.6vw,18px); line-height:1.6;
-    color:var(--chalk-dim); animation:rise .9s .16s var(--ease) both;
+    margin:clamp(26px,3.8vh,38px) 0 0; max-width:52ch; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62;
+    color:var(--chalk-dim); animation:rise .9s .3s var(--ease) both;
   }
-  .hero .lead .serif{color:var(--chalk);}
+  .hero .lead strong{color:var(--chalk); font-weight:600;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,3.6vh,34px); animation:rise .9s .42s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
-  /* ---------- hero credibility strip ----------
-     This used to be its own full-bleed white band between the hero and the
-     desk, which read as a stray slab of somebody else's page: a hard white
-     rectangle with its own fades, wedged between two designed sections. The
-     schools are credibility, not a section, so they now sit inside the hero
-     itself, small and quiet, under the CTA where there was already open
-     space. Crests carry more optical weight per pixel of height than a
-     horizontal wordmark, so the two shapes are sized separately rather than
-     forced onto one height, which is what made the old band look lumpy. */
+  /* ---------- the census (dark band) ----------
+     The one beat of grounding between the hero and the studio: what MindCraft
+     actually is, in numbers counted from the same library index this page
+     searches. Slimmer than a full section on purpose; it is a breath, not a
+     chapter. */
+  .census{
+    background:var(--field); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
+    padding:clamp(64px,8vw,108px) 0;
+  }
+  .census-grid{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:clamp(32px,5vw,72px); align-items:center;}
+  .census-stats{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--edge); border:1px solid var(--edge); border-radius:20px; overflow:hidden;}
+  .census-stats div{background:var(--field-1); padding:clamp(18px,2.6vw,28px) clamp(18px,2.4vw,26px);}
+  .census-stats dt{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.15em;
+    text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .census-stats dd{
+    margin-top:8px; font-family:var(--disp); font-weight:560; font-variant-numeric:tabular-nums;
+    font-size:clamp(34px,4vw,52px); letter-spacing:-.02em; line-height:1; color:var(--lime);
+  }
+  .census-stats div:nth-child(2) dd, .census-stats div:nth-child(3) dd{color:var(--chalk);}
+  .census-notes{
+    margin-top:clamp(36px,5.5vh,56px); padding-top:clamp(22px,3.2vh,30px); border-top:1px dashed var(--edge);
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px clamp(22px,3vw,40px);
+  }
+  .census-notes p{font-size:13px; line-height:1.6; color:var(--chalk-faint);}
+  .census-notes i{
+    display:block; margin-bottom:6px; font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:16.5px; color:var(--chalk);
+  }
+  @media (max-width:900px){
+    .census-grid{grid-template-columns:1fr;}
+    .census-notes{grid-template-columns:1fr; gap:18px;}
+  }
+
+  /* the schools, as a quiet credit line pinned to the hero's last breath */
   .hero-cred{
-    margin-top:clamp(40px,6.5vh,68px); display:flex; flex-direction:column; align-items:flex-start; gap:16px;
-    animation:rise .9s .3s var(--ease) both;
+    margin-top:clamp(44px,7.5vh,84px); padding-top:22px; border-top:1px solid rgba(18,53,42,.1);
+    display:flex; flex-wrap:wrap; align-items:center; gap:18px clamp(26px,4.2vw,48px);
+    animation:rise .9s .58s var(--ease) both;
   }
   .hero-cred > span{
-    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.2em;
-    text-transform:uppercase; color:rgba(20,58,46,.4);
+    flex:none; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.2em;
+    text-transform:uppercase; color:rgba(18,53,42,.42); max-width:12ch; line-height:1.7;
   }
-  .hero-cred-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:20px clamp(28px,4.6vw,52px);}
-  .hero-cred img{width:auto; height:56px; opacity:.88; transition:opacity .25s var(--ease);}
-  .hero-cred img.wordmark{height:39px;}
-  .hero-cred-row:hover img{opacity:1;}
-  .hero-cred-cta{margin-left:clamp(4px,1vw,16px);}
+  .hero-cred-row{display:contents;}
+  .hero-cred img{width:auto; height:50px; opacity:.85; transition:opacity .25s var(--ease); filter:saturate(.85);}
+  .hero-cred img.wordmark{height:34px;}
+  .hero-cred:hover img{opacity:1; filter:none;}
   @media (max-width:640px){
-    .hero-cred{align-items:center;}
-    .hero-cred-row{justify-content:center;}
-    .hero-cred img{height:38px;}
-    .hero-cred img.wordmark{height:27px;}
-    .hero-cred-cta{margin-left:0; width:100%; margin-top:6px;}
+    .hero h1{font-size:clamp(52px,15vw,72px);}
+    .hero-ctas .btn{flex:1 1 100%;}
+    .hero-cred{gap:14px 22px;}
+    .hero-cred > span{max-width:none;}
+    .hero-cred img{height:34px;}
+    .hero-cred img.wordmark{height:24px;}
   }
 
 
@@ -269,7 +342,7 @@
   /* the studio panel itself */
   .studio{
     position:relative; margin:0 auto; max-width:860px; border-radius:26px;
-    background:#fff; border:1px solid rgba(20,58,46,.14); box-shadow:0 26px 70px rgba(20,58,46,.13);
+    background:var(--card); border:1px solid rgba(18,53,42,.14); box-shadow:0 26px 70px rgba(18,53,42,.13);
     padding:clamp(20px,3.2vw,34px);
   }
   .studio-coach{display:flex; gap:14px; align-items:flex-start;}
@@ -297,7 +370,7 @@
   .studio-chips{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px;}
   .studio-chips > span{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,58,46,.4);}
   .studio-chip{
-    border:1px solid rgba(20,58,46,.16); border-radius:999px; padding:8px 16px; background:#fff;
+    border:1px solid rgba(18,53,42,.16); border-radius:999px; padding:8px 16px; background:var(--card);
     color:var(--ink-soft); font-size:13px; font-weight:600; cursor:pointer;
     transition:transform .2s var(--ease), border-color .2s, background .2s, color .2s;
   }
@@ -314,13 +387,14 @@
   .studio-choice:hover{transform:translateY(-2px); border-color:var(--lime); background:rgba(196,245,71,.15); box-shadow:0 12px 28px rgba(20,58,46,.12);}
   .studio-choice:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
   .studio-choice small{display:block; margin-top:4px; font-family:var(--mono); font-weight:600; font-size:9px; letter-spacing:.11em; text-transform:uppercase; color:rgba(20,58,46,.42);}
-  .studio-simwrap{margin-top:18px; border-radius:18px; overflow:hidden; border:1px solid rgba(20,58,46,.16); background:#fff; box-shadow:0 16px 42px rgba(20,58,46,.12);}
-  .studio-simhead{display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; padding:11px 16px; border-bottom:1px solid rgba(20,58,46,.1); background:var(--paper);}
-  .studio-simhead b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--ink);}
+  .studio-simwrap{margin-top:18px; border-radius:18px; overflow:hidden; border:1px solid rgba(18,53,42,.16); background:var(--card); box-shadow:0 16px 42px rgba(18,53,42,.12);}
+  .studio-simhead{display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; padding:11px 16px; border-bottom:1px solid rgba(18,53,42,.1); background:var(--paper);}
+  .studio-simhead b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--ink);}
   .studio-simhead span{font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:rgba(20,58,46,.45);}
   .studio-simhead a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf);}
   .studio-simhead a:hover{text-decoration:underline;}
   .studio-simwrap iframe{display:block; width:100%; height:min(56vh,440px); border:0; background:#fff;}
+  .zpd-stats dd b{font-variant-numeric:tabular-nums;}
   .studio-honest{padding:10px 16px; border-top:1px solid rgba(20,58,46,.08); background:var(--paper); font-size:12px; line-height:1.55; color:rgba(20,58,46,.55);}
   .studio-done h3{font-size:clamp(26px,3.6vw,40px); letter-spacing:-.03em;}
   .world-plaque{
@@ -344,12 +418,12 @@
   .simlib-intro h3{font-size:clamp(21px,2.6vw,30px);}
   .simlib-intro p{margin-top:8px; font-size:14.5px; line-height:1.6; color:var(--chalk-dim);}
   .sim-card{
-    border-radius:22px; background:#fff; border:1px solid rgba(20,58,46,.12);
-    box-shadow:0 10px 32px rgba(20,58,46,.1);
+    border-radius:22px; background:var(--card); border:1px solid rgba(18,53,42,.12);
+    box-shadow:0 10px 32px rgba(18,53,42,.09);
     overflow:hidden; display:flex; flex-direction:column;
     transition:transform .3s var(--ease), box-shadow .3s var(--ease);
   }
-  .sim-card:hover{transform:translateY(-6px); box-shadow:0 30px 64px rgba(20,58,46,.22);}
+  .sim-card:hover{transform:translateY(-6px); box-shadow:0 30px 64px rgba(18,53,42,.2);}
   .sim-card.open{grid-column:1/-1;}
   .sim-card.open:hover{transform:none;}
   .cur-thumb{position:relative; aspect-ratio:16/10; background:var(--stage,#0b1026); overflow:hidden;}
@@ -392,23 +466,8 @@
   .desk-more .btn{min-height:40px; padding:0 18px; font-size:12.5px; border-radius:11px;}
   .desk-more em{font-style:normal; color:rgba(20,58,46,.35);}
 
-  /* ---------- create-your-own feature story (cream) ---------- */
-  .fx-flow{margin-top:clamp(40px,6vh,64px); display:grid; gap:clamp(36px,5.5vh,62px);}
-  .fx{display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(24px,4vw,56px); align-items:center;}
-  .fx.flip .fx-copy{order:2;}
-  @media (max-width:860px){.fx{grid-template-columns:1fr;} .fx.flip .fx-copy{order:0;}}
-  .fx-step{display:block; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--leaf); margin-bottom:10px;}
-  .fx-copy h3{font-size:clamp(21px,2.4vw,27px); margin-bottom:10px;}
-  .fx-copy p{font-size:15px; line-height:1.6; color:var(--chalk-dim); max-width:46ch;}
-  .fx-shot{border-radius:20px; background:#fff; border:1px solid rgba(20,58,46,.12); box-shadow:0 18px 44px rgba(20,58,46,.1); overflow:hidden;}
-  .fx-shot img{display:block; width:100%; height:auto;}
-  /* the frontier teaser that closes the create story */
-  .frontier-tease{margin-top:clamp(36px,5vh,56px); max-width:66ch; font-size:clamp(16px,1.7vw,19px); line-height:1.65; color:var(--chalk-dim);}
-  .frontier-tease strong{color:var(--chalk);}
-
   /* ---------- frontier graph (dark) ---------- */
   .frontier{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .frontier-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
 
   /* ---------- native ZPD explorer ----------
      Replaces the p5 iframe that used to sit here. That embed carried its own
@@ -426,7 +485,7 @@
     display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap;
     padding:13px 18px; border-bottom:1px solid var(--edge); background:var(--field-2);
   }
-  .zpd-head b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--chalk);}
+  .zpd-head b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--chalk);}
   .zpd-head .zpd-hint{font-size:12px; color:var(--chalk-faint);}
   .zpd-seeds{display:flex; gap:6px; flex-wrap:wrap; margin-left:auto;}
   .zpd-seed{
@@ -541,7 +600,6 @@
      whole MicroSim as well as the graph, and Dan's sims put their controls
      under the drawing, so at 660 the last row of buttons sat on the crop. */
   .conceptmap-frame iframe{display:block; width:100%; height:min(82vh,760px); border:0;}
-  .conceptmap-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
   /* The stage is one rectangle that two things take turns owning: the full 3D
      graph, and the chapter a search resolved to. Same rectangle, never both
      stacked, which is what app/src/pages/Learn.tsx does with its graph iframe
@@ -550,280 +608,21 @@
   .cm-stage .conceptmap-frame{transition:opacity .6s var(--ease);}
   .cm-stage.is-open .conceptmap-frame{opacity:.55; pointer-events:none;}
 
-
-  /* ---------- the desk (cream, three surfaces) ---------- */
-  .desk-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px); margin-top:clamp(40px,6vh,60px);}
-  .desk-grid-4{grid-template-columns:repeat(4,1fr);}
-  @media (max-width:1080px){.desk-grid-4{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:860px){.desk-grid{grid-template-columns:1fr;}}
-  /* mock: live-sim previews standing in for a static screenshot (2026-08-23) -
-     same iframes already embedded bigger elsewhere on this page, shrunk and
-     inert (tabindex=-1, pointer-events none) so they read as a preview
-     image, not a second interactive widget competing with the real one
-     above. */
-  .mock .mock-img[src*="sims/"], .mock-split-top iframe{border:0; pointer-events:none;}
-  iframe.mock-img{position:absolute; inset:0; width:100%; height:100%;}
-  .mock-split{display:flex; flex-direction:column;}
-  .mock-split-top{position:relative; flex:1; overflow:hidden; border-bottom:1px solid var(--edge);}
-  .mock-split-top iframe{position:absolute; inset:0; width:100%; height:100%;}
-  .mock-split-bottom{position:relative !important; inset:auto !important; flex:1;}
-  .mock-recommend{align-items:center; justify-content:center; text-align:center; gap:6px;}
-  .mock-recommend .mock-stamp{font-style:normal; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; font-family:var(--mono); color:rgba(20,58,46,.5);}
-  .mock-recommend .mock-q{font-size:16px; font-weight:600;}
-  .mock-rec-arrow{color:var(--leaf); font-size:16px;}
-  .mock-q-rec{color:var(--leaf);}
-  .reel-strip{margin-top:44px; padding-top:36px; border-top:1px solid var(--edge);}
-  .reel-label{display:block; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-faint); margin-bottom:16px;}
-  .reel-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
-  .reel-item{border-radius:14px; overflow:hidden; background:var(--field-2); position:relative;}
-  .reel-item img{width:100%; display:block;}
-  .reel-item small{position:absolute; left:12px; bottom:10px; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); background:rgba(255,255,255,.85); padding:3px 8px; border-radius:20px;}
-  @media (max-width:640px){.reel-row{grid-template-columns:1fr;}}
-  .desk-card{
-    border-radius:24px; background:var(--field-2); box-shadow:0 2px 14px rgba(20,58,46,.06);
-    overflow:hidden; display:flex; flex-direction:column;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .desk-card:hover{transform:translateY(-5px); box-shadow:var(--shadow);}
-  /* Grown from 16/11 (2026-08-23, explicit ask: "make the images bigger")
-     now that the caption paragraph is gone - the image is the content. */
-  .desk-card .mock{position:relative; aspect-ratio:4/5; background:var(--cream-2); border-bottom:1px solid var(--edge); overflow:hidden;}
-  .mock-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 45%;}
-  .desk-card .cap{padding:18px 22px 20px;}
-  .desk-card .cap b{display:block; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf); margin-bottom:8px;}
-  .desk-card .cap h3{font-size:clamp(19px,2vw,24px);}
-  /* mock: notes */
-  .mock-notes{position:absolute; inset:14px; display:flex; flex-direction:column; gap:8px;}
-  .mock-page{flex:1; background:#fff; border:1px solid rgba(20,58,46,.12); border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:8px;}
-  .mock-line{height:8px; border-radius:4px; background:rgba(20,58,46,.12);}
-  .mock-line.w60{width:60%;} .mock-line.w85{width:85%;} .mock-line.w40{width:40%;} .mock-line.w72{width:72%;}
-  .mock-line.title{height:12px; width:48%; background:rgba(20,58,46,.32);}
-  .mock-chiprow{display:flex; gap:6px; margin-top:auto;}
-  .mock-chip{height:20px; border-radius:999px; background:rgba(20,58,46,.08); flex:1;}
-  .mock-chip.lit{background:var(--lime);}
-  /* mock: solver */
-  .mock-solver{position:absolute; inset:14px; background:#fff; border:1px solid rgba(20,58,46,.12); border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:9px;}
-  .mock-stamp{font-family:var(--serif); font-style:italic; font-size:12.5px; color:rgba(20,58,46,.6);}
-  .mock-q{font-family:var(--serif); font-style:italic; font-size:14.5px; line-height:1.4; color:var(--ink);}
-  .mock-choices{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:auto;}
-  .mock-choice{height:26px; border-radius:8px; border:1px solid rgba(20,58,46,.16); background:rgba(20,58,46,.03);}
-  .mock-choice.pick{background:var(--lime); border-color:var(--lime);}
-  /* mock: map */
-  .mock-map{position:absolute; inset:0; background:#0a1612;}
-  .mock-map svg{width:100%; height:100%;}
-
-  /* ---------- jesse (cream) ---------- */
-  .jesse-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(32px,5vw,72px); align-items:center;}
-  .why-photos{margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-  .why-photo{position:relative; border-radius:16px; overflow:hidden; aspect-ratio:4/3;}
-  .why-photo img{width:100%; height:100%; object-fit:cover; display:block;}
-  .why-photo span{position:absolute; left:14px; bottom:12px; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6);}
-  @media (max-width:640px){.why-photos{grid-template-columns:1fr;}}
-  .why-photos-caption{font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-faint); text-align:center;}
-  .why-photos-caption.above{margin-top:24px; margin-bottom:0;}
-  .why-photos-caption.below{margin-top:16px;}
-  .jesse-demo{
-    border-radius:26px; background:#f4efe6;
-    background-image:radial-gradient(circle at 50% 38%, rgba(196,245,71,.16), transparent 46%);
-    min-height:380px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:44px 28px; gap:14px;
-  }
-  .jesse-disc{
-    width:112px; height:112px; border:0; border-radius:50%; background:var(--lime); color:var(--lime-ink);
-    font:700 13px/1 var(--disp); letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
-    box-shadow:0 0 0 14px rgba(196,245,71,.14), 0 16px 40px rgba(196,245,71,.35);
-    transition:transform .2s var(--ease);
-  }
-  .jesse-disc:hover{transform:scale(1.04);}
-  .jesse-disc:focus-visible{outline:3px solid var(--ink); outline-offset:4px;}
-  .jesse-disc.is-hot{animation:jessePulse 1.5s ease-in-out infinite;}
-  @keyframes jessePulse{
-    0%,100%{box-shadow:0 0 0 10px rgba(196,245,71,.12), 0 16px 40px rgba(196,245,71,.35);}
-    50%{box-shadow:0 0 0 22px rgba(196,245,71,.08), 0 20px 48px rgba(196,245,71,.45);}
-  }
-  .jesse-words{min-height:3.2em; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(18px,2.2vw,26px); line-height:1.35; color:var(--ink); max-width:30ch;}
-  .jesse-words .you{color:rgba(20,58,46,.55);}
-  .jesse-hint{font-size:12px; color:rgba(20,58,46,.5);}
-  .jesse-reveal{width:100%; opacity:0; transform:translateY(10px); transition:opacity .5s var(--ease), transform .5s var(--ease);}
-  .jesse-reveal.in{opacity:1; transform:none;}
-  .jesse-reveal-frame{width:100%; border-radius:16px; overflow:hidden; background:#fafafa;}
-  .jesse-reveal-frame iframe{display:block; width:100%; height:min(48vh,320px); border:0;}
-  .jesse-reveal-cap{margin-top:12px; font-size:12px; color:rgba(20,58,46,.5);}
-  .jesse-points{margin-top:26px; display:grid; gap:14px;}
-  .jpoint{display:flex; gap:14px; align-items:baseline;}
-  .jpoint i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:11px; color:var(--leaf); flex:none; letter-spacing:.08em;}
-  .jpoint p{font-size:15px; line-height:1.55; color:var(--chalk-dim);}
-  .jpoint p strong{color:var(--chalk); font-weight:600;}
-  @media (max-width:860px){.jesse-grid{grid-template-columns:1fr;}}
-  .jesse-sub{margin-top:56px;}
-  .jesse-sub.jesse-sub-first{margin-top:8px;}
-  .jesse-sub-title{
-    font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
-    color:var(--leaf2); margin:0 0 10px;
-  }
-  .jesse-human-teaser{margin-top:48px; padding-top:28px; border-top:1px solid var(--edge); text-align:center;}
-  .jesse-human-teaser p{margin:0;}
-  .jesse-human-teaser p strong{font-size:20px; color:var(--chalk);}
-  .jesse-human-names{margin-top:6px !important; font-size:13px; color:var(--chalk-faint);}
-
-  /* ---------- the gate (dark) ---------- */
-  .gate-sec{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .gate-flow{display:flex; flex-wrap:wrap; align-items:center; gap:16px 18px; margin-top:clamp(36px,6vh,60px);}
-  .gate-step{
-    padding:clamp(20px,2.6vh,28px) clamp(26px,2.8vw,36px); border-radius:18px; border:1px solid var(--edge); background:var(--field-2);
-    font-family:var(--mono); font-weight:600; font-size:clamp(15px,1.6vw,19px); letter-spacing:.05em; color:var(--chalk-dim);
-  }
-  .gate-step.final{background:var(--lime); border-color:var(--lime); color:var(--lime-ink); font-family:var(--disp); font-weight:700; font-size:clamp(17px,1.9vw,22px); letter-spacing:-.01em;}
-  .gate-arrow{color:var(--chalk-faint); font-size:clamp(18px,2vw,24px);}
-
-  /* ---------- every brain (cream) ---------- */
-  .brains-formats{
-    margin-top:clamp(22px,3.5vh,32px); font-family:var(--disp); font-weight:600;
-    font-size:clamp(16px,1.9vw,21px); line-height:1.5; color:var(--ink); max-width:70ch;
-  }
-  .brains-formats strong{color:var(--leaf); font-weight:700;}
-  .brains-engine{
-    margin-top:clamp(26px,4vh,40px); border-left:3px solid var(--lime); border-radius:0 18px 18px 0;
-    background:rgba(196,245,71,.16); padding:clamp(16px,2.4vh,24px) clamp(18px,2.4vw,28px);
-    font-size:clamp(15px,1.6vw,18px); line-height:1.6; color:var(--ink); max-width:74ch;
-  }
-  .brains-note{margin-top:14px; font-size:13.5px; line-height:1.55; color:var(--chalk-faint); max-width:70ch;}
-  .why-note{margin-top:14px; font-size:13.5px; line-height:1.55; color:var(--chalk-faint); max-width:70ch;}
-  .power-stats{margin-top:32px; display:flex; flex-wrap:wrap; gap:28px 48px;}
-  .pstat{min-width:150px; padding-left:18px; border-left:2px solid var(--edge);}
-  .pstat b{display:block; font-family:var(--serif); font-size:clamp(28px,3.2vw,40px); font-weight:600; color:var(--ink); line-height:1;}
-  .pstat span{display:block; margin-top:8px; font-size:13px; line-height:1.4; color:var(--chalk-dim); max-width:22ch;}
-  .brains-library{margin-top:18px; font-size:15px; line-height:1.6; color:var(--ink); max-width:68ch;}
-
-  /* ---------- real sim showcase (cream) ---------- */
-  .sim-showcase{position:relative; margin-top:clamp(40px,6vh,64px); border-radius:24px; background:var(--field-2); padding:clamp(20px,3vw,32px);}
-  .sim-showcase-cta{position:absolute; top:clamp(16px,2.6vw,26px); right:clamp(16px,2.6vw,26px); font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--lime-ink); background:var(--lime); padding:8px 14px; border-radius:999px; text-decoration:none; white-space:nowrap;}
-  .brains-archive-box{margin-top:22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px 20px; border-radius:16px; background:var(--field-2);}
-  .brains-archive-box img{width:52px; height:60px; object-fit:contain; flex:none;}
-  .brains-archive-box p{margin:0; font-size:13.5px; line-height:1.5; color:var(--chalk-dim); flex:1; min-width:180px;}
-  .brains-archive-box a{flex:none;}
-  .sim-showcase-head{max-width:70ch;}
-  .sim-showcase-tag{display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--leaf); background:rgba(36,122,77,.1); border-radius:999px; padding:5px 12px; margin-bottom:10px;}
-  .sim-showcase-head h3{font-size:clamp(18px,2vw,22px); line-height:1.35; margin:0 0 8px;}
-  .sim-showcase-head p{font-size:14px; line-height:1.6; color:var(--chalk-dim); margin:0;}
-  .sim-showcase-frame{margin-top:20px; border-radius:16px; overflow:hidden; background:#fafafa;}
-  .sim-showcase-frame iframe{display:block; width:100%; height:min(70vh,620px); border:0;}
-  .sim-showcase-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
-
-  /* ---------- mentors (dark) ---------- */
-  .mentors{background:var(--field);}
-  .mentor-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:clamp(34px,5vh,50px);}
-  .mcard{border-radius:20px; background:var(--field-2); padding:22px; transition:box-shadow .25s var(--ease), transform .25s var(--ease);}
-  .mcard:hover{box-shadow:0 16px 40px rgba(196,245,71,.1); transform:translateY(-3px);}
-  .mcard .who{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
-  .mcard .ava{width:38px; height:38px; border-radius:50%; flex:none; display:grid; place-items:center; font-family:var(--disp); font-weight:700; font-size:13px; color:#fff;}
-  .mcard h4{font-family:var(--serif); font-style:italic; font-weight:600; font-size:19px; color:var(--chalk);}
-  .mcard .meta{font-size:12.5px; color:var(--chalk-faint);}
-  .mcard p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim);}
-  .mcard .brief{margin-top:12px; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--lime);}
-  .mentor-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px;}
-  @media (max-width:820px){.mentor-cards{grid-template-columns:1fr;}}
-  .testimonial-grid{margin-top:clamp(28px,4vh,44px); display:grid; grid-template-columns:1fr 1fr; gap:24px;}
-  .testimonial-card video{width:100%; border-radius:16px; background:#000; display:block; aspect-ratio:9/16; max-height:70vh; object-fit:contain;}
-  .testimonial-name{margin-top:10px; font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--chalk-faint);}
-  @media (max-width:640px){.testimonial-grid{grid-template-columns:1fr;}}
-
-  /* ---------- archive (dark) ---------- */
-  .archive{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .archive-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,4.5vw,64px); align-items:center;}
-  .archive-stats{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:18px 20px; margin-top:28px; padding-top:20px; border-top:1px solid var(--edge);
-  }
-  .astat b{display:block; font-family:var(--disp); font-size:clamp(26px,3vw,36px); letter-spacing:-.03em; color:var(--lime); font-weight:700; font-variant-numeric:tabular-nums;}
-  .astat span{display:block; margin-top:8px; font-size:12px; color:var(--chalk-faint); line-height:1.45;}
-  .archive-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
-  .shelf{position:relative; height:360px;}
-  .shelf-book{
-    position:absolute; width:172px; aspect-ratio:3/4.2; border-radius:8px; overflow:hidden; cursor:pointer;
-    border:1px solid var(--edge); box-shadow:0 18px 44px rgba(0,0,0,.5); background:var(--cream);
-    display:flex; flex-direction:column; justify-content:space-between; padding:16px 14px;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .shelf-book:hover{box-shadow:0 24px 54px rgba(0,0,0,.6);}
-  .shelf-book:hover{transform:translateY(-6px) scale(1.02) !important; z-index:9 !important;}
-  .shelf-book img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
-  .shelf-book b{position:relative; z-index:1; font-family:var(--disp); font-weight:700; font-size:16px; letter-spacing:-.02em; line-height:1.15; color:var(--ink);
-    text-shadow:0 1px 0 rgba(247,245,240,.9), 0 0 18px rgba(247,245,240,.9);}
-  .shelf-book span{position:relative; z-index:1; align-self:flex-start; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--ink); background:var(--lime); border-radius:999px; padding:4px 9px;}
-  .sb1{top:6px; left:16%; transform:rotate(-3.5deg); z-index:4;}
-  .sb2{top:44px; left:46%; transform:rotate(4deg); z-index:3;}
-  .sb3{top:132px; left:6%; transform:rotate(2deg); z-index:2;}
-  .sb4{top:168px; left:35%; transform:rotate(-2deg); z-index:1;}
-  @media (max-width:900px){
-    .archive-grid{grid-template-columns:1fr;}
-    .shelf{height:300px;}
-    .shelf-book{width:140px;}
-  }
-
-
-
-  /* ---------- faq (dark) ---------- */
-  .faq{background:var(--field);}
-  .faq-list{margin-top:44px; max-width:800px; display:grid; gap:10px;}
-  details{border-radius:18px; background:var(--field-2); padding:0 22px;}
-  details[open]{border-color:rgba(196,245,71,.3);}
-  summary{
-    cursor:pointer; list-style:none; font-family:var(--disp); font-weight:600; font-size:16px;
-    padding:19px 0; display:flex; justify-content:space-between; align-items:center; gap:16px; color:var(--chalk);
-  }
-  summary::-webkit-details-marker{display:none;}
-  summary::after{content:"+"; font-size:20px; font-weight:400; color:var(--lime); flex:none;}
-  details[open] summary::after{content:"\2013";}
-  details p{padding:0 0 20px; color:var(--chalk-dim); font-size:14px; line-height:1.6; max-width:660px;}
-
-  /* ---------- cta ---------- */
-  .cta{padding-bottom:clamp(88px,10vw,148px); background:#070f0a;}
-  .cta-split{display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:18px; align-items:stretch;}
-  .cta-visual{
-    position:relative; min-height:480px; border-radius:28px; overflow:hidden;
-    background:radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%), #070f0a;
-  }
-  .cta-visual-frame{position:absolute; inset:0; width:100%; height:100%; border:0;}
-  .cta-visual-cap{
-    position:absolute; left:22px; right:22px; bottom:22px; z-index:2; max-width:30ch;
-    font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.35; color:#f4f1ea;
-    text-shadow:0 2px 18px rgba(0,0,0,.72);
-  }
-  .cta-visual-cap b{display:block; margin-bottom:7px; font-family:var(--sans); font-style:normal; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--lime);}
-  .ctaband{
-    position:relative; border-radius:28px; overflow:hidden; padding:clamp(28px,4vw,40px);
-    border:1px solid rgba(20,58,46,.12); background:var(--cream); color:var(--ink);
-    box-shadow:0 30px 80px rgba(0,0,0,.28);
-  }
-  .ctaband h2{font-size:clamp(32px,4.2vw,48px); color:var(--ink);}
-  .ctaband h2 em{font-style:normal; color:var(--leaf);}
-  .ctaband > p{margin:12px 0 0; max-width:38ch; font-size:15.5px; color:rgba(20,58,46,.68); line-height:1.5;}
-  .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px;}
-  .ctaband .btn.soft{background:#fff; border-color:rgba(20,58,46,.16); color:var(--ink);}
-  .ctaband .btn.soft:hover{border-color:var(--ink);}
-  .ctaband .btn.soft[aria-selected="true"]{background:var(--ink); color:var(--cream); border-color:var(--ink);}
-  .apply-done{margin:16px 0 0; font-size:14px; color:var(--leaf); font-weight:600;}
-  .apply-stage{margin:22px 0 0;}
-  .apply-form{display:none;}
-  .apply-stage[data-state="student"] #applyFormStudent{display:block;}
-  .apply-stage[data-state="tutor"] #applyFormTutor{display:block;}
+  /* ---------- shared form language (the claim card uses all of this) ---------- */
   .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   .field{display:flex; flex-direction:column; gap:7px;}
   .field.full{grid-column:1/-1;}
-  .field label{font-size:11.5px; font-weight:600; color:rgba(20,58,46,.5); letter-spacing:.04em; text-transform:uppercase;}
+  .field label{font-size:11.5px; font-weight:600; color:rgba(18,53,42,.5); letter-spacing:.04em; text-transform:uppercase;}
   .field input,.field select,.field textarea{
-    font:inherit; font-size:15px; padding:13px 14px; border-radius:14px;
-    border:1px solid rgba(20,58,46,.14); background:#fff; color:var(--ink);
+    font:inherit; font-size:15px; padding:13px 15px; border-radius:14px;
+    border:1px solid rgba(18,53,42,.16); background:var(--card); color:var(--ink);
+    transition:border-color .2s, box-shadow .2s;
   }
   .field textarea{min-height:88px; resize:vertical;}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(196,245,71,.55); border-color:var(--ink);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(196,245,71,.55); border-color:var(--leaf);}
   .apply-submit{width:100%; margin-top:16px;}
-  .apply-note{margin-top:10px; font-size:11.5px; color:rgba(20,58,46,.45); text-align:center;}
   .honey{position:absolute; left:-9999px;}
   @media (max-width:900px){
-    .cta-split{grid-template-columns:1fr;}
-    .cta-visual{min-height:280px;}
     .form-grid{grid-template-columns:1fr;}
   }
 
@@ -912,7 +711,7 @@
   .cm-stage.is-settled .cs-res-sim{opacity:1;}
   .cs-sim{flex:1; min-height:0; display:flex; flex-direction:column; background:#0a1210;}
   .cs-sim-head{display:flex; align-items:center; gap:10px 14px; flex-wrap:wrap; flex:none; padding:12px 18px; border-bottom:1px solid var(--edge);}
-  .cs-sim-head b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--chalk);}
+  .cs-sim-head b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--chalk);}
   .cs-sim-head span{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-faint);}
   .cs-sim-head a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--lime);}
   .cs-sim-head a:hover{text-decoration:underline;}
@@ -962,11 +761,16 @@
   .claim-sms{margin-top:12px; font-size:10.5px; line-height:1.6; color:rgba(20,58,46,.45);}
   .claim-sms a{color:var(--leaf); text-decoration:underline; text-underline-offset:2px;}
 
-  footer{background:var(--field); border-top:1px solid var(--edge); padding:44px 0 56px; color:var(--chalk-faint); font-size:13px;}
-  .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  footer{background:var(--field); border-top:1px solid var(--edge); padding:clamp(56px,7vw,84px) 0 56px; color:var(--chalk-faint); font-size:13px;}
+  .foot-sign{
+    font-family:var(--disp); font-weight:560; font-size:clamp(24px,3.4vw,42px); letter-spacing:-.014em;
+    line-height:1.16; color:var(--chalk); max-width:26ch; margin-bottom:clamp(28px,4vh,44px); text-wrap:balance;
+  }
+  .foot-sign em{font-style:italic; font-weight:480; color:var(--leaf2);}
+  .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap; padding-top:18px; border-top:1px solid var(--edge);}
   .foot-links{display:flex; gap:18px; margin-left:auto; flex-wrap:wrap;}
   .foot-links a:hover{color:var(--chalk);}
-  .foot-quip{margin-top:18px; padding-top:14px; border-top:1px dashed var(--edge); font-size:11.5px; color:rgba(245,245,244,.3);}
+  .foot-quip{margin-top:16px; font-size:11.5px; color:rgba(246,245,240,.3);}
 </style>
 </head>
 <body>
@@ -990,8 +794,16 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="heroMap" aria-hidden="true"></canvas>
   <div class="hero-stage">
-    <h1>Interact With the <em>World.</em></h1>
-    <p class="sub">Hands-on simulations that build the instincts 2028's workforce will actually need.</p>
+    <p class="hero-kicker">The Desk by MindCraft</p>
+    <h1>
+      <span class="hl"><span>Interact with</span></span>
+      <span class="hl"><span>the <em>world<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
+    </h1>
+    <p class="lead">Hands-on simulations that build the instincts 2028's workforce will actually need. <strong>Everything on this page is the real product:</strong> type an idea, search the library, walk the map.</p>
+    <div class="hero-ctas">
+      <a class="btn primary" href="#claim">Claim your desk</a>
+      <a class="btn soft" href="#desk">Step into the studio</a>
+    </div>
     <div class="hero-cred">
       <span>Built with students from</span>
       <div class="hero-cred-row">
@@ -1000,8 +812,31 @@
         <img src="img/logos/hero/macalester.png" alt="Macalester College" width="132" height="132">
         <img class="wordmark" src="img/logos/hero/uwc.png" alt="United World Colleges" width="582" height="132">
         <img src="img/logos/hero/kenyon.png" alt="Kenyon College" width="132" height="132">
-        <a class="btn primary hero-cred-cta" href="#claim">Claim your desk</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE CENSUS: THE LIBRARY, COUNTED ================= -->
+<section class="census" id="library">
+  <div class="wrap">
+    <div class="census-grid">
+      <div class="reveal">
+        <div class="kicker"><i>00</i> The library, counted</div>
+        <h2 class="h2">One living map of everything we teach.</h2>
+        <p class="lede">Every concept is written as a chapter, wired to the concepts it unlocks, and, where it has earned one, paired with a simulation you can reach into. It is one connected library, and this whole page runs on it.</p>
+      </div>
+      <dl class="census-stats reveal" aria-label="The library in numbers">
+        <div><dt>Concepts mapped</dt><dd data-count="4118">4118</dd></div>
+        <div><dt>Subjects</dt><dd data-count="13">13</dd></div>
+        <div><dt>Written chapters</dt><dd data-count="3746">3746</dd></div>
+        <div><dt>Live simulations</dt><dd data-count="722">722</dd></div>
+      </dl>
+    </div>
+    <div class="census-notes reveal">
+      <p><i>Free to try.</i>The concept search runs in your own browser. No account, no API call, nothing billed to anyone.</p>
+      <p><i>Never faked.</i>Every simulation here is real and hand-built. Nothing on this page is generated on the spot.</p>
+      <p><i>Counted, not claimed.</i>The numbers above are read from the same library index this page searches.</p>
     </div>
   </div>
 </section>
@@ -1012,8 +847,8 @@
   <canvas id="deskAwake" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="desk-head reveal">
-      <div class="kicker">The Desk &middot; a creation studio</div>
-      <h2 class="h2">What do you want to bring to life?</h2>
+      <div class="kicker"><i>01</i> The Desk &middot; a creation studio</div>
+      <h2 class="h2">What do you want to bring to <em>life</em>?</h2>
     </div>
 
     <!-- the creation flow's progress trail. Filled in by the studio script. -->
@@ -1059,7 +894,7 @@
     </div>
 
     <div class="simlib-intro reveal">
-      <h3>Or step through a door that is already open.</h3>
+      <h3>Or step through a door that is <em>already open</em>.</h3>
       <p>Six entry points into the library's 722 live MicroSims. Hover a card to see its world move, then try it for real.</p>
     </div>
 
@@ -1157,8 +992,8 @@
 <section class="frontier" id="frontier">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal">The frontier graph</div>
-    <h2 class="h2 reveal">Learning works in mysterious ways. Not really.</h2>
+    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <h2 class="h2 reveal">Learning works in <em>mysterious</em> ways. Not really.</h2>
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
         <b>Where you stand</b>
@@ -1198,7 +1033,9 @@
 <section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <h2 class="h2 reveal">Every concept has a place.</h2>
+    <div class="kicker reveal"><i>03</i> The whole map</div>
+    <h2 class="h2 reveal">Every concept has a <em>place</em>.</h2>
+    <p class="lede reveal">All 4118 of them, drawn as one graph. Ask for anything below and watch the map fly to where it lives.</p>
 
     <div class="cs reveal">
       <form class="cs-form" id="csForm" role="search">
@@ -1256,8 +1093,8 @@
   <div class="wrap">
     <div class="claim-grid">
       <div class="reveal">
-        <div class="kicker">Early access</div>
-        <h2 class="h2">Claim your desk.</h2>
+        <div class="kicker"><i>04</i> Early access</div>
+        <h2 class="h2">Claim your <em>desk</em>.</h2>
         <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
         <div class="claim-points">
           <div><i>01</i><p>The whole library, <b>4118 concepts across 13 subjects</b>, with 3746 written chapters and 722 built simulations.</p></div>
@@ -1339,6 +1176,7 @@
 
 <footer>
   <div class="wrap">
+    <p class="foot-sign">Built for the weeks before a test, <em>and whatever's stuck after.</em></p>
     <div class="foot-row">
       <span>&copy; MindCraft &middot; founders@joinmindcraft.com</span>
       <div class="foot-links">
@@ -1351,7 +1189,7 @@
         <a href="mailto:founders@joinmindcraft.com">Email</a>
       </div>
     </div>
-    <p class="foot-quip">Built for the weeks before a test and whatever's stuck after. Still wondering about the moon, honestly.</p>
+    <p class="foot-quip">Still wondering about the moon, honestly.</p>
   </div>
 </footer>
 
@@ -1364,6 +1202,35 @@
       entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(e){ io.observe(e); });
+  })();
+
+  // ----- census numbers count up to their real totals on first sight -----
+  // The targets live in data-count and in the markup itself, so with JS off
+  // (or reduced motion on) the real numbers are simply already there.
+  (function(){
+    var stats = document.querySelector('.census-stats');
+    if(!stats) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        io.disconnect();
+        stats.querySelectorAll('dd[data-count]').forEach(function(dd){
+          var target = parseInt(dd.getAttribute('data-count'), 10);
+          var t0 = 0;
+          function frame(ts){
+            if(!t0) t0 = ts;
+            var t = Math.min(1, (ts - t0) / 1300);
+            var e = 1 - Math.pow(1 - t, 3);
+            dd.textContent = String(Math.round(target * e));
+            if(t < 1) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        });
+      });
+    }, {threshold:.4});
+    io.observe(stats);
   })();
 
   // ----- mascot nav: fill color adapts to the section behind it, menu opens
@@ -1379,7 +1246,16 @@
         var r = s.getBoundingClientRect();
         if(r.top <= y && r.bottom > y) current = s;
       });
-      nav.classList.toggle('on-light', !!(current && current.classList.contains('stage-desk')));
+      // A light section's first and last ~90px are its dark seam fades
+      // (except the very top of the hero, which has no fade), so the icon
+      // only flips to its dark-ink fill once it is over actual paper.
+      var light = false;
+      if(current && current.classList.contains('stage-desk')){
+        var r2 = current.getBoundingClientRect();
+        var topClear = current.id === 'top' || (y - r2.top) > 90;
+        light = topClear && (r2.bottom - y) > 90;
+      }
+      nav.classList.toggle('on-light', light);
     }
     document.addEventListener('scroll', updateTheme, {passive:true});
     window.addEventListener('resize', updateTheme);
@@ -1395,33 +1271,6 @@
     document.addEventListener('click', function(e){
       if(!nav.contains(e.target)) nav.classList.remove('open');
     });
-  })();
-
-  // ----- hero headline types itself in once, on load -----
-  (function(){
-    var h1 = document.querySelector('.hero h1');
-    if(!h1) return;
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var plain = 'Interact With the ';
-    var accent = 'World.';
-    var full = plain + accent;
-    h1.innerHTML = '<span class="type-plain"></span><em class="type-accent"></em><span class="type-cursor" aria-hidden="true"></span>';
-    var plainEl = h1.querySelector('.type-plain');
-    var accentEl = h1.querySelector('.type-accent');
-    var cursor = h1.querySelector('.type-cursor');
-    var i = 0;
-    function tick(){
-      if(i <= full.length){
-        var shown = full.slice(0, i);
-        if(shown.length <= plain.length){ plainEl.textContent = shown; }
-        else { plainEl.textContent = plain; accentEl.textContent = shown.slice(plain.length); }
-        i++;
-        setTimeout(tick, 36 + Math.random() * 40);
-      } else {
-        setTimeout(function(){ if(cursor) cursor.remove(); }, 1100);
-      }
-    }
-    setTimeout(tick, 260);
   })();
 
   // ----- top scroll-progress bar -----
@@ -2200,33 +2049,6 @@
       }
       window.addEventListener('resize', function(){ if(W && size()) paint(); });
     });
-  })();
-
-  // ----- apply-form tabs -----
-  (function(){
-    var stage = document.getElementById('applyStage');
-    var tabS = document.getElementById('applyTabStudent');
-    var tabT = document.getElementById('applyTabTutor');
-    if(!stage || !tabS || !tabT) return;
-    function set(state){
-      stage.dataset.state = state;
-      tabS.setAttribute('aria-selected', state === 'student');
-      tabT.setAttribute('aria-selected', state === 'tutor');
-      tabS.classList.toggle('primary', state === 'student');
-      tabS.classList.toggle('soft', state !== 'student');
-      tabT.classList.toggle('primary', state === 'tutor');
-      tabT.classList.toggle('soft', state !== 'tutor');
-    }
-    tabS.addEventListener('click', function(){ set('student'); });
-    tabT.addEventListener('click', function(){ set('tutor'); });
-    document.querySelectorAll('[data-apply]').forEach(function(a){
-      a.addEventListener('click', function(){ set(a.dataset.apply === 'tutor' ? 'tutor' : 'student'); });
-    });
-    var params = new URLSearchParams(location.search);
-    if(params.get('applied')){
-      var done = document.getElementById('applyDone');
-      if(done) done.hidden = false;
-    }
   })();
 
   // ---------------------------------------------------------------------
