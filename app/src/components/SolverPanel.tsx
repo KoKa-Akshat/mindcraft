@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import HomeworkCards, { type HomeworkSession, type HomeworkCard, type OutcomeRecord } from './HomeworkCards'
-import { PRACTICE_CONCEPTS } from '../lib/questionBank'
-import { getIngredientCards, recordOutcomes, type IngredientRecommendResult } from '../lib/mlApi'
+import ColdCheckPrompt from './ColdCheckPrompt'
+import { PRACTICE_CONCEPTS, getQuestions, type Question } from '../lib/questionBank'
+import { getIngredientCards, recordOutcomes, type IngredientRecommendResult, type OutcomeInput } from '../lib/mlApi'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
@@ -12,7 +13,7 @@ import s from '../pages/Practice.module.css'
 
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
 
-export type SolverPhase = 'input' | 'loading' | 'cards' | 'done'
+export type SolverPhase = 'input' | 'loading' | 'cards' | 'check' | 'done'
 
 type SolverPanelProps = {
   /** Currently selected exam track from the practice flow — steers the LLM
@@ -103,6 +104,15 @@ export default function SolverPanel({ exam, initialProblemText, onBackToPractice
   const [sResults,   setSResults]   = useState<OutcomeRecord[]>([])
   const [error,      setError]      = useState('')
   const [slowLoad,   setSlowLoad]   = useState(false)
+
+  // The solo-check gate: a self-reported "I get it" queues one fresh,
+  // unaided question on that concept before the session can close. Self-
+  // report outcomes are still recorded immediately (below) so that write
+  // never depends on a bank match existing — the check is an additional,
+  // separate signal, not a blocker on the base write. checkQuestion stays
+  // null when the concept has no unseen bank item (a real bank gap), and
+  // the gate is skipped gracefully rather than treated as an error.
+  const [checkQuestion, setCheckQuestion] = useState<Question | null>(null)
 
   // Cross-mode handoff: a pre-filled problem (dashboard quick-box, or a stuck
   // practice question's walkthrough link) auto-submits once on arrival.
@@ -273,7 +283,7 @@ export default function SolverPanel({ exam, initialProblemText, onBackToPractice
           apiBase={HOMEWORK_API}
           fetchClue={(content, concept, num) => clueWithGemini(content, concept, num, exam || 'General')}
           onComplete={r => {
-            setSResults(r); setSPhase('done')
+            setSResults(r)
             // Feed homework outcomes into the student graph (concept_chip
             // -> concept id; outcome 1 = solved). Unknown ids skip server-side.
             const outs = r.map(rec => ({
@@ -284,8 +294,39 @@ export default function SolverPanel({ exam, initialProblemText, onBackToPractice
             }))
             void recordOutcomes(user.uid, outs)
             invalidateKnowledgeGraph(user.uid)
+
+            // Solo-check gate: self-report says "I get it" is a feeling, not
+            // proof (Bastani et al. 2025 — self-report can't detect a crutch
+            // effect). Pick one fresh, unaided question on the first
+            // self-reported-solved concept before letting the session close.
+            const solvedConceptId = outs.find(o => o.succeeded)?.conceptId
+            const pool = solvedConceptId ? getQuestions(solvedConceptId, 1, 1, []) : []
+            if (pool.length > 0) {
+              setCheckQuestion(pool[0])
+              setSPhase('check')
+            } else {
+              setSPhase('done')
+            }
           }}
           onNewProblem={() => { setProblem(''); setSession(null); setSPhase('input') }}
+        />
+      )}
+
+      {sPhase === 'check' && checkQuestion && (
+        <ColdCheckPrompt
+          question={checkQuestion}
+          onResult={({ correct, selectedIndex }) => {
+            void recordOutcomes(user.uid, [{
+              conceptId: checkQuestion.conceptId,
+              score: correct ? 1 : 0,
+              questionId: checkQuestion.id,
+              selectedChoiceIndex: selectedIndex,
+              level: checkQuestion.level,
+            }])
+            invalidateKnowledgeGraph(user.uid)
+            setCheckQuestion(null)
+            setSPhase('done')
+          }}
         />
       )}
 

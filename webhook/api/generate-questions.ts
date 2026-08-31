@@ -295,7 +295,15 @@ examTag must be {exam_tag_instruction}.`
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin',  ALLOWED_ORIGIN)
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  // Authorization added 2026-08-30. This endpoint started REQUIRING a Firebase
+  // ID token on 2026-08-27 (see the verifyToken call below) but its allowed
+  // headers were never widened to match, so every browser call died in
+  // preflight with "Request header field authorization is not allowed by
+  // Access-Control-Allow-Headers" and could never reach the handler at all.
+  // It went unnoticed because the change was made for iOS, and a native
+  // client sends no CORS preflight. Caught by a real browser call from the
+  // Learn page against production, not by reading the file.
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' })
 

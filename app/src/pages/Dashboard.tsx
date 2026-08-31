@@ -31,7 +31,8 @@ import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/bo
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import { ACT_TOC_SECTIONS, actConceptLabel, type ActTocSection } from '../lib/actToc'
 import { storyArtFor } from '../lib/storyArt'
-import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen, Sparkles } from 'lucide-react'
+import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen, Sparkles, Search } from 'lucide-react'
+import Learn from './Learn'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -269,8 +270,10 @@ export default function Dashboard({
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string; eventCount: number }>>({})
-  const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
+  const [embedView, setEmbedView] = useState<'home' | 'learn' | 'map' | 'work' | 'notes'>('home')
   const [showWeeklyPicker, setShowWeeklyPicker] = useState(false)
+  /** Draft text in the home "Learn anything" box, handed to the Learn view. */
+  const [learnQuery, setLearnQuery] = useState('')
 
   const rawView = embedded ? embedView : (searchParams.get('view') ?? 'home')
   const view = (
@@ -279,7 +282,7 @@ export default function Dashboard({
     : rawView === 'homework' || rawView === 'worksheet' ? 'work'
     : rawView === 'saved' ? 'notes'
     : rawView
-  ) as 'home' | 'route' | 'map' | 'work' | 'notes'
+  ) as 'home' | 'learn' | 'route' | 'map' | 'work' | 'notes'
 
   function withEmbed(path: string) {
     if (!frameEmbed || !viewingAs) return path
@@ -290,6 +293,18 @@ export default function Dashboard({
   function openHome() {
     if (embedded) { setEmbedView('home'); return }
     navigate(withEmbed(homeBase.split('?')[0]), { replace: true })
+  }
+  /** The Learn experience: free-text search across the whole 4118-concept,
+   * 13-subject library. Opened in place as a dashboard view (rather than
+   * navigating away) so the notebook chrome, sign-out, and the rest of the
+   * nav stay exactly where a student already expects them. An optional
+   * starting question is passed through as ?q= so typing in the home search
+   * box lands on real results instead of an empty search page. */
+  function openLearn(q?: string) {
+    const question = (q ?? '').trim()
+    if (embedded) { setEmbedView('learn'); return }
+    const suffix = question ? `&q=${encodeURIComponent(question)}` : ''
+    navigate(withEmbed(`${homeBase.split('?')[0]}?view=learn${suffix}`), { replace: false })
   }
   function openMap() {
     if (embedded) { setEmbedView('map'); return }
@@ -751,6 +766,19 @@ export default function Dashboard({
             Mind<span className={s.canvasWordmarkCraft}>Craft</span>
           </button>
           <nav className={s.canvasNav} aria-label="Notebook sections">
+            {/* Learn sits FIRST in the nav: it is the primary way into the
+                content library now (4118 concepts, 13 subjects), where the
+                rest of the nav is scoped to the ACT notebook. Nothing was
+                removed to make room. */}
+            <button
+              type="button"
+              className={view === 'learn' ? s.navActive : s.navBtn}
+              onClick={() => openLearn()}
+              aria-label="Learn"
+              title="Learn anything"
+            >
+              <Search size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
             <button
               type="button"
               className={view === 'map' ? s.navActive : s.navBtn}
@@ -815,8 +843,38 @@ export default function Dashboard({
           </div>
 
           <div key={view} className={s.stagePane}>
+            {/* Learn: the primary way into the full content library. Rendered
+                inside the existing stage so the notebook chrome stays put.
+                Deliberately keyed to the current query so a new search from
+                the home box remounts with the right starting question. */}
+            {view === 'learn' && (
+              <div style={{ position: 'absolute', inset: 0, borderRadius: 14, overflow: 'hidden' }}>
+                <Learn embedded />
+              </div>
+            )}
+
             {view === 'home' && (
               <div className={s.homeCanvas}>
+                {/* Learn-anything search. The single most prominent action on
+                    the landing view, above Contents, because the library it
+                    searches (4118 concepts across 13 subjects) is far bigger
+                    than the ACT notebook below it. Everything that was already
+                    here is untouched and still exactly where students left it. */}
+                <form
+                  className={s.learnSearchBar}
+                  onSubmit={e => { e.preventDefault(); playTap(); openLearn(learnQuery) }}
+                >
+                  <Search size={20} aria-hidden="true" />
+                  <input
+                    type="text"
+                    value={learnQuery}
+                    onChange={e => setLearnQuery(e.target.value)}
+                    placeholder="Ask anything, or paste a homework question..."
+                    aria-label="Ask anything"
+                  />
+                  <button type="submit">Learn</button>
+                </form>
+
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>

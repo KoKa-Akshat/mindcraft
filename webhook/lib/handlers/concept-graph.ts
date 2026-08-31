@@ -6,14 +6,40 @@
  *   1. Student's sessions (keyword detection in title + bullets)
  *   2. Pre-loaded math ontology (domain prior graph)
  *   3. Weighted edges: session co-occurrence + ontology
+ *   4. NEW (2026-08-30): the real 4118-concept conceptLibrary, when the
+ *      hardcoded ontology below has nothing for the query.
  *
- * POST { concept: string, studentEmail: string }
- * Returns { concept, nodes, edges }
+ * POST { concept: string, studentEmail: string, conceptId?: string }
+ * Returns { concept, nodes, edges, source }
+ *
+ * ── The library blend, and why it is shaped as an opt-in fallback ──────────
+ * MATH_ONTOLOGY below is 21 real concepts plus 6 deliberately-unrelated ones.
+ * The migrated conceptLibrary is 4118 concepts across 13 subjects with 7330
+ * real prerequisite/cross-subject edges, so it is a strictly richer source for
+ * anything it covers. It is NOT swapped in wholesale, though, because this
+ * endpoint is live and its existing behaviour (session-history detection,
+ * mastery from session counts, the exact node/edge shape) is depended on by
+ * callers this change cannot see. Instead:
+ *
+ *   - A request in the existing shape whose concept IS in MATH_ONTOLOGY gets
+ *     byte-identical behaviour to before. That path is untouched.
+ *   - A request whose concept is NOT in MATH_ONTOLOGY used to return a lone
+ *     node with no edges at all, which is a dead end, not an answer. That case
+ *     now falls back to the library, so "Phylogenetics" or "Conformity"
+ *     returns a real neighbourhood instead of nothing.
+ *   - A caller that already knows a library id can force the library path by
+ *     passing `conceptId`.
+ *
+ * Session history and mastery are layered on top of whichever source supplied
+ * the neighbours, so the student's own data still drives hasSession/mastery
+ * exactly as before. `source` in the response says which prior was used, so a
+ * client never has to guess.
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../firebase'
 import { setCors } from '../cors'
+import { CONCEPT_LIBRARY } from '../conceptLibrary'
 
 // ── Math Ontology (domain prior) ─────────────────────────────────────────────
 // Undirected adjacency list. Each edge = ontology relationship.
@@ -121,12 +147,53 @@ export interface GraphEdge {
   type:   'session' | 'ontology' | 'both'
 }
 
+// ── conceptLibrary fallback ─────────────────────────────────────────────────
+
+/** Fields needed to build a neighbourhood. Field-masked so this never pulls a
+ * lesson body it is not going to use. */
+const LIB_FIELDS = ['conceptId', 'name', 'prereqs', 'unlocks', 'crossSubject']
+
+interface LibNode {
+  conceptId: string
+  name?: string
+  prereqs?: string[]
+  unlocks?: string[]
+  crossSubject?: string[]
+}
+
+/** Resolves a display name or a raw library id to one library document.
+ * Exact-id first (free), then an equality match on `name` (served by
+ * Firestore's automatic single-field index, no composite index needed). */
+async function findLibraryNode(idOrName: string): Promise<LibNode | null> {
+  const direct = await db.collection(CONCEPT_LIBRARY).doc(idOrName).get()
+  if (direct.exists) return { ...(direct.data() as LibNode), conceptId: direct.id }
+  const byName = await db.collection(CONCEPT_LIBRARY).where('name', '==', idOrName).limit(1).get()
+  if (!byName.empty) return { ...(byName.docs[0].data() as LibNode), conceptId: byName.docs[0].id }
+  return null
+}
+
+/** id -> display name for a set of library ids, in one batched, masked read. */
+async function libraryLabels(ids: string[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>()
+  if (ids.length === 0) return out
+  const refs = ids.map((id) => db.collection(CONCEPT_LIBRARY).doc(id))
+  const snaps = await db.getAll(...refs, { fieldMask: LIB_FIELDS })
+  for (let i = 0; i < snaps.length; i++) {
+    if (snaps[i].exists) out.set(ids[i], (snaps[i].data() as LibNode).name || ids[i])
+  }
+  return out
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { concept: rawConcept, studentEmail } = req.body as { concept: string; studentEmail: string }
+  const { concept: rawConcept, studentEmail, conceptId } = req.body as {
+    concept: string
+    studentEmail: string
+    conceptId?: string
+  }
   if (!rawConcept || !studentEmail) return res.status(400).json({ error: 'concept and studentEmail required' })
 
   const concept = normalizeConcept(rawConcept)
@@ -208,16 +275,87 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     })
   }
 
-  // Center node
-  addNode(concept, 0)
+  // ── Pick the domain prior ────────────────────────────────────────────────
+  // Default is the hardcoded MATH_ONTOLOGY, so every request that worked
+  // before still takes exactly the path it took before. The library is
+  // consulted only when the caller asked for it by id, or when the ontology
+  // genuinely has nothing (the case that used to return a lone, edgeless
+  // node). A library lookup that fails falls straight back to the ontology
+  // behaviour rather than erroring: a richer graph is a bonus here, never a
+  // dependency.
+  let adjacency: Record<string, string[]> = MATH_ONTOLOGY
+  let centerName = concept
+  let source: 'ontology' | 'library' = 'ontology'
 
-  // Level 1: ontology neighbors
-  const level1 = new Set<string>(MATH_ONTOLOGY[concept] ?? [])
+  const wantLibrary = !!conceptId || !MATH_ONTOLOGY[concept]
+  if (wantLibrary) {
+    try {
+      const center = await findLibraryNode(conceptId || concept || rawConcept)
+      if (center) {
+        const direct = [
+          ...(center.prereqs ?? []),
+          ...(center.unlocks ?? []),
+          ...(center.crossSubject ?? []),
+        ].slice(0, 14) // keep the graph readable, same instinct as the level-2 cap below
+        // One batched read for the direct neighbours, then their own
+        // neighbours for level 2. Two round trips total, not one per node.
+        const neighborRefs = direct.map((id) => db.collection(CONCEPT_LIBRARY).doc(id))
+        const neighborSnaps = neighborRefs.length ? await db.getAll(...neighborRefs, { fieldMask: LIB_FIELDS }) : []
+
+        const built: Record<string, string[]> = {}
+        const labelOf = new Map<string, string>()
+        labelOf.set(center.conceptId, center.name || center.conceptId)
+        const secondDegree = new Set<string>()
+        for (const s of neighborSnaps) {
+          if (!s.exists) continue
+          const n = s.data() as LibNode
+          labelOf.set(s.id, n.name || s.id)
+          for (const id of [...(n.prereqs ?? []), ...(n.unlocks ?? [])].slice(0, 4)) {
+            if (id !== center.conceptId && !direct.includes(id)) secondDegree.add(id)
+          }
+        }
+        const secondLabels = await libraryLabels([...secondDegree].slice(0, 12))
+        for (const [id, label] of secondLabels) labelOf.set(id, label)
+
+        // The rest of this handler works in DISPLAY NAMES, not ids, so the
+        // library adjacency is translated into the same name-keyed shape
+        // MATH_ONTOLOGY uses. Ids that never resolved to a label are dropped
+        // rather than shown raw.
+        const nameOf = (id: string) => labelOf.get(id)
+        centerName = center.name || center.conceptId
+        built[centerName] = direct.map(nameOf).filter((n): n is string => !!n)
+        for (const s of neighborSnaps) {
+          if (!s.exists) continue
+          const n = s.data() as LibNode
+          const label = nameOf(s.id)
+          if (!label) continue
+          built[label] = [
+            centerName,
+            ...[...(n.prereqs ?? []), ...(n.unlocks ?? [])].slice(0, 4).map(nameOf).filter((x): x is string => !!x),
+          ]
+        }
+        if (built[centerName]?.length) {
+          adjacency = built
+          source = 'library'
+        }
+      }
+    } catch (e) {
+      // Library unavailable or not migrated yet. The ontology path below still
+      // answers, which is exactly the behaviour that shipped before.
+      console.error('concept-graph: library lookup failed, using the ontology', e)
+    }
+  }
+
+  // Center node
+  addNode(centerName, 0)
+
+  // Level 1: ontology (or library) neighbors
+  const level1 = new Set<string>(adjacency[centerName] ?? [])
 
   // Also add concepts where student has sessions co-occurring with the concept
-  const centerSessions = new Set(conceptData[concept]?.ids ?? [])
+  const centerSessions = new Set(conceptData[centerName]?.ids ?? [])
   for (const [otherConcept, data] of Object.entries(conceptData)) {
-    if (otherConcept === concept) continue
+    if (otherConcept === centerName) continue
     const otherSessions = new Set(data.ids)
     const overlap = [...centerSessions].filter(id => otherSessions.has(id)).length
     if (overlap > 0) level1.add(otherConcept)
@@ -226,22 +364,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   for (const neighbor of level1) {
     addNode(neighbor, 1)
     const sessionBased = centerSessions.size > 0 && (conceptData[neighbor]?.ids.length ?? 0) > 0
-    const ontologyBased = (MATH_ONTOLOGY[concept] ?? []).includes(neighbor)
-    addEdge(concept, neighbor, sessionBased, ontologyBased)
+    const ontologyBased = (adjacency[centerName] ?? []).includes(neighbor)
+    addEdge(centerName, neighbor, sessionBased, ontologyBased)
   }
 
   // Level 2: neighbors of level 1 (max 10 to keep graph readable)
   let l2count = 0
   for (const l1 of level1) {
     if (l2count >= 10) break
-    const l2candidates = MATH_ONTOLOGY[l1] ?? []
+    const l2candidates = adjacency[l1] ?? []
     for (const l2 of l2candidates) {
-      if (l2 === concept || level1.has(l2) || l2count >= 10) continue
+      if (l2 === centerName || level1.has(l2) || l2count >= 10) continue
       addNode(l2, 2)
       addEdge(l1, l2, false, true)
       l2count++
     }
   }
 
-  return res.json({ concept, nodes, edges })
+  // `concept` (not centerName) stays the echoed value so an existing caller
+  // that matches the response against what it sent keeps matching. `source`
+  // is additive and tells a newer client which prior actually built this.
+  return res.json({ concept, nodes, edges, source, centerLabel: centerName })
 }

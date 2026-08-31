@@ -1837,3 +1837,60 @@
   .tocNodeName { font-size: 11px; }
   .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }
 }
+
+/* ── Learn-anything search bar (2026-08-30) ────────────────────────────────
+ * The primary entry into the full content library (4118 concepts across 13
+ * subjects) from the notebook's landing view. Sits above Contents because the
+ * library it reaches is far wider than the ACT notebook below it, but nothing
+ * that was already on this view was moved or removed to make room. Visual
+ * language matches .weeklyCard's warm-notebook treatment rather than
+ * introducing a new one. */
+.learnSearchBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px 10px 18px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(185, 232, 111, 0.42);
+  background:
+    radial-gradient(ellipse 60% 140% at 0% 50%, rgba(185, 232, 111, 0.22), transparent 60%),
+    linear-gradient(135deg, rgba(36, 122, 77, 0.42), rgba(20, 58, 46, 0.78));
+  color: #f4efe2;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+}
+.learnSearchBar svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.learnSearchBar input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: #f4efe2;
+  font-family: var(--tok-font-sans);
+  font-size: 16px;
+  padding: 8px 0;
+}
+.learnSearchBar input::placeholder {
+  color: rgba(244, 239, 226, 0.5);
+}
+.learnSearchBar input:focus {
+  outline: none;
+}
+.learnSearchBar button {
+  flex-shrink: 0;
+  padding: 9px 20px;
+  border-radius: 12px;
+  border: none;
+  background: #b9e86f;
+  color: #12301f;
+  font-family: var(--tok-font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.learnSearchBar button:hover {
+  filter: brightness(1.06);
+}

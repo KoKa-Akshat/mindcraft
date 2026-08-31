@@ -210,6 +210,65 @@ service cloud.firestore {
       );
     }
 
+    // ── Migrated content library (scripts/migrate-concept-library.ts) ───────
+    // The real 13-subject library: 4118 concepts, 3746 written lessons, 722
+    // concepts with built sim HTML, 7330 prerequisite/cross-subject edges.
+    //
+    // Read-only reference content served DIRECTLY to the authenticated client
+    // rather than through a webhook endpoint. That is a deliberate choice over
+    // adding a thin server handler, for three reasons: (a) it is exactly the
+    // shape `classrooms` and `articles` already use here for read-only
+    // reference data, (b) the Hobby plan's 12-function ceiling is already
+    // fully consumed so every server endpoint costs a slot in the shared
+    // app-actions router, and (c) a student walking a seven-step guided path
+    // reads seven concepts, and a direct read saves seven serverless round
+    // trips on the critical path of the thing they are actually reading.
+    // There is nothing student-specific or secret in these documents.
+    //
+    // Writes are Admin SDK only (the migration script bypasses rules), so a
+    // client can never edit the library it is reading.
+    match /conceptLibrary/{conceptId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    match /conceptLibrarySims/{conceptId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // The embedding index is server-side machinery for /api/concept-resolve,
+    // not content. No client has a reason to read a megabyte of packed
+    // vectors, so this stays closed on both sides (the Admin SDK still
+    // writes and reads it, bypassing rules entirely).
+    match /conceptLibraryIndex/{docId} {
+      allow read, write: if false;
+    }
+
+    // Per-student, per-concept study record for the Learn experience. "Studied"
+    // means the student actually ANSWERED that concept's check question, right
+    // or wrong — not that a chapter was on screen. Replaces the prototype's
+    // localStorage log now that there is a real backend, so the history
+    // follows the student across devices instead of dying with a browser
+    // profile. Same ownership shape as binder_items directly above: update
+    // requires owning the EXISTING doc too, not merely naming yourself owner
+    // in the write, so a caller who somehow guessed another student's doc id
+    // cannot adopt it.
+    match /conceptStudyLog/{docId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow update: if request.auth != null
+        && resource.data.studentId == request.auth.uid
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||

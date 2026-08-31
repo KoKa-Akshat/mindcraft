@@ -45,6 +45,8 @@ import discoverInternships from '../lib/handlers/discover-internships'
 import reconcileApplications from '../lib/handlers/reconcile-applications'
 import listGeneratedSims from '../lib/handlers/list-generated-sims'
 import microsims from '../lib/handlers/microsims'
+import conceptResolve from '../lib/handlers/concept-resolve'
+import simplifyChapter from '../lib/handlers/simplify-chapter'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -84,6 +86,14 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'reconcile-applications': reconcileApplications,
   'list-generated-sims': listGeneratedSims,
   'microsims': microsims,
+  // Concept library (migrated 2026-08-30): free-text semantic resolution over
+  // the whole 4118-concept library, and the auto-simplify pass that reshapes a
+  // chapter for how the student asked. Both are new capabilities, neither
+  // duplicates an existing handler. Concept CONTENT is deliberately not here:
+  // it is served by direct authenticated Firestore reads gated by
+  // firestore.rules, see the note in that file.
+  'concept-resolve': conceptResolve,
+  'simplify-chapter': simplifyChapter,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

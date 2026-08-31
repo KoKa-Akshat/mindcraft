@@ -32,6 +32,12 @@ import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
 import FirstSpark      from './pages/FirstSpark'
+import DevColdCheckPreview from './pages/DevColdCheckPreview' // THROWAWAY — remove with its route below
+import DevJarvisPreview from './pages/DevJarvisPreview' // THROWAWAY — remove with its route below
+import DevUnifiedLearn from './pages/DevUnifiedLearn' // THROWAWAY — remove with its route below
+// Production promotion of the DevUnifiedLearn prototype, wired to the real
+// migrated content library, real auth, and the real generation endpoints.
+import Learn           from './pages/Learn'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -282,6 +288,9 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/spark" element={<FirstSpark />} />
+        <Route path="/dev-cold-check" element={<DevColdCheckPreview />} /> {/* THROWAWAY — remove */}
+        <Route path="/dev-jarvis" element={<DevJarvisPreview />} /> {/* THROWAWAY — remove */}
+        <Route path="/dev-learn" element={<DevUnifiedLearn />} /> {/* THROWAWAY — remove */}
         {/* Old plain list-only booking page — permanently redirects to the
             richer Find-a-Tutor page (map + proximity search + honest
             no-fake-reviews handling). Keep the redirect, not the old page,
@@ -293,6 +302,12 @@ export default function App() {
 
         {/* Authenticated routes */}
         <Route path="/dashboard"           element={<AuthGuard><Dashboard /></AuthGuard>} />
+        {/* Learn: free-text search over the whole 4118-concept library, guided
+            prerequisite paths, auto-simplified chapters, real sims. Also
+            reachable in-place as /dashboard?view=learn; this standalone route
+            exists so it can be linked and bookmarked directly, with ?q= to
+            run a search on arrival. */}
+        <Route path="/learn"               element={<AuthGuard><Learn /></AuthGuard>} />
         <Route path="/parent"              element={<AuthGuard><ParentDashboard /></AuthGuard>} />
         <Route path="/tutor"               element={<AuthGuard><TutorDashboard /></AuthGuard>} />
         <Route path="/tutor/session/:id"   element={<AuthGuard><SessionDetail /></AuthGuard>} />

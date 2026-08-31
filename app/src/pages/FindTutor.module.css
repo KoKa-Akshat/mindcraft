@@ -50,6 +50,12 @@
 .tutorStat{margin-top:4px;color:rgba(75,0,29,.54);font-size:11px;font-weight:950;letter-spacing:.1em;text-transform:uppercase}
 .tutorBio{color:var(--muted);font-size:14px;font-weight:700;line-height:1.65}
 .subjects{display:flex;flex-wrap:wrap;gap:7px}.subjectTag{padding:6px 10px;border:1px solid rgba(6,77,54,.14);border-radius:999px;background:rgba(78,181,67,.08);color:var(--forest);font-size:10.5px;font-weight:950}
+.eventsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.eventCard{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2.2vw,24px);border:1px solid var(--line);border-radius:24px;background:rgba(255,253,247,.74);box-shadow:0 16px 40px rgba(75,0,29,.05)}
+.eventCafe{color:rgba(75,0,29,.54);font-size:11px;font-weight:950;letter-spacing:.1em;text-transform:uppercase}
+.eventTitle{color:var(--forest);font-family:var(--tok-font-serif);font-size:19px;font-weight:600;line-height:1.12;letter-spacing:-.02em}
+.eventMeta{color:var(--muted);font-size:13px;font-weight:700}
+.eventDesc{color:var(--muted);font-size:13.5px;font-weight:700;line-height:1.6}
 .reviewsRow{font-size:12px;font-weight:800}
 .reviewsButton{width:100%;min-height:58px;display:flex;align-items:center;gap:11px;padding:10px 13px;border:1px solid rgba(6,77,54,.18);border-radius:14px;background:rgba(78,181,67,.08);color:var(--forest);font-family:inherit;text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease}
 .reviewsButton:hover{transform:translateY(-1px);border-color:rgba(78,181,67,.5);background:rgba(78,181,67,.13)}

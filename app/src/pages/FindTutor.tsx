@@ -726,7 +726,7 @@ export default function FindTutor() {
           )}
 
           <div className={s.tutorList}>
-            <h2 className={s.sectionTitle}>Available Tutors</h2>
+            <h2 className={s.sectionTitle}>Tutors near me</h2>
             {rankedTutors.map(tutor => (
               <div
                 key={tutor.id}
@@ -800,6 +800,26 @@ export default function FindTutor() {
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={s.section}>
+        <h2 className={s.sectionTitle}>Events nearby</h2>
+        <div className={s.eventsGrid}>
+          <div className={s.eventCard}>
+            <div className={s.eventCafe}>Coming soon</div>
+            <div className={s.eventTitle}>Study sessions, hosted at real cafes</div>
+            <p className={s.eventDesc}>
+              Students hosting live, drop-in study sessions at cafes near you, open to anyone nearby who wants to work alongside other people instead of alone. Nothing is scheduled here yet, this section is not showing real events.
+            </p>
+          </div>
+          <div className={s.eventCard}>
+            <div className={s.eventCafe}>Want to host one?</div>
+            <div className={s.eventTitle}>Tell us where you'd meet up</div>
+            <p className={s.eventDesc}>
+              <a href="mailto:founders@joinmindcraft.com">Email founders@joinmindcraft.com</a> with your city and a cafe you like, and we will help get the first ones on the map.
+            </p>
           </div>
         </div>
       </div>

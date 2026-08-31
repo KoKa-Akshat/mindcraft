@@ -4,7 +4,7 @@
     "api/generate-summary.ts": { "maxDuration": 30 },
     "api/cron-fireflies.ts": { "maxDuration": 60 },
     "api/research-agent.ts": { "maxDuration": 60 },
-    "api/generate-questions.ts": { "maxDuration": 30 },
+    "api/generate-questions.ts": { "maxDuration": 60 },
     "api/gemini.ts": { "maxDuration": 30 },
     "api/story-module.ts": { "maxDuration": 30 },
     "api/jarvis.ts": { "maxDuration": 60 },
@@ -50,7 +50,9 @@
     { "source": "/api/discover-internships", "destination": "/api/app-actions?action=discover-internships" },
     { "source": "/api/reconcile-applications", "destination": "/api/app-actions?action=reconcile-applications" },
     { "source": "/api/list-generated-sims", "destination": "/api/app-actions?action=list-generated-sims" },
-    { "source": "/api/microsims", "destination": "/api/app-actions?action=microsims" }
+    { "source": "/api/microsims", "destination": "/api/app-actions?action=microsims" },
+    { "source": "/api/concept-resolve", "destination": "/api/app-actions?action=concept-resolve" },
+    { "source": "/api/simplify-chapter", "destination": "/api/app-actions?action=simplify-chapter" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },
