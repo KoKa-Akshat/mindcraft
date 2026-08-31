@@ -42,10 +42,6 @@ const DEFAULTS = [
   },
 ];
 
-function fmtCount(n) {
-  return Number(n || 0).toLocaleString('en-US');
-}
-
 function loadInstances() {
   try {
     const raw = JSON.parse(localStorage.getItem(INST_KEY) || '[]');
@@ -210,7 +206,6 @@ function goalOptionsFor(inst) {
 export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
-  const hubList = hub?.querySelector('[data-hub-list]');
   const hubName = hub?.querySelector('[data-hub-name]');
   const hubEmail = hub?.querySelector('[data-hub-email]');
   const hubFirst = hub?.querySelector('[data-hub-first]');
@@ -291,7 +286,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
         hubMasteryPct.textContent = `${pct}%`;
         hubMasteryPct.classList.remove('is-unknown');
       } else {
-        hubMasteryPct.textContent = '—';
+        hubMasteryPct.textContent = '--';
         hubMasteryPct.classList.add('is-unknown');
       }
     }
@@ -304,6 +299,16 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     } catch { /* ignore */ }
   }
 
+  // Instance-card rendering (the old "Your instances" grid, `[data-hub-list]`)
+  // was removed 2026-08-31 -- the instances concept is dropped from the hub,
+  // not just hidden, and "Tutors nearby" now sits where it used to. The
+  // catalog itself (ensureCatalog/list) stays: it still backs the Mastery
+  // goal-instance picker (paintGoalControls) and mastery readout
+  // (paintMastery) just above where the grid used to be. onOpenInstance and
+  // onCreateInstance are unused now that their only trigger buttons
+  // (`[data-open]` / `[data-create]`) are gone with the grid -- kept as
+  // no-op-safe params rather than changing createBootHub's call signature
+  // in app.js, which is outside this audit's scope.
   function renderHub() {
     const list = ensureCatalog();
     const user = setUser();
@@ -311,54 +316,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hubEmail) hubEmail.textContent = user.email;
     paintGoalControls(list);
     paintMastery(list);
-    if (!hubList) return;
-
-    hubList.innerHTML = list.map((inst) => {
-      const kind = inst.kind || 'desk';
-      const kindClass = kind === 'act' ? 'is-act' : kind === 'piano' ? 'is-piano' : kind === 'book' ? 'is-book' : 'is-desk';
-      const used = Number(inst.execUsed ?? 0);
-      const cap = Math.max(1, Number(inst.execCap ?? 1000));
-      const pct = Math.min(100, Math.round((used / cap) * 100));
-      const running = (inst.status || 'running') !== 'off';
-      return `
-      <article class="hub-card ${kindClass}" data-inst="${inst.id}" data-kind="${kind}">
-        <div class="hub-card-top">
-          <span class="hub-card-gear" aria-hidden="true" title="Settings">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.5.42l-.36 2.54c-.6.24-1.15.55-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.82 14.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.43.34.68.22l2.39-.96c.48.39 1.03.7 1.63.94l.36 2.54c.05.24.26.42.5.42h3.8c.24 0 .45-.18.5-.42l.36-2.54c.6-.24 1.15-.55 1.63-.94l2.39.96c.25.12.54.02.68-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/></svg>
-          </span>
-          <span class="hub-card-badge ${kindClass}">${inst.badge || (kind === 'act' ? 'ACT' : kind === 'piano' ? 'Piano' : 'Desk')}</span>
-        </div>
-        <div class="hub-card-main">
-          <h2 class="hub-card-name">${inst.name}</h2>
-          <button type="button" class="hub-open" data-open="${inst.id}">Open instance</button>
-          <p class="hub-card-status">
-            <span>${running ? 'Running' : 'Stopped'}</span>
-            <span class="hub-dot ${running ? 'is-ready' : ''}" aria-hidden="true"></span>
-          </p>
-        </div>
-        <div class="hub-card-exec">
-          <p class="hub-exec-count"><strong>${fmtCount(used)}</strong> / ${fmtCount(cap)}</p>
-          <div class="hub-exec-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
-          <p class="hub-exec-label">Execution steps</p>
-        </div>
-      </article>`;
-    }).join('') + `
-      <button type="button" class="hub-card hub-card-new" data-create>
-        <span class="hub-plus">+</span>
-        <span>Create an instance</span>
-      </button>
-    `;
-
-    hubList.querySelectorAll('[data-open]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-open');
-        const inst = list.find((x) => x.id === id) || list[0];
-        onOpenInstance?.(inst);
-      });
-    });
-    hubList.querySelector('[data-create]')?.addEventListener('click', () => {
-      onCreateInstance?.();
-    });
   }
 
   /** Append a cooked Field Book instance (like ACT) */
