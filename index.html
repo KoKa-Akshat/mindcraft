@@ -4,17 +4,17 @@
 <title>The Desk by MindCraft</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you. The Desk by MindCraft.">
+<meta name="description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
 <link rel="canonical" href="https://joinmindcraft.com/">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Desk by MindCraft">
-<meta property="og:description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you.">
+<meta property="og:description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta property="og:url" content="https://joinmindcraft.com/">
 <meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Desk by MindCraft">
-<meta name="twitter:description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you.">
+<meta name="twitter:description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,8 +101,9 @@
   }
   .stage-desk::before{top:0; background:linear-gradient(to bottom, #070f0c, transparent);}
   .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
-  /* desk and create are consecutive cream stages, so no fade belongs at that seam */
-  #desk::after, #create::before{content:none;}
+  /* the graph showcase between desk and create is dark, so both of their
+     fades toward it are wanted again, unlike when desk and create used to be
+     back to back cream stages with nothing dark between them to fade into. */
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -147,13 +148,17 @@
   @media (max-width:900px){.nav-links a:not(.join){display:none;}}
 
   /* ---------- hero ---------- */
+  /* light stage, same cream-stage variable trick as .stage-desk, so the dark
+     graph showcase slotted in as the third section reads as a real beat of
+     contrast right after it, not two dark sections running together. */
   .hero{
     min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.30), transparent 60%),
-      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.09), transparent 55%),
-      linear-gradient(180deg,#070f0a 0%,#0a1612 55%,#070f0a 100%);
+      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(95,183,121,.16), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.10), transparent 55%),
+      linear-gradient(180deg,#ffffff 0%,#fafaf8 55%,#ffffff 100%);
   }
+  .hero.stage-desk .hero-tag{background:rgba(20,58,46,.045);}
   .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none; transition:transform .2s linear;}
   .hero-stage{position:relative; z-index:2; width:100%; max-width:920px; margin:0 auto; padding:clamp(120px,15vh,170px) clamp(20px,4vw,48px) 0; text-align:center;}
   .hero-tag{
@@ -257,6 +262,14 @@
   .frontier-frame{margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden; background:#070f0a; border:1px solid var(--edge); box-shadow:var(--shadow);}
   .frontier-frame iframe{display:block; width:100%; height:min(70vh,600px); border:0;}
   .frontier-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
+
+  /* ---------- concept map (dark), the third slide, same iframe-embed
+     pattern as the frontier graph above but showing the whole library's
+     real prerequisite structure rather than one ZPD demo ---------- */
+  .conceptmap{background:#070f0a; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
+  .conceptmap-frame{margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden; background:#050a08; border:1px solid var(--edge); box-shadow:var(--shadow);}
+  .conceptmap-frame iframe{display:block; width:100%; height:min(74vh,660px); border:0;}
+  .conceptmap-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
 
 
   /* ---------- the desk (cream, three surfaces) ---------- */
@@ -470,37 +483,6 @@
   }
 
 
-  /* ---------- pricing (cream) ---------- */
-  .pricing-lede-row{display:grid; grid-template-columns:1.3fr .7fr; gap:clamp(24px,4vw,48px); align-items:start; margin-bottom:16px;}
-  .seats-chip{
-    display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:14px;
-    background:rgba(193,18,31,.07); border:1px solid rgba(193,18,31,.25); font-size:12.5px; font-weight:500; color:var(--stakes);
-  }
-  .seats-chip b{font-weight:700;}
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:40px;}
-  .price-card{
-    background:var(--field-2); border-radius:22px; padding:26px 22px;
-    display:flex; flex-direction:column; transition:transform .25s var(--ease), box-shadow .25s var(--ease);
-  }
-  .price-card.feature{box-shadow:0 0 0 1.5px rgba(36,122,77,.35); background:linear-gradient(180deg, rgba(196,245,71,.12), var(--field-2) 42%);}
-  .price-card:hover{transform:translateY(-4px);}
-  .tier-chip{display:inline-block; margin-bottom:16px; padding:4px 11px; border-radius:999px; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; width:fit-content;}
-  .price-card.free .tier-chip{background:var(--lime); color:var(--lime-ink);}
-  .price-card.family .tier-chip{background:rgba(211,169,0,.12); color:var(--gold-deep);}
-  .price-card.inst .tier-chip{background:rgba(20,58,46,.07); color:var(--chalk-faint);}
-  .price-card h3{font-size:19px; margin-bottom:4px;}
-  .price-card .price{font-family:var(--disp); font-size:clamp(24px,2.6vw,30px); font-weight:700; letter-spacing:-.02em; margin:6px 0 8px; font-variant-numeric:tabular-nums;}
-  .price-card .price small{font-size:13px; font-weight:500; color:var(--chalk-faint);}
-  .price-who{margin:0 0 14px; font-size:13px; line-height:1.4; color:var(--chalk-dim);}
-  .price-card ul{list-style:none; display:grid; gap:9px; margin-bottom:18px; flex:1;}
-  .price-card li{font-size:12.5px; line-height:1.45; color:var(--chalk-dim); padding-left:16px; position:relative;}
-  .price-card li::before{content:"\2022"; position:absolute; left:0; color:var(--chalk-faint);}
-  .price-card.free li::before{color:var(--leaf);}
-  .price-card.inst{opacity:.68; border-style:dashed;}
-  .price-card.inst:hover{transform:none;}
-  .price-foot{margin-top:26px; font-size:12px; color:var(--chalk-faint); max-width:640px; line-height:1.5;}
-  @media (max-width:980px){.price-grid{grid-template-columns:1fr 1fr;} .pricing-lede-row{grid-template-columns:1fr;}}
-  @media (max-width:560px){.price-grid{grid-template-columns:1fr;}}
 
   /* ---------- faq (dark) ---------- */
   .faq{background:var(--field);}
@@ -585,22 +567,22 @@
   </a>
   <div class="nav-links">
     <a href="#desk">The Desk</a>
-    <a href="#why">Why Us?</a>
-    <a class="join" href="#start">Claim Your Desk</a>
+    <a href="#conceptmap">The Concept Map</a>
+    <a class="join" href="https://mindcraft-93858.web.app">Claim Your Desk</a>
   </div>
 </nav>
 
 <!-- ================= HERO ================= -->
-<section class="hero" id="top">
+<section class="hero stage-desk" id="top">
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="heroMap" aria-hidden="true"></canvas>
   <div class="hero-stage">
     <span class="hero-tag"><i>Early access</i> free right now &middot; a few seats each round</span>
-    <h1>Built for <em>Visual Learners.</em></h1>
-    <p class="sub">See it. Move it. Get it.</p>
+    <h1>Interact With the <em>World.</em></h1>
+    <p class="sub">Hands-on simulations that build the instincts 2028's workforce will actually need.</p>
     <p class="lead">Learn anything through live simulations and interactive lessons that reshape themselves around the way <span class="serif">your</span> brain works. No walls of text. No one-size-fits-all.</p>
     <div class="hero-actions">
-      <a class="btn primary" href="#start">Claim your desk</a>
+      <a class="btn primary" href="https://mindcraft-93858.web.app">Claim your desk</a>
       <a class="btn soft" href="#desk">Open the library</a>
     </div>
   </div>
@@ -631,7 +613,7 @@
         <p class="simlib-bullet">No homework: students interact with simulations, and The Desk tracks their learning outcomes.</p>
       </div>
       <div class="simlib-cta">
-        <a class="btn primary" href="https://joinmindcraft.com/dans-archive.html">Sim_Craft</a>
+        <a class="btn primary" href="https://mindcraft-93858.web.app/desk">Sim_Craft</a>
       </div>
     </div>
 
@@ -717,283 +699,17 @@
   </div>
 </section>
 
-<!-- ================= CREATE YOUR OWN ================= -->
-<section class="stage-desk" id="create">
+<!-- ================= CONCEPT MAP ================= -->
+<section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal">Create &middot; easy tools</div>
-    <h2 class="h2 reveal">Or create your own.</h2>
-    <p class="lede reveal">Personalized homework and lesson plans in minutes. From anywhere, even your phone. Made simple.</p>
-
-    <div class="fx-flow">
-      <div class="fx reveal">
-        <div class="fx-copy">
-          <span class="fx-step">01 &middot; Understand</span>
-          <h3>Gurukul: a companion that knows you.</h3>
-          <p>Smart at making visuals and sims. Ask about anything and it builds a fun, interactive way to learn it, right in the chat. And it remembers what works for you.</p>
-        </div>
-        <div class="fx-shot"><img src="img/mkt/feature-gurukul-chat.png" alt="Gurukul, the study companion chat, opening a Biology lesson with quick actions and Save to Binder" loading="lazy"></div>
-      </div>
-
-      <div class="fx flip reveal">
-        <div class="fx-copy">
-          <span class="fx-step">02 &middot; Design</span>
-          <h3>Design Studio.</h3>
-          <p>On-the-go lesson and homework creation with interactive sims, made easier with AI. No learning curve.</p>
-        </div>
-        <div class="fx-shot"><img src="img/mkt/feature-design-studio.png" alt="Design Studio canvas connecting a Geometry chapter to an AI-generated simulation with a live preview" loading="lazy"></div>
-      </div>
-
-      <div class="fx reveal">
-        <div class="fx-copy">
-          <span class="fx-step">03 &middot; Track</span>
-          <h3>Not just sims.</h3>
-          <p>The logic behind each sim turns every student interaction into learning data that matters.</p>
-        </div>
-        <div class="fx-shot"><img src="img/mkt/feature-sim-logic.png" alt="Simulation Workspace with drag-and-drop logic and loop blocks and a Run button" loading="lazy"></div>
-      </div>
-
-      <div class="fx flip reveal">
-        <div class="fx-copy">
-          <span class="fx-step">04 &middot; Leverage</span>
-          <h3>The work becomes your passport.</h3>
-          <p>Tell Jesse what you did and the resume fills itself in. What you do helps us map you to bigger opportunities.</p>
-        </div>
-        <div class="fx-shot"><img src="img/mkt/feature-resume.png" alt="Your Resume builder with a checklist, LinkedIn Drive and PDF import, and Jesse on a live voice call" loading="lazy"></div>
-      </div>
+    <div class="kicker reveal">The concept map</div>
+    <h2 class="h2 reveal">Every concept has a place.</h2>
+    <p class="lede reveal">4,118 concepts across 13 subjects, connected by the real prerequisites between them, not a syllabus someone guessed at. 3,746 already have a full written lesson, and interactive sims are filling in the rest, mapped honestly as they land, not hidden until they are done.</p>
+    <div class="conceptmap-frame reveal">
+      <iframe src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
     </div>
-
-    <p class="frontier-tease reveal">One algorithm runs under all of it. It maps what a student has mastered, finds the edge of what's within reach, and recommends the next best concept to show them. That edge is <strong>the frontier</strong>, and what follows is a snippet of how deep our backend goes.</p>
-  </div>
-</section>
-
-<!-- ================= THE FRONTIER GRAPH ================= -->
-<section class="frontier" id="frontier">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">The frontier graph</div>
-    <h2 class="h2 reveal">Learning has a shape.</h2>
-    <p class="lede reveal">Every question answered, every sim dragged, every session feeds a live map of what a student knows. The bright edge between what's mastered and what's within reach is <strong>the frontier.</strong> The Desk always teaches at yours: never busywork you've outgrown, never a leap you can't make yet.</p>
-    <div class="frontier-frame reveal">
-      <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
-    </div>
-    <p class="frontier-foot reveal">Live and draggable: the Zone of Proximal Development, the same idea The Desk's own knowledge map runs on.</p>
-  </div>
-</section>
-
-<!-- ================= WHY US ================= -->
-<section class="stage-desk" id="why">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Why us</div>
-    <h2 class="h2 reveal">This isn't about one test. It's about every one after it.</h2>
-    <p class="why-photos-caption above reveal">Two versions of the same night.</p>
-    <div class="why-photos reveal">
-      <div class="why-photo"><img src="img/mkt/mkt-maya-lamp.jpg" alt="A student studying alone late at night" loading="lazy"><span>2:14 AM, alone</span></div>
-      <div class="why-photo"><img src="img/mkt/mkt-desk-together.jpg" alt="Two students working through a problem together" loading="lazy"><span>Office hours, together</span></div>
-    </div>
-    <p class="why-photos-caption below reveal">The only difference: who else was in the room.</p>
-  </div>
-</section>
-
-<!-- ================= MENTORS ================= -->
-<section class="mentors" id="mentors">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Real people, on call</div>
-    <h2 class="h2 reveal">Jesse can route you to real tutors.</h2>
-    <div class="mentor-cards">
-      <div class="mcard reveal">
-        <div class="who"><span class="ava" style="background:#247a4d;">EN</span><div><h4>The engineering sophomore</h4><span class="meta">Math &middot; physics &middot; the click</span></div></div>
-        <p>Remembers his own click, the spring problem that suddenly became a picture, and has been handing that moment on since.</p>
-        <div class="brief">Briefed before the session starts</div>
-      </div>
-      <div class="mcard reveal">
-        <div class="who"><span class="ava" style="background:#1d3a8a;">DS</span><div><h4>The design senior</h4><span class="meta">Decks &middot; portfolios &middot; the blank page</span></div></div>
-        <p>Walks a stranger through her first slide deck at 10pm, the stuck moment no report card ever shows.</p>
-        <div class="brief">Sees what you tried, not just the ask</div>
-      </div>
-      <div class="mcard reveal">
-        <div class="who"><span class="ava" style="background:#7b5ea7;">CS</span><div><h4>The CS junior</h4><span class="meta">Code &middot; debugging &middot; the third same error</span></div></div>
-        <p>Knows the difference between handing you the fix and teaching you to see it.</p>
-        <div class="brief">The hour goes to teaching, not detective work</div>
-      </div>
-    </div>
-    <div class="mentor-actions reveal">
-      <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a mentor</a>
-      <a class="btn soft" href="#start" data-apply="tutor">Apply to mentor</a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TESTIMONIALS ================= -->
-<section class="stage-desk" id="testimonials">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">In their own words</div>
-    <h2 class="h2 reveal">Not our copy. Theirs.</h2>
-    <div class="testimonial-grid">
-      <div class="testimonial-card reveal">
-        <video controls preload="none" poster="img/testimonials/mary-ida-poster.jpg" playsinline>
-          <source src="img/testimonials/mary-ida-feedback.mp4" type="video/mp4">
-        </video>
-        <p class="testimonial-name">Mary</p>
-      </div>
-      <div class="testimonial-card reveal">
-        <video controls preload="none" poster="img/testimonials/sebastian-poster.jpg" playsinline>
-          <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
-        </video>
-        <p class="testimonial-name">Sebastian</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="faq" id="faq">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Questions, answered straight</div>
-    <h2 class="h2 reveal">The stuff everyone asks first.</h2>
-    <div class="faq-list reveal">
-      <details>
-        <summary>Is this just another AI homework bot?</summary>
-        <p>No. A chatbot forgets you by tomorrow; The Desk keeps a record, maps it, and briefs a real person.</p>
-      </details>
-      <details>
-        <summary>Does it do my homework for me?</summary>
-        <p>No. Solver walks you through steps and asks you questions back. The Desk makes you faster, not fake.</p>
-      </details>
-      <details>
-        <summary>How do I know the AI isn't teaching my kid something wrong?</summary>
-        <p>We assume it will and check first: every AI-made lesson passes a quality gate before a student sees it. A failed lesson shows an honest &ldquo;couldn't make a good one yet.&rdquo;</p>
-      </details>
-      <details>
-        <summary>Who are the mentors?</summary>
-        <p>College students who remember what junior year felt like. They open your map before the session. Your first one is free.</p>
-      </details>
-      <details>
-        <summary>My kid can't sit through a page of text. Will this work?</summary>
-        <p>That's who we build for first. Same idea, four doors: simulation, story, voice, picture. The engine learns which one works for your kid.</p>
-      </details>
-      <details>
-        <summary>What can I drop on the desk, and where does it go?</summary>
-        <p>Photos, PDFs, docs, screenshots, scans of handwritten work. It all lands in your private binder, yours to export or delete, never sold.</p>
-      </details>
-      <details>
-        <summary>Is it only for the ACT?</summary>
-        <p>The ACT road is the deepest-built part, but the desk works all year on essays, decks, code, and scholarship applications.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PRICING ================= -->
-<section class="stage-desk" id="pricing">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="pricing-lede-row">
-      <div>
-        <div class="kicker reveal">Pricing &middot; early access</div>
-        <h2 class="h2 reveal">Free right now. A few seats left.</h2>
-        <p class="lede reveal">Invitation only while we build with a small group.</p>
-      </div>
-      <div class="seats-chip reveal">A few seats remain this round. <b>Apply for a seat &rarr;</b></div>
-    </div>
-    <div class="price-grid">
-      <div class="price-card free reveal">
-        <span class="tier-chip">Now</span>
-        <h3>Free</h3>
-        <div class="price">$0</div>
-        <ul>
-          <li>Workspace: notes, binder, project boards</li>
-          <li>Rate-limited AI tools, all quality-gated</li>
-          <li>Mentor browsing, plus one intro session</li>
-        </ul>
-        <a class="btn soft" href="#start" data-apply="student">Apply for a seat</a>
-      </div>
-      <div class="price-card family reveal">
-        <span class="tier-chip">Add-on</span>
-        <h3>Family</h3>
-        <div class="price">+$24<small>/mo</small></div>
-        <p class="price-who">One parent view of one student.</p>
-        <ul>
-          <li>Their notes, map, and work in one record</li>
-          <li>What's hard this week, in plain language</li>
-          <li>A receipt of what actually improved</li>
-        </ul>
-        <a class="btn soft" href="#start" data-apply="student">Ask about Family</a>
-      </div>
-      <div class="price-card inst reveal">
-        <span class="tier-chip">Later</span>
-        <h3>Institutional</h3>
-        <div class="price">$30<small>/seat/yr</small></div>
-        <p class="price-who">One teacher view of the whole class.</p>
-        <ul>
-          <li>See who's stuck, and on what, before Friday</li>
-          <li>AI-drafted custom practice, teacher-approved</li>
-          <li>A way to bring AI into school without the guesswork</li>
-        </ul>
-      </div>
-    </div>
-    <p class="price-foot reveal">Early members hear first when paid plans open.</p>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="cta" id="start">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="cta-split reveal">
-      <aside class="cta-visual">
-        <iframe class="cta-visual-frame" src="sims/graph/index.html?embed=1" title="MindCraft's live concept map. Drag to spin, click a node." loading="lazy"></iframe>
-        <p class="cta-visual-cap" aria-hidden="true"><b>The map is waiting</b>Fog lifts where you click.</p>
-      </aside>
-      <div class="ctaband">
-        <h2>Never work <em>alone</em> again.</h2>
-        <p>A few seats this round, so we can build the first maps together.</p>
-        <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
-        <div class="cta-row" role="tablist" aria-label="Choose an application type">
-          <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
-          <button class="btn soft" type="button" id="applyTabTutor" role="tab" aria-selected="false">Apply as a mentor</button>
-        </div>
-        <div class="apply-stage" id="applyStage" data-state="student">
-          <form class="apply-form" id="applyFormStudent" action="https://formsubmit.co/founders@joinmindcraft.com" method="POST">
-            <input type="hidden" name="_subject" value="MindCraft student application">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://joinmindcraft.com/?applied=student#start">
-            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <div class="form-grid">
-              <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
-              <div class="field"><label for="applyEmail">Email</label><input id="applyEmail" name="email" type="email" autocomplete="email" required></div>
-              <div class="field"><label for="studentName">Student name</label><input id="studentName" name="studentName" required></div>
-              <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
-              <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, a resume, study skills..." required></textarea></div>
-            </div>
-            <button class="btn primary apply-submit" type="submit">Build my learning map</button>
-            <p class="apply-note">Sends to founders@joinmindcraft.com. We reply within 48 hours.</p>
-          </form>
-          <form class="apply-form" id="applyFormTutor" action="https://formsubmit.co/founders@joinmindcraft.com" method="POST">
-            <input type="hidden" name="_subject" value="MindCraft tutor application">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://joinmindcraft.com/?applied=tutor#start">
-            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <div class="form-grid">
-              <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
-              <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="email" type="email" autocomplete="email" required></div>
-              <div class="field full"><label for="tutorUniversity">University</label><input id="tutorUniversity" name="university" placeholder="Macalester, St. Olaf, UNC..." required></div>
-              <div class="field"><label for="tutorLocation">Location</label><input id="tutorLocation" name="location" placeholder="St Paul, MN or online" autocomplete="address-level2" required></div>
-              <div class="field"><label for="tutorSubjects">Subjects</label><input id="tutorSubjects" name="subjects" placeholder="ACT math, algebra, precalc..." required></div>
-              <div class="field full"><label for="tutorBio">Bio</label><textarea id="tutorBio" name="bio" placeholder="Who you are, what you teach best, and why you want to mentor with MindCraft." required></textarea></div>
-            </div>
-            <button class="btn primary apply-submit" type="submit">Apply to mentor</button>
-            <p class="apply-note">Sends to founders@joinmindcraft.com. We reply within 48 hours.</p>
-          </form>
-        </div>
-      </div>
-    </div>
+    <p class="conceptmap-foot reveal">Live and explorable: drag, zoom, and see exactly how one idea builds on the next.</p>
   </div>
 </section>
 
@@ -1004,7 +720,6 @@
       <div class="foot-links">
         <a href="https://joinmindcraft.com/blog.html">Blog</a>
         <a href="https://joinmindcraft.com/dans-archive.html">Open Archive</a>
-        <a href="#pricing">Pricing</a>
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener">Instagram</a>
         <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noopener">Spotify</a>
         <a href="https://www.linkedin.com/company/joinmindcraft" target="_blank" rel="noopener">LinkedIn</a>
@@ -1108,7 +823,7 @@
           ctx.fillStyle = 'rgba(196,245,71,.9)';
           ctx.shadowColor = 'rgba(196,245,71,.8)'; ctx.shadowBlur = 10;
         } else {
-          ctx.fillStyle = 'rgba(245,245,244,.32)'; ctx.shadowBlur = 0;
+          ctx.fillStyle = 'rgba(20,58,46,.28)'; ctx.shadowBlur = 0;
         }
         ctx.fill(); ctx.shadowBlur = 0;
         if(!reduced){
