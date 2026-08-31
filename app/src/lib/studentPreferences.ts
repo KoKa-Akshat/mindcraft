@@ -3,7 +3,7 @@
  *
  * Shared shape for the student language + voice one-time gate (2026-08-31
  * ask). The web app had zero language/voice preference infrastructure
- * before this -- this mirrors the already-shipped iOS prototype pattern
+ * before this: it mirrors the already-shipped iOS prototype pattern
  * (ios-prototype/MindCraftNotes/MindCraftNotes/Networking/
  * StudentLanguagePreference.swift + StudentVoicePreference.swift), but
  * persisted on the student's users/{uid} Firestore doc instead of
@@ -27,7 +27,7 @@ export const STUDENT_LANGUAGE_OPTIONS: StudentLanguageOption[] = [
 ]
 
 /**
- * Only English has real graded voice options today (three Kokoro voices --
+ * Only English has real graded voice options today (three Kokoro voices;
  * see webhook/lib/handlers/tts.ts's own doc comment on why Spanish has no
  * Kokoro voice among them). Same gap as iOS's StudentLanguage.usesKokoro:
  * a Spanish-choosing student skips the voice picker entirely rather than
@@ -46,7 +46,7 @@ export interface StudentVoiceOption {
 }
 
 // Same three voices, same names/blurbs, as iOS's KokoroVoice enum
-// (ios-prototype/.../Networking/KokoroTTSClient.swift) -- kept identical so
+// (ios-prototype/.../Networking/KokoroTTSClient.swift), kept identical so
 // a student who used the iOS prototype and now lands on web sees the same
 // choices under the same names.
 export const STUDENT_VOICE_OPTIONS: StudentVoiceOption[] = [

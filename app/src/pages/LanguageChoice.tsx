@@ -4,7 +4,7 @@
  * One-time language picker, shown right after login, ahead of the real
  * destination (2026-08-31 ask). Mirrors the iOS prototype's
  * LanguageChoiceView (ios-prototype/MindCraftNotes/MindCraftNotes/Views/
- * LanguageChoiceView.swift) for tone and structure -- same "gate one layer
+ * LanguageChoiceView.swift) for tone and structure, same "gate one layer
  * before the real destination" shape Login.tsx already uses ahead of the
  * app, same dark-green/lime brand palette Login.module.css already
  * defines.

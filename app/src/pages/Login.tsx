@@ -32,7 +32,7 @@ function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KE
 // signInWithRedirect, so when Login.tsx next mounts (either the real
 // redirect-back, or AuthGuard bouncing an unauthenticated user back here) we
 // can tell "never even tried" apart from "tried and it silently didn't come
-// back" -- the latter is the iPad/Safari ITP failure mode, where the visitor
+// back": the latter is the iPad/Safari ITP failure mode, where the visitor
 // otherwise just sees a dead end with no explanation.
 const REDIRECT_ATTEMPTED_KEY = 'mc_redirect_attempted'
 function markRedirectAttempted(): void {
@@ -44,14 +44,14 @@ function consumeFailedRedirectAttempt(): boolean {
     if (!raw) return false
     sessionStorage.removeItem(REDIRECT_ATTEMPTED_KEY)
     // Only treat it as a real (rather than stale/leftover) attempt if it was
-    // recent -- a stray key from days ago shouldn't trigger the fallback copy.
+    // recent; a stray key from days ago shouldn't trigger the fallback copy.
     return Date.now() - Number(raw) < 5 * 60_000
   } catch {
     return false
   }
 }
 
-/** iPad / iPhone only -- redirect is required there; desktop popup is more reliable. */
+/** iPad / iPhone only. Redirect is required there; desktop popup is more reliable. */
 function preferGoogleRedirect() {
   if (typeof window === 'undefined') return false
   const ua = navigator.userAgent
@@ -86,7 +86,7 @@ function friendlyError(code: string) {
     case 'auth/invalid-email':              return 'Please enter a valid email address.'
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
-    case 'auth/popup-blocked':              return 'Sign-in could not open. Tap Continue with Google again -- we will use a full-page sign-in.'
+    case 'auth/popup-blocked':              return 'Sign-in could not open. Tap Continue with Google again, we will use a full-page sign-in.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
     default:                                return `Sign-in failed (${code}). Please try again.`
   }
@@ -150,21 +150,21 @@ export default function Login() {
         return
       }
 
-      // Already signed in (restored session) -- don't leave them on the login form.
+      // Already signed in (restored session): don't leave them on the login form.
       if (auth.currentUser) {
         setLoading(true)
         await routeAfterLogin(auth.currentUser.uid)
         return
       }
 
-      // We sent them to Google and nothing came back -- no redirect result, no
+      // We sent them to Google and nothing came back: no redirect result, no
       // restored session. On iPad/Safari this usually means ITP wiped the
       // pending sign-in mid-flight rather than it just being slow. Instead of
       // a silent dead end, say so and open the password path, which doesn't
       // depend on this redirect round-trip at all.
       if (consumeFailedRedirectAttempt()) {
         setEmailMode(true)
-        setError("Sign-in didn't finish on this device. This can happen in Safari on iPad -- try again, or sign in with your email and password below.")
+        setError("Sign-in didn't finish on this device. This can happen in Safari on iPad, try again, or sign in with your email and password below.")
       }
     })().catch((e: { code?: string; message?: string }) => {
       if (cancelled) return

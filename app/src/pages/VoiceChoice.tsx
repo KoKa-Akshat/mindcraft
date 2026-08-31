@@ -6,7 +6,7 @@
  * VoiceChoiceView (ios-prototype/MindCraftNotes/MindCraftNotes/Views/
  * VoiceChoiceView.swift) for tone and structure: same once-per-account
  * gate, same three graded voices (Warm / Bright / Calm), minus the audio
- * preview -- the web app has no Kokoro TTS wiring yet (the build brief for
+ * preview: the web app has no Kokoro TTS wiring yet (the build brief for
  * this feature is explicit that web starts from zero language/voice
  * infrastructure), so this is the selection UI only. A real preview sample
  * would mean wiring a new webhook call, a separate, heavier task from this

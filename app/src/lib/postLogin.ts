@@ -1,5 +1,5 @@
 /**
- * Post-login routing -- shared path resolution + guarded navigation.
+ * Post-login routing: shared path resolution + guarded navigation.
  *
  * Sets a short-lived session handoff flag so AuthGuard does not treat a
  * freshly signed-in user as logged out while Firebase persistence settles.
@@ -33,7 +33,7 @@ const AUTH_HANDOFF_KEY = 'mc-auth-handoff'
 // to rehydrate auth.currentUser, and AuthGuard was bouncing back to /login
 // before that finished. This alone won't fix a hard case where Safari ITP
 // wiped the pending-redirect state entirely (nothing arrives, ever, no matter
-// how long we wait) -- only a same-origin authDomain fixes that, which needs
+// how long we wait); only a same-origin authDomain fixes that, which needs
 // the .web.app callback URL manually added to the OAuth client in Google
 // Cloud Console first. This is the safe, no-downside half of the fix.
 const AUTH_HANDOFF_MS = 25_000
@@ -60,7 +60,7 @@ export function isAuthHandoffActive(): boolean {
 /**
  * Validates a `?next=` redirect target so it can't escape the app or bounce
  * back into /login. Shared by Login.tsx and the post-login preference gates
- * (LanguageChoice.tsx, VoiceChoice.tsx) -- each gate screen re-resolves the
+ * (LanguageChoice.tsx, VoiceChoice.tsx): each gate screen re-resolves the
  * post-login path when the student finishes it, and needs the same
  * validated returnTo carried through so a deep link (?next=/practice, say)
  * survives the gate instead of getting dropped.
@@ -93,12 +93,12 @@ async function ensureRoleDoc(
   }, { merge: true })
 }
 
-/** Same job as ensureRoleDoc, but for 'tutor'/'parent' -- firebase/firestore.rules
+/** Same job as ensureRoleDoc, but for 'tutor'/'parent': firebase/firestore.rules
  * only permits role to be absent or 'student' on a Firestore CREATE, so a
  * direct client setDoc for those two roles is rejected by the rules (which
  * are correctly doing their job). Routes through claim-invited-role.ts
  * instead, which does the same write server-side via the Admin SDK after
- * re-confirming the caller's email is genuinely in login_allowlist -- the
+ * re-confirming the caller's email is genuinely in login_allowlist: the
  * endpoint can't grant a role nobody pre-approved, it just moves an
  * already-approved write out of the unprivileged client context. */
 async function claimInvitedRole(role: 'tutor' | 'parent'): Promise<void> {
@@ -154,7 +154,7 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     // Invite-only: a brand-new email must already be in the admin-managed
     // allowlist (Admin -> Links), and lands in whichever role it was added
     // under. Existing accounts (handled by the early returns above) are
-    // never subject to this -- only first-time account creation is gated.
+    // never subject to this, only first-time account creation is gated.
     const exempt = isTestProfileEmail(email) || isDevBypassEmail(email) || isDiagResetEmail(email)
     const allowedRole: AllowlistRole | null = exempt ? 'student' : await lookupAllowlistRole(email)
     if (!allowedRole) {
@@ -163,7 +163,7 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     }
     if (allowedRole === 'tutor' || allowedRole === 'parent') {
       // Rules block a client-created 'tutor'/'parent' role doc (see
-      // claimInvitedRole's doc comment) -- must go through the webhook.
+      // claimInvitedRole's doc comment), must go through the webhook.
       await claimInvitedRole(allowedRole)
       return allowedRole === 'tutor' ? '/tutor' : '/parent'
     }
@@ -172,15 +172,15 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
 
   // Student-only language + voice gate (2026-08-31 ask): mirrors the iOS
   // prototype's onboarding gate shape (one gate at a time, ahead of the
-  // real destination -- ios-prototype/.../MindCraftNotesApp.swift's own
+  // real destination, see ios-prototype/.../MindCraftNotesApp.swift's own
   // gate cascade). Every branch above that resolves to admin/tutor/parent
   // has already returned by this point, so uid here is guaranteed a
-  // student -- this gate can never reach a tutor/parent/admin account.
+  // student: this gate can never reach a tutor/parent/admin account.
   // `snap` still reflects users/{uid} as fetched at the top of this
   // function: unchanged for a returning student (the block above only
   // wrote a fresh doc for a brand-new account, whose prefs are correctly
   // unset either way). Placed ahead of the dev-bypass/diag-reset shortcuts
-  // below -- unlike the diagnostic gate, this is a one-time Firestore flag,
+  // below: unlike the diagnostic gate, this is a one-time Firestore flag,
   // not a per-login flow, so skipping it for dev/QA accounts would mean
   // the people testing this feature never actually see it.
   const prefs = snap.data() ?? {}
@@ -194,20 +194,20 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   // Dev accounts skip the diagnostic gate entirely.
   if (isDevBypassEmail(email)) return opts.returnTo ?? '/desk'
 
-  // Diag-reset accounts re-run the gap scan on every login (diagnostic only --
+  // Diag-reset accounts re-run the gap scan on every login (diagnostic only;
   // KG and practice history are preserved so you can compare dashboard effects).
   if (isDiagResetEmail(email)) {
     await clearStudentDiagnosticState(uid)
     return '/diagnostic'
   }
 
-  // Always gate students on diagnostic -- ignore ?next= when scan isn't done.
+  // Always gate students on diagnostic: ignore ?next= when scan isn't done.
   const done = await isDiagnosticComplete(uid)
   if (!done) return '/diagnostic'
 
   // Desk OS is now the real post-login landing for students (2026-08-31),
   // replacing the old default of /dashboard. /dashboard itself is untouched
-  // and still reachable directly -- this only changes where a student with
+  // and still reachable directly, this only changes where a student with
   // no explicit ?next= lands. Reuses the existing /desk alias (App.tsx's
   // DeskOsRedirect) rather than duplicating its redirect target here.
   return opts.returnTo ?? '/desk'

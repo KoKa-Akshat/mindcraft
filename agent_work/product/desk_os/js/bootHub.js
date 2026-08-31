@@ -300,13 +300,13 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   }
 
   // Instance-card rendering (the old "Your instances" grid, `[data-hub-list]`)
-  // was removed 2026-08-31 -- the instances concept is dropped from the hub,
+  // was removed 2026-08-31. The instances concept is dropped from the hub,
   // not just hidden, and "Tutors nearby" now sits where it used to. The
   // catalog itself (ensureCatalog/list) stays: it still backs the Mastery
   // goal-instance picker (paintGoalControls) and mastery readout
   // (paintMastery) just above where the grid used to be. onOpenInstance and
   // onCreateInstance are unused now that their only trigger buttons
-  // (`[data-open]` / `[data-create]`) are gone with the grid -- kept as
+  // (`[data-open]` / `[data-create]`) are gone with the grid, kept as
   // no-op-safe params rather than changing createBootHub's call signature
   // in app.js, which is outside this audit's scope.
   function renderHub() {

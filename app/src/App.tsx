@@ -9,7 +9,7 @@
  * Adding a new page:
  *   1. Create the component in pages/
  *   2. Import it here
- *   3. Add a <Route> entry -- wrap in <AuthGuard> if login is required
+ *   3. Add a <Route> entry (wrap in <AuthGuard> if login is required)
  */
 
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
@@ -32,9 +32,9 @@ import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
 import FirstSpark      from './pages/FirstSpark'
-import DevColdCheckPreview from './pages/DevColdCheckPreview' // THROWAWAY -- remove with its route below
-import DevJarvisPreview from './pages/DevJarvisPreview' // THROWAWAY -- remove with its route below
-import DevUnifiedLearn from './pages/DevUnifiedLearn' // THROWAWAY -- remove with its route below
+import DevColdCheckPreview from './pages/DevColdCheckPreview' // THROWAWAY, remove with its route below
+import DevJarvisPreview from './pages/DevJarvisPreview' // THROWAWAY, remove with its route below
+import DevUnifiedLearn from './pages/DevUnifiedLearn' // THROWAWAY, remove with its route below
 // Production promotion of the DevUnifiedLearn prototype, wired to the real
 // migrated content library, real auth, and the real generation endpoints.
 import Learn           from './pages/Learn'
@@ -61,11 +61,11 @@ import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 
 
 // Hidden action-math zone: dynamic import() so its own chunk (a 2D layered
-// scene as of the 2026-07-21 pivot, ~44KB -- was ~622KB with the earlier
+// scene as of the 2026-07-21 pivot, ~44KB (was ~622KB with the earlier
 // Three.js engine) never bloats the normal dashboard bundle for the vast
 // majority of students who never open the portal. THIS WIRING HAS BEEN LOST
 // TO CONCURRENT OVERWRITES ON THIS SHARED CHECKOUT THREE TIMES IN ONE
-// SESSION (see ACTIVE_TASK.md / LESSONS.md) -- if you are reading this
+// SESSION (see ACTIVE_TASK.md / LESSONS.md). If you are reading this
 // comment, it survived; if the route is missing again, restore it exactly
 // as shown here and in the two <Route> entries below.
 const ManjushreeZone = lazy(() => import('./manjushree/ManjushreeZone'))
@@ -140,9 +140,9 @@ function RoleRedirect() {
   return <Navigate to={dest} replace />
 }
 
-/** Sets QA mode and redirects to /dashboard -- entry point for the test harness. */
+/** Sets QA mode and redirects to /dashboard: entry point for the test harness. */
 function QAEntry() {
-  sessionStorage.setItem('mc-qa-mode', '1') // must be sync -- Navigate fires before any useEffect
+  sessionStorage.setItem('mc-qa-mode', '1') // must be sync, Navigate fires before any useEffect
   return <Navigate to="/dashboard" replace />
 }
 
@@ -189,7 +189,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     if (!user) return
     // Test profiles start fresh even when Firebase restores a persisted session
     // (reload / reopened tab), where Login's routeAfterLogin never runs. Once
-    // per tab session -- the login-path reset covers explicit sign-ins.
+    // per tab session; the login-path reset covers explicit sign-ins.
     if (isTestProfileEmail(user.email) && sessionStorage.getItem('mc-test-reset') !== '1') {
       sessionStorage.setItem('mc-test-reset', '1')
       void resetStudentProfile(user.uid)
@@ -261,24 +261,37 @@ function MarketingRedirect() {
   return null
 }
 
-/** Full-page jump into the Desk OS static prototype (Piano + ACT books). */
+/**
+ * Full-page jump into the Desk OS static prototype (Piano + ACT books).
+ *
+ * Targets the explicit index.html filename, not a directory-style trailing
+ * slash (2026-08-31 fix): Firebase Hosting's rewrite ("/desk-os" -> "/desk-os
+ * /index.html") resolves either form fine in production, but Vite's local
+ * dev server does not auto-append index.html for a bare directory request,
+ * it falls through to the SPA history fallback and serves the React app's
+ * OWN index.html instead. Since Desk OS became the real post-login landing
+ * for students, that silently sent every local dev session straight back
+ * into the app it was supposed to replace, an invisible redirect loop with
+ * no console error to flag it. The explicit filename resolves identically
+ * under both servers.
+ */
 function DeskOsRedirect() {
   useEffect(() => {
-    window.location.replace('/desk-os/?v=r9b')
+    window.location.replace('/desk-os/index.html?v=r9b')
   }, [])
   return null
 }
 
 function DeskStudioRedirect() {
   useEffect(() => {
-    window.location.replace('/desk-os/studio/?v=spatial2')
+    window.location.replace('/desk-os/studio/index.html?v=spatial2')
   }, [])
   return null
 }
 
 function DeskWorkflowsRedirect() {
   useEffect(() => {
-    window.location.replace('/desk-os/workflows/?v=f5')
+    window.location.replace('/desk-os/workflows/index.html?v=f5')
   }, [])
   return null
 }
@@ -290,10 +303,10 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/spark" element={<FirstSpark />} />
-        <Route path="/dev-cold-check" element={<DevColdCheckPreview />} /> {/* THROWAWAY -- remove */}
-        <Route path="/dev-jarvis" element={<DevJarvisPreview />} /> {/* THROWAWAY -- remove */}
-        <Route path="/dev-learn" element={<DevUnifiedLearn />} /> {/* THROWAWAY -- remove */}
-        {/* Old plain list-only booking page -- permanently redirects to the
+        <Route path="/dev-cold-check" element={<DevColdCheckPreview />} /> {/* THROWAWAY, remove */}
+        <Route path="/dev-jarvis" element={<DevJarvisPreview />} /> {/* THROWAWAY, remove */}
+        <Route path="/dev-learn" element={<DevUnifiedLearn />} /> {/* THROWAWAY, remove */}
+        {/* Old plain list-only booking page: permanently redirects to the
             richer Find-a-Tutor page (map + proximity search + honest
             no-fake-reviews handling). Keep the redirect, not the old page,
             so existing bookmarks/links to /book still work. */}
@@ -325,7 +338,7 @@ export default function App() {
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         {/* Student-only one-time language + voice gate (2026-08-31), slotted
             into resolvePostLoginPath ahead of the diagnostic gate. Never
-            reached by tutor/parent/admin accounts -- see postLogin.ts. */}
+            reached by tutor/parent/admin accounts, see postLogin.ts. */}
         <Route path="/welcome/language"    element={<AuthGuard><LanguageChoice /></AuthGuard>} />
         <Route path="/welcome/voice"       element={<AuthGuard><VoiceChoice /></AuthGuard>} />
         {/* Marketing Try Demo: ACT diagnostic → ephemeral dashboard (no login, resets). */}
@@ -352,7 +365,7 @@ export default function App() {
 
         {/* Sword of Wisdom + story slideshow.
             /manjushree + /story-loop/* stay AuthGuard-wrapped for signed-in students.
-            /try/* is the public landing-preview path (no login) -- marketing panel
+            /try/* is the public landing-preview path (no login); marketing panel
             iframes these, and the kitchen handoff lands here so visitors can try
             one full loop without an account. */}
         <Route path="/manjushree" element={
