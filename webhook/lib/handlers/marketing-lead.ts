@@ -2,6 +2,11 @@
  * Public marketing lead capture.
  * POST https://mindcraft-webhook.vercel.app/api/marketing-lead
  * Body: { email, name?, role?, source?, note?, page? }
+ * plus the optional intake fields the #claim form on joinmindcraft.com sends:
+ * { parentFirstName?, parentLastName?, phone?, howHeard?, studentFirstName?,
+ *   studentLastName?, school?, grade?, subject?, message? }
+ * All additive: the original shape still works unchanged, and unknown
+ * callers sending only the original fields are unaffected.
  *
  * Stores Firestore marketing_leads/{emailLower}, emails founders@joinmindcraft.com,
  * and schedules a 1-hour follow-up (sent by cron-marketing-followup).
@@ -24,10 +29,13 @@ async function notifyFounders(input: {
   note: string
   page: string
   returning: boolean
+  intake?: Record<string, string>
 }) {
   const subject = input.returning
     ? `Lead again · ${input.email}`
     : `New lead · ${input.email}`
+  const intake = input.intake || {}
+  const student = [intake.studentFirstName, intake.studentLastName].filter(Boolean).join(' ')
   const lines = [
     input.returning ? 'A returning visitor submitted again.' : 'A new visitor submitted their email.',
     `Email: ${input.email}`,
@@ -35,6 +43,12 @@ async function notifyFounders(input: {
     `Role: ${input.role}`,
     `Source: ${input.source}`,
     input.page && `Page: ${input.page}`,
+    intake.phone && `Phone: ${intake.phone}`,
+    intake.howHeard && `How they heard of us: ${intake.howHeard}`,
+    student && `Student: ${student}`,
+    intake.school && `School: ${intake.school}`,
+    intake.grade && `Grade: ${intake.grade}`,
+    intake.subject && `Subject: ${intake.subject}`,
     input.note && `Note: ${input.note}`,
   ].filter(Boolean)
   try {
@@ -60,9 +74,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const name = String(body.name || '').trim().slice(0, 120)
     const role = String(body.role || 'visitor').trim().slice(0, 40)
     const source = String(body.source || 'marketing_site').trim().slice(0, 80)
-    const note = String(body.note || body.goal || '').trim().slice(0, 2000)
+    const note = String(body.note || body.goal || body.message || '').trim().slice(0, 2000)
     const page = String(body.page || '').trim().slice(0, 200)
     const honey = String(body._honey || body.honey || '').trim()
+
+    // Optional intake fields from the fuller #claim form. Only non-empty
+    // values are kept, so the original minimal payloads write exactly the
+    // documents they always did.
+    const intake: Record<string, string> = {}
+    const INTAKE_FIELDS: Array<[string, number]> = [
+      ['parentFirstName', 120],
+      ['parentLastName', 120],
+      ['phone', 40],
+      ['howHeard', 120],
+      ['studentFirstName', 120],
+      ['studentLastName', 120],
+      ['school', 160],
+      ['grade', 40],
+      ['subject', 160],
+      ['message', 2000],
+    ]
+    for (const [key, max] of INTAKE_FIELDS) {
+      const value = String(body[key] || '').trim().slice(0, max)
+      if (value) intake[key] = value
+    }
 
     if (honey) return res.status(200).json({ ok: true, ignored: true })
     if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Valid email required' })
@@ -83,6 +118,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           source: source || prev.source || 'marketing_site',
           note: note || prev.note || '',
           page: page || prev.page || '',
+          // merge:true keeps any previously stored intake value a resubmission
+          // left blank, same policy as the fields above.
+          ...intake,
           visitCount: (prev.visitCount || 1) + 1,
           lastSeenAt: now,
           updatedAt: FieldValue.serverTimestamp(),
@@ -96,7 +134,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         { merge: true },
       )
-      await notifyFounders({ email, name: name || String(prev.name || ''), role, source, note, page, returning: true })
+      await notifyFounders({ email, name: name || String(prev.name || ''), role, source, note, page, returning: true, intake })
       return res.status(200).json({ ok: true, id, returning: true })
     }
 
@@ -107,6 +145,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       source,
       note,
       page,
+      ...intake,
       visitCount: 1,
       createdAt: FieldValue.serverTimestamp(),
       lastSeenAt: now,
@@ -129,7 +168,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
 
-    await notifyFounders({ email, name, role, source, note, page, returning: false })
+    await notifyFounders({ email, name, role, source, note, page, returning: false, intake })
     return res.status(200).json({ ok: true, id, returning: false })
   } catch (err: any) {
     console.error('[marketing-lead]', err)
