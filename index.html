@@ -101,9 +101,12 @@
   }
   .stage-desk::before{top:0; background:linear-gradient(to bottom, #070f0c, transparent);}
   .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
-  /* the graph showcase between desk and create is dark, so both of their
-     fades toward it are wanted again, unlike when desk and create used to be
-     back to back cream stages with nothing dark between them to fade into. */
+  /* The dark fades exist for the edges where a cream stage meets a dark
+     section: the bottom of #desk (the frontier below it is dark) and both
+     edges of #claim. The hero and #desk are BOTH cream and sit back to back,
+     so the hero's bottom fade and the desk's top fade were painting a black
+     band across a seam with nothing dark on either side of it. Off. */
+  #top::after, #desk::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -217,22 +220,144 @@
   }
 
 
-  /* ---------- sim library, top picks (cream) ---------- */
-  .simlib{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:clamp(36px,5vh,54px);}
+  /* ---------- the desk: creation studio (cream) ----------
+     Not a catalog. The top of the section is a working prompt desk: Jesse
+     asks, the visitor types, the grid behind them wakes up, and a real
+     client-side flow walks Dream it > Build it > Experiment > Make it yours
+     > Share. Nothing here calls paid generation: the "build" step pulls a
+     REAL MicroSim out of the migrated library that matches the idea, says so
+     honestly, and the finish line is the same free marketing-lead endpoint
+     the claim section already uses. */
+  #deskAwake{position:absolute; inset:0; z-index:0; pointer-events:none;}
+  .desk-head{text-align:center; max-width:820px; margin:0 auto;}
+  .desk-head .kicker{justify-content:center;}
+  .desk-head .h2{margin:0 auto; max-width:16ch;}
+  .desk-head .lede{margin-left:auto; margin-right:auto; max-width:52ch;}
+
+  /* progress trail across the top of the creation flow */
+  .studio-trail{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px clamp(6px,1.4vw,14px);
+    margin:clamp(30px,4.5vh,46px) auto 16px; max-width:860px;
+  }
+  .trail-step{
+    display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; font-weight:600;
+    letter-spacing:.13em; text-transform:uppercase; color:rgba(20,58,46,.38); transition:color .35s;
+  }
+  .trail-step i{
+    font-style:normal; width:11px; height:11px; border-radius:50%; flex:none;
+    border:2px solid rgba(20,58,46,.22); background:transparent;
+    transition:background .35s, border-color .35s, box-shadow .35s;
+  }
+  .trail-step.active{color:var(--ink);}
+  .trail-step.active i{border-color:var(--leaf); box-shadow:0 0 0 4px rgba(196,245,71,.3); animation:trailBreath 1.8s ease-in-out infinite;}
+  .trail-step.done{color:var(--leaf);}
+  .trail-step.done i{background:var(--lime); border-color:var(--lime); box-shadow:none; animation:none;}
+  @keyframes trailBreath{
+    0%,100%{box-shadow:0 0 0 3px rgba(196,245,71,.22);}
+    50%{box-shadow:0 0 0 7px rgba(196,245,71,.4);}
+  }
+  .trail-link{flex:none; width:clamp(12px,2.6vw,30px); height:2px; border-radius:2px; background:rgba(20,58,46,.13); transition:background .35s;}
+  .trail-link.done{background:var(--lime);}
+
+  /* the studio panel itself */
+  .studio{
+    position:relative; margin:0 auto; max-width:860px; border-radius:26px;
+    background:#fff; border:1px solid rgba(20,58,46,.14); box-shadow:0 26px 70px rgba(20,58,46,.13);
+    padding:clamp(20px,3.2vw,34px);
+  }
+  .studio-coach{display:flex; gap:14px; align-items:flex-start;}
+  .coach-disc{
+    width:46px; height:46px; flex:none; border-radius:50%; background:var(--lime); color:var(--lime-ink);
+    display:grid; place-items:center; font:700 15px/1 var(--disp);
+    box-shadow:0 0 0 6px rgba(196,245,71,.16), 0 10px 24px rgba(196,245,71,.3);
+  }
+  .coach-disc.is-talking{animation:jessePulse 1.5s ease-in-out infinite;}
+  .coach-name{font-family:var(--mono); font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf); margin-bottom:4px;}
+  .coach-says{font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(16px,2vw,20px); line-height:1.42; color:var(--ink);}
+  .studio-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+  .studio-input{
+    flex:1 1 300px; min-width:0; font:inherit; font-size:16px; padding:15px 18px; border-radius:16px;
+    border:1px solid rgba(20,58,46,.18); background:var(--paper); color:var(--ink);
+  }
+  .studio-input::placeholder{color:rgba(20,58,46,.4);}
+  .studio-input:focus{outline:2px solid rgba(196,245,71,.6); border-color:var(--leaf);}
+  .studio-build{flex:none;}
+  .studio-build.is-lit{animation:buildGlow 1.5s ease-in-out infinite;}
+  @keyframes buildGlow{
+    0%,100%{box-shadow:0 16px 36px rgba(196,245,71,.22);}
+    50%{box-shadow:0 0 0 7px rgba(196,245,71,.24), 0 18px 46px rgba(196,245,71,.5);}
+  }
+  .studio-chips{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px;}
+  .studio-chips > span{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,58,46,.4);}
+  .studio-chip{
+    border:1px solid rgba(20,58,46,.16); border-radius:999px; padding:8px 16px; background:#fff;
+    color:var(--ink-soft); font-size:13px; font-weight:600; cursor:pointer;
+    transition:transform .2s var(--ease), border-color .2s, background .2s, color .2s;
+  }
+  .studio-chip:hover{transform:translateY(-1px); border-color:var(--leaf); color:var(--ink); background:rgba(196,245,71,.14);}
+  .studio-chip:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
+  /* Jesse's guided choices: a few large buttons, never a blank stare */
+  .studio-choices{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px;}
+  @media (max-width:620px){.studio-choices{grid-template-columns:1fr;}}
+  .studio-choice{
+    padding:16px 14px; border-radius:16px; border:1px solid rgba(20,58,46,.16); background:var(--paper);
+    font-family:var(--disp); font-weight:600; font-size:15px; color:var(--ink); cursor:pointer; text-align:left;
+    transition:transform .2s var(--ease), border-color .2s, background .2s, box-shadow .2s;
+  }
+  .studio-choice:hover{transform:translateY(-2px); border-color:var(--lime); background:rgba(196,245,71,.15); box-shadow:0 12px 28px rgba(20,58,46,.12);}
+  .studio-choice:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
+  .studio-choice small{display:block; margin-top:4px; font-family:var(--mono); font-weight:600; font-size:9px; letter-spacing:.11em; text-transform:uppercase; color:rgba(20,58,46,.42);}
+  .studio-simwrap{margin-top:18px; border-radius:18px; overflow:hidden; border:1px solid rgba(20,58,46,.16); background:#fff; box-shadow:0 16px 42px rgba(20,58,46,.12);}
+  .studio-simhead{display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; padding:11px 16px; border-bottom:1px solid rgba(20,58,46,.1); background:var(--paper);}
+  .studio-simhead b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--ink);}
+  .studio-simhead span{font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:rgba(20,58,46,.45);}
+  .studio-simhead a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf);}
+  .studio-simhead a:hover{text-decoration:underline;}
+  .studio-simwrap iframe{display:block; width:100%; height:min(56vh,440px); border:0; background:#fff;}
+  .studio-honest{padding:10px 16px; border-top:1px solid rgba(20,58,46,.08); background:var(--paper); font-size:12px; line-height:1.55; color:rgba(20,58,46,.55);}
+  .studio-done h3{font-size:clamp(26px,3.6vw,40px); letter-spacing:-.03em;}
+  .world-plaque{
+    display:inline-flex; align-items:center; gap:10px; margin-top:12px; padding:10px 18px; border-radius:14px;
+    background:var(--ink); color:var(--lime); font-family:var(--disp); font-weight:700; font-size:17px; letter-spacing:-.01em;
+  }
+  .world-plaque i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,245,244,.55);}
+  .studio-fine{margin-top:10px; font-size:12px; line-height:1.55; color:rgba(20,58,46,.5);}
+  .studio-reset{
+    margin-top:14px; border:0; background:transparent; cursor:pointer; padding:0;
+    font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:rgba(20,58,46,.45);
+  }
+  .studio-reset:hover{color:var(--ink); text-decoration:underline;}
+
+  /* six curiosity doors: real sims behind playful entry points */
+  .simlib{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,20px); margin-top:clamp(22px,3vh,32px);}
   @media (max-width:980px){.simlib{grid-template-columns:1fr 1fr;}}
   @media (max-width:620px){.simlib{grid-template-columns:1fr;}}
+  .simlib-intro{margin-top:clamp(44px,6.5vh,72px); text-align:center;}
+  .simlib-intro h3{font-size:clamp(21px,2.6vw,30px);}
+  .simlib-intro p{margin-top:8px; font-size:14.5px; line-height:1.6; color:var(--chalk-dim);}
   .sim-card{
-    border-radius:20px; background:var(--field-2); box-shadow:0 2px 14px rgba(20,58,46,.06);
+    border-radius:22px; background:#fff; border:1px solid rgba(20,58,46,.12);
+    box-shadow:0 10px 32px rgba(20,58,46,.1);
     overflow:hidden; display:flex; flex-direction:column;
     transition:transform .3s var(--ease), box-shadow .3s var(--ease);
   }
-  .sim-card:hover{transform:translateY(-4px); box-shadow:var(--shadow);}
+  .sim-card:hover{transform:translateY(-6px); box-shadow:0 30px 64px rgba(20,58,46,.22);}
   .sim-card.open{grid-column:1/-1;}
   .sim-card.open:hover{transform:none;}
-  .sim-face{padding:20px 20px 18px; display:flex; flex-direction:column; gap:8px; min-height:158px;}
-  .sim-tag{width:fit-content; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--leaf); background:rgba(36,122,77,.09); border-radius:999px; padding:4px 10px;}
-  .sim-card h3{font-size:18px;}
+  .cur-thumb{position:relative; aspect-ratio:16/10; background:var(--stage,#0b1026); overflow:hidden;}
+  .cur-thumb canvas{position:absolute; inset:0; width:100%; height:100%;}
+  .cur-live{
+    position:absolute; top:10px; right:10px; font-family:var(--mono); font-size:8.5px; font-weight:700;
+    letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.82);
+    border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:3px 8px;
+    background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+  }
+  .sim-card.open .cur-thumb{display:none;}
+  .sim-face{padding:16px 18px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .sim-card h3{font-size:19px;}
   .sim-face p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim);}
+  .cur-meta{font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(20,58,46,.42);}
   .sim-play{
     margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
     border:0; border-radius:999px; padding:9px 18px; cursor:pointer;
@@ -250,11 +375,15 @@
   .sim-stage-foot a:hover{text-decoration:underline;}
   .sim-close{border:1px solid var(--edge); border-radius:999px; padding:6px 14px; background:transparent; color:var(--chalk-dim); font-size:11.5px; font-weight:600; cursor:pointer;}
   .sim-close:hover{border-color:var(--chalk); color:var(--chalk);}
-  .simlib-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px 32px; flex-wrap:wrap;}
-  .simlib-head .lede{margin-top:14px; font-family:var(--disp); font-weight:600; color:var(--chalk);}
-  .simlib-bullet{margin-top:10px; position:relative; padding-left:20px; font-size:15px; line-height:1.55; color:var(--chalk-dim); max-width:56ch;}
-  .simlib-bullet::before{content:""; position:absolute; left:0; top:.52em; width:9px; height:9px; border-radius:50%; background:var(--lime);}
-  .simlib-cta{display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;}
+
+  /* the quiet second mention: the whole library and the open books, one slim
+     line instead of the full-width band that used to sit here */
+  .desk-more{
+    margin-top:clamp(28px,4vh,40px); display:flex; align-items:center; justify-content:center;
+    gap:10px 14px; flex-wrap:wrap; text-align:center; font-size:13.5px; color:var(--chalk-dim);
+  }
+  .desk-more .btn{min-height:40px; padding:0 18px; font-size:12.5px; border-radius:11px;}
+  .desk-more em{font-style:normal; color:rgba(20,58,46,.35);}
 
   /* ---------- create-your-own feature story (cream) ---------- */
   .fx-flow{margin-top:clamp(40px,6vh,64px); display:grid; gap:clamp(36px,5.5vh,62px);}
@@ -818,6 +947,13 @@
   .claim-msg.ok b{display:block; font-size:15px; color:var(--ink); margin-bottom:4px;}
   .claim-msg.bad{background:rgba(193,18,31,.08); color:#a30f1a; border:1px solid rgba(193,18,31,.24);}
   .claim-msg.bad b{display:block; font-size:15px; margin-bottom:4px;}
+  .form-legend{
+    grid-column:1/-1; margin-top:8px; font-family:var(--mono); font-size:10px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:rgba(20,58,46,.45);
+  }
+  .form-legend:first-child{margin-top:0;}
+  .claim-sms{margin-top:12px; font-size:10.5px; line-height:1.6; color:rgba(20,58,46,.45);}
+  .claim-sms a{color:var(--leaf); text-decoration:underline; text-underline-offset:2px;}
 
   footer{background:var(--field); border-top:1px solid var(--edge); padding:44px 0 56px; color:var(--chalk-faint); font-size:13px;}
   .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
@@ -865,101 +1001,151 @@
   </div>
 </section>
 
-<!-- ================= THE DESK: SIM LIBRARY ================= -->
+<!-- ================= THE DESK: CREATION STUDIO ================= -->
 <section class="stage-desk" id="desk">
   <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="deskAwake" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="kicker reveal">The Desk &middot; a library you can touch</div>
-    <div class="simlib-head reveal">
-      <div>
-        <h2 class="h2">Some brains learn visually.</h2>
-        <p class="lede">4000+ live, interactive MicroSims.</p>
-        <p class="simlib-bullet">No homework: students interact with simulations, and The Desk tracks their learning outcomes.</p>
-      </div>
-      <div class="simlib-cta">
-        <a class="btn primary" href="https://mindcraft-93858.web.app/desk">Sim_Craft</a>
-      </div>
+    <div class="desk-head reveal">
+      <div class="kicker">The Desk &middot; a creation studio</div>
+      <h2 class="h2">What do you want to bring to life?</h2>
+      <p class="lede">Turn anything you love into an interactive world. Describe it, build it with AI and a little guidance, and take it home to share.</p>
     </div>
 
-    <div class="simlib reveal" aria-label="Top picks from the MicroSim library">
-      <article class="sim-card" data-sim="https://dmccreary.github.io/geometry-course/sims/pythagorean-theorem/main.html" data-title="Pythagorean Theorem MicroSim">
+    <!-- the creation flow's progress trail. Filled in by the studio script. -->
+    <div class="studio-trail reveal" id="studioTrail" aria-label="Creation progress">
+      <span class="trail-step" data-step="dream"><i></i>Dream it</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="build"><i></i>Build it</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="experiment"><i></i>Experiment</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="yours"><i></i>Make it yours</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="share"><i></i>Share</span>
+    </div>
+
+    <div class="studio reveal" id="studio">
+      <div class="studio-coach">
+        <div class="coach-disc" id="coachDisc" aria-hidden="true">J</div>
+        <div>
+          <div class="coach-name">Jesse &middot; your studio guide</div>
+          <p class="coach-says" id="coachSays">What should we build together?</p>
+        </div>
+      </div>
+
+      <form class="studio-row" id="studioForm">
+        <input class="studio-input" id="studioInput" type="text" autocomplete="off" maxlength="140"
+               placeholder="I want to simulate what happens inside a black hole..."
+               aria-label="Describe the world you want to build">
+        <button class="btn primary studio-build" id="studioBuild" type="submit">Build my world</button>
+      </form>
+      <div class="studio-chips" id="studioChips">
+        <span>Quick start</span>
+        <button class="studio-chip" type="button" data-idea="a tiny solar system where I control gravity" data-domain="space">Space</button>
+        <button class="studio-chip" type="button" data-idea="the perfect free kick, curve and all" data-domain="sports">Sports</button>
+        <button class="studio-chip" type="button" data-idea="a creature that has to outrun what hunts it" data-domain="animals">Animals</button>
+        <button class="studio-chip" type="button" data-idea="a sound wave I can stack layers onto" data-domain="music">Music</button>
+        <button class="studio-chip" type="button" data-surprise="1">Surprise me</button>
+      </div>
+
+      <!-- Jesse's guided choices land here, then the live sim, the naming
+           step and the share step. All real state, driven by studioFlow(). -->
+      <div id="studioStage"></div>
+    </div>
+
+    <div class="simlib-intro reveal">
+      <h3>Or step through a door that is already open.</h3>
+      <p>Six entry points into the library's 722 live MicroSims. Hover a card to see its world move, then try it for real.</p>
+    </div>
+
+    <div class="simlib reveal" aria-label="Curiosity doors into the MicroSim library">
+      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html" data-title="Solar System Simulation">
+        <div class="cur-thumb" style="--stage:#0b1026"><canvas data-anim="universe"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Geometry</span>
-          <h3>Pythagorean Theorem</h3>
-          <p>Why a&sup2; + b&sup2; = c&sup2;. Shown, not told.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Build a universe</h3>
+          <p>Set planets moving around a star and watch gravity choreograph the whole thing.</p>
+          <p class="cur-meta">Orbital motion &middot; Physics</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/geometry-course/sims/pythagorean-theorem/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
-      <article class="sim-card" data-sim="https://dmccreary.github.io/calculus/sims/unit-circle/main.html" data-title="Interactive Unit Circle MicroSim">
+      <article class="sim-card" data-sim="library/sims/biology__natural-selection.html" data-title="Coevolution Arms Race MicroSim">
+        <div class="cur-thumb" style="--stage:#0f2e1d"><canvas data-anim="creature"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Trigonometry</span>
-          <h3>The Unit Circle</h3>
-          <p>Spin the angle. Watch sine and cosine breathe.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Design a creature</h3>
+          <p>Give prey a defense, give predators an answer, and watch an arms race evolve.</p>
+          <p class="cur-meta">Natural selection &middot; Biology</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/calculus/sims/unit-circle/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="library/sims/biology__natural-selection.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
-      <article class="sim-card" data-sim="sims/lever-force-amplifier.html" data-title="Lever Force Amplifier MicroSim">
+      <article class="sim-card" data-sim="library/sims/computer-science__sorting-comparison.html" data-title="Sorting Algorithm Race MicroSim">
+        <div class="cur-thumb" style="--stage:#1a1030"><canvas data-anim="game"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Physics</span>
-          <h3>Lever Force Amplifier</h3>
-          <p>Drag the fulcrum. Feel the trade.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Invent a game</h3>
+          <p>Six sorting algorithms, one starting gun. Rig the race and call the winner.</p>
+          <p class="cur-meta">Algorithms &middot; Computer science</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="sims/lever-force-amplifier.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="library/sims/computer-science__sorting-comparison.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
-      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/projectile-motion/main.html" data-title="Projectile Motion MicroSim">
+      <article class="sim-card" data-sim="library/sims/algebra-1__projectile-motion.html" data-title="Projectile Motion MicroSim">
+        <div class="cur-thumb" style="--stage:#14321f"><canvas data-anim="sport"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Physics</span>
-          <h3>Projectile Motion</h3>
-          <p>Aim, launch, and trace the arc yourself.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Simulate your favorite sport</h3>
+          <p>Pick the angle and the power, then trace the perfect arc yourself.</p>
+          <p class="cur-meta">Projectile motion &middot; Algebra</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/projectile-motion/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="library/sims/algebra-1__projectile-motion.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
-      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/doppler-effect/main.html" data-title="Doppler Effect MicroSim">
+      <article class="sim-card" data-sim="library/sims/circuits__harmonics.html" data-title="Harmonic Content Explorer MicroSim">
+        <div class="cur-thumb" style="--stage:#241536"><canvas data-anim="music"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Physics</span>
-          <h3>Doppler Effect</h3>
-          <p>Why the siren bends as it passes you.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Make music move</h3>
+          <p>Stack harmonics until a plain wave turns into a sound with real character.</p>
+          <p class="cur-meta">Harmonics &middot; Circuits</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/doppler-effect/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="library/sims/circuits__harmonics.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
-      <article class="sim-card" data-sim="https://dmccreary.github.io/computer-science/sims/sorting-algorithm-race/main.html" data-title="Sorting Algorithm Race MicroSim">
+      <article class="sim-card" data-sim="library/sims/psychology__cognitive-biases.html" data-title="Cognitive Bias Detective MicroSim">
+        <div class="cur-thumb" style="--stage:#1c1410"><canvas data-anim="mystery"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
-          <span class="sim-tag">Computer Science</span>
-          <h3>Sorting Algorithm Race</h3>
-          <p>Six algorithms, one starting gun.</p>
-          <button class="sim-play" type="button">&#9654; Play</button>
+          <h3>Solve a mystery</h3>
+          <p>Play detective against your own brain and catch the biases planting false clues.</p>
+          <p class="cur-meta">Cognitive biases &middot; Psychology</p>
+          <button class="sim-play" type="button">Try it</button>
         </div>
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/computer-science/sims/sorting-algorithm-race/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+          <div class="sim-stage-foot"><a href="library/sims/psychology__cognitive-biases.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
     </div>
-    <div class="brains-archive-box reveal">
-      <img src="img/raccoon-mascot.png" alt="MindCraft raccoon mascot" loading="lazy">
-      <p>113 free, open digital books, loaded with sims. They level up as you engage.</p>
-      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">Book_Craft</a>
-    </div>
+
+    <p class="desk-more reveal">
+      <a class="btn soft" href="https://mindcraft-93858.web.app/desk">Browse all 722 in SimCraft</a>
+      <em>&middot;</em>
+      <span>Prefer pages? 113 free, open books, loaded with sims.</span>
+      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
+    </p>
   </div>
 </section>
 
@@ -1077,35 +1263,69 @@
       </div>
       <div class="claim-card reveal">
         <h3>Get your seat</h3>
-        <p>One email. No card, no trial timer.</p>
+        <p>A minute of typing. No card, no trial timer.</p>
         <form id="claimForm" novalidate>
           <div class="form-grid">
-            <div class="field full">
+            <span class="form-legend">Parent or guardian</span>
+            <div class="field">
+              <label for="claimParentFirst">First name</label>
+              <input id="claimParentFirst" name="parentFirst" type="text" required autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="claimParentLast">Last name</label>
+              <input id="claimParentLast" name="parentLast" type="text" required autocomplete="family-name">
+            </div>
+            <div class="field">
               <label for="claimEmail">Email</label>
               <input id="claimEmail" name="email" type="email" required autocomplete="email" placeholder="you@school.edu">
             </div>
             <div class="field">
-              <label for="claimName">Name</label>
-              <input id="claimName" name="name" type="text" autocomplete="name" placeholder="Optional">
-            </div>
-            <div class="field">
-              <label for="claimRole">You are a</label>
-              <select id="claimRole" name="role">
-                <option value="student">Student</option>
-                <option value="parent">Parent</option>
-                <option value="teacher">Teacher</option>
-                <option value="tutor">Tutor</option>
-                <option value="other">Something else</option>
-              </select>
+              <label for="claimPhone">Phone</label>
+              <input id="claimPhone" name="phone" type="tel" required autocomplete="tel" placeholder="(555) 555-5555">
             </div>
             <div class="field full">
-              <label for="claimNote">What are you trying to learn</label>
-              <textarea id="claimNote" name="note" placeholder="Optional. A subject, a test, a thing that never made sense."></textarea>
+              <label for="claimHeard">How did you hear about us?</label>
+              <select id="claimHeard" name="howHeard">
+                <option value="">Pick one, if you remember</option>
+                <option value="friend_or_family">A friend or family member</option>
+                <option value="school_or_teacher">School or a teacher</option>
+                <option value="instagram">Instagram</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="search">Search</option>
+                <option value="podcast">Podcast</option>
+                <option value="other">Somewhere else</option>
+              </select>
+            </div>
+            <span class="form-legend">The student</span>
+            <div class="field">
+              <label for="claimStudentFirst">First name</label>
+              <input id="claimStudentFirst" name="studentFirst" type="text" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="claimStudentLast">Last name</label>
+              <input id="claimStudentLast" name="studentLast" type="text" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="claimSchool">School</label>
+              <input id="claimSchool" name="school" type="text" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="claimGrade">Grade</label>
+              <input id="claimGrade" name="grade" type="text" placeholder="Optional">
+            </div>
+            <div class="field full">
+              <label for="claimSubject">Subject</label>
+              <input id="claimSubject" name="subject" type="text" placeholder="English, math, SAT test prep, etc.">
+            </div>
+            <div class="field full">
+              <label for="claimMessage">Message</label>
+              <textarea id="claimMessage" name="message" required placeholder="What are you hoping The Desk does for your student?"></textarea>
             </div>
           </div>
           <input class="honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn primary apply-submit" id="claimSubmit" type="submit">Claim your desk</button>
           <p class="claim-note">Goes straight to the founders. No list, no reselling.</p>
+          <p class="claim-sms">By providing my phone number to MindCraft, I agree and acknowledge that MindCraft may send text messages to my wireless phone number for any purpose. Message and data rates may apply. Message frequency will vary, and you will be able to opt out by replying STOP. For more information on how your data will be handled, please see our <a href="privacy.html">privacy policy</a>.</p>
         </form>
         <div class="claim-msg" id="claimMsg" hidden role="status" aria-live="polite"></div>
       </div>
@@ -1309,12 +1529,667 @@
           var f = document.createElement('iframe');
           f.src = card.dataset.sim;
           f.title = card.dataset.title || 'MicroSim';
+          // p5 sims probe motion sensors on boot; without this the browser
+          // logs a permissions-policy violation for every sim opened.
+          f.setAttribute('allow', 'accelerometer *; gyroscope *; magnetometer *');
           frame.appendChild(f);
         }
         card.classList.add('open');
         card.scrollIntoView({behavior:'smooth', block:'nearest'});
       });
       if(closeBtn) closeBtn.addEventListener('click', function(){ shut(card); });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // The creation studio.
+  //
+  // Everything in this flow is real and everything in it is free. The
+  // matcher, the choices and the state machine run entirely in this file;
+  // the "world" Jesse puts on the desk is a REAL MicroSim from the migrated
+  // library (or Dan McCreary's published course sims, which the cards below
+  // already embed), matched to the idea by honest keyword scoring; and the
+  // finish line posts to the same free marketing-lead endpoint the claim
+  // section uses. Nothing here touches /api/generate-sim or any other
+  // endpoint that spends money per call: live generation is authenticated
+  // and budget-gated in the real product, and a public page has neither the
+  // auth nor the budget. The copy says so instead of faking a generation.
+  // ---------------------------------------------------------------------
+  (function(){
+    var form = document.getElementById('studioForm');
+    if(!form) return;
+    var input = document.getElementById('studioInput');
+    var build = document.getElementById('studioBuild');
+    var chips = document.getElementById('studioChips');
+    var stage = document.getElementById('studioStage');
+    var says = document.getElementById('coachSays');
+    var disc = document.getElementById('coachDisc');
+    var trail = document.getElementById('studioTrail');
+    var sec = document.getElementById('desk');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ----- the grid wakes up as the visitor types -----
+    // Lime pulses at the same 44px intersections .grid-bg draws, on a canvas
+    // spanning the whole section, so typing visibly charges the room up.
+    var awake = (function(){
+      var cv = document.getElementById('deskAwake');
+      if(!cv || reduced) return function(){};
+      var ctx = cv.getContext('2d');
+      var sparks = [], raf = null, W = 0, H = 0;
+      function size(){
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = sec.clientWidth; H = sec.clientHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function frame(){
+        ctx.clearRect(0, 0, W, H);
+        var alive = [];
+        for(var i = 0; i < sparks.length; i++){
+          var s = sparks[i];
+          s.t += 0.016;
+          var life = s.t / 1.25;
+          if(life >= 1) continue;
+          alive.push(s);
+          var fade = 1 - life;
+          var r = 1.2 + 4.5 * Math.sin(Math.min(1, life) * Math.PI);
+          if(s.link){
+            ctx.strokeStyle = 'rgba(95,183,121,' + (0.35 * fade).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.link.x, s.link.y); ctx.stroke();
+          }
+          ctx.strokeStyle = 'rgba(196,245,71,' + (0.5 * fade).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(s.x - r - 4, s.y); ctx.lineTo(s.x + r + 4, s.y);
+          ctx.moveTo(s.x, s.y - r - 4); ctx.lineTo(s.x, s.y + r + 4);
+          ctx.stroke();
+          ctx.fillStyle = 'rgba(196,245,71,' + (0.9 * fade).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(s.x, s.y, r, 0, 7); ctx.fill();
+        }
+        sparks = alive;
+        if(sparks.length){ raf = requestAnimationFrame(frame); }
+        else { raf = null; ctx.clearRect(0, 0, W, H); }
+      }
+      window.addEventListener('resize', function(){ if(W) size(); });
+      return function(count, yFrac){
+        // The section grows as the flow advances, so the canvas re-measures
+        // whenever it is about to matter rather than on a schedule.
+        if(W !== sec.clientWidth || H !== sec.clientHeight) size();
+        for(var i = 0; i < count; i++){
+          var s = {
+            x: Math.round((Math.random() * W) / 44) * 44,
+            y: Math.round((H * (yFrac + Math.random() * 0.3)) / 44) * 44,
+            t: 0,
+            link: sparks.length && Math.random() < 0.45 ? sparks[sparks.length - 1] : null
+          };
+          sparks.push(s);
+        }
+        if(sparks.length > 80) sparks.splice(0, sparks.length - 80);
+        if(!raf) raf = requestAnimationFrame(frame);
+      };
+    })();
+
+    // ----- domains: every sim path here is a real file in library/sims/
+    // (checked against the 722 on disk) or a course sim this page already
+    // embeds from Dan McCreary's published repos. -----
+    var DOMAINS = {
+      space: {
+        pick: 'Space', cap: 'planets and gravity',
+        words: ['space', 'black hole', 'planet', 'star', 'rocket', 'moon', 'gravity', 'orbit', 'galaxy', 'universe', 'mars', 'sun', 'asteroid', 'comet', 'solar', 'astronaut', 'alien', 'cosmos', 'saturn', 'jupiter'],
+        levers: [['Gravity', 'how hard the star pulls'], ['Speed', 'how fast worlds fly'], ['Scale', 'how big it all gets']],
+        sim: {src: 'https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html', title: 'Solar System Simulation', meta: 'Orbital motion · Physics'}
+      },
+      sports: {
+        pick: 'Sports', cap: 'arcs and momentum',
+        words: ['sport', 'soccer', 'basketball', 'football', 'baseball', 'tennis', 'golf', 'throw', 'kick', 'jump', 'ball', 'goal', 'dunk', 'hoop', 'ski', 'skate', 'hockey', 'volleyball', 'archery', 'frisbee', 'pitch', 'homerun', 'home run', 'penalty'],
+        levers: [['Angle', 'where the shot leaves from'], ['Power', 'how hard it gets hit'], ['Gravity', 'which planet you play on']],
+        sim: {src: 'library/sims/algebra-1__projectile-motion.html', title: 'Projectile Motion MicroSim', meta: 'Projectile motion · Algebra'}
+      },
+      animals: {
+        pick: 'Creatures', cap: 'evolution and survival',
+        words: ['animal', 'creature', 'dog', 'cat', 'bird', 'fish', 'dinosaur', 'dragon', 'monster', 'predator', 'prey', 'evolve', 'evolution', 'bug', 'insect', 'shark', 'wolf', 'lion', 'tiger', 'snake', 'frog', 'octopus', 'pet', 'zoo', 'jungle', 'beast', 'species'],
+        levers: [['Speed', 'how fast prey can run'], ['Defenses', 'armor, camouflage, spines'], ['Environment', 'where the chase happens']],
+        sim: {src: 'library/sims/biology__natural-selection.html', title: 'Coevolution Arms Race', meta: 'Natural selection · Biology'}
+      },
+      music: {
+        pick: 'Music', cap: 'waves and harmonics',
+        words: ['music', 'song', 'sound', 'beat', 'drum', 'guitar', 'piano', 'wave', 'note', 'rhythm', 'siren', 'voice', 'sing', 'band', 'melody', 'bass', 'synth', 'violin', 'chord'],
+        levers: [['Pitch', 'how high it rings'], ['Layers', 'how many voices stack'], ['Tempo', 'how fast it moves']],
+        sim: {src: 'library/sims/circuits__harmonics.html', title: 'Harmonic Content Explorer', meta: 'Harmonics · Circuits'}
+      },
+      games: {
+        pick: 'Games', cap: 'rules and algorithms',
+        words: ['game', 'maze', 'puzzle', 'level', 'player', 'score', 'algorithm', 'code', 'robot', 'arcade', 'quest', 'battle', 'chess', 'cards', 'videogame', 'video game', 'minecraft', 'race'],
+        levers: [['Speed', 'how fast the race runs'], ['Rules', 'what counts as winning'], ['Players', 'who lines up at the start']],
+        sim: {src: 'library/sims/computer-science__sorting-comparison.html', title: 'Sorting Algorithm Race', meta: 'Algorithms · Computer science'}
+      },
+      mystery: {
+        pick: 'Mysteries', cap: 'clues and cognition',
+        words: ['mystery', 'detective', 'clue', 'solve', 'brain', 'mind', 'trick', 'illusion', 'secret', 'crime', 'spy', 'magic', 'dream', 'memory', 'sherlock', 'riddle', 'puzzle'],
+        levers: [['Clues', 'what evidence surfaces'], ['Suspects', 'who could have done it'], ['Red herrings', 'how hard your brain gets fooled']],
+        sim: {src: 'library/sims/psychology__cognitive-biases.html', title: 'Cognitive Bias Detective', meta: 'Cognitive biases · Psychology'}
+      }
+    };
+    var DOMAIN_KEYS = Object.keys(DOMAINS);
+
+    var idea = '', domainKey = null, lever = null, worldName = '';
+    var experimented = false, talkTimer = null;
+
+    function say(text){
+      says.textContent = text;
+      disc.classList.add('is-talking');
+      clearTimeout(talkTimer);
+      talkTimer = setTimeout(function(){ disc.classList.remove('is-talking'); }, 1600);
+    }
+    // steps: 0 dream, 1 build, 2 experiment, 3 yours, 4 share. trailTo(n)
+    // marks everything before n done and n active; trailTo(5) is all done.
+    function trailTo(n){
+      trail.querySelectorAll('.trail-step').forEach(function(s, i){
+        s.classList.toggle('done', i < n);
+        s.classList.toggle('active', i === n);
+      });
+      trail.querySelectorAll('.trail-link').forEach(function(l, i){
+        l.classList.toggle('done', i < n);
+      });
+    }
+    function clearStage(){ stage.innerHTML = ''; }
+    function el(tag, cls, text){
+      var n = document.createElement(tag);
+      if(cls) n.className = cls;
+      if(text !== undefined) n.textContent = text;
+      return n;
+    }
+
+    function detect(text){
+      var hay = ' ' + text.toLowerCase() + ' ';
+      var bestKey = null, bestScore = 0;
+      DOMAIN_KEYS.forEach(function(k){
+        var score = 0;
+        DOMAINS[k].words.forEach(function(w){ if(hay.indexOf(w) >= 0) score++; });
+        if(score > bestScore){ bestScore = score; bestKey = k; }
+      });
+      return bestKey;
+    }
+
+    function choiceBtn(label, caption, onPick){
+      var b = el('button', 'studio-choice');
+      b.type = 'button';
+      b.appendChild(document.createTextNode(label));
+      b.appendChild(el('small', null, caption));
+      b.addEventListener('click', onPick);
+      return b;
+    }
+
+    function startIdea(text, forcedKey){
+      idea = String(text || '').trim();
+      if(!idea){ input.focus(); return; }
+      input.value = idea;
+      awake(6, 0.08);
+      trailTo(1);
+      clearStage();
+      var key = forcedKey || detect(idea);
+      if(key){ askLevers(key); } else { askClosest(); }
+    }
+
+    // The honest fallback: no keyword hit means the idea is genuinely outside
+    // what the matcher can place, so Jesse says that instead of pretending.
+    function askClosest(){
+      say('That one is out ahead of my library, honestly. Which of these is closest? We will start there and stretch it.');
+      var grid = el('div', 'studio-choices');
+      ['space', 'animals', 'games'].forEach(function(k){
+        grid.appendChild(choiceBtn(DOMAINS[k].pick, DOMAINS[k].cap, function(){
+          awake(4, 0.1);
+          clearStage();
+          askLevers(k);
+        }));
+      });
+      stage.appendChild(grid);
+    }
+
+    function askLevers(key){
+      domainKey = key;
+      say('That sounds fun. What should players be able to change?');
+      var grid = el('div', 'studio-choices');
+      DOMAINS[key].levers.forEach(function(lv){
+        grid.appendChild(choiceBtn(lv[0], lv[1], function(){
+          lever = lv[0];
+          awake(8, 0.1);
+          buildWorld();
+        }));
+      });
+      stage.appendChild(grid);
+    }
+
+    function buildWorld(){
+      var d = DOMAINS[domainKey];
+      clearStage();
+      trailTo(2);
+      say('Noted: players get to change ' + lever.toLowerCase() + '. I cannot conjure a brand new sim on this page, but here is a live one from the library built on the same idea. Poke it and see how your world will feel.');
+
+      var wrap = el('div', 'studio-simwrap');
+      var head = el('div', 'studio-simhead');
+      head.appendChild(el('b', null, d.sim.title));
+      head.appendChild(el('span', null, d.sim.meta));
+      var link = el('a', null, 'Open full screen ↗');
+      link.href = d.sim.src; link.target = '_blank'; link.rel = 'noopener';
+      head.appendChild(link);
+      var frame = document.createElement('iframe');
+      frame.src = d.sim.src;
+      frame.title = d.sim.title;
+      // same motion-sensor grant the card iframes get, for the same p5 reason
+      frame.setAttribute('allow', 'accelerometer *; gyroscope *; magnetometer *');
+      wrap.appendChild(head);
+      wrap.appendChild(frame);
+      wrap.appendChild(el('div', 'studio-honest',
+        'This is a real MicroSim from the library of 722, not something generated on the spot. On the full Desk, Jesse helps you build your own from a blank canvas.'));
+      stage.appendChild(wrap);
+
+      // Experiment counts when the visitor actually reaches into the sim.
+      function touched(){
+        if(experimented) return;
+        experimented = true;
+        trailTo(3);
+        awake(5, 0.2);
+      }
+      wrap.addEventListener('pointerenter', touched);
+      wrap.addEventListener('touchstart', touched, {passive: true});
+
+      var row = el('form', 'studio-row');
+      var nameIn = document.createElement('input');
+      nameIn.className = 'studio-input';
+      nameIn.type = 'text';
+      nameIn.maxLength = 60;
+      nameIn.placeholder = 'Then name your world. "Gravity Grand Prix"?';
+      nameIn.setAttribute('aria-label', 'Name your world');
+      var nameBtn = el('button', 'btn primary', 'Make it mine');
+      nameBtn.type = 'submit';
+      row.appendChild(nameIn);
+      row.appendChild(nameBtn);
+      row.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(!nameIn.value.trim()){ nameIn.focus(); return; }
+        worldName = nameIn.value.trim();
+        finish(row);
+      });
+      stage.appendChild(row);
+      nameIn.focus();
+    }
+
+    function finish(nameRow){
+      var d = DOMAINS[domainKey];
+      experimented = true;
+      trailTo(4);
+      awake(12, 0.15);
+      say(worldName + '. I like it. Last step: send it home, and we will help you build it for real.');
+      nameRow.remove();
+
+      var done = el('div', 'studio-done');
+      done.appendChild(el('h3', null, 'You built a world.'));
+      var plaque = el('div', 'world-plaque');
+      plaque.appendChild(el('i', null, 'World'));
+      plaque.appendChild(document.createTextNode(worldName));
+      done.appendChild(plaque);
+      var fine = el('p', 'studio-fine');
+      fine.appendChild(document.createTextNode('Dreamed as "' + idea + '", players change ' + lever.toLowerCase() + ', running on ' + d.sim.title + '. Share the sim with someone: '));
+      var shareLink = el('a', null, 'open it full screen');
+      shareLink.href = d.sim.src; shareLink.target = '_blank'; shareLink.rel = 'noopener';
+      shareLink.style.color = 'var(--leaf)';
+      shareLink.style.textDecoration = 'underline';
+      fine.appendChild(shareLink);
+      fine.appendChild(document.createTextNode(' and send the link.'));
+      done.appendChild(fine);
+
+      var row = el('form', 'studio-row');
+      var mail = document.createElement('input');
+      mail.className = 'studio-input';
+      mail.type = 'email';
+      mail.placeholder = 'you@school.edu';
+      mail.setAttribute('aria-label', 'Email to save your world and claim a desk');
+      var send = el('button', 'btn primary', 'Save it and claim my desk');
+      send.type = 'submit';
+      row.appendChild(mail);
+      row.appendChild(send);
+      done.appendChild(row);
+      done.appendChild(el('p', 'studio-fine',
+        'Your idea rides along with your seat request to the same founders the claim form reaches. No list, no reselling.'));
+      var msg = el('div', 'claim-msg');
+      msg.hidden = true;
+      done.appendChild(msg);
+      var again = el('button', 'studio-reset', 'Start another world');
+      again.type = 'button';
+      again.addEventListener('click', reset);
+      done.appendChild(again);
+      stage.appendChild(done);
+
+      row.addEventListener('submit', function(e){
+        e.preventDefault();
+        var email = mail.value.trim();
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+          msg.className = 'claim-msg bad';
+          msg.textContent = 'That email does not look right. Nothing was sent.';
+          msg.hidden = false;
+          mail.focus();
+          return;
+        }
+        send.disabled = true;
+        send.textContent = 'Sending...';
+        fetch('https://mindcraft-webhook.vercel.app/api/marketing-lead', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            email: email,
+            role: 'studio_builder',
+            source: 'joinmindcraft_desk_studio',
+            note: 'Studio world "' + worldName + '". Idea: ' + idea + '. Players change: ' + lever + '. Library sim matched: ' + d.sim.title + '.',
+            page: location.pathname + '#desk'
+          })
+        }).then(function(res){
+          return res.json().catch(function(){ return {}; }).then(function(data){
+            return {ok: res.ok && data && data.ok, status: res.status, data: data};
+          });
+        }).then(function(r){
+          if(r.ok){
+            trailTo(5);
+            awake(14, 0.1);
+            say('Sent. A founder reads every one of these personally. Go show ' + worldName + ' to someone who will love it.');
+            msg.className = 'claim-msg ok';
+            msg.textContent = 'Saved. ' + worldName + ' and your email went straight to the founders, and your desk is in the queue.';
+          } else {
+            msg.className = 'claim-msg bad';
+            msg.textContent = (r.data && r.data.error ? r.data.error : 'The signup service answered with ' + r.status + '.') +
+              ' Nothing was saved. founders@joinmindcraft.com works too.';
+          }
+          msg.hidden = false;
+        }).catch(function(err){
+          msg.className = 'claim-msg bad';
+          msg.textContent = 'Could not reach the signup service: ' + String(err && err.message || err) +
+            '. Nothing was saved. founders@joinmindcraft.com works too.';
+          msg.hidden = false;
+        }).then(function(){
+          send.disabled = false;
+          send.textContent = 'Save it and claim my desk';
+        });
+      });
+    }
+
+    function reset(){
+      idea = ''; domainKey = null; lever = null; worldName = ''; experimented = false;
+      input.value = '';
+      build.classList.remove('is-lit');
+      clearStage();
+      trailTo(-1);
+      say('What should we build together?');
+      input.focus();
+    }
+
+    // typing wakes the grid, lights the first step and charges the CTA
+    input.addEventListener('input', function(){
+      var len = input.value.trim().length;
+      if(len){ trailTo(0); awake(2, 0.05); }
+      build.classList.toggle('is-lit', len >= 3);
+    });
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      startIdea(input.value, null);
+    });
+    chips.querySelectorAll('.studio-chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        if(chip.dataset.surprise){
+          var k = DOMAIN_KEYS[Math.floor(Math.random() * DOMAIN_KEYS.length)];
+          var ideas = {
+            space: 'a comet with a tail I can steer',
+            sports: 'the highest dunk gravity allows',
+            animals: 'an octopus that outsmarts every trap',
+            music: 'a bass drop you can see',
+            games: 'a race where the slowest strategy wins',
+            mystery: 'why my own eyes miss what is right there'
+          };
+          startIdea(ideas[k], k);
+        } else {
+          startIdea(chip.dataset.idea, chip.dataset.domain);
+        }
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // Miniature living thumbnails on the six curiosity cards. Hand-drawn
+  // canvas sketches in the site's own palette, animated on hover (and while
+  // visible on touch screens, which have no hover), frozen to a single
+  // painted frame under prefers-reduced-motion. Decoration for the REAL sim
+  // behind each card, not a claim of being that sim.
+  // ---------------------------------------------------------------------
+  (function(){
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var LIME = '#c4f547', LEAF = '#5fb779', GOLD = '#f5d348', RED = '#e0394a';
+
+    // tiny deterministic PRNG so static frames do not reshuffle on resize
+    function rng(seed){
+      var s = seed >>> 0;
+      return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+    }
+
+    var DRAW = {
+      universe: function(ctx, W, H, st){
+        if(!st.stars){
+          var r = rng(11);
+          st.stars = [];
+          for(var i = 0; i < 26; i++) st.stars.push({x: r() * W, y: r() * H, s: 0.6 + r() * 1.2, p: r() * 6});
+          st.planets = [
+            {rx: 0.17, sp: 0.9, ph: 0.4, c: LEAF, r: 3.4},
+            {rx: 0.28, sp: 0.55, ph: 2.3, c: LIME, r: 4.6},
+            {rx: 0.4, sp: 0.34, ph: 4.6, c: GOLD, r: 3.6}
+          ];
+        }
+        var cx = W / 2, cy = H / 2;
+        st.stars.forEach(function(s){
+          ctx.fillStyle = 'rgba(245,245,244,' + (0.25 + 0.3 * Math.abs(Math.sin(st.t * 1.6 + s.p))).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 7); ctx.fill();
+        });
+        ctx.fillStyle = GOLD;
+        ctx.shadowColor = GOLD; ctx.shadowBlur = 18;
+        ctx.beginPath(); ctx.arc(cx, cy, 8, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+        st.planets.forEach(function(p){
+          var rx = p.rx * W, ry = rx * 0.42;
+          ctx.strokeStyle = 'rgba(245,245,244,.14)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.stroke();
+          var a = st.t * p.sp + p.ph;
+          ctx.fillStyle = p.c;
+          ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, p.r, 0, 7); ctx.fill();
+        });
+      },
+      creature: function(ctx, W, H, st){
+        if(!st.prey){
+          var r = rng(23);
+          st.prey = [];
+          for(var i = 0; i < 5; i++) st.prey.push({p: r() * 6, sp: 0.6 + r() * 0.8, ry: 0.2 + r() * 0.6});
+        }
+        var cx = W * 0.34, cy = H * 0.52, R = H * 0.27;
+        var grad = ctx.createRadialGradient(cx, cy, 2, cx, cy, R * 1.4);
+        grad.addColorStop(0, LIME); grad.addColorStop(1, LEAF);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        for(var k = 0; k <= 26; k++){
+          var ang = (k / 26) * Math.PI * 2;
+          var rr = R * (1 + 0.13 * Math.sin(3 * ang + st.t * 2.1) + 0.07 * Math.sin(5 * ang - st.t * 3.2));
+          var x = cx + Math.cos(ang) * rr, y = cy + Math.sin(ang) * rr;
+          if(k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath(); ctx.fill();
+        // eyes track the nearest fleeing dot
+        var look = Math.sin(st.t * 0.8) * 3;
+        [[-0.28, -0.12], [0.2, -0.16]].forEach(function(e){
+          ctx.fillStyle = '#fff';
+          ctx.beginPath(); ctx.arc(cx + e[0] * R * 2, cy + e[1] * R * 2, 5.5, 0, 7); ctx.fill();
+          ctx.fillStyle = '#0f2e1d';
+          ctx.beginPath(); ctx.arc(cx + e[0] * R * 2 + look, cy + e[1] * R * 2, 2.6, 0, 7); ctx.fill();
+        });
+        st.prey.forEach(function(p, i){
+          var x = W * 0.68 + Math.sin(st.t * p.sp + p.p) * W * 0.16;
+          var y = H * (0.25 + p.ry * 0.5) + Math.cos(st.t * p.sp * 1.3 + p.p) * H * 0.08;
+          ctx.fillStyle = i === 0 ? RED : GOLD;
+          ctx.beginPath(); ctx.arc(x, y, i === 0 ? 4 : 2.6, 0, 7); ctx.fill();
+        });
+      },
+      game: function(ctx, W, H, st){
+        if(!st.arr){
+          var r = rng(7);
+          st.arr = [];
+          for(var i = 0; i < 14; i++) st.arr.push(i + 1);
+          for(var j = st.arr.length - 1; j > 0; j--){
+            var k = Math.floor(r() * (j + 1));
+            var tmp = st.arr[j]; st.arr[j] = st.arr[k]; st.arr[k] = tmp;
+          }
+          st.cool = 0; st.hot = -1;
+        }
+        st.cool -= 1;
+        if(st.cool <= 0){
+          st.cool = 7; st.hot = -1;
+          var swapped = false;
+          for(var a = 0; a < st.arr.length - 1; a++){
+            if(st.arr[a] > st.arr[a + 1]){
+              var t2 = st.arr[a]; st.arr[a] = st.arr[a + 1]; st.arr[a + 1] = t2;
+              st.hot = a; swapped = true;
+              break;
+            }
+          }
+          if(!swapped){
+            // sorted: hold the finished race on screen a beat, then rerun it
+            st.done = (st.done || 0) + 1;
+            if(st.done > 6){ st.arr = null; st.done = 0; return; }
+          }
+        }
+        var n = 14, gap = 4, bw = (W - gap * (n + 1)) / n;
+        for(var b = 0; b < n; b++){
+          var v = st.arr[b] / n;
+          var bh = v * (H - 26) + 6;
+          ctx.fillStyle = (b === st.hot || b === st.hot + 1) ? RED : (v > 0.66 ? GOLD : v > 0.33 ? LIME : LEAF);
+          ctx.fillRect(gap + b * (bw + gap), H - 8 - bh, bw, bh);
+        }
+      },
+      sport: function(ctx, W, H, st){
+        if(st.u === undefined){ st.u = 0; st.hmax = H * 0.62; st.trail = []; }
+        ctx.strokeStyle = 'rgba(245,245,244,.25)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, H - 12); ctx.lineTo(W, H - 12); ctx.stroke();
+        // the goal
+        ctx.strokeStyle = GOLD; ctx.lineWidth = 2;
+        ctx.strokeRect(W - 26, H - 44, 16, 32);
+        st.u += 0.013;
+        if(st.u > 1.25){ st.u = 0; st.hmax = H * (0.35 + Math.random() * 0.35); st.trail = []; }
+        var u = Math.min(st.u, 1);
+        var x = W * 0.08 + u * W * 0.78;
+        var y = (H - 16) - 4 * st.hmax * u * (1 - u);
+        st.trail.push({x: x, y: y});
+        if(st.trail.length > 16) st.trail.shift();
+        st.trail.forEach(function(p, i){
+          ctx.fillStyle = 'rgba(196,245,71,' + (0.08 + 0.4 * (i / st.trail.length)).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, 7); ctx.fill();
+        });
+        ctx.fillStyle = LIME;
+        ctx.shadowColor = LIME; ctx.shadowBlur = 10;
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+      },
+      music: function(ctx, W, H, st){
+        var mid = H * 0.42;
+        [[1, LEAF, 0.5], [0, LIME, 1]].forEach(function(layer){
+          ctx.strokeStyle = layer[1];
+          ctx.globalAlpha = layer[2];
+          ctx.lineWidth = layer[0] ? 1.4 : 2.2;
+          ctx.beginPath();
+          for(var x = 0; x <= W; x += 3){
+            var ph = st.t * (1.6 + layer[0]);
+            var y = mid +
+              Math.sin((x / W) * 12.6 + ph) * H * 0.1 +
+              Math.sin((x / W) * 25.1 - ph * 1.4) * H * 0.05 +
+              Math.sin((x / W) * 37.7 + ph * 0.7) * H * 0.028;
+            if(x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+        var n = 14, gap = 5, bw = (W - gap * (n + 1)) / n;
+        for(var i = 0; i < n; i++){
+          var bh = (0.15 + 0.85 * Math.abs(Math.sin(st.t * 2.2 + i * 0.74))) * H * 0.2;
+          ctx.fillStyle = i % 3 === 0 ? GOLD : 'rgba(196,245,71,.75)';
+          ctx.fillRect(gap + i * (bw + gap), H - 8 - bh, bw, bh);
+        }
+      },
+      mystery: function(ctx, W, H, st){
+        if(!st.dots){
+          var r = rng(41);
+          st.dots = [];
+          for(var i = 0; i < 24; i++) st.dots.push({x: 10 + r() * (W - 20), y: 10 + r() * (H - 20), clue: i % 5 === 0, red: i === 7});
+        }
+        var lx = W * (0.5 + 0.34 * Math.sin(st.t * 0.7));
+        var ly = H * (0.5 + 0.26 * Math.sin(st.t * 1.13 + 1.2));
+        var LR = H * 0.34;
+        var clues = [];
+        st.dots.forEach(function(d){
+          var near = Math.hypot(d.x - lx, d.y - ly) < LR;
+          if(d.clue && near) clues.push(d);
+          if(near && d.red){ ctx.fillStyle = RED; }
+          else if(near && d.clue){ ctx.fillStyle = GOLD; }
+          else { ctx.fillStyle = 'rgba(245,245,244,' + (near ? 0.55 : 0.16) + ')'; }
+          ctx.beginPath(); ctx.arc(d.x, d.y, near && (d.clue || d.red) ? 4 : 2, 0, 7); ctx.fill();
+        });
+        if(clues.length > 1){
+          ctx.strokeStyle = 'rgba(245,211,72,.5)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          clues.forEach(function(c, i){ if(i === 0) ctx.moveTo(c.x, c.y); else ctx.lineTo(c.x, c.y); });
+          ctx.stroke();
+        }
+        ctx.strokeStyle = 'rgba(245,245,244,.7)';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(lx, ly, LR, 0, 7); ctx.stroke();
+        var ha = Math.PI * 0.78;
+        ctx.beginPath();
+        ctx.moveTo(lx + Math.cos(ha) * LR, ly + Math.sin(ha) * LR);
+        ctx.lineTo(lx + Math.cos(ha) * (LR + 12), ly + Math.sin(ha) * (LR + 12));
+        ctx.stroke();
+      }
+    };
+
+    var hoverable = window.matchMedia('(hover: hover)').matches;
+    document.querySelectorAll('.cur-thumb canvas[data-anim]').forEach(function(cv){
+      var fn = DRAW[cv.dataset.anim];
+      if(!fn) return;
+      var ctx = cv.getContext('2d');
+      var st = {t: Math.random() * 40};
+      var raf = null, W = 0, H = 0;
+      function size(){
+        var r = cv.getBoundingClientRect();
+        if(!r.width) return false;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = r.width; H = r.height;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return true;
+      }
+      function paint(){ ctx.clearRect(0, 0, W, H); fn(ctx, W, H, st); }
+      function loop(){ st.t += 0.016; paint(); raf = requestAnimationFrame(loop); }
+      function start(){ if(reduced || raf) return; if(!W && !size()) return; raf = requestAnimationFrame(loop); }
+      function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
+      var card = cv.closest('.sim-card');
+      whenNear(card, function(){ if(size()) paint(); });
+      if(hoverable){
+        card.addEventListener('pointerenter', start);
+        card.addEventListener('pointerleave', stop);
+        card.addEventListener('focusin', start);
+        card.addEventListener('focusout', stop);
+      } else if(!reduced && 'IntersectionObserver' in window){
+        // no hover exists on this device, so the worlds move while on screen
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(en){ if(en.isIntersecting) start(); else stop(); });
+        }, {threshold: 0.4});
+        io.observe(card);
+      }
+      window.addEventListener('resize', function(){ if(W && size()) paint(); });
     });
   })();
 
@@ -2324,6 +3199,12 @@
   // in Firestore, emails the founders and schedules a follow-up. No new
   // backend, and no "thanks!" that fires regardless of what happened: the
   // message shown is decided by the actual response.
+  //
+  // The intake fields (phone, how they heard, student, school, grade,
+  // subject) are sent twice on purpose: as their own structured keys, which
+  // the extended handler stores, AND packed into `note`, which every version
+  // of the handler that has ever been deployed stores. Either way the
+  // founders get the whole picture.
   // ---------------------------------------------------------------------
   (function(){
     var form = document.getElementById('claimForm');
@@ -2344,12 +3225,45 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var f = form.elements;   // form.name would be the FORM's name, not the field
-      var email = f['email'].value.trim();
+      function val(key){ return f[key] ? f[key].value.trim() : ''; }
+      var parentFirst = val('parentFirst');
+      var parentLast = val('parentLast');
+      var email = val('email');
+      var phone = val('phone');
+      var message = val('message');
+
+      if(!parentFirst || !parentLast){
+        show('bad', 'We need a name', 'First and last name of the parent or guardian, so a founder knows who they are writing back to.');
+        (parentFirst ? f['parentLast'] : f['parentFirst']).focus();
+        return;
+      }
       if(!EMAIL_RE.test(email)){
         show('bad', 'That email does not look right', 'Check it and try again. Nothing was sent.');
         f['email'].focus();
         return;
       }
+      if(phone.replace(/\D/g, '').length < 7){
+        show('bad', 'That phone number does not look right', 'A few more digits, please. Nothing was sent.');
+        f['phone'].focus();
+        return;
+      }
+      if(!message){
+        show('bad', 'Tell us one sentence', 'The message is the part a founder actually answers. Nothing was sent.');
+        f['message'].focus();
+        return;
+      }
+
+      // Everything, labeled, in one string: the note field is stored by every
+      // deployed version of the endpoint, so no intake detail can be dropped.
+      var packed = ['Message: ' + message, 'Phone: ' + phone];
+      var heard = val('howHeard');
+      var student = (val('studentFirst') + ' ' + val('studentLast')).trim();
+      if(heard) packed.push('How they heard of us: ' + heard);
+      if(student) packed.push('Student: ' + student);
+      if(val('school')) packed.push('School: ' + val('school'));
+      if(val('grade')) packed.push('Grade: ' + val('grade'));
+      if(val('subject')) packed.push('Subject: ' + val('subject'));
+
       btn.disabled = true;
       var label = btn.textContent;
       btn.textContent = 'Sending...';
@@ -2360,12 +3274,22 @@
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           email: email,
-          name: f['name'].value.trim(),
-          role: f['role'].value,
+          name: parentFirst + ' ' + parentLast,
+          role: 'parent',
           source: 'joinmindcraft_claim_section',
-          note: f['note'].value.trim(),
+          note: packed.join('\n'),
           page: location.pathname + '#claim',
-          _honey: f['_honey'].value
+          _honey: f['_honey'].value,
+          parentFirstName: parentFirst,
+          parentLastName: parentLast,
+          phone: phone,
+          howHeard: heard,
+          studentFirstName: val('studentFirst'),
+          studentLastName: val('studentLast'),
+          school: val('school'),
+          grade: val('grade'),
+          subject: val('subject'),
+          message: message
         })
       }).then(function(res){
         return res.json().catch(function(){ return {}; }).then(function(data){
