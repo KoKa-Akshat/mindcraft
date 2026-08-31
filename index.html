@@ -183,7 +183,7 @@
       linear-gradient(180deg,#ffffff 0%,#fafaf8 55%,#ffffff 100%);
   }
   .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none; transition:transform .2s linear;}
-  .hero-stage{position:relative; z-index:2; width:100%; max-width:920px; margin:0 auto; padding:clamp(70px,9vh,110px) clamp(20px,4vw,48px) 0; text-align:center;}
+  .hero-stage{position:relative; z-index:2; width:100%; max-width:1040px; margin:0 auto; padding:clamp(70px,9vh,110px) clamp(20px,4vw,48px) 0; text-align:center;}
   .hero h1{color:var(--chalk); font-size:clamp(22px,7vw,88px); white-space:nowrap; animation:rise .9s .05s var(--ease) both;}
   .hero h1 em{font-style:normal; color:var(--lime);}
   .type-cursor{display:inline-block; width:.05em; margin-left:.05em; color:var(--lime); animation:blinkCursor .9s step-end infinite;}
@@ -194,7 +194,6 @@
     color:var(--chalk-dim); animation:rise .9s .16s var(--ease) both;
   }
   .hero .lead .serif{color:var(--chalk);}
-  .hero-cta{justify-content:center; animation:rise .9s .22s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
   /* ---------- hero credibility strip ----------
@@ -218,11 +217,13 @@
   .hero-cred img{width:auto; height:56px; opacity:.88; transition:opacity .25s var(--ease);}
   .hero-cred img.wordmark{height:39px;}
   .hero-cred-row:hover img{opacity:1;}
+  .hero-cred-cta{margin-left:clamp(4px,1vw,16px);}
   @media (max-width:640px){
     .hero-cred{align-items:center;}
     .hero-cred-row{justify-content:center;}
     .hero-cred img{height:38px;}
     .hero-cred img.wordmark{height:27px;}
+    .hero-cred-cta{margin-left:0; width:100%; margin-top:6px;}
   }
 
 
@@ -999,10 +1000,8 @@
         <img src="img/logos/hero/macalester.png" alt="Macalester College" width="132" height="132">
         <img class="wordmark" src="img/logos/hero/uwc.png" alt="United World Colleges" width="582" height="132">
         <img src="img/logos/hero/kenyon.png" alt="Kenyon College" width="132" height="132">
+        <a class="btn primary hero-cred-cta" href="#claim">Claim your desk</a>
       </div>
-    </div>
-    <div class="cta-row hero-cta">
-      <a class="btn primary" href="#claim">Claim your desk</a>
     </div>
   </div>
 </section>
@@ -1015,7 +1014,6 @@
     <div class="desk-head reveal">
       <div class="kicker">The Desk &middot; a creation studio</div>
       <h2 class="h2">What do you want to bring to life?</h2>
-      <p class="lede">Turn anything you love into an interactive world. Describe it, build it with AI and a little guidance, and take it home to share.</p>
     </div>
 
     <!-- the creation flow's progress trail. Filled in by the studio script. -->
@@ -2896,6 +2894,11 @@
     // jsDelivr is already the CDN this repo uses for p5 in sims/.
     var CDN = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1';
     var TOP_K = 5;
+    // How many raw-ranked candidates to look through when bubbling sim-backed
+    // concepts to the front (see preferSims below). Wide enough that a decent
+    // sim match nearby in meaning usually gets found; still cheap, since this
+    // only re-sorts an already-computed slice, not the whole corpus.
+    var WIDEN_K = 40;
 
     var indexPromise = null, extractorPromise = null, lexicalOnly = false, lexicalWhy = '', busy = false;
 
@@ -2962,6 +2965,23 @@
       return extractorPromise;
     }
 
+    // The chips this renders are clickable promises: a visitor who picks one
+    // expects to land on something interactive, not a wall of text. Only 652
+    // of 3746 searchable concepts have a built sim, so ranking by raw score
+    // alone regularly fills all five with sim-less concepts. This keeps the
+    // real ranking (no score is invented or reordered within its own kind)
+    // but bubbles sim-backed candidates ahead of sim-less ones within the
+    // widened pool, so the row is sim-backed whenever the corpus has one
+    // nearby, and only honestly falls back to sim-less matches when it does
+    // not. What a visitor TYPES can still land anywhere, sim or no sim, same
+    // as always: this only reorders what gets offered as a click target.
+    function preferSims(scored, meta){
+      var pool = scored.slice(0, WIDEN_K);
+      var withSim = pool.filter(function(s){ return meta.concepts[s.i].hasSim; });
+      var withoutSim = pool.filter(function(s){ return !meta.concepts[s.i].hasSim; });
+      return withSim.concat(withoutSim).slice(0, TOP_K);
+    }
+
     /**
      * The documented fallback. It is genuinely worse than the embedding path,
      * so it is only ever reached when the model could not load at all (an
@@ -2990,7 +3010,7 @@
         scored.push({i:i, score: hit / q.length - c.name.length / 4000});
       }
       scored.sort(function(a, b){ return b.score - a.score; });
-      return scored.slice(0, TOP_K);
+      return preferSims(scored, meta);
     }
 
     function semantic(vector, meta){
@@ -2998,16 +3018,16 @@
       for(var i = 0; i < meta.count; i++){
         var dot = 0, base = i * dim;
         for(var j = 0; j < dim; j++) dot += vecs[base + j] * vector[j];
-        if(best.length < TOP_K){
+        if(best.length < WIDEN_K){
           best.push({i:i, score:dot});
-          if(best.length === TOP_K) best.sort(function(a, b){ return b.score - a.score; });
-        } else if(dot > best[TOP_K - 1].score){
-          best[TOP_K - 1] = {i:i, score:dot};
+          if(best.length === WIDEN_K) best.sort(function(a, b){ return b.score - a.score; });
+        } else if(dot > best[WIDEN_K - 1].score){
+          best[WIDEN_K - 1] = {i:i, score:dot};
           best.sort(function(a, b){ return b.score - a.score; });
         }
       }
       best.sort(function(a, b){ return b.score - a.score; });
-      return best;
+      return preferSims(best, meta);
     }
 
     function showAlts(hits, meta, mode){
