@@ -42,6 +42,9 @@
  * handler should decide by bypassing a budget rail it was explicitly told not
  * to bypass. The 24h cache below is what keeps it from biting often: a repeat
  * of the same concept + same phrasing costs nothing and never touches the cap.
+ * That cache holds settled REJECTIONS as well as verified rewrites (see
+ * cacheVerdict), so a chapter whose rewrite failed the faithfulness check
+ * stops burning spend and capped attempts on every revisit.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createHash } from 'crypto'
@@ -173,6 +176,28 @@ interface Verdict {
   cached?: boolean
 }
 
+/** Writes a settled verdict to the 24h cache. Used for verified rewrites AND
+ * for real content rejections (not faithful, or longer than the original):
+ * a rejection is just as much a settled answer about this exact chapter and
+ * phrasing as a pass is, and before rejections were cached, every revisit of
+ * a failing chapter re-spent both Groq calls plus one of the student's
+ * capped daily attempts to re-reach the same "showing the original" outcome.
+ * Transient failures (Groq unreachable, unparseable model output) are
+ * deliberately NOT cached: those say nothing about the content and should be
+ * retried. Cache write failure stays non-fatal, same as the read side. */
+async function cacheVerdict(cacheKey: string, verdict: Verdict, conceptId: string, query: string): Promise<void> {
+  try {
+    await db.collection(CACHE_COLLECTION).doc(cacheKey).set({
+      verdict,
+      cachedAt: Date.now(),
+      conceptId,
+      query,
+    })
+  } catch {
+    // Non-fatal: the verdict still goes back to the client.
+  }
+}
+
 /** Models are told to emit JSON only, but a stray prose wrapper is a normal
  * failure mode, so the first balanced-looking object is extracted rather than
  * trusting the whole string to parse. */
@@ -204,6 +229,26 @@ async function callGroq(model: string, system: string, user: string, maxTokens: 
       ? msg.content.map((c) => (typeof c === 'string' ? c : ((c as { text?: string }).text ?? ''))).join('')
       : ''
   return { content, usage: msg.usage_metadata }
+}
+
+/** The pieces a prompt eval needs, exported as one object so a test harness
+ * always runs the file's REAL current prompts, models, and token budgets
+ * instead of a copy that silently drifts. Grouped rather than exported
+ * individually so the handler's public surface stays one default export. */
+export const simplifyInternals = {
+  SIMPLIFY_MODEL,
+  CHECK_MODEL,
+  SIMPLIFY_SYSTEM,
+  CHECK_SYSTEM,
+  SIMPLIFY_MAX_TOKENS,
+  CHECK_MAX_TOKENS,
+  SIMPLIFY_INPUT_USD_PER_MTOK,
+  SIMPLIFY_OUTPUT_USD_PER_MTOK,
+  CHECK_INPUT_USD_PER_MTOK,
+  CHECK_OUTPUT_USD_PER_MTOK,
+  MAX_BODY_CHARS,
+  callGroq,
+  extractJson,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -297,12 +342,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // A "simplification" that grew is not one, and is the shape a drifting
-  // rewrite takes. Rejected before anyone spends a check call on it.
+  // rewrite takes. Rejected before anyone spends a check call on it, and the
+  // rejection is cached so a revisit of this exact chapter and phrasing does
+  // not pay for the same failed rewrite again.
   if (simplified.length > trimmedBody.length) {
-    return res.status(200).json({
+    const verdict: Verdict = {
       verified: false,
       reason: 'rewrite came back longer than the original, so it is not a simplification',
-    } as Verdict)
+    }
+    await cacheVerdict(cacheKey, verdict, conceptId, query)
+    return res.status(200).json(verdict)
   }
 
   // ── 4. Independent faithfulness check ─────────────────────────────────────
@@ -328,11 +377,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const issues = Array.isArray(parsed.issues) && parsed.issues.length
         ? parsed.issues.map((i) => String(i))
         : ['unspecified']
-      return res.status(200).json({
+      // Cached like a pass: this is a settled judgment about this exact
+      // chapter + phrasing, and re-rolling it on every revisit costs two paid
+      // calls and a capped attempt for an outcome that almost never flips
+      // inside the 24h TTL.
+      const rejection: Verdict = {
         verified: false,
         reason: 'simplified version dropped or altered content: ' + issues.join('; ').slice(0, 300),
         issues,
-      } as Verdict)
+      }
+      await cacheVerdict(cacheKey, rejection, conceptId, query)
+      return res.status(200).json(rejection)
     }
     verdict = {
       verified: true,
@@ -349,16 +404,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // ── 5. Cache the verified result ──────────────────────────────────────────
-  try {
-    await db.collection(CACHE_COLLECTION).doc(cacheKey).set({
-      verdict,
-      cachedAt: Date.now(),
-      conceptId,
-      query,
-    })
-  } catch {
-    // Cache write failure is non-fatal.
-  }
+  await cacheVerdict(cacheKey, verdict, conceptId, query)
 
   return res.status(200).json({ ...verdict, cached: false })
 }

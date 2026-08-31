@@ -41,9 +41,10 @@
  *       validated locally), int8-quantized and packed base64 into ~1000-concept
  *       shards. Quantization is what makes this viable at all: fp32 would be
  *       5.7 MB across ~10 shard reads on every cold start, int8 is 1.4 MB
- *       across 4, and for top-k retrieval the recall difference is nil (the
- *       verification pass at the end of this script measures that on real
- *       queries rather than asserting it).
+ *       across 4, and for top-k retrieval the recall difference is nil
+ *       (cosine difference measured at ~0.002 on real query/concept pairs
+ *       during the local prototype pass; the verify step at the end of this
+ *       script checks document counts and sample docs, not recall).
  *
  * Idempotent by construction: every write is a .set() keyed on the concept id,
  * so a re-run converges on the same documents instead of duplicating. Safe to

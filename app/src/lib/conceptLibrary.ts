@@ -144,12 +144,36 @@ export async function resolveConcept(
   return data as ResolveResult
 }
 
+// ── Session-scope memo for read-only reference content ─────────────────────
+// The library is reference data that only changes when the migration script
+// re-runs, so within one tab session a concept read twice is the same
+// answer twice. Walking a guided path back and forth re-requests the same
+// chapters and neighbour labels otherwise (goToStep resets per-concept state,
+// so Learn re-fetches every revisited step). Bounded FIFO so a long session
+// cannot hoard sim HTML: ~40 concepts x ~20 KB worst case is well under 1 MB.
+const contentCache = new Map<string, ConceptContent>()
+const CONTENT_CACHE_MAX = 40
+const labelCache = new Map<string, { label: string; subjectTitle: string; level: string; hasLesson: boolean; hasSim: boolean }>()
+const LABEL_CACHE_MAX = 500
+
+function cachePut<V>(cache: Map<string, V>, max: number, key: string, value: V): void {
+  if (cache.size >= max) {
+    const oldest = cache.keys().next().value
+    if (oldest !== undefined) cache.delete(oldest)
+  }
+  cache.set(key, value)
+}
+
 /**
  * One concept's real lesson and sim, read directly from Firestore.
  * The sim document is only fetched when the concept doc says one exists, so a
- * concept with no sim costs exactly one read, not two.
+ * concept with no sim costs exactly one read, not two. Memoized per session
+ * (see contentCache above); a missing document is deliberately NOT memoized,
+ * so a mid-session migration that fills a gap is picked up on the next try.
  */
 export async function fetchConceptContent(conceptId: string): Promise<ConceptContent | null> {
+  const cached = contentCache.get(conceptId)
+  if (cached) return cached
   const snap = await getDoc(doc(db, CONCEPT_LIBRARY, conceptId))
   if (!snap.exists()) return null
   const d = snap.data() as Record<string, unknown>
@@ -171,7 +195,7 @@ export async function fetchConceptContent(conceptId: string): Promise<ConceptCon
     }
   }
 
-  return {
+  const content: ConceptContent = {
     conceptId,
     label: String(d.name ?? conceptId),
     subject: String(d.subject ?? ''),
@@ -183,26 +207,38 @@ export async function fetchConceptContent(conceptId: string): Promise<ConceptCon
     unlocks: Array.isArray(d.unlocks) ? (d.unlocks as string[]) : [],
     crossSubject: Array.isArray(d.crossSubject) ? (d.crossSubject as string[]) : [],
   }
+  cachePut(contentCache, CONTENT_CACHE_MAX, conceptId, content)
+  return content
 }
 
 /** Display labels for a set of concept ids, for the related-concepts list.
  * Reads only the ids it was given, one document each; the caller is expected
- * to keep that list short. */
+ * to keep that list short. Labels already seen this session come from the
+ * memo instead of another read: stepping along a guided path re-requests
+ * mostly the same neighbours every step. */
 export async function fetchConceptLabels(
   ids: string[],
 ): Promise<Map<string, { label: string; subjectTitle: string; level: string; hasLesson: boolean; hasSim: boolean }>> {
   const out = new Map<string, { label: string; subjectTitle: string; level: string; hasLesson: boolean; hasSim: boolean }>()
-  const snaps = await Promise.all(ids.map((id) => getDoc(doc(db, CONCEPT_LIBRARY, id)).catch(() => null)))
+  const missing: string[] = []
+  for (const id of ids) {
+    const hit = labelCache.get(id)
+    if (hit) out.set(id, hit)
+    else missing.push(id)
+  }
+  const snaps = await Promise.all(missing.map((id) => getDoc(doc(db, CONCEPT_LIBRARY, id)).catch(() => null)))
   snaps.forEach((s, i) => {
     if (!s || !s.exists()) return
     const d = s.data() as Record<string, unknown>
-    out.set(ids[i], {
-      label: String(d.name ?? ids[i]),
+    const meta = {
+      label: String(d.name ?? missing[i]),
       subjectTitle: String(d.subjectTitle ?? d.subject ?? ''),
       level: String(d.level ?? 'core'),
       hasLesson: d.hasLesson === true,
       hasSim: d.hasSim === true,
-    })
+    }
+    cachePut(labelCache, LABEL_CACHE_MAX, missing[i], meta)
+    out.set(missing[i], meta)
   })
   return out
 }

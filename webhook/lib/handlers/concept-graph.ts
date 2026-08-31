@@ -163,21 +163,28 @@ interface LibNode {
 
 /** Resolves a display name or a raw library id to one library document.
  * Exact-id first (free), then an equality match on `name` (served by
- * Firestore's automatic single-field index, no composite index needed). */
+ * Firestore's automatic single-field index, no composite index needed).
+ * Both reads carry the LIB_FIELDS mask: this function's callers only walk
+ * edges and names, so pulling the node's lesson body would be pure waste. */
 async function findLibraryNode(idOrName: string): Promise<LibNode | null> {
-  const direct = await db.collection(CONCEPT_LIBRARY).doc(idOrName).get()
+  const [direct] = await db.getAll(db.collection(CONCEPT_LIBRARY).doc(idOrName), { fieldMask: LIB_FIELDS })
   if (direct.exists) return { ...(direct.data() as LibNode), conceptId: direct.id }
-  const byName = await db.collection(CONCEPT_LIBRARY).where('name', '==', idOrName).limit(1).get()
+  const byName = await db.collection(CONCEPT_LIBRARY)
+    .where('name', '==', idOrName)
+    .select(...LIB_FIELDS)
+    .limit(1)
+    .get()
   if (!byName.empty) return { ...(byName.docs[0].data() as LibNode), conceptId: byName.docs[0].id }
   return null
 }
 
-/** id -> display name for a set of library ids, in one batched, masked read. */
+/** id -> display name for a set of library ids, in one batched, masked read.
+ * Masked to `name` alone: nothing here walks these nodes' own edges. */
 async function libraryLabels(ids: string[]): Promise<Map<string, string>> {
   const out = new Map<string, string>()
   if (ids.length === 0) return out
   const refs = ids.map((id) => db.collection(CONCEPT_LIBRARY).doc(id))
-  const snaps = await db.getAll(...refs, { fieldMask: LIB_FIELDS })
+  const snaps = await db.getAll(...refs, { fieldMask: ['name'] })
   for (let i = 0; i < snaps.length; i++) {
     if (snaps[i].exists) out.set(ids[i], (snaps[i].data() as LibNode).name || ids[i])
   }
