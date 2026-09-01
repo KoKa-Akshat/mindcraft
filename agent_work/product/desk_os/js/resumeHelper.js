@@ -41,7 +41,7 @@ const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf
 const STEP_KEY_PREFIX = 'deskOs.resumeHelper.step.';
 
 const EMPTY_DRAFT = {
-  name: '', headline: '', school: '', email: '', location: '',
+  name: '', headline: '', school: '', email: '', location: '', age: '',
   skills: [], roles: [], education: [], projects: [], files: [],
   linkedinUrl: '', drive: false,
 };
@@ -250,6 +250,7 @@ export function createResumeHelper({ root, onToast }) {
     draft.school = next.school || draft.school;
     draft.email = next.email || draft.email;
     draft.location = next.location || draft.location;
+    draft.age = next.age || draft.age;
     draft.linkedinUrl = next.linkedinUrl || draft.linkedinUrl;
     draft.drive = Boolean(next.drive || draft.drive);
     for (const key of ['skills', 'education', 'projects', 'files']) {
