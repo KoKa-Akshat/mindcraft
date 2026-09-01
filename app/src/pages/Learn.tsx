@@ -437,6 +437,11 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     else setSimGenFailed(reason || 'Generation did not produce a usable sim.')
     setSimGenerating(false)
     setSimGenStatus('')
+    // Was missing entirely: a student asking for and getting a sim is real
+    // study effort, same as answering a check question, but Jesse's leveling
+    // never counted it. Only fires on a real, gate-passed result, not a
+    // failed attempt.
+    if (made && uid) recordLearnActivity(uid, 'learn_sim_generated', { conceptId: activeConceptId })
   }
 
   async function onAnswered(correct: boolean) {
