@@ -295,7 +295,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const byok = body.byok
   const byokProvider = byok?.provider
   const validByok: ByokChatOptions | null =
-    byok?.apiKey && (byokProvider === 'openai' || byokProvider === 'groq' || byokProvider === 'anthropic' || byokProvider === 'custom')
+    byok?.apiKey && (byokProvider === 'openai' || byokProvider === 'groq' || byokProvider === 'gemini' || byokProvider === 'openrouter' || byokProvider === 'anthropic' || byokProvider === 'custom')
       ? {
           provider: byokProvider,
           apiKey: clip(byok.apiKey, 200),

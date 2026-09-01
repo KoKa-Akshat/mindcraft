@@ -86,7 +86,7 @@ interface PdfBody {
 
 function toByokOptions(byok: PdfBody['byok'], system: string): ByokChatOptions | null {
   const provider = byok?.provider
-  if (!byok?.apiKey || !(provider === 'openai' || provider === 'groq' || provider === 'anthropic' || provider === 'custom')) return null
+  if (!byok?.apiKey || !(provider === 'openai' || provider === 'groq' || provider === 'gemini' || provider === 'openrouter' || provider === 'anthropic' || provider === 'custom')) return null
   return {
     provider,
     apiKey: clip(byok.apiKey, 200),

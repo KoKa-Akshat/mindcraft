@@ -5257,6 +5257,12 @@ body.is-hub-chrome .sky { opacity: 0; }
   color: #1a1a1a;
   background: #fff;
 }
+.settings-keylink {
+  font: 600 12px/1.2 var(--sans);
+  color: #3d6b4f;
+  text-decoration: none;
+}
+.settings-keylink:hover { text-decoration: underline; }
 /* An author display rule always beats the UA [hidden]{display:none}
    regardless of specificity, the exact bug found and fixed on the
    marketing page's studio trail this same day. Say it explicitly so the

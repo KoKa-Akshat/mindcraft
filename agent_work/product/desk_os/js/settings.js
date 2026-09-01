@@ -16,6 +16,21 @@
 
 const STORAGE_KEY = 'deskOs.byok';
 
+// Where to get a free key for each provider, shown next to the picker so a
+// student is one click from a real key instead of hunting for it. Every one
+// of these has a genuinely permanent free tier, no credit card, source:
+// github.com/mnfst/awesome-free-llm-apis (checked 2026-09-01). Cohere and a
+// few others on that list are excluded here on purpose, their free key is
+// explicitly non-commercial-use-only in its own terms, not a fit for a
+// product asking students to route requests through it.
+const PROVIDER_KEY_LINKS = {
+  openai: 'https://platform.openai.com/api-keys',
+  groq: 'https://console.groq.com/keys',
+  gemini: 'https://aistudio.google.com/app/apikey',
+  openrouter: 'https://openrouter.ai/keys',
+  anthropic: 'https://console.anthropic.com/settings/keys',
+};
+
 /** Reads the saved key config, or null if none is saved. Safe to call from
  *  any panel that wants to try a student key as a fallback. */
 export function readByokConfig() {
@@ -56,11 +71,14 @@ export function createSettings({ button, onToast }) {
         <form class="friends-add settings-form" data-settings-form>
           <select data-settings-provider>
             <option value="">No key, use MindCraft's own</option>
+            <option value="gemini">Google Gemini, free</option>
+            <option value="groq">Groq, free</option>
+            <option value="openrouter">OpenRouter, free models</option>
             <option value="openai">OpenAI</option>
-            <option value="groq">Groq</option>
             <option value="anthropic">Anthropic</option>
             <option value="custom">Custom, OpenAI-compatible</option>
           </select>
+          <a class="settings-keylink" data-settings-keylink href="#" target="_blank" rel="noopener" hidden>Get a free key from this provider &#8599;</a>
           <input data-settings-key type="password" placeholder="API key" autocomplete="off" />
           <input data-settings-model type="text" placeholder="Model, optional, provider default otherwise" autocomplete="off" hidden />
           <input data-settings-baseurl type="text" placeholder="Base URL, e.g. https://api.example.com/v1/chat/completions" autocomplete="off" hidden />
@@ -73,6 +91,7 @@ export function createSettings({ button, onToast }) {
 
     const form = panel.querySelector('[data-settings-form]');
     const providerSel = panel.querySelector('[data-settings-provider]');
+    const keyLink = panel.querySelector('[data-settings-keylink]');
     const keyInput = panel.querySelector('[data-settings-key]');
     const modelInput = panel.querySelector('[data-settings-model]');
     const baseUrlInput = panel.querySelector('[data-settings-baseurl]');
@@ -81,6 +100,9 @@ export function createSettings({ button, onToast }) {
     function syncFields() {
       modelInput.hidden = !providerSel.value;
       baseUrlInput.hidden = providerSel.value !== 'custom';
+      const link = PROVIDER_KEY_LINKS[providerSel.value];
+      keyLink.hidden = !link;
+      if (link) keyLink.href = link;
     }
     providerSel.addEventListener('change', syncFields);
 

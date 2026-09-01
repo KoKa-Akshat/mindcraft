@@ -16,6 +16,7 @@
  * extraction, and the text sanitizer live here.
  */
 import Anthropic from '@anthropic-ai/sdk'
+import { studentGeminiComplete } from './studentGemini'
 
 export interface AnthropicChatOptions {
   model: string
@@ -92,7 +93,7 @@ export async function callGroq(user: string, options: GroqChatOptions): Promise<
 }
 
 export interface ByokChatOptions {
-  provider: 'openai' | 'groq' | 'anthropic' | 'custom'
+  provider: 'openai' | 'groq' | 'gemini' | 'openrouter' | 'anthropic' | 'custom'
   apiKey: string
   model?: string
   baseUrl?: string
@@ -109,12 +110,15 @@ export interface ByokChatOptions {
  * failing in production. Not a replacement for those, purely additive:
  * neither existing function is touched.
  *
- * openai, groq, and custom all speak the same OpenAI-compatible
+ * openai, groq, openrouter, and custom all speak the same OpenAI-compatible
  * chat-completions wire format (see callGroq's own comment, its endpoint
  * already is one), so they share one fetch path here, only the base URL
  * and default model differ. anthropic gets its own SDK call with the
- * student's key in place of the platform's. Never throws, returns null on
- * any failure, same contract as callAnthropic/callGroq.
+ * student's key in place of the platform's. gemini delegates to
+ * studentGeminiComplete, the same helper generate-resume-pdf.ts's
+ * studentGeminiKey path already uses, Gemini's wire format is not
+ * OpenAI-compatible so it cannot share the fetch path above. Never throws,
+ * returns null on any failure, same contract as callAnthropic/callGroq.
  */
 export async function callByok(user: string, options: ByokChatOptions): Promise<string | null> {
   if (!options.apiKey) return null
@@ -134,12 +138,18 @@ export async function callByok(user: string, options: ByokChatOptions): Promise<
         .trim()
     }
 
+    if (options.provider === 'gemini') {
+      const text = await studentGeminiComplete(options.apiKey, `${options.system}\n\n${user}`, options.maxTokens)
+      return text || null
+    }
+
     const presets: Record<string, { baseUrl: string; model: string }> = {
       openai: { baseUrl: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o-mini' },
       // NOT llama-3.3-70b-versatile: Groq shut that model down 2026-08-16
       // (see english-practice.ts's own discovery of this), this is the
       // live, confirmed replacement.
       groq: { baseUrl: 'https://api.groq.com/openai/v1/chat/completions', model: 'openai/gpt-oss-120b' },
+      openrouter: { baseUrl: 'https://openrouter.ai/api/v1/chat/completions', model: 'openai/gpt-oss-20b:free' },
     }
     const preset = presets[options.provider]
     const baseUrl = options.provider === 'custom' ? options.baseUrl : preset?.baseUrl
