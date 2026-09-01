@@ -5146,3 +5146,212 @@ body.is-hub-chrome .sky { opacity: 0; }
     min-height: 44px;
   }
 }
+
+/* ── Call a friend · hub nav button + slide-over (friends.js) ─────────── */
+.hub-friends-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #cfe0d5;
+  background: #eef4ef;
+  color: #1f2a22;
+  border-radius: 999px;
+  font: 700 12px/1 var(--sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.hub-friends-btn svg { width: 15px; height: 15px; }
+.hub-friends-btn:hover { background: #e2ece5; }
+
+.friends-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(10, 16, 12, 0.35);
+  display: flex;
+  justify-content: flex-end;
+}
+.friends-panel[hidden] { display: none; }
+.friends-card {
+  width: min(400px, 92vw);
+  height: 100%;
+  background: #fffdf7;
+  border-left: 1px solid #e6e6ea;
+  box-shadow: -18px 0 48px rgba(20, 30, 26, 0.18);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+}
+.friends-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.friends-kicker {
+  margin: 0 0 4px;
+  font: 700 10px/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3d6b4f;
+}
+.friends-title {
+  margin: 0;
+  font: 700 22px/1.1 var(--sans);
+  letter-spacing: -0.03em;
+  color: #111;
+}
+.friends-x {
+  border: 1px solid #e8e8ea;
+  background: #f3f3f5;
+  color: #555;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  font: 600 15px/1 var(--sans);
+  cursor: pointer;
+}
+.friends-x:hover { background: #ececef; color: #222; }
+.friends-soft { margin: 0; font: 400 13px/1.45 var(--sans); color: #666; }
+.friends-note {
+  margin: 0;
+  font: 600 12.5px/1.4 var(--sans);
+  color: #8a5a3a;
+  background: rgba(196, 122, 40, 0.1);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.friends-add { display: grid; gap: 8px; }
+.friends-add input {
+  border: 1px solid #dddcd6;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font: 600 13px/1.2 var(--sans);
+  color: #1a1a1a;
+  background: #fff;
+}
+.friends-add input:focus {
+  outline: 3px solid rgba(61, 107, 79, 0.18);
+  border-color: #3d6b4f;
+}
+.friends-add button {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 12px;
+  background: #1f2a22;
+  color: #fff;
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.friends-add button:hover { background: #3d6b4f; }
+.friends-list { display: flex; flex-direction: column; gap: 8px; }
+.friends-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid rgba(45, 74, 56, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+}
+.friends-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #3d6b4f;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font: 700 13px/1 var(--sans);
+  flex: none;
+}
+.friends-who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.friends-who strong { font: 600 14px/1.2 var(--sans); color: #111; }
+.friends-who em {
+  font-style: normal;
+  font: 400 11.5px/1.2 var(--sans);
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.friends-call {
+  border: 0;
+  border-radius: 10px;
+  background: #1f2a22;
+  color: #fff;
+  padding: 8px 14px;
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.friends-call:hover { background: #3d6b4f; }
+.friends-remove {
+  border: 0;
+  background: transparent;
+  color: #b3b3ba;
+  font: 600 16px/1 var(--sans);
+  cursor: pointer;
+  padding: 4px;
+}
+.friends-remove:hover { color: #8a3a3a; }
+.friends-empty { margin: 4px 0 0; font: 400 13px/1.45 var(--sans); color: #888; }
+
+/* ── Tutors and Events tabs (tutorMap.js rebuild) ─────────────────────── */
+.tm-tabs { align-items: center; }
+.tm-tabs .tm-create {
+  margin-left: auto;
+  border: 1px solid #3d6b4f;
+  background: #3d6b4f;
+  color: #fff;
+}
+.tm-tabs .tm-create:hover {
+  background: #1f2a22;
+  border-color: #1f2a22;
+  color: #fff;
+}
+
+/* ── Tutor tool tiles · replace Jesse for tutor role (bootHub.js) ─────── */
+.hub-tutor-tiles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hub-tutor-tiles[hidden] { display: none; }
+.hub-tutor-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 128px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #e6e6ea;
+  background: linear-gradient(165deg, #fffef9, #f3f1ea);
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(20, 30, 26, 0.07);
+  transition: transform 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.hub-tutor-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(61, 107, 79, 0.4);
+}
+.hub-tutor-tile-kicker {
+  font: 700 9.5px/1 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a5a3a;
+}
+.hub-tutor-tile strong { font: 700 15px/1.15 var(--sans); color: #111; }
+.hub-tutor-tile-soft { font: 400 11.5px/1.3 var(--sans); color: #777; }

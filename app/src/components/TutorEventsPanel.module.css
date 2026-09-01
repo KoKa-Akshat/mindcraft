@@ -1,0 +1,180 @@
+.wrap {
+  display: grid;
+  gap: 16px;
+  max-width: 720px;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cardLabel {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--td-muted, #6b6478);
+}
+.hint {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--td-muted, #6b6478);
+  line-height: 1.45;
+}
+.formGrid {
+  display: grid;
+  gap: 10px;
+}
+.timeRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.field {
+  display: grid;
+  gap: 5px;
+}
+.field span {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--td-muted, #6b6478);
+}
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--td-ink, #2a2430);
+  background: #fff;
+  box-sizing: border-box;
+}
+.textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--td-ink, #2a2430);
+  background: #fff;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.mapFrame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 240px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  background: #e4f7dc;
+}
+.primary {
+  justify-self: start;
+  min-height: 42px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--td-ink, #2a2430);
+  color: #fffdf8;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.primary:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.eventList {
+  display: grid;
+  gap: 8px;
+}
+.eventRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.eventPast {
+  opacity: 0.6;
+}
+.eventWho {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.eventWho strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--td-ink, #2a2430);
+}
+.eventWho em {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--td-muted, #6b6478);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.liveBadge {
+  flex: none;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2f4a38;
+  background: rgba(88, 204, 2, 0.16);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+.pastBadge {
+  flex: none;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--td-muted, #6b6478);
+  background: rgba(58, 47, 85, 0.08);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+.endBtn {
+  flex: none;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  border-radius: 10px;
+  background: transparent;
+  color: var(--td-muted, #6b6478);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.endBtn:hover {
+  color: #8a3a3a;
+  border-color: rgba(138, 58, 58, 0.4);
+}

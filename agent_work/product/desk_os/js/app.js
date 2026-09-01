@@ -45,7 +45,8 @@ import { createActBookOverlay } from './actBook.js?v=r9b';
 import { openConnectGuide } from './connectGuide.js?v=r9b';
 import { createBootHub } from './bootHub.js?v=r9b';
 import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9b';
-import { createTutorMap } from './tutorMap.js?v=r9b';
+import { createTutorMap } from './tutorMap.js?v=te1';
+import { createFriends } from './friends.js?v=te1';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
 import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
@@ -210,6 +211,8 @@ let bookStudio = null;
 let widgets = null;
 /** @type {ReturnType<typeof createTutorMap> | null} */
 let tutorMap = null;
+/** @type {ReturnType<typeof createFriends> | null} */
+let friendsPanel = null;
 /** @type {ReturnType<typeof createWorkflowMarket> | null} */
 let workflowMarket = null;
 /** @type {ReturnType<typeof createHubCall> | null} */
@@ -2033,6 +2036,17 @@ function wire() {
 
   tutorMap = createTutorMap({
     root: els.hubTutorMap,
+    onToast: (msg) => showToast(msg),
+  });
+  friendsPanel = createFriends({
+    button: document.querySelector('[data-hub-friends]'),
+    getUserName: () => {
+      try {
+        return JSON.parse(localStorage.getItem('deskOs.user') || '{}')?.name || '';
+      } catch {
+        return '';
+      }
+    },
     onToast: (msg) => showToast(msg),
   });
   workflowMarket = createWorkflowMarket({
