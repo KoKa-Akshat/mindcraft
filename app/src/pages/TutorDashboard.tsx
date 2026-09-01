@@ -63,6 +63,23 @@ interface AssignedStudent {
   examTrack: string
 }
 
+// A durable, cross-session signal about a student, tagged by topic (broad,
+// "math in general", or narrow, "this one trig problem"). Deliberately
+// separate from the session-scoped `sessions/{id}.tutorNotes` textarea
+// above: that one is a single field tied to one session and gets
+// overwritten every time a different session is focused. This is a real
+// per-note collection under the student's own doc, so it survives across
+// sessions and reads as a running signal about the student, not a session
+// summary.
+interface KnowledgeNote {
+  id: string
+  tutorId: string
+  tutorName: string
+  topic: string
+  note: string
+  ts: number
+}
+
 
 function timeAgo(ts: number): string {
   if (!ts) return ''
@@ -146,6 +163,10 @@ export default function TutorDashboard() {
   const [sessionNotes, setSessionNotes] = useState('')
   const [sessionNotesId, setSessionNotesId] = useState<string | null>(null)
   const [savingNotes, setSavingNotes] = useState(false)
+  const [knowledgeTopic, setKnowledgeTopic] = useState('')
+  const [knowledgeNote, setKnowledgeNote] = useState('')
+  const [savingKnowledgeNote, setSavingKnowledgeNote] = useState(false)
+  const [knowledgeNotes, setKnowledgeNotes] = useState<KnowledgeNote[]>([])
   const [connectChip, setConnectChip] = useState<null | 'calendly' | 'meet' | 'location'>(null)
 
   // Deep links from Desk OS (TUTORS_EVENTS build, 2026-08-31): the hub's
@@ -310,6 +331,58 @@ export default function TutorDashboard() {
       showToast('Could not save notes')
     } finally {
       setSavingNotes(false)
+    }
+  }
+
+  // Knowledge notes: a running, topic-tagged signal about the student that
+  // outlives any one session, meant to be read back both by the tutor and,
+  // later, by the student's own agent context. Lives at
+  // users/{studentUid}/knowledgeNotes/{noteId}, only the student's own
+  // linked tutor can create one (see firestore.rules), so it stays a
+  // trusted signal, not open annotation.
+  useEffect(() => {
+    if (panel !== 'notes' || !focusStudent) { setKnowledgeNotes([]); return }
+    const unsub = onSnapshot(
+      query(collection(db, 'users', focusStudent.id, 'knowledgeNotes'), orderBy('createdAt', 'desc'), limit(20)),
+      snap => {
+        setKnowledgeNotes(snap.docs.map(d => {
+          const data = d.data()
+          return {
+            id: d.id,
+            tutorId: data.tutorId ?? '',
+            tutorName: data.tutorName || 'Tutor',
+            topic: data.topic ?? '',
+            note: data.note ?? '',
+            ts: data.createdAt?.toMillis?.() ?? 0,
+          }
+        }))
+      },
+      () => setKnowledgeNotes([]),
+    )
+    return () => unsub()
+  }, [panel, focusStudent?.id])
+
+  async function saveKnowledgeNote() {
+    const topic = knowledgeTopic.trim()
+    const note = knowledgeNote.trim()
+    if (!focusStudent) { showToast('Pick a student first'); return }
+    if (!topic || !note) { showToast('Add a topic and a note'); return }
+    setSavingKnowledgeNote(true)
+    try {
+      await addDoc(collection(db, 'users', focusStudent.id, 'knowledgeNotes'), {
+        tutorId: user.uid,
+        tutorName: tutorProfile.displayName,
+        topic,
+        note,
+        createdAt: serverTimestamp(),
+      })
+      setKnowledgeTopic('')
+      setKnowledgeNote('')
+      showToast('Knowledge note saved')
+    } catch {
+      showToast('Could not save note')
+    } finally {
+      setSavingKnowledgeNote(false)
     }
   }
 
@@ -799,6 +872,7 @@ export default function TutorDashboard() {
             onToast={showToast}
           />
         ) : panel === 'notes' ? (
+          <>
           <div className={s.card}>
             <div className={s.cardHeader}>
               <span className={s.cardLabel}>Session notes</span>
@@ -824,6 +898,53 @@ export default function TutorDashboard() {
               placeholder="What clicked. What to drill next. Parent note if needed."
             />
           </div>
+          <div className={`${s.card} ${s.knowledgeCard}`}>
+            <div className={s.cardHeader}>
+              <span className={s.cardLabel}>Knowledge notes</span>
+              <button
+                type="button"
+                className={s.btnPrimary}
+                disabled={savingKnowledgeNote || !focusStudent}
+                onClick={() => void saveKnowledgeNote()}
+              >
+                {savingKnowledgeNote ? 'Saving…' : 'Save note'}
+              </button>
+            </div>
+            <p className={s.calendlyHint}>
+              {focusStudent
+                ? `Beyond this one session. A running signal about ${focusStudent.name}, broad ("math in general") or narrow ("this one trig problem").`
+                : 'Pick a student to add a knowledge note.'}
+            </p>
+            <input
+              className={s.topicInput}
+              type="text"
+              value={knowledgeTopic}
+              onChange={e => setKnowledgeTopic(e.target.value)}
+              placeholder="Topic, e.g. Trigonometry, or Math in general"
+              maxLength={80}
+            />
+            <textarea
+              className={s.notesArea}
+              rows={5}
+              value={knowledgeNote}
+              onChange={e => setKnowledgeNote(e.target.value)}
+              placeholder="What you noticed, why it matters going forward."
+            />
+            {knowledgeNotes.length > 0 && (
+              <div className={s.sessionList}>
+                {knowledgeNotes.map(kn => (
+                  <div key={kn.id} className={s.sessionRow}>
+                    <div className={s.sessionLeft}>
+                      <div className={s.sessionName}>{kn.topic}</div>
+                      <div className={s.sessionMeta}>{kn.note}</div>
+                      <div className={s.sessionDate}>{kn.tutorName} · {timeAgo(kn.ts)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          </>
         ) : panel === 'home' ? (
           <div className={s.homeLayout}>
             <div className={s.homeMain}>
