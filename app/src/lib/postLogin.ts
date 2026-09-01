@@ -9,7 +9,6 @@ import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import { isDiagnosticComplete } from './practiceState'
 import { lookupAllowlistRole, type AllowlistRole } from './loginAllowlist'
 import { WEBHOOK_BASE } from './mlApi'
 import { languageHasVoiceOptions } from './studentPreferences'
@@ -142,7 +141,7 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     if (!snap.exists() || !existingRole) {
       await ensureStudentDoc(email, currentUser?.displayName, uid)
     }
-    return '/diagnostic'
+    return '/desk'
   }
 
   if (opts.grantAdmin) return '/admin'
@@ -179,10 +178,8 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   // `snap` still reflects users/{uid} as fetched at the top of this
   // function: unchanged for a returning student (the block above only
   // wrote a fresh doc for a brand-new account, whose prefs are correctly
-  // unset either way). Placed ahead of the dev-bypass/diag-reset shortcuts
-  // below: unlike the diagnostic gate, this is a one-time Firestore flag,
-  // not a per-login flow, so skipping it for dev/QA accounts would mean
-  // the people testing this feature never actually see it.
+  // unset either way). This is a one-time Firestore flag, not a per-login
+  // flow, so every student genuinely sees it exactly once.
   const prefs = snap.data() ?? {}
   if (!prefs.languageChosen) {
     return withReturnTo('/welcome/language', opts.returnTo)
@@ -191,19 +188,14 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     return withReturnTo('/welcome/voice', opts.returnTo)
   }
 
-  // Dev accounts skip the diagnostic gate entirely.
-  if (isDevBypassEmail(email)) return opts.returnTo ?? '/desk'
-
-  // Diag-reset accounts re-run the gap scan on every login (diagnostic only;
-  // KG and practice history are preserved so you can compare dashboard effects).
-  if (isDiagResetEmail(email)) {
-    await clearStudentDiagnosticState(uid)
-    return '/diagnostic'
-  }
-
-  // Always gate students on diagnostic: ignore ?next= when scan isn't done.
-  const done = await isDiagnosticComplete(uid)
-  if (!done) return '/diagnostic'
+  // The diagnostic gate (Jesse's Kitchen + the ACT math probe) is retired
+  // from the post-login sequence (2026-09-01 ask): Desk OS's own Mastery
+  // check-in and goal-setting now cover what the diagnostic used to
+  // establish, and forcing every student through both was exactly the kind
+  // of legacy-page pile-up this whole redesign was meant to remove. The
+  // /diagnostic route and Diagnostic.tsx itself are untouched and still
+  // directly reachable (nothing here deletes the page), this just stops
+  // gating the default landing on it.
 
   // Desk OS is now the real post-login landing for students (2026-08-31),
   // replacing the old default of /dashboard. /dashboard itself is untouched
