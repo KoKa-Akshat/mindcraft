@@ -313,9 +313,12 @@ export function createTutorMap({ root, onToast }) {
       scrollWheelZoom: false,
       attributionControl: true,
     });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 18,
-      attribution: '&copy; OSM &copy; CARTO',
+    // Standard OSM tiles. The CARTO basemap this prototype launched with now
+    // stamps "API KEY REQUIRED" across every tile (CARTO gated their free
+    // basemaps), which looked broken on a panel that is now real product.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
     ready = true;
     paintMarkers();
