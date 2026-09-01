@@ -3875,6 +3875,40 @@ body.is-hub-chrome .sky { opacity: 0; }
   align-items: center;
   gap: 20px;
   padding: 10px 0 2px;
+  /* Now a real <button> (2026-09-01 ask): clicking the cube takes you to
+     Learn, the same destination as the Dashboard tab. Reset the button
+     defaults it inherits (border, background, font, text-align) back to
+     how this row always looked. */
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background .15s ease;
+}
+.hub-orb-row:hover,
+.hub-orb-row:focus-visible {
+  background: rgba(61, 107, 79, 0.06);
+}
+.hub-orb-row:focus-visible {
+  outline: 2px solid rgba(61, 107, 79, 0.5);
+  outline-offset: 2px;
+}
+/* One quick full turn on click, briefly taking over from the cube's own
+   slow ambient spin (cubeTurn), so the click actually reads as having done
+   something before the page navigates away. Resumes the ambient spin on
+   its own once this finishes (animation-fill-mode: none, the default). */
+.hub-cube.is-click-spin {
+  animation: cubeClickSpin .5s ease-in-out;
+}
+@keyframes cubeClickSpin {
+  from { transform: rotateX(-18deg) rotateY(0deg) scale(1); }
+  50%  { transform: rotateX(-18deg) rotateY(180deg) scale(1.08); }
+  to   { transform: rotateX(-18deg) rotateY(360deg) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-cube.is-click-spin { animation: none !important; }
 }
 .hub-orb-stage {
   position: relative;
@@ -3975,7 +4009,6 @@ body.is-hub-chrome .sky { opacity: 0; }
 }
 @media (max-width: 720px) {
   .hub-mastery-head { flex-direction: column; }
-  .hub-call { align-self: flex-end; }
   .hub-orb-row { gap: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {

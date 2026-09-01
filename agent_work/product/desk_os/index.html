@@ -126,28 +126,10 @@
       <main class="hub-main" data-hub-panel="dashboard">
         <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
           <div class="hub-mastery-head">
-            <div>
-              <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
-              <div class="hub-goal" data-hub-goal>
-                <label class="hub-goal-label" for="hubGoalInstance">Set goal</label>
-                <div class="hub-goal-row">
-                  <select id="hubGoalInstance" data-hub-goal-instance aria-label="Instance for goal"></select>
-                  <select id="hubGoalType" data-hub-goal-type aria-label="Goal type"></select>
-                </div>
-                <p class="hub-goal-echo" data-hub-goal-echo>Pick an instance, then a target for today.</p>
-              </div>
-            </div>
-            <button type="button" class="hub-call" data-hub-call aria-label="Start mastery check-in" title="Mastery check-in">
-              <span class="hub-call-bubble">Start your mastery check-in</span>
-              <span class="hub-call-phone" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-                  <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.2 2.2Z"/>
-                </svg>
-              </span>
-            </button>
+            <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
           </div>
 
-          <div class="hub-orb-row">
+          <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
             <div class="hub-orb-stage" aria-hidden="true">
               <div class="hub-orb-glow"></div>
               <div class="hub-orb">
@@ -168,7 +150,7 @@
               <h2 class="hub-orb-title">Mastery</h2>
               <p class="hub-orb-pct" data-hub-mastery-pct aria-label="Mastery estimate">--</p>
             </div>
-          </div>
+          </button>
         </section>
 
         <section class="hub-tutors" id="hubTutorMap" aria-label="Tutors nearby">

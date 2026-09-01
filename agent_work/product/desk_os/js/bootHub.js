@@ -214,6 +214,8 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const goalType = hub?.querySelector('[data-hub-goal-type]');
   const goalEcho = hub?.querySelector('[data-hub-goal-echo]');
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
+  const masteryNav = hub?.querySelector('[data-hub-mastery-nav]');
+  const masteryCube = hub?.querySelector('.hub-cube');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
 
@@ -389,6 +391,20 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (boot) boot.hidden = true;
     if (hub) hub.hidden = true;
   }
+
+  // Clicking the Mastery cube goes to Learn, same destination as the
+  // Dashboard tab (2026-09-01 ask, replacing the Set Goal picker and
+  // "Start your mastery check-in" call button that used to sit around it).
+  // The cube already has a slow ambient spin (cubeTurn); this layers one
+  // quick full turn on top as click feedback, then navigates once it's
+  // played, matching CLICK_SPIN_MS to the CSS animation's own duration.
+  const CLICK_SPIN_MS = 500;
+  masteryNav?.addEventListener('click', () => {
+    masteryCube?.classList.add('is-click-spin');
+    window.setTimeout(() => {
+      window.location.href = '/learn';
+    }, CLICK_SPIN_MS);
+  });
 
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {

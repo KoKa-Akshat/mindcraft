@@ -222,6 +222,16 @@ export async function completePostLoginNavigate(
   if (path === '/dashboard' || path.startsWith('/dashboard?')) {
     try { sessionStorage.removeItem('mc-cover-seen-session') } catch { /* ignore */ }
   }
+  // Heading to Desk OS: paint the body this exact moment, synchronously,
+  // before React Router even starts unmounting the current page (2026-09-01
+  // ask). DeskOsRedirect's own DeskHandoffBackground overlay only exists
+  // once it mounts, and global.css's body default (--bg, a dark teal-blue,
+  // #102F35) shows through for a frame in the gap between the old page
+  // unmounting and that overlay committing, a visible blue flash. Setting
+  // it here removes the gap entirely rather than racing it.
+  if (path === '/desk' || path.startsWith('/desk?') || path.startsWith('/desk-os')) {
+    document.body.style.background = '#060c09'
+  }
   if (navigate) {
     navigate(path, { replace: true })
     return
