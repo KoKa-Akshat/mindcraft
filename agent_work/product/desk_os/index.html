@@ -18,7 +18,7 @@
        matches the dark theme instantly at parse time, before any network
        fetch, so the handoff reads as intentional instead of a broken flash. -->
   <style>html,body{background:#080e14}</style>
-  <link rel="stylesheet" href="styles.css?v=r9b" />
+  <link rel="stylesheet" href="styles.css?v=rh1" />
 </head>
 <body>
   <div class="app" id="appShell" data-mode="gate" data-surface="gate">
@@ -159,7 +159,7 @@
                  nothing here is simulated. Owl per the existing Jesse-energy
                  mascot (img/orbs/mascot-ivory.png): ivory feathers, tall ear
                  tufts, lime-green eyes. -->
-            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Open Learn. Real learning on Learn grows Jesse.">
+            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Open the Resume Helper. Real learning on Learn grows Jesse.">
               <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
                 <div class="hub-orb-glow jesse-glow"></div>
                 <div class="jesse-scene">
@@ -237,6 +237,113 @@
                 <button type="button" class="tm-create" data-tm-create hidden>Create event</button>
               </div>
               <div class="tm-list" data-tm-list></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Resume Helper · swapped in place of Tutors and events when the
+             student clicks Jesse (the mascot beside the Mastery cube).
+             Toggling back and forth never navigates; the panel remembers
+             its own step (profile building vs jobs table) per session.
+             All data lives under the signed-in student's own uid:
+             users/{uid}/jobOS/resumeDraft (the editable draft) and
+             users/{uid}/jobOS/state (the shared board the iOS app syncs). -->
+        <section class="hub-tutors hub-resume" id="hubResume" aria-label="Resume Helper" hidden>
+          <div class="hub-tutors-head rh-head">
+            <div>
+              <h2 class="hub-tutors-title">Resume Helper</h2>
+              <p class="hub-tutors-soft" data-rh-soft>Jesse builds your profile from a real resume, then finds real openings with links.</p>
+            </div>
+            <div class="rh-head-actions">
+              <button type="button" class="rh-back" data-rh-back hidden>
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Edit skills and uploads
+              </button>
+              <button type="button" class="rh-forward" data-rh-forward>Jobs table</button>
+            </div>
+          </div>
+
+          <!-- Step 1 · Jesse conversation + editable profile -->
+          <div class="hub-tutor-duo rh-duo" data-rh-step-build>
+            <div class="hub-tutor-pane rh-pane rh-jesse-pane">
+              <div class="rh-jesse-top">
+                <img class="rh-jesse-face" src="img/orbs/mascot-ivory.png" alt="" />
+                <div>
+                  <strong>Jesse</strong>
+                  <p class="rh-jesse-status" data-rh-status>Ready when you are</p>
+                </div>
+              </div>
+              <div class="rh-transcript" data-rh-transcript aria-live="polite"></div>
+              <div class="rh-uploads">
+                <button type="button" class="rh-mini" data-rh-upload-resume>Upload resume (PDF)</button>
+                <button type="button" class="rh-mini" data-rh-upload-writing>Upload a writing piece</button>
+              </div>
+              <form class="rh-chat" data-rh-chat autocomplete="off">
+                <input data-rh-chat-input type="text" maxlength="500" placeholder="Tell Jesse about you, or ask for changes" aria-label="Message Jesse" />
+                <button type="submit">Send</button>
+              </form>
+              <input data-rh-file-resume type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden />
+              <input data-rh-file-writing type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" hidden />
+            </div>
+            <div class="hub-tutor-pane rh-pane rh-profile-pane">
+              <div class="rh-profile-head">
+                <span class="rh-kicker">Your profile · edit anything</span>
+              </div>
+              <div class="rh-profile-scroll">
+                <div class="rh-grid">
+                  <label>Name<input data-rh-f="name" type="text" maxlength="80" /></label>
+                  <label>Headline<input data-rh-f="headline" type="text" maxlength="180" /></label>
+                  <label>School<input data-rh-f="school" type="text" maxlength="120" /></label>
+                  <label>Email<input data-rh-f="email" type="email" maxlength="120" /></label>
+                  <label>Location<input data-rh-f="location" type="text" maxlength="80" /></label>
+                  <label>LinkedIn URL<input data-rh-f="linkedinUrl" type="url" maxlength="200" placeholder="https://www.linkedin.com/in/you" /></label>
+                </div>
+                <div class="rh-block">
+                  <span class="rh-kicker">Skills</span>
+                  <div class="rh-chips" data-rh-skills></div>
+                  <form class="rh-add" data-rh-skill-form autocomplete="off">
+                    <input data-rh-skill-input type="text" maxlength="60" placeholder="Add a skill" />
+                    <button type="submit">Add</button>
+                  </form>
+                </div>
+                <div class="rh-block">
+                  <span class="rh-kicker">Experience</span>
+                  <div class="rh-roles" data-rh-roles></div>
+                </div>
+                <div class="rh-block">
+                  <span class="rh-kicker">Custom links · portfolio, GitHub, anything</span>
+                  <div class="rh-links" data-rh-links></div>
+                  <form class="rh-add" data-rh-link-form autocomplete="off">
+                    <input data-rh-link-input type="url" maxlength="200" placeholder="https://" />
+                    <button type="submit">Add link</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 · jobs table from users/{uid}/jobOS/state.roles -->
+          <div class="rh-jobs" data-rh-step-jobs hidden>
+            <div class="rh-jobs-bar">
+              <button type="button" class="rh-discover" data-rh-discover>Find openings for me</button>
+              <span class="rh-jobs-note" data-rh-jobs-note>Real search, real links. Nothing lands on your board unless you add it.</span>
+            </div>
+            <div class="rh-candidates" data-rh-candidates hidden></div>
+            <div class="rh-table-wrap">
+              <table class="rh-table">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Deadline</th>
+                    <th>Resume</th>
+                    <th>Cover letter</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody data-rh-table></tbody>
+              </table>
             </div>
           </div>
         </section>
@@ -512,6 +619,6 @@
 
   <div class="toast" id="toast" role="status"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script type="module" src="js/app.js?v=r9c"></script>
+  <script type="module" src="js/app.js?v=rh1"></script>
 </body>
 </html>

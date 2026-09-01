@@ -1,5 +1,5 @@
 /**
- * api/app-actions.ts — consolidated router for small Firestore actions.
+ * api/app-actions.ts, consolidated router for small Firestore actions.
  *
  * Vercel's Hobby plan caps a deployment at 12 serverless functions; the heavy
  * LLM endpoints (story-module, generate-questions, gemini, jarvis, …) need
@@ -47,6 +47,7 @@ import listGeneratedSims from '../lib/handlers/list-generated-sims'
 import microsims from '../lib/handlers/microsims'
 import conceptResolve from '../lib/handlers/concept-resolve'
 import simplifyChapter from '../lib/handlers/simplify-chapter'
+import generateResumePdf from '../lib/handlers/generate-resume-pdf'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -94,6 +95,13 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   // firestore.rules, see the note in that file.
   'concept-resolve': conceptResolve,
   'simplify-chapter': simplifyChapter,
+  // Resume Helper PDFs (2026-08-31). Routed through this consolidated
+  // function rather than a new api/*.ts file on purpose: the deployment
+  // already sits at exactly 12 functions, the Hobby plan's cap (see this
+  // file's header), so a 13th function file would fail the next deploy.
+  // pdf-lib is pure JS (~1MB), so it does not move this function anywhere
+  // near the 250MB size limit the way a headless renderer would.
+  'generate-resume-pdf': generateResumePdf,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

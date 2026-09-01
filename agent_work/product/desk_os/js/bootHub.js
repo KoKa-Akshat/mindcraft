@@ -204,7 +204,7 @@ function goalOptionsFor(inst) {
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
-export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut }) {
+export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onJesseToggle }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
   const hubName = hub?.querySelector('[data-hub-name]');
@@ -359,7 +359,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (jesseNav) {
       jesseNav.setAttribute(
         'aria-label',
-        `Open Learn. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
+        `Open the Resume Helper. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
           + (known ? `, from ${count} real learn actions.` : '.'),
       );
     }
@@ -489,16 +489,18 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     }, CLICK_SPIN_MS);
   });
 
-  // Jesse is clickable for the same reason the cube is: Learn is what grows
-  // him, so clicking him goes there too, reinforcing the mechanic. A quick
-  // hop with a full turn (jesseHop) as click feedback, then the same
-  // navigation; JESSE_HOP_MS matches the CSS animation's own duration.
+  // Jesse toggles the Resume Helper (2026-08-31 ask: "clicking on the cute
+  // mascot next to dice opens, instead of maps and tutors, the resume
+  // helper"; press again and the tutor map is back, and a third press
+  // returns to wherever the student left off in Resume mode). He used to
+  // navigate to /learn like the cube; the cube still does, so Learn stays
+  // one click away. The hop animation stays as click feedback, and the
+  // class is removed after it plays so every click hops again.
   const JESSE_HOP_MS = 520;
   jesseNav?.addEventListener('click', () => {
     jesseOwl?.classList.add('is-hop');
-    window.setTimeout(() => {
-      window.location.href = '/learn';
-    }, JESSE_HOP_MS);
+    window.setTimeout(() => jesseOwl?.classList.remove('is-hop'), JESSE_HOP_MS);
+    onJesseToggle?.();
   });
 
   tabBtns.forEach((btn) => {

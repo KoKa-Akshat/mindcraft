@@ -5249,6 +5249,19 @@ body.is-hub-chrome .sky { opacity: 0; }
   cursor: pointer;
 }
 .friends-add button:hover { background: #3d6b4f; }
+.settings-form select {
+  border: 1px solid #dddcd6;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font: 600 13px/1.2 var(--sans);
+  color: #1a1a1a;
+  background: #fff;
+}
+/* An author display rule always beats the UA [hidden]{display:none}
+   regardless of specificity, the exact bug found and fixed on the
+   marketing page's studio trail this same day. Say it explicitly so the
+   model/base-URL fields actually hide until Custom is picked. */
+.settings-form [hidden] { display: none !important; }
 .friends-list { display: flex; flex-direction: column; gap: 8px; }
 .friends-row {
   display: flex;
@@ -5355,3 +5368,363 @@ body.is-hub-chrome .sky { opacity: 0; }
 }
 .hub-tutor-tile strong { font: 700 15px/1.15 var(--sans); color: #111; }
 .hub-tutor-tile-soft { font: 400 11.5px/1.3 var(--sans); color: #777; }
+
+/* Resume Helper · swapped in place of Tutors and events by Jesse's toggle
+   (2026-08-31). Same visual family as .hub-tutors: light panes, the green
+   from the tutor map, lime only as the ready accent. */
+.hub-resume[hidden] { display: none !important; }
+.rh-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.rh-head-actions { display: flex; gap: 8px; }
+.rh-back,
+.rh-forward {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(45, 74, 56, 0.25);
+  background: #fff;
+  color: #2f4a38;
+  padding: 9px 14px;
+  border-radius: 999px;
+  font: 600 12.5px/1 var(--sans);
+  cursor: pointer;
+}
+.rh-back:hover,
+.rh-forward:hover { background: #eef4ef; }
+.rh-forward { background: #2f4a38; color: #fff; border-color: #2f4a38; }
+.rh-forward:hover { background: #3d6b4f; }
+.rh-forward.is-ready { box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.55); }
+.rh-duo { margin-top: 10px; }
+.rh-pane { height: 420px; }
+.rh-jesse-pane { display: flex; flex-direction: column; }
+.rh-jesse-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #ecece8;
+}
+.rh-jesse-top strong { font: 700 14px/1.1 var(--sans); color: #111; }
+.rh-jesse-face {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef4ef;
+}
+.rh-jesse-status { margin: 2px 0 0; font: 500 11px/1.2 var(--sans); color: #3d6b4f; }
+.rh-transcript {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  min-height: 0;
+}
+.rh-bubble {
+  max-width: 88%;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font: 500 13px/1.4 var(--sans);
+}
+.rh-bubble.is-jesse {
+  align-self: flex-start;
+  background: #f1f1ec;
+  color: #222;
+  border-bottom-left-radius: 4px;
+}
+.rh-bubble.is-you {
+  align-self: flex-end;
+  background: var(--lime);
+  color: var(--lime-ink);
+  border-bottom-right-radius: 4px;
+}
+.rh-uploads {
+  display: flex;
+  gap: 8px;
+  padding: 0 14px 8px;
+}
+.rh-mini {
+  flex: 1;
+  border: 1px dashed rgba(45, 74, 56, 0.35);
+  background: #fbfbf8;
+  color: #2f4a38;
+  padding: 9px 10px;
+  border-radius: 10px;
+  font: 600 11.5px/1.2 var(--sans);
+  cursor: pointer;
+}
+.rh-mini:hover { background: #eef4ef; }
+.rh-mini:disabled { opacity: 0.5; cursor: default; }
+.rh-chat {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px 12px;
+  border-top: 1px solid #ecece8;
+}
+.rh-chat input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #e2e2de;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font: 500 13px/1.2 var(--sans);
+  color: #222;
+  background: #fff;
+  outline: none;
+}
+.rh-chat input:focus { border-color: rgba(61, 107, 79, 0.5); }
+.rh-chat button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: #1f2a22;
+  color: #fff;
+  font: 700 12px/1 var(--sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.rh-chat button:hover { background: #2f4a38; }
+.rh-chat button:disabled { opacity: 0.5; cursor: default; }
+.rh-profile-pane { overflow: hidden; display: flex; flex-direction: column; }
+.rh-profile-head { padding: 12px 14px 8px; border-bottom: 1px solid #ecece8; }
+.rh-kicker {
+  font: 700 10px/1 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8478;
+}
+.rh-profile-scroll { flex: 1; overflow: auto; padding: 12px 14px; min-height: 0; }
+.rh-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 10px;
+}
+.rh-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: 600 10.5px/1 var(--sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a8478;
+}
+.rh-grid input {
+  border: 1px solid #e2e2de;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: 500 13px/1.2 var(--sans);
+  color: #222;
+  background: #fff;
+  outline: none;
+}
+.rh-grid input:focus { border-color: rgba(61, 107, 79, 0.5); }
+.rh-block { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.rh-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px 5px 10px;
+  border-radius: 999px;
+  background: rgba(196, 245, 71, 0.4);
+  color: #1f2a22;
+  font: 600 12px/1 var(--sans);
+}
+.rh-chip button,
+.rh-role-row button {
+  border: 0;
+  background: rgba(31, 42, 34, 0.12);
+  color: #1f2a22;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font: 700 11px/1 var(--sans);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.rh-chip button:hover,
+.rh-role-row button:hover { background: rgba(31, 42, 34, 0.25); }
+.rh-add { display: flex; gap: 6px; }
+.rh-add input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #e2e2de;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font: 500 12.5px/1.2 var(--sans);
+  outline: none;
+}
+.rh-add input:focus { border-color: rgba(61, 107, 79, 0.5); }
+.rh-add button {
+  border: 1px solid rgba(45, 74, 56, 0.25);
+  background: #fff;
+  color: #2f4a38;
+  border-radius: 8px;
+  padding: 0 12px;
+  font: 600 11.5px/1 var(--sans);
+  cursor: pointer;
+}
+.rh-add button:hover { background: #eef4ef; }
+.rh-role-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid #ecece8;
+  border-radius: 8px;
+  background: #fbfbf8;
+  font: 500 12.5px/1.35 var(--sans);
+  color: #333;
+}
+.rh-role-row a { color: #2f4a38; text-decoration: none; overflow-wrap: anywhere; }
+.rh-role-row a:hover { text-decoration: underline; }
+.rh-soft-note { font: 400 12px/1.4 var(--sans); color: #999; }
+.rh-jobs {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid #e6e6ea;
+  background: linear-gradient(165deg, #fffef9, #f3f1ea);
+  box-shadow: 0 16px 40px rgba(20, 30, 26, 0.08);
+}
+.rh-jobs-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.rh-discover {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #1f2a22;
+  color: #fff;
+  font: 700 12.5px/1 var(--sans);
+  cursor: pointer;
+}
+.rh-discover:hover { background: #2f4a38; }
+.rh-discover:disabled { opacity: 0.6; cursor: default; }
+.rh-jobs-note { font: 500 12px/1.4 var(--sans); color: #666; }
+.rh-candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.rh-candidate {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(45, 74, 56, 0.18);
+  border-radius: 12px;
+  background: #fff;
+}
+.rh-candidate strong { font: 700 13.5px/1.25 var(--sans); color: #111; display: block; }
+.rh-cand-co { font: 600 12px/1.3 var(--sans); color: #3d6b4f; }
+.rh-candidate p { margin: 4px 0; font: 400 12px/1.4 var(--sans); color: #555; }
+.rh-candidate a {
+  font: 500 11px/1.3 var(--sans);
+  color: #2f4a38;
+  overflow-wrap: anywhere;
+}
+.rh-verify {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: #8a8478;
+  font: 700 9.5px/1.4 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rh-verify.is-verified { background: rgba(196, 245, 71, 0.45); color: #1f2a22; }
+.rh-candidate > button {
+  flex: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: #2f4a38;
+  color: #fff;
+  font: 700 11.5px/1 var(--sans);
+  cursor: pointer;
+}
+.rh-candidate > button:hover { background: #3d6b4f; }
+.rh-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(45, 74, 56, 0.12);
+  border-radius: 12px;
+  background: #fff;
+}
+.rh-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font: 500 12.5px/1.4 var(--sans);
+  color: #333;
+}
+.rh-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font: 700 10px/1 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8478;
+  border-bottom: 1px solid #ecece8;
+  white-space: nowrap;
+}
+.rh-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f1ec;
+  vertical-align: middle;
+}
+.rh-table tr:last-child td { border-bottom: 0; }
+.rh-td-role a { color: #1f2a22; font-weight: 700; text-decoration: underline; text-decoration-color: rgba(61, 107, 79, 0.5); }
+.rh-td-role a:hover { color: #2f4a38; }
+.rh-pdf {
+  border: 1px solid rgba(45, 74, 56, 0.25);
+  background: #fff;
+  color: #2f4a38;
+  border-radius: 999px;
+  padding: 6px 11px;
+  font: 600 11px/1 var(--sans);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.rh-pdf:hover { background: #eef4ef; }
+.rh-pdf:disabled { opacity: 0.6; cursor: default; }
+.rh-pdf.is-ready { background: rgba(196, 245, 71, 0.4); border-color: transparent; color: #1f2a22; }
+.rh-status-chip {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: #666;
+  font: 600 11px/1.3 var(--sans);
+  white-space: nowrap;
+}
+.rh-empty {
+  text-align: center;
+  color: #999;
+  font: 400 12.5px/1.5 var(--sans);
+  padding: 22px 12px !important;
+}
+@media (max-width: 900px) {
+  .rh-pane { height: auto; min-height: 320px; }
+  .rh-jesse-pane { height: 420px; }
+  .rh-grid { grid-template-columns: 1fr; }
+  .rh-head-actions { width: 100%; justify-content: flex-end; }
+}
