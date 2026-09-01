@@ -136,7 +136,10 @@ export async function callByok(user: string, options: ByokChatOptions): Promise<
 
     const presets: Record<string, { baseUrl: string; model: string }> = {
       openai: { baseUrl: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o-mini' },
-      groq: { baseUrl: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama-3.3-70b-versatile' },
+      // NOT llama-3.3-70b-versatile: Groq shut that model down 2026-08-16
+      // (see english-practice.ts's own discovery of this), this is the
+      // live, confirmed replacement.
+      groq: { baseUrl: 'https://api.groq.com/openai/v1/chat/completions', model: 'openai/gpt-oss-120b' },
     }
     const preset = presets[options.provider]
     const baseUrl = options.provider === 'custom' ? options.baseUrl : preset?.baseUrl

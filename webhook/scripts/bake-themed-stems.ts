@@ -5,8 +5,11 @@
  * Reuses the SAME composer as live `/story-module` (C-2). Neutral student
  * context so stems stay deterministic per {concept, question} (C-5).
  *
- * Groq free-tier limits for llama-3.3-70b-versatile
- * (https://console.groq.com/docs/rate-limits):
+ * Groq free-tier limits, last confirmed for llama-3.3-70b-versatile before
+ * Groq shut that model down on 2026-08-16. storyModuleComposer now uses
+ * openai/gpt-oss-120b instead (confirmed live); check
+ * https://console.groq.com/docs/rate-limits for that model's real current
+ * caps rather than trusting the figures below.
  *   RPM 30 | RPD 1,000 | TPM 12,000 | TPD 100,000
  * TPM/TPD dominate this workload (long system prompt + story + explanations).
  * Default `--tier free` = concurrency 1, batch 3, ~1 req / 55s, soft daily stop.
