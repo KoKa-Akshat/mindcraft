@@ -380,13 +380,16 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.hubTab;
-      // "Dashboard" is real cross-app navigation to the concept map (React
-      // app's /knowledge-graph, ML-positioned nodes + mastery coloring +
-      // real sims), not an in-page panel this static shell can render.
-      // Desk OS is a separate static page from the React app, so this has
-      // to be a full navigation, not a client-side route change.
+      // "Dashboard" is real cross-app navigation to Learn (React app's
+      // /learn, the "ask anything -> resolve -> read -> check" experience:
+      // real search, real chapters, real sims), not an in-page panel this
+      // static shell can render. Desk OS is a separate static page from
+      // the React app, so this has to be a full navigation, not a
+      // client-side route change. (2026-09-01: was /knowledge-graph, the
+      // concept-graph visualization; corrected to /learn, which is the
+      // lessons-and-sims screen actually meant here.)
       if (tab === 'dashboard') {
-        window.location.href = '/knowledge-graph';
+        window.location.href = '/learn';
         return;
       }
       tabBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
