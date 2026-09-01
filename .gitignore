@@ -68,6 +68,7 @@ data/assistments/
 img/Vid.mp4
 *.mp4
 !img/testimonials/sebastian-feedback.mp4
+!img/human/mindcraft-1on1.mp4
 
 # Repo-root batch zips (e.g. chapter-image generation output): the
 # marketing hosting target serves the repo root, so anything committed here

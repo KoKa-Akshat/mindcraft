@@ -111,12 +111,13 @@
   .stage-desk::before{ top:0; }
   .stage-desk::after{ bottom:0; }
   /* The line only makes sense where a cream stage actually meets a dark
-     section: the bottom of #desk (the frontier below it is dark) and both
-     edges of #claim (conceptmap above, footer below). The hero and #desk
-     are both cream and now sit directly back to back with nothing dark
-     between them, so their shared seam gets no line either. #top's own top
-     edge has nothing above it at all, first section on the page. */
-  #top::before, #top::after, #desk::before{content:none;}
+     section: the bottom of #human (the frontier below it is dark) and both
+     edges of #claim (conceptmap above, footer below). #top, #desk, and
+     #human are three cream stages in a row now (hero, then the studio,
+     then the human chapter), nothing dark between any of them, so those
+     shared seams get no line. #top's own top edge has nothing above it at
+     all, first section on the page. */
+  #top::before, #top::after, #desk::before, #desk::after, #human::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -488,6 +489,17 @@
   }
   .book-mini span{font-size:12.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
 
+  /* ---------- chapter 1: the human ---------- */
+  .human-video{margin-top:clamp(32px,5vh,52px); max-width:900px;}
+  .human-video video{
+    display:block; width:100%; aspect-ratio:16/9; border-radius:18px;
+    background:#000; box-shadow:var(--shadow); outline:1px solid var(--edge);
+  }
+  .human-video-cap{
+    margin-top:16px; font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:clamp(15px,1.6vw,18px); color:var(--chalk-dim); text-align:center;
+  }
+
   /* ---------- frontier graph (dark) ---------- */
   .frontier{
     background:radial-gradient(ellipse 80% 55% at 50% 8%, var(--field-2), var(--field-1) 72%);
@@ -828,8 +840,8 @@
     <span class="mascot-icon" aria-hidden="true"></span>
   </a>
   <div class="mascot-menu" role="menu">
-    <a href="#desk">The Desk</a>
-    <a href="#conceptmap">The Concept Map</a>
+    <a href="#human">Chapter 1</a>
+    <a href="#desk">Chapter 2</a>
     <a class="join" href="https://mindcraft-93858.web.app/login">Login</a>
   </div>
 </div>
@@ -1002,12 +1014,27 @@
   </div>
 </section>
 
-<!-- ================= CONCEPT MAP ================= -->
+<!-- ================= CHAPTER 1: THE HUMAN ================= -->
+<section class="stage-desk human" id="human">
+  <div class="wrap">
+    <div class="kicker reveal"><i>01</i> The human</div>
+    <h2 class="h2 reveal">A real tutor who actually notices.</h2>
+    <p class="lede reveal">Software that guesses. A person who checks in. One-on-one time, live events you can actually get to, and a tutor who notices when you are stuck and says so, not a chatbot pretending to.</p>
+    <div class="human-video reveal">
+      <video controls preload="metadata" poster="img/human/mindcraft-1on1-poster.jpg" playsinline>
+        <source src="img/human/mindcraft-1on1.mp4" type="video/mp4">
+      </video>
+      <p class="human-video-cap">One-on-one time. Live events. A tutor who notices when you are stuck, and says so.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE FRONTIER GRAPH ================= -->
 <section class="frontier" id="frontier">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>01</i> The frontier graph</div>
-    <h2 class="h2 reveal">See exactly what your student is <em>ready</em> for.</h2>
+    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <h2 class="h2 reveal">How does the <em>technology</em> work?</h2>
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
         <b>Where you stand</b>
@@ -1047,8 +1074,8 @@
 <section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>02</i> The whole map</div>
-    <h2 class="h2 reveal">Ask Jesse <em>anything</em>.</h2>
+    <div class="kicker reveal"><i>03</i> The whole map</div>
+    <h2 class="h2 reveal">Try it <em>yourself</em>.</h2>
 
     <div class="cs reveal">
       <form class="cs-form" id="csForm" role="search">
@@ -1106,7 +1133,7 @@
   <div class="wrap">
     <div class="claim-grid">
       <div class="reveal">
-        <div class="kicker"><i>03</i> Early access</div>
+        <div class="kicker"><i>04</i> Early access</div>
         <h2 class="h2">Claim your <em>desk</em>.</h2>
         <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
         <div class="claim-points">
