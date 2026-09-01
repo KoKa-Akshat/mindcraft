@@ -3482,7 +3482,7 @@ body.is-hub-chrome .sky { opacity: 0; }
   border: 1px solid rgba(45, 74, 56, 0.12);
   background: #fff;
   min-height: 0;
-  height: 320px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   position: relative;
