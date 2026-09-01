@@ -97,24 +97,26 @@
     background:var(--field); color:var(--chalk);
   }
   .stage-desk .kicker::before{background:var(--leaf); box-shadow:none;}
+  /* A color-to-transparent fade at a cream/dark seam reads as a gray smear,
+     because it has to wash out both the field it starts on and whatever
+     sits underneath. Skip the blend entirely: mark the seam with a slim,
+     fully-saturated brand gradient line, the same lime/gold/leaf sweep the
+     scroll .progress bar already uses. Every section keeps its own real
+     color right up to the line instead of fighting a haze. */
   .stage-desk::before, .stage-desk::after{
-    content:''; position:absolute; left:0; right:0; height:clamp(40px,6vw,84px); pointer-events:none; z-index:1;
+    content:''; position:absolute; left:0; right:0; height:3px; pointer-events:none; z-index:1;
+    background:linear-gradient(90deg, var(--leaf2), var(--gold), var(--lime), var(--leaf));
+    opacity:.7;
   }
-  .stage-desk::before{top:0; background:linear-gradient(to bottom, #070f0c, transparent);}
-  .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
-  /* The dark fades exist for the edges where a cream stage meets a dark
+  .stage-desk::before{ top:0; }
+  .stage-desk::after{ bottom:0; }
+  /* The line only makes sense where a cream stage actually meets a dark
      section: the bottom of #desk (the frontier below it is dark) and both
-     edges of #claim. The hero and #desk are BOTH cream and sit back to back,
-     so the hero's bottom fade and the desk's top fade were painting a black
-     band across a seam with nothing dark on either side of it. Off. #top's
-     own top edge has the same problem for a different reason: it is the
-     first section on the page, nothing dark sits above it either, so that
-     fade was painting an equally pointless black band at the very top of
-     the site on every load. Off too. */
-  /* The census band between them is dark, so the hero's bottom edge and the
-     desk's top edge now DO meet dark and keep their fades. Only the very top
-     of the page still has nothing dark above it. */
-  #top::before{content:none;}
+     edges of #claim (conceptmap above, footer below). The hero and #desk
+     are both cream and now sit directly back to back with nothing dark
+     between them, so their shared seam gets no line either. #top's own top
+     edge has nothing above it at all, first section on the page. */
+  #top::before, #top::after, #desk::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -246,40 +248,23 @@
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,3.6vh,34px); animation:rise .9s .42s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
-  /* ---------- the census (dark band) ----------
-     The one beat of grounding between the hero and the studio: what MindCraft
-     actually is, in numbers counted from the same library index this page
-     searches. Slimmer than a full section on purpose; it is a breath, not a
-     chapter. */
-  .census{
-    background:var(--field); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
-    padding:clamp(64px,8vw,108px) 0;
+  /* ---------- the library numbers (now a strip atop the studio, not a
+     standalone section) ----------
+     Just the counts and what they mean, read from the same library index
+     this page searches. No heading, no lede, nothing to read first. */
+  .desk-stats{
+    display:flex; flex-wrap:wrap; gap:clamp(26px,4vw,52px); margin-bottom:clamp(30px,4.4vh,46px);
   }
-  .census-grid{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:clamp(32px,5vw,72px); align-items:center;}
-  .census-stats{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--edge); border:1px solid var(--edge); border-radius:20px; overflow:hidden;}
-  .census-stats div{background:var(--field-1); padding:clamp(18px,2.6vw,28px) clamp(18px,2.4vw,26px);}
-  .census-stats dt{
-    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.15em;
+  .desk-stats div{display:flex; align-items:baseline; gap:9px;}
+  .desk-stats dd{
+    font-family:var(--disp); font-weight:560; font-variant-numeric:tabular-nums;
+    font-size:clamp(22px,2.3vw,29px); letter-spacing:-.02em; line-height:1; color:var(--leaf);
+  }
+  .desk-stats dt{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.13em;
     text-transform:uppercase; color:var(--chalk-faint);
   }
-  .census-stats dd{
-    margin-top:8px; font-family:var(--disp); font-weight:560; font-variant-numeric:tabular-nums;
-    font-size:clamp(34px,4vw,52px); letter-spacing:-.02em; line-height:1; color:var(--lime);
-  }
-  .census-stats div:nth-child(2) dd, .census-stats div:nth-child(3) dd{color:var(--chalk);}
-  .census-notes{
-    margin-top:clamp(36px,5.5vh,56px); padding-top:clamp(22px,3.2vh,30px); border-top:1px dashed var(--edge);
-    display:grid; grid-template-columns:repeat(3,1fr); gap:20px clamp(22px,3vw,40px);
-  }
-  .census-notes p{font-size:13px; line-height:1.6; color:var(--chalk-faint);}
-  .census-notes i{
-    display:block; margin-bottom:6px; font-family:var(--serif); font-style:italic; font-weight:500;
-    font-size:16.5px; color:var(--chalk);
-  }
-  @media (max-width:900px){
-    .census-grid{grid-template-columns:1fr;}
-    .census-notes{grid-template-columns:1fr; gap:18px;}
-  }
+  @media (max-width:640px){ .desk-stats{gap:16px 26px;} }
 
   /* the schools, as a quiet credit line pinned to the hero's last breath */
   .hero-cred{
@@ -324,6 +309,11 @@
     display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px clamp(6px,1.4vw,14px);
     margin:clamp(30px,4.5vh,46px) auto 16px; max-width:860px;
   }
+  /* the [hidden] attribute alone loses to the display:flex above, since an
+     author rule always beats the UA stylesheet's [hidden]{display:none}
+     regardless of specificity. Say it explicitly so the studio card can
+     actually hide the trail until trailTo() first runs. */
+  .studio-trail[hidden]{display:none;}
   .trail-step{
     display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; font-weight:600;
     letter-spacing:.13em; text-transform:uppercase; color:rgba(20,58,46,.38); transition:color .35s;
@@ -357,7 +347,7 @@
     box-shadow:0 0 0 6px rgba(196,245,71,.16), 0 10px 24px rgba(196,245,71,.3);
   }
   .coach-disc.is-talking{animation:jessePulse 1.5s ease-in-out infinite;}
-  .coach-name{font-family:var(--mono); font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf); margin-bottom:4px;}
+  .coach-owl{width:26px; height:26px; color:var(--lime-ink); stroke:var(--lime-ink); stroke-width:1.6;}
   .coach-says{font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(16px,2vw,20px); line-height:1.42; color:var(--ink);}
   .studio-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
   .studio-input{
@@ -419,7 +409,11 @@
   .simlib{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,20px); margin-top:clamp(22px,3vh,32px);}
   @media (max-width:980px){.simlib{grid-template-columns:1fr 1fr;}}
   @media (max-width:620px){.simlib{grid-template-columns:1fr;}}
-  .simlib-intro{margin-top:clamp(44px,6.5vh,72px); text-align:center;}
+  .simlib-intro{
+    margin-top:clamp(44px,6.5vh,72px); display:flex; align-items:center; justify-content:center;
+    flex-wrap:wrap; gap:16px 20px;
+  }
+  .simlib-intro h3{margin:0;}
   .simlib-intro h3{font-size:clamp(21px,2.6vw,30px);}
   .simlib-intro p{margin-top:8px; font-size:14.5px; line-height:1.6; color:var(--chalk-dim);}
   .sim-card{
@@ -472,21 +466,20 @@
   .desk-more em{font-style:normal; color:rgba(20,58,46,.35);}
 
   .books-teaser{
-    margin-top:20px; padding-top:28px; border-top:1px solid rgba(20,58,46,.1);
-    display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;
+    margin-top:clamp(32px,4.4vh,52px); padding-top:clamp(36px,4.6vh,52px); border-top:1px solid rgba(20,58,46,.1);
+    display:flex; flex-direction:column; align-items:center; gap:clamp(26px,3.4vh,36px); text-align:center;
   }
-  .books-teaser-lede{font-size:13.5px; color:var(--chalk-dim);}
-  .books-teaser-row{display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
+  .books-teaser-row{display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(24px,3vw,36px);}
   .book-mini{
-    display:flex; flex-direction:column; gap:8px; width:104px; text-decoration:none;
+    display:flex; flex-direction:column; gap:10px; width:132px; text-decoration:none;
     transition:transform .25s var(--ease);
   }
   .book-mini:hover{transform:translateY(-3px);}
   .book-mini img{
-    width:104px; height:156px; object-fit:cover; border-radius:8px;
-    box-shadow:0 10px 26px rgba(20,58,46,.16); border:1px solid rgba(20,58,46,.08);
+    width:132px; height:198px; object-fit:cover; border-radius:9px;
+    box-shadow:0 14px 32px rgba(20,58,46,.18); border:1px solid rgba(20,58,46,.08);
   }
-  .book-mini span{font-size:11.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
+  .book-mini span{font-size:12.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
 
   /* ---------- frontier graph (dark) ---------- */
   .frontier{
@@ -842,42 +835,27 @@
   </div>
 </section>
 
-<!-- ================= THE CENSUS: THE LIBRARY, COUNTED ================= -->
-<section class="census" id="library">
-  <div class="wrap">
-    <div class="census-grid">
-      <div class="reveal">
-        <div class="kicker"><i>00</i> The library, counted</div>
-        <h2 class="h2">One living map of everything we teach.</h2>
-        <p class="lede">Every concept is written as a chapter, wired to the concepts it unlocks, and, where it has earned one, paired with a simulation you can reach into. It is one connected library, and this whole page runs on it.</p>
-      </div>
-      <dl class="census-stats reveal" aria-label="The library in numbers">
-        <div><dt>Concepts mapped</dt><dd data-count="4118">4118</dd></div>
-        <div><dt>Subjects</dt><dd data-count="13">13</dd></div>
-        <div><dt>Written chapters</dt><dd data-count="3746">3746</dd></div>
-        <div><dt>Live simulations</dt><dd data-count="722">722</dd></div>
-      </dl>
-    </div>
-    <div class="census-notes reveal">
-      <p><i>Free to try.</i>The concept search runs in your own browser. No account, no API call, nothing billed to anyone.</p>
-      <p><i>Never faked.</i>Every simulation here is real and hand-built. Nothing on this page is generated on the spot.</p>
-      <p><i>Counted, not claimed.</i>The numbers above are read from the same library index this page searches.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ================= THE DESK: CREATION STUDIO ================= -->
 <section class="stage-desk" id="desk">
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="deskAwake" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="desk-head reveal">
-      <div class="kicker"><i>01</i></div>
-      <h2 class="h2">What would you like to bring to <em>life</em>?</h2>
-    </div>
+    <!-- the library, counted: just the numbers and what they mean, sitting
+         above the search bar. No heading of its own, per the 2026-08-31 ask
+         to fold the old standalone stats section in here instead. -->
+    <dl class="desk-stats reveal" aria-label="The library in numbers">
+      <div><dd data-count="4118">4118</dd><dt>Concepts mapped</dt></div>
+      <div><dd data-count="13">13</dd><dt>Subjects</dt></div>
+      <div><dd data-count="3746">3746</dd><dt>Written chapters</dt></div>
+      <div><dd data-count="722">722</dd><dt>Live simulations</dt></div>
+    </dl>
 
-    <!-- the creation flow's progress trail. Filled in by the studio script. -->
-    <div class="studio-trail reveal" id="studioTrail" aria-label="Creation progress">
+    <!-- the creation flow's progress trail. Filled in by the studio script,
+         which also reveals it (hidden until trailTo() first runs, i.e. the
+         moment a student actually starts building something, per the
+         2026-09-01 ask to lead with the box, not a heading + an empty
+         progress bar with nothing yet to show progress on). -->
+    <div class="studio-trail reveal" id="studioTrail" aria-label="Creation progress" hidden>
       <span class="trail-step" data-step="dream"><i></i>Dream it</span>
       <span class="trail-link"></span>
       <span class="trail-step" data-step="build"><i></i>Build it</span>
@@ -891,10 +869,19 @@
 
     <div class="studio reveal" id="studio">
       <div class="studio-coach">
-        <div class="coach-disc" id="coachDisc" aria-hidden="true">J</div>
+        <div class="coach-disc" id="coachDisc" aria-hidden="true">
+          <svg class="coach-owl" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7 L7.5 3 L9 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 7 L16.5 3 L15 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <ellipse cx="8.6" cy="12.2" rx="2.6" ry="3"/>
+            <ellipse cx="15.4" cy="12.2" rx="2.6" ry="3"/>
+            <circle cx="8.6" cy="12.2" r="1" fill="currentColor" stroke="none"/>
+            <circle cx="15.4" cy="12.2" r="1" fill="currentColor" stroke="none"/>
+            <path d="M11 15.4 L12 17.2 L13 15.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <div>
-          <div class="coach-name">Jesse &middot; your studio guide</div>
-          <p class="coach-says" id="coachSays">What should we build together?</p>
+          <p class="coach-says" id="coachSays">What would you like to bring to life?</p>
         </div>
       </div>
 
@@ -920,7 +907,7 @@
 
     <div class="simlib-intro reveal">
       <h3>Or step through a door that is <em>already open</em>.</h3>
-      <p>Three entry points into the library's 722 live MicroSims. Hover a card to see its world move, then try it for real.</p>
+      <a class="btn soft" href="https://mindcraft-93858.web.app/desk">SimCraft</a>
     </div>
 
     <div class="simlib reveal" aria-label="Curiosity doors into the MicroSim library">
@@ -965,12 +952,11 @@
       </article>
     </div>
 
-    <p class="desk-more reveal">
-      <a class="btn soft" href="https://mindcraft-93858.web.app/desk">Browse all 722 in SimCraft</a>
-    </p>
-
     <div class="books-teaser reveal">
-      <p class="books-teaser-lede">Prefer a much more extensive lesson? Real books from our library:</p>
+      <div class="simlib-intro">
+        <h3>Prefer a much more extensive <em>lesson</em>?</h3>
+        <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
+      </div>
       <div class="books-teaser-row">
         <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=biology">
           <img src="img/dans-covers/biology.jpg" alt="Biology: An Interactive Course cover" loading="lazy">
@@ -985,7 +971,6 @@
           <span>Psychology</span>
         </a>
       </div>
-      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft &#8594; all books</a>
     </div>
   </div>
 </section>
@@ -994,7 +979,7 @@
 <section class="frontier" id="frontier">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <div class="kicker reveal"><i>01</i> The frontier graph</div>
     <h2 class="h2 reveal">See exactly what your student is <em>ready</em> for.</h2>
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
@@ -1035,7 +1020,7 @@
 <section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>03</i> The whole map</div>
+    <div class="kicker reveal"><i>02</i> The whole map</div>
     <h2 class="h2 reveal">Ask Jesse <em>anything</em>.</h2>
 
     <div class="cs reveal">
@@ -1094,7 +1079,7 @@
   <div class="wrap">
     <div class="claim-grid">
       <div class="reveal">
-        <div class="kicker"><i>04</i> Early access</div>
+        <div class="kicker"><i>03</i> Early access</div>
         <h2 class="h2">Claim your <em>desk</em>.</h2>
         <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
         <div class="claim-points">
@@ -1226,11 +1211,11 @@
     }, 2100);
   })();
 
-  // ----- census numbers count up to their real totals on first sight -----
+  // ----- library numbers count up to their real totals on first sight -----
   // The targets live in data-count and in the markup itself, so with JS off
   // (or reduced motion on) the real numbers are simply already there.
   (function(){
-    var stats = document.querySelector('.census-stats');
+    var stats = document.querySelector('.desk-stats');
     if(!stats) return;
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(reduced || !('IntersectionObserver' in window)) return;
@@ -1560,6 +1545,7 @@
     // steps: 0 dream, 1 build, 2 experiment, 3 yours, 4 share. trailTo(n)
     // marks everything before n done and n active; trailTo(5) is all done.
     function trailTo(n){
+      trail.hidden = false;
       trail.querySelectorAll('.trail-step').forEach(function(s, i){
         s.classList.toggle('done', i < n);
         s.classList.toggle('active', i === n);
@@ -1799,7 +1785,8 @@
       build.classList.remove('is-lit');
       clearStage();
       trailTo(-1);
-      say('What should we build together?');
+      trail.hidden = true;
+      say('What would you like to bring to life?');
       input.focus();
     }
 
