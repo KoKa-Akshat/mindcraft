@@ -216,6 +216,11 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
   const masteryNav = hub?.querySelector('[data-hub-mastery-nav]');
   const masteryCube = hub?.querySelector('.hub-cube');
+  const jesseNav = hub?.querySelector('[data-hub-jesse-nav]');
+  const jesseBox = hub?.querySelector('[data-jesse-scene]');
+  const jesseOwl = hub?.querySelector('.jesse-owl');
+  const jesseStageName = hub?.querySelector('[data-jesse-stage-name]');
+  const jesseCountEl = hub?.querySelector('[data-jesse-count]');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
 
@@ -238,6 +243,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hubEmail) hubEmail.textContent = user.email;
     if (hubFirst) hubFirst.textContent = String(user.name || 'there').split(/\s+/)[0];
     if (hubGreetWord) hubGreetWord.textContent = greetWord();
+    paintJesse(user);
     return user;
   }
 
@@ -284,6 +290,64 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     try { localStorage.setItem(GOAL_FOCUS_KEY, inst.id); } catch { /* ignore */ }
     paintGoalEcho(inst, goal);
     paintMastery(list);
+  }
+
+  /**
+   * Jesse's growth curve, driven only by the real handed off learn count
+   * (users/{uid}.learnActivityCount, which the /learn page bumps at three
+   * genuine moments: a search resolving to a real concept, a real chapter
+   * landing on screen, a check question actually answered). Nothing on this
+   * side ever invents activity: with no handed off count Jesse shows an
+   * unknown state, and a count of 0 is honestly stage 0.
+   *
+   * Threshold reasoning: one sincere /learn session produces roughly 4 to 8
+   * of those events (a search or two, a few chapters, a check answer), so:
+   *   stage 0, Hatchling, 0+: brand new, nothing proven yet, still in the
+   *     egg.
+   *   stage 1, Fledgling, 3+: reachable inside the very first real session;
+   *     an early honest win that teaches the mechanic (learning grows him).
+   *   stage 2, Student, 10+: a couple of real sessions; earns his glasses.
+   *   stage 3, Scholar, 25+: several sessions across days; earns his book.
+   *   stage 4, Sage, 60+: a sustained habit over weeks; earns the cap.
+   *     Deliberately far out so the top stage means something.
+   */
+  const JESSE_STAGES = [
+    { min: 60, idx: 4, name: 'Sage' },
+    { min: 25, idx: 3, name: 'Scholar' },
+    { min: 10, idx: 2, name: 'Student' },
+    { min: 3, idx: 1, name: 'Fledgling' },
+    { min: 0, idx: 0, name: 'Hatchling' },
+  ];
+
+  function jesseStageFor(count) {
+    return JESSE_STAGES.find((s) => count >= s.min) || JESSE_STAGES[JESSE_STAGES.length - 1];
+  }
+
+  /** Honest pet: stage comes only from the real learn count, dash when unknown. */
+  function paintJesse(user) {
+    if (!jesseBox) return;
+    const raw = Number(user?.learnCount);
+    const known = Number.isFinite(raw) && raw >= 0;
+    const count = known ? Math.floor(raw) : 0;
+    const stage = jesseStageFor(count);
+    jesseBox.dataset.jesseStage = String(stage.idx);
+    if (jesseStageName) jesseStageName.textContent = stage.name;
+    if (jesseCountEl) {
+      if (known) {
+        jesseCountEl.textContent = count === 1 ? '1 learn action' : `${count} learn actions`;
+        jesseCountEl.classList.remove('is-unknown');
+      } else {
+        jesseCountEl.textContent = 'no activity recorded';
+        jesseCountEl.classList.add('is-unknown');
+      }
+    }
+    if (jesseNav) {
+      jesseNav.setAttribute(
+        'aria-label',
+        `Open Learn. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
+          + (known ? `, from ${count} real learn actions.` : '.'),
+      );
+    }
   }
 
   /** Honest estimate beside the cube · dash when we do not know */
@@ -404,6 +468,18 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     window.setTimeout(() => {
       window.location.href = '/learn';
     }, CLICK_SPIN_MS);
+  });
+
+  // Jesse is clickable for the same reason the cube is: Learn is what grows
+  // him, so clicking him goes there too, reinforcing the mechanic. A quick
+  // hop with a full turn (jesseHop) as click feedback, then the same
+  // navigation; JESSE_HOP_MS matches the CSS animation's own duration.
+  const JESSE_HOP_MS = 520;
+  jesseNav?.addEventListener('click', () => {
+    jesseOwl?.classList.add('is-hop');
+    window.setTimeout(() => {
+      window.location.href = '/learn';
+    }, JESSE_HOP_MS);
   });
 
   tabBtns.forEach((btn) => {

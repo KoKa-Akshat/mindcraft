@@ -1,5 +1,5 @@
 /**
- * Learn — the production "ask anything -> resolve -> read -> check" experience.
+ * Learn: the production "ask anything -> resolve -> read -> check" experience.
  *
  * Promoted from the DevUnifiedLearn prototype (2026-08-30) and rewired off the
  * prototype's four localhost Python servers onto real production services:
@@ -50,6 +50,7 @@ import {
   type StudyRecord,
 } from '../lib/conceptLibrary'
 import { prewarmEmbedder, embedderReady } from '../lib/queryEmbedder'
+import { recordLearnActivity } from '../lib/learnActivity'
 
 /** Below this, even the best available match is noise rather than a signal:
  * nothing in the library is actually about the query, and dressing up a
@@ -214,6 +215,13 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         return
       }
       setContent(data)
+      if (data.chapter) {
+        // A real chapter from the library actually landed on this student's
+        // screen (the no document and no chapter paths above never reach
+        // here). One of the three honest Jesse signals; see
+        // lib/learnActivity.ts.
+        recordLearnActivity(uid, 'learn_chapter_opened', { conceptId })
+      }
       const related = [
         ...data.prereqs.map((id) => ({ id, relation: 'prerequisite' as const })),
         ...data.unlocks.map((id) => ({ id, relation: 'next' as const })),
@@ -246,7 +254,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     } finally {
       setContentLoading(false)
     }
-  }, [])
+  }, [uid])
 
   function resetPerConcept(keepContent = false) {
     setCheckQuestion(null)
@@ -314,6 +322,14 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       const withContent = ms.find((m) => m.hasLesson && ms[0].score - m.score <= NEAR_TIE)
       const best = withContent ?? ms[0]
       setResolved(best)
+      // The search genuinely resolved to a real concept in the library (the
+      // no matches and out of domain paths above return before this line).
+      // One of the three honest Jesse signals; see lib/learnActivity.ts.
+      recordLearnActivity(uid, 'learn_search_resolved', {
+        query: q,
+        conceptId: best.conceptId,
+        score: Number(best.score.toFixed(3)),
+      })
 
       // The resolver builds the ramp for its own top match. If the near-tie
       // guard picked a different concept, that ramp is not about the concept
@@ -334,7 +350,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       setLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, loadContent])
+  }, [query, loadContent, uid])
 
   // A ?q= in the URL runs one search on mount, so the Dashboard can hand a
   // typed question straight through into this view.
@@ -426,6 +442,11 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   async function onAnswered(correct: boolean) {
     setCheckResult(correct ? 'Recorded: correct, on your own.' : 'Recorded: missed it, flagged for review.')
     if (!activeConceptId || !uid) return
+    // The strongest of the three honest Jesse signals: a check question was
+    // actually answered. Right or wrong both count as real study effort,
+    // matching this page's own rule that only an answered question marks a
+    // concept studied; see lib/learnActivity.ts.
+    recordLearnActivity(uid, 'learn_check_answered', { conceptId: activeConceptId, correct })
     const updated = await recordStudied(uid, activeConceptId, correct, studyLog[activeConceptId])
     setStudyLog((prev) => ({ ...prev, [activeConceptId]: updated }))
   }

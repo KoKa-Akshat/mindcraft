@@ -4026,6 +4026,367 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-orb-glow { animation: none !important; }
   .hub-cube { transform: rotateX(-18deg) rotateY(-28deg); }
 }
+
+/* Jesse · the desk pet. Same fake-3D construction family as the cube on his
+   left: absolutely positioned face planes inside a preserve-3d parent under
+   a perspective stage, pure CSS, no WebGL. Instead of the cube's endless
+   cubeTurn he sways side to side (owls swivel, they do not tumble), blinks,
+   and hops one full turn when clicked (jesseHop, the cubeClickSpin analog).
+   Stage visuals are driven ONLY by [data-jesse-stage] on .jesse-stagebox,
+   which bootHub.js paints from the real handed-off learn count:
+     0 Hatchling: small, sleepy lids, still sitting in his cracked shell.
+     1 Fledgling: hatched, eyes open, a little bigger.
+     2 Student: bigger again, earns round reading glasses.
+     3 Scholar: bigger, glasses plus a little green book held at the belly.
+     4 Sage: biggest, all of the above plus mortarboard, tassel, and a
+       lime-warmed glow. */
+.hub-mastery-duo {
+  display: flex;
+  align-items: center;
+  gap: 12px 56px;
+  flex-wrap: wrap;
+}
+.jesse-stagebox {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  flex: none;
+  /* Growth curve: scale per stage, plus a downward seat while in the egg. */
+  --jesse-scale: 0.8;
+  --jesse-y: 0px;
+}
+.jesse-stagebox[data-jesse-stage="0"] { --jesse-scale: 0.62; --jesse-y: 14px; }
+.jesse-stagebox[data-jesse-stage="1"] { --jesse-scale: 0.78; }
+.jesse-stagebox[data-jesse-stage="2"] { --jesse-scale: 0.88; }
+.jesse-stagebox[data-jesse-stage="3"] { --jesse-scale: 0.98; }
+.jesse-stagebox[data-jesse-stage="4"] { --jesse-scale: 1.08; }
+.jesse-glow {
+  animation-duration: 5s;
+}
+.jesse-stagebox[data-jesse-stage="4"] .jesse-glow {
+  inset: 8%;
+  background: radial-gradient(
+    circle,
+    rgba(196, 245, 71, 0.26),
+    rgba(45, 90, 62, 0.07) 55%,
+    transparent 72%
+  );
+}
+.jesse-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  perspective: 520px;
+  perspective-origin: 50% 42%;
+}
+.jesse-owl {
+  --s: 64px;
+  --h: calc(var(--s) / 2);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--h) * -1) 0 0 calc(var(--h) * -1);
+  transform-style: preserve-3d;
+  transform: translateY(var(--jesse-y)) rotateX(-10deg) rotateY(-24deg) scale(var(--jesse-scale));
+  animation: jesseSway 9s ease-in-out infinite;
+}
+@keyframes jesseSway {
+  0%, 100% { transform: translateY(var(--jesse-y)) rotateX(-10deg) rotateY(-26deg) scale(var(--jesse-scale)); }
+  50% { transform: translateY(calc(var(--jesse-y) - 3px)) rotateX(-7deg) rotateY(26deg) scale(var(--jesse-scale)); }
+}
+/* Click feedback: one airborne full turn, then the page navigates to Learn.
+   Same role as the cube's cubeClickSpin; resumes the ambient sway on its own
+   (animation-fill-mode: none, the default). */
+.jesse-owl.is-hop {
+  animation: jesseHop 0.52s ease-in-out;
+}
+@keyframes jesseHop {
+  0% { transform: translateY(var(--jesse-y)) rotateX(-10deg) rotateY(0deg) scale(var(--jesse-scale)); }
+  45% { transform: translateY(calc(var(--jesse-y) - 16px)) rotateX(-4deg) rotateY(180deg) scale(calc(var(--jesse-scale) * 1.06)); }
+  100% { transform: translateY(var(--jesse-y)) rotateX(-10deg) rotateY(360deg) scale(var(--jesse-scale)); }
+}
+.jesse-face {
+  position: absolute;
+  inset: 0;
+  border: 1.25px solid rgba(111, 106, 97, 0.62);
+  background: var(--paper-raised);
+  box-shadow: inset 0 0 0 1px rgba(230, 221, 208, 0.5);
+  backface-visibility: visible;
+}
+.jesse-face.j-front {
+  transform: translateZ(var(--h));
+  border-radius: 46% 46% 42% 42% / 42% 42% 50% 50%;
+}
+.jesse-face.j-back {
+  transform: rotateY(180deg) translateZ(var(--h));
+  background: var(--paper-recessed);
+  border-radius: 46% 46% 42% 42% / 42% 42% 50% 50%;
+}
+/* Side faces read as folded wings: the sage green ties him to the cube. */
+.jesse-face.j-right,
+.jesse-face.j-left {
+  background: rgba(61, 107, 79, 0.2);
+  border-color: rgba(47, 74, 56, 0.55);
+  border-radius: 44% / 48%;
+  box-shadow: inset 0 0 0 1px rgba(143, 188, 143, 0.12);
+}
+.jesse-face.j-right { transform: rotateY(90deg) translateZ(var(--h)); }
+.jesse-face.j-left { transform: rotateY(-90deg) translateZ(var(--h)); }
+.jesse-face.j-top {
+  transform: rotateX(90deg) translateZ(var(--h));
+  background: var(--paper-base);
+  border-radius: 50%;
+}
+.jesse-face.j-bottom {
+  transform: rotateX(-90deg) translateZ(var(--h));
+  background: var(--paper-edge);
+  border-radius: 46%;
+}
+.jesse-tuft {
+  position: absolute;
+  top: -14px;
+  width: 15px;
+  height: 18px;
+  background: linear-gradient(#ded4c3, var(--paper-recessed));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 0 1px rgba(111, 106, 97, 0.65));
+}
+.jesse-tuft.t-left { left: 10%; transform: rotate(-16deg); }
+.jesse-tuft.t-right { right: 10%; transform: rotate(16deg); }
+/* Lime-green eyes per the mascot; lid (::before) handles sleep and blinks. */
+.jesse-eye {
+  position: absolute;
+  top: 20%;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.25px solid rgba(47, 74, 56, 0.6);
+  background: radial-gradient(circle at 35% 30%, #e7fb9a, #c4f547 55%, #9ec92f);
+}
+.jesse-eye.e-left { left: 13%; }
+.jesse-eye.e-right { right: 13%; }
+.jesse-pupil {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--ink-system);
+}
+.jesse-pupil::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+}
+.jesse-eye::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: var(--paper-raised);
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: jesseBlink 6s ease-in-out infinite;
+}
+@keyframes jesseBlink {
+  0%, 93%, 100% { transform: scaleY(0); }
+  96% { transform: scaleY(1); }
+}
+/* Hatchling: half-closed lids, no blink, still small in the shell. */
+.jesse-stagebox[data-jesse-stage="0"] .jesse-eye::before {
+  transform: scaleY(0.55);
+  animation: none;
+}
+.jesse-beak {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #e0b900, var(--gold));
+  border: 1px solid rgba(111, 106, 97, 0.4);
+  transform: rotate(45deg);
+}
+.jesse-belly {
+  position: absolute;
+  left: 21%;
+  bottom: 5%;
+  width: 58%;
+  height: 34%;
+  border-radius: 50%;
+  background: rgba(239, 233, 224, 0.95);
+  box-shadow: inset 0 2px 0 rgba(111, 106, 97, 0.14);
+}
+/* Stage 2+: round reading glasses over the eyes. */
+.jesse-specs {
+  position: absolute;
+  left: 50%;
+  top: 21px;
+  width: 12px;
+  height: 2px;
+  margin-left: -6px;
+  background: #33302a;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.jesse-specs::before,
+.jesse-specs::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 21px;
+  height: 21px;
+  border: 2px solid #33302a;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+.jesse-specs::before { right: 9px; }
+.jesse-specs::after { left: 9px; }
+/* Stage 3+: a little green book held at the belly, floated just in front. */
+.jesse-book {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 20px;
+  margin: 4px 0 0 -15px;
+  transform: translateZ(calc(var(--h) + 7px)) rotateX(-24deg);
+  background: linear-gradient(var(--paper-raised), var(--paper-recessed));
+  border: 1.5px solid #3d6b4f;
+  border-radius: 2px 2px 3px 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.jesse-book::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  margin-left: -0.75px;
+  background: rgba(61, 107, 79, 0.55);
+}
+.jesse-book::after {
+  content: "";
+  position: absolute;
+  inset: 4px 5px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    rgba(111, 106, 97, 0.28) 3px 4px
+  );
+}
+/* Stage 4: mortarboard, a flat plane hovering just above the head (same
+   rotateX(90deg) translateZ move the cube's top face uses), plus tassel. */
+.jesse-cap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  transform: rotateX(90deg) translateZ(calc(var(--h) + 7px));
+  background: linear-gradient(135deg, #24332a, #1f2a22);
+  border: 1px solid #131b16;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.jesse-cap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.jesse-tassel {
+  position: absolute;
+  top: -8px;
+  right: 12%;
+  width: 2px;
+  height: 15px;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.jesse-tassel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 1px solid rgba(47, 74, 56, 0.5);
+}
+.jesse-stagebox[data-jesse-stage="2"] .jesse-specs,
+.jesse-stagebox[data-jesse-stage="3"] .jesse-specs,
+.jesse-stagebox[data-jesse-stage="4"] .jesse-specs { opacity: 1; }
+.jesse-stagebox[data-jesse-stage="3"] .jesse-book,
+.jesse-stagebox[data-jesse-stage="4"] .jesse-book { opacity: 1; }
+.jesse-stagebox[data-jesse-stage="4"] .jesse-cap,
+.jesse-stagebox[data-jesse-stage="4"] .jesse-tassel { opacity: 1; }
+/* Stage 0 only: the cracked shell he has not left yet, a flat cup in front
+   of the scene with a zigzag broken rim. */
+.jesse-shell {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 66px;
+  height: 32px;
+  margin-left: -33px;
+  background: var(--paper-raised);
+  border: 1.25px solid rgba(111, 106, 97, 0.55);
+  border-radius: 0 0 50% 50% / 0 0 85% 85%;
+  clip-path: polygon(0 26%, 11% 10%, 24% 28%, 37% 6%, 50% 26%, 63% 8%, 78% 26%, 90% 12%, 100% 28%, 100% 100%, 0 100%);
+  box-shadow: inset 0 -5px 0 rgba(230, 221, 208, 0.85);
+}
+.jesse-stagebox[data-jesse-stage="0"] .jesse-shell { display: block; }
+.jesse-stage-name {
+  margin: 0;
+  font: italic 400 26px/1.05 var(--serif);
+  letter-spacing: -0.02em;
+  color: #1f2a22;
+}
+.jesse-count {
+  margin: 0;
+  font: 500 12.5px/1.3 var(--sans);
+  color: #5a6b5e;
+  font-variant-numeric: tabular-nums;
+}
+.jesse-count.is-unknown {
+  color: #8a968c;
+  font-weight: 400;
+}
+@media (max-width: 720px) {
+  .hub-mastery-duo { gap: 8px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jesse-owl,
+  .jesse-owl.is-hop,
+  .jesse-glow,
+  .jesse-eye::before { animation: none !important; }
+  .jesse-owl { transform: translateY(var(--jesse-y)) rotateX(-10deg) rotateY(-22deg) scale(var(--jesse-scale)); }
+}
 .hub-grid {
   gap: 18px;
 }

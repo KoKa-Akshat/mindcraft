@@ -345,6 +345,17 @@ async function deskOsHandoffQuery(): Promise<string> {
     const snap = await getDoc(doc(db, 'users', user.uid))
     const role = snap.data()?.role
     if (role === 'student' || role === 'tutor') params.set('mcRole', role)
+    // Jesse the desk pet: hand Desk OS the student's REAL /learn activity
+    // count (users/{uid}.learnActivityCount, bumped by lib/learnActivity.ts
+    // at genuine learning moments) so the hub can render Jesse's stage
+    // without a Firebase SDK of its own. Reuses this same single getDoc
+    // rather than adding a second read. Always set on success, even at 0:
+    // a brand new student honestly starts at the hatchling stage. Only a
+    // failed read (the catch below) leaves the param off, which Desk OS
+    // renders as an unknown state rather than pretending to know.
+    const learnRaw = Number(snap.data()?.learnActivityCount)
+    const learnCount = Number.isFinite(learnRaw) && learnRaw > 0 ? Math.floor(learnRaw) : 0
+    params.set('mcLearn', String(learnCount))
   } catch { /* fall through with no mcRole, Desk OS shows its own picker */ }
   return `&${params.toString()}`
 }

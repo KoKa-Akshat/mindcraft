@@ -2261,7 +2261,17 @@ function readAuthHandoff() {
     if (!email) return null;
     const role = params.get('mcRole') === 'tutor' ? 'tutor' : 'student';
     const name = params.get('mcName') || email.split('@')[0] || 'Student';
-    return { name, email, role };
+    const profile = { name, email, role };
+    // Real /learn activity count for Jesse the desk pet's stage, set by
+    // App.tsx's deskOsHandoffQuery from users/{uid}.learnActivityCount.
+    // Only carried across when it parses as a nonnegative integer; absent
+    // means the React app could not read the user doc, and Jesse then
+    // renders as unknown rather than at a made up stage. The key is left
+    // out entirely (not set to null) so setUser()'s merge never clobbers a
+    // previously persisted real count with an empty one.
+    const learnRaw = params.get('mcLearn');
+    if (learnRaw != null && /^\d+$/.test(learnRaw)) profile.learnCount = Number(learnRaw);
+    return profile;
   } catch {
     return null;
   }

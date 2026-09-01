@@ -114,28 +114,70 @@
 
       <main class="hub-main" data-hub-panel="dashboard">
         <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
-          <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
-            <div class="hub-orb-stage" aria-hidden="true">
-              <div class="hub-orb-glow"></div>
-              <div class="hub-orb">
-                <div class="hub-cube">
-                  <span class="hub-cube-face f-front"></span>
-                  <span class="hub-cube-face f-back"></span>
-                  <span class="hub-cube-face f-right"></span>
-                  <span class="hub-cube-face f-left"></span>
-                  <span class="hub-cube-face f-top"></span>
-                  <span class="hub-cube-face f-bottom"></span>
-                  <span class="hub-cube-cross c-xy"></span>
-                  <span class="hub-cube-cross c-xz"></span>
-                  <span class="hub-cube-cross c-yz"></span>
+          <div class="hub-mastery-duo">
+            <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
+              <div class="hub-orb-stage" aria-hidden="true">
+                <div class="hub-orb-glow"></div>
+                <div class="hub-orb">
+                  <div class="hub-cube">
+                    <span class="hub-cube-face f-front"></span>
+                    <span class="hub-cube-face f-back"></span>
+                    <span class="hub-cube-face f-right"></span>
+                    <span class="hub-cube-face f-left"></span>
+                    <span class="hub-cube-face f-top"></span>
+                    <span class="hub-cube-face f-bottom"></span>
+                    <span class="hub-cube-cross c-xy"></span>
+                    <span class="hub-cube-cross c-xz"></span>
+                    <span class="hub-cube-cross c-yz"></span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="hub-orb-copy">
-              <h2 class="hub-orb-title">Mastery</h2>
-              <p class="hub-orb-pct" data-hub-mastery-pct aria-label="Mastery estimate">--</p>
-            </div>
-          </button>
+              <div class="hub-orb-copy">
+                <h2 class="hub-orb-title">Mastery</h2>
+                <p class="hub-orb-pct" data-hub-mastery-pct aria-label="Mastery estimate">--</p>
+              </div>
+            </button>
+            <!-- Jesse · the desk pet. Same CSS-only fake-3D technique family
+                 as the cube beside him (absolutely positioned face planes in
+                 a preserve-3d parent, no WebGL, no model file). His stage is
+                 painted by bootHub.js's paintJesse() from the REAL /learn
+                 activity count handed off by the React app (mcLearn param);
+                 nothing here is simulated. Owl per the existing Jesse-energy
+                 mascot (img/orbs/mascot-ivory.png): ivory feathers, tall ear
+                 tufts, lime-green eyes. -->
+            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Open Learn. Real learning on Learn grows Jesse.">
+              <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
+                <div class="hub-orb-glow jesse-glow"></div>
+                <div class="jesse-scene">
+                  <div class="jesse-owl">
+                    <span class="jesse-face j-back"></span>
+                    <span class="jesse-face j-right"></span>
+                    <span class="jesse-face j-left"></span>
+                    <span class="jesse-face j-top"></span>
+                    <span class="jesse-face j-bottom"></span>
+                    <span class="jesse-face j-front">
+                      <span class="jesse-tuft t-left"></span>
+                      <span class="jesse-tuft t-right"></span>
+                      <span class="jesse-eye e-left"><span class="jesse-pupil"></span></span>
+                      <span class="jesse-eye e-right"><span class="jesse-pupil"></span></span>
+                      <span class="jesse-specs"></span>
+                      <span class="jesse-beak"></span>
+                      <span class="jesse-belly"></span>
+                      <span class="jesse-tassel"></span>
+                    </span>
+                    <span class="jesse-book"></span>
+                    <span class="jesse-cap"></span>
+                  </div>
+                  <span class="jesse-shell"></span>
+                </div>
+              </div>
+              <div class="hub-orb-copy">
+                <h2 class="hub-orb-title">Jesse</h2>
+                <p class="jesse-stage-name" data-jesse-stage-name>Hatchling</p>
+                <p class="jesse-count is-unknown" data-jesse-count>no activity recorded</p>
+              </div>
+            </button>
+          </div>
         </section>
 
         <section class="hub-tutors" id="hubTutorMap" aria-label="Tutors nearby">
