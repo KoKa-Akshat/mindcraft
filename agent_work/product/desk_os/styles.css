@@ -3482,7 +3482,7 @@ body.is-hub-chrome .sky { opacity: 0; }
   border: 1px solid rgba(45, 74, 56, 0.12);
   background: #fff;
   min-height: 0;
-  height: 400px;
+  height: 420px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -5450,7 +5450,10 @@ body.is-hub-chrome .sky { opacity: 0; }
 .rh-forward:hover { background: #3d6b4f; }
 .rh-forward.is-ready { box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.55); }
 .rh-duo { margin-top: 10px; }
-.rh-pane { height: 420px; }
+/* No height override needed: .rh-pane shares .hub-tutor-pane's base 420px
+   (2026-09-01 ask, match the Tutors/Events pane so both duos read as the
+   same size in the hub), this class exists only as a hook for the rules
+   below it. */
 .rh-jesse-pane { display: flex; flex-direction: column; }
 .rh-jesse-top {
   display: flex;
