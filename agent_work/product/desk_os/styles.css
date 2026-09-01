@@ -3522,6 +3522,50 @@ body.is-hub-chrome .sky { opacity: 0; }
   cursor: pointer;
 }
 .tm-search button:hover { background: #3d6b4f; }
+.tm-upload {
+  flex: none;
+  width: 40px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tm-upload svg { width: 17px; height: 17px; }
+.tm-stuck-on {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #eef4ef;
+  border-bottom: 1px solid #dbe6dd;
+  flex: none;
+}
+.tm-stuck-on[hidden] { display: none !important; }
+.tm-stuck-label {
+  flex: none;
+  font: 700 10px/1.3 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d6b4f;
+  padding-top: 2px;
+}
+.tm-stuck-on p {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: 600 12.5px/1.4 var(--sans);
+  color: #1a1a1a;
+}
+.tm-stuck-clear {
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: #6b7a70;
+  font: 600 15px/1 var(--sans);
+  cursor: pointer;
+  padding: 0 2px;
+}
+.tm-stuck-clear:hover { color: #1a1a1a; }
 .tm-map {
   flex: 1;
   min-height: 0;

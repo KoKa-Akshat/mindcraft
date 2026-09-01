@@ -226,7 +226,20 @@
               <form class="tm-search" data-tm-search autocomplete="off">
                 <input data-tm-query type="search" placeholder="We'll meet you where you are" aria-label="Search a city or zip" />
                 <button type="submit">Search</button>
+                <button type="button" class="tm-upload" data-tm-upload aria-label="Upload a homework problem" title="Show a tutor what you're stuck on">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v12"></path>
+                    <path d="M7 8l5-5 5 5"></path>
+                    <path d="M4 17v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"></path>
+                  </svg>
+                </button>
+                <input type="file" data-tm-upload-input accept="image/*" hidden />
               </form>
+              <div class="tm-stuck-on" data-tm-stuck-on hidden>
+                <span class="tm-stuck-label">What I need help with</span>
+                <p data-tm-stuck-text></p>
+                <button type="button" class="tm-stuck-clear" data-tm-stuck-clear aria-label="Remove">&times;</button>
+              </div>
               <div class="tm-map" data-tm-map role="img" aria-label="Map of MindCraft tutors"></div>
             </div>
             <div class="hub-tutor-pane book">
