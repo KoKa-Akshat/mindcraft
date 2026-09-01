@@ -16,7 +16,7 @@
  * extraction, and the text sanitizer live here.
  */
 import Anthropic from '@anthropic-ai/sdk'
-import { studentGeminiComplete } from './studentGemini'
+import { studentGeminiComplete, studentGeminiVisionComplete } from './studentGemini'
 
 export interface AnthropicChatOptions {
   model: string
@@ -170,6 +170,113 @@ export async function callByok(user: string, options: ByokChatOptions): Promise<
         messages: [
           { role: 'system', content: options.system },
           { role: 'user', content: user },
+        ],
+      }),
+    })
+    if (!res.ok) return null
+    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
+    return data.choices?.[0]?.message?.content ?? null
+  } catch {
+    return null
+  }
+}
+
+export interface ByokVisionOptions {
+  provider: 'openai' | 'groq' | 'gemini' | 'openrouter' | 'anthropic' | 'custom'
+  apiKey: string
+  model?: string
+  baseUrl?: string
+  maxTokens: number
+  system: string
+  imageBase64: string
+  /** e.g. 'image/png' */
+  mimeType: string
+}
+
+/**
+ * Same shape as callByok, plus one inline image. A student's own key is the
+ * ONLY path for vision calls (parse-homework's 2026-09-01 rework): no
+ * platform-key fallback here, so a provider/model must actually support
+ * image input or this returns null and the caller reports it honestly.
+ *
+ * Per-provider default models are deliberately NOT the same as callByok's
+ * text presets — groq's 'openai/gpt-oss-120b' and openrouter's
+ * 'openai/gpt-oss-20b:free' are text-only reasoning models, no vision.
+ * groq gets a real, currently-free vision model instead (Llama 4 Scout,
+ * verified live 2026-09-01: console.groq.com/docs/model/meta-llama/
+ * llama-4-scout-17b-16e-instruct). openrouter gets 'openrouter/free', a
+ * router that auto-picks a free model and filters for the capability the
+ * request actually needs (here, vision) rather than one hardcoded free
+ * model name — the exact kind of hardcoded-name staleness that broke
+ * parse-homework in the first place (see MODEL's own comment in
+ * lib/handlers/parse-homework.ts), so this should not go stale the same way.
+ */
+export async function callByokVision(user: string, options: ByokVisionOptions): Promise<string | null> {
+  if (!options.apiKey || !options.imageBase64) return null
+  try {
+    if (options.provider === 'gemini') {
+      const text = await studentGeminiVisionComplete(
+        options.apiKey,
+        `${options.system}\n\n${user}`,
+        options.imageBase64,
+        options.mimeType,
+        options.maxTokens,
+      )
+      return text || null
+    }
+
+    if (options.provider === 'anthropic') {
+      const client = new Anthropic({ apiKey: options.apiKey })
+      const mediaType = options.mimeType as 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif'
+      const response = await client.messages.create({
+        model: options.model || 'claude-haiku-4-5-20251001',
+        max_tokens: options.maxTokens,
+        system: options.system,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mediaType, data: options.imageBase64 } },
+            { type: 'text', text: user },
+          ],
+        }],
+      })
+      return response.content
+        .filter((b) => b.type === 'text')
+        .map((b) => (b as Anthropic.Messages.TextBlock).text)
+        .join('')
+        .trim()
+    }
+
+    const presets: Record<string, { baseUrl: string; model: string }> = {
+      openai: { baseUrl: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o-mini' },
+      groq: { baseUrl: 'https://api.groq.com/openai/v1/chat/completions', model: 'meta-llama/llama-4-scout-17b-16e-instruct' },
+      openrouter: { baseUrl: 'https://openrouter.ai/api/v1/chat/completions', model: 'openrouter/free' },
+    }
+    const preset = presets[options.provider]
+    const baseUrl = options.provider === 'custom' ? options.baseUrl : preset?.baseUrl
+    const model = options.model || preset?.model
+    if (!baseUrl || !model) return null
+
+    const res = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${options.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model,
+        temperature: 0,
+        max_tokens: options.maxTokens,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: options.system },
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: user },
+              { type: 'image_url', image_url: { url: `data:${options.mimeType};base64,${options.imageBase64}` } },
+            ],
+          },
         ],
       }),
     })

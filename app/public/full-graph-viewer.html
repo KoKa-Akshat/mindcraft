@@ -38,9 +38,11 @@
   <div id="graph"></div>
   <div class="panel" id="focus"><div class="name"></div><div class="meta"></div></div>
   <div class="panel" id="legend" hidden>
-    <h2>Subjects</h2>
-    <div class="subjects" id="subjects"></div>
-    <div class="rule"></div>
+    <div id="subjectBlock">
+      <h2>Subjects</h2>
+      <div class="subjects" id="subjects"></div>
+      <div class="rule"></div>
+    </div>
     <div class="key"><span class="dot" style="width:9px;height:9px"></span> lesson + sim</div>
     <div class="key"><span class="dot" style="width:6px;height:6px"></span> lesson only</div>
     <div class="key"><span class="dot" style="width:4px;height:4px;background:#3d4a52"></span> gap, no content yet</div>
@@ -173,16 +175,21 @@
     }
   }
 
+  const hideSubjects = new URLSearchParams(location.search).has('hideSubjects');
+  if (hideSubjects) document.getElementById('subjectBlock').hidden = true;
+
   function renderLegend(data) {
-    const box = document.getElementById('subjects');
-    box.innerHTML = '';
-    for (const s of data.subjects) {
-      const row = document.createElement('div');
-      row.className = 'sub';
-      row.title = `${s.title} — ${s.nodeCount} concepts, ${s.withLesson} with a lesson, ${s.withSim} with a sim`;
-      row.innerHTML = `<span class="swatch" style="background:${s.color}"></span>` +
-        `<span>${s.id} <em>${s.nodeCount}</em></span>`;
-      box.appendChild(row);
+    if (!hideSubjects) {
+      const box = document.getElementById('subjects');
+      box.innerHTML = '';
+      for (const s of data.subjects) {
+        const row = document.createElement('div');
+        row.className = 'sub';
+        row.title = `${s.title} — ${s.nodeCount} concepts, ${s.withLesson} with a lesson, ${s.withSim} with a sim`;
+        row.innerHTML = `<span class="swatch" style="background:${s.color}"></span>` +
+          `<span>${s.id} <em>${s.nodeCount}</em></span>`;
+        box.appendChild(row);
+      }
     }
     const c = data.counts || {};
     document.getElementById('totals').textContent =

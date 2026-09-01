@@ -1,0 +1,40 @@
+# The mindcraft-webhook Vercel project's dashboard rootDirectory is
+# "webhook", so a CLI deploy run from the repo root (the only invocation
+# that doesn't hit the CLI's "webhook/webhook does not exist" bug when
+# rootDirectory is set) otherwise archives the entire monorepo: 60k+ files,
+# a 4.3GB .git history, several 100MB+ image-batch zips at the root, and a
+# stray broken symlink in .scratch-pdf-venv/ that fails the archive step
+# outright. webhook/ is fully self-contained (own package.json, own
+# lockfile, own node_modules), no workspace setup, so everything else here
+# is safe to exclude.
+#
+# Every one of these is anchored with a leading slash (repo root only): an
+# unanchored pattern like "data/" matches at ANY depth, and webhook/ has its
+# own data/, firebase/, and scripts/ directories the build actually needs
+# (webhook/data/*.json in particular, found the hard way when an unanchored
+# "data/" here broke the build entirely). node_modules/ is the deliberate
+# exception, left unanchored: webhook's own copy should also be excluded,
+# Vercel reinstalls it fresh from package-lock.json during its build.
+/.git/
+/*.zip
+/agent_work/
+/app/
+/data/
+/demo-assets/
+/docs/
+/firebase/
+/generated_chapter_images/
+/homework/
+/img/
+/ios-prototype/
+/library/
+/marketing/
+/memory/
+/ml/
+node_modules/
+/pitch/
+/scripts/
+/sims/
+/spark/
+/worlds/
+/.scratch-pdf-venv/

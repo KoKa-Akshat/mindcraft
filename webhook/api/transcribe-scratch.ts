@@ -6,7 +6,9 @@ import { verifyToken } from '../lib/verifyToken'
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
 const MAX_LINES = 20
 const MODEL_TIMEOUT_MS = 4000
-const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash'
+// 'gemini-2.5-flash' is retired (404 for new callers); '-latest' is a
+// rolling alias so this should not go stale the same way again.
+const DEFAULT_GEMINI_MODEL = 'gemini-flash-lite-latest'
 const TRANSCRIBE_MODEL = process.env.TRANSCRIBE_MODEL ?? DEFAULT_GEMINI_MODEL
 
 interface TranscriptionResult {

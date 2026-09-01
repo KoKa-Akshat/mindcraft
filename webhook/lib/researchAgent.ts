@@ -27,7 +27,9 @@ interface ResearchBatch {
   insights: ResearchInsight
 }
 
-const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
+// 'gemini-1.5-flash' is retired (404 for new callers); '-latest' is a
+// rolling alias so this should not go stale the same way again.
+const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent'
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? ''
 
 const RESEARCH_QUERIES = [

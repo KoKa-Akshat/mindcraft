@@ -111,13 +111,17 @@
   .stage-desk::before{ top:0; }
   .stage-desk::after{ bottom:0; }
   /* The line only makes sense where a cream stage actually meets a dark
-     section: the bottom of #human (the frontier below it is dark) and both
-     edges of #claim (conceptmap above, footer below). #top, #desk, and
-     #human are three cream stages in a row now (hero, then the studio,
-     then the human chapter), nothing dark between any of them, so those
-     shared seams get no line. #top's own top edge has nothing above it at
-     all, first section on the page. */
-  #top::before, #top::after, #desk::before, #desk::after, #human::before{content:none;}
+     section: the bottom of #frontier (conceptmap below it is dark) and both
+     edges of #claim (conceptmap above, footer below). #top, #advisors,
+     #human, #desk and #frontier are five cream stages in a row now (hero,
+     then the "why it is not instant" advisors section moved up front for
+     legitimacy, the human chapter, the studio, then the frontier graph),
+     nothing dark between any of them, so those shared seams get no line.
+     #top's own top edge has nothing above it at all, first section on the
+     page. */
+  #top::before, #top::after, #advisors::before, #advisors::after,
+  #human::before, #human::after, #desk::before, #desk::after,
+  #frontier::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -278,16 +282,16 @@
     text-transform:uppercase; color:rgba(18,53,42,.42); max-width:12ch; line-height:1.7;
   }
   .hero-cred-row{display:contents;}
-  .hero-cred img{width:auto; height:50px; opacity:.85; transition:opacity .25s var(--ease); filter:saturate(.85);}
-  .hero-cred img.wordmark{height:34px;}
+  .hero-cred img{width:auto; height:68px; opacity:.85; transition:opacity .25s var(--ease); filter:saturate(.85);}
+  .hero-cred img.wordmark{height:46px;}
   .hero-cred:hover img{opacity:1; filter:none;}
   @media (max-width:640px){
     .hero h1{font-size:clamp(52px,15vw,72px);}
     .hero-ctas .btn{flex:1 1 100%;}
     .hero-cred{gap:14px 22px;}
     .hero-cred > span{max-width:none;}
-    .hero-cred img{height:34px;}
-    .hero-cred img.wordmark{height:24px;}
+    .hero-cred img{height:44px;}
+    .hero-cred img.wordmark{height:31px;}
   }
 
 
@@ -479,30 +483,44 @@
   }
   .books-teaser-row{display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(24px,3vw,36px);}
   .book-mini{
-    display:flex; flex-direction:column; gap:10px; width:132px; text-decoration:none;
+    display:flex; flex-direction:column; gap:10px; width:164px; text-decoration:none;
     transition:transform .25s var(--ease);
   }
   .book-mini:hover{transform:translateY(-3px);}
   .book-mini img{
-    width:132px; height:198px; object-fit:cover; border-radius:9px;
+    width:164px; height:246px; object-fit:cover; border-radius:9px;
     box-shadow:0 14px 32px rgba(20,58,46,.18); border:1px solid rgba(20,58,46,.08);
   }
   .book-mini span{font-size:12.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
 
   /* ---------- chapter 1: the human ---------- */
+  /* Short enough on its own to sit on one line; the global .h2 22ch cap
+     (tuned for the page's longer, wrapping taglines) forces an unwanted
+     wrap here instead. */
+  #human .h2{max-width:none; font-size:clamp(30px,4vw,54px);}
   .human-video{margin-top:clamp(32px,5vh,52px); max-width:900px;}
-  .human-video video{
+  .human-video video, .human-video-play{
     display:block; width:100%; aspect-ratio:16/9; border-radius:18px;
     background:#000; box-shadow:var(--shadow); outline:1px solid var(--edge);
   }
+  .human-video-play{position:relative; border:0; padding:0; cursor:pointer; overflow:hidden;}
+  .human-video-play img{width:100%; height:100%; object-fit:cover; display:block;}
+  .human-video-playicon{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  }
+  .human-video-playicon svg{
+    width:clamp(52px,8vw,72px); height:clamp(52px,8vw,72px); color:#fff;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.45)); transition:transform .2s var(--ease);
+  }
+  .human-video-play:hover .human-video-playicon svg{transform:scale(1.08);}
   .human-video-cap{
     margin-top:16px; font-family:var(--serif); font-style:italic; font-weight:500;
     font-size:clamp(15px,1.6vw,18px); color:var(--chalk-dim); text-align:center;
   }
 
-  /* ---------- frontier graph (dark) ---------- */
+  /* ---------- frontier graph (bright, matches the paper stages around it) ---------- */
   .frontier{
-    background:radial-gradient(ellipse 80% 55% at 50% 8%, var(--field-2), var(--field-1) 72%);
+    background:radial-gradient(ellipse 80% 55% at 50% 8%, var(--field-2), var(--field) 72%);
     border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
   }
 
@@ -516,7 +534,7 @@
      whole page still loads zero JS frameworks. */
   .zpd{
     margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden;
-    background:#070f0a; border:1px solid var(--edge); box-shadow:var(--shadow);
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
   }
   .zpd-head{
     display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap;
@@ -524,7 +542,7 @@
   }
   .zpd-head b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--chalk);}
   .zpd-head .zpd-hint{font-size:12px; color:var(--chalk-faint);}
-  .zpd-seeds{display:flex; gap:6px; flex-wrap:wrap; margin-left:auto;}
+  .zpd-seeds{display:flex; gap:6px; flex-wrap:wrap;}
   .zpd-seed{
     border:1px solid var(--edge); border-radius:999px; padding:6px 13px; background:transparent;
     color:var(--chalk-dim); font-family:var(--mono); font-size:10.5px; font-weight:600;
@@ -543,15 +561,15 @@
   .zpd-stage svg{display:block; width:100%; height:min(62vh,540px); cursor:grab;}
   .zpd-stage svg.dragging{cursor:grabbing;}
   .zpd-ring{fill:none; stroke-width:1;}
-  .zpd-ring.r1{stroke:rgba(95,183,121,.34);}
-  .zpd-ring.r2{stroke:rgba(196,245,71,.42); stroke-dasharray:5 6;}
-  .zpd-ring.r3{stroke:rgba(224,57,74,.3); stroke-dasharray:2 7;}
+  .zpd-ring.r1{stroke:rgba(31,117,72,.4);}
+  .zpd-ring.r2{stroke:rgba(150,196,40,.55); stroke-dasharray:5 6;}
+  .zpd-ring.r3{stroke:rgba(224,57,74,.35); stroke-dasharray:2 7;}
   .zpd-ring-label{
     font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.16em;
     text-transform:uppercase; fill:var(--chalk-faint);
   }
-  .zpd-link{stroke:rgba(245,245,244,.14); stroke-width:1;}
-  .zpd-link.to-r2{stroke:rgba(196,245,71,.3);}
+  .zpd-link{stroke:rgba(18,53,42,.14); stroke-width:1;}
+  .zpd-link.to-r2{stroke:rgba(150,196,40,.45);}
   .zpd-node{cursor:pointer;}
   .zpd-node[data-open="false"]{cursor:not-allowed;}
   .zpd-node circle{transition:r .25s var(--ease), fill .25s, stroke .25s;}
@@ -573,7 +591,7 @@
   .zpd-node.z2 circle{fill:#c4f547; stroke:rgba(196,245,71,.22); stroke-width:5;}
   .zpd-node.z2 text{fill:var(--chalk);}
   .zpd-node.z3 circle{fill:rgba(224,57,74,.55); stroke:rgba(224,57,74,.14); stroke-width:4;}
-  .zpd-node.z3 text{fill:rgba(245,245,244,.34);}
+  .zpd-node.z3 text{fill:rgba(18,53,42,.32);}
   /* A rect, not a circle, so none of the per-zone `circle` rules above (or
      the :hover and .is-picked ones below) can paint the invisible hit target
      by accident. */
@@ -625,7 +643,7 @@
     transition:transform .2s var(--ease), opacity .2s;
   }
   .zpd-act:hover{transform:translateY(-1px);}
-  .zpd-act[disabled]{background:rgba(245,245,244,.06); color:var(--chalk-faint); cursor:default; transform:none;}
+  .zpd-act[disabled]{background:rgba(18,53,42,.06); color:var(--chalk-faint); cursor:default; transform:none;}
   .zpd-legend{display:flex; flex-wrap:wrap; gap:8px 16px; padding:12px 18px; border-top:1px solid var(--edge); background:var(--field-2);}
   .zpd-foot{padding:0 18px 14px; background:var(--field-2); font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
   @media (max-width:860px){
@@ -792,6 +810,36 @@
     .cs-res-head .zpd-sub{overflow-wrap:anywhere;}
   }
 
+  /* ---------- advisors (cream) ---------- */
+  .advisors-label{
+    margin-top:clamp(30px,4.5vh,44px); font-family:var(--mono); font-size:11.5px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .advisors-row{margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){.advisors-row{grid-template-columns:1fr;}}
+  .advisor-card{
+    display:flex; gap:16px; align-items:flex-start; padding:20px; border-radius:16px;
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .advisor-card img{
+    width:64px; height:64px; border-radius:50%; object-fit:cover; flex:none;
+    border:1px solid var(--edge);
+  }
+  .advisor-card h3{font-size:16px; margin-bottom:6px;}
+  .advisor-card p{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+
+  .research-row{margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){.research-row{grid-template-columns:1fr;}}
+  .research-card{
+    border-radius:16px; overflow:hidden;
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .research-card img{width:100%; height:260px; object-fit:contain; display:block; background:#fff;}
+  .research-card figcaption{padding:16px 20px 20px;}
+  .research-card h3{font-size:15px; margin-bottom:6px;}
+  .research-card p{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+  .research-cite{margin-top:14px; font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
+
   /* ---------- claim your desk (cream) ---------- */
   .claim{background:var(--cream); color:var(--ink); border-top:1px solid var(--edge); scroll-margin-top:80px;}
   .claim-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:clamp(28px,4.5vw,64px); align-items:start;}
@@ -874,6 +922,75 @@
   </div>
 </section>
 
+<!-- ================= WHY IT IS NOT INSTANT ================= -->
+<section class="advisors stage-desk" id="advisors">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal"><i>01</i> Why it is not instant</div>
+    <h2 class="h2 reveal">Our remarkably <em>slow</em> AI.</h2>
+    <p class="lede reveal">Every generated chapter and sim is checked against a real quality rubric before it ever ships, gated behind Dan McCreary's published methodology for AI-built intelligent textbooks. Not fired off and hoped for.</p>
+    <div class="advisors-label reveal">Meet our advisors</div>
+    <div class="advisors-row reveal">
+      <div class="advisor-card">
+        <img src="img/advisors/dan-mccreary.jpg" alt="Dan McCreary" loading="lazy">
+        <div>
+          <h3>Dan McCreary</h3>
+          <p>40+ years building enterprise knowledge graphs in healthcare and NoSQL, co-author of <em>Making Sense of NoSQL</em>, and the researcher behind the MicroSims methodology our quality bar is built on.</p>
+        </div>
+      </div>
+      <div class="advisor-card">
+        <img src="img/advisors/ingrid-erickson.jpg" alt="Ingrid Erickson" loading="lazy">
+        <div>
+          <h3>Ingrid Erickson</h3>
+          <p>Associate Professor at Syracuse University's iSchool, PhD from Stanford, studying how AI reshapes how we work and learn together.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="advisors-label reveal">Why the guardrails matter</div>
+    <div class="research-row reveal">
+      <figure class="research-card">
+        <img src="img/research/gpt-base-error-rates.png" alt="Histogram showing how often an ungated GPT gets a wrong answer, from logical and arithmetic errors, across 57 practice problems" loading="lazy">
+        <figcaption>
+          <h3>Left unchecked, it gets things wrong.</h3>
+          <p>Across 57 real practice problems, an ungated model returned the wrong answer, logically or arithmetically, on a meaningful share of them, on some almost every time. This is exactly what a quality gate is for.</p>
+        </figcaption>
+      </figure>
+      <figure class="research-card">
+        <img src="img/research/non-superficial-engagement.png" alt="Bar chart showing students have roughly twice the constructive, non-superficial conversation rate with a guardrailed tutor that withholds the answer, versus one that gives it" loading="lazy">
+        <figcaption>
+          <h3>Withholding the answer works.</h3>
+          <p>Students talking to a tutor that never just hands over the answer stayed constructively engaged roughly twice as often as students talking to one that did. Hints, not solutions, is the whole design.</p>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="research-cite reveal">Source: Bastani, Bastani, Sungu, Ge, Kabakcı &amp; Mariman, <em>Generative AI Without Guardrails Can Harm Learning: Evidence from High School Mathematics</em>, University of Pennsylvania (Wharton).</p>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 1: THE HUMAN ================= -->
+<section class="stage-desk human" id="human">
+  <div class="wrap">
+    <div class="kicker reveal"><i>02</i> The human</div>
+    <h2 class="h2 reveal">A real tutor who actually notices.</h2>
+    <p class="lede reveal">Not software that guesses. A real person who checks in and notices when you are stuck.</p>
+    <div class="human-video reveal">
+      <!-- Click to load: every browser tested (Chromium and WebKit both,
+           despite preload="metadata") fetches the WHOLE video file the
+           moment a <video><source> exists in the DOM, controls or no
+           controls, autoplay or no autoplay. At 2.4MB that was two-thirds
+           of this page's entire initial weight, paid by every visitor
+           whether or not they ever watch. Nothing loads until a real
+           click. -->
+      <button type="button" class="human-video-play" data-video-play aria-label="Play the one-on-one tutoring video">
+        <img src="img/human/mindcraft-1on1-poster.jpg" alt="" loading="lazy">
+        <span class="human-video-playicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      </button>
+      <p class="human-video-cap">One-on-one time. Live events. A tutor who notices when you are stuck, and says so.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ================= THE DESK: CREATION STUDIO ================= -->
 <section class="stage-desk" id="desk">
   <div class="grid-bg" aria-hidden="true"></div>
@@ -904,44 +1021,6 @@
       <span class="trail-step" data-step="yours"><i></i>Make it yours</span>
       <span class="trail-link"></span>
       <span class="trail-step" data-step="share"><i></i>Share</span>
-    </div>
-
-    <div class="studio reveal" id="studio">
-      <div class="studio-coach">
-        <div class="coach-disc" id="coachDisc" aria-hidden="true">
-          <svg class="coach-owl" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7 L7.5 3 L9 7.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M20 7 L16.5 3 L15 7.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <ellipse cx="8.6" cy="12.2" rx="2.6" ry="3"/>
-            <ellipse cx="15.4" cy="12.2" rx="2.6" ry="3"/>
-            <circle cx="8.6" cy="12.2" r="1" fill="currentColor" stroke="none"/>
-            <circle cx="15.4" cy="12.2" r="1" fill="currentColor" stroke="none"/>
-            <path d="M11 15.4 L12 17.2 L13 15.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <p class="coach-says" id="coachSays">What would you like to bring to life?</p>
-        </div>
-      </div>
-
-      <form class="studio-row" id="studioForm">
-        <input class="studio-input" id="studioInput" type="text" autocomplete="off" maxlength="140"
-               placeholder="I want to simulate what happens inside a black hole..."
-               aria-label="Describe the world you want to build">
-        <button class="btn primary studio-build" id="studioBuild" type="submit">Build my world</button>
-      </form>
-      <div class="studio-chips" id="studioChips">
-        <span>Quick start</span>
-        <button class="studio-chip" type="button" data-idea="a tiny solar system where I control gravity" data-domain="space">Space</button>
-        <button class="studio-chip" type="button" data-idea="the perfect free kick, curve and all" data-domain="sports">Sports</button>
-        <button class="studio-chip" type="button" data-idea="a creature that has to outrun what hunts it" data-domain="animals">Animals</button>
-        <button class="studio-chip" type="button" data-idea="a sound wave I can stack layers onto" data-domain="music">Music</button>
-        <button class="studio-chip" type="button" data-surprise="1">Surprise me</button>
-      </div>
-
-      <!-- Jesse's guided choices land here, then the live sim, the naming
-           step and the share step. All real state, driven by studioFlow(). -->
-      <div id="studioStage"></div>
     </div>
 
     <div class="simlib-intro reveal">
@@ -997,15 +1076,15 @@
         <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
       </div>
       <div class="books-teaser-row">
-        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=biology">
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=10">
           <img src="img/dans-covers/biology.jpg" alt="Biology: An Interactive Course cover" loading="lazy">
           <span>Biology: An Interactive Course</span>
         </a>
-        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=circuits">
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=3">
           <img src="img/dans-covers/circuits.jpg" alt="AI Circuits Course cover" loading="lazy">
           <span>AI Circuits Course</span>
         </a>
-        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=psychology">
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=89">
           <img src="img/dans-covers/psychology.jpg" alt="Psychology cover" loading="lazy">
           <span>Psychology</span>
         </a>
@@ -1014,31 +1093,14 @@
   </div>
 </section>
 
-<!-- ================= CHAPTER 1: THE HUMAN ================= -->
-<section class="stage-desk human" id="human">
-  <div class="wrap">
-    <div class="kicker reveal"><i>01</i> The human</div>
-    <h2 class="h2 reveal">A real tutor who actually notices.</h2>
-    <p class="lede reveal">Software that guesses. A person who checks in. One-on-one time, live events you can actually get to, and a tutor who notices when you are stuck and says so, not a chatbot pretending to.</p>
-    <div class="human-video reveal">
-      <video controls preload="metadata" poster="img/human/mindcraft-1on1-poster.jpg" playsinline>
-        <source src="img/human/mindcraft-1on1.mp4" type="video/mp4">
-      </video>
-      <p class="human-video-cap">One-on-one time. Live events. A tutor who notices when you are stuck, and says so.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ================= THE FRONTIER GRAPH ================= -->
-<section class="frontier" id="frontier">
+<section class="frontier stage-desk" id="frontier">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <div class="kicker reveal"><i>03</i> The frontier graph</div>
     <h2 class="h2 reveal">How does the <em>technology</em> work?</h2>
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
-        <b>Where you stand</b>
-        <span class="zpd-hint">Drag to move the graph. Tap or click a lime concept to step onto it.</span>
         <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
       </div>
       <div class="zpd-body">
@@ -1061,12 +1123,6 @@
           <button class="zpd-act" id="zpdAct" type="button" disabled>Step onto this concept</button>
         </div>
       </div>
-      <div class="zpd-legend">
-        <span class="zpd-zone z1"><i></i>Comfort zone, already yours</span>
-        <span class="zpd-zone z2"><i></i>Proximal zone, reachable now</span>
-        <span class="zpd-zone z3"><i></i>Frustration zone, gated</span>
-      </div>
-      <p class="zpd-foot">Every concept, every edge and every count here is real data from the MindCraft library, not a mock. The zones are computed live from prerequisite edges: what you have already passed, what those unlock next, and what is still two steps out.</p>
     </div>
   </div>
 </section>
@@ -1074,7 +1130,7 @@
 <section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal"><i>03</i> The whole map</div>
+    <div class="kicker reveal"><i>04</i> The whole map</div>
     <h2 class="h2 reveal">Try it <em>yourself</em>.</h2>
 
     <div class="cs reveal">
@@ -1102,7 +1158,7 @@
          it back. -->
     <div class="cm-stage reveal" id="cmStage">
       <div class="conceptmap-frame">
-        <iframe id="cmGraph" src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
+        <iframe id="cmGraph" src="full-graph-viewer.html?hideSubjects" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
       </div>
 
       <article class="cs-result" id="csResult" hidden aria-live="polite">
@@ -1133,7 +1189,7 @@
   <div class="wrap">
     <div class="claim-grid">
       <div class="reveal">
-        <div class="kicker"><i>04</i> Early access</div>
+        <div class="kicker"><i>05</i> Early access</div>
         <h2 class="h2">Claim your <em>desk</em>.</h2>
         <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
         <div class="claim-points">
@@ -1348,6 +1404,27 @@
     document.addEventListener('scroll', update, {passive:true});
     window.addEventListener('resize', update);
     update();
+  })();
+
+  // ----- chapter 1 video: nothing loads until a real click (see the HTML
+  // comment above .human-video-play for why), then resets to its first
+  // frame once it finishes instead of freezing on its last one -----
+  (function(){
+    var btn = document.querySelector('.human-video-play');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.poster = 'img/human/mindcraft-1on1-poster.jpg';
+      var source = document.createElement('source');
+      source.src = 'img/human/mindcraft-1on1.mp4';
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.addEventListener('ended', function(){ video.currentTime = 0; });
+      btn.replaceWith(video);
+      video.play();
+    }, { once: true });
   })();
 
   // ----- hero star map zooms in as you scroll past it -----

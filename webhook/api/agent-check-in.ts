@@ -168,7 +168,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const msg = await genai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      // 'gemini-2.5-flash' is retired (404 for new callers); '-latest' is a
+      // rolling alias so this should not go stale the same way again.
+      model: 'gemini-flash-lite-latest',
       contents: [{ role: 'user', parts: [{ text: buildPrompt(text) }] }],
       config: { maxOutputTokens: 512 },
     })

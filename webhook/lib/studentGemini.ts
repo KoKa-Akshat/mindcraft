@@ -18,10 +18,10 @@
  * Model: `gemini-flash-lite-latest`, matching the sibling
  * mindcraft-content-engine repo's own 2026-08-23 finding
  * (`book_ingestion.py`'s `_gemini_complete`) that `gemini-2.5-flash` is
- * gone for new users - NOT the `gemini-2.5-flash` some other handlers in
- * THIS repo (agent-check-in.ts and others) still use, which may itself be
- * stale; found while wiring this, not fixed here - a separate follow-up,
- * out of scope for a BYOK change.
+ * gone for new users. The other platform-key handlers in this repo
+ * (agent-check-in.ts and others) were still on the stale name and silently
+ * 404ing in prod for over a week - fixed 2026-09-01, all now on the same
+ * `-latest` alias so this does not go stale the same way again.
  */
 import { GoogleGenAI } from '@google/genai'
 
@@ -30,6 +30,29 @@ export async function studentGeminiComplete(apiKey: string, prompt: string, maxO
   const msg = await genai.models.generateContent({
     model: 'gemini-flash-lite-latest',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    config: { maxOutputTokens },
+  })
+  return msg.text ?? ''
+}
+
+/** Same as studentGeminiComplete, plus one inline image (vision). */
+export async function studentGeminiVisionComplete(
+  apiKey: string,
+  prompt: string,
+  imageBase64: string,
+  mimeType: string,
+  maxOutputTokens: number,
+): Promise<string> {
+  const genai = new GoogleGenAI({ apiKey })
+  const msg = await genai.models.generateContent({
+    model: 'gemini-flash-lite-latest',
+    contents: [{
+      role: 'user',
+      parts: [
+        { inlineData: { mimeType, data: imageBase64 } },
+        { text: prompt },
+      ],
+    }],
     config: { maxOutputTokens },
   })
   return msg.text ?? ''

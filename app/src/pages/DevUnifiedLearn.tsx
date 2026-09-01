@@ -689,7 +689,7 @@ export default function DevUnifiedLearn() {
           <iframe
             ref={graphIframeRef}
             title="concept-graph"
-            src="/full-graph-viewer.html"
+            src="/full-graph-viewer.html?hideSubjects"
             onLoad={() => pushStudiedToGraph(studyLog)}
             style={{ width: '100%', height: '100%', border: 'none' }}
           />

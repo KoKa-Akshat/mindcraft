@@ -11,7 +11,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { GoogleGenAI } from '@google/genai'
 import { setCors } from '../cors'
 
-const MODEL = process.env.PARSE_HOMEWORK_MODEL ?? 'gemini-2.5-flash'
+// 'gemini-2.5-flash' is retired (404 for new callers); '-latest' is a
+// rolling alias so this should not go stale the same way again.
+const MODEL = process.env.PARSE_HOMEWORK_MODEL ?? 'gemini-flash-lite-latest'
 const MAX_IMAGE_BASE64_BYTES = 900 * 1024
 const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' })
 

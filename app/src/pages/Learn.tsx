@@ -63,6 +63,7 @@ import {
   loadStudyLog,
   recordStudied,
   type ConceptMatch,
+  type ConceptSim,
   type PathStep,
   type ConceptContent,
   type CheckQuestion,
@@ -70,7 +71,9 @@ import {
   type StudyRecord,
 } from '../lib/conceptLibrary'
 import { pagesFromFile, parseHomeworkPages } from '../lib/homework'
-import { getIngredientCards, WEBHOOK_BASE, type IngredientRecommendResult } from '../lib/mlApi'
+import { getIngredientCards, getRecommendations, WEBHOOK_BASE, type IngredientRecommendResult, type MisconceptionGap } from '../lib/mlApi'
+import { mlIdToLabel } from '../lib/conceptMap'
+import { lookupMisconceptionTrap } from '../lib/questionBank'
 import { prewarmEmbedder, embedderReady } from '../lib/queryEmbedder'
 import { recordLearnActivity } from '../lib/learnActivity'
 import type { HomeworkQuestion } from '../types'
@@ -208,8 +211,40 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null)
   const [voiceFailed, setVoiceFailed] = useState(false)
 
+  // ── Proactive misconception nudge ───────────────────────────────────────
+  // 2026-09-02: every surface on this page was student-initiated (search,
+  // upload, hints on request) — nothing ever spoke up first. This is the
+  // fix: /recommend already computes misconceptionGaps (a reviewed
+  // misconception -> ingredient map, not a raw LLM guess) for every
+  // student, it was just never surfaced outside the tutor dashboard. Shown
+  // the moment this page opens, before any search, because "independent,
+  // inside the platform" is most of how a student actually studies here —
+  // tutors are once a week; this either catches the gap or it does not.
+  const [nudge, setNudge] = useState<{ conceptId: string; label: string; trapLabel: string } | null>(null)
+  const [nudgeDismissed, setNudgeDismissed] = useState(false)
+
+  // ── Per-question sims ────────────────────────────────────────────────────
+  // "Sims and questions are trackable and give us immediate data" — every
+  // materials question resolves to its own concept and, if the library
+  // already has a real sim for it (no generation spend), loads it
+  // automatically alongside the hint path. If none exists yet, a real
+  // "generate one" button stands in, same budget-gated pipeline the main
+  // reading pane already uses, just scoped to this one question's concept.
+  interface QuestionSimState {
+    status: 'loading' | 'ready' | 'none' | 'error'
+    conceptId?: string
+    conceptLabel?: string
+    sim?: ConceptSim
+    generating?: boolean
+    genStatus?: string
+    genFailed?: string
+    generatedSim?: GeneratedSim
+  }
+  const [questionSims, setQuestionSims] = useState<Record<number, QuestionSimState>>({})
+
   const graphIframeRef = useRef<HTMLIFrameElement>(null)
   const materialsFileRef = useRef<HTMLInputElement>(null)
+  const topUploadFileRef = useRef<HTMLInputElement>(null)
   const simplifyStartedForRef = useRef<string | null>(null)
   const checkStartedForRef = useRef<string | null>(null)
   const simGenStartedForRef = useRef<string | null>(null)
@@ -252,6 +287,21 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   useEffect(() => {
     if (!uid) return
     void loadStudyLog(uid).then(setStudyLog)
+  }, [uid])
+
+  useEffect(() => {
+    if (!uid) return
+    void getRecommendations(uid, [], 'curriculum').then((rec) => {
+      const gaps = rec?.misconceptionGaps ?? []
+      if (!gaps.length) return
+      const top = [...gaps].sort((a, b) => b.severity - a.severity)[0]
+      const trap = lookupMisconceptionTrap(top.misconceptionId)
+      setNudge({
+        conceptId: top.conceptId,
+        label: mlIdToLabel(top.conceptId),
+        trapLabel: trap ?? 'a familiar trap',
+      })
+    })
   }, [uid])
 
   // Start pulling the on-device search model as soon as this view opens, so
@@ -547,7 +597,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   // Same pipeline as the Work tab (WorkStudio.tsx): rasterize client-side,
   // extract questions via /api/parse-homework, which transcribes and splits
   // only, never solves. Failures are stated plainly, never papered over.
-  async function handleMaterialsFile(file: File) {
+  async function handleMaterialsFile(file: File, opts: { autoResolve?: boolean } = {}) {
     setMaterialsError('')
     setMaterialsBusy('Reading your pages...')
     try {
@@ -557,7 +607,11 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         return
       }
       setMaterialsBusy(`Pulling questions out of ${pages.length} page${pages.length > 1 ? 's' : ''}...`)
-      const { questions, unavailable } = await parseHomeworkPages(pages)
+      const { questions, unavailable, needsKey } = await parseHomeworkPages(pages)
+      if (needsKey) {
+        setMaterialsError('Add a free API key in Settings (the gear icon on your dash) to use homework upload.')
+        return
+      }
       if (unavailable) {
         setMaterialsError('Reading is temporarily unavailable. Try again in a bit.')
         return
@@ -566,9 +620,23 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         setMaterialsError('No questions found on those pages. Try another file.')
         return
       }
-      setMaterials({ fileName: file.name, pageCount: pages.length, questions })
-      setSelectedQ(null)
+      const materialsSnapshot: MaterialsState = { fileName: file.name, pageCount: pages.length, questions }
+      setMaterials(materialsSnapshot)
       setRightTab('materials')
+      // Uploading before ever searching has no resolved concept to hang the
+      // materials panel off of, so the first extracted question doubles as
+      // the search query: same resolve path as typing it in, just skipping
+      // the retyping. A later upload from inside an already-resolved concept
+      // (the materials panel's own uploader) must NOT do this, or it would
+      // yank the student off the concept they are already reading.
+      if (opts.autoResolve) {
+        setSelectedQ(0)
+        setQuery(questions[0].text)
+        runSearch(questions[0].text)
+        void loadSimForQuestion(0, materialsSnapshot)
+      } else {
+        setSelectedQ(null)
+      }
     } catch {
       setMaterialsError('Something went wrong reading that upload.')
     } finally {
@@ -582,11 +650,72 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setQHintsTried(false)
     setHintsShown(0)
     setVoiceFailed(false)
+    void loadSimForQuestion(i)
     // The help card renders in the left column; bring it into view so picking
     // a question on the right visibly answers on the left.
     window.setTimeout(() => {
       document.getElementById('lrn-q-intel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 80)
+  }
+
+  /** Resolve one materials question to its own concept and, if the library
+   * already has a real sim there, load it, free, no generation spend. Cached
+   * per question index so re-selecting the same question does not re-resolve.
+   * Takes an optional explicit materials snapshot: the auto-resolve upload
+   * path calls this in the same tick as setMaterials(), before the state
+   * update has landed, so reading the `materials` state here would still see
+   * the pre-upload value (null). */
+  async function loadSimForQuestion(i: number, materialsOverride?: MaterialsState) {
+    const m = materialsOverride ?? materials
+    if (!m || questionSims[i]) return
+    const q = m.questions[i]
+    setQuestionSims((prev) => ({ ...prev, [i]: { status: 'loading' } }))
+    try {
+      const resolved = await resolveConcept(q.text, 3)
+      const best = resolved.matches[0]
+      if (!best) {
+        setQuestionSims((prev) => ({ ...prev, [i]: { status: 'none' } }))
+        return
+      }
+      if (!best.hasSim) {
+        setQuestionSims((prev) => ({ ...prev, [i]: { status: 'none', conceptId: best.conceptId, conceptLabel: best.label } }))
+        return
+      }
+      const content = await fetchConceptContent(best.conceptId)
+      setQuestionSims((prev) => ({
+        ...prev,
+        [i]: content?.sim
+          ? { status: 'ready', conceptId: best.conceptId, conceptLabel: best.label, sim: content.sim }
+          : { status: 'none', conceptId: best.conceptId, conceptLabel: best.label },
+      }))
+    } catch {
+      setQuestionSims((prev) => ({ ...prev, [i]: { status: 'error' } }))
+    }
+  }
+
+  /** Same budget-gated generation pipeline the main reading pane uses
+   * (runSimGeneration), scoped to one materials question's own concept
+   * instead of the page's active one. Only reachable once loadSimForQuestion
+   * has already confirmed the library has no sim here, same "deliberate
+   * button, not automatic" rule. */
+  async function generateSimForQuestion(i: number) {
+    const qs = questionSims[i]
+    if (!qs?.conceptLabel) return
+    setQuestionSims((prev) => ({ ...prev, [i]: { ...prev[i], generating: true, genFailed: '' } }))
+    const { sim: made, reason } = await generateSim(qs.conceptLabel, {
+      onStatus: (s) => setQuestionSims((prev) => ({ ...prev, [i]: { ...prev[i], genStatus: s } })),
+    })
+    setQuestionSims((prev) => ({
+      ...prev,
+      [i]: {
+        ...prev[i],
+        generating: false,
+        genStatus: '',
+        generatedSim: made ?? undefined,
+        genFailed: made ? '' : (reason || 'Generation did not produce a usable sim.'),
+      },
+    }))
+    if (made && uid && qs.conceptId) recordLearnActivity(uid, 'learn_sim_generated', { conceptId: qs.conceptId })
   }
 
   async function fetchFirstHint() {
@@ -645,6 +774,27 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         .lrn-qrow:hover { background: rgba(94,200,240,0.1) !important; border-color: rgba(94,200,240,0.45) !important; }
       `}</style>
 
+      {nudge && !nudgeDismissed && (
+        <div style={{ padding: '12px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, borderBottom: BORDER_SOFT, background: 'rgba(167,139,250,0.08)' }}>
+          <span style={{ flex: 1, minWidth: 0, lineHeight: 1.5 }}>
+            <b style={{ color: '#A78BFA' }}>Worth a look:</b> {nudge.trapLabel} keeps catching you on <b>{nudge.label}</b>. A quick pass now beats it showing up again later.
+          </span>
+          <button
+            onClick={() => { setNudgeDismissed(true); setQuery(nudge.label); runSearch(nudge.label) }}
+            style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 600, padding: '7px 14px', borderRadius: 9, border: 'none', background: '#A78BFA', color: '#1E1533', cursor: 'pointer' }}
+          >
+            Practice this
+          </button>
+          <button
+            onClick={() => setNudgeDismissed(true)}
+            aria-label="Dismiss"
+            style={{ flexShrink: 0, fontSize: 12.5, padding: '7px 10px', borderRadius: 9, border: '1px solid rgba(167,139,250,0.35)', background: 'transparent', color: TEXT_FAINT, cursor: 'pointer' }}
+          >
+            not now
+          </button>
+        </div>
+      )}
+
       {resolved && (
         <div style={{ padding: '10px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, borderBottom: BORDER_SOFT, background: 'rgba(205,215,238,0.03)', color: outOfDomain ? '#FF7B7B' : belowThreshold ? '#F0C060' : TEXT_FAINT }}>
           <span style={{ flex: 1, minWidth: 0 }}>
@@ -682,7 +832,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
           <iframe
             ref={graphIframeRef}
             title="concept-graph"
-            src="/full-graph-viewer.html"
+            src="/full-graph-viewer.html?hideSubjects"
             onLoad={() => pushStudiedToGraph(studyLog)}
             style={{ width: '100%', height: '100%', border: 'none' }}
           />
@@ -828,6 +978,56 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
                       </p>
                     )}
                   </div>
+
+                  {selectedQ != null && questionSims[selectedQ] && (
+                    <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid rgba(94,200,240,0.2)' }}>
+                      {(() => {
+                        const qs = questionSims[selectedQ]
+                        if (qs.status === 'loading') {
+                          return <p style={{ margin: 0, fontSize: 12.5, color: 'rgba(94,200,240,0.75)' }}>Checking for a sim on this...</p>
+                        }
+                        if (qs.status === 'ready' && qs.sim) {
+                          return (
+                            <>
+                              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
+                                <span style={{ fontSize: 11, fontWeight: 700, color: '#58CC02', letterSpacing: 0.6 }}>SIM</span>
+                                <span style={{ fontSize: 13, fontWeight: 600 }}>{qs.sim.title}</span>
+                              </div>
+                              <iframe title="question-sim" srcDoc={qs.sim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,215,238,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
+                            </>
+                          )
+                        }
+                        if (qs.generatedSim) {
+                          return (
+                            <>
+                              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
+                                <span style={{ fontSize: 11, fontWeight: 700, color: '#A78BFA', letterSpacing: 0.6 }}>AI GENERATED</span>
+                                <span style={{ fontSize: 13, fontWeight: 600 }}>{qs.generatedSim.title}</span>
+                              </div>
+                              <iframe title="question-sim-generated" srcDoc={qs.generatedSim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,215,238,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
+                            </>
+                          )
+                        }
+                        if (qs.generating) {
+                          return <p style={{ margin: 0, fontSize: 12.5, color: 'rgba(167,139,250,0.85)' }}>{qs.genStatus || 'Starting...'}</p>
+                        }
+                        if (qs.status === 'none' && qs.conceptLabel) {
+                          return (
+                            <>
+                              <button
+                                onClick={() => void generateSimForQuestion(selectedQ)}
+                                style={{ fontSize: 12.5, fontWeight: 600, padding: '7px 14px', borderRadius: 9, border: '1px solid rgba(167,139,250,0.45)', background: 'transparent', color: '#A78BFA', cursor: 'pointer' }}
+                              >
+                                Generate a sim for this
+                              </button>
+                              {qs.genFailed && <p style={{ margin: '8px 0 0', fontSize: 12, color: '#FF7B7B' }}>{qs.genFailed}</p>}
+                            </>
+                          )
+                        }
+                        return null
+                      })()}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1097,6 +1297,32 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         <button onClick={() => runSearch()} disabled={loading} style={{ padding: '13px 28px', borderRadius: 13, border: 'none', background: '#6366F1', color: 'white', fontWeight: 600, fontSize: 14.5, cursor: loading ? 'default' : 'pointer' }}>
           {loading ? '...' : 'Search'}
         </button>
+        <input
+          ref={topUploadFileRef}
+          type="file"
+          accept={MATERIALS_ACCEPT}
+          hidden
+          onChange={(e) => {
+            const f = e.target.files?.[0]
+            if (f) void handleMaterialsFile(f, { autoResolve: true })
+            e.target.value = ''
+          }}
+        />
+        <button
+          onClick={() => topUploadFileRef.current?.click()}
+          disabled={!!materialsBusy || loading}
+          title="Upload a worksheet and jump straight to it, no typing needed"
+          style={{ padding: '13px 20px', borderRadius: 13, border: '1.5px dashed rgba(94,200,240,0.5)', background: 'rgba(94,200,240,0.07)', color: '#5EC8F0', fontWeight: 600, fontSize: 13.5, cursor: materialsBusy || loading ? 'default' : 'pointer', whiteSpace: 'nowrap' }}
+        >
+          {materialsBusy || 'Upload homework'}
+        </button>
+        {/* The materials panel's own error line only exists once a concept has
+            resolved, so an upload started from here (before anything has
+            resolved) needs its own surface, or a failure reads as the button
+            just silently doing nothing. */}
+        {!showPanels && materialsError && (
+          <span style={{ fontSize: 12.5, color: '#FF7B7B', maxWidth: 320, lineHeight: 1.45 }}>{materialsError}</span>
+        )}
         {embedPct !== null && embedPct < 100 && !embedderReady() && (
           <span style={{ fontSize: 12, color: '#5EC8F0', maxWidth: 360, lineHeight: 1.45 }}>
             Getting the search model ready ({embedPct}%). This is a one-time download that stays cached in your browser, and it runs on your device, so searching costs nothing.

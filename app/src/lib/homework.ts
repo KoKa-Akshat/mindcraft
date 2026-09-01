@@ -16,6 +16,7 @@ import {
 } from 'firebase/firestore'
 import { db, auth } from '../firebase'
 import { WEBHOOK_BASE } from './mlApi'
+import { readByokConfig } from './byokSettings'
 import type { HomeworkQuestion, HomeworkSessionDoc } from '../types'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl
@@ -144,6 +145,7 @@ interface ParseHomeworkResponse {
   questions: ParsedPageQuestion[]
   pageCount: number
   unavailable?: boolean
+  needsKey?: boolean
 }
 
 function chunk<T>(arr: T[], size: number): T[][] {
@@ -158,23 +160,34 @@ function chunk<T>(arr: T[], size: number): T[][] {
  * Throws only on auth/network failure; a provider-side miss comes back as
  * an empty (but valid) questions array with `unavailable` folded into the
  * return value's length being zero — callers check `.length === 0`.
+ *
+ * Runs entirely on the student's own BYOK key (Desk OS Settings) —
+ * 2026-09-01 rework, no platform-key path here at all (see
+ * webhook/lib/handlers/parse-homework.ts's own header comment for why).
+ * `needsKey` short-circuits before any network call if none is set, so
+ * callers can point the student at Settings instead of a generic failure.
  */
-export async function parseHomeworkPages(pages: string[]): Promise<{ questions: HomeworkQuestion[]; unavailable: boolean }> {
+export async function parseHomeworkPages(pages: string[]): Promise<{ questions: HomeworkQuestion[]; unavailable: boolean; needsKey: boolean }> {
   const token = await auth.currentUser?.getIdToken()
   if (!token) throw new Error('Not signed in')
+
+  const byok = readByokConfig()
+  if (!byok) return { questions: [], unavailable: false, needsKey: true }
 
   const chunks = chunk(pages, PAGES_PER_PARSE_CALL)
   const merged: ParsedPageQuestion[] = []
   let anyUnavailable = false
+  let needsKey = false
 
   for (const pageChunk of chunks) {
     const res = await fetch(`${WEBHOOK_BASE}/api/parse-homework`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ pages: pageChunk.map(imageBase64 => ({ imageBase64 })) }),
+      body: JSON.stringify({ pages: pageChunk.map(imageBase64 => ({ imageBase64 })), byok }),
     })
     if (!res.ok) { anyUnavailable = true; continue }
     const data = await res.json() as ParseHomeworkResponse
+    if (data.needsKey) { needsKey = true; continue }
     if (data.unavailable) anyUnavailable = true
 
     for (let i = 0; i < data.questions.length; i++) {
@@ -200,7 +213,7 @@ export async function parseHomeworkPages(pages: string[]): Promise<{ questions: 
     ambiguous: q.ambiguous,
   }))
 
-  return { questions, unavailable: anyUnavailable && questions.length === 0 }
+  return { questions, unavailable: anyUnavailable && questions.length === 0, needsKey: needsKey && questions.length === 0 }
 }
 
 // ── Firestore CRUD ────────────────────────────────────────────────────────────

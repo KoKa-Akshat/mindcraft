@@ -84,7 +84,13 @@ export default function WorkStudio({
     setStage('reading')
     setStatusText('Reading your questions…')
     try {
-      const { questions, unavailable } = await parseHomeworkPages(pendingPages)
+      const { questions, unavailable, needsKey } = await parseHomeworkPages(pendingPages)
+      if (needsKey) {
+        setError('Add a free API key in Settings (the gear icon on your dash) to use homework upload.')
+        setStage('error')
+        setPendingPages(null)
+        return
+      }
       if (unavailable) {
         // Both the primary and fallback reading providers failed (not "no
         // questions on this page" — the readers themselves are down). Say so
