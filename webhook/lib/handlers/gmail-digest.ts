@@ -19,10 +19,7 @@ import { setCors } from '../cors'
 import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
-// NOT llama-3.3-70b-versatile: Groq shut that model down 2026-08-16 (see
-// english-practice.ts's own discovery of this), this is the live,
-// confirmed replacement.
-const GROQ_MODEL = 'openai/gpt-oss-120b'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
 export interface DigestMessageIn {
   from?: string

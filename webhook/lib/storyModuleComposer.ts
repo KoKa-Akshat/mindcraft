@@ -14,10 +14,7 @@ import { ChatGroq } from '@langchain/groq'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
 import { JsonOutputParser } from '@langchain/core/output_parsers'
 
-// NOT llama-3.3-70b-versatile: Groq shut that model down 2026-08-16 (see
-// english-practice.ts's own discovery of this), this is the live,
-// confirmed replacement.
-export const STORY_MODULE_MODEL = 'openai/gpt-oss-120b'
+export const STORY_MODULE_MODEL = 'llama-3.3-70b-versatile'
 export const MAX_QUESTIONS = 12
 export const MAX_STORY_CHARS = 4000
 export const CACHE_VERSION = 'v5'
