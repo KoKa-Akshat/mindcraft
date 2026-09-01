@@ -233,6 +233,11 @@
     stroke-dasharray:520; stroke-dashoffset:520; animation:drawSwash .7s .95s ease-out forwards;
   }
   @keyframes drawSwash{to{stroke-dashoffset:0;}}
+  /* "the world" shows first, matching the original headline, then swaps to
+     "Jesse" a beat later (script near the end of the file). Fade only, the
+     line's own width can change freely since nothing else sits beside it. */
+  #heroWordLine{display:inline-block; transition:opacity .4s ease;}
+  #heroWordLine.is-swapping{opacity:0;}
   .hero .lead{
     margin:clamp(26px,3.8vh,38px) 0 0; max-width:52ch; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62;
     color:var(--chalk-dim); animation:rise .9s .3s var(--ease) both;
@@ -817,7 +822,7 @@
     <p class="hero-kicker">The Desk by MindCraft</p>
     <h1>
       <span class="hl"><span>Interact with</span></span>
-      <span class="hl"><span><em>Jesse<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
+      <span class="hl"><span id="heroWordLine">the <em>world<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
     </h1>
     <p class="lead">Hands-on simulations that build the instincts 2028's workforce will actually need. <strong>Everything on this page is the real product:</strong> type an idea, search the library, walk the map.</p>
     <div class="hero-ctas">
@@ -1198,6 +1203,27 @@
       entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(e){ io.observe(e); });
+  })();
+
+  // ----- hero headline: "the world" first, then swaps to "Jesse" -----
+  // Shows the original phrasing for a beat (so it reads, and its own
+  // underline finishes drawing, drawSwash settles at ~1.65s) before fading
+  // to the new one. Reduced motion skips straight to the final state.
+  (function(){
+    var el = document.getElementById('heroWordLine');
+    if(!el) return;
+    var jesseHTML = '<em>Jesse<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.';
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      el.innerHTML = jesseHTML;
+      return;
+    }
+    setTimeout(function(){
+      el.classList.add('is-swapping');
+      setTimeout(function(){
+        el.innerHTML = jesseHTML;
+        el.classList.remove('is-swapping');
+      }, 400);
+    }, 2100);
   })();
 
   // ----- census numbers count up to their real totals on first sight -----
