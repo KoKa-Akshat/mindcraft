@@ -450,6 +450,13 @@
   .sim-stage{display:none; border-top:1px solid var(--edge); background:#fafafa;}
   .sim-card.open .sim-stage{display:block;}
   .sim-stage-frame iframe{display:block; width:100%; height:min(62vh,540px); border:0; background:#fff;}
+  /* Dan's sims stack their controls under the drawing, so on a phone the
+     62vh frame cropped the whole control row (the mutation slider sat on the
+     cut). More height means the controls are visible without hunting for the
+     scroll inside the iframe. */
+  @media (max-width:640px){
+    .sim-stage-frame iframe{height:min(76vh,560px);}
+  }
   .sim-stage-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 16px; background:var(--field-2);}
   .sim-stage-foot a{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--leaf);}
   .sim-stage-foot a:hover{text-decoration:underline;}
@@ -514,7 +521,13 @@
   .zpd-seed:hover{color:var(--chalk); border-color:var(--chalk-faint);}
   .zpd-seed[aria-pressed="true"]{background:var(--lime); border-color:var(--lime); color:var(--lime-ink);}
   .zpd-body{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
-  .zpd-stage{position:relative; background:radial-gradient(ellipse 62% 62% at 50% 46%, rgba(36,122,77,.16), transparent 70%); touch-action:none;}
+  /* pan-y, not none: a finger swiping DOWN the page over this full-width
+     stage must keep scrolling the page, or the graph turns into a scroll trap
+     that fills most of a phone screen (verified with a synthesized touch
+     scroll: with none, the page moved 0px). The browser keeps vertical
+     swipes; sideways drags still reach the pointer handlers and pan the
+     graph, and a tap still selects a concept. */
+  .zpd-stage{position:relative; background:radial-gradient(ellipse 62% 62% at 50% 46%, rgba(36,122,77,.16), transparent 70%); touch-action:pan-y;}
   .zpd-stage svg{display:block; width:100%; height:min(62vh,540px); cursor:grab;}
   .zpd-stage svg.dragging{cursor:grabbing;}
   .zpd-ring{fill:none; stroke-width:1;}
@@ -747,10 +760,24 @@
   .cs-nosim b{color:var(--chalk); font-weight:600;}
   @media (max-width:860px){
     /* Too narrow for two columns, so the panel itself scrolls and the sim gets
-       a real height rather than being squeezed into a sliver. */
-    .cs-res-body, .cs-res-body.has-sim{grid-template-columns:1fr; overflow-y:auto;}
+       a real height rather than being squeezed into a sliver. Block flow, not
+       a one-column grid: with the grid, WebKit sized the reading row to its
+       MINIMUM (the 40px of padding) instead of its content, so an iPhone saw
+       one clipped line of summary with the rest painted over by the sim.
+       Measured on an emulated iPhone 13: grid rows came out 40px and 340px
+       while the reading column actually held 1089px of chapter. */
+    .cs-res-body, .cs-res-body.has-sim{display:block; overflow-y:auto;}
     .cs-res-read{overflow:visible;}
     .cs-res-sim{border-left:0; border-top:1px solid var(--edge); min-height:340px;}
+  }
+  @media (max-width:640px){
+    /* On a phone the back button and the heading no longer fit side by side:
+       the heading got squeezed to one word per line next to a wide button.
+       Stack them instead, button first so the way out stays obvious. */
+    .cs-res-top{flex-wrap:wrap;}
+    .cs-back{order:-1; margin-left:0;}
+    .cs-res-head{flex:1 1 100%;}
+    .cs-res-head .zpd-sub{overflow-wrap:anywhere;}
   }
 
   /* ---------- claim your desk (cream) ---------- */
@@ -984,7 +1011,7 @@
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
         <b>Where you stand</b>
-        <span class="zpd-hint">Drag to move the graph. Click a lime concept to step onto it.</span>
+        <span class="zpd-hint">Drag to move the graph. Tap or click a lime concept to step onto it.</span>
         <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
       </div>
       <div class="zpd-body">
@@ -2267,8 +2294,13 @@
         // across, which is an unfair thing to ask anyone to hit, and an SVG
         // <g> has no surface of its own so a near miss falls straight through
         // to the background. Concepts are at least 149 units apart at the
-        // tightest ring, so a 44-unit target cannot steal a neighbour's click.
-        g.appendChild(el('rect', {x:-22, y:-22, width:44, height:44, class:'zpd-hit'}));
+        // tightest ring, so neither size below can steal a neighbour's click.
+        // On a narrow screen the whole viewBox is squeezed into under 560
+        // real pixels, so 44 units land around 16 on-screen pixels, well
+        // under a fingertip; 76 units gets a phone tap target back to about
+        // 28 pixels without moving a single visible dot.
+        var hit = narrow ? 76 : 44;
+        g.appendChild(el('rect', {x:-hit/2, y:-hit/2, width:hit, height:hit, class:'zpd-hit'}));
         g.appendChild(el('circle', {r: p.zone === 0 ? 15 : p.zone === 3 ? 6 : 9}));
         if(p.zone === 0) g.appendChild(el('text', {class:'zpd-you', y:4})).textContent = 'YOU';
         var label = el('text', {y: p.zone === 0 ? 40 : 24});
@@ -2543,6 +2575,7 @@
         svg.classList.remove('dragging');
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', up);
       }
       svg.addEventListener('pointerdown', function(e){
         // A recenter still in flight owns the pan transform. Land it first so
@@ -2552,6 +2585,11 @@
         sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
         window.addEventListener('pointermove', move);
         window.addEventListener('pointerup', up);
+        // The stage allows vertical touch scrolling (touch-action:pan-y), so
+        // when the browser claims a mostly-vertical swipe for the page it
+        // cancels the pointer stream. Treat that exactly like lifting the
+        // finger, or the drag state sticks until the next tap.
+        window.addEventListener('pointercancel', up);
       });
       // A drag that happens to end on a concept must not also select it.
       svg.addEventListener('click', function(e){ if(moved){ e.stopPropagation(); moved = false; } }, true);
