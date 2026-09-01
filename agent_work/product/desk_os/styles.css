@@ -3244,6 +3244,26 @@ body.is-hub-chrome .sky { opacity: 0; }
   font: 400 12px/1.2 var(--sans);
   color: #888;
 }
+.hub-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hub-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e8e8ea;
+  background: #f3f3f5;
+  color: #555;
+  border-radius: 999px;
+  padding: 0;
+  cursor: pointer;
+}
+.hub-settings svg { width: 18px; height: 18px; }
+.hub-settings:hover { background: #ececef; color: #222; }
 .hub-signout {
   border: 1px solid #e8e8ea;
   background: transparent;
@@ -3256,7 +3276,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-signout:hover { background: #f3f3f5; color: #222; }
 .hub-main {
   flex: 1;
-  padding: 28px 28px 48px;
+  padding: 20px 28px 28px;
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
@@ -3431,10 +3451,10 @@ body.is-hub-chrome .sky { opacity: 0; }
 
 /* In-dash tutors · marketing-style map + shrink profiles */
 .hub-tutors {
-  margin-top: 40px;
+  margin-top: 22px;
   margin-bottom: 12px;
 }
-.hub-tutors-head { margin-bottom: 14px; }
+.hub-tutors-head { margin-bottom: 10px; }
 .hub-tutors-title {
   margin: 0 0 6px;
   font: 700 22px/1.15 var(--sans);
@@ -3462,7 +3482,7 @@ body.is-hub-chrome .sky { opacity: 0; }
   border: 1px solid rgba(45, 74, 56, 0.12);
   background: #fff;
   min-height: 0;
-  height: 480px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   position: relative;
