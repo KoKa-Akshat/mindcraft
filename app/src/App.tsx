@@ -310,7 +310,19 @@ async function deskOsHandoffQuery(): Promise<string> {
   const params = new URLSearchParams()
   if (user.displayName) params.set('mcName', user.displayName)
   if (user.email) params.set('mcEmail', user.email)
-  params.set('mcRole', 'student')
+  // The post-login gate only ever sends students here, but /desk itself is
+  // an unguarded alias (see the route table below): a tutor, parent, or
+  // admin who navigates to it directly is still a real signed-in user, and
+  // hardcoding 'student' would mislabel them. Read the real role instead;
+  // Desk OS's own onboarding only has student/tutor personas (see its
+  // "Who is joining the desk?" picker), so a parent/admin, or an account
+  // with no role doc at all, gets no mcRole and falls back to Desk OS's
+  // own picker rather than being bridged in under the wrong identity.
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid))
+    const role = snap.data()?.role
+    if (role === 'student' || role === 'tutor') params.set('mcRole', role)
+  } catch { /* fall through with no mcRole, Desk OS shows its own picker */ }
   return `&${params.toString()}`
 }
 
