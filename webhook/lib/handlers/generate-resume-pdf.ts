@@ -27,7 +27,7 @@ import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb } from 'pdf-lib'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
-import { callAnthropic } from '../llmChat'
+import { callAnthropic, callByok, type ByokChatOptions } from '../llmChat'
 import { studentGeminiComplete } from '../studentGemini'
 
 const ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001'
@@ -73,6 +73,29 @@ interface PdfBody {
   role?: TargetRole
   links?: string[]
   studentGeminiKey?: string
+  // Tried only after studentGeminiKey and the platform Anthropic call both
+  // give up, same 2026-09-01 addition as resume-agent.ts, see callByok's
+  // own comment in llmChat.ts.
+  byok?: {
+    provider?: string
+    apiKey?: string
+    model?: string
+    baseUrl?: string
+  }
+}
+
+function toByokOptions(byok: PdfBody['byok'], system: string): ByokChatOptions | null {
+  const provider = byok?.provider
+  if (!byok?.apiKey || !(provider === 'openai' || provider === 'groq' || provider === 'anthropic' || provider === 'custom')) return null
+  return {
+    provider,
+    apiKey: clip(byok.apiKey, 200),
+    model: byok.model ? clip(byok.model, 80) : undefined,
+    baseUrl: byok.baseUrl ? clip(byok.baseUrl, 300) : undefined,
+    maxTokens: 600,
+    temperature: 0.5,
+    system,
+  }
 }
 
 function clip(s: unknown, n: number): string {
@@ -267,6 +290,7 @@ async function letterBody(
   d: Required<DraftBody>,
   role: TargetRole,
   studentGeminiKey: string,
+  byok: PdfBody['byok'],
 ): Promise<{ paragraphs: string[]; source: 'llm' | 'template'; costUsd: number }> {
   const user = JSON.stringify({
     student: { name: d.name, school: d.school, location: d.location, skills: d.skills, roles: d.roles, projects: d.projects, headline: d.headline },
@@ -283,6 +307,12 @@ async function letterBody(
         // Estimated, since callAnthropic returns text without usage counts.
         const inputTokens = Math.ceil((LETTER_SYSTEM.length + user.length) / 4)
         costUsd = (inputTokens / 1_000_000) * INPUT_USD_PER_MTOK + (EST_OUTPUT_TOKENS / 1_000_000) * OUTPUT_USD_PER_MTOK
+      }
+      // Tried last, and only costs the platform budget nothing either way,
+      // since it is the student's own key.
+      if (!raw) {
+        const byokOptions = toByokOptions(byok, LETTER_SYSTEM)
+        if (byokOptions) raw = await callByok(user, byokOptions)
       }
     }
   } catch {
@@ -368,7 +398,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const d = clean(body.draft)
     const key = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
-    const { paragraphs, source, costUsd } = await letterBody(d, role, key)
+    const { paragraphs, source, costUsd } = await letterBody(d, role, key, body.byok)
     if (costUsd > 0) {
       recordActualSpend(costUsd).catch((e) => {
         console.error('generate-resume-pdf: failed to record platform spend', e)

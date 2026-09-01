@@ -10,7 +10,7 @@
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { setCors } from '../cors'
-import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
+import { callAnthropic, callByok, callGroq, parseModelJson, sanitizeText, type ByokChatOptions } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
@@ -55,6 +55,15 @@ interface ResumeAgentBody {
     driveFiles?: { name?: string; text?: string }[]
     resumeText?: string
     resumeFileName?: string
+  }
+  // A student-supplied key (2026-09-01), tried only after the platform's own
+  // Anthropic and Groq calls both fail, see callByok's own comment in
+  // llmChat.ts. Optional, never required, never persisted here.
+  byok?: {
+    provider?: string
+    apiKey?: string
+    model?: string
+    baseUrl?: string
   }
 }
 
@@ -280,9 +289,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     },
   })
 
+  const byok = body.byok
+  const byokProvider = byok?.provider
+  const validByok: ByokChatOptions | null =
+    byok?.apiKey && (byokProvider === 'openai' || byokProvider === 'groq' || byokProvider === 'anthropic' || byokProvider === 'custom')
+      ? {
+          provider: byokProvider,
+          apiKey: clip(byok.apiKey, 200),
+          model: byok.model ? clip(byok.model, 80) : undefined,
+          baseUrl: byok.baseUrl ? clip(byok.baseUrl, 300) : undefined,
+          maxTokens: 1400,
+          temperature: 0.3,
+          system: SYSTEM,
+        }
+      : null
+
   const raw =
     (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 1400, system: SYSTEM })) ||
-    (await callGroq(user, { model: GROQ_MODEL, maxTokens: 1400, temperature: 0.3, system: SYSTEM }))
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: 1400, temperature: 0.3, system: SYSTEM })) ||
+    (validByok ? await callByok(user, validByok) : null)
   const parsed = raw ? parseModelJson<ParsedResumeReply>(raw) : null
   const fallback = !parsed
 

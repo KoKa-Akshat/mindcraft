@@ -48,6 +48,7 @@ import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9b
 import { createTutorMap } from './tutorMap.js?v=te1';
 import { createResumeHelper } from './resumeHelper.js?v=rh1';
 import { createFriends } from './friends.js?v=te1';
+import { createSettings } from './settings.js?v=s1';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
 import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
@@ -2075,6 +2076,10 @@ function wire() {
         return '';
       }
     },
+    onToast: (msg) => showToast(msg),
+  });
+  createSettings({
+    button: document.querySelector('[data-hub-settings]'),
     onToast: (msg) => showToast(msg),
   });
   workflowMarket = createWorkflowMarket({

@@ -33,6 +33,7 @@
  */
 
 import { ensureFire } from './fire.js';
+import { readByokConfig } from './settings.js';
 
 const WEBHOOK_BASE = 'https://mindcraft-webhook.vercel.app';
 const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
@@ -170,6 +171,7 @@ export function createResumeHelper({ root, onToast }) {
   let saveTimer = null;
   let greeted = false;
   let signedOut = false;
+  let firstFallbackNudged = false;
 
   // ---------- auth ----------
 
@@ -469,7 +471,10 @@ export function createResumeHelper({ root, onToast }) {
       const res = await fetch(`${WEBHOOK_BASE}/api/resume-agent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, draft, sources }),
+        // byok: tried only after MindCraft's own platform keys fail, see
+        // settings.js's own header comment for why this never touches
+        // Firestore.
+        body: JSON.stringify({ message, draft, sources, byok: readByokConfig() || undefined }),
       });
       if (res.ok) data = await res.json();
     } catch { /* honest failure below */ }
@@ -482,6 +487,10 @@ export function createResumeHelper({ root, onToast }) {
     paintDraft();
     scheduleSaveDraft();
     bubble('jesse', data.reply);
+    if (data.fallback && !readByokConfig() && !firstFallbackNudged) {
+      firstFallbackNudged = true;
+      bubble('jesse', "MindCraft's own key is resting right now, so I am working off simpler rules. Add your own key in Settings, top right, and I will get sharper.");
+    }
     if (Array.isArray(data.suggestedRoles) && data.suggestedRoles.length) {
       bubble('jesse', 'Directions worth searching: ' + data.suggestedRoles.map((r) => r.role).filter(Boolean).join(' · ')
         + '. Open the jobs table and I will look for real openings.');
@@ -651,6 +660,7 @@ export function createResumeHelper({ root, onToast }) {
           role: kind === 'coverLetter'
             ? { company: role.company, role: role.role, location: role.location, why: role.why, roleUrl: role.roleUrl }
             : undefined,
+          byok: kind === 'coverLetter' ? (readByokConfig() || undefined) : undefined,
         }),
       });
       if (res.status === 404) {

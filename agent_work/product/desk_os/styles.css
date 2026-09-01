@@ -5249,6 +5249,19 @@ body.is-hub-chrome .sky { opacity: 0; }
   cursor: pointer;
 }
 .friends-add button:hover { background: #3d6b4f; }
+.settings-form select {
+  border: 1px solid #dddcd6;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font: 600 13px/1.2 var(--sans);
+  color: #1a1a1a;
+  background: #fff;
+}
+/* An author display rule always beats the UA [hidden]{display:none}
+   regardless of specificity, the exact bug found and fixed on the
+   marketing page's studio trail this same day. Say it explicitly so the
+   model/base-URL fields actually hide until Custom is picked. */
+.settings-form [hidden] { display: none !important; }
 .friends-list { display: flex; flex-direction: column; gap: 8px; }
 .friends-row {
   display: flex;
