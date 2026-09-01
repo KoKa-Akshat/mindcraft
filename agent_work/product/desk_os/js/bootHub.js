@@ -1,6 +1,7 @@
 /** Boot → instance hub → open desk / ACT · n8n-shaped flow */
 
 import { BOOT_DIAGRAM_DELAY_MS, BOOT_HUB_DELAY_MS } from './actBook.js';
+import { getRole } from './onboarding.js';
 
 const INST_KEY = 'deskOs.instances';
 const USER_KEY = 'deskOs.user';
@@ -217,6 +218,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const masteryNav = hub?.querySelector('[data-hub-mastery-nav]');
   const masteryCube = hub?.querySelector('.hub-cube');
   const jesseNav = hub?.querySelector('[data-hub-jesse-nav]');
+  const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
   const jesseBox = hub?.querySelector('[data-jesse-scene]');
   const jesseOwl = hub?.querySelector('.jesse-owl');
   const jesseStageName = hub?.querySelector('[data-jesse-stage-name]');
@@ -244,7 +246,20 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hubFirst) hubFirst.textContent = String(user.name || 'there').split(/\s+/)[0];
     if (hubGreetWord) hubGreetWord.textContent = greetWord();
     paintJesse(user);
+    paintRoleSurfaces();
     return user;
+  }
+
+  /**
+   * Tutors have no hatchling (2026-08-31 ask): a tutor's hub swaps Jesse
+   * for the three tutor-tool tiles (Calendly, Meet, Location), which
+   * deep-link to the real /tutor dashboard where those boxes already live.
+   * Students keep Jesse exactly as before.
+   */
+  function paintRoleSurfaces() {
+    const tutor = (getRole() || 'student') === 'tutor';
+    if (jesseNav) jesseNav.hidden = tutor;
+    if (tutorTiles) tutorTiles.hidden = !tutor;
   }
 
   function selectedInstance(list) {
@@ -462,11 +477,15 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   // The cube already has a slow ambient spin (cubeTurn); this layers one
   // quick full turn on top as click feedback, then navigates once it's
   // played, matching CLICK_SPIN_MS to the CSS animation's own duration.
+  // 2026-08-31: a TUTOR's cube goes to their own dashboard (/tutor, the
+  // existing React tutor page with Calendly, Meet, Location, and now
+  // Events), not to the student Learn experience.
   const CLICK_SPIN_MS = 500;
   masteryNav?.addEventListener('click', () => {
     masteryCube?.classList.add('is-click-spin');
+    const dest = (getRole() || 'student') === 'tutor' ? '/tutor' : '/learn';
     window.setTimeout(() => {
-      window.location.href = '/learn';
+      window.location.href = dest;
     }, CLICK_SPIN_MS);
   });
 
