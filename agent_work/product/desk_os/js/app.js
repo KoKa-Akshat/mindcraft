@@ -43,9 +43,10 @@ import { createFieldBookCook } from './fieldbook.js?v=r9b';
 import { createSatellites } from './satellites.js?v=r9b';
 import { createActBookOverlay } from './actBook.js?v=r9b';
 import { openConnectGuide } from './connectGuide.js?v=r9b';
-import { createBootHub } from './bootHub.js?v=r9b';
+import { createBootHub } from './bootHub.js?v=rh1';
 import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9b';
 import { createTutorMap } from './tutorMap.js?v=te1';
+import { createResumeHelper } from './resumeHelper.js?v=rh1';
 import { createFriends } from './friends.js?v=te1';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
@@ -211,6 +212,8 @@ let bookStudio = null;
 let widgets = null;
 /** @type {ReturnType<typeof createTutorMap> | null} */
 let tutorMap = null;
+/** @type {ReturnType<typeof createResumeHelper> | null} */
+let resumeHelper = null;
 /** @type {ReturnType<typeof createFriends> | null} */
 let friendsPanel = null;
 /** @type {ReturnType<typeof createWorkflowMarket> | null} */
@@ -619,12 +622,33 @@ function ensureBookStudio() {
   return bookStudio;
 }
 
+/**
+ * Jesse's toggle (2026-08-31 ask): swap the hub's lower panel between the
+ * Tutors and events map and the Resume Helper, in place, no navigation.
+ * The Resume Helper keeps its own internal step (profile building vs jobs
+ * table), so pressing Jesse a third time lands the student exactly where
+ * they left off in Resume mode.
+ */
+function toggleResumePanel() {
+  const resumeRoot = document.getElementById('hubResume');
+  if (!resumeRoot) return;
+  if (resumeRoot.hidden) {
+    if (els.hubTutorMap) els.hubTutorMap.hidden = true;
+    void resumeHelper?.open();
+  } else {
+    resumeHelper?.close();
+    if (els.hubTutorMap) els.hubTutorMap.hidden = false;
+    tutorMap?.open();
+  }
+}
+
 function ensureBootHub() {
   if (bootHub || !els.bootStage || !els.hubStage) return bootHub;
   bootHub = createBootHub({
     boot: els.bootStage,
     hub: els.hubStage,
     onOpenInstance: (inst) => openInstance(inst),
+    onJesseToggle: () => toggleResumePanel(),
     onCreateInstance: () => {
       bootHub?.hideAll();
       ensureBookStudio()?.show();
@@ -2036,6 +2060,10 @@ function wire() {
 
   tutorMap = createTutorMap({
     root: els.hubTutorMap,
+    onToast: (msg) => showToast(msg),
+  });
+  resumeHelper = createResumeHelper({
+    root: document.getElementById('hubResume'),
     onToast: (msg) => showToast(msg),
   });
   friendsPanel = createFriends({
