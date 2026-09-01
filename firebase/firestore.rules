@@ -427,6 +427,42 @@ service cloud.firestore {
       }
     }
 
+    // Tutor-created, location-pinned public events (TUTORS_EVENTS build,
+    // 2026-08-31): office hours at a cafe, a study meetup, anything a tutor
+    // wants every MindCraft student to see live on their map. Any signed-in
+    // user may read (the whole point is students discovering events on the
+    // Desk OS Events tab and, later, other maps). Create requires the caller
+    // to (a) name themselves as tutorId, (b) actually hold the tutor or
+    // admin role on their own users/{uid} doc (Admin-SDK-written, so it
+    // cannot be spoofed client-side, same defense flagged_questions uses),
+    // and (c) ship a minimally well-formed event: string title, numeric
+    // lat/lng, numeric startAt/endAt in ms epoch (the same time shape
+    // sessions.scheduledAt already uses). Update and delete stay with the
+    // owning tutor, and tutorId is immutable post-create so an event can
+    // never be reassigned to someone else.
+    match /tutorEvents/{eventId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.tutorId == request.auth.uid
+        && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tutor'
+          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        )
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.lat is number
+        && request.resource.data.lng is number
+        && request.resource.data.startAt is number
+        && request.resource.data.endAt is number
+        && request.resource.data.endAt > request.resource.data.startAt;
+      allow update: if request.auth != null
+        && resource.data.tutorId == request.auth.uid
+        && request.resource.data.tutorId == resource.data.tutorId;
+      allow delete: if request.auth != null
+        && resource.data.tutorId == request.auth.uid;
+    }
+
     match /knowledge_graphs/{studentId} {
       allow read: if request.auth != null && (
         request.auth.uid == studentId ||
