@@ -4,17 +4,17 @@
 <title>The Desk by MindCraft</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
+<meta name="description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
 <link rel="canonical" href="https://joinmindcraft.com/">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Desk by MindCraft">
-<meta property="og:description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta property="og:description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta property="og:url" content="https://joinmindcraft.com/">
 <meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Desk by MindCraft">
-<meta name="twitter:description" content="Interact with the world. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta name="twitter:description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -466,8 +466,28 @@
   .desk-more .btn{min-height:40px; padding:0 18px; font-size:12.5px; border-radius:11px;}
   .desk-more em{font-style:normal; color:rgba(20,58,46,.35);}
 
+  .books-teaser{
+    margin-top:20px; padding-top:28px; border-top:1px solid rgba(20,58,46,.1);
+    display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;
+  }
+  .books-teaser-lede{font-size:13.5px; color:var(--chalk-dim);}
+  .books-teaser-row{display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
+  .book-mini{
+    display:flex; flex-direction:column; gap:8px; width:104px; text-decoration:none;
+    transition:transform .25s var(--ease);
+  }
+  .book-mini:hover{transform:translateY(-3px);}
+  .book-mini img{
+    width:104px; height:156px; object-fit:cover; border-radius:8px;
+    box-shadow:0 10px 26px rgba(20,58,46,.16); border:1px solid rgba(20,58,46,.08);
+  }
+  .book-mini span{font-size:11.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
+
   /* ---------- frontier graph (dark) ---------- */
-  .frontier{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
+  .frontier{
+    background:radial-gradient(ellipse 80% 55% at 50% 8%, var(--field-2), var(--field-1) 72%);
+    border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
+  }
 
   /* ---------- native ZPD explorer ----------
      Replaces the p5 iframe that used to sit here. That embed carried its own
@@ -797,7 +817,7 @@
     <p class="hero-kicker">The Desk by MindCraft</p>
     <h1>
       <span class="hl"><span>Interact with</span></span>
-      <span class="hl"><span>the <em>world<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
+      <span class="hl"><span><em>Jesse<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
     </h1>
     <p class="lead">Hands-on simulations that build the instincts 2028's workforce will actually need. <strong>Everything on this page is the real product:</strong> type an idea, search the library, walk the map.</p>
     <div class="hero-ctas">
@@ -847,8 +867,8 @@
   <canvas id="deskAwake" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="desk-head reveal">
-      <div class="kicker"><i>01</i> The Desk &middot; a creation studio</div>
-      <h2 class="h2">What do you want to bring to <em>life</em>?</h2>
+      <div class="kicker"><i>01</i></div>
+      <h2 class="h2">What would you like to bring to <em>life</em>?</h2>
     </div>
 
     <!-- the creation flow's progress trail. Filled in by the studio script. -->
@@ -895,23 +915,10 @@
 
     <div class="simlib-intro reveal">
       <h3>Or step through a door that is <em>already open</em>.</h3>
-      <p>Six entry points into the library's 722 live MicroSims. Hover a card to see its world move, then try it for real.</p>
+      <p>Three entry points into the library's 722 live MicroSims. Hover a card to see its world move, then try it for real.</p>
     </div>
 
     <div class="simlib reveal" aria-label="Curiosity doors into the MicroSim library">
-      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html" data-title="Solar System Simulation">
-        <div class="cur-thumb" style="--stage:#0b1026"><canvas data-anim="universe"></canvas><span class="cur-live">Live sim</span></div>
-        <div class="sim-face">
-          <h3>Build a universe</h3>
-          <p>Set planets moving around a star and watch gravity choreograph the whole thing.</p>
-          <p class="cur-meta">Orbital motion &middot; Physics</p>
-          <button class="sim-play" type="button">Try it</button>
-        </div>
-        <div class="sim-stage">
-          <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
-        </div>
-      </article>
       <article class="sim-card" data-sim="library/sims/biology__natural-selection.html" data-title="Coevolution Arms Race MicroSim">
         <div class="cur-thumb" style="--stage:#0f2e1d"><canvas data-anim="creature"></canvas><span class="cur-live">Live sim</span></div>
         <div class="sim-face">
@@ -923,32 +930,6 @@
         <div class="sim-stage">
           <div class="sim-stage-frame"></div>
           <div class="sim-stage-foot"><a href="library/sims/biology__natural-selection.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
-        </div>
-      </article>
-      <article class="sim-card" data-sim="library/sims/computer-science__sorting-comparison.html" data-title="Sorting Algorithm Race MicroSim">
-        <div class="cur-thumb" style="--stage:#1a1030"><canvas data-anim="game"></canvas><span class="cur-live">Live sim</span></div>
-        <div class="sim-face">
-          <h3>Invent a game</h3>
-          <p>Six sorting algorithms, one starting gun. Rig the race and call the winner.</p>
-          <p class="cur-meta">Algorithms &middot; Computer science</p>
-          <button class="sim-play" type="button">Try it</button>
-        </div>
-        <div class="sim-stage">
-          <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="library/sims/computer-science__sorting-comparison.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
-        </div>
-      </article>
-      <article class="sim-card" data-sim="library/sims/algebra-1__projectile-motion.html" data-title="Projectile Motion MicroSim">
-        <div class="cur-thumb" style="--stage:#14321f"><canvas data-anim="sport"></canvas><span class="cur-live">Live sim</span></div>
-        <div class="sim-face">
-          <h3>Simulate your favorite sport</h3>
-          <p>Pick the angle and the power, then trace the perfect arc yourself.</p>
-          <p class="cur-meta">Projectile motion &middot; Algebra</p>
-          <button class="sim-play" type="button">Try it</button>
-        </div>
-        <div class="sim-stage">
-          <div class="sim-stage-frame"></div>
-          <div class="sim-stage-foot"><a href="library/sims/algebra-1__projectile-motion.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
         </div>
       </article>
       <article class="sim-card" data-sim="library/sims/circuits__harmonics.html" data-title="Harmonic Content Explorer MicroSim">
@@ -981,10 +962,26 @@
 
     <p class="desk-more reveal">
       <a class="btn soft" href="https://mindcraft-93858.web.app/desk">Browse all 722 in SimCraft</a>
-      <em>&middot;</em>
-      <span>Prefer a much more extensive lesson?</span>
-      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
     </p>
+
+    <div class="books-teaser reveal">
+      <p class="books-teaser-lede">Prefer a much more extensive lesson? Real books from our library:</p>
+      <div class="books-teaser-row">
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=biology">
+          <img src="img/dans-covers/biology.jpg" alt="Biology: An Interactive Course cover" loading="lazy">
+          <span>Biology: An Interactive Course</span>
+        </a>
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=circuits">
+          <img src="img/dans-covers/circuits.jpg" alt="AI Circuits Course cover" loading="lazy">
+          <span>AI Circuits Course</span>
+        </a>
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=psychology">
+          <img src="img/dans-covers/psychology.jpg" alt="Psychology cover" loading="lazy">
+          <span>Psychology</span>
+        </a>
+      </div>
+      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft &#8594; all books</a>
+    </div>
   </div>
 </section>
 
@@ -993,7 +990,7 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal"><i>02</i> The frontier graph</div>
-    <h2 class="h2 reveal">Learning works in <em>mysterious</em> ways. Not really.</h2>
+    <h2 class="h2 reveal">See exactly what your student is <em>ready</em> for.</h2>
     <div class="zpd reveal" id="zpd">
       <div class="zpd-head">
         <b>Where you stand</b>
@@ -1002,7 +999,7 @@
       </div>
       <div class="zpd-body">
         <div class="zpd-stage">
-          <svg id="zpdSvg" viewBox="0 0 760 620" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
+          <svg id="zpdSvg" viewBox="23 19 714 583" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
             <g id="zpdPan">
               <g id="zpdRings"></g>
               <g id="zpdLinks"></g>
@@ -1034,7 +1031,7 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal"><i>03</i> The whole map</div>
-    <h2 class="h2 reveal">Ask MindCraft <em>anything</em>.</h2>
+    <h2 class="h2 reveal">Ask Jesse <em>anything</em>.</h2>
 
     <div class="cs reveal">
       <form class="cs-form" id="csForm" role="search">
@@ -1050,7 +1047,7 @@
         <button class="cs-eg" type="button">what makes a species change over time</button>
         <button class="cs-eg" type="button">the fundamental theorem of calculus</button>
       </div>
-      <p class="cs-status" id="csStatus">Free and private. The search model runs in your browser, not on our servers, so this costs nothing and needs no account.</p>
+      <p class="cs-status" id="csStatus"></p>
       <div class="cs-bar" id="csBar" hidden><i></i></div>
       <div class="cs-alts" id="csAlts"></div>
     </div>
