@@ -24,6 +24,7 @@ import LiveJoinBanner from '../components/LiveJoinBanner'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorWeeklyPaperCard from '../components/TutorWeeklyPaperCard'
 import TutorLocationPin from '../components/TutorLocationPin'
+import TutorEventsPanel from '../components/TutorEventsPanel'
 import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
 import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
@@ -31,7 +32,7 @@ import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 
-type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin'
+type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin' | 'events'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
 const GMEET_GUIDE = '/guides/gmeet-setup.html'
 
@@ -103,7 +104,7 @@ export default function TutorDashboard() {
     [sessionStudents, extraStudents],
   )
   // studentId -> display name, reused for LiveJoinBanner (no new Firestore
-  // read — same fallback chain focusStudent/heroStudent already use).
+  // read, same fallback chain focusStudent/heroStudent already use).
   const studentNames = useMemo(
     () => Object.fromEntries(students.map(st => [st.id, st.displayName || st.email?.split('@')[0] || 'Student'])),
     [students],
@@ -146,6 +147,24 @@ export default function TutorDashboard() {
   const [sessionNotesId, setSessionNotesId] = useState<string | null>(null)
   const [savingNotes, setSavingNotes] = useState(false)
   const [connectChip, setConnectChip] = useState<null | 'calendly' | 'meet' | 'location'>(null)
+
+  // Deep links from Desk OS (TUTORS_EVENTS build, 2026-08-31): the hub's
+  // "Create event" button lands on /tutor?panel=events, and the hub's three
+  // tutor tiles land on /tutor?chip=calendly|meet|location. Read once on
+  // mount, then scrubbed from the URL so refresh and back do not keep
+  // forcing the same panel.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const wantPanel = params.get('panel')
+    const wantChip = params.get('chip')
+    if (wantPanel === 'events') {
+      setPanel('events')
+    } else if (wantChip === 'calendly' || wantChip === 'meet' || wantChip === 'location') {
+      setPanel('home')
+      setConnectChip(wantChip)
+    }
+    if (wantPanel || wantChip) window.history.replaceState({}, '', window.location.pathname)
+  }, [])
 
   // ── Assigned student (roster seed) ──────────────────────────────────────────
   const [assignedStudent, setAssignedStudent] = useState<AssignedStudent | null>(null)
@@ -195,7 +214,7 @@ export default function TutorDashboard() {
     }
   }, [selectedStudent, students, heroStudent])
 
-  // Live activity — pause while student dash is open in-panel
+  // Live activity, pause while student dash is open in-panel
   useEffect(() => {
     const sid = focusStudent?.id
     if (!sid || panel === 'admin') { setActivity([]); return }
@@ -335,7 +354,7 @@ export default function TutorDashboard() {
 
   // One-time parent lookup + mailto - no extra state needed. Checks both the
   // legacy single-child scalar and the childIds array (a student can now
-  // have more than one linked parent — see admin-link.ts), mailing all of
+  // have more than one linked parent, see admin-link.ts), mailing all of
   // them at once via a comma-separated recipient list.
   async function emailParent(studentId: string, studentName: string) {
     try {
@@ -383,7 +402,7 @@ export default function TutorDashboard() {
 
   // Roster: assignedTutorId (legacy single-tutor scalar, still the only
   // field an older student doc has) UNION assignedTutorIds array-contains
-  // (a student can now be linked to multiple tutors — see admin-link.ts).
+  // (a student can now be linked to multiple tutors, see admin-link.ts).
   // Both queries run and get deduped by id, so a tutor sees every student
   // linked either way, old or new.
   useEffect(() => {
@@ -719,6 +738,13 @@ export default function TutorDashboard() {
         >
           Notes
         </button>
+        <button
+          type="button"
+          className={`${s.sideItem} ${panel === 'events' ? s.sideActive : ''}`}
+          onClick={() => { setPanel('events'); setConnectChip(null) }}
+        >
+          Events
+        </button>
 
         <div className={s.sideDivider} />
         <button
@@ -763,6 +789,13 @@ export default function TutorDashboard() {
               setTutorProfile(next)
               if (next.locationAddress) setLocationAddress(next.locationAddress)
             }}
+            onToast={showToast}
+          />
+        ) : panel === 'events' ? (
+          <TutorEventsPanel
+            user={user}
+            tutorName={tutorProfile.displayName}
+            initialLatLng={locationLatLng}
             onToast={showToast}
           />
         ) : panel === 'notes' ? (
