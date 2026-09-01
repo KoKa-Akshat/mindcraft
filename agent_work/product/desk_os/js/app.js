@@ -218,6 +218,10 @@ let hubCall = null;
 let bookBlobUrl = null;
 let entered = false;
 let instanceOpen = false;
+/** True once boot() finds real handoff params (see readAuthHandoff/boot
+ * below): this session is a real signed-in Firebase student, not the local
+ * demo. Sign out needs to know this, see its own comment at onSignOut. */
+let isRealSession = false;
 /** Active instance · rail tools are shared chrome that act on this */
 /** @type {{ id?: string, name?: string, kind?: string, label?: string } | null} */
 let activeInstance = null;
@@ -625,7 +629,20 @@ function ensureBootHub() {
       els.appShell.dataset.mode = 'studio';
       document.title = 'MindCraft · Cook a Field Book';
     },
-    onSignOut: () => signOutToGate(),
+    // A real signed-in student needs a real Firebase sign-out, which only
+    // the React app can do (this static shell has no Firebase SDK of its
+    // own); the local-only reset below would leave the real session signed
+    // in underneath, so a reload would just bounce them right back in.
+    // The local demo (unauthenticated /try/desk) keeps the local reset,
+    // there is no real session there to sign out of. See DeskSignOutRedirect
+    // in App.tsx for the real half of this.
+    onSignOut: () => {
+      if (isRealSession) {
+        window.location.href = '/desk-sign-out';
+        return;
+      }
+      signOutToGate();
+    },
   });
   return bootHub;
 }
@@ -2268,6 +2285,7 @@ async function boot() {
   if (handoff) {
     setRole(handoff.role);
     entered = true;
+    isRealSession = true;
     try { sessionStorage.setItem('deskOs.entered', '1'); } catch { /* ignore */ }
     els.gate?.classList.add('hidden');
     document.body.classList.add('is-hub-chrome');

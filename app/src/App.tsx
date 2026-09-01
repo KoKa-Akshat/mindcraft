@@ -14,7 +14,7 @@
 
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { createContext, useContext, useEffect, useState, lazy, Suspense } from 'react'
-import { onAuthStateChanged, User } from 'firebase/auth'
+import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from './firebase'
 import Login         from './pages/Login'
@@ -262,6 +262,29 @@ function MarketingRedirect() {
 }
 
 /**
+ * Real sign-out for a student bridged into Desk OS (2026-09-01 fix).
+ *
+ * Desk OS has zero Firebase SDK of its own (it's a standalone static
+ * prototype), so its own "Sign out" button only ever reset its local demo
+ * state (signOutToGate() in app.js), the real Firebase session stayed
+ * signed in underneath. A student clicking it would see the demo splash
+ * again but a reload would immediately bounce them right back in, not
+ * actually signed out. Desk OS now navigates here for a real handoff
+ * session instead of its own local reset; this does the one real thing
+ * only the React app can (call signOut on the actual Firebase auth
+ * instance) before landing on /login.
+ */
+function DeskSignOutRedirect() {
+  useEffect(() => {
+    void (async () => {
+      try { await signOut(auth) } catch { /* ignore, still redirect */ }
+      window.location.replace('/login')
+    })()
+  }, [])
+  return <DeskHandoffBackground />
+}
+
+/**
  * Full-page jump into the Desk OS static prototype (Piano + ACT books).
  *
  * Targets the explicit index.html filename, not a directory-style trailing
@@ -466,6 +489,9 @@ export default function App() {
             Short in-app aliases so the live preview is easy to open. */}
         <Route path="/desk" element={<DeskOsRedirect />} />
         <Route path="/try/desk" element={<DeskOsRedirect />} />
+        {/* Real sign-out for a student bridged into Desk OS, see
+            DeskSignOutRedirect's own doc comment. */}
+        <Route path="/desk-sign-out" element={<DeskSignOutRedirect />} />
         <Route path="/studio" element={<DeskStudioRedirect />} />
         <Route path="/try/studio" element={<DeskStudioRedirect />} />
         <Route path="/workflows" element={<DeskWorkflowsRedirect />} />

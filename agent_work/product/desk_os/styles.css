@@ -3183,6 +3183,16 @@ body.is-hub-chrome .sky { opacity: 0; }
   background: #fff;
   border-bottom: 1px solid #e8e8ea;
 }
+/* The greeting used to live inside the Mastery section and duplicate the
+   nav's own MindCraft logo / Dashboard tab / name+email block (2026-09-01
+   ask: drop that duplication, the greeting alone carries the "who's here"
+   context, promoted into the header where the logo used to sit). Same
+   .hub-greet look, just sized for a slim nav row instead of a section
+   heading. */
+.hub-greet-nav {
+  margin: 0;
+  font-size: 20px;
+}
 .hub-nav-left {
   display: flex;
   align-items: center;
