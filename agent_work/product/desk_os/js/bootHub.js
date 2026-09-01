@@ -361,6 +361,19 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     });
   }
 
+  // No-animation path for a real signed-in student handed off from the
+  // React app (2026-09-01 ask): the "workspace is starting up..." beat with
+  // its icon-diagram fade exists to sell the local demo prototype some
+  // theater, a real student who already clicked through two real preference
+  // screens does not need another ~2s of manufactured boot time before
+  // reaching content that is already loaded.
+  function skipBoot() {
+    if (!boot) return;
+    boot.classList.add('hidden');
+    boot.hidden = true;
+    if (hub) { hub.hidden = true; hub.classList.add('hidden'); }
+  }
+
   function showHub() {
     boot?.classList.add('hidden');
     if (boot) boot.hidden = true;
@@ -411,9 +424,13 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   });
   goalType?.addEventListener('change', () => persistGoal());
 
-  async function runAfterAuth(profile) {
+  async function runAfterAuth(profile, opts) {
     setUser(profile || {});
-    await showBoot();
+    if (opts?.skipBoot) {
+      skipBoot();
+    } else {
+      await showBoot();
+    }
     showHub();
   }
 

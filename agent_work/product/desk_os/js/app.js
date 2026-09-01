@@ -645,13 +645,18 @@ function bookSrcFor(inst) {
  * Finish auth → optional role onboarding → boot → hub.
  *
  * `profile`, when given, is the real signed-in identity handed off from the
- * React app (see readAuthHandoff() / boot()) or from the local demo
- * onboarding picker. Previously this hardcoded the founder's own name/email
- * here regardless of who was signing in, so every real student saw
- * "Akshat Koirala" on their own hub, bootHub.js's setUser() has its own
- * fallback for the case where no profile is known at all (never-onboarded
- * local demo), so this only forwards what it actually has instead of
- * inventing an identity.
+ * React app (see readAuthHandoff() / boot()); the local demo onboarding
+ * path (createOnboarding's onDone below) never passes one. Previously this
+ * hardcoded the founder's own name/email here regardless of who was signing
+ * in, so every real student saw "Akshat Koirala" on their own hub,
+ * bootHub.js's setUser() has its own fallback for the case where no profile
+ * is known at all (never-onboarded local demo), so this only forwards what
+ * it actually has instead of inventing an identity.
+ *
+ * A real `profile` also skips the "workspace is starting up..." boot
+ * animation (2026-09-01 ask): that theater is for the local demo, a real
+ * student who already clicked through two real preference screens does not
+ * need a manufactured delay before content that is already loaded.
  */
 async function finishEnter(role, profile) {
   ensureBootHub();
@@ -662,7 +667,7 @@ async function finishEnter(role, profile) {
   await bootHub?.runAfterAuth({
     ...(profile || {}),
     role: role || getRole() || 'student',
-  });
+  }, { skipBoot: Boolean(profile) });
   els.appShell.dataset.mode = 'hub';
   els.appShell.dataset.surface = 'hub';
   document.title = 'MindCraft · Dashboard';
