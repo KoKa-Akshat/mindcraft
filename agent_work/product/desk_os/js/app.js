@@ -49,7 +49,7 @@ import { createTutorMap } from './tutorMap.js?v=r9b';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
 import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
-import { createOnboarding, getRole } from './onboarding.js?v=r9b';
+import { createOnboarding, getRole, setRole } from './onboarding.js?v=r9b';
 import { loadConnectState, isConnected } from './connectLinks.js';
 
 const ORB_SRC = {
@@ -641,16 +641,26 @@ function bookSrcFor(inst) {
   return bookBlobUrl;
 }
 
-/** Finish auth → optional role onboarding → boot → hub */
-async function finishEnter(role) {
+/**
+ * Finish auth → optional role onboarding → boot → hub.
+ *
+ * `profile`, when given, is the real signed-in identity handed off from the
+ * React app (see readAuthHandoff() / boot()) or from the local demo
+ * onboarding picker. Previously this hardcoded the founder's own name/email
+ * here regardless of who was signing in, so every real student saw
+ * "Akshat Koirala" on their own hub, bootHub.js's setUser() has its own
+ * fallback for the case where no profile is known at all (never-onboarded
+ * local demo), so this only forwards what it actually has instead of
+ * inventing an identity.
+ */
+async function finishEnter(role, profile) {
   ensureBootHub();
   hubCall?.paintRoleChrome?.();
   els.appShell.dataset.mode = 'boot';
   els.appShell.dataset.surface = 'boot';
   document.title = 'MindCraft · Starting';
   await bootHub?.runAfterAuth({
-    name: 'Akshat Koirala',
-    email: 'akoirala@macalester.edu',
+    ...(profile || {}),
     role: role || getRole() || 'student',
   });
   els.appShell.dataset.mode = 'hub';
@@ -2211,6 +2221,30 @@ function wire() {
   if (els.railHint) els.railHint.textContent = '';
 }
 
+/**
+ * Real, already-authenticated handoff from the React app's post-login flow
+ * (App.tsx's DeskOsRedirect / DeskStudioRedirect / DeskWorkflowsRedirect,
+ * only ever reached once Firebase auth is confirmed there). Trusting these
+ * query params outright is safe: Desk OS's own Google/Apple splash and
+ * student/tutor picker were never a real security boundary, this whole
+ * shell is a static prototype with no protected reads of its own ("Local
+ * demo, no cloud"). A visit with no handoff params (a manual /desk-os/ open,
+ * the public /try/desk marketing demo) falls through to the existing splash
+ * exactly as before.
+ */
+function readAuthHandoff() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('mcEmail') || '';
+    if (!email) return null;
+    const role = params.get('mcRole') === 'tutor' ? 'tutor' : 'student';
+    const name = params.get('mcName') || email.split('@')[0] || 'Student';
+    return { name, email, role };
+  } catch {
+    return null;
+  }
+}
+
 async function boot() {
   wire();
   itemsCache = await listItems();
@@ -2222,6 +2256,19 @@ async function boot() {
   renderSemesterSelect();
   renderMailList();
   renderCanvas();
+
+  // A real signed-in student handed off from the React app: skip the demo
+  // gate and role picker entirely and go straight to the real hub.
+  const handoff = readAuthHandoff();
+  if (handoff) {
+    setRole(handoff.role);
+    entered = true;
+    try { sessionStorage.setItem('deskOs.entered', '1'); } catch { /* ignore */ }
+    els.gate?.classList.add('hidden');
+    document.body.classList.add('is-hub-chrome');
+    await finishEnter(handoff.role, handoff);
+    return;
+  }
 
   // Always land on the journal entry; skip orb soup
   els.gate?.classList.remove('hidden');

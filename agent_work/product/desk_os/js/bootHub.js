@@ -217,10 +217,17 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
 
+  // No hardcoded fallback identity here (this used to default to the
+  // founder's own name/email, meaning every real student saw
+  // "Akshat Koirala" / his email on their own hub whenever setUser() ran
+  // with no profile, e.g. renderHub()'s bare setUser() call, or the local
+  // demo onboarding path before a real profile was ever known). Falls back
+  // to whatever was last persisted (loadUser()), and only to a neutral
+  // placeholder if nothing has ever been saved.
   function setUser(profile = {}) {
     const user = {
-      name: profile.name || 'Akshat Koirala',
-      email: profile.email || 'akoirala@macalester.edu',
+      name: 'Student',
+      email: '',
       ...loadUser(),
       ...profile,
     };
@@ -373,6 +380,15 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.hubTab;
+      // "Dashboard" is real cross-app navigation to the concept map (React
+      // app's /knowledge-graph, ML-positioned nodes + mastery coloring +
+      // real sims), not an in-page panel this static shell can render.
+      // Desk OS is a separate static page from the React app, so this has
+      // to be a full navigation, not a client-side route change.
+      if (tab === 'dashboard') {
+        window.location.href = '/knowledge-graph';
+        return;
+      }
       tabBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
       panels.forEach((p) => {
         p.hidden = p.dataset.hubPanel !== tab;

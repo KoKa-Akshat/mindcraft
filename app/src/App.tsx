@@ -275,25 +275,67 @@ function MarketingRedirect() {
  * no console error to flag it. The explicit filename resolves identically
  * under both servers.
  */
+/**
+ * Dark-green background for the brief moment between firing a hard
+ * navigation into Desk OS and that navigation actually landing (this
+ * component itself only ever renders for a beat, `window.location.replace`
+ * tears the page down right after). The default page background is white
+ * until then, which read as a broken flash rather than an intentional
+ * handoff; matches the palette Login.module.css / LanguageChoice.module.css
+ * already use for the same dark-green brand look.
+ */
+function DeskHandoffBackground() {
+  return <div style={{ position: 'fixed', inset: 0, background: '#060c09', zIndex: 9999 }} />
+}
+
+/**
+ * Builds the query string that hands Desk OS the real, already-authenticated
+ * user's identity (see agent_work/product/desk_os/js/app.js's
+ * readAuthHandoff()), so it can invoke its own enterFromAuth/finishEnter
+ * flow directly instead of showing its disconnected demo splash + student/
+ * tutor picker. Desk OS's own gate was never a real security boundary
+ * (a static prototype with no protected reads of its own, "Local demo, no
+ * cloud" by its own doc comments), so handing identity across as plain
+ * query params is a safe, low-risk UX handoff, not a security boundary
+ * crossing. Awaits authStateReady() first: a full-page `window.location.
+ * replace` into `/desk` (the path Login.tsx's non-navigate call takes)
+ * resets the JS module state, so `auth.currentUser` can still be null for a
+ * moment on the fresh load even though the user genuinely is signed in,
+ * same race the AUTH_HANDOFF_MS mechanism in postLogin.ts exists to avoid.
+ */
+async function deskOsHandoffQuery(): Promise<string> {
+  await auth.authStateReady()
+  const user = auth.currentUser
+  if (!user) return ''
+  const params = new URLSearchParams()
+  if (user.displayName) params.set('mcName', user.displayName)
+  if (user.email) params.set('mcEmail', user.email)
+  params.set('mcRole', 'student')
+  return `&${params.toString()}`
+}
+
 function DeskOsRedirect() {
   useEffect(() => {
-    window.location.replace('/desk-os/index.html?v=r9b')
+    void (async () => {
+      const handoff = await deskOsHandoffQuery()
+      window.location.replace(`/desk-os/index.html?v=r9b${handoff}`)
+    })()
   }, [])
-  return null
+  return <DeskHandoffBackground />
 }
 
 function DeskStudioRedirect() {
   useEffect(() => {
     window.location.replace('/desk-os/studio/index.html?v=spatial2')
   }, [])
-  return null
+  return <DeskHandoffBackground />
 }
 
 function DeskWorkflowsRedirect() {
   useEffect(() => {
     window.location.replace('/desk-os/workflows/index.html?v=f5')
   }, [])
-  return null
+  return <DeskHandoffBackground />
 }
 
 export default function App() {

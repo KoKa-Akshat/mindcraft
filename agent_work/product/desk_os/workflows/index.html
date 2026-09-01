@@ -6,6 +6,11 @@
 <title>MindCraft · Workflows</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Fredoka:wght@600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<!-- Matches workflows.css's own --bg-warm instantly at parse time, before
+     that external stylesheet loads, so a hard navigation in (the React
+     app's DeskWorkflowsRedirect) does not flash the browser's default
+     white first. -->
+<style>html,body{background:#f4f2ec}</style>
 <link rel="stylesheet" href="workflows.css">
 </head>
 <body>
