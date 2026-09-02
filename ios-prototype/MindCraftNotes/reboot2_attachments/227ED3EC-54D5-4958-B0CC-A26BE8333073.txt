@@ -1,4 +1,0 @@
-Query chain:
- →Find: Target Application 'com.mindcraft.notes-prototype'
-  ↪︎Find: Descendants matching type Image
-    ↪︎Find: Elements matching predicate '"diagramRealImage" IN identifiers'

@@ -32,9 +32,6 @@ import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
 import FirstSpark      from './pages/FirstSpark'
-import DevColdCheckPreview from './pages/DevColdCheckPreview' // THROWAWAY, remove with its route below
-import DevJarvisPreview from './pages/DevJarvisPreview' // THROWAWAY, remove with its route below
-import DevUnifiedLearn from './pages/DevUnifiedLearn' // THROWAWAY, remove with its route below
 // Production promotion of the DevUnifiedLearn prototype, wired to the real
 // migrated content library, real auth, and the real generation endpoints.
 import Learn           from './pages/Learn'
@@ -392,9 +389,6 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/spark" element={<FirstSpark />} />
-        <Route path="/dev-cold-check" element={<DevColdCheckPreview />} /> {/* THROWAWAY, remove */}
-        <Route path="/dev-jarvis" element={<DevJarvisPreview />} /> {/* THROWAWAY, remove */}
-        <Route path="/dev-learn" element={<DevUnifiedLearn />} /> {/* THROWAWAY, remove */}
         {/* Old plain list-only booking page: permanently redirects to the
             richer Find-a-Tutor page (map + proximity search + honest
             no-fake-reviews handling). Keep the redirect, not the old page,
