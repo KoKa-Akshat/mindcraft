@@ -147,12 +147,15 @@
 
       <main class="hub-main" data-hub-panel="dashboard">
         <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
+          <!-- G0 (2026-09-02, dashboard redesign): from an equal-weight row
+               of three icon-only boxes to a grid, the cube as the real
+               centerpiece on the left (bigger, same construction, see
+               .hub-orb-stage-hero), Jesse + the raccoon moved into a right
+               column that G1 gives real tabs and G2 gives a real activity
+               panel. Cube still opens Learn, unchanged. -->
           <div class="hub-mastery-duo">
-            <!-- 2026-09-02 (second pass): three icon-only boxes, no labels
-                 under any of them, the icon itself is the whole affordance.
-                 Cube still opens Learn, unchanged. -->
-            <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
-              <div class="hub-orb-stage" aria-hidden="true">
+            <button type="button" class="hub-orb-row hub-orb-hero" data-hub-mastery-nav aria-label="Open Learn">
+              <div class="hub-orb-stage hub-orb-stage-hero" aria-hidden="true">
                 <div class="hub-orb-glow"></div>
                 <div class="hub-orb">
                   <div class="hub-cube">
@@ -169,75 +172,78 @@
                 </div>
               </div>
             </button>
-            <!-- Jesse · the desk pet. Same CSS-only fake-3D technique family
-                 as the cube beside him (absolutely positioned face planes in
-                 a preserve-3d parent, no WebGL, no model file). His stage is
-                 painted by bootHub.js's paintJesse() from the REAL /learn
-                 activity count handed off by the React app (mcLearn param).
-                 Click behavior (second pass, 2026-09-02): opens Tutors and
-                 events (was its own separate "Map" box for one round, folded
-                 back into Jesse per the founder, one fewer box). -->
-            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Tutors and events near you">
-              <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
-                <div class="hub-orb-glow jesse-glow"></div>
-                <div class="jesse-scene">
-                  <div class="jesse-owl">
-                    <span class="jesse-face j-back"></span>
-                    <span class="jesse-face j-right"></span>
-                    <span class="jesse-face j-left"></span>
-                    <span class="jesse-face j-top"></span>
-                    <span class="jesse-face j-bottom"></span>
-                    <span class="jesse-face j-front">
-                      <span class="jesse-tuft t-left"></span>
-                      <span class="jesse-tuft t-right"></span>
-                      <span class="jesse-eye e-left"><span class="jesse-pupil"></span></span>
-                      <span class="jesse-eye e-right"><span class="jesse-pupil"></span></span>
-                      <span class="jesse-specs"></span>
-                      <span class="jesse-beak"></span>
-                      <span class="jesse-belly"></span>
-                      <span class="jesse-tassel"></span>
-                    </span>
-                    <span class="jesse-book"></span>
-                    <span class="jesse-cap"></span>
-                  </div>
-                  <span class="jesse-shell"></span>
-                </div>
-              </div>
-            </button>
-            <!-- Raccoon · opens the Resume Helper (was a separate "Unlock"
-                 keybook box for one round, replaced per the founder with the
-                 real MindCraft mark, forest green, same asset + filter
-                 treatment as the marketing page's ZPD graph center mark). -->
-            <button type="button" class="hub-orb-row" data-hub-resume-nav aria-label="Open the Resume Helper">
-              <div class="hub-orb-stage" aria-hidden="true">
-                <div class="hub-orb-glow"></div>
-                <div class="hub-orb hub-orb-img">
-                  <img src="img/orbs/raccoon-logo.png" alt="" class="hub-orb-raccoon" />
-                </div>
-              </div>
-            </button>
 
-            <!-- Tutor tools · shown INSTEAD of Jesse when the signed-in role
-                 is tutor (bootHub.js toggles both). Tutors have no hatchling;
-                 their three boxes, Calendly, Meet room, and Location, already
-                 live on the real /tutor dashboard, so these tiles deep-link
-                 straight to them rather than duplicating that UI here. -->
-            <div class="hub-tutor-tiles" data-hub-tutor-tiles hidden>
-              <a class="hub-tutor-tile" href="/tutor?chip=calendly">
-                <span class="hub-tutor-tile-kicker">Bookings</span>
-                <strong>Calendly</strong>
-                <span class="hub-tutor-tile-soft">Connect once, sessions flow in</span>
-              </a>
-              <a class="hub-tutor-tile" href="/tutor?chip=meet">
-                <span class="hub-tutor-tile-kicker">Video</span>
-                <strong>Google Meet</strong>
-                <span class="hub-tutor-tile-soft">Your permanent room link</span>
-              </a>
-              <a class="hub-tutor-tile" href="/tutor?chip=location">
-                <span class="hub-tutor-tile-kicker">Map</span>
-                <strong>Location</strong>
-                <span class="hub-tutor-tile-soft">Where students find you</span>
-              </a>
+            <div class="hub-mastery-side" data-hub-mastery-side>
+              <div class="hub-icon-pair">
+                <!-- Jesse · the desk pet. Same CSS-only fake-3D technique
+                     family as the cube (absolutely positioned face planes in
+                     a preserve-3d parent, no WebGL, no model file). His
+                     stage is painted by bootHub.js's paintJesse() from the
+                     REAL /learn activity count handed off by the React app
+                     (mcLearn param). Opens Tutors and events. -->
+                <button type="button" class="hub-orb-row hub-orb-row-sm hub-jesse" data-hub-jesse-nav aria-label="Tutors and events near you">
+                  <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
+                    <div class="hub-orb-glow jesse-glow"></div>
+                    <div class="jesse-scene">
+                      <div class="jesse-owl">
+                        <span class="jesse-face j-back"></span>
+                        <span class="jesse-face j-right"></span>
+                        <span class="jesse-face j-left"></span>
+                        <span class="jesse-face j-top"></span>
+                        <span class="jesse-face j-bottom"></span>
+                        <span class="jesse-face j-front">
+                          <span class="jesse-tuft t-left"></span>
+                          <span class="jesse-tuft t-right"></span>
+                          <span class="jesse-eye e-left"><span class="jesse-pupil"></span></span>
+                          <span class="jesse-eye e-right"><span class="jesse-pupil"></span></span>
+                          <span class="jesse-specs"></span>
+                          <span class="jesse-beak"></span>
+                          <span class="jesse-belly"></span>
+                          <span class="jesse-tassel"></span>
+                        </span>
+                        <span class="jesse-book"></span>
+                        <span class="jesse-cap"></span>
+                      </div>
+                      <span class="jesse-shell"></span>
+                    </div>
+                  </div>
+                </button>
+                <!-- Raccoon · opens the Resume Helper. The real MindCraft
+                     mark, forest green, same asset + filter treatment as the
+                     marketing page's ZPD graph center mark. -->
+                <button type="button" class="hub-orb-row hub-orb-row-sm" data-hub-resume-nav aria-label="Open the Resume Helper">
+                  <div class="hub-orb-stage" aria-hidden="true">
+                    <div class="hub-orb-glow"></div>
+                    <div class="hub-orb hub-orb-img">
+                      <img src="img/orbs/raccoon-logo.png" alt="" class="hub-orb-raccoon" />
+                    </div>
+                  </div>
+                </button>
+
+                <!-- Tutor tools · shown INSTEAD of Jesse when the signed-in
+                     role is tutor (bootHub.js toggles both). Tutors have no
+                     hatchling; their three boxes, Calendly, Meet room, and
+                     Location, already live on the real /tutor dashboard, so
+                     these tiles deep-link straight to them rather than
+                     duplicating that UI here. -->
+                <div class="hub-tutor-tiles" data-hub-tutor-tiles hidden>
+                  <a class="hub-tutor-tile" href="/tutor?chip=calendly">
+                    <span class="hub-tutor-tile-kicker">Bookings</span>
+                    <strong>Calendly</strong>
+                    <span class="hub-tutor-tile-soft">Connect once, sessions flow in</span>
+                  </a>
+                  <a class="hub-tutor-tile" href="/tutor?chip=meet">
+                    <span class="hub-tutor-tile-kicker">Video</span>
+                    <strong>Google Meet</strong>
+                    <span class="hub-tutor-tile-soft">Your permanent room link</span>
+                  </a>
+                  <a class="hub-tutor-tile" href="/tutor?chip=location">
+                    <span class="hub-tutor-tile-kicker">Map</span>
+                    <strong>Location</strong>
+                    <span class="hub-tutor-tile-soft">Where students find you</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>

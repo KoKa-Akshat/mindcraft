@@ -4089,9 +4089,46 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-orb-img img.hub-orb-raccoon {
   filter: brightness(.55) saturate(.85) drop-shadow(0 6px 14px rgba(31, 42, 34, 0.18));
 }
+/* Hero cube (G0, 2026-09-02 dashboard redesign): same .hub-cube construction
+   (faces, crosses, cubeTurn spin, click-spin, reduced-motion override all
+   untouched below), just scaled up inside a bigger stage. Perspective has
+   to grow with the stage or the enlarged cube looks fisheyed; the ratio
+   here roughly matches the original 520px-for-128px stage. */
+.hub-orb-hero {
+  justify-content: center;
+  padding: 4px 0;
+}
+.hub-orb-stage-hero {
+  width: 300px;
+  height: 300px;
+  perspective: 1200px;
+}
+.hub-orb-stage-hero .hub-cube {
+  --s: 150px;
+  animation-duration: 22s;
+}
+.hub-icon-pair {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.hub-mastery-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .hub-mastery-duo { grid-template-columns: 1fr !important; }
+  .hub-orb-hero { padding: 0; }
+}
 @media (max-width: 720px) {
   .hub-mastery-head { flex-direction: column; }
   .hub-orb-row { gap: 14px; }
+  .hub-orb-stage-hero { width: 210px; height: 210px; perspective: 900px; }
+  .hub-orb-stage-hero .hub-cube { --s: 100px; }
+  .hub-icon-pair { gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hub-cube,
@@ -4113,10 +4150,10 @@ body.is-hub-chrome .sky { opacity: 0; }
      4 Sage: biggest, all of the above plus mortarboard, tassel, and a
        lime-warmed glow. */
 .hub-mastery-duo {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
   align-items: center;
-  gap: 12px 56px;
-  flex-wrap: wrap;
+  gap: 12px 40px;
 }
 .jesse-stagebox {
   position: relative;
