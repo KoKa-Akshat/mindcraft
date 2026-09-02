@@ -207,10 +207,10 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   // only, see lib/learnSessions.ts's doc comment for why).
   const [sessions, setSessions] = useState<LearnSessionSummary[]>([])
   const [sessionsLoading, setSessionsLoading] = useState(false)
-  // Phase G1 (2026-09-02): open by default (search/upload live here now,
-  // instead of a bottom bar), auto-collapses once a concept actually
-  // reveals (see the panelsRevealed effect below), reopens on toggle.
-  const [historyOpen, setHistoryOpen] = useState(true)
+  // Reverted 2026-09-02: open-by-default didn't land well, closed by
+  // default again, reopens on toggle. Search/upload still live in this
+  // panel (Phase G1), just not shown until the student opens it.
+  const [historyOpen, setHistoryOpen] = useState(false)
 
   // ── Proactive misconception nudge ───────────────────────────────────────
   // 2026-09-02: every surface on this page was student-initiated (search,
