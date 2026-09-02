@@ -73,11 +73,24 @@ function buildQueries(age: number | undefined, grade: number | undefined, progra
     // queries still run as the remaining slots (also a real safety net when
     // nothing matches, matchAlumniCompanies returns empty, not a guess).
     const alumniMatches = matchAlumniCompanies(topic, 2)
+    // ATS-scoped query (2026-09-02, root-caused a real "zero candidates"
+    // report): plain queries like "{topic} internship college student
+    // apply" mostly surfaced aggregator/category pages (an Indeed search
+    // results page, a LinkedIn "316 jobs" listing page), which
+    // safeExtractionPrompt's own honesty rule correctly rejects as "not a
+    // specific posting", so every real search was returning zero
+    // candidates even though search itself worked. Verified directly
+    // against Serper before shipping: scoping to the ATS platforms
+    // individual companies actually post through (not aggregators)
+    // returned nothing but real, specific, individually-verifiable
+    // postings (Dimensional Fund Advisors, BRG, an internal Workday req)
+    // for the exact same topic that returned zero usable results before.
+    const atsQuery = `${topic} internship (site:jobs.lever.co OR site:boards.greenhouse.io OR site:myworkdayjobs.com OR site:jobs.ashbyhq.com)`
     const queries = [
       ...alumniMatches.map((company) => `${topic} internship ${company} apply`),
+      atsQuery,
       `${topic} internship college student apply`,
       `entry level ${topic} job new grad ${loc}`.trim(),
-      `${topic} internship ${loc}`.trim(),
     ]
     return queries.slice(0, 3)
   }
