@@ -28,13 +28,13 @@ service cloud.firestore {
           || (!('role' in resource.data) && request.resource.data.role == 'student')
         );
 
-      // Personal contact list for QCal invites (native app Friends tab) —
+      // Personal contact list for QCal invites (native app Friends tab),
       // a simple owner-only address book, not a mutual friend-request graph.
       match /friends/{friendId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
 
-      // Job OS board (JobOSStore, native app Resume feature) — synced
+      // Job OS board (JobOSStore, native app Resume feature), synced
       // 2026-08-22, previously local-only (UserDefaults). Single doc
       // (`state`) holding the whole board; same owner-only shape as
       // friends above, since this is the student's own private tracker,
@@ -42,11 +42,44 @@ service cloud.firestore {
       match /jobOS/{docId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
+
+      // Knowledge notes (tutor to student, 2026-09-01): a durable,
+      // topic-tagged signal about a student that outlives any one session,
+      // written by the student's own linked tutor. Deliberately separate
+      // from sessions/{id}.tutorNotes, which is one field on one session
+      // and gets overwritten the next time a different session is focused.
+      // Read: the student themselves, the tutor who wrote it, or an admin,
+      // never any other tutor. Create requires the caller to actually BE
+      // this student's linked tutor (users/{userId}.tutorId, Admin-SDK-set,
+      // same cross-check pattern as sessions/interactions/liveSessions
+      // above) and to name themselves as the note's own tutorId, so a note
+      // can never be forged as coming from someone else. Update stays with
+      // the authoring tutor and cannot reassign tutorId; delete likewise.
+      match /knowledgeNotes/{noteId} {
+        allow read: if request.auth != null && (
+          request.auth.uid == userId ||
+          resource.data.tutorId == request.auth.uid ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        );
+        allow create: if request.auth != null
+          && request.resource.data.tutorId == request.auth.uid
+          && get(/databases/$(database)/documents/users/$(userId)).data.tutorId == request.auth.uid
+          && request.resource.data.topic is string
+          && request.resource.data.topic.size() > 0
+          && request.resource.data.topic.size() <= 80
+          && request.resource.data.note is string
+          && request.resource.data.note.size() > 0
+          && request.resource.data.note.size() <= 2000;
+        allow update: if request.auth != null
+          && resource.data.tutorId == request.auth.uid
+          && request.resource.data.tutorId == resource.data.tutorId;
+        allow delete: if request.auth != null && resource.data.tutorId == request.auth.uid;
+      }
     }
 
     // Invite-only sign-in gate (see app/src/lib/loginAllowlist.ts + postLogin.ts).
     // Doc id = lowercased email. Any signed-in user may read (needed at
-    // first-login time, before their own users/{uid} doc exists) — same
+    // first-login time, before their own users/{uid} doc exists), same
     // permissiveness precedent as users/{userId}'s own unconditional read
     // rule just above. Only an admin may add/remove entries.
     match /login_allowlist/{emailId} {
@@ -88,7 +121,7 @@ service cloud.firestore {
         );
       }
 
-      // New (TUTOR_PARENT_CLASSROOM_PLAN.md §3) — student-authored async
+      // New (TUTOR_PARENT_CLASSROOM_PLAN.md §3), student-authored async
       // reasoning capture. Append-only from the client: students create their
       // own entries, tutors read all entries for their own sessions, nobody
       // edits/deletes from the client.
@@ -100,7 +133,7 @@ service cloud.firestore {
             || get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email
           );
         // NOTE: must depend only on the parent session doc's fields, never on
-        // resource.data of the studentWork doc itself — both StudentSessions.tsx
+        // resource.data of the studentWork doc itself, both StudentSessions.tsx
         // (pending-work check) and SessionDetail.tsx (tutor review) call
         // getDocs()/onSnapshot() on this subcollection with NO where filter, and
         // Firestore rejects an entire unfiltered list() if the rule can't be
@@ -161,16 +194,16 @@ service cloud.firestore {
     // Per-student notebook (BINDER feature, ios-prototype MindCraftNotes app):
     // Memo / Doc / BYOB items filed into the app's spine-bound Binder. Same
     // ownership shape as student_work / homework_sessions / wrong_answer_notes
-    // directly above — a student owns and can create/update only their own
+    // directly above, a student owns and can create/update only their own
     // items (request.resource.data.studentId == request.auth.uid), a linked
     // parent can read their child's via childId/childIds on their own users/
     // {uid} doc. UNLIKE those append-only academic-evidence collections,
     // this is the student's own scratch notebook: they may also delete their
-    // own items (no tutor/admin override for v1 — a student clearing their
+    // own items (no tutor/admin override for v1, a student clearing their
     // own memo/doc/BYOB entry isn't an academic-integrity concern the way
     // deleting a wrong-answer note or student_work entry would be). "Books"
     // (the ACT map / concept-story library) is read-only reference content
-    // baked into the app bundle and is never written here — only
+    // baked into the app bundle and is never written here, only
     // type in {"memo","doc","byob"} documents live in this collection.
     match /binder_items/{docId} {
       allow create: if request.auth != null
@@ -210,6 +243,84 @@ service cloud.firestore {
       );
     }
 
+    // ── Migrated content library (scripts/migrate-concept-library.ts) ───────
+    // The real 13-subject library: 4118 concepts, 3746 written lessons, 722
+    // concepts with built sim HTML, 7330 prerequisite/cross-subject edges.
+    //
+    // Read-only reference content served DIRECTLY to the authenticated client
+    // rather than through a webhook endpoint. That is a deliberate choice over
+    // adding a thin server handler, for three reasons: (a) it is exactly the
+    // shape `classrooms` and `articles` already use here for read-only
+    // reference data, (b) the Hobby plan's 12-function ceiling is already
+    // fully consumed so every server endpoint costs a slot in the shared
+    // app-actions router, and (c) a student walking a seven-step guided path
+    // reads seven concepts, and a direct read saves seven serverless round
+    // trips on the critical path of the thing they are actually reading.
+    // There is nothing student-specific or secret in these documents.
+    //
+    // Writes are Admin SDK only (the migration script bypasses rules), so a
+    // client can never edit the library it is reading.
+    match /conceptLibrary/{conceptId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    match /conceptLibrarySims/{conceptId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // The embedding index is server-side machinery for /api/concept-resolve,
+    // not content. No client has a reason to read a megabyte of packed
+    // vectors, so this stays closed on both sides (the Admin SDK still
+    // writes and reads it, bypassing rules entirely).
+    match /conceptLibraryIndex/{docId} {
+      allow read, write: if false;
+    }
+
+    // Per-student, per-concept study record for the Learn experience. "Studied"
+    // means the student actually ANSWERED that concept's check question, right
+    // or wrong, not that a chapter was on screen. Replaces the prototype's
+    // localStorage log now that there is a real backend, so the history
+    // follows the student across devices instead of dying with a browser
+    // profile. Same ownership shape as binder_items directly above: update
+    // requires owning the EXISTING doc too, not merely naming yourself owner
+    // in the write, so a caller who somehow guessed another student's doc id
+    // cannot adopt it.
+    match /conceptStudyLog/{docId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow update: if request.auth != null
+        && resource.data.studentId == request.auth.uid
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if false;
+    }
+
+    // Phase 3 of the Learn refactor: one doc per student, a capped list of
+    // recent tutor-chat sessions (concept id/label, last message preview,
+    // timestamp) that powers the HistorySidebar. Written only by the
+    // webhook's admin SDK (learn-tutor.ts's upsertLearnSession), never by
+    // the client, same reason the raw conversations/* collection has no
+    // rule at all here: the actual chat content stays backend-gated, this
+    // is only ever a lightweight, curated index. Doc id is the student's
+    // own uid, so read access mirrors conceptStudyLog's owner/parent shape
+    // without needing a studentId field check.
+    match /learnSessions/{studentUid} {
+      allow read: if request.auth != null && (
+        request.auth.uid == studentUid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == studentUid
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([studentUid]))
+      );
+      allow write: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||
@@ -232,7 +343,7 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §1) — classroom join-code roster.
+    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §1), classroom join-code roster.
     // Only the Admin-SDK webhook endpoints (join-classroom, create-classroom)
     // write these; any signed-in user can read (needed for a student to see
     // their own classroom's tutor name/roster after joining).
@@ -241,11 +352,11 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §4) — previously UNCOVERED by any
+    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §4), previously UNCOVERED by any
     // rule (confirmed via the live Firebase Rules API, not just the stale
     // git snapshot). This blocked BOTH: (a) ParentDashboard.tsx reading a
     // linked child's data, and (b) QAToolbar.tsx reading/deleting the
-    // CURRENT user's own interactions/knowledge_graphs — i.e. this was
+    // CURRENT user's own interactions/knowledge_graphs, i.e. this was
     // broken for direct client access generally, not only the parent case.
     // Writes are Admin SDK only (the ML backend's server-side Firestore
     // client bypasses rules entirely) EXCEPT the existing QA "delete my own
@@ -257,7 +368,7 @@ service cloud.firestore {
         // below): interaction docs carry no tutorId field of their own, so
         // the tutor check cross-references the student's OWN user doc
         // (Admin-SDK-authoritative), same source of truth flagged_questions
-        // uses at create-time. Previously this had no tutor clause at all —
+        // uses at create-time. Previously this had no tutor clause at all,
         // TutorDashboard.tsx's live-activity onSnapshot on interactions was
         // denied for real tutors.
         get(/databases/$(database)/documents/users/$(resource.data.studentId)).data.tutorId == request.auth.uid ||
@@ -301,10 +412,10 @@ service cloud.firestore {
     // Live "Call" co-working sessions (snuggly-wandering-candle plan, step 1).
     // A student-initiated synced session (question/paper context + a shared
     // scratchpad, written as append-only strokes below) that their OWN
-    // linked tutor (users/{uid}.tutorId, Admin-SDK-set — same spoofing
+    // linked tutor (users/{uid}.tutorId, Admin-SDK-set, same spoofing
     // defense as flagged_questions' create-time cross-check) and/or a linked
     // parent (childId/childIds, same pattern as student_work/interactions)
-    // can join, read, and draw into. No new trust boundary — same three
+    // can join, read, and draw into. No new trust boundary, same three
     // relationships already governed elsewhere in this file.
     match /liveSessions/{sessionId} {
       allow create: if request.auth != null
@@ -322,7 +433,7 @@ service cloud.firestore {
          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
       );
       // Any of the three authorized participants may update lifecycle fields
-      // (status/lastActivityAt/endedAt — e.g. the student's unmount effect
+      // (status/lastActivityAt/endedAt, e.g. the student's unmount effect
       // ending the session, or a joiner's activity ping); studentId/tutorId
       // stay immutable post-create so a joiner can never reassign the
       // session to a different tutor.
@@ -338,7 +449,7 @@ service cloud.firestore {
       // Append-only, one doc per completed stroke (two people drawing at
       // once don't clobber each other). MUST resolve access via get() on the
       // PARENT liveSessions doc only, never resource.data on the stroke
-      // itself — LiveSessionPage's onSnapshot on this subcollection has no
+      // itself, LiveSessionPage's onSnapshot on this subcollection has no
       // where() filter, and Firestore rejects an entire unfiltered list()
       // if the rule can't be proven safe without per-document resource.data
       // evaluation (same constraint documented on sessions/{id}/studentWork
@@ -366,6 +477,41 @@ service cloud.firestore {
           );
         allow update, delete: if false;
       }
+    }
+
+    // Location-pinned public events (TUTORS_EVENTS build, 2026-08-31;
+    // generalized to any signed-in host, 2026-09-02): office hours at a
+    // cafe, a study meetup, anything a tutor OR a student wants nearby
+    // MindCraft users to see live on the map. Any signed-in user may read
+    // (the whole point is discovering events on the web app's Events page).
+    // Create requires the caller to (a) name themselves as hostId, (b) ship
+    // a minimally well-formed event: string title, numeric lat/lng, numeric
+    // startAt/endAt in ms epoch (the same time shape sessions.scheduledAt
+    // already uses), endAt after startAt, and (c) keep the window to at
+    // most 24 hours, a spam/abuse rail now that any signed-in user can post,
+    // not just role-checked tutors. Update and delete stay with the owning
+    // host, and hostId is immutable post-create so an event can never be
+    // reassigned to someone else. Collection name kept as tutorEvents
+    // (an internal id, not user-facing) rather than a rename + migration
+    // for what is otherwise a same-shape generalization.
+    match /tutorEvents/{eventId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.hostId == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.lat is number
+        && request.resource.data.lng is number
+        && request.resource.data.startAt is number
+        && request.resource.data.endAt is number
+        && request.resource.data.endAt > request.resource.data.startAt
+        && request.resource.data.endAt - request.resource.data.startAt <= 86400000;
+      allow update: if request.auth != null
+        && resource.data.hostId == request.auth.uid
+        && request.resource.data.hostId == resource.data.hostId;
+      allow delete: if request.auth != null
+        && resource.data.hostId == request.auth.uid;
     }
 
     match /knowledge_graphs/{studentId} {
