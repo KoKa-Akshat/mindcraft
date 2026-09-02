@@ -80,7 +80,6 @@ import QuestionHelpCard from './learn/QuestionHelpCard'
 import ReadingPane from './learn/ReadingPane'
 import NeighborsCard from './learn/NeighborsCard'
 import RightColumn from './learn/RightColumn'
-import SearchBar from './learn/SearchBar'
 import EntryStage from './learn/EntryStage'
 import RouteCards from './learn/RouteCards'
 import TutorPanel, { type TutorMessage } from './learn/TutorPanel'
@@ -208,7 +207,10 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   // only, see lib/learnSessions.ts's doc comment for why).
   const [sessions, setSessions] = useState<LearnSessionSummary[]>([])
   const [sessionsLoading, setSessionsLoading] = useState(false)
-  const [historyOpen, setHistoryOpen] = useState(false)
+  // Phase G1 (2026-09-02): open by default (search/upload live here now,
+  // instead of a bottom bar), auto-collapses once a concept actually
+  // reveals (see the panelsRevealed effect below), reopens on toggle.
+  const [historyOpen, setHistoryOpen] = useState(true)
 
   // ── Proactive misconception nudge ───────────────────────────────────────
   // 2026-09-02: every surface on this page was student-initiated (search,
@@ -397,7 +399,6 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setTutorMessages([])
     setTutorInput('')
     setTutorError('')
-    setHistoryOpen(false)
     checkStartedForRef.current = null
     simplifyStartedForRef.current = null
     simGenStartedForRef.current = null
@@ -610,6 +611,14 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     if (!panelsRevealed) { setPanelsSettled(false); return }
     const t = setTimeout(() => setPanelsSettled(true), SETTLE_DELAY_MS)
     return () => clearTimeout(t)
+  }, [panelsRevealed])
+
+  // Phase G1: the History/search panel opens by default, but a concept
+  // actually revealing means there is real content to read, so give it the
+  // full width back rather than leaving the panel parked open over it. The
+  // toggle button stays visible either way to bring it back.
+  useEffect(() => {
+    if (panelsRevealed) setHistoryOpen(false)
   }, [panelsRevealed])
 
   // Check question: starts only once the panels have settled, and only once
@@ -911,12 +920,35 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             onToggle={() => setHistoryOpen((v) => !v)}
             onOpenSession={(conceptId, conceptLabel) => void openSession(conceptId, conceptLabel)}
             activeConceptId={activeConceptId}
+            query={query}
+            onQueryChange={setQuery}
+            onSearch={() => runSearch()}
+            searchLoading={loading}
+            inputRef={searchInputRef}
+            topUploadFileRef={topUploadFileRef}
+            materialsAccept={MATERIALS_ACCEPT}
+            onTopUpload={(f) => void handleMaterialsFile(f, { autoResolve: true })}
+            materialsBusy={materialsBusy}
+            showPanels={showPanels}
+            materialsError={materialsError}
+            embedPct={embedPct}
+            embedderReady={embedderReady()}
+            resolveMeta={resolveMeta}
+            studiedIds={studiedIds}
+            searchErr={err}
           />
         )}
 
         {!searchedQuery && !materials && !routeCardsFor && (
           <EntryStage
-            onFocusSearch={() => searchInputRef.current?.focus()}
+            onFocusSearch={() => {
+              // The search input now lives inside the History/search panel,
+              // which only mounts it while open. If the student closed the
+              // panel from the entry screen, reopen it first, one tick
+              // ahead of the focus, or this silently does nothing.
+              setHistoryOpen(true)
+              window.setTimeout(() => searchInputRef.current?.focus(), 60)
+            }}
             onUploadHomework={() => topUploadFileRef.current?.click()}
             nudgeLabel={nudge && !nudgeDismissed ? nudge.label : null}
             onPracticeNudge={() => {
@@ -1041,25 +1073,6 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
           </div>
         )}
       </div>
-
-      <SearchBar
-        query={query}
-        onQueryChange={setQuery}
-        onSearch={() => runSearch()}
-        loading={loading}
-        inputRef={searchInputRef}
-        topUploadFileRef={topUploadFileRef}
-        materialsAccept={MATERIALS_ACCEPT}
-        onTopUpload={(f) => void handleMaterialsFile(f, { autoResolve: true })}
-        materialsBusy={materialsBusy}
-        showPanels={showPanels}
-        materialsError={materialsError}
-        embedPct={embedPct}
-        embedderReady={embedderReady()}
-        resolveMeta={resolveMeta}
-        studiedIds={studiedIds}
-        err={err}
-      />
     </div>
   )
 }
