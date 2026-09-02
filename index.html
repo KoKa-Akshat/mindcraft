@@ -111,17 +111,17 @@
   .stage-desk::before{ top:0; }
   .stage-desk::after{ bottom:0; }
   /* The line only makes sense where a cream stage actually meets a dark
-     section: the bottom of #frontier (conceptmap below it is dark) and both
+     section: the bottom of #desk (conceptmap below it is dark) and both
      edges of #claim (conceptmap above, footer below). #top, #advisors,
-     #human, #desk and #frontier are five cream stages in a row now (hero,
+     #frontier, #human and #desk are five cream stages in a row now (hero,
      then the "why it is not instant" advisors section moved up front for
-     legitimacy, the human chapter, the studio, then the frontier graph),
+     legitimacy, the frontier graph, the human chapter, then the studio),
      nothing dark between any of them, so those shared seams get no line.
      #top's own top edge has nothing above it at all, first section on the
      page. */
   #top::before, #top::after, #advisors::before, #advisors::after,
-  #human::before, #human::after, #desk::before, #desk::after,
-  #frontier::before{content:none;}
+  #frontier::before, #frontier::after, #human::before, #human::after,
+  #desk::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -968,10 +968,44 @@
   </div>
 </section>
 
+<!-- ================= THE FRONTIER GRAPH ================= -->
+<section class="frontier stage-desk" id="frontier">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <h2 class="h2 reveal">How does the <em>technology</em> work?</h2>
+    <div class="zpd reveal" id="zpd">
+      <div class="zpd-head">
+        <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
+      </div>
+      <div class="zpd-body">
+        <div class="zpd-stage">
+          <svg id="zpdSvg" viewBox="23 19 714 583" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
+            <g id="zpdPan">
+              <g id="zpdRings"></g>
+              <g id="zpdLinks"></g>
+              <g id="zpdGhosts" aria-hidden="true"></g>
+              <g id="zpdNodes"></g>
+            </g>
+          </svg>
+        </div>
+        <div class="zpd-side">
+          <span class="zpd-zone" id="zpdZone"><i></i><em id="zpdZoneName">You are here</em></span>
+          <h3 id="zpdName">Loading the graph</h3>
+          <div class="zpd-sub" id="zpdSub"></div>
+          <p id="zpdSay">Reading real prerequisite edges out of the concept library.</p>
+          <dl class="zpd-stats" id="zpdStats"></dl>
+          <button class="zpd-act" id="zpdAct" type="button" disabled>Step onto this concept</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= CHAPTER 1: THE HUMAN ================= -->
 <section class="stage-desk human" id="human">
   <div class="wrap">
-    <div class="kicker reveal"><i>02</i> The human</div>
+    <div class="kicker reveal"><i>03</i> The human</div>
     <h2 class="h2 reveal">A real tutor who actually notices.</h2>
     <p class="lede reveal">Not software that guesses. A real person who checks in and notices when you are stuck.</p>
     <div class="human-video reveal">
@@ -996,9 +1030,6 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="deskAwake" aria-hidden="true"></canvas>
   <div class="wrap">
-    <h2 class="h2 reveal">Try it <em>yourself</em>.</h2>
-    <p class="lede reveal">See what our students are up to.</p>
-
     <!-- the library, counted: just the numbers and what they mean, sitting
          above the search bar. No heading of its own, per the 2026-08-31 ask
          to fold the old standalone stats section in here instead. -->
@@ -1028,6 +1059,7 @@
 
     <div class="simlib-intro reveal">
       <h3>Or step through a door that is <em>already open</em>.</h3>
+      <a class="btn soft" href="https://mindcraft-93858.web.app/desk">SimCraft</a>
     </div>
 
     <div class="simlib reveal" aria-label="Curiosity doors into the MicroSim library">
@@ -1075,6 +1107,7 @@
     <div class="books-teaser reveal">
       <div class="simlib-intro">
         <h3>Prefer a much more extensive <em>lesson</em>?</h3>
+        <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
       </div>
       <div class="books-teaser-row">
         <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=10">
@@ -1089,40 +1122,6 @@
           <img src="img/dans-covers/psychology.jpg" alt="Psychology cover" loading="lazy">
           <span>Psychology</span>
         </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= THE FRONTIER GRAPH ================= -->
-<section class="frontier stage-desk" id="frontier">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal"><i>03</i> The frontier graph</div>
-    <h2 class="h2 reveal">How does the <em>technology</em> work?</h2>
-    <div class="zpd reveal" id="zpd">
-      <div class="zpd-head">
-        <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
-      </div>
-      <div class="zpd-body">
-        <div class="zpd-stage">
-          <svg id="zpdSvg" viewBox="23 19 714 583" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
-            <g id="zpdPan">
-              <g id="zpdRings"></g>
-              <g id="zpdLinks"></g>
-              <g id="zpdGhosts" aria-hidden="true"></g>
-              <g id="zpdNodes"></g>
-            </g>
-          </svg>
-        </div>
-        <div class="zpd-side">
-          <span class="zpd-zone" id="zpdZone"><i></i><em id="zpdZoneName">You are here</em></span>
-          <h3 id="zpdName">Loading the graph</h3>
-          <div class="zpd-sub" id="zpdSub"></div>
-          <p id="zpdSay">Reading real prerequisite edges out of the concept library.</p>
-          <dl class="zpd-stats" id="zpdStats"></dl>
-          <button class="zpd-act" id="zpdAct" type="button" disabled>Step onto this concept</button>
-        </div>
       </div>
     </div>
   </div>
