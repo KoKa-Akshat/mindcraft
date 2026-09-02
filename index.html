@@ -83,6 +83,19 @@
   .h2{font-size:clamp(36px,4.8vw,62px); max-width:22ch;}
   .lede{margin-top:18px; font-size:clamp(16px,1.6vw,19px); font-weight:400; line-height:1.62; color:var(--chalk-dim); max-width:60ch;}
   .lede strong{color:var(--chalk); font-weight:600;}
+  /* Shared bullet-list look (2026-09-02 ask): reused for the lede, advisor
+     bios, and research-card captions, each of which used to be one dense
+     paragraph. Font-size/color come from whatever else is on the element
+     (.lede, or .advisor-card/.research-card's own descendant rules below),
+     this class only handles list structure and the dot marker, which uses
+     currentColor so it always matches its own text without a separate
+     color rule per context. */
+  .bullets{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .bullets li{position:relative; padding-left:17px;}
+  .bullets li::before{
+    content:''; position:absolute; left:1px; top:0.62em; width:5px; height:5px;
+    border-radius:50%; background:currentColor; opacity:.6;
+  }
   .serif{font-family:var(--serif); font-style:italic; font-weight:500;}
 
   /* warm paper stage override, same trick the live site uses. Paper, not
@@ -565,8 +578,6 @@
   .zpd-ring.r1{stroke:rgba(31,74,53,.45);}
   .zpd-ring.r2{stroke:rgba(150,196,40,.55); stroke-dasharray:5 6;}
   .zpd-ring.r3{stroke:rgba(150,180,160,.4); stroke-dasharray:2 7;}
-  .zpd-link{stroke:rgba(18,53,42,.14); stroke-width:1;}
-  .zpd-link.to-r2{stroke:rgba(150,196,40,.45);}
   .zpd-node{cursor:pointer;}
   .zpd-node[data-open="false"]{cursor:not-allowed;}
   .zpd-node circle{transition:r .25s var(--ease), fill .25s, stroke .25s;}
@@ -668,6 +679,20 @@
   @media (max-width:900px){
     .form-grid{grid-template-columns:1fr;}
   }
+  /* Wrapper only for hide/show, never a real grid box of its own, so its
+     .field children keep landing in .form-grid's own columns exactly as if
+     this div were not here (the alternative, toggling each field
+     individually, is the same result with five times the JS). */
+  .claim-student-block{display:contents;}
+  .claim-student-block[hidden]{display:none;}
+  .claim-role{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px;}
+  .claim-role button{
+    border:1px solid var(--edge); background:transparent; color:var(--ink);
+    border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s;
+  }
+  .claim-role button:hover{border-color:var(--leaf);}
+  .claim-role button.is-active{background:var(--leaf); border-color:var(--leaf); color:#fff;}
 
 
   /* ---------- advisors (cream) ---------- */
@@ -686,18 +711,22 @@
     border:1px solid var(--edge);
   }
   .advisor-card h3{font-size:16px; margin-bottom:6px;}
-  .advisor-card p{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+  .advisor-card .bullets{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
 
-  .research-row{margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  /* Pushed down a bit + given room to breathe (2026-09-02 ask): more space
+     above the row, and the card grows to fit taller bullet captions instead
+     of leaving empty space below a one-line source citation. */
+  .research-row{margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
   @media (max-width:720px){.research-row{grid-template-columns:1fr;}}
   .research-card{
+    height:100%; display:flex; flex-direction:column;
     border-radius:16px; overflow:hidden;
     background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
   }
-  .research-card img{width:100%; height:260px; object-fit:contain; display:block; background:#fff;}
-  .research-card figcaption{padding:16px 20px 20px;}
-  .research-card h3{font-size:15px; margin-bottom:6px;}
-  .research-card p{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+  .research-card img{width:100%; height:300px; object-fit:contain; display:block; background:#fff; flex:none;}
+  .research-card figcaption{padding:18px 20px 22px; flex:1; display:flex; flex-direction:column;}
+  .research-card h3{font-size:15px; margin-bottom:8px;}
+  .research-card .bullets{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
   .research-cite{margin-top:14px; font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
 
   /* ---------- claim your desk (cream) ---------- */
@@ -708,6 +737,13 @@
   .claim-points div{display:flex; gap:12px; align-items:baseline; font-size:14.5px; line-height:1.55; color:var(--chalk-dim);}
   .claim-points i{font-style:normal; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf); flex:none; letter-spacing:.08em;}
   .claim-points b{color:var(--chalk); font-weight:600;}
+  .claim-price{margin-top:24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .claim-price-badge{
+    font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--leaf); border:1px solid var(--edge); border-radius:999px; padding:5px 12px; flex:none;
+  }
+  .claim-price-tag{font-family:var(--serif); font-style:italic; font-size:24px; color:var(--chalk); font-weight:500;}
+  .claim-price-note{flex-basis:100%; font-size:12.5px; color:var(--chalk-faint);}
   .claim-card{border-radius:24px; background:var(--field-2); border:1px solid var(--edge); padding:clamp(22px,3vw,32px); box-shadow:0 18px 44px rgba(20,58,46,.09);}
   .claim-card h3{font-size:21px; margin-bottom:6px;}
   .claim-card > p{font-size:13.5px; line-height:1.55; color:var(--chalk-dim); margin-bottom:18px;}
@@ -788,21 +824,33 @@
   <div class="wrap">
     <div class="kicker reveal"><i>01</i> Why it is not instant</div>
     <h2 class="h2 reveal">Our remarkably <em>slow</em> AI.</h2>
-    <p class="lede reveal">Every generated chapter and sim is checked against a real quality rubric before it ever ships, gated behind Dan McCreary's published methodology for AI-built intelligent textbooks. Not fired off and hoped for.</p>
+    <ul class="lede bullets reveal">
+      <li>Every generated chapter and sim is checked against a real quality rubric before it ever ships.</li>
+      <li>Gated behind Dan McCreary's published methodology for AI-built intelligent textbooks.</li>
+      <li>Not fired off and hoped for.</li>
+    </ul>
     <div class="advisors-label reveal">Meet our advisors</div>
     <div class="advisors-row reveal">
       <div class="advisor-card">
         <img src="img/advisors/dan-mccreary.jpg" alt="Dan McCreary" loading="lazy">
         <div>
           <h3>Dan McCreary</h3>
-          <p>40+ years building enterprise knowledge graphs in healthcare and NoSQL, co-author of <em>Making Sense of NoSQL</em>, and the researcher behind the MicroSims methodology our quality bar is built on.</p>
+          <ul class="bullets">
+            <li>40+ years building enterprise knowledge graphs in healthcare and NoSQL</li>
+            <li>Co-author of <em>Making Sense of NoSQL</em></li>
+            <li>Researcher behind the MicroSims methodology our quality bar is built on</li>
+          </ul>
         </div>
       </div>
       <div class="advisor-card">
         <img src="img/advisors/ingrid-erickson.jpg" alt="Ingrid Erickson" loading="lazy">
         <div>
           <h3>Ingrid Erickson</h3>
-          <p>Associate Professor at Syracuse University's iSchool, PhD from Stanford, studying how AI reshapes how we work and learn together.</p>
+          <ul class="bullets">
+            <li>Associate Professor at Syracuse University's iSchool</li>
+            <li>PhD from Stanford</li>
+            <li>Studies how AI reshapes how we work and learn together</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -813,14 +861,22 @@
         <img src="img/research/gpt-base-error-rates.png" alt="Histogram showing how often an ungated GPT gets a wrong answer, from logical and arithmetic errors, across 57 practice problems" loading="lazy">
         <figcaption>
           <h3>Left unchecked, it gets things wrong.</h3>
-          <p>Across 57 real practice problems, an ungated model returned the wrong answer, logically or arithmetically, on a meaningful share of them, on some almost every time. This is exactly what a quality gate is for.</p>
+          <ul class="bullets">
+            <li>57 real practice problems, tested against an ungated model</li>
+            <li>Wrong answers, logically or arithmetically, on a meaningful share, some almost every time</li>
+            <li>This is exactly what a quality gate is for</li>
+          </ul>
         </figcaption>
       </figure>
       <figure class="research-card">
         <img src="img/research/non-superficial-engagement.png" alt="Bar chart showing students have roughly twice the constructive, non-superficial conversation rate with a guardrailed tutor that withholds the answer, versus one that gives it" loading="lazy">
         <figcaption>
           <h3>Withholding the answer works.</h3>
-          <p>Students talking to a tutor that never just hands over the answer stayed constructively engaged roughly twice as often as students talking to one that did. Hints, not solutions, is the whole design.</p>
+          <ul class="bullets">
+            <li>Students talking to a tutor that never just hands over the answer</li>
+            <li>Stayed constructively engaged roughly twice as often</li>
+            <li>Hints, not solutions, is the whole design</li>
+          </ul>
         </figcaption>
       </figure>
     </div>
@@ -1001,13 +1057,31 @@
           <div><i>02</i><p>Search that <b>knows where a concept sits</b>, so you get the ramp into it, not just the page.</p></div>
           <div><i>03</i><p>Jesse, the voice tutor, and a desk that <b>tracks what actually stuck</b> instead of assigning homework.</p></div>
         </div>
+        <div class="claim-price reveal">
+          <span class="claim-price-badge">Beta</span>
+          <span class="claim-price-tag">Free</span>
+          <span class="claim-price-note">No card, no trial timer, while we are in early access.</span>
+        </div>
       </div>
       <div class="claim-card reveal">
         <h3>Get your seat</h3>
         <p>A minute of typing. No card, no trial timer.</p>
+        <!-- Who is filling this out (2026-09-02 ask): the form was
+             hardcoded "parent signing up their kid", which reads as
+             unfriendly to a student or tutor signing themselves up. Same
+             fields underneath either way (parentFirst/parentLast etc. stay
+             the wire format the backend expects, see the submit handler
+             below), this just relabels the legend, hides the redundant
+             "the student" block when the signer IS the student, and sends
+             the real role instead of a hardcoded 'parent'. -->
+        <div class="claim-role" id="claimRoleToggle" role="radiogroup" aria-label="Who is signing up">
+          <button type="button" class="is-active" data-claim-role="parent">I'm a parent</button>
+          <button type="button" data-claim-role="student">I'm a student</button>
+          <button type="button" data-claim-role="tutor">I'm a tutor</button>
+        </div>
         <form id="claimForm" novalidate>
           <div class="form-grid">
-            <span class="form-legend">Parent or guardian</span>
+            <span class="form-legend" id="claimRoleLegend">Parent or guardian</span>
             <div class="field">
               <label for="claimParentFirst">First name</label>
               <input id="claimParentFirst" name="parentFirst" type="text" required autocomplete="given-name">
@@ -1037,25 +1111,27 @@
                 <option value="other">Somewhere else</option>
               </select>
             </div>
-            <span class="form-legend">The student</span>
-            <div class="field">
-              <label for="claimStudentFirst">First name</label>
-              <input id="claimStudentFirst" name="studentFirst" type="text" placeholder="Optional">
-            </div>
-            <div class="field">
-              <label for="claimStudentLast">Last name</label>
-              <input id="claimStudentLast" name="studentLast" type="text" placeholder="Optional">
-            </div>
-            <div class="field">
-              <label for="claimSchool">School</label>
-              <input id="claimSchool" name="school" type="text" placeholder="Optional">
-            </div>
-            <div class="field">
-              <label for="claimGrade">Grade</label>
-              <input id="claimGrade" name="grade" type="text" placeholder="Optional">
+            <div id="claimStudentBlock" class="claim-student-block">
+              <span class="form-legend">The student</span>
+              <div class="field">
+                <label for="claimStudentFirst">First name</label>
+                <input id="claimStudentFirst" name="studentFirst" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimStudentLast">Last name</label>
+                <input id="claimStudentLast" name="studentLast" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimSchool">School</label>
+                <input id="claimSchool" name="school" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimGrade">Grade</label>
+                <input id="claimGrade" name="grade" type="text" placeholder="Optional">
+              </div>
             </div>
             <div class="field full">
-              <label for="claimSubject">Subject</label>
+              <label for="claimSubject" id="claimSubjectLabel">Subject</label>
               <input id="claimSubject" name="subject" type="text" placeholder="English, math, SAT test prep, etc.">
             </div>
             <div class="field full">
@@ -2172,21 +2248,10 @@
       var pos = {};
       layout.forEach(function(p){ pos[p.id] = p; });
 
-      // Real edges only: an edge is drawn when the library actually has one
-      // between two concepts that both landed on screen.
-      layout.forEach(function(p){
-        var n = node(p.id);
-        (n.unlocks || []).forEach(function(u){
-          var q = pos[u];
-          if(!q) return;
-          // The endpoint ids ride on the line so the recenter animation can
-          // re-stretch it every frame without rebuilding the edge list.
-          linksG.appendChild(el('line', {
-            x1:p.x, y1:p.y, x2:q.x, y2:q.y, 'data-a':p.id, 'data-b':u,
-            class:'zpd-link' + (q.zone === 2 ? ' to-r2' : '')
-          }));
-        });
-      });
+      // No connecting lines (2026-09-02 ask: dots read cleaner on their own).
+      // linksG stays in the DOM (cleared, empty) since the recenter
+      // animation below still queries it every frame; an empty group is a
+      // harmless no-op there rather than something that needs its own guard.
 
       layout.forEach(function(p){
         var n = node(p.id);
@@ -2433,18 +2498,27 @@
       goTo(pickedId);
     }
 
+    // One click selects AND steps: select(id) just paints the side panel and
+    // sets pickedId, step() then recenters immediately if this concept is
+    // actually steppable (its own guard: n.full and not already centered),
+    // so a comfort/frustration-zone dot still just selects, informing without
+    // jumping, exactly as before. Used to need a second click on the same
+    // dot (or the side panel's own button) to recenter, per the 2026-09-02
+    // ask to make a single click enough.
     nodesG.addEventListener('click', function(e){
       var g = e.target.closest ? e.target.closest('.zpd-node') : null;
       if(!g) return;
       var id = g.getAttribute('data-id');
-      if(id === pickedId) step(); else select(id);
+      select(id);
+      step();
     });
     nodesG.addEventListener('keydown', function(e){
       var g = e.target.closest ? e.target.closest('.zpd-node') : null;
       if(!g || (e.key !== 'Enter' && e.key !== ' ')) return;
       e.preventDefault();
       var id = g.getAttribute('data-id');
-      if(id === pickedId) step(); else select(id);
+      select(id);
+      step();
     });
     elAct.addEventListener('click', step);
 
@@ -2556,6 +2630,55 @@
     var ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/marketing-lead';
     var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   // same shape the handler enforces
 
+    // Who is filling this out, see the HTML comment above claim-role for
+    // why: same field names go to the backend regardless (the "parent"
+    // fields are really just "the primary contact"), this only changes
+    // labels, hides "the student" block for a self-signup, and sets the
+    // real role sent in the payload below instead of a hardcoded 'parent'.
+    var claimRole = 'parent';
+    var roleToggle = document.getElementById('claimRoleToggle');
+    var roleLegend = document.getElementById('claimRoleLegend');
+    var studentBlock = document.getElementById('claimStudentBlock');
+    var subjectLabel = document.getElementById('claimSubjectLabel');
+    var subjectInput = document.getElementById('claimSubject');
+    var messageInput = document.getElementById('claimMessage');
+    var ROLE_COPY = {
+      parent: {
+        legend: 'Parent or guardian', subjectLabel: 'Subject',
+        subjectPh: 'English, math, SAT test prep, etc.',
+        messagePh: 'What are you hoping The Desk does for your student?',
+      },
+      student: {
+        legend: 'About you', subjectLabel: 'Subject',
+        subjectPh: 'English, math, SAT test prep, etc.',
+        messagePh: 'What are you hoping The Desk does for you?',
+      },
+      tutor: {
+        legend: 'About you', subjectLabel: 'What you teach',
+        subjectPh: 'Algebra, ACT math, chemistry, etc.',
+        messagePh: 'What subjects or age group do you want to tutor?',
+      },
+    };
+    function setClaimRole(role){
+      claimRole = ROLE_COPY[role] ? role : 'parent';
+      var copy = ROLE_COPY[claimRole];
+      if(roleToggle){
+        roleToggle.querySelectorAll('[data-claim-role]').forEach(function(b){
+          b.classList.toggle('is-active', b.getAttribute('data-claim-role') === claimRole);
+        });
+      }
+      if(roleLegend) roleLegend.textContent = copy.legend;
+      if(studentBlock) studentBlock.hidden = claimRole !== 'parent';
+      if(subjectLabel) subjectLabel.textContent = copy.subjectLabel;
+      if(subjectInput) subjectInput.placeholder = copy.subjectPh;
+      if(messageInput) messageInput.placeholder = copy.messagePh;
+    }
+    if(roleToggle){
+      roleToggle.querySelectorAll('[data-claim-role]').forEach(function(b){
+        b.addEventListener('click', function(){ setClaimRole(b.getAttribute('data-claim-role')); });
+      });
+    }
+
     function show(kind, title, body){
       msg.className = 'claim-msg ' + kind;
       msg.innerHTML = '<b></b><span></span>';
@@ -2575,7 +2698,7 @@
       var message = val('message');
 
       if(!parentFirst || !parentLast){
-        show('bad', 'We need a name', 'First and last name of the parent or guardian, so a founder knows who they are writing back to.');
+        show('bad', 'We need a name', 'First and last name, so a founder knows who they are writing back to.');
         (parentFirst ? f['parentLast'] : f['parentFirst']).focus();
         return;
       }
@@ -2617,7 +2740,7 @@
         body: JSON.stringify({
           email: email,
           name: parentFirst + ' ' + parentLast,
-          role: 'parent',
+          role: claimRole,
           source: 'joinmindcraft_claim_section',
           note: packed.join('\n'),
           page: location.pathname + '#claim',
