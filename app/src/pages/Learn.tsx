@@ -207,6 +207,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   // that concept AND its actual chat transcript (fetchTutorHistory, backend
   // only, see lib/learnSessions.ts's doc comment for why).
   const [sessions, setSessions] = useState<LearnSessionSummary[]>([])
+  const [sessionsLoading, setSessionsLoading] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
 
   // ── Proactive misconception nudge ───────────────────────────────────────
@@ -280,7 +281,8 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
 
   useEffect(() => {
     if (!uid) return
-    void loadLearnSessions(uid).then(setSessions)
+    setSessionsLoading(true)
+    void loadLearnSessions(uid).then(setSessions).finally(() => setSessionsLoading(false))
   }, [uid])
 
   useEffect(() => {
@@ -395,6 +397,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setTutorMessages([])
     setTutorInput('')
     setTutorError('')
+    setHistoryOpen(false)
     checkStartedForRef.current = null
     simplifyStartedForRef.current = null
     simGenStartedForRef.current = null
@@ -444,7 +447,6 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
    * including a still-blank EntryStage, so it resets the same search-level
    * state search() itself resets before setting the new resolved concept. */
   async function openSession(conceptId: string, conceptLabel: string) {
-    setHistoryOpen(false)
     resetPerConcept()
     setMatches(null)
     setOutOfDomain(false)
@@ -904,6 +906,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         {uid && (
           <HistorySidebar
             sessions={sessions}
+            loading={sessionsLoading}
             open={historyOpen}
             onToggle={() => setHistoryOpen((v) => !v)}
             onOpenSession={(conceptId, conceptLabel) => void openSession(conceptId, conceptLabel)}

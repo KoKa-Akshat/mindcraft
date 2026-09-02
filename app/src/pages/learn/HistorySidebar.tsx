@@ -1,8 +1,10 @@
+import { useEffect } from 'react'
 import { CARD, BORDER_SOFT, TEXT_FAINT, TEXT_PRIMARY, TEXT_SOFT } from './shared'
 import type { LearnSessionSummary } from '../../lib/learnSessions'
 
 export interface HistorySidebarProps {
   sessions: LearnSessionSummary[]
+  loading: boolean
   open: boolean
   onToggle: () => void
   onOpenSession: (conceptId: string, conceptLabel: string) => void
@@ -26,7 +28,14 @@ function timeAgo(ts: number): string {
  * panel. Purely presentational, Learn.tsx owns the session list and what
  * happens when one is picked (openSession, see its own doc comment there
  * for why it re-resolves the concept and re-fetches that chat's history). */
-export default function HistorySidebar({ sessions, open, onToggle, onOpenSession, activeConceptId }: HistorySidebarProps) {
+export default function HistorySidebar({ sessions, loading, open, onToggle, onOpenSession, activeConceptId }: HistorySidebarProps) {
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onToggle() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onToggle])
+
   return (
     <>
       <button
@@ -50,7 +59,10 @@ export default function HistorySidebar({ sessions, open, onToggle, onOpenSession
               <button onClick={onToggle} style={{ background: 'none', border: 'none', color: TEXT_FAINT, fontSize: 20, lineHeight: 1, cursor: 'pointer' }}>×</button>
             </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '0 10px' }}>
-              {sessions.length === 0 && (
+              {loading && sessions.length === 0 && (
+                <p style={{ padding: '20px 8px', fontSize: 12.5, color: TEXT_FAINT }}>Loading...</p>
+              )}
+              {!loading && sessions.length === 0 && (
                 <p style={{ padding: '20px 8px', fontSize: 12.5, lineHeight: 1.6, color: TEXT_FAINT }}>
                   Nothing yet. Once you talk to Jesse about a concept, it shows up here so you can pick up where you left off.
                 </p>
