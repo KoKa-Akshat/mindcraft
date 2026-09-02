@@ -1121,6 +1121,16 @@ branch. Whoever starts either assignment: branch off current `main` (not off
 this long-lived branch) per the lesson in Assignment A's report above, unless
 told otherwise.
 
+**2026-09-02 - Codex DeskOS Workspace redesign completed and live**
+
+Worked only in the canonical static source at `agent_work/product/desk_os/`. Replaced the oversized particle cube and generic rounded hero card with a restrained cream paper workspace: The Desk text chrome, a compact persistent Workspace / Resume studio / Tutors & events tab row, a direct Open Learn action, layered working papers, the existing raccoon mark as a small paper detail, and a compact Jesse activity slip driven by the existing real `mcLearn` count. Tutor accounts still receive their three real links, now presented as a proper tutoring work surface. No React page, backend, iOS source, generated `app/public/desk-os/` copy, or unrelated untracked work was edited directly.
+
+The interaction audit found a real bug in the previous controller: `querySelector('[data-hub-mastery-nav]')` wired only the first of two Learn controls. The new controller wires every matching action, removes the discarded cube's canvas renderer and artificial 500 ms delay, and gives the tabs real state. Resume and Tutors now hide the Workspace surface while their existing panels are open; Workspace closes both and returns cleanly. ARIA selected state follows the visible panel. A mobile QA pass found the two-row navigation shrinking to 78 px and painting its tabs outside the header; adding a nonshrinking header flex item fixed the geometry.
+
+Verified locally: `node --check` passes for `js/bootHub.js` and `js/app.js`; `node agent_work/product/desk_os/tests/run.mjs` passes all 3 DeskOS test files; `app/node_modules/.bin/tsc --noEmit` passes; `cd app && npm run build` passes with only the existing dynamic-import and bundle-size warnings. Playwright used the supported `mcEmail` / `mcName` / `mcRole` handoff and confirmed desktop, 390 px phone, 1024 x 768 iPad landscape, 768 x 1024 iPad portrait, and tutor role with no horizontal overflow or browser errors. It also confirmed Workspace / Resume / Tutors state changes in both directions and the paper action's real `/learn` destination. New palette contrast is 11.51:1 for ink on cream and 5.56:1 for muted text on cream.
+
+Concurrent ownership note: before Codex could create a commit, a live Claude session picked up the same shared worktree, credited this Workspace work to Codex, added a matching Resume Helper pass, and committed and pushed it as `f803bafb`. Claude then shipped a further three-pane Resume refinement as `946bb3a1`. Both commits are on `main`. Deploy runs [33680207455](https://github.com/KoKa-Akshat/mindcraft/actions/runs/33680207455) and [33683655634](https://github.com/KoKa-Akshat/mindcraft/actions/runs/33683655634) passed. A direct production fetch from `https://mindcraft-93858.web.app/desk-os/` returned the `workspace3` stylesheet reference, Resume studio tab, and "Start with what is in front of you." marker. No manual local Firebase deploy was run. Still not verified: no physical iPad browser was used for this web-only batch. The local preview is `http://127.0.0.1:8899/index.html?mcEmail=test@example.com&mcName=Test&mcRole=student&mcLearn=12` while the temporary preview server remains running.
+
 ---
 
 ### Claude's report

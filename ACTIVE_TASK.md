@@ -4,6 +4,10 @@
 
 ---
 
+## DeskOS Workspace paper redesign (2026-09-02)
+
+The live DeskOS source now has a compact persistent Workspace / Resume studio / Tutors & events header and a cream paper Learn surface instead of the oversized particle cube. Jesse's real learn-activity stage has a small activity slip, tutor accounts retain their three working tool links, and tabs now replace the Workspace surface correctly. Source: `agent_work/product/desk_os/`. Local DeskOS tests, TypeScript, production build, and Playwright checks at desktop, phone, both iPad orientations, and tutor role pass. A concurrent Claude session incorporated the shared-tree Workspace work in `f803bafb`, then refined Resume in `946bb3a1`; both are on `main`, the latest deploy workflow passed, and production markers were verified directly. A physical iPad browser pass remains open.
+
 ## Level 2 Jesse connectors (2026-08-16)
 
 One central Jesse. Intel/Moodle/Binder/Email/Gcal are scoped connectors and a store, not sub-agents. Work dashboard now restores the Google session, fetches inbox + digest + calendar week on appear, and paints those summaries on the tiles (that was why Email Summaries stayed empty even when Gmail was already connected). A cramped tile asks neighbors to shrink via `DeskBoxBus` (not an LLM). Jesse quotes any box on that page through the same bus. Flows Transcribe is ambient recording. Create canvas "Storyboards" is now **Slides**. Presentation specialized agent is still a later pass.
