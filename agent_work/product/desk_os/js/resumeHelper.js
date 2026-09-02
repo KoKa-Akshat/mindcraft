@@ -4,21 +4,29 @@
  * hub between the tutor map and the resume flow the iOS prototype already
  * ships, remembering where the student left off).
  *
- * Two steps, both in place, no navigation:
- *   build · Jesse conversation (the same POST /api/resume-agent the iOS
- *     ResumeAgentView and workflows/resume/agent.js already call, stateless,
- *     full draft sent every turn) plus an editable profile: fields, skills,
- *     roles, custom links. Resume/writing uploads extract text client side
- *     via pdf.js, exactly like agent.js does, and land as sources.
- *   jobs · a real table over users/{uid}/jobOS/state.roles (the same doc the
- *     iOS JobOSStore syncs). Titles link out via roleUrl. Discovery runs the
- *     real evidence-backed /api/discover-internships endpoint and NOTHING
- *     reaches the board without an explicit "Add to board" tap, matching
- *     JobOSStore's "the board never changes silently" discipline. Resume and
- *     cover letter cells call /api/generate-resume-pdf (still the route
- *     name, the handler now returns a real .docx) and download the
- *     bytes; resumeReady/coverLetterReady flip true only after a doc was
- *     really generated.
+ * Three-pane app (2026-09-02 rebuild, per a reference screenshot of a
+ * competitor's job-search copilot the founder shared): a left rail, a
+ * center chat with Jesse that never swaps out, and a right panel whose
+ * content is entirely decided by which rail item is active. Nothing here
+ * is a separate page/route — `rail` is in-memory UI state only.
+ *   jobs (right panel, default) · discovery via the real evidence-backed
+ *     /api/discover-internships endpoint, plus a compact table over
+ *     users/{uid}/jobOS/state.roles (the same doc the iOS JobOSStore
+ *     syncs). NOTHING reaches the board without an explicit "Add to
+ *     board" tap, matching JobOSStore's "the board never changes
+ *     silently" discipline.
+ *   profile (right panel) · the editable profile Jesse reads and writes:
+ *     fields, skills, roles, custom links.
+ *   documents (right panel) · one resume + one cover letter per board
+ *     role, generated from that same profile via /api/generate-resume-pdf
+ *     (still the route name, the handler now returns a real .docx).
+ *     resumeReady/coverLetterReady flip true only after a doc was really
+ *     generated.
+ *   chat (center, always visible) · the same POST /api/resume-agent the
+ *     iOS ResumeAgentView and workflows/resume/agent.js already call,
+ *     stateless, full draft sent every turn. Resume/writing uploads
+ *     extract text client side via pdf.js, exactly like agent.js does,
+ *     and land as sources.
  *
  * Data layout (all under the SIGNED-IN student's own uid, resolved fresh
  * from ensureFire() at every operation, never cached at module scope and
@@ -39,7 +47,7 @@ import { readByokConfig } from './settings.js';
 const WEBHOOK_BASE = 'https://mindcraft-webhook.vercel.app';
 const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-const STEP_KEY_PREFIX = 'deskOs.resumeHelper.step.';
+const RAIL_KEY_PREFIX = 'deskOs.resumeHelper.rail.';
 
 const EMPTY_DRAFT = {
   name: '', headline: '', school: '', email: '', location: '', age: '',
@@ -150,11 +158,6 @@ export function createResumeHelper({ root, onToast }) {
   if (!root) return { open() {}, close() {}, isOpen: () => false, destroy() {} };
 
   const el = (sel) => root.querySelector(sel);
-  const soft = el('[data-rh-soft]');
-  const backBtn = el('[data-rh-back]');
-  const forwardBtn = el('[data-rh-forward]');
-  const stepBuild = el('[data-rh-step-build]');
-  const stepJobs = el('[data-rh-step-jobs]');
   const statusEl = el('[data-rh-status]');
   const transcript = el('[data-rh-transcript]');
   const starters = el('[data-rh-starters]');
@@ -166,12 +169,19 @@ export function createResumeHelper({ root, onToast }) {
   const rolesEl = el('[data-rh-roles]');
   const linksEl = el('[data-rh-links]');
   const tableEl = el('[data-rh-table]');
+  const documentsEl = el('[data-rh-documents]');
   const candidatesEl = el('[data-rh-candidates]');
   const discoverBtn = el('[data-rh-discover]');
   const jobsNote = el('[data-rh-jobs-note]');
+  const jobsBadge = el('[data-rh-jobs-badge]');
+  const railBtns = [...root.querySelectorAll('[data-rh-rail]')];
+  const jobsRailBtn = el('[data-rh-rail="jobs"]');
+  const sidePanels = [...root.querySelectorAll('[data-rh-side]')];
+  const attachBtn = el('[data-rh-attach]');
+  const attachMenu = el('[data-rh-attach-menu]');
   const fields = [...root.querySelectorAll('[data-rh-f]')];
 
-  let step = 'build';
+  let rail = 'jobs';
   let draft = { ...EMPTY_DRAFT };
   let draftLoaded = false;
   let board = null;
@@ -192,33 +202,31 @@ export function createResumeHelper({ root, onToast }) {
     return fire;
   }
 
-  // ---------- step memory ----------
+  // ---------- rail (left nav decides what the right panel shows; the
+  // center chat never swaps out, same split the reference screenshot used)
 
-  function stepKey(uid) { return STEP_KEY_PREFIX + (uid || 'anon'); }
+  function railKey(uid) { return RAIL_KEY_PREFIX + (uid || 'anon'); }
 
-  function rememberStep(uid) {
-    try { sessionStorage.setItem(stepKey(uid), step); } catch { /* ignore */ }
+  function rememberRail(uid) {
+    try { sessionStorage.setItem(railKey(uid), rail); } catch { /* ignore */ }
   }
 
-  function recallStep(uid) {
+  function recallRail(uid) {
     try {
-      const s = sessionStorage.getItem(stepKey(uid));
-      if (s === 'jobs' || s === 'build') step = s;
+      const r = sessionStorage.getItem(railKey(uid));
+      if (r === 'jobs' || r === 'profile' || r === 'documents') rail = r;
     } catch { /* ignore */ }
   }
 
-  function setStep(next, uid) {
-    step = next === 'jobs' ? 'jobs' : 'build';
-    if (stepBuild) stepBuild.hidden = step !== 'build';
-    if (stepJobs) stepJobs.hidden = step !== 'jobs';
-    if (backBtn) backBtn.hidden = step !== 'jobs';
-    if (forwardBtn) forwardBtn.hidden = step !== 'build';
-    if (soft) {
-      soft.textContent = step === 'jobs'
-        ? 'Openings on your board. Titles link to the real posting; docs are ready to send.'
-        : 'Jesse builds your profile from a real resume, then finds real openings with links.';
-    }
-    rememberStep(uid);
+  function selectRail(next, uid) {
+    rail = ['jobs', 'profile', 'documents'].includes(next) ? next : 'jobs';
+    railBtns.forEach((btn) => {
+      const selected = btn.dataset.rhRail === rail;
+      btn.classList.toggle('is-active', selected);
+      btn.setAttribute('aria-selected', String(selected));
+    });
+    sidePanels.forEach((panel) => { panel.hidden = panel.dataset.rhSide !== rail; });
+    rememberRail(uid);
   }
 
   // ---------- Jesse transcript ----------
@@ -363,8 +371,9 @@ export function createResumeHelper({ root, onToast }) {
         board = snap.exists() ? snap.data() : null;
         paintLinks();
         paintTable();
+        paintDocuments();
       },
-      () => { board = null; paintTable(); },
+      () => { board = null; paintTable(); paintDocuments(); },
     );
   }
 
@@ -523,9 +532,9 @@ export function createResumeHelper({ root, onToast }) {
     }
     if (Array.isArray(data.suggestedRoles) && data.suggestedRoles.length) {
       bubble('jesse', 'Directions worth searching: ' + data.suggestedRoles.map((r) => r.role).filter(Boolean).join(' · ')
-        + '. Open the jobs table and I will look for real openings.');
+        + '. Open Jobs on the left and I will look for real openings.');
     }
-    if (data.readyToApply && forwardBtn) forwardBtn.classList.add('is-ready');
+    if (data.readyToApply && jobsRailBtn) jobsRailBtn.classList.add('is-ready');
   }
 
   // ---------- discovery ----------
@@ -577,6 +586,10 @@ export function createResumeHelper({ root, onToast }) {
   }
 
   function paintCandidates() {
+    if (jobsBadge) {
+      jobsBadge.hidden = candidates.length === 0;
+      jobsBadge.textContent = String(candidates.length);
+    }
     if (!candidatesEl) return;
     candidatesEl.hidden = candidates.length === 0;
     candidatesEl.innerHTML = candidates.map((c, i) => `
@@ -645,15 +658,18 @@ export function createResumeHelper({ root, onToast }) {
       .sort((a, b) => (a.rank || 0) - (b.rank || 0));
   }
 
+  // A compact stacked list, not a table: at the side panel's width a real
+  // multi-column table either clips its last column or forces horizontal
+  // scroll (tried both). Same row shape as the Documents panel's .rh-doc-row.
   function paintTable() {
     if (!tableEl) return;
     if (signedOut) {
-      tableEl.innerHTML = '<tr><td colspan="7" class="rh-empty">Sign in to see your board.</td></tr>';
+      tableEl.innerHTML = '<span class="rh-soft-note">Sign in to see your board.</span>';
       return;
     }
     const rows = openRoles();
     if (!rows.length) {
-      tableEl.innerHTML = '<tr><td colspan="7" class="rh-empty">Nothing on the board yet. Hit "Find openings for me" above, then add what you like.</td></tr>';
+      tableEl.innerHTML = '<span class="rh-soft-note">Nothing on the board yet. Hit "Find openings for me" above, then add what you like.</span>';
       return;
     }
     tableEl.innerHTML = rows.map((r) => {
@@ -661,17 +677,46 @@ export function createResumeHelper({ root, onToast }) {
       const title = url
         ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(r.role || 'Opening')}</a>`
         : esc(r.role || 'Opening');
+      const meta = [r.company, r.location, r.deadline].filter(Boolean).map(esc).join(' · ');
       return `
-        <tr data-role-id="${esc(r.id)}">
-          <td class="rh-td-role">${title}</td>
-          <td>${esc(r.company || '')}</td>
-          <td>${esc(r.location || '')}</td>
-          <td>${esc(r.deadline || '')}</td>
-          <td><button type="button" class="rh-pdf ${r.resumeReady ? 'is-ready' : ''}" data-rh-pdf="resume" data-role-id="${esc(r.id)}">${r.resumeReady ? 'Resume ✓' : 'Resume'}</button></td>
-          <td><button type="button" class="rh-pdf ${r.coverLetterReady ? 'is-ready' : ''}" data-rh-pdf="coverLetter" data-role-id="${esc(r.id)}">${r.coverLetterReady ? 'Letter ✓' : 'Letter'}</button></td>
-          <td><span class="rh-status-chip">${esc(r.processStatus || 'Not Started')}</span></td>
-        </tr>`;
+        <div class="rh-board-row" data-role-id="${esc(r.id)}">
+          <div class="rh-board-info">
+            <strong>${title}</strong>
+            <span>${meta}</span>
+          </div>
+          <span class="rh-status-chip">${esc(r.processStatus || 'Not Started')}</span>
+        </div>`;
     }).join('');
+  }
+
+  // Documents · one resume + one cover letter per tracked role, generated
+  // from the same profile Jesse and the Jobs table both use. Reuses the
+  // exact .rh-pdf buttons/downloadPdf() the old inline table cells called;
+  // this is just a dedicated place for them now instead of two columns
+  // squeezed into the compact Jobs list.
+  function paintDocuments() {
+    if (!documentsEl) return;
+    if (signedOut) {
+      documentsEl.innerHTML = '<span class="rh-soft-note">Sign in to see your documents.</span>';
+      return;
+    }
+    const rows = openRoles();
+    if (!rows.length) {
+      documentsEl.innerHTML = '<span class="rh-soft-note">Add a role from Jobs to generate a resume and cover letter for it.</span>';
+      return;
+    }
+    documentsEl.innerHTML = rows.map((r) => `
+      <div class="rh-doc-row" data-role-id="${esc(r.id)}">
+        <div class="rh-doc-info">
+          <strong>${esc(r.role || 'Opening')}</strong>
+          <span>${esc(r.company || '')}</span>
+        </div>
+        <div class="rh-doc-actions">
+          <button type="button" class="rh-pdf ${r.resumeReady ? 'is-ready' : ''}" data-rh-pdf="resume" data-role-id="${esc(r.id)}">${r.resumeReady ? 'Resume ✓' : 'Resume'}</button>
+          <button type="button" class="rh-pdf ${r.coverLetterReady ? 'is-ready' : ''}" data-rh-pdf="coverLetter" data-role-id="${esc(r.id)}">${r.coverLetterReady ? 'Letter ✓' : 'Letter'}</button>
+        </div>
+      </div>
+    `).join('');
   }
 
   async function downloadPdf(kind, roleId, button) {
@@ -681,7 +726,7 @@ export function createResumeHelper({ root, onToast }) {
     if (!role) return;
     if (kind === 'resume' && !draft.name && !draft.skills.length) {
       onToast?.('Build your profile first, the doc needs it');
-      setStep('build', fire.user.uid);
+      selectRail('profile', fire.user.uid);
       return;
     }
     const original = button?.textContent;
@@ -856,13 +901,44 @@ export function createResumeHelper({ root, onToast }) {
 
   discoverBtn?.addEventListener('click', () => { void runDiscovery(); });
 
-  backBtn?.addEventListener('click', async () => {
-    const fire = await me();
-    setStep('build', fire?.user?.uid);
+  railBtns.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const fire = await me();
+      selectRail(btn.dataset.rhRail, fire?.user?.uid);
+    });
   });
-  forwardBtn?.addEventListener('click', async () => {
-    const fire = await me();
-    setStep('jobs', fire?.user?.uid);
+
+  attachBtn?.addEventListener('click', () => {
+    if (!attachMenu) return;
+    const willOpen = attachMenu.hidden;
+    attachMenu.hidden = !willOpen;
+    attachBtn.setAttribute('aria-expanded', String(willOpen));
+  });
+  document.addEventListener('click', (e) => {
+    if (!attachMenu || attachMenu.hidden) return;
+    if (e.target === attachBtn || attachBtn?.contains(e.target) || attachMenu.contains(e.target)) return;
+    attachMenu.hidden = true;
+    attachBtn?.setAttribute('aria-expanded', 'false');
+  });
+
+  root.querySelectorAll('[data-rh-quick]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const action = btn.dataset.rhQuick;
+      const fire = await me();
+      if (action === 'discover') {
+        selectRail('jobs', fire?.user?.uid);
+        void runDiscovery();
+      } else if (action === 'profile') {
+        selectRail('profile', fire?.user?.uid);
+      } else if (action === 'documents') {
+        selectRail('documents', fire?.user?.uid);
+      } else if (action === 'feedback') {
+        if (thinking) return;
+        const text = 'Can you review my profile so far and tell me what would make it stronger?';
+        bubble('you', text);
+        void askJesse(text);
+      }
+    });
   });
 
   // ---------- lifecycle ----------
@@ -874,23 +950,24 @@ export function createResumeHelper({ root, onToast }) {
     const fire = await me();
     if (!fire) {
       signedOut = true;
-      if (soft) soft.textContent = 'Sign in to build your resume. This panel saves to your own account.';
-      setStep('build');
+      if (statusEl) statusEl.textContent = 'Sign in to build your resume';
+      selectRail('jobs');
       paintDraft();
       paintTable();
+      paintDocuments();
       greetOnce();
       return;
     }
     signedOut = false;
     if (!opened) {
       opened = true;
-      recallStep(fire.user.uid);
+      recallRail(fire.user.uid);
       await loadDraft();
       if (!draft.email && fire.user.email) draft.email = fire.user.email;
       if (!draft.name && fire.user.displayName) draft.name = fire.user.displayName;
       void watchBoard();
     }
-    setStep(step, fire.user.uid);
+    selectRail(rail, fire.user.uid);
     paintDraft();
     greetOnce();
   }

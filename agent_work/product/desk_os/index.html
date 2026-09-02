@@ -318,30 +318,35 @@
 
         <!-- Resume Helper · shown when the student clicks the Unlock box
              (2026-09-02, was Jesse's click behavior, see the comment on
-             that button). Toggling back and forth with Map never navigates;
-             the panel remembers its own step (profile building vs jobs
-             table) per session. All data lives under the signed-in
-             student's own uid: users/{uid}/jobOS/resumeDraft (the editable
-             draft) and users/{uid}/jobOS/state (the shared board the iOS
-             app syncs). -->
-        <section class="hub-tutors hub-resume" id="hubResume" role="tabpanel" aria-label="Resume Helper" hidden>
-          <div class="hub-tutors-head rh-head">
-            <div>
-              <h2 class="hub-tutors-title">Resume Helper</h2>
-              <p class="hub-tutors-soft" data-rh-soft>Jesse builds your profile from a real resume, then finds real openings with links.</p>
-            </div>
-            <div class="rh-head-actions">
-              <button type="button" class="rh-back" data-rh-back hidden>
-                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Edit skills and uploads
+             that button); rebuilt 2026-09-02 into a three-pane app (rail +
+             chat + contextual side panel) per a reference screenshot the
+             founder shared of a competitor's job-search copilot. Center
+             chat is the constant: it never swaps out. The left rail only
+             decides which section shows in the right panel, exactly like
+             that reference — nothing here renders "jobs", "profile" or
+             "documents" as separate pages. All data lives under the
+             signed-in student's own uid: users/{uid}/jobOS/resumeDraft
+             (the editable draft) and users/{uid}/jobOS/state (the shared
+             board the iOS app syncs). -->
+        <section class="hub-resume rh-shell" id="hubResume" role="tabpanel" aria-label="Resume Helper" hidden>
+          <div class="rh-app">
+            <nav class="rh-rail" aria-label="Resume Helper sections">
+              <button type="button" class="rh-rail-btn is-active" data-rh-rail="jobs" aria-selected="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+                <span>Jobs</span>
+                <span class="rh-rail-badge" data-rh-jobs-badge hidden>0</span>
               </button>
-              <button type="button" class="rh-forward" data-rh-forward>Jobs table</button>
-            </div>
-          </div>
+              <button type="button" class="rh-rail-btn" data-rh-rail="profile" aria-selected="false">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.3"/><path d="M5.3 20c0-3.7 3-6.2 6.7-6.2s6.7 2.5 6.7 6.2"/></svg>
+                <span>Profile</span>
+              </button>
+              <button type="button" class="rh-rail-btn" data-rh-rail="documents" aria-selected="false">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.8H6.5a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.3Z"/><path d="M14 2.8v5.5h5.5M8 13h8M8 17h5"/></svg>
+                <span>Documents</span>
+              </button>
+            </nav>
 
-          <!-- Step 1 · Jesse conversation + editable profile -->
-          <div class="hub-tutor-duo rh-duo" data-rh-step-build>
-            <div class="hub-tutor-pane rh-pane rh-jesse-pane">
+            <div class="rh-chat-col">
               <div class="rh-jesse-top">
                 <img class="rh-jesse-face" src="img/orbs/mascot-ivory.png" alt="" />
                 <div>
@@ -352,31 +357,50 @@
               <div class="rh-transcript" data-rh-transcript aria-live="polite">
                 <div class="rh-starters" data-rh-starters hidden></div>
               </div>
-              <div class="rh-uploads">
-                <button type="button" class="rh-mini" data-rh-upload-resume>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
-                  Upload resume (PDF)
-                </button>
-                <button type="button" class="rh-mini" data-rh-upload-writing>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
-                  Upload a writing piece
-                </button>
+              <div class="rh-quick-actions">
+                <button type="button" data-rh-quick="discover">Find openings for me</button>
+                <button type="button" data-rh-quick="feedback">Resume feedback</button>
+                <button type="button" data-rh-quick="profile">Review my profile</button>
+                <button type="button" data-rh-quick="documents">My documents</button>
               </div>
               <form class="rh-chat" data-rh-chat autocomplete="off">
+                <div class="rh-attach-wrap">
+                  <button type="button" class="rh-attach" data-rh-attach aria-haspopup="true" aria-expanded="false" aria-label="Attach a file">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                  <div class="rh-attach-menu" data-rh-attach-menu hidden>
+                    <button type="button" data-rh-upload-resume>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+                      Upload resume (PDF)
+                    </button>
+                    <button type="button" data-rh-upload-writing>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+                      Upload a writing piece
+                    </button>
+                  </div>
+                </div>
                 <input data-rh-chat-input type="text" maxlength="500" placeholder="Tell Jesse about you, or ask for changes" aria-label="Message Jesse" />
                 <button type="submit">Send</button>
               </form>
               <input data-rh-file-resume type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden />
               <input data-rh-file-writing type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" hidden />
             </div>
-            <div class="hub-tutor-pane rh-pane rh-profile-pane">
-              <div class="rh-profile-head">
-                <span class="rh-profile-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.8H6.5a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.3Z"/><path d="M14 2.8v5.5h5.5M8 13h8M8 17h5"/></svg>
-                </span>
-                <span class="rh-kicker">Your profile · edit anything</span>
+
+            <aside class="rh-side">
+              <div class="rh-side-panel" data-rh-side="jobs">
+                <div class="rh-side-head">
+                  <h3>Jobs</h3>
+                  <button type="button" class="rh-discover" data-rh-discover>Find openings for me</button>
+                </div>
+                <p class="rh-side-note" data-rh-jobs-note>Real search, real links. Nothing lands on your board unless you add it.</p>
+                <div class="rh-candidates" data-rh-candidates hidden></div>
+                <p class="rh-side-sub">On your board</p>
+                <div class="rh-board" data-rh-table></div>
               </div>
-              <div class="rh-profile-scroll">
+
+              <div class="rh-side-panel" data-rh-side="profile" hidden>
+                <div class="rh-side-head"><h3>Your profile</h3></div>
+                <p class="rh-side-note">Edit anything. Jesse reads this to search and to write your docs.</p>
                 <div class="rh-grid">
                   <label>Name<input data-rh-f="name" type="text" maxlength="80" /></label>
                   <label>Headline<input data-rh-f="headline" type="text" maxlength="180" /></label>
@@ -407,32 +431,13 @@
                   </form>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Step 2 · jobs table from users/{uid}/jobOS/state.roles -->
-          <div class="rh-jobs" data-rh-step-jobs hidden>
-            <div class="rh-jobs-bar">
-              <button type="button" class="rh-discover" data-rh-discover>Find openings for me</button>
-              <span class="rh-jobs-note" data-rh-jobs-note>Real search, real links. Nothing lands on your board unless you add it.</span>
-            </div>
-            <div class="rh-candidates" data-rh-candidates hidden></div>
-            <div class="rh-table-wrap">
-              <table class="rh-table">
-                <thead>
-                  <tr>
-                    <th>Role</th>
-                    <th>Company</th>
-                    <th>Location</th>
-                    <th>Deadline</th>
-                    <th>Resume</th>
-                    <th>Cover letter</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody data-rh-table></tbody>
-              </table>
-            </div>
+              <div class="rh-side-panel" data-rh-side="documents" hidden>
+                <div class="rh-side-head"><h3>Documents</h3></div>
+                <p class="rh-side-note">A resume and cover letter per role on your board, written from your real profile.</p>
+                <div class="rh-documents" data-rh-documents></div>
+              </div>
+            </aside>
           </div>
         </section>
 
