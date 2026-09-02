@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import type { RefObject } from 'react'
-import { BORDER_SOFT, CARD, FONT_STACK, TEXT_FAINT, TEXT_PRIMARY, TEXT_SOFT } from './shared'
+import { BORDER_SOFT, CARD, TEXT_FAINT, TEXT_PRIMARY, TEXT_SOFT } from './shared'
 import type { LearnSessionSummary } from '../../lib/learnSessions'
 
 export interface HistorySidebarProps {
@@ -10,24 +10,9 @@ export interface HistorySidebarProps {
   onToggle: () => void
   onOpenSession: (conceptId: string, conceptLabel: string) => void
   activeConceptId: string | null
-  // Search + upload (Phase G1: moved off the bottom bar and into this panel,
-  // which now opens by default instead of the old flyout-on-demand menu).
-  query: string
-  onQueryChange: (v: string) => void
-  onSearch: () => void
-  searchLoading: boolean
-  inputRef: RefObject<HTMLInputElement>
   topUploadFileRef: RefObject<HTMLInputElement>
   materialsAccept: string
   onTopUpload: (file: File) => void
-  materialsBusy: string
-  showPanels: boolean
-  materialsError: string
-  embedPct: number | null
-  embedderReady: boolean
-  resolveMeta: { indexed: number; totalMs: number; coldStart: boolean } | null
-  studiedIds: string[]
-  searchErr: string
 }
 
 function timeAgo(ts: number): string {
@@ -42,21 +27,18 @@ function timeAgo(ts: number): string {
 }
 
 /** Phase 3 built this as a toggle + flyout for "what have I been talking to
- * Jesse about." Phase G1 (2026-09-02) folds the search/upload bar that used
- * to run across the bottom of the whole page into the same panel instead,
- * and flips the default to open: a fresh /learn opens with this panel
- * showing, search focused, so a student can start typing immediately
- * instead of hunting for a bottom bar. Learn.tsx auto-collapses it the
- * moment a concept actually reveals (see the panelsRevealed effect there),
- * so the reading/sim area gets full width once there is something to read;
- * the toggle button here is always visible to bring it back. The upload
- * file input stays mounted outside the open-only block below so
- * EntryStage's "I have homework" button can trigger it via ref even while
- * this panel is collapsed. */
+ * Jesse about." Phase G1 (2026-09-02) folded the search/upload bar into this
+ * same panel; this pass (same day, later) pulls search back out into
+ * EntryStage's own real bottom bar (which also fixed backToGraph() to
+ * reliably land back on that screen, so a second search entry point here is
+ * no longer needed anywhere) and strips this panel down to what the founder
+ * actually asked for: just the past prompts you've sent, nothing else. The
+ * upload file input stays mounted here (hidden, no visual footprint) since
+ * EntryStage's "I have homework" button still triggers it via this same
+ * ref, open or collapsed. */
 export default function HistorySidebar({
   sessions, loading, open, onToggle, onOpenSession, activeConceptId,
-  query, onQueryChange, onSearch, searchLoading, inputRef, topUploadFileRef, materialsAccept, onTopUpload,
-  materialsBusy, showPanels, materialsError, embedPct, embedderReady, resolveMeta, studiedIds, searchErr,
+  topUploadFileRef, materialsAccept, onTopUpload,
 }: HistorySidebarProps) {
   useEffect(() => {
     if (!open) return
@@ -76,7 +58,7 @@ export default function HistorySidebar({
           color: TEXT_PRIMARY, fontSize: 12.5, fontWeight: 600, cursor: 'pointer',
         }}
       >
-        {sessions.length > 0 ? `History (${sessions.length})` : 'Search'}
+        {sessions.length > 0 ? `History (${sessions.length})` : 'History'}
       </button>
 
       <input
@@ -93,68 +75,13 @@ export default function HistorySidebar({
 
       {open && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 5, display: 'flex' }}>
-          {/* Open by default now, alongside EntryStage/RouteCards, not just as
-              an on-demand modal, so this stays a transparent click-outside
-              target rather than a dark scrim that would dim whatever else is
-              on screen behind it. */}
           <div onClick={onToggle} style={{ flex: 1, background: 'transparent' }} />
           <div style={{ ...CARD, width: 340, maxWidth: '88%', height: '100%', borderRadius: 0, borderLeft: BORDER_SOFT, display: 'flex', flexDirection: 'column', padding: '60px 0 16px' }}>
             <div style={{ padding: '0 18px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: TEXT_PRIMARY }}>Ask Jesse</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: TEXT_PRIMARY }}>History</div>
               <button onClick={onToggle} style={{ background: 'none', border: 'none', color: TEXT_FAINT, fontSize: 20, lineHeight: 1, cursor: 'pointer' }}>×</button>
             </div>
 
-            <div style={{ padding: '0 18px 16px', borderBottom: BORDER_SOFT, marginBottom: 4 }}>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input
-                  ref={inputRef}
-                  className="lrn-input"
-                  value={query}
-                  onChange={(e) => onQueryChange(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && onSearch()}
-                  placeholder="Ask anything, or paste a homework question..."
-                  style={{ flex: 1, minWidth: 0, padding: '12px 14px', borderRadius: 12, border: '1px solid rgba(205,220,208,0.2)', background: 'rgba(205,220,208,0.05)', color: TEXT_PRIMARY, fontSize: 14, fontFamily: FONT_STACK }}
-                />
-                <button onClick={onSearch} disabled={searchLoading} style={{ padding: '12px 18px', borderRadius: 12, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 13.5, cursor: searchLoading ? 'default' : 'pointer' }}>
-                  {searchLoading ? '...' : 'Go'}
-                </button>
-              </div>
-              <button
-                onClick={() => topUploadFileRef.current?.click()}
-                disabled={!!materialsBusy || searchLoading}
-                title="Upload a worksheet and jump straight to it, no typing needed"
-                style={{ marginTop: 8, width: '100%', padding: '11px 16px', borderRadius: 12, border: '1.5px dashed rgba(94,200,240,0.5)', background: 'rgba(94,200,240,0.07)', color: '#5EC8F0', fontWeight: 600, fontSize: 13, cursor: materialsBusy || searchLoading ? 'default' : 'pointer' }}
-              >
-                {materialsBusy || 'Upload homework'}
-              </button>
-              {/* The materials panel's own error line only exists once a concept
-                  has resolved, so an upload started from here (before anything
-                  has resolved) needs its own surface, or a failure reads as the
-                  button just silently doing nothing. */}
-              {!showPanels && materialsError && (
-                <p style={{ margin: '8px 0 0', fontSize: 12, color: '#FF7B7B', lineHeight: 1.45 }}>{materialsError}</p>
-              )}
-              {embedPct !== null && embedPct < 100 && !embedderReady && (
-                <p style={{ margin: '8px 0 0', fontSize: 11.5, color: '#5EC8F0', lineHeight: 1.45 }}>
-                  Getting the search model ready ({embedPct}%). One-time download, cached in your browser, runs on your device.
-                </p>
-              )}
-              {resolveMeta && !searchLoading && (
-                <p style={{ margin: '8px 0 0', fontSize: 11, color: TEXT_FAINT }}>
-                  {resolveMeta.indexed} concepts searched in {resolveMeta.totalMs}ms{resolveMeta.coldStart ? ' (cold start)' : ''}
-                </p>
-              )}
-              {studiedIds.length > 0 && (
-                <p title={studiedIds.join(', ')} style={{ margin: '8px 0 0', fontSize: 11.5, color: '#f2b84b' }}>
-                  ✓ {studiedIds.length} studied
-                </p>
-              )}
-              {searchErr && <p style={{ margin: '8px 0 0', color: '#FF7B7B', fontSize: 12.5 }}>{searchErr}</p>}
-            </div>
-
-            <div style={{ padding: '12px 18px 6px', fontSize: 11.5, fontWeight: 700, letterSpacing: 0.6, textTransform: 'uppercase', color: TEXT_FAINT }}>
-              Your sessions
-            </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '0 10px' }}>
               {loading && sessions.length === 0 && (
                 <p style={{ padding: '20px 8px', fontSize: 12.5, color: TEXT_FAINT }}>Loading...</p>

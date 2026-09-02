@@ -140,7 +140,6 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     ramp: PathStep[]
     startAtFoundation: boolean
   } | null>(null)
-  const searchInputRef = useRef<HTMLInputElement>(null)
   const entrySearchInputRef = useRef<HTMLInputElement>(null)
 
   const [content, setContent] = useState<ConceptContent | null>(null)
@@ -642,6 +641,16 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [panelsSettled, chapter, activeConceptId, contentLoading])
 
+  // A real full reset, not just "clear the resolved concept" (2026-09-02
+  // fix): searchedQuery/materials were never cleared here, so "Back to full
+  // graph" used to land on a screen with resolved === null but
+  // searchedQuery still truthy, which fails EntryStage's own render guard
+  // (!searchedQuery && !materials && !routeCardsFor) — no search bar, no
+  // upload button, nothing. Only the History sidebar's own search input
+  // could get a student out of that dead end, which is exactly the piece
+  // this session's own ask is removing (History becomes a pure session
+  // list). Clearing everything here makes "back to graph" a real landing
+  // on EntryStage every time, so that removal is safe.
   function backToGraph() {
     setResolved(null)
     setMatches(null)
@@ -650,6 +659,19 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setPanelsSettled(false)
     setPath([])
     setPathIndex(0)
+    setSearchedQuery('')
+    setQuery('')
+    setMaterials(null)
+    setSelectedQ(null)
+    setQHints(null)
+    setQHintsTried(false)
+    setHintsShown(0)
+    setMaterialsError('')
+    if (!embedded) {
+      const next = new URLSearchParams(searchParams)
+      next.delete('q')
+      setSearchParams(next, { replace: true })
+    }
     resetPerConcept()
     graphIframeRef.current?.contentWindow?.postMessage({ type: 'clear' }, '*')
   }
@@ -907,7 +929,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
           <iframe
             ref={graphIframeRef}
             title="concept-graph"
-            src="/full-graph-viewer.html?hideSubjects"
+            src="/full-graph-viewer.html?hideSubjects&hideLegend"
             onLoad={() => pushStudiedToGraph(studyLog)}
             style={{ width: '100%', height: '100%', border: 'none' }}
           />
@@ -921,22 +943,9 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             onToggle={() => setHistoryOpen((v) => !v)}
             onOpenSession={(conceptId, conceptLabel) => void openSession(conceptId, conceptLabel)}
             activeConceptId={activeConceptId}
-            query={query}
-            onQueryChange={setQuery}
-            onSearch={() => runSearch()}
-            searchLoading={loading}
-            inputRef={searchInputRef}
             topUploadFileRef={topUploadFileRef}
             materialsAccept={MATERIALS_ACCEPT}
             onTopUpload={(f) => void handleMaterialsFile(f, { autoResolve: true })}
-            materialsBusy={materialsBusy}
-            showPanels={showPanels}
-            materialsError={materialsError}
-            embedPct={embedPct}
-            embedderReady={embedderReady()}
-            resolveMeta={resolveMeta}
-            studiedIds={studiedIds}
-            searchErr={err}
           />
         )}
 
@@ -953,7 +962,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             }}
             query={query}
             onQueryChange={setQuery}
-            onSearch={() => runSearch()}
+            onSearch={(text) => runSearch(text)}
             searchLoading={loading}
             searchInputRef={entrySearchInputRef}
           />

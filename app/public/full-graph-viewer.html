@@ -289,7 +289,7 @@
 
       const controls = graph.controls();
       controls.autoRotate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      controls.autoRotateSpeed = 0.35;
+      controls.autoRotateSpeed = 1;
       controls.addEventListener('start', () => { controls.autoRotate = false; });
     })
     .catch(() => {

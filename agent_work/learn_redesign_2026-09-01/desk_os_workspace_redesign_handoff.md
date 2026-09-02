@@ -237,3 +237,82 @@ founder wants it.
   only, no `?hideLegend`) is unaffected by both additions to that shared
   file — real backward-compatibility check, not an assumption.
 - `npm run build` (tsc + vite) clean.
+
+## Round four: EntryStage gets a real mode chooser + voice input, History goes pure, legend removed on /learn too
+
+Same day, next ask, covering five separate items:
+
+1. **Legend removed from /learn's own embed too** — `Learn.tsx`'s iframe
+   src now also passes `&hideLegend` (previously only the Desk OS embed
+   did). This also removed the one real reason `EntryStage`'s new bottom
+   search bar needed a responsive breakpoint (the legend's bottom-left zone
+   it used to dodge below ~1088px wide) — simplified back to a single
+   `bottom: 28px`, verified via a static preview at desktop/iPad/phone that
+   nothing else lives there to collide with now.
+2. **Graph motion**: `full-graph-viewer.html`'s `controls.autoRotateSpeed`
+   0.35 → 1 (roughly 3x, still gentle) — shared file, benefits both /learn
+   and the Desk OS hero card.
+3. **History sidebar stripped to a pure session list.** Dropped the search
+   input, upload button, and every status line (materialsError, embedPct,
+   resolveMeta, studiedIds, searchErr) that Phase G1 had folded in here —
+   `HistorySidebarProps` shrank from 22 fields to 9. Pill label is always
+   "History" now (was conditionally "Search" with zero sessions).
+   **Real bug caught and fixed to make this safe, not just a rename**:
+   `backToGraph()` (the "Back to full graph" button shown once a concept
+   resolves) never reset `searchedQuery`/`materials`, so clicking it used
+   to land on a screen where `resolved === null` but `searchedQuery` was
+   still truthy — failing `EntryStage`'s own render guard
+   (`!searchedQuery && !materials && !routeCardsFor`), meaning no search UI
+   at all. The sidebar's own (now-removed) search input was the only way
+   out of that dead end. Fixed `backToGraph()` to do a real full reset
+   (`searchedQuery`, `query`, `materials` and its sub-state, the `?q=` URL
+   param) so it reliably lands back on `EntryStage` — a real fix this
+   session's removal needed to be safe, not scope creep.
+4. **"Help me learn something new" now opens a real two-option chooser**
+   instead of jumping straight to the search bar: **Fun Lessons** (the same
+   real search — "begin" focuses the same bottom bar) and **Vocal
+   Practice** (speak the question instead of typing it). Neither term
+   existed anywhere in the codebase before this — verified via a full
+   repo-wide search — so Vocal Practice's actual behavior was a real
+   design call, not a lookup: real browser `SpeechRecognition`
+   (`webkitSpeechRecognition` fallback for Safari), transcript becomes the
+   query and runs through the same real `runSearch()` every other entry
+   point already uses. No new backend, no fabricated "vocal practice"
+   pedagogy — just voice as an alternate input method for search that
+   already works. Handles all three real states honestly: listening (pulse
+   animation), unsupported browser (a real message naming Chrome/Edge/
+   Safari-iOS-17+, not a silently dead mic), and error (mic denied vs. no
+   speech heard, with a Try again). Fixed a real stale-closure risk along
+   the way: `onSearch` had to gain an optional explicit `text` override
+   (`Learn.tsx`'s `runSearch(text)` already supported this) because setting
+   `query` then immediately calling a no-arg `onSearch()` in the same
+   synchronous handler would have searched the *previous* query, not the
+   just-heard transcript — React state updates aren't visible to a closure
+   created before the update lands in the same tick.
+   **Flagging the interpretation, not asking permission for it**: this
+   session's established pattern (see "friends online," round three) — a
+   term with nothing behind it gets a real, honest, buildable
+   interpretation shipped and clearly documented, not silently faked and
+   not blocked on a question. If "Vocal Practice" was meant to be a bigger
+   ongoing spoken conversation with Jesse (closer to the iOS app's real
+   `JesseCallSession` voice-call pattern — replies read aloud too, not just
+   one-shot speech-to-search), that is a materially bigger build (TTS
+   playback, persistent listening state, a different UX entirely) and
+   would need to be scoped as its own follow-up, not assumed here.
+
+### Verification (round four)
+
+- `npx tsc --noEmit` clean after each of the four file changes
+  (`Learn.tsx`, `EntryStage.tsx`, `HistorySidebar.tsx`,
+  `full-graph-viewer.html`), confirming the `HistorySidebar` prop-shrink
+  and the `onSearch` signature change didn't break any call site.
+- Static style previews (same technique as round three, since `/learn` is
+  auth-gated in this environment) for the simplified bottom bar and the
+  new chooser card — both read cleanly against the real dark-forest
+  palette from `shared.tsx`, not just verified by reading the JSX.
+- Traced `backToGraph()`'s full call graph and every piece of state
+  `EntryStage`'s render guard depends on before removing the sidebar's
+  search input, specifically to rule out creating a dead end — this is
+  the one item in this round that would have shipped a real regression if
+  skipped.
+- `npm run build` (tsc + vite) clean.
