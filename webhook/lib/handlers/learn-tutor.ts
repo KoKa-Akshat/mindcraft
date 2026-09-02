@@ -30,6 +30,14 @@
  * tried before hinting, escalate hints instead of dumping a full solution,
  * and treat the student's own message as DATA, never as instructions that
  * can override any of the above.
+ *
+ * Phase 3 addition (2026-09-02): every successful reply also upserts a
+ * lightweight per-student session index (learnSessions/{uid}, one doc,
+ * capped array of recent concept sessions) so the new HistorySidebar can
+ * list "what have I been talking to Jesse about" without ever reading the
+ * conversations/* collection directly (that stays backend-only, same as
+ * before; see lib/handlers/learn-tutor-history.ts for how the sidebar
+ * fetches a past conversation's actual messages).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { setCors } from '../cors'
@@ -81,6 +89,39 @@ async function checkAndSpendDailyFallback(uid: string): Promise<boolean> {
     })
   } catch {
     return false
+  }
+}
+
+const MAX_SESSIONS = 30
+
+interface SessionSummary {
+  conceptId: string
+  conceptLabel: string
+  lastMessage: string
+  lastRole: 'user' | 'assistant'
+  updatedAt: number
+}
+
+/** Fire-and-forget: moves this concept to the front of the student's recent
+ * session list (deduped, capped at MAX_SESSIONS). Never blocks or fails the
+ * actual reply, the sidebar is a convenience, not the conversation's source
+ * of truth (that is still conversationStore's own per-concept doc). */
+async function upsertLearnSession(uid: string, conceptId: string, conceptLabel: string, lastMessage: string, lastRole: 'user' | 'assistant'): Promise<void> {
+  if (!conceptId) return
+  const ref = db.collection('learnSessions').doc(uid)
+  try {
+    await db.runTransaction(async (tx) => {
+      const snap = await tx.get(ref)
+      const existing: SessionSummary[] = snap.exists ? (snap.data()?.sessions ?? []) : []
+      const withoutThis = existing.filter((s) => s.conceptId !== conceptId)
+      const updated: SessionSummary[] = [
+        { conceptId, conceptLabel, lastMessage: lastMessage.slice(0, 140), lastRole, updatedAt: Date.now() },
+        ...withoutThis,
+      ].slice(0, MAX_SESSIONS)
+      tx.set(ref, { sessions: updated }, { merge: true })
+    })
+  } catch {
+    // Swallowed on purpose, see doc comment above.
   }
 }
 
@@ -149,7 +190,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const body = req.body || {}
   const message = clip(body.message, 1000).trim()
   const sessionId = clip(body.sessionId, 120) || 'default'
-  const conceptLabel = clip(body.conceptId, 200) ? clip(body.conceptLabel, 200) || clip(body.conceptId, 200) : 'this concept'
+  const conceptId = clip(body.conceptId, 200)
+  const conceptLabel = conceptId ? clip(body.conceptLabel, 200) || conceptId : 'this concept'
   const questionText = clip(body.questionText, 1000)
   const chapterSummary = clip(body.chapterSummary, 600)
   const hintsShown = Number.isFinite(body.hintsShown) ? Math.max(0, Math.min(20, Number(body.hintsShown))) : 0
@@ -191,6 +233,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     void saveExchange(conversationId, message, result.reply).catch(() => {})
+    void upsertLearnSession(uid, conceptId, conceptLabel, result.reply, 'assistant').catch(() => {})
     return res.status(200).json({ reply: result.reply, action: result.action, fallback: usedFallback })
   } catch (err: any) {
     console.warn('learn-tutor error:', err?.message ?? err)

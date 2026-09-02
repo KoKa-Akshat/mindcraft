@@ -302,6 +302,25 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Phase 3 of the Learn refactor: one doc per student, a capped list of
+    // recent tutor-chat sessions (concept id/label, last message preview,
+    // timestamp) that powers the HistorySidebar. Written only by the
+    // webhook's admin SDK (learn-tutor.ts's upsertLearnSession), never by
+    // the client, same reason the raw conversations/* collection has no
+    // rule at all here: the actual chat content stays backend-gated, this
+    // is only ever a lightweight, curated index. Doc id is the student's
+    // own uid, so read access mirrors conceptStudyLog's owner/parent shape
+    // without needing a studentId field check.
+    match /learnSessions/{studentUid} {
+      allow read: if request.auth != null && (
+        request.auth.uid == studentUid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == studentUid
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([studentUid]))
+      );
+      allow write: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||

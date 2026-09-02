@@ -49,6 +49,7 @@ import conceptResolve from '../lib/handlers/concept-resolve'
 import simplifyChapter from '../lib/handlers/simplify-chapter'
 import generateResumePdf from '../lib/handlers/generate-resume-pdf'
 import learnTutor from '../lib/handlers/learn-tutor'
+import learnTutorHistory from '../lib/handlers/learn-tutor-history'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -97,6 +98,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'concept-resolve': conceptResolve,
   'simplify-chapter': simplifyChapter,
   'learn-tutor': learnTutor,
+  'learn-tutor-history': learnTutorHistory,
   // Resume Helper PDFs (2026-08-31). Routed through this consolidated
   // function rather than a new api/*.ts file on purpose: the deployment
   // already sits at exactly 12 functions, the Hobby plan's cap (see this

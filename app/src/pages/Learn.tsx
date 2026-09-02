@@ -85,6 +85,8 @@ import EntryStage from './learn/EntryStage'
 import RouteCards from './learn/RouteCards'
 import TutorPanel, { type TutorMessage } from './learn/TutorPanel'
 import { askTutor } from '../lib/learnTutor'
+import HistorySidebar from './learn/HistorySidebar'
+import { loadLearnSessions, fetchTutorHistory, type LearnSessionSummary } from '../lib/learnSessions'
 import { PAGE_BG, FONT_STACK, TEXT_PRIMARY, type NeighborRow, type MaterialsState, type LibraryCounts, type QuestionSimState } from './learn/shared'
 
 /** Below this, even the best available match is noise rather than a signal:
@@ -198,6 +200,15 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   const [tutorSending, setTutorSending] = useState(false)
   const [tutorError, setTutorError] = useState('')
 
+  // ── Phase 3: chat-history sidebar ─────────────────────────────────────────
+  // A lightweight per-student index (learnSessions/{uid}, read directly from
+  // Firestore, same pattern loadStudyLog already uses) of which concepts
+  // have a Jesse conversation and when it last moved. Picking one re-opens
+  // that concept AND its actual chat transcript (fetchTutorHistory, backend
+  // only, see lib/learnSessions.ts's doc comment for why).
+  const [sessions, setSessions] = useState<LearnSessionSummary[]>([])
+  const [historyOpen, setHistoryOpen] = useState(false)
+
   // ── Proactive misconception nudge ───────────────────────────────────────
   // 2026-09-02: every surface on this page was student-initiated (search,
   // upload, hints on request), nothing ever spoke up first. This is the
@@ -265,6 +276,11 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   useEffect(() => {
     if (!uid) return
     void loadStudyLog(uid).then(setStudyLog)
+  }, [uid])
+
+  useEffect(() => {
+    if (!uid) return
+    void loadLearnSessions(uid).then(setSessions)
   }, [uid])
 
   useEffect(() => {
@@ -409,11 +425,53 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       if (result.action === 'reveal_hint') {
         setHintsShown((n) => (qHints ? Math.min(qHints.cards.length, n + 1) : n))
       }
+      // The backend already upserted this concept to the front of the
+      // student's session index (learn-tutor.ts's upsertLearnSession); pull
+      // the fresh list so the sidebar reflects it without a page reload.
+      if (uid) void loadLearnSessions(uid).then(setSessions)
     } catch (e) {
       setTutorError(String(e instanceof Error ? e.message : e))
     } finally {
       setTutorSending(false)
     }
+  }
+
+  /** Fired by HistorySidebar. Re-opens a past concept exactly like a
+   * neighbor/route pick (loadContent + highlightInGraph + reveal), skipping
+   * the resolver since the concept id is already known, then loads that
+   * concept's actual chat transcript so the student picks up the
+   * conversation instead of starting it over. Reachable from any stage,
+   * including a still-blank EntryStage, so it resets the same search-level
+   * state search() itself resets before setting the new resolved concept. */
+  async function openSession(conceptId: string, conceptLabel: string) {
+    setHistoryOpen(false)
+    resetPerConcept()
+    setMatches(null)
+    setOutOfDomain(false)
+    setPath([])
+    setPathIndex(0)
+    setRouteCardsFor(null)
+    setPanelsRevealed(false)
+    setPanelsSettled(false)
+    setQuery(conceptLabel)
+    setSearchedQuery(conceptLabel)
+    const labels = await fetchConceptLabels([conceptId])
+    const meta = labels.get(conceptId)
+    setResolved({
+      conceptId,
+      label: meta?.label ?? conceptLabel,
+      subject: '',
+      subjectTitle: meta?.subjectTitle ?? '',
+      level: meta?.level ?? '',
+      hasLesson: meta?.hasLesson ?? true,
+      hasSim: meta?.hasSim ?? false,
+      score: 1,
+    })
+    void loadContent(conceptId)
+    highlightInGraph(conceptId)
+    setTimeout(() => setPanelsRevealed(true), REVEAL_DELAY_MS)
+    const history = await fetchTutorHistory(conceptId)
+    setTutorMessages(history)
   }
 
   function goToStep(i: number) {
@@ -842,6 +900,16 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             style={{ width: '100%', height: '100%', border: 'none' }}
           />
         </div>
+
+        {uid && (
+          <HistorySidebar
+            sessions={sessions}
+            open={historyOpen}
+            onToggle={() => setHistoryOpen((v) => !v)}
+            onOpenSession={(conceptId, conceptLabel) => void openSession(conceptId, conceptLabel)}
+            activeConceptId={activeConceptId}
+          />
+        )}
 
         {!searchedQuery && !materials && !routeCardsFor && (
           <EntryStage
