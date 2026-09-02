@@ -359,7 +359,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (jesseNav) {
       jesseNav.setAttribute(
         'aria-label',
-        `Open the Resume Helper. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
+        `Tutors and events near you. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
           + (known ? `, from ${count} real learn actions.` : '.'),
       );
     }
@@ -489,25 +489,25 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     }, CLICK_SPIN_MS);
   });
 
-  // Jesse (2026-09-02: no longer a nav trigger, see the Unlock box comment
-  // in index.html for why). He still hops on click, purely for delight,
-  // same feedback he always had; the class is removed after it plays so
-  // every click hops again.
+  // Jesse (second pass, 2026-09-02): opens Tutors and events, folded back
+  // onto him after one round as a separate "Map" box, one fewer box per the
+  // founder. Still hops on click first, purely for delight, same feedback
+  // he always had; the class is removed after it plays so every click hops
+  // again.
   const JESSE_HOP_MS = 520;
   jesseNav?.addEventListener('click', () => {
     jesseOwl?.classList.add('is-hop');
     window.setTimeout(() => jesseOwl?.classList.remove('is-hop'), JESSE_HOP_MS);
+    onMapOpen?.();
   });
 
-  // Unlock (Resume Helper) and Map (Tutors and events): dedicated boxes,
-  // replacing Jesse's old toggle-in-place behavior (2026-09-02 ask). Each
-  // is a direct "show mine, hide the other" rather than a shared toggle,
-  // since they are now two independently reachable destinations, not two
-  // faces of one control.
+  // Raccoon: opens the Resume Helper. Its own dedicated box (was Jesse's
+  // click behavior originally, then a separate "Unlock" box for one round),
+  // a direct "show mine, hide the other" against Jesse's Map above rather
+  // than a shared toggle, since they are two independently reachable
+  // destinations, not two faces of one control.
   const resumeNav = hub?.querySelector('[data-hub-resume-nav]');
-  const mapNav = hub?.querySelector('[data-hub-map-nav]');
   resumeNav?.addEventListener('click', () => onResumeOpen?.());
-  mapNav?.addEventListener('click', () => onMapOpen?.());
 
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {

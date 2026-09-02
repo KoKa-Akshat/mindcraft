@@ -12,19 +12,23 @@
  *     shown when nobody is signed in (the /try/desk marketing demo) or the
  *     SDK cannot load.
  *
- *   Events · live onSnapshot on the new tutorEvents collection: tutor-posted,
- *     location-pinned, time-bound happenings (office hours at a cafe etc.)
- *     that update on every student's map the moment a tutor posts one. Until
- *     the tutorEvents rules block is deployed, the listener fails closed and
- *     the tab says so honestly instead of pretending to be empty.
+ *   Events · live onSnapshot on the tutorEvents collection: location-pinned,
+ *     time-bound happenings (office hours, a study meetup) that update on
+ *     every signed-in user's map the moment one is posted. Until the
+ *     tutorEvents rules block is deployed, the listener fails closed and the
+ *     tab says so honestly instead of pretending to be empty.
  *
- * A signed-in tutor also gets a "Create event" button on the Events tab,
- * which goes to their real dashboard's Events panel (/tutor?panel=events),
- * where the create form with the map pin lives.
+ * Any signed-in user (not just tutors, generalized 2026-09-02, see
+ * firestore.rules' tutorEvents block) gets a "+ Add event" button on the
+ * Events tab. Clicking it arms pin-placement on the real map to the left
+ * (the next click there drops/moves a marker) and reveals a small inline
+ * form (title, date, start/end, notes) right here; posting writes straight
+ * to tutorEvents with hostId/hostName, the same doc shape and collection
+ * TutorEventsPanel.tsx's own create flow uses, so an event shows up
+ * identically regardless of which surface made it.
  */
 
 import { ensureFire } from './fire.js';
-import { getRole } from './onboarding.js';
 
 const WEBHOOK_BASE = 'https://mindcraft-webhook.vercel.app';
 
@@ -163,6 +167,15 @@ export function createTutorMap({ root, onToast }) {
   const stuckOn = root.querySelector('[data-tm-stuck-on]');
   const stuckText = root.querySelector('[data-tm-stuck-text]');
   const stuckClear = root.querySelector('[data-tm-stuck-clear]');
+  const eventForm = root.querySelector('[data-tm-event-form]');
+  const eventHint = root.querySelector('[data-tm-event-hint]');
+  const efTitle = root.querySelector('[data-tm-ef-title]');
+  const efDate = root.querySelector('[data-tm-ef-date]');
+  const efStart = root.querySelector('[data-tm-ef-start]');
+  const efEnd = root.querySelector('[data-tm-ef-end]');
+  const efNotes = root.querySelector('[data-tm-ef-notes]');
+  const efCancel = root.querySelector('[data-tm-ef-cancel]');
+  const efPost = root.querySelector('[data-tm-ef-post]');
 
   /** @type {any} */
   let map = null;
@@ -175,6 +188,19 @@ export function createTutorMap({ root, onToast }) {
   let tab = 'tutors';
   let ready = false;
   let started = false;
+  /** @type {any} The signed-in Firebase user, once known; null means either
+   *  still loading or genuinely signed out, checked before ever posting. */
+  let fireUser = null;
+  /** @type {any} */
+  let fireDb = null;
+  /** @type {any} */
+  let fireFx = null;
+  let placingEvent = false;
+  /** @type {any} Leaflet marker for the event being placed, removed on
+   *  cancel/post. */
+  let pendingMarker = null;
+  /** @type {{lat:number,lng:number}|null} */
+  let pendingLatLng = null;
 
   /** @type {Array<object>} */
   let tutors = DEMO_TUTORS;
@@ -247,10 +273,10 @@ export function createTutorMap({ root, onToast }) {
 
   function emptyLine() {
     if (tab === 'tutors') return 'No tutors to show yet.';
-    if (eventsState === 'signed-out') return 'Sign in to see live tutor events near you.';
+    if (eventsState === 'signed-out') return 'Sign in to see live events near you.';
     if (eventsState === 'blocked') return 'Events are not switched on for this environment yet. Check back soon.';
     if (eventsState === 'loading') return 'Checking for events…';
-    return 'No upcoming events yet. Tutors can post office hours and meetups from their dashboard.';
+    return 'No upcoming events yet. Post one with + Add event above.';
   }
 
   function paintList() {
@@ -267,7 +293,8 @@ export function createTutorMap({ root, onToast }) {
         nearLabel.textContent = `${rows.length} tutor${rows.length === 1 ? '' : 's'}${tutorsAreDemo ? ' · demo' : ''}`;
       }
     }
-    if (createBtn) createBtn.hidden = !(tab === 'events' && getRole() === 'tutor');
+    // Any signed-in user now, not just tutors (2026-09-02 generalization).
+    if (createBtn) createBtn.hidden = !(tab === 'events' && fireUser);
     if (!listEl) return;
     listEl.innerHTML = rows
       .map((item, i) => (tab === 'events' ? eventCard(item, i) : tutorCard(item, i)))
@@ -327,9 +354,111 @@ export function createTutorMap({ root, onToast }) {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
+    // Pin placement for a new event, only live while the + Add event form
+    // is open (placingEvent). A plain map click never fires this while
+    // browsing tutors/events normally, existing marker popups are a
+    // separate Leaflet layer and unaffected.
+    map.on('click', (e) => {
+      if (!placingEvent) return;
+      placePendingMarker(e.latlng.lat, e.latlng.lng);
+    });
     ready = true;
     paintMarkers();
     return true;
+  }
+
+  function placePendingMarker(lat, lng) {
+    const L = window.L;
+    pendingLatLng = { lat, lng };
+    if (pendingMarker) {
+      pendingMarker.setLatLng([lat, lng]);
+    } else {
+      pendingMarker = L.marker([lat, lng], {
+        draggable: true,
+        icon: L.divIcon({
+          className: 'tm-div-icon',
+          html: '<div style="position:relative;width:28px;height:28px"><div class="tm-pin tm-pin-pending"></div></div>',
+          iconSize: [28, 28],
+          iconAnchor: [14, 28],
+        }),
+      }).addTo(map);
+      pendingMarker.on('dragend', () => {
+        const p = pendingMarker.getLatLng();
+        pendingLatLng = { lat: p.lat, lng: p.lng };
+      });
+    }
+    if (eventHint) eventHint.textContent = 'Drag the pin to adjust, then fill in the details below.';
+    updatePostEnabled();
+  }
+
+  function clearPendingMarker() {
+    pendingMarker?.remove();
+    pendingMarker = null;
+    pendingLatLng = null;
+  }
+
+  function updatePostEnabled() {
+    if (efPost) efPost.disabled = !(pendingLatLng && efTitle?.value.trim());
+  }
+
+  function todayIso() {
+    const d = new Date();
+    const p = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  }
+
+  function openEventForm() {
+    placingEvent = true;
+    if (createBtn) createBtn.classList.add('is-active');
+    if (eventForm) eventForm.hidden = false;
+    if (eventHint) eventHint.textContent = 'Click the map on the left to place your event.';
+    if (efTitle) efTitle.value = '';
+    if (efDate) efDate.value = todayIso();
+    if (efStart) efStart.value = '16:00';
+    if (efEnd) efEnd.value = '17:00';
+    if (efNotes) efNotes.value = '';
+    updatePostEnabled();
+  }
+
+  function closeEventForm() {
+    placingEvent = false;
+    if (createBtn) createBtn.classList.remove('is-active');
+    if (eventForm) eventForm.hidden = true;
+    clearPendingMarker();
+  }
+
+  async function postEvent() {
+    if (!fireUser || !fireDb || !fireFx || !pendingLatLng) return;
+    const title = (efTitle?.value || '').trim();
+    if (!title) { onToast?.('Give the event a title first'); return; }
+    const date = efDate?.value || todayIso();
+    const startAt = new Date(`${date}T${efStart?.value || '00:00'}`).getTime();
+    const endAt = new Date(`${date}T${efEnd?.value || '00:00'}`).getTime();
+    if (!Number.isFinite(startAt) || !Number.isFinite(endAt)) { onToast?.('Pick a real date and time'); return; }
+    if (endAt <= startAt) { onToast?.('The end time has to be after the start'); return; }
+    if (endAt < Date.now()) { onToast?.('That time is already in the past'); return; }
+    if (endAt - startAt > 86400000) { onToast?.('Events can run for at most 24 hours'); return; }
+    if (efPost) efPost.disabled = true;
+    try {
+      const name = fireUser.displayName || (fireUser.email ? fireUser.email.split('@')[0] : '') || 'A MindCraft user';
+      await fireFx.addDoc(fireFx.collection(fireDb, 'tutorEvents'), {
+        hostId: fireUser.uid,
+        hostName: name,
+        title,
+        notes: (efNotes?.value || '').trim(),
+        locationLabel: `${pendingLatLng.lat.toFixed(4)}, ${pendingLatLng.lng.toFixed(4)}`,
+        lat: pendingLatLng.lat,
+        lng: pendingLatLng.lng,
+        startAt,
+        endAt,
+        createdAt: fireFx.serverTimestamp(),
+      });
+      onToast?.('Event is live on the map');
+      closeEventForm();
+    } catch {
+      onToast?.('Could not save the event, try again.');
+      if (efPost) efPost.disabled = false;
+    }
   }
 
   function focus(id) {
@@ -433,6 +562,9 @@ export function createTutorMap({ root, onToast }) {
         if (tab === 'events') paintList();
         return; // demo tutors stay
       }
+      fireUser = fire.user;
+      fireDb = fire.db;
+      fireFx = fire.fx;
       watchEvents(fire);
       try {
         await loadRealTutors(fire);
@@ -448,6 +580,7 @@ export function createTutorMap({ root, onToast }) {
     origin = null;
     originLabel = '';
     if (input) input.value = '';
+    if (tab !== 'events') closeEventForm();
     paintList();
     paintMarkers();
   }
@@ -471,6 +604,7 @@ export function createTutorMap({ root, onToast }) {
 
   function close() {
     root.classList.add('is-collapsed');
+    closeEventForm();
   }
 
   function runSearch(raw) {
@@ -572,8 +706,15 @@ export function createTutorMap({ root, onToast }) {
   });
 
   createBtn?.addEventListener('click', () => {
-    window.location.href = '/tutor?panel=events';
+    if (placingEvent) closeEventForm();
+    else {
+      ensureMap();
+      openEventForm();
+    }
   });
+  efCancel?.addEventListener('click', () => closeEventForm());
+  efPost?.addEventListener('click', () => void postEvent());
+  efTitle?.addEventListener('input', () => updatePostEnabled());
 
   // Lazy init when section enters view
   if (typeof IntersectionObserver !== 'undefined' && mapEl) {

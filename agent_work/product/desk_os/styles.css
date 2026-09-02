@@ -3708,6 +3708,14 @@ body.is-hub-chrome .sky { opacity: 0; }
   border: 2.5px solid #fff;
   box-shadow: 0 6px 14px rgba(20, 58, 46, 0.35);
 }
+.tm-pin-pending {
+  background: #3d6b4f;
+  animation: tmPinPulse 1.6s ease-in-out infinite;
+}
+@keyframes tmPinPulse {
+  0%, 100% { box-shadow: 0 6px 14px rgba(20, 58, 46, 0.35); }
+  50% { box-shadow: 0 6px 14px rgba(20, 58, 46, 0.35), 0 0 0 6px rgba(61, 107, 79, 0.25); }
+}
 .tm-pin-label {
   position: absolute;
   left: 22px;
@@ -4063,43 +4071,23 @@ body.is-hub-chrome .sky { opacity: 0; }
   0%, 100% { opacity: 0.65; transform: scale(1); }
   50% { opacity: 0.95; transform: scale(1.04); }
 }
-.hub-orb-copy {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.hub-orb-title {
-  margin: 0;
-  font: 600 22px/1.1 var(--sans);
-  letter-spacing: -0.02em;
-  color: #1f2a22;
-}
-.hub-orb-pct {
-  margin: 0;
-  font: 500 28px/1 var(--sans);
-  letter-spacing: -0.03em;
-  color: #3d5a45;
-  font-variant-numeric: tabular-nums;
-}
-.hub-orb-pct.is-unknown {
-  color: #8a968c;
-  font-weight: 400;
-}
-/* Unlock and Map (2026-09-02): pre-made dashboard-stickers-3d art instead
-   of a hand-built CSS-3D construction like the cube/owl beside them, see
-   the comment on the Unlock button in index.html for why. Sized to sit
-   comfortably inside the same 128px .hub-orb-stage those use. */
+/* Raccoon box (second pass, 2026-09-02): the real MindCraft mark instead of
+   a hand-built CSS-3D construction like the cube/owl beside it. Sized to
+   sit comfortably inside the same 128px .hub-orb-stage those use. */
 .hub-orb-img img {
   width: 92px;
   height: 92px;
   object-fit: contain;
   filter: drop-shadow(0 6px 14px rgba(31, 42, 34, 0.18));
 }
-.hub-orb-sub {
-  margin: 0;
-  font: 500 13.5px/1.3 var(--sans);
-  color: #5a6b5e;
+/* The logo ships lime (its brand color everywhere else); forest green here
+   matches the treatment already shipped on the marketing page's ZPD graph
+   center mark, same asset family, same filter approach. Selector has to
+   out-specificity .hub-orb-img img above (class+element beats a bare
+   class), or that rule's own filter: drop-shadow(...) silently wins and
+   the recolor never applies. */
+.hub-orb-img img.hub-orb-raccoon {
+  filter: brightness(.55) saturate(.85) drop-shadow(0 6px 14px rgba(31, 42, 34, 0.18));
 }
 @media (max-width: 720px) {
   .hub-mastery-head { flex-direction: column; }
@@ -4445,22 +4433,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   box-shadow: inset 0 -5px 0 rgba(230, 221, 208, 0.85);
 }
 .jesse-stagebox[data-jesse-stage="0"] .jesse-shell { display: block; }
-.jesse-stage-name {
-  margin: 0;
-  font: italic 400 26px/1.05 var(--serif);
-  letter-spacing: -0.02em;
-  color: #1f2a22;
-}
-.jesse-count {
-  margin: 0;
-  font: 500 12.5px/1.3 var(--sans);
-  color: #5a6b5e;
-  font-variant-numeric: tabular-nums;
-}
-.jesse-count.is-unknown {
-  color: #8a968c;
-  font-weight: 400;
-}
 @media (max-width: 720px) {
   .hub-mastery-duo { gap: 8px 24px; }
 }
@@ -5404,6 +5376,75 @@ body.is-hub-chrome .sky { opacity: 0; }
   background: #1f2a22;
   border-color: #1f2a22;
   color: #fff;
+}
+.tm-tabs .tm-create.is-active {
+  background: #1f2a22;
+  border-color: #1f2a22;
+}
+.tm-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 12px 12px;
+  padding: 12px;
+  background: #f6f8f5;
+  border: 1px solid #dbe6dd;
+  border-radius: 12px;
+  flex: none;
+}
+.tm-event-form[hidden] { display: none !important; }
+.tm-event-hint {
+  margin: 0;
+  font: 600 11.5px/1.4 var(--sans);
+  color: #3d6b4f;
+}
+.tm-ef-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 8px;
+}
+.tm-ef-input {
+  width: 100%;
+  border: 1px solid #dddcd6;
+  border-radius: 10px;
+  padding: 9px 11px;
+  font: 600 12.5px/1.3 var(--sans);
+  color: #1a1a1a;
+  background: #fff;
+  box-sizing: border-box;
+}
+.tm-ef-input:focus {
+  outline: 3px solid rgba(61, 107, 79, 0.18);
+  border-color: #3d6b4f;
+}
+.tm-ef-notes { resize: vertical; font-weight: 500; }
+.tm-ef-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.tm-ef-cancel, .tm-ef-post {
+  border-radius: 10px;
+  padding: 8px 14px;
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.tm-ef-cancel {
+  border: 1px solid #dddcd6;
+  background: #fff;
+  color: #555;
+}
+.tm-ef-cancel:hover { border-color: #bbb; color: #1a1a1a; }
+.tm-ef-post {
+  border: 0;
+  background: #3d6b4f;
+  color: #fff;
+}
+.tm-ef-post:hover { background: #1f2a22; }
+.tm-ef-post:disabled { background: #a9bcae; cursor: not-allowed; }
+@media (max-width: 640px) {
+  .tm-ef-row { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── Tutor tool tiles · replace Jesse for tutor role (bootHub.js) ─────── */

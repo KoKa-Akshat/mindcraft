@@ -148,6 +148,9 @@
       <main class="hub-main" data-hub-panel="dashboard">
         <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
           <div class="hub-mastery-duo">
+            <!-- 2026-09-02 (second pass): three icon-only boxes, no labels
+                 under any of them, the icon itself is the whole affordance.
+                 Cube still opens Learn, unchanged. -->
             <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
               <div class="hub-orb-stage" aria-hidden="true">
                 <div class="hub-orb-glow"></div>
@@ -165,20 +168,16 @@
                   </div>
                 </div>
               </div>
-              <div class="hub-orb-copy">
-                <h2 class="hub-orb-title">Mastery</h2>
-                <p class="hub-orb-pct" data-hub-mastery-pct aria-label="Mastery estimate">--</p>
-              </div>
             </button>
             <!-- Jesse · the desk pet. Same CSS-only fake-3D technique family
                  as the cube beside him (absolutely positioned face planes in
                  a preserve-3d parent, no WebGL, no model file). His stage is
                  painted by bootHub.js's paintJesse() from the REAL /learn
-                 activity count handed off by the React app (mcLearn param);
-                 nothing here is simulated. Owl per the existing Jesse-energy
-                 mascot (img/orbs/mascot-ivory.png): ivory feathers, tall ear
-                 tufts, lime-green eyes. -->
-            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Jesse. Real learning on Learn grows Jesse.">
+                 activity count handed off by the React app (mcLearn param).
+                 Click behavior (second pass, 2026-09-02): opens Tutors and
+                 events (was its own separate "Map" box for one round, folded
+                 back into Jesse per the founder, one fewer box). -->
+            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Tutors and events near you">
               <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
                 <div class="hub-orb-glow jesse-glow"></div>
                 <div class="jesse-scene">
@@ -204,52 +203,17 @@
                   <span class="jesse-shell"></span>
                 </div>
               </div>
-              <div class="hub-orb-copy">
-                <h2 class="hub-orb-title">Jesse</h2>
-                <p class="jesse-stage-name" data-jesse-stage-name>Hatchling</p>
-                <p class="jesse-count is-unknown" data-jesse-count>no activity recorded</p>
-              </div>
             </button>
-            <!-- Unlock · was Jesse's own click behavior (2026-08-31 build):
-                 clicking the mascot swapped the panel below between Tutors
-                 and events and the Resume Helper. That overloaded a study
-                 companion as a nav trigger AND made the dash never start
-                 clean (Tutors and events was always visible by default).
-                 2026-09-02 ask: give Resume Helper its own dedicated,
-                 clearly-labeled box instead, name deliberately not literally
-                 "Resume" per the founder. Jesse now just shows level, no
-                 click action. Asset: img/orbs/keybook-3d.png (a locked book
-                 + key, "unlock your next opportunity"), same
-                 dashboard-stickers-3d pack Map's compass below comes from,
-                 so the two new boxes read as a matched pair even though
-                 their art style (photoreal sticker) differs from Mastery's
-                 and Jesse's hand-built CSS-3D. -->
+            <!-- Raccoon · opens the Resume Helper (was a separate "Unlock"
+                 keybook box for one round, replaced per the founder with the
+                 real MindCraft mark, forest green, same asset + filter
+                 treatment as the marketing page's ZPD graph center mark). -->
             <button type="button" class="hub-orb-row" data-hub-resume-nav aria-label="Open the Resume Helper">
               <div class="hub-orb-stage" aria-hidden="true">
                 <div class="hub-orb-glow"></div>
                 <div class="hub-orb hub-orb-img">
-                  <img src="img/orbs/keybook-3d.png" alt="" />
+                  <img src="img/orbs/raccoon-logo.png" alt="" class="hub-orb-raccoon" />
                 </div>
-              </div>
-              <div class="hub-orb-copy">
-                <h2 class="hub-orb-title">Unlock</h2>
-                <p class="hub-orb-sub">Resume + real openings</p>
-              </div>
-            </button>
-
-            <!-- Map · was always-visible "Tutors and events" below, moved
-                 behind its own box for the same "dash starts clean" ask.
-                 Asset: img/orbs/compass-3d.png. -->
-            <button type="button" class="hub-orb-row" data-hub-map-nav aria-label="Open tutors and events near you">
-              <div class="hub-orb-stage" aria-hidden="true">
-                <div class="hub-orb-glow"></div>
-                <div class="hub-orb hub-orb-img">
-                  <img src="img/orbs/compass-3d.png" alt="" />
-                </div>
-              </div>
-              <div class="hub-orb-copy">
-                <h2 class="hub-orb-title">Map</h2>
-                <p class="hub-orb-sub">Tutors + live events nearby</p>
               </div>
             </button>
 
@@ -309,7 +273,27 @@
               <div class="tm-chips tm-tabs">
                 <button type="button" class="is-active" data-tm-tab="tutors">Tutors</button>
                 <button type="button" data-tm-tab="events">Events</button>
-                <button type="button" class="tm-create" data-tm-create hidden>Create event</button>
+                <button type="button" class="tm-create" data-tm-create hidden>+ Add event</button>
+              </div>
+              <!-- Any signed-in user now, not just tutors (2026-09-02
+                   generalization, see firestore.rules' tutorEvents block).
+                   Pin placement happens on the real map in the pane to the
+                   left (data-tm-map), clicking it while this form is open
+                   drops/moves a temporary marker; this form is just the
+                   rest of the event's fields plus Post/Cancel. -->
+              <div class="tm-event-form" data-tm-event-form hidden>
+                <p class="tm-event-hint" data-tm-event-hint>Click the map on the left to place your event.</p>
+                <input class="tm-ef-input" data-tm-ef-title type="text" maxlength="120" placeholder="Title · study session, office hours..." />
+                <div class="tm-ef-row">
+                  <input class="tm-ef-input" data-tm-ef-date type="date" aria-label="Date" />
+                  <input class="tm-ef-input" data-tm-ef-start type="time" aria-label="Starts" />
+                  <input class="tm-ef-input" data-tm-ef-end type="time" aria-label="Ends" />
+                </div>
+                <textarea class="tm-ef-input tm-ef-notes" data-tm-ef-notes maxlength="280" placeholder="Description, optional" rows="2"></textarea>
+                <div class="tm-ef-actions">
+                  <button type="button" class="tm-ef-cancel" data-tm-ef-cancel>Cancel</button>
+                  <button type="button" class="tm-ef-post" data-tm-ef-post disabled>Post it</button>
+                </div>
               </div>
               <div class="tm-list" data-tm-list></div>
             </div>
