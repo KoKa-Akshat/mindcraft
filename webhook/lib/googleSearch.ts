@@ -1,9 +1,34 @@
 /**
- * Shared Google Custom Search JSON API client — factored out of
- * researchAgent.ts (2026-08-22) so discover-internships.ts can reuse the
- * exact same real search plumbing instead of a second implementation. This
- * is the ONE real live-web-search capability anywhere in this repo — no
- * Anthropic web-search tool exists here; do not build a second one.
+ * Shared real-web-search client — factored out of researchAgent.ts
+ * (2026-08-22) so discover-internships.ts can reuse the exact same search
+ * plumbing instead of a second implementation. This is the ONE real
+ * live-web-search capability anywhere in this repo — no Anthropic
+ * web-search tool exists here; do not build a second one.
+ *
+ * Backed by Serper (google.serper.dev), not Google's own Custom Search JSON
+ * API, as of 2026-09-02. Two real, unrelated problems with Google's own API
+ * forced the switch, both confirmed via live testing, not assumed:
+ *   1. Google changed Programmable Search Engine policy on 2026-01-20: a
+ *      NEWLY created engine can no longer search the whole web, only a
+ *      curated "Sites to search" list capped at 50 domains. Workable for
+ *      job search specifically (postings concentrate on a handful of
+ *      boards + ATS platforms), but ruled out broader use.
+ *   2. Separately, and worse: the Custom Search JSON API returned
+ *      `403 "This project does not have the access to Custom Search JSON
+ *      API"` on every single call, from a project with the API enabled, a
+ *      linked billing account, and a freshly created search engine, the
+ *      correct project selected the whole time. This is a known, currently
+ *      unresolved issue on Google's side (multiple 2026 Google Developer
+ *      forum threads report the exact same error on both new and
+ *      years-old projects), not a configuration mistake, confirmed by
+ *      exhausting every documented fix before switching.
+ * Serper proxies real Google search results (see a live response: JPMorgan,
+ * Harvard career services, Indeed, Glassdoor all showed up correctly for a
+ * real internship query), no domain cap, works today. One real trade-off,
+ * disclosed not silent: the old call passed `safe=active`; Serper's API has
+ * no documented safe-search parameter. Acceptable here since every query
+ * this file serves is a narrow, specific job/program search, not
+ * open-ended, but worth knowing if this file ever serves a broader query.
  */
 
 export type SourceKind = 'google' | 'reddit' | 'quora' | 'forum'
@@ -16,9 +41,8 @@ export interface SearchResult {
   kind: SourceKind
 }
 
-const GOOGLE_SEARCH_API = 'https://www.googleapis.com/customsearch/v1'
-const GOOGLE_API_KEY = process.env.GOOGLE_SEARCH_API_KEY ?? ''
-const GOOGLE_CX = process.env.GOOGLE_SEARCH_ENGINE_ID ?? ''
+const SERPER_SEARCH_API = 'https://google.serper.dev/search'
+const SERPER_API_KEY = process.env.SERPER_API_KEY ?? ''
 
 const SOURCE_KIND_BY_QUERY: { pattern: RegExp; kind: SourceKind }[] = [
   { pattern: /site:reddit\.com/i, kind: 'reddit' },
@@ -37,32 +61,32 @@ function safePreview(snippet: string): string {
 }
 
 export async function googleSearch(query: string, num = 5): Promise<SearchResult[]> {
-  if (!GOOGLE_API_KEY || !GOOGLE_CX) {
-    throw new Error('GOOGLE_SEARCH_API_KEY and GOOGLE_SEARCH_ENGINE_ID must be configured.')
+  if (!SERPER_API_KEY) {
+    throw new Error('SERPER_API_KEY must be configured.')
   }
 
-  const url = new URL(GOOGLE_SEARCH_API)
-  url.searchParams.set('key', GOOGLE_API_KEY)
-  url.searchParams.set('cx', GOOGLE_CX)
-  url.searchParams.set('q', query)
-  url.searchParams.set('num', String(num))
-  url.searchParams.set('safe', 'active')
-
-  const response = await fetch(url)
+  const response = await fetch(SERPER_SEARCH_API, {
+    method: 'POST',
+    headers: {
+      'X-API-KEY': SERPER_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ q: query, num }),
+  })
   if (!response.ok) {
-    throw new Error(`Google Search failed: ${response.status}`)
+    throw new Error(`Serper search failed: ${response.status}`)
   }
 
   const data = (await response.json()) as {
-    items?: { title?: string; link?: string; displayLink?: string; snippet?: string }[]
+    organic?: { title?: string; link?: string; snippet?: string }[]
   }
 
-  return (data.items ?? [])
+  return (data.organic ?? [])
     .filter((item) => item.link && item.title)
     .map((item) => ({
       title: item.title ?? '',
       url: item.link ?? '',
-      displayLink: item.displayLink ?? new URL(item.link ?? 'https://example.com').hostname,
+      displayLink: new URL(item.link ?? 'https://example.com').hostname,
       snippet: safePreview(item.snippet ?? ''),
       kind: sourceKindFor(query, item.link ?? ''),
     }))
