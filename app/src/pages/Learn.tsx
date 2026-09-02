@@ -141,6 +141,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     startAtFoundation: boolean
   } | null>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const entrySearchInputRef = useRef<HTMLInputElement>(null)
 
   const [content, setContent] = useState<ConceptContent | null>(null)
   const [contentLoading, setContentLoading] = useState(false)
@@ -941,14 +942,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
 
         {!searchedQuery && !materials && !routeCardsFor && (
           <EntryStage
-            onFocusSearch={() => {
-              // The search input now lives inside the History/search panel,
-              // which only mounts it while open. If the student closed the
-              // panel from the entry screen, reopen it first, one tick
-              // ahead of the focus, or this silently does nothing.
-              setHistoryOpen(true)
-              window.setTimeout(() => searchInputRef.current?.focus(), 60)
-            }}
+            onFocusSearch={() => entrySearchInputRef.current?.focus()}
             onUploadHomework={() => topUploadFileRef.current?.click()}
             nudgeLabel={nudge && !nudgeDismissed ? nudge.label : null}
             onPracticeNudge={() => {
@@ -957,6 +951,11 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
               setQuery(nudge.label)
               runSearch(nudge.label, { skipRouteCards: true })
             }}
+            query={query}
+            onQueryChange={setQuery}
+            onSearch={() => runSearch()}
+            searchLoading={loading}
+            searchInputRef={entrySearchInputRef}
           />
         )}
 
