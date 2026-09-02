@@ -53,7 +53,8 @@
     { "source": "/api/microsims", "destination": "/api/app-actions?action=microsims" },
     { "source": "/api/concept-resolve", "destination": "/api/app-actions?action=concept-resolve" },
     { "source": "/api/simplify-chapter", "destination": "/api/app-actions?action=simplify-chapter" },
-    { "source": "/api/generate-resume-pdf", "destination": "/api/app-actions?action=generate-resume-pdf" }
+    { "source": "/api/generate-resume-pdf", "destination": "/api/app-actions?action=generate-resume-pdf" },
+    { "source": "/api/learn-tutor", "destination": "/api/app-actions?action=learn-tutor" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },

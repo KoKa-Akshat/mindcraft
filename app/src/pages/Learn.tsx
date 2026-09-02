@@ -83,6 +83,8 @@ import RightColumn from './learn/RightColumn'
 import SearchBar from './learn/SearchBar'
 import EntryStage from './learn/EntryStage'
 import RouteCards from './learn/RouteCards'
+import TutorPanel, { type TutorMessage } from './learn/TutorPanel'
+import { askTutor } from '../lib/learnTutor'
 import { PAGE_BG, FONT_STACK, TEXT_PRIMARY, type NeighborRow, type MaterialsState, type LibraryCounts, type QuestionSimState } from './learn/shared'
 
 /** Below this, even the best available match is noise rather than a signal:
@@ -183,6 +185,18 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   const [hintsShown, setHintsShown] = useState(0)
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null)
   const [voiceFailed, setVoiceFailed] = useState(false)
+
+  // ── Phase 2: guarded tutor chat ───────────────────────────────────────────
+  // One conversation per concept (activeConceptId doubles as the session
+  // id, see sendTutorMessage), reset by resetPerConcept the same way every
+  // other per-concept surface already is. Sends through askTutor
+  // (lib/learnTutor.ts), which runs on the student's own BYOK key first,
+  // a capped platform fallback second, and reveals the next hint card
+  // client-side as a last resort, never a dead end.
+  const [tutorMessages, setTutorMessages] = useState<TutorMessage[]>([])
+  const [tutorInput, setTutorInput] = useState('')
+  const [tutorSending, setTutorSending] = useState(false)
+  const [tutorError, setTutorError] = useState('')
 
   // ── Proactive misconception nudge ───────────────────────────────────────
   // 2026-09-02: every surface on this page was student-initiated (search,
@@ -362,9 +376,44 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setSimplifying(false)
     setSimplifyMeta(null)
     setShowSimplified(true)
+    setTutorMessages([])
+    setTutorInput('')
+    setTutorError('')
     checkStartedForRef.current = null
     simplifyStartedForRef.current = null
     simGenStartedForRef.current = null
+  }
+
+  /** One turn of the guarded tutor chat. activeConceptId doubles as the
+   * conversation's session id, so leaving and coming back to the same
+   * concept resumes it (loadHistory in the backend), the same continuity
+   * every other per-concept surface here already has. */
+  async function sendTutorMessage() {
+    const text = tutorInput.trim()
+    if (!text || !activeConceptId || tutorSending) return
+    setTutorInput('')
+    setTutorError('')
+    setTutorMessages((prev) => [...prev, { role: 'user', content: text }])
+    setTutorSending(true)
+    try {
+      const result = await askTutor({
+        sessionId: activeConceptId,
+        message: text,
+        conceptId: activeConceptId,
+        conceptLabel: activeLabel || resolved?.label || activeConceptId,
+        questionText: selectedQuestion?.text,
+        chapterSummary: chapter?.summary,
+        hintsShown,
+      })
+      setTutorMessages((prev) => [...prev, { role: 'assistant', content: result.reply, fallback: result.fallback }])
+      if (result.action === 'reveal_hint') {
+        setHintsShown((n) => (qHints ? Math.min(qHints.cards.length, n + 1) : n))
+      }
+    } catch (e) {
+      setTutorError(String(e instanceof Error ? e.message : e))
+    } finally {
+      setTutorSending(false)
+    }
   }
 
   function goToStep(i: number) {
@@ -875,6 +924,15 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
                 checkFailed={checkFailed}
                 checkResult={checkResult}
                 onAnswered={(correct) => void onAnswered(correct)}
+              />
+
+              <TutorPanel
+                messages={tutorMessages}
+                input={tutorInput}
+                onInputChange={setTutorInput}
+                onSend={() => void sendTutorMessage()}
+                sending={tutorSending}
+                error={tutorError}
               />
 
               <NeighborsCard

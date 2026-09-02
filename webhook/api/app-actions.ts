@@ -48,6 +48,7 @@ import microsims from '../lib/handlers/microsims'
 import conceptResolve from '../lib/handlers/concept-resolve'
 import simplifyChapter from '../lib/handlers/simplify-chapter'
 import generateResumePdf from '../lib/handlers/generate-resume-pdf'
+import learnTutor from '../lib/handlers/learn-tutor'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -95,6 +96,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   // firestore.rules, see the note in that file.
   'concept-resolve': conceptResolve,
   'simplify-chapter': simplifyChapter,
+  'learn-tutor': learnTutor,
   // Resume Helper PDFs (2026-08-31). Routed through this consolidated
   // function rather than a new api/*.ts file on purpose: the deployment
   // already sits at exactly 12 functions, the Hobby plan's cap (see this
