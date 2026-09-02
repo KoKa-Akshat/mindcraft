@@ -170,16 +170,14 @@
   }
 
   /* ---------- nav ---------- */
-  /* Just the mascot, fixed top left, no bar. Its own fill color swaps between
-     the lime accent and the dark ink depending on which section is behind it
-     (see the section-observer script near the bottom), so it stays legible
-     over both the dark sections and the light stage-desk ones without ever
-     needing a background chip of its own. The three real destinations live
-     in a menu that reveals on hover on a device that has hover, and on tap
-     everywhere else, rather than a persistent bar taking up screen the whole
-     scroll. */
-  .mascot-nav{position:fixed; z-index:80; top:max(14px,env(safe-area-inset-top,0px)); left:max(14px,env(safe-area-inset-left,0px));}
-  .mascot-link{display:block; width:38px; height:38px;}
+  /* Just the mascot and a Login pill, fixed top right, no bar. The mascot's
+     own fill color swaps between the lime accent and the dark ink depending
+     on which section is behind it (see the section-observer script near the
+     bottom), so it stays legible over both the dark sections and the light
+     stage-desk ones without ever needing a background chip of its own. The
+     Login pill is a solid lime fill so it reads fine over either. */
+  .mascot-nav{position:fixed; z-index:80; top:max(14px,env(safe-area-inset-top,0px)); right:max(14px,env(safe-area-inset-right,0px)); display:flex; align-items:center; gap:12px;}
+  .mascot-link{display:block; width:38px; height:38px; flex-shrink:0;}
   .mascot-icon{
     display:block; width:100%; height:100%; background-color:var(--lime);
     -webkit-mask:url('img/raccoon-logo.png') center/contain no-repeat;
@@ -188,22 +186,12 @@
     transition:background-color .35s ease;
   }
   .mascot-nav.on-light .mascot-icon{background-color:var(--ink); filter:drop-shadow(0 6px 14px rgba(20,58,46,.22));}
-  .mascot-menu{
-    position:absolute; top:calc(100% + 10px); left:0; min-width:180px;
-    display:flex; flex-direction:column; gap:2px; padding:8px;
-    border:1px solid var(--edge); border-radius:16px;
-    background:rgba(7,9,12,.9); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
-    box-shadow:0 20px 50px rgba(0,0,0,.4);
-    opacity:0; transform:translateY(-6px) scale(.98); pointer-events:none;
-    transition:opacity .18s ease, transform .18s ease;
+  .mascot-login{
+    padding:9px 18px; border-radius:999px; font-size:13px; font-weight:600;
+    background:var(--lime); color:var(--lime-ink); white-space:nowrap;
+    box-shadow:0 6px 14px rgba(0,0,0,.2); transition:background .15s ease;
   }
-  .mascot-nav:hover .mascot-menu, .mascot-nav:focus-within .mascot-menu, .mascot-nav.open .mascot-menu{
-    opacity:1; transform:none; pointer-events:auto;
-  }
-  .mascot-menu a{padding:9px 13px; border-radius:10px; font-size:13px; font-weight:600; color:var(--chalk); transition:background .15s;}
-  .mascot-menu a:hover{background:rgba(245,245,244,.08);}
-  .mascot-menu a.join{background:var(--lime); color:var(--lime-ink); text-align:center; margin-top:2px;}
-  .mascot-menu a.join:hover{background:#d8ff72;}
+  .mascot-login:hover{background:#d8ff72;}
   /* ---------- hero ----------
      Editorial, left aligned, on warm paper. The old version centered a
      typewriter headline in a lot of open air; this one composes the page
@@ -783,11 +771,7 @@
   <a class="mascot-link" href="#top" aria-label="MindCraft home">
     <span class="mascot-icon" aria-hidden="true"></span>
   </a>
-  <div class="mascot-menu" role="menu">
-    <a href="#human">Chapter 1</a>
-    <a href="#desk">Chapter 2</a>
-    <a class="join" href="https://mindcraft-93858.web.app/login">Login</a>
-  </div>
+  <a class="mascot-login" href="https://mindcraft-93858.web.app/login">Login</a>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -1231,8 +1215,7 @@
     io.observe(stats);
   })();
 
-  // ----- mascot nav: fill color adapts to the section behind it, menu opens
-  // on hover where hover exists and on tap everywhere else -----
+  // ----- mascot nav: icon fill color adapts to the section behind it -----
   (function(){
     var nav = document.getElementById('mascotNav');
     if(!nav) return;
@@ -1258,17 +1241,6 @@
     document.addEventListener('scroll', updateTheme, {passive:true});
     window.addEventListener('resize', updateTheme);
     updateTheme();
-
-    // A real href to #top always navigates, on every device. The tap/click
-    // additionally opens the menu so a touch device (no real hover state)
-    // gets both in one action, exactly like a mouse hover already does on
-    // a device that has one.
-    nav.querySelector('.mascot-link').addEventListener('click', function(){
-      nav.classList.add('open');
-    });
-    document.addEventListener('click', function(e){
-      if(!nav.contains(e.target)) nav.classList.remove('open');
-    });
   })();
 
   // ----- top scroll-progress bar -----
