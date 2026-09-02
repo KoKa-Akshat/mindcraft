@@ -40,52 +40,7 @@
           ]
         },
         {
-          "source": "/index.html",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/login",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/dashboard",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/practice",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/knowledge-graph",
+          "source": "**",
           "headers": [
             {
               "key": "Cache-Control",
