@@ -201,11 +201,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const isCollege = typeof age === 'number' && age >= 19
     const queries = buildQueries(age, grade, program, interests, location)
+    // TEMP diagnostic logging (2026-09-02, remove once the "zero
+    // candidates" report is root-caused): this endpoint has no visibility
+    // today into WHY a real request comes back empty, search failing
+    // silently vs extraction failing silently vs genuinely no results are
+    // presently indistinguishable from the outside.
+    console.log('[discover-internships] input:', { age, isCollege, grade, program, interests, location, queries })
     const searchBundle = await Promise.all(
-      queries.map(async (query) => ({ query, results: await googleSearch(query, 5).catch(() => []) })),
+      queries.map(async (query) => {
+        const results = await googleSearch(query, 5).catch((e) => {
+          console.error('[discover-internships] search failed for query:', query, e)
+          return []
+        })
+        console.log('[discover-internships] search results:', query, '->', results.length)
+        return { query, results }
+      }),
     )
     const totalResults = searchBundle.reduce((n, b) => n + b.results.length, 0)
     if (totalResults === 0) {
+      console.log('[discover-internships] zero total search results, returning empty')
       return res.status(200).json({ status: 'ok', candidates: [], reason: 'No live search results this run' })
     }
 
@@ -221,7 +235,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const text = studentGeminiKey
       ? await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle, isCollege), 1800)
       : (await callGemini(safeExtractionPrompt(searchBundle, isCollege), { system: '', maxTokens: 1800 })) ?? ''
+    console.log('[discover-internships] extraction raw text length:', text.length, 'preview:', text.slice(0, 300))
     const candidates = parseCandidates(text)
+    console.log('[discover-internships] parsed candidates:', candidates.length)
     return res.status(200).json({ status: 'ok', candidates })
   } catch (err) {
     console.error('[discover-internships] error:', err)
