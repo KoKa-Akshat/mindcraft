@@ -4,11 +4,14 @@
  * Renders a ready-to-send PDF for the Resume Helper on Desk OS (2026-08-31):
  * either the student's resume (deterministic layout from the ResumeDraft the
  * resume-agent conversation already builds, no LLM, no platform spend) or a
- * per-role cover letter (short LLM-written body, so it runs behind the same
- * auth+budget discipline as generate-lesson-outline.ts/discover-internships.ts:
- * verifyToken -> checkPlatformBudget -> checkAndRecordAttempt -> real call ->
- * recordActualSpend, with an honest template fallback that is labeled as such
- * via the x-mc-letter-source response header, never passed off as generated).
+ * per-role cover letter (short LLM-written body via the platform Gemini key
+ * as of 2026-09-02, was Anthropic until that key was found out of credits
+ * in production, same discovery as discover-internships.ts's fix; runs
+ * behind the same auth+budget discipline as
+ * generate-lesson-outline.ts/discover-internships.ts: verifyToken ->
+ * checkPlatformBudget -> checkAndRecordAttempt -> real call, with an
+ * honest template fallback that is labeled as such via the
+ * x-mc-letter-source response header, never passed off as generated).
  *
  * PDF library choice: pdf-lib. Pure JS, no native modules, no font files, no
  * headless browser, about 1MB installed. api/tts.ts already sits near
@@ -26,18 +29,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb } from 'pdf-lib'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
-import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
-import { callAnthropic, callByok, type ByokChatOptions } from '../llmChat'
+import { checkAndRecordAttempt, checkPlatformBudget } from '../generationBudget'
+import { callGemini, callByok, type ByokChatOptions } from '../llmChat'
 import { studentGeminiComplete } from '../studentGemini'
-
-const ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001'
-// Published Haiku rates, same accounting style as discover-internships.ts.
-// callAnthropic does not surface token usage, so the letter's cost is
-// recorded from a deliberately generous estimate (prompt + 700 output
-// tokens) rather than not recorded at all.
-const INPUT_USD_PER_MTOK = 1.0
-const OUTPUT_USD_PER_MTOK = 5.0
-const EST_OUTPUT_TOKENS = 700
 
 interface DraftRole {
   title?: string
@@ -291,23 +285,23 @@ async function letterBody(
   role: TargetRole,
   studentGeminiKey: string,
   byok: PdfBody['byok'],
-): Promise<{ paragraphs: string[]; source: 'llm' | 'template'; costUsd: number }> {
+): Promise<{ paragraphs: string[]; source: 'llm' | 'template' }> {
   const user = JSON.stringify({
     student: { name: d.name, school: d.school, location: d.location, skills: d.skills, roles: d.roles, projects: d.projects, headline: d.headline },
     applyingTo: { company: clip(role.company, 120), role: clip(role.role, 160), location: clip(role.location, 100), why: clip(role.why, 300) },
   })
   let raw: string | null = null
-  let costUsd = 0
   try {
     if (studentGeminiKey) {
       raw = await studentGeminiComplete(studentGeminiKey, `${LETTER_SYSTEM}\n\n${user}`, 600)
     } else {
-      raw = await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 600, system: LETTER_SYSTEM })
-      if (raw) {
-        // Estimated, since callAnthropic returns text without usage counts.
-        const inputTokens = Math.ceil((LETTER_SYSTEM.length + user.length) / 4)
-        costUsd = (inputTokens / 1_000_000) * INPUT_USD_PER_MTOK + (EST_OUTPUT_TOKENS / 1_000_000) * OUTPUT_USD_PER_MTOK
-      }
+      // Platform fallback switched from callAnthropic to callGemini
+      // (2026-09-02): the platform ANTHROPIC_API_KEY was found out of
+      // credits in production (same discovery as discover-internships.ts's
+      // fix, confirmed via Vercel logs), so this call was failing on every
+      // real cover letter request, silently falling through to the
+      // template body every time instead of a real generated letter.
+      raw = await callGemini(user, { system: LETTER_SYSTEM, maxTokens: 600 })
       // Tried last, and only costs the platform budget nothing either way,
       // since it is the student's own key.
       if (!raw) {
@@ -318,13 +312,25 @@ async function letterBody(
   } catch {
     raw = null
   }
+  // The system prompt asks for no greeting line and no sign-off (this file
+  // already adds its own "Dear X team," and "Sincerely, Name" around
+  // whatever paragraphs come back, see buildCoverLetterPdf below), but the
+  // model does not reliably comply, confirmed empirically while wiring up
+  // this Gemini switch: a real test call came back with its own "Dear
+  // JPMorgan Hiring Team," opener and "Sincerely, Test Student" closer.
+  // Left uncaught, that becomes a real paragraph via the split below and
+  // doubles up with the wrapper's own greeting/sign-off in the final PDF.
+  // Strip both defensively rather than trust prompt adherence.
   const cleaned = String(raw || '')
     .replace(/[\u2014\u2013]/g, ', ')
     .replace(/\r/g, '')
     .trim()
+    .replace(/^(Dear[^\n]*,|Hello,|Hi[^\n]*,)\s*\n+/i, '')
+    .replace(/\n+\s*(Sincerely|Best regards|Best|Regards|Warm regards|Thank you)[,.]?\s*\n+[\s\S]{0,80}$/i, '')
+    .trim()
   const paragraphs = cleaned.split(/\n\s*\n/).map((p) => p.replace(/\n/g, ' ').trim()).filter(Boolean).slice(0, 4)
-  if (paragraphs.length >= 2) return { paragraphs, source: 'llm', costUsd }
-  return { paragraphs: templateLetterBody(d, role), source: 'template', costUsd }
+  if (paragraphs.length >= 2) return { paragraphs, source: 'llm' }
+  return { paragraphs: templateLetterBody(d, role), source: 'template' }
 }
 
 export async function buildCoverLetterPdf(
@@ -398,12 +404,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const d = clean(body.draft)
     const key = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
-    const { paragraphs, source, costUsd } = await letterBody(d, role, key, body.byok)
-    if (costUsd > 0) {
-      recordActualSpend(costUsd).catch((e) => {
-        console.error('generate-resume-pdf: failed to record platform spend', e)
-      })
-    }
+    const { paragraphs, source } = await letterBody(d, role, key, body.byok)
     const bytes = await buildCoverLetterPdf(body.draft, role, paragraphs)
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Disposition', 'attachment; filename="cover-letter.pdf"')
