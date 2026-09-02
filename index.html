@@ -562,13 +562,9 @@
   .zpd-stage svg{display:block; width:100%; height:min(62vh,540px); cursor:grab;}
   .zpd-stage svg.dragging{cursor:grabbing;}
   .zpd-ring{fill:none; stroke-width:1;}
-  .zpd-ring.r1{stroke:rgba(31,117,72,.4);}
+  .zpd-ring.r1{stroke:rgba(31,74,53,.45);}
   .zpd-ring.r2{stroke:rgba(150,196,40,.55); stroke-dasharray:5 6;}
-  .zpd-ring.r3{stroke:rgba(224,57,74,.35); stroke-dasharray:2 7;}
-  .zpd-ring-label{
-    font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.16em;
-    text-transform:uppercase; fill:var(--chalk-faint);
-  }
+  .zpd-ring.r3{stroke:rgba(150,180,160,.4); stroke-dasharray:2 7;}
   .zpd-link{stroke:rgba(18,53,42,.14); stroke-width:1;}
   .zpd-link.to-r2{stroke:rgba(150,196,40,.45);}
   .zpd-node{cursor:pointer;}
@@ -584,15 +580,21 @@
      turning into overlapping mush. */
   .zpd-stage svg.narrow .zpd-node text{font-size:17px;}
   .zpd-stage svg.narrow .zpd-node.z0 text{font-size:19px;}
-  .zpd-stage svg.narrow .zpd-ring-label{font-size:14px;}
-  .zpd-stage svg.narrow .zpd-you{font-size:13px;}
-  .zpd-node.z0 circle{fill:var(--lime); stroke:rgba(196,245,71,.4); stroke-width:8;}
+  /* One green family, shaded by distance instead of a traffic-light palette:
+     darkest (comfort, already behind you) -> brand lime (proximal, the one
+     actionable ring) -> palest sage (frustration, two steps out, meant to
+     recede). Ring strokes above follow the same logic. */
   .zpd-node.z0 text{fill:var(--chalk); font-weight:700; font-size:12px;}
-  .zpd-node.z1 circle{fill:#5fb779; stroke:rgba(95,183,121,.25); stroke-width:5;}
+  .zpd-node.z1 circle{fill:#1f4a35; stroke:rgba(31,74,53,.3); stroke-width:5;}
   .zpd-node.z2 circle{fill:#c4f547; stroke:rgba(196,245,71,.22); stroke-width:5;}
   .zpd-node.z2 text{fill:var(--chalk);}
-  .zpd-node.z3 circle{fill:rgba(224,57,74,.55); stroke:rgba(224,57,74,.14); stroke-width:4;}
+  .zpd-node.z3 circle{fill:rgba(150,180,160,.55); stroke:rgba(150,180,160,.16); stroke-width:4;}
   .zpd-node.z3 text{fill:rgba(18,53,42,.32);}
+  /* The center mark: the mascot instead of a plain lime dot + "YOU" label,
+     recolored to a deep forest green (the raccoon logo ships lime, its
+     brand color everywhere else on this page) with a filter rather than a
+     second image asset. */
+  .zpd-you-logo{filter:brightness(.55) saturate(.85); pointer-events:none;}
   /* A rect, not a circle, so none of the per-zone `circle` rules above (or
      the :hover and .is-picked ones below) can paint the invisible hit target
      by accident. */
@@ -608,10 +610,6 @@
   .zpd-node:focus{outline:none;}
   .zpd-node:focus-visible circle{stroke:rgba(196,245,71,.75);}
   .zpd-node.is-picked circle{stroke:var(--chalk); stroke-width:3;}
-  .zpd-you{
-    font-family:var(--mono); font-size:9px; font-weight:600; letter-spacing:.18em;
-    text-transform:uppercase; fill:var(--lime-ink); text-anchor:middle; pointer-events:none;
-  }
   .zpd-side{
     padding:20px 22px 22px; border-left:1px solid var(--edge); background:var(--field-1);
     display:flex; flex-direction:column; gap:12px;
@@ -2094,9 +2092,6 @@
       clear(ringsG);
       for(var z = 1; z <= 3; z++){
         ringsG.appendChild(el('circle', {cx:CX, cy:CY, r:R[z], class:'zpd-ring r' + z}));
-        ringsG.appendChild(el('text', {
-          x:CX, y:CY - R[z] - 9, class:'zpd-ring-label', 'text-anchor':'middle'
-        })).textContent = ZONE_NAME[z];
       }
     }
 
@@ -2212,8 +2207,16 @@
         // 28 pixels without moving a single visible dot.
         var hit = narrow ? 76 : 44;
         g.appendChild(el('rect', {x:-hit/2, y:-hit/2, width:hit, height:hit, class:'zpd-hit'}));
-        g.appendChild(el('circle', {r: p.zone === 0 ? 15 : p.zone === 3 ? 6 : 9}));
-        if(p.zone === 0) g.appendChild(el('text', {class:'zpd-you', y:4})).textContent = 'YOU';
+        // Center marks itself with the mascot instead of a plain dot + "YOU"
+        // label, everywhere else still gets a dot sized by zone.
+        if(p.zone === 0){
+          g.appendChild(el('image', {
+            href:'img/raccoon-logo.png', x:-23, y:-23, width:46, height:46,
+            class:'zpd-you-logo', 'preserveAspectRatio':'xMidYMid meet'
+          }));
+        } else {
+          g.appendChild(el('circle', {r: p.zone === 3 ? 6 : 9}));
+        }
         var label = el('text', {y: p.zone === 0 ? 40 : 24});
         label.textContent = clip(n.name, p.zone === 0 ? (narrow ? 20 : 30) : CLIP);
         g.appendChild(label);
