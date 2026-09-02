@@ -204,7 +204,97 @@ function goalOptionsFor(inst) {
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
-export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen }) {
+/**
+ * Hero cube face texture (2026-09-02, built against the founder's own
+ * reference image): a real constellation of connected nodes per face,
+ * ported from index.html's own constellation() function on the marketing
+ * page's hero canvas (same node+edge algorithm, same devicePixelRatio
+ * handling), not reinvented. Colors swapped from that page's brand lime to
+ * a warm gold to match the reference image's glass-and-light look instead
+ * of the marketing page's dark-hero look. One canvas per cube face (all 6,
+ * even though only 3 are visible at any instant, since cubeTurn keeps
+ * spinning it) so the texture never pops in/out as faces rotate into view.
+ */
+function paintConstellation(canvas) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W = 0;
+  let H = 0;
+  let nodes = [];
+  let raf = null;
+  function seed() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    if (!W || !H) return false;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.max(10, Math.floor((W * H) / 1800));
+    nodes = [];
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+        r: Math.random() * 1.3 + 0.6,
+      });
+    }
+    return true;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d = dx * dx + dy * dy;
+        if (d < 3200) {
+          ctx.strokeStyle = `rgba(255, 225, 160, ${(0.35 * (1 - d / 3200)).toFixed(3)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for (let k = 0; k < nodes.length; k++) {
+      const n = nodes[k];
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, 7);
+      ctx.fillStyle = 'rgba(255, 240, 200, 0.95)';
+      ctx.shadowColor = 'rgba(255, 225, 150, 0.85)';
+      ctx.shadowBlur = 5;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      if (!reduced) {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      }
+    }
+    if (!reduced) raf = requestAnimationFrame(draw);
+  }
+  if (seed()) draw();
+  window.addEventListener('resize', () => {
+    if (raf) cancelAnimationFrame(raf);
+    if (seed()) draw();
+  });
+}
+
+function paintCubeFaces(hub) {
+  const canvases = [...(hub?.querySelectorAll('[data-cube-canvas]') || [])];
+  canvases.forEach((cv) => paintConstellation(cv));
+}
+
+export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen, onHomeOpen }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
   const hubName = hub?.querySelector('[data-hub-name]');
@@ -225,6 +315,12 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const jesseCountEl = hub?.querySelector('[data-jesse-count]');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
+  // Dashboard tab row (2026-09-02 rebuild). tab2Row + heroCard are the
+  // "Workspace" surface, hidden for tutors same as tabBtns2's own hidden
+  // state is irrelevant to them; see paintRoleSurfaces below.
+  const tab2Row = hub?.querySelector('[data-hub-tabs2]');
+  const heroCard = hub?.querySelector('.hub-hero-card');
+  const tab2Btns = [...(hub?.querySelectorAll('[data-hub-tab2]') || [])];
 
   // No hardcoded fallback identity here (this used to default to the
   // founder's own name/email, meaning every real student saw
@@ -258,7 +354,8 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
    */
   function paintRoleSurfaces() {
     const tutor = (getRole() || 'student') === 'tutor';
-    if (jesseNav) jesseNav.hidden = tutor;
+    if (tab2Row) tab2Row.hidden = tutor;
+    if (heroCard) heroCard.hidden = tutor;
     if (tutorTiles) tutorTiles.hidden = !tutor;
   }
 
@@ -455,6 +552,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hub) { hub.hidden = true; hub.classList.add('hidden'); }
   }
 
+  let cubeFacesPainted = false;
   function showHub() {
     boot?.classList.add('hidden');
     if (boot) boot.hidden = true;
@@ -462,6 +560,15 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     hub.hidden = false;
     hub.classList.remove('hidden');
     renderHub();
+    // Canvas sizing needs real layout (clientWidth/Height), which only
+    // exists once hub.hidden is false, so this can't run any earlier than
+    // here. Painted once; the cube's own faces never resize independently
+    // of the window, and paintConstellation already has its own resize
+    // listener for that case.
+    if (!cubeFacesPainted) {
+      cubeFacesPainted = true;
+      paintCubeFaces(hub);
+    }
   }
 
   function hideAll() {
@@ -508,6 +615,21 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   // destinations, not two faces of one control.
   const resumeNav = hub?.querySelector('[data-hub-resume-nav]');
   resumeNav?.addEventListener('click', () => onResumeOpen?.());
+
+  // Dashboard tab row (2026-09-02 rebuild): the tutors/resume buttons carry
+  // BOTH data-hub-tab2 (for the active-underline styling here) and the
+  // existing data-hub-jesse-nav / data-hub-resume-nav (for the real
+  // open-panel behavior wired just above), so this only has to own the
+  // visual is-active sync, not duplicate the opening logic. "home" is not
+  // a panel at all, just "close whichever panel is open," since the
+  // tabs+cube stay visible above any opened panel either way (same layout
+  // the old icon row always had).
+  tab2Btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tab2Btns.forEach((b) => b.classList.toggle('is-active', b === btn));
+      if (btn.dataset.hubTab2 === 'home') onHomeOpen?.();
+    });
+  });
 
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {

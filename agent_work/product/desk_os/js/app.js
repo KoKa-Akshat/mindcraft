@@ -645,6 +645,15 @@ function showTutorMapPanel() {
   tutorMap?.open();
 }
 
+// Workspace tab (2026-09-02): closes whichever of the two panels above is
+// open, same "return to the clean dashboard" job showTutorMapPanel already
+// does for resumeHelper when switching the other way, just without opening
+// a new panel of its own.
+function closeDashboardPanels() {
+  resumeHelper?.close();
+  if (els.hubTutorMap) els.hubTutorMap.hidden = true;
+}
+
 function ensureBootHub() {
   if (bootHub || !els.bootStage || !els.hubStage) return bootHub;
   bootHub = createBootHub({
@@ -652,6 +661,7 @@ function ensureBootHub() {
     hub: els.hubStage,
     onOpenInstance: (inst) => openInstance(inst),
     onResumeOpen: () => showResumePanel(),
+    onHomeOpen: () => closeDashboardPanels(),
     onMapOpen: () => showTutorMapPanel(),
     onCreateInstance: () => {
       bootHub?.hideAll();

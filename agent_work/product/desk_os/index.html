@@ -147,21 +147,58 @@
 
       <main class="hub-main" data-hub-panel="dashboard">
         <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
-          <!-- Reverted 2026-09-02: back to the equal-weight row of three
-               icon-only boxes, no labels. The bigger-cube grid layout (G0)
-               didn't land well, reverted per the founder. -->
-          <div class="hub-mastery-duo">
-            <button type="button" class="hub-orb-row" data-hub-mastery-nav aria-label="Open Learn">
-              <div class="hub-orb-stage" aria-hidden="true">
-                <div class="hub-orb-glow"></div>
+          <!-- Rebuilt 2026-09-02 against the founder's own reference image:
+               a real tab row (Workspace / Resume studio / Tutors & events,
+               reusing bootHub.js's onResumeOpen/onMapOpen, the same
+               callbacks the icon click already used), and the cube as a
+               genuine hero image instead of a flat-colored construction.
+               Faces stay the exact .hub-cube-face / preserve-3d geometry
+               (cubeTurn spin, click-spin, reduced-motion override all
+               untouched), each face now holds a <canvas> painted by
+               paintCubeFaces() in bootHub.js: the same constellation
+               node+edge technique already proven on the marketing page's
+               hero (index.html's constellation() function), ported rather
+               than reinvented, recolored warm gold to match the reference
+               instead of brand lime.
+               Trade-off, disclosed not silent: Jesse's growth-stage owl
+               (hatchling -> sage, driven by real /learn activity) had its
+               own animated box before this pass. The reference image has
+               no equivalent element, so the Tutors & events tab icon below
+               is a plain raccoon-mark image, not Jesse. If the founder
+               wants the growth signal back, it needs a new home; it is not
+               wired to anything in this section anymore. -->
+          <nav class="hub-tabs2" data-hub-tabs2 role="tablist" aria-label="Dashboard sections">
+            <button type="button" class="is-active" data-hub-tab2="home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M4 10h16"></path><path d="M10 10v10"></path></svg>
+              Workspace
+            </button>
+            <button type="button" data-hub-tab2="tutors" data-hub-jesse-nav>
+              <span class="hub-tab2-emoji" aria-hidden="true">&#x1F989;</span>
+              Tutors &amp; events
+            </button>
+            <button type="button" data-hub-tab2="resume" data-hub-resume-nav>
+              <img src="img/orbs/raccoon-logo.png" alt="" class="hub-tab2-icon" />
+              Resume studio
+            </button>
+          </nav>
+
+          <div class="hub-hero-card">
+            <div class="hub-hero-copy">
+              <h2>Enter your workspace</h2>
+              <p>Learn, build, and watch your ideas connect.</p>
+              <button type="button" class="hub-hero-cta" data-hub-mastery-nav>Open workspace</button>
+            </div>
+            <button type="button" class="hub-orb-row hub-orb-hero" data-hub-mastery-nav aria-label="Open Learn">
+              <div class="hub-orb-stage hub-orb-stage-hero" aria-hidden="true">
+                <div class="hub-orb-glow hub-orb-glow-hero"></div>
                 <div class="hub-orb">
-                  <div class="hub-cube">
-                    <span class="hub-cube-face f-front"></span>
-                    <span class="hub-cube-face f-back"></span>
-                    <span class="hub-cube-face f-right"></span>
-                    <span class="hub-cube-face f-left"></span>
-                    <span class="hub-cube-face f-top"></span>
-                    <span class="hub-cube-face f-bottom"></span>
+                  <div class="hub-cube" data-hub-cube>
+                    <span class="hub-cube-face f-front" data-cube-face><canvas data-cube-canvas></canvas></span>
+                    <span class="hub-cube-face f-back" data-cube-face><canvas data-cube-canvas></canvas></span>
+                    <span class="hub-cube-face f-right" data-cube-face><canvas data-cube-canvas></canvas></span>
+                    <span class="hub-cube-face f-left" data-cube-face><canvas data-cube-canvas></canvas></span>
+                    <span class="hub-cube-face f-top" data-cube-face><canvas data-cube-canvas></canvas></span>
+                    <span class="hub-cube-face f-bottom" data-cube-face><canvas data-cube-canvas></canvas></span>
                     <span class="hub-cube-cross c-xy"></span>
                     <span class="hub-cube-cross c-xz"></span>
                     <span class="hub-cube-cross c-yz"></span>
@@ -169,73 +206,30 @@
                 </div>
               </div>
             </button>
-            <!-- Jesse · the desk pet. Same CSS-only fake-3D technique family
-                 as the cube beside him (absolutely positioned face planes in
-                 a preserve-3d parent, no WebGL, no model file). His stage is
-                 painted by bootHub.js's paintJesse() from the REAL /learn
-                 activity count handed off by the React app (mcLearn param).
-                 Opens Tutors and events. -->
-            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Tutors and events near you">
-              <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
-                <div class="hub-orb-glow jesse-glow"></div>
-                <div class="jesse-scene">
-                  <div class="jesse-owl">
-                    <span class="jesse-face j-back"></span>
-                    <span class="jesse-face j-right"></span>
-                    <span class="jesse-face j-left"></span>
-                    <span class="jesse-face j-top"></span>
-                    <span class="jesse-face j-bottom"></span>
-                    <span class="jesse-face j-front">
-                      <span class="jesse-tuft t-left"></span>
-                      <span class="jesse-tuft t-right"></span>
-                      <span class="jesse-eye e-left"><span class="jesse-pupil"></span></span>
-                      <span class="jesse-eye e-right"><span class="jesse-pupil"></span></span>
-                      <span class="jesse-specs"></span>
-                      <span class="jesse-beak"></span>
-                      <span class="jesse-belly"></span>
-                      <span class="jesse-tassel"></span>
-                    </span>
-                    <span class="jesse-book"></span>
-                    <span class="jesse-cap"></span>
-                  </div>
-                  <span class="jesse-shell"></span>
-                </div>
-              </div>
-            </button>
-            <!-- Raccoon · opens the Resume Helper. The real MindCraft mark,
-                 forest green, same asset + filter treatment as the
-                 marketing page's ZPD graph center mark. -->
-            <button type="button" class="hub-orb-row" data-hub-resume-nav aria-label="Open the Resume Helper">
-              <div class="hub-orb-stage" aria-hidden="true">
-                <div class="hub-orb-glow"></div>
-                <div class="hub-orb hub-orb-img">
-                  <img src="img/orbs/raccoon-logo.png" alt="" class="hub-orb-raccoon" />
-                </div>
-              </div>
-            </button>
+          </div>
 
-            <!-- Tutor tools · shown INSTEAD of Jesse when the signed-in role
-                 is tutor (bootHub.js toggles both). Tutors have no hatchling;
-                 their three boxes, Calendly, Meet room, and Location, already
-                 live on the real /tutor dashboard, so these tiles deep-link
-                 straight to them rather than duplicating that UI here. -->
-            <div class="hub-tutor-tiles" data-hub-tutor-tiles hidden>
-              <a class="hub-tutor-tile" href="/tutor?chip=calendly">
-                <span class="hub-tutor-tile-kicker">Bookings</span>
-                <strong>Calendly</strong>
-                <span class="hub-tutor-tile-soft">Connect once, sessions flow in</span>
-              </a>
-              <a class="hub-tutor-tile" href="/tutor?chip=meet">
-                <span class="hub-tutor-tile-kicker">Video</span>
-                <strong>Google Meet</strong>
-                <span class="hub-tutor-tile-soft">Your permanent room link</span>
-              </a>
-              <a class="hub-tutor-tile" href="/tutor?chip=location">
-                <span class="hub-tutor-tile-kicker">Map</span>
-                <strong>Location</strong>
-                <span class="hub-tutor-tile-soft">Where students find you</span>
-              </a>
-            </div>
+          <!-- Tutor tools · shown INSTEAD of the tabs above when the
+               signed-in role is tutor (bootHub.js toggles this). Tutors
+               have no student workspace; their three boxes, Calendly, Meet
+               room, and Location, already live on the real /tutor
+               dashboard, so these tiles deep-link straight to them rather
+               than duplicating that UI here. -->
+          <div class="hub-tutor-tiles" data-hub-tutor-tiles hidden>
+            <a class="hub-tutor-tile" href="/tutor?chip=calendly">
+              <span class="hub-tutor-tile-kicker">Bookings</span>
+              <strong>Calendly</strong>
+              <span class="hub-tutor-tile-soft">Connect once, sessions flow in</span>
+            </a>
+            <a class="hub-tutor-tile" href="/tutor?chip=meet">
+              <span class="hub-tutor-tile-kicker">Video</span>
+              <strong>Google Meet</strong>
+              <span class="hub-tutor-tile-soft">Your permanent room link</span>
+            </a>
+            <a class="hub-tutor-tile" href="/tutor?chip=location">
+              <span class="hub-tutor-tile-kicker">Map</span>
+              <strong>Location</strong>
+              <span class="hub-tutor-tile-soft">Where students find you</span>
+            </a>
           </div>
         </section>
 
