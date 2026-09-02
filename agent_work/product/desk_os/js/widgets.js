@@ -55,7 +55,7 @@ function mount(plane, attachSheet, el, slot) {
   return el;
 }
 
-export function createWidgetFactory({ plane, attachSheet, showToast, onFocus, onCruiseTag }) {
+export function createWidgetFactory({ plane, attachSheet, showToast, onFocus, onCruiseTag, onOpenTutorMap }) {
   /** @type {HTMLElement | null} */
   let addTray = null;
 
@@ -377,7 +377,12 @@ export function createWidgetFactory({ plane, attachSheet, showToast, onFocus, on
         else if (kind === 'scan') document.getElementById('toolGoogle')?.click();
         else if (kind === 'tutors') {
           document.getElementById('brandHome')?.click();
+          // hubTutorMap starts hidden now (2026-09-02, behind the Map box),
+          // so getting there needs the real open path (unhides + inits the
+          // map/list), not just a scroll to a section that may not be
+          // rendered yet. onOpenTutorMap wraps app.js's openTutorMap().
           window.setTimeout(() => {
+            onOpenTutorMap?.();
             document.getElementById('hubTutorMap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 120);
         }

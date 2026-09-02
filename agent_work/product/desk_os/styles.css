@@ -56,6 +56,11 @@ html, body {
 ::selection { background: rgba(46, 196, 166, 0.35); color: var(--ink-system); }
 :focus-visible { outline: 2px solid rgba(46, 196, 166, 0.55); outline-offset: 3px; }
 .hidden, [hidden] { display: none !important; }
+/* Backs the inline anti-flash script at the top of index.html's <body>:
+   once that script (or app.js's normal boot flow) has moved #appShell off
+   its default data-mode="gate", #gate itself should never be visible again,
+   declaratively, so there is no frame where both are true at once. */
+.app:not([data-mode="gate"]) #gate { display: none !important; }
 
 .sky {
   position: fixed;
@@ -4080,6 +4085,21 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-orb-pct.is-unknown {
   color: #8a968c;
   font-weight: 400;
+}
+/* Unlock and Map (2026-09-02): pre-made dashboard-stickers-3d art instead
+   of a hand-built CSS-3D construction like the cube/owl beside them, see
+   the comment on the Unlock button in index.html for why. Sized to sit
+   comfortably inside the same 128px .hub-orb-stage those use. */
+.hub-orb-img img {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(31, 42, 34, 0.18));
+}
+.hub-orb-sub {
+  margin: 0;
+  font: 500 13.5px/1.3 var(--sans);
+  color: #5a6b5e;
 }
 @media (max-width: 720px) {
   .hub-mastery-head { flex-direction: column; }

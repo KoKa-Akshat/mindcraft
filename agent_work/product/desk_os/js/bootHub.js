@@ -204,7 +204,7 @@ function goalOptionsFor(inst) {
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
-export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onJesseToggle }) {
+export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
   const hubName = hub?.querySelector('[data-hub-name]');
@@ -489,19 +489,25 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     }, CLICK_SPIN_MS);
   });
 
-  // Jesse toggles the Resume Helper (2026-08-31 ask: "clicking on the cute
-  // mascot next to dice opens, instead of maps and tutors, the resume
-  // helper"; press again and the tutor map is back, and a third press
-  // returns to wherever the student left off in Resume mode). He used to
-  // navigate to /learn like the cube; the cube still does, so Learn stays
-  // one click away. The hop animation stays as click feedback, and the
-  // class is removed after it plays so every click hops again.
+  // Jesse (2026-09-02: no longer a nav trigger, see the Unlock box comment
+  // in index.html for why). He still hops on click, purely for delight,
+  // same feedback he always had; the class is removed after it plays so
+  // every click hops again.
   const JESSE_HOP_MS = 520;
   jesseNav?.addEventListener('click', () => {
     jesseOwl?.classList.add('is-hop');
     window.setTimeout(() => jesseOwl?.classList.remove('is-hop'), JESSE_HOP_MS);
-    onJesseToggle?.();
   });
+
+  // Unlock (Resume Helper) and Map (Tutors and events): dedicated boxes,
+  // replacing Jesse's old toggle-in-place behavior (2026-09-02 ask). Each
+  // is a direct "show mine, hide the other" rather than a shared toggle,
+  // since they are now two independently reachable destinations, not two
+  // faces of one control.
+  const resumeNav = hub?.querySelector('[data-hub-resume-nav]');
+  const mapNav = hub?.querySelector('[data-hub-map-nav]');
+  resumeNav?.addEventListener('click', () => onResumeOpen?.());
+  mapNav?.addEventListener('click', () => onMapOpen?.());
 
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {

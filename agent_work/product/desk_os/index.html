@@ -22,6 +22,25 @@
 </head>
 <body>
   <div class="app" id="appShell" data-mode="gate" data-surface="gate">
+    <!-- Same FOUC-prevention idea as the inline background style above, one
+         level further: a real signed-in student lands here via the React
+         app's post-login redirect with ?mcEmail=... already in the URL
+         (readAuthHandoff() in app.js). Previously app.js's boot() only
+         checked for that AFTER several async data loads (listItems/
+         listEvents/listMail), during which this element's own DEFAULT
+         data-mode ("gate", the login/entry screen below) was genuinely
+         painted on screen, on every load and every refresh, before boot()
+         got around to switching it. This tiny synchronous script runs
+         immediately as the parser reaches it, before #gate's own markup a
+         few lines down is even parsed, so a real handoff never paints the
+         gate at all (see the matching #appShell:not([data-mode="gate"])
+         #gate rule in styles.css). app.js's boot() still does the real
+         work (setRole, finishEnter, etc.), this only prevents the flash. -->
+    <script>
+      if (/[?&]mcEmail=/.test(window.location.search)) {
+        document.getElementById('appShell').dataset.mode = 'boot';
+      }
+    </script>
     <div class="sky" aria-hidden="true"></div>
 
     <!-- Opening · art still + enter -->
@@ -159,7 +178,7 @@
                  nothing here is simulated. Owl per the existing Jesse-energy
                  mascot (img/orbs/mascot-ivory.png): ivory feathers, tall ear
                  tufts, lime-green eyes. -->
-            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Open the Resume Helper. Real learning on Learn grows Jesse.">
+            <button type="button" class="hub-orb-row hub-jesse" data-hub-jesse-nav aria-label="Jesse. Real learning on Learn grows Jesse.">
               <div class="jesse-stagebox" data-jesse-scene data-jesse-stage="0" aria-hidden="true">
                 <div class="hub-orb-glow jesse-glow"></div>
                 <div class="jesse-scene">
@@ -191,6 +210,49 @@
                 <p class="jesse-count is-unknown" data-jesse-count>no activity recorded</p>
               </div>
             </button>
+            <!-- Unlock · was Jesse's own click behavior (2026-08-31 build):
+                 clicking the mascot swapped the panel below between Tutors
+                 and events and the Resume Helper. That overloaded a study
+                 companion as a nav trigger AND made the dash never start
+                 clean (Tutors and events was always visible by default).
+                 2026-09-02 ask: give Resume Helper its own dedicated,
+                 clearly-labeled box instead, name deliberately not literally
+                 "Resume" per the founder. Jesse now just shows level, no
+                 click action. Asset: img/orbs/keybook-3d.png (a locked book
+                 + key, "unlock your next opportunity"), same
+                 dashboard-stickers-3d pack Map's compass below comes from,
+                 so the two new boxes read as a matched pair even though
+                 their art style (photoreal sticker) differs from Mastery's
+                 and Jesse's hand-built CSS-3D. -->
+            <button type="button" class="hub-orb-row" data-hub-resume-nav aria-label="Open the Resume Helper">
+              <div class="hub-orb-stage" aria-hidden="true">
+                <div class="hub-orb-glow"></div>
+                <div class="hub-orb hub-orb-img">
+                  <img src="img/orbs/keybook-3d.png" alt="" />
+                </div>
+              </div>
+              <div class="hub-orb-copy">
+                <h2 class="hub-orb-title">Unlock</h2>
+                <p class="hub-orb-sub">Resume + real openings</p>
+              </div>
+            </button>
+
+            <!-- Map · was always-visible "Tutors and events" below, moved
+                 behind its own box for the same "dash starts clean" ask.
+                 Asset: img/orbs/compass-3d.png. -->
+            <button type="button" class="hub-orb-row" data-hub-map-nav aria-label="Open tutors and events near you">
+              <div class="hub-orb-stage" aria-hidden="true">
+                <div class="hub-orb-glow"></div>
+                <div class="hub-orb hub-orb-img">
+                  <img src="img/orbs/compass-3d.png" alt="" />
+                </div>
+              </div>
+              <div class="hub-orb-copy">
+                <h2 class="hub-orb-title">Map</h2>
+                <p class="hub-orb-sub">Tutors + live events nearby</p>
+              </div>
+            </button>
+
             <!-- Tutor tools · shown INSTEAD of Jesse when the signed-in role
                  is tutor (bootHub.js toggles both). Tutors have no hatchling;
                  their three boxes, Calendly, Meet room, and Location, already
@@ -216,7 +278,7 @@
           </div>
         </section>
 
-        <section class="hub-tutors" id="hubTutorMap" aria-label="Tutors and events nearby">
+        <section class="hub-tutors" id="hubTutorMap" aria-label="Tutors and events nearby" hidden>
           <div class="hub-tutors-head">
             <h2 class="hub-tutors-title">Tutors and events</h2>
             <p class="hub-tutors-soft">Real tutors on the map, live events as they post them. Search a city to rank by distance.</p>
@@ -254,13 +316,14 @@
           </div>
         </section>
 
-        <!-- Resume Helper · swapped in place of Tutors and events when the
-             student clicks Jesse (the mascot beside the Mastery cube).
-             Toggling back and forth never navigates; the panel remembers
-             its own step (profile building vs jobs table) per session.
-             All data lives under the signed-in student's own uid:
-             users/{uid}/jobOS/resumeDraft (the editable draft) and
-             users/{uid}/jobOS/state (the shared board the iOS app syncs). -->
+        <!-- Resume Helper · shown when the student clicks the Unlock box
+             (2026-09-02, was Jesse's click behavior, see the comment on
+             that button). Toggling back and forth with Map never navigates;
+             the panel remembers its own step (profile building vs jobs
+             table) per session. All data lives under the signed-in
+             student's own uid: users/{uid}/jobOS/resumeDraft (the editable
+             draft) and users/{uid}/jobOS/state (the shared board the iOS
+             app syncs). -->
         <section class="hub-tutors hub-resume" id="hubResume" aria-label="Resume Helper" hidden>
           <div class="hub-tutors-head rh-head">
             <div>

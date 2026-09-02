@@ -403,6 +403,7 @@ function ensureDeskSurfaces() {
         surfaces.flashFocus?.(el);
         deskPan?.focusEl?.(el, { soft: true });
       },
+      onOpenTutorMap: () => openTutorMap(),
       onCruiseTag: ({ tag, text }) => {
         if (!tag || !text) return;
         // Soft handoff into instance surfaces
@@ -624,23 +625,24 @@ function ensureBookStudio() {
 }
 
 /**
- * Jesse's toggle (2026-08-31 ask): swap the hub's lower panel between the
- * Tutors and events map and the Resume Helper, in place, no navigation.
+ * Unlock and Map (2026-09-02, was Jesse's toggle from 2026-08-31): the
+ * dashboard's two on-demand panels, each its own dedicated box now instead
+ * of one shared toggle. Both start hidden (index.html), so the dashboard
+ * itself starts clean; clicking either box shows it and hides the other.
  * The Resume Helper keeps its own internal step (profile building vs jobs
- * table), so pressing Jesse a third time lands the student exactly where
- * they left off in Resume mode.
+ * table) across opens within a session.
  */
-function toggleResumePanel() {
+function showResumePanel() {
   const resumeRoot = document.getElementById('hubResume');
   if (!resumeRoot) return;
-  if (resumeRoot.hidden) {
-    if (els.hubTutorMap) els.hubTutorMap.hidden = true;
-    void resumeHelper?.open();
-  } else {
-    resumeHelper?.close();
-    if (els.hubTutorMap) els.hubTutorMap.hidden = false;
-    tutorMap?.open();
-  }
+  if (els.hubTutorMap) els.hubTutorMap.hidden = true;
+  void resumeHelper?.open();
+}
+
+function showTutorMapPanel() {
+  resumeHelper?.close();
+  if (els.hubTutorMap) els.hubTutorMap.hidden = false;
+  tutorMap?.open();
 }
 
 function ensureBootHub() {
@@ -649,7 +651,8 @@ function ensureBootHub() {
     boot: els.bootStage,
     hub: els.hubStage,
     onOpenInstance: (inst) => openInstance(inst),
-    onJesseToggle: () => toggleResumePanel(),
+    onResumeOpen: () => showResumePanel(),
+    onMapOpen: () => showTutorMapPanel(),
     onCreateInstance: () => {
       bootHub?.hideAll();
       ensureBookStudio()?.show();
@@ -1613,6 +1616,11 @@ function openTool(mode) {
 function openTutorMap(opts = {}) {
   // Stay on dashboard · scroll/focus the in-page map (not a new tab)
   goHome?.();
+  // Map now starts hidden like Resume does (2026-09-02); if Resume happens
+  // to be open when a search/deep-link routes here, close it first so the
+  // two panels are never both visible at once, same rule the Map/Unlock
+  // boxes themselves enforce.
+  resumeHelper?.close();
   window.setTimeout(() => tutorMap?.open(opts), 40);
 }
 
