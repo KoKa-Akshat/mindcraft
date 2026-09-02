@@ -6,6 +6,7 @@ export interface SearchBarProps {
   onQueryChange: (v: string) => void
   onSearch: () => void
   loading: boolean
+  inputRef: RefObject<HTMLInputElement>
   topUploadFileRef: RefObject<HTMLInputElement>
   materialsAccept: string
   onTopUpload: (file: File) => void
@@ -22,12 +23,13 @@ export interface SearchBarProps {
 /** The persistent bottom search/upload bar. Purely presentational, the
  * search/upload logic and every piece of state here lives in Learn.tsx. */
 export default function SearchBar({
-  query, onQueryChange, onSearch, loading, topUploadFileRef, materialsAccept, onTopUpload,
+  query, onQueryChange, onSearch, loading, inputRef, topUploadFileRef, materialsAccept, onTopUpload,
   materialsBusy, showPanels, materialsError, embedPct, embedderReady, resolveMeta, studiedIds, err,
 }: SearchBarProps) {
   return (
     <div style={{ flexShrink: 0, padding: '14px 20px', borderTop: BORDER_SOFT, display: 'flex', gap: 10, alignItems: 'center', background: PAGE_BG, flexWrap: 'wrap' }}>
       <input
+        ref={inputRef}
         className="lrn-input"
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}

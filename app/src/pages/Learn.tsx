@@ -81,6 +81,8 @@ import ReadingPane from './learn/ReadingPane'
 import NeighborsCard from './learn/NeighborsCard'
 import RightColumn from './learn/RightColumn'
 import SearchBar from './learn/SearchBar'
+import EntryStage from './learn/EntryStage'
+import RouteCards from './learn/RouteCards'
 import { PAGE_BG, FONT_STACK, TEXT_PRIMARY, type NeighborRow, type MaterialsState, type LibraryCounts, type QuestionSimState } from './learn/shared'
 
 /** Below this, even the best available match is noise rather than a signal:
@@ -118,6 +120,24 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
 
   const [path, setPath] = useState<PathStep[]>([])
   const [pathIndex, setPathIndex] = useState(0)
+
+  // ── Entry + route cards (Phase 1) ────────────────────────────────────────
+  // A resolve from a genuinely blank-slate search (typed into the entry
+  // stage or the main search bar) does not jump straight to content. It
+  // stops here with the real data needed to offer a few honest routes in,
+  // and only calls loadContent/highlightInGraph/reveals the panels once the
+  // student actually picks one (see pickRoute). The three ALREADY-specific
+  // entry points, a ?q= deep link from the Dashboard, a materials
+  // auto-resolve, and the nudge banner's "Practice this", skip this stage
+  // entirely and keep their exact pre-Phase-1 direct-to-content behavior:
+  // the student already said precisely what they want, a route picker
+  // would be friction, not help.
+  const [routeCardsFor, setRouteCardsFor] = useState<{
+    best: ConceptMatch
+    ramp: PathStep[]
+    startAtFoundation: boolean
+  } | null>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   const [content, setContent] = useState<ConceptContent | null>(null)
   const [contentLoading, setContentLoading] = useState(false)
@@ -356,7 +376,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     highlightInGraph(step.conceptId)
   }
 
-  const search = useCallback(async (text?: string) => {
+  const search = useCallback(async (text?: string, opts: { skipRouteCards?: boolean } = {}) => {
     const q = (text ?? query).trim()
     if (!q) return
     setLoading(true)
@@ -369,6 +389,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setPanelsSettled(false)
     setPath([])
     setPathIndex(0)
+    setRouteCardsFor(null)
     setResolveMeta(null)
     resetPerConcept()
     try {
@@ -410,6 +431,12 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       const startAtFoundation = ramp.length > 1 && best.score < RAMP_CONFIDENCE_CEILING
       const startIndex = startAtFoundation ? 0 : ramp.length - 1
       setPathIndex(Math.max(0, startIndex))
+      if (!opts.skipRouteCards) {
+        // Stop here. pickRoute (fired by RouteCards) does the loadContent
+        // + highlight + reveal this used to do unconditionally.
+        setRouteCardsFor({ best, ramp, startAtFoundation })
+        return
+      }
       const startId = startAtFoundation ? ramp[0].conceptId : best.conceptId
       void loadContent(startId)
       highlightInGraph(startId)
@@ -422,6 +449,18 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, loadContent, uid])
 
+  /** Fired by a RouteCards pick. Does what search() used to do
+   * unconditionally before Phase 1: sets the real path index for whichever
+   * route was chosen, loads that concept's content, highlights it in the
+   * graph, and reveals the panels. */
+  function pickRoute(conceptId: string, pathIndexToUse: number) {
+    setRouteCardsFor(null)
+    setPathIndex(Math.max(0, pathIndexToUse))
+    void loadContent(conceptId)
+    highlightInGraph(conceptId)
+    setTimeout(() => setPanelsRevealed(true), REVEAL_DELAY_MS)
+  }
+
   // A ?q= in the URL runs one search on mount, so the Dashboard can hand a
   // typed question straight through into this view.
   const autoRanRef = useRef(false)
@@ -429,7 +468,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     const q = searchParams.get('q')
     if (q && !autoRanRef.current) {
       autoRanRef.current = true
-      void search(q)
+      void search(q, { skipRouteCards: true })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -526,7 +565,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     setStudyLog((prev) => ({ ...prev, [activeConceptId]: updated }))
   }
 
-  function runSearch(text?: string) {
+  function runSearch(text?: string, opts: { skipRouteCards?: boolean } = {}) {
     const q = (text ?? query).trim()
     if (!q) return
     if (!embedded) {
@@ -534,7 +573,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       next.set('q', q)
       setSearchParams(next, { replace: true })
     }
-    void search(q)
+    void search(q, opts)
   }
 
   // ── Materials upload ──────────────────────────────────────────────────────
@@ -576,7 +615,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       if (opts.autoResolve) {
         setSelectedQ(0)
         setQuery(questions[0].text)
-        runSearch(questions[0].text)
+        runSearch(questions[0].text, { skipRouteCards: true })
         void loadSimForQuestion(0, materialsSnapshot)
       } else {
         setSelectedQ(null)
@@ -721,7 +760,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
       {nudge && !nudgeDismissed && (
         <NudgeBanner
           nudge={nudge}
-          onPractice={() => { setNudgeDismissed(true); setQuery(nudge.label); runSearch(nudge.label) }}
+          onPractice={() => { setNudgeDismissed(true); setQuery(nudge.label); runSearch(nudge.label, { skipRouteCards: true }) }}
           onDismiss={() => setNudgeDismissed(true)}
         />
       )}
@@ -754,6 +793,35 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             style={{ width: '100%', height: '100%', border: 'none' }}
           />
         </div>
+
+        {!searchedQuery && !materials && !routeCardsFor && (
+          <EntryStage
+            onFocusSearch={() => searchInputRef.current?.focus()}
+            onUploadHomework={() => topUploadFileRef.current?.click()}
+            nudgeLabel={nudge && !nudgeDismissed ? nudge.label : null}
+            onPracticeNudge={() => {
+              if (!nudge) return
+              setNudgeDismissed(true)
+              setQuery(nudge.label)
+              runSearch(nudge.label, { skipRouteCards: true })
+            }}
+          />
+        )}
+
+        {routeCardsFor && (
+          <RouteCards
+            resolvedLabel={routeCardsFor.best.label}
+            hasFoundation={routeCardsFor.ramp.length > 1}
+            foundationLabel={routeCardsFor.ramp[0]?.label}
+            rampLength={routeCardsFor.ramp.length}
+            personalizedLabel={nudge && nudge.conceptId !== routeCardsFor.best.conceptId ? nudge.label : null}
+            personalizedTrapLabel={nudge?.trapLabel ?? null}
+            onPickFoundation={() => pickRoute(routeCardsFor.ramp[0].conceptId, 0)}
+            onPickDirect={() => pickRoute(routeCardsFor.best.conceptId, Math.max(0, routeCardsFor.ramp.length - 1))}
+            onPickPersonalized={() => { if (nudge) runSearch(nudge.label, { skipRouteCards: true }) }}
+            onUploadInstead={() => topUploadFileRef.current?.click()}
+          />
+        )}
 
         {showPanels && chapter && resolved && (
           <div style={{ position: 'absolute', inset: '20px 16px 16px 16px', borderRadius: 18, zIndex: 1, display: 'flex', gap: 16, padding: '10px 12px 12px', background: 'transparent' }}>
@@ -850,6 +918,7 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
         onQueryChange={setQuery}
         onSearch={() => runSearch()}
         loading={loading}
+        inputRef={searchInputRef}
         topUploadFileRef={topUploadFileRef}
         materialsAccept={MATERIALS_ACCEPT}
         onTopUpload={(f) => void handleMaterialsFile(f, { autoResolve: true })}
