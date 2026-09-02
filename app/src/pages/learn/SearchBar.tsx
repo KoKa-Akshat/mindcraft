@@ -35,9 +35,9 @@ export default function SearchBar({
         onChange={(e) => onQueryChange(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && onSearch()}
         placeholder="Ask anything, or paste a homework question..."
-        style={{ flex: 1, minWidth: 220, padding: '13px 17px', borderRadius: 13, border: '1px solid rgba(205,215,238,0.2)', background: 'rgba(205,215,238,0.05)', color: TEXT_PRIMARY, fontSize: 15, fontFamily: FONT_STACK }}
+        style={{ flex: 1, minWidth: 220, padding: '13px 17px', borderRadius: 13, border: '1px solid rgba(205,220,208,0.2)', background: 'rgba(205,220,208,0.05)', color: TEXT_PRIMARY, fontSize: 15, fontFamily: FONT_STACK }}
       />
-      <button onClick={onSearch} disabled={loading} style={{ padding: '13px 28px', borderRadius: 13, border: 'none', background: '#6366F1', color: 'white', fontWeight: 600, fontSize: 14.5, cursor: loading ? 'default' : 'pointer' }}>
+      <button onClick={onSearch} disabled={loading} style={{ padding: '13px 28px', borderRadius: 13, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 14.5, cursor: loading ? 'default' : 'pointer' }}>
         {loading ? '...' : 'Search'}
       </button>
       <input

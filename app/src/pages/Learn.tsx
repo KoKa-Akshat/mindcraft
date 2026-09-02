@@ -856,12 +856,12 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
     <div style={{ height: embedded ? '100%' : '100vh', width: '100%', background: PAGE_BG, color: TEXT_PRIMARY, fontFamily: FONT_STACK, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <style>{`
         @keyframes lrnRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-        .lrn-col { scrollbar-width: thin; scrollbar-color: rgba(205,215,238,0.2) transparent; }
+        .lrn-col { scrollbar-width: thin; scrollbar-color: rgba(205,220,208,0.2) transparent; }
         .lrn-col::-webkit-scrollbar { width: 8px; }
-        .lrn-col::-webkit-scrollbar-thumb { background: rgba(205,215,238,0.16); border-radius: 4px; }
+        .lrn-col::-webkit-scrollbar-thumb { background: rgba(205,220,208,0.16); border-radius: 4px; }
         .lrn-neighbor { transition: background .15s ease, border-color .15s ease, transform .15s ease; }
-        .lrn-neighbor:hover { background: rgba(99,102,241,0.15) !important; border-color: rgba(129,140,248,0.55) !important; transform: translateX(3px); }
-        .lrn-input:focus { outline: none; border-color: rgba(129,140,248,0.7) !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
+        .lrn-neighbor:hover { background: rgba(61,107,79,0.15) !important; border-color: rgba(95,165,120,0.55) !important; transform: translateX(3px); }
+        .lrn-input:focus { outline: none; border-color: rgba(95,165,120,0.7) !important; box-shadow: 0 0 0 3px rgba(61,107,79,0.2); }
         .lrn-qrow { transition: background .15s ease, border-color .15s ease; }
         .lrn-qrow:hover { background: rgba(94,200,240,0.1) !important; border-color: rgba(94,200,240,0.45) !important; }
       `}</style>

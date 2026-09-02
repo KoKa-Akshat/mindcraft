@@ -47,9 +47,9 @@ export default function RightColumn({
               onClick={() => onSetRightTab(tab)}
               style={{
                 fontSize: 12.5, fontWeight: 600, padding: '6px 14px', borderRadius: 999, cursor: 'pointer',
-                border: `1px solid ${effectiveTab === tab ? 'rgba(129,140,248,0.6)' : 'rgba(205,215,238,0.18)'}`,
-                background: effectiveTab === tab ? '#2A3054' : 'rgba(15,20,36,0.85)',
-                color: effectiveTab === tab ? '#B4BCF9' : TEXT_FAINT,
+                border: `1px solid ${effectiveTab === tab ? 'rgba(95,165,120,0.6)' : 'rgba(205,220,208,0.18)'}`,
+                background: effectiveTab === tab ? '#1a2b21' : 'rgba(8,14,20,0.85)',
+                color: effectiveTab === tab ? '#a8d4b5' : TEXT_FAINT,
               }}
             >
               {tab === 'sim' ? 'Simulation' : `Your materials${materials ? ` (${materials.questions.length})` : ''}`}
@@ -71,9 +71,9 @@ export default function RightColumn({
         ) : generatedSim ? (
           <div style={{ ...CARD, flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             <div style={{ padding: '12px 18px', borderBottom: BORDER_SOFT, display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
-              <Eyebrow color="#A78BFA">Interactive simulation</Eyebrow>
+              <Eyebrow color="#c4f547">Interactive simulation</Eyebrow>
               <span style={{ fontSize: 14.5, fontWeight: 600 }}>{generatedSim.title}</span>
-              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 0.6, color: '#A78BFA', border: '1px solid rgba(167,139,250,0.5)', background: 'rgba(167,139,250,0.12)', borderRadius: 6, padding: '2px 8px' }}>
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 0.6, color: '#c4f547', border: '1px solid rgba(196,245,71,0.5)', background: 'rgba(196,245,71,0.12)', borderRadius: 6, padding: '2px 8px' }}>
                 AI GENERATED
               </span>
               {generatedSim.cached && <span style={{ fontSize: 10.5, color: TEXT_FAINT }}>reused from the library, not regenerated</span>}
@@ -89,7 +89,7 @@ export default function RightColumn({
         <div className="lrn-col" style={{ ...CARD, flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 14, padding: '20px 22px' }}>
           {!hasSimContent && (
             <div style={{ borderBottom: BORDER_SOFT, paddingBottom: 16 }}>
-              <Eyebrow color="#A78BFA">Simulation</Eyebrow>
+              <Eyebrow color="#c4f547">Simulation</Eyebrow>
               <div style={{ fontSize: 15.5, fontWeight: 700, margin: '8px 0 6px', color: TEXT_PRIMARY }}>No simulation exists yet for this concept</div>
               <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: TEXT_FAINT }}>
                 {counts ? `Only ${counts.withSim} of ${counts.nodes} concepts in the library have a pre-built interactive sim so far` : 'Most concepts have no pre-built interactive sim yet'}, and {activeLabel || resolved.label} isn't one of them. That's a real content gap we're closing, not a loading error.
@@ -98,13 +98,13 @@ export default function RightColumn({
                 <button
                   onClick={onRunSimGeneration}
                   disabled={simGenerating}
-                  style={{ padding: '9px 18px', borderRadius: 10, border: 'none', background: simGenerating ? 'rgba(167,139,250,0.35)' : '#A78BFA', color: '#140a2e', fontWeight: 700, fontSize: 13, cursor: simGenerating ? 'default' : 'pointer' }}
+                  style={{ padding: '9px 18px', borderRadius: 10, border: 'none', background: simGenerating ? 'rgba(196,245,71,0.35)' : '#c4f547', color: '#0a0f08', fontWeight: 700, fontSize: 13, cursor: simGenerating ? 'default' : 'pointer' }}
                 >
                   {simGenerating ? 'Generating and reviewing...' : 'Generate a sim for this'}
                 </button>
               </div>
               {simGenerating ? (
-                <p style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.6, color: 'rgba(167,139,250,0.85)' }}>
+                <p style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.6, color: 'rgba(196,245,71,0.85)' }}>
                   {simGenStatus || 'Starting...'} The pipeline writes the sim, renders it headlessly, scores it against a structural rubric, then runs a visual quality gate. Nothing is shown unless the whole gate passes, and if it fails you will be told why. This usually takes under two minutes.
                 </p>
               ) : simGenFailed ? (

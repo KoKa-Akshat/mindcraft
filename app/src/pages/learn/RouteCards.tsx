@@ -16,7 +16,7 @@ export interface RouteCardsProps {
 const ZONE_STYLE = {
   comfort: { color: '#8BE85C', label: 'COMFORT ZONE' },
   proximal: { color: '#58CC02', label: 'PROXIMAL ZONE' },
-  trap: { color: '#A78BFA', label: 'WORTH FIXING' },
+  trap: { color: '#c4f547', label: 'WORTH FIXING' },
 }
 
 function RouteCard({

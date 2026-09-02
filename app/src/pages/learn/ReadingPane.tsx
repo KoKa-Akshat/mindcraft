@@ -42,7 +42,7 @@ export default function ReadingPane({
           {simplifiedBody && (
             <button
               onClick={onToggleSimplified}
-              style={{ marginLeft: 'auto', fontSize: 11.5, padding: '4px 11px', borderRadius: 7, border: '1px solid rgba(205,215,238,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}
+              style={{ marginLeft: 'auto', fontSize: 11.5, padding: '4px 11px', borderRadius: 7, border: '1px solid rgba(205,220,208,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}
             >
               {showSimplified ? 'show full original' : 'show simplified'}
             </button>
@@ -64,7 +64,7 @@ export default function ReadingPane({
 
       {chunks.map((group, i) => (
         <div key={`${usingSimplified ? 's' : 'o'}-${i}`} style={{ ...CARD, padding: '20px 24px', flexShrink: 0 }}>
-          <Eyebrow color="rgba(205,215,238,0.4)">Part {i + 1} of {chunks.length}</Eyebrow>
+          <Eyebrow color="rgba(205,220,208,0.4)">Part {i + 1} of {chunks.length}</Eyebrow>
           {group.map((p, j) => (
             <p key={j} style={{ margin: '12px 0 0', fontSize: 16.5, lineHeight: 1.75, color: TEXT_PRIMARY, maxWidth: '64ch' }}>{p}</p>
           ))}
@@ -72,7 +72,7 @@ export default function ReadingPane({
       ))}
 
       <div style={{ ...CARD, padding: '20px 24px', flexShrink: 0 }}>
-        <Eyebrow color="#818CF8">Cement understanding</Eyebrow>
+        <Eyebrow color="#5fa578">Cement understanding</Eyebrow>
         {checkQuestion ? (
           <>
             <div style={{ marginTop: 10 }}>

@@ -32,15 +32,15 @@ export default function PathRamp({ path, pathIndex, contentLoading, nextStep, se
           const done = i < pathIndex
           return (
             <span key={step.conceptId} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              {i > 0 && <span style={{ fontSize: 11, color: 'rgba(205,215,238,0.3)' }}>›</span>}
+              {i > 0 && <span style={{ fontSize: 11, color: 'rgba(205,220,208,0.3)' }}>›</span>}
               <button
                 onClick={() => onGoToStep(i)}
                 title={step.conceptId}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 5, cursor: 'pointer',
                   fontSize: 12.5, fontWeight: current ? 700 : 500, padding: '6px 12px', borderRadius: 999,
-                  border: `1px solid ${current ? '#58CC02' : done ? 'rgba(88,204,2,0.32)' : 'rgba(205,215,238,0.18)'}`,
-                  background: current ? 'rgba(88,204,2,0.18)' : done ? 'rgba(88,204,2,0.07)' : 'rgba(205,215,238,0.04)',
+                  border: `1px solid ${current ? '#58CC02' : done ? 'rgba(88,204,2,0.32)' : 'rgba(205,220,208,0.18)'}`,
+                  background: current ? 'rgba(88,204,2,0.18)' : done ? 'rgba(88,204,2,0.07)' : 'rgba(205,220,208,0.04)',
                   color: current ? '#8BE85C' : done ? TEXT_SOFT : TEXT_SOFT,
                 }}
               >
@@ -57,7 +57,7 @@ export default function PathRamp({ path, pathIndex, contentLoading, nextStep, se
         <button
           onClick={() => onGoToStep(pathIndex - 1)}
           disabled={pathIndex === 0}
-          style={{ fontSize: 12.5, padding: '7px 13px', borderRadius: 9, border: '1px solid rgba(205,215,238,0.2)', background: 'transparent', color: pathIndex === 0 ? 'rgba(205,215,238,0.3)' : TEXT_SOFT, cursor: pathIndex === 0 ? 'default' : 'pointer' }}
+          style={{ fontSize: 12.5, padding: '7px 13px', borderRadius: 9, border: '1px solid rgba(205,220,208,0.2)', background: 'transparent', color: pathIndex === 0 ? 'rgba(205,220,208,0.3)' : TEXT_SOFT, cursor: pathIndex === 0 ? 'default' : 'pointer' }}
         >
           Back
         </button>

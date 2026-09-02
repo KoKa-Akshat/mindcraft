@@ -35,7 +35,7 @@ export default function QuestionHelpCard({
         <Eyebrow color="#5EC8F0">Help with {selectedQuestion.number ? `question ${selectedQuestion.number}` : 'this question'}</Eyebrow>
         <button
           onClick={onClose}
-          style={{ marginLeft: 'auto', fontSize: 11.5, padding: '3px 10px', borderRadius: 7, border: '1px solid rgba(205,215,238,0.22)', background: 'transparent', color: TEXT_FAINT, cursor: 'pointer' }}
+          style={{ marginLeft: 'auto', fontSize: 11.5, padding: '3px 10px', borderRadius: 7, border: '1px solid rgba(205,220,208,0.22)', background: 'transparent', color: TEXT_FAINT, cursor: 'pointer' }}
         >
           close
         </button>
@@ -115,23 +115,23 @@ export default function QuestionHelpCard({
                 <span style={{ fontSize: 11, fontWeight: 700, color: '#58CC02', letterSpacing: 0.6 }}>SIM</span>
                 <span style={{ fontSize: 13, fontWeight: 600 }}>{questionSim.sim.title}</span>
               </div>
-              <iframe title="question-sim" srcDoc={questionSim.sim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,215,238,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
+              <iframe title="question-sim" srcDoc={questionSim.sim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,220,208,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
             </>
           ) : questionSim.generatedSim ? (
             <>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#A78BFA', letterSpacing: 0.6 }}>AI GENERATED</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#c4f547', letterSpacing: 0.6 }}>AI GENERATED</span>
                 <span style={{ fontSize: 13, fontWeight: 600 }}>{questionSim.generatedSim.title}</span>
               </div>
-              <iframe title="question-sim-generated" srcDoc={questionSim.generatedSim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,215,238,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
+              <iframe title="question-sim-generated" srcDoc={questionSim.generatedSim.html} style={{ width: '100%', height: 280, border: '1px solid rgba(205,220,208,0.15)', borderRadius: 12, background: 'white' }} sandbox="allow-scripts" />
             </>
           ) : questionSim.generating ? (
-            <p style={{ margin: 0, fontSize: 12.5, color: 'rgba(167,139,250,0.85)' }}>{questionSim.genStatus || 'Starting...'}</p>
+            <p style={{ margin: 0, fontSize: 12.5, color: 'rgba(196,245,71,0.85)' }}>{questionSim.genStatus || 'Starting...'}</p>
           ) : questionSim.status === 'none' && questionSim.conceptLabel ? (
             <>
               <button
                 onClick={onGenerateSim}
-                style={{ fontSize: 12.5, fontWeight: 600, padding: '7px 14px', borderRadius: 9, border: '1px solid rgba(167,139,250,0.45)', background: 'transparent', color: '#A78BFA', cursor: 'pointer' }}
+                style={{ fontSize: 12.5, fontWeight: 600, padding: '7px 14px', borderRadius: 9, border: '1px solid rgba(196,245,71,0.45)', background: 'transparent', color: '#c4f547', cursor: 'pointer' }}
               >
                 Generate a sim for this
               </button>

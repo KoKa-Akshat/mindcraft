@@ -17,19 +17,36 @@ import type { CSSProperties, ReactNode } from 'react'
 import type { ConceptSim, GeneratedSim } from '../../lib/conceptLibrary'
 import type { HomeworkQuestion } from '../../types'
 
-export const PAGE_BG = '#0F1424'
+// Forest-green retheme (2026-09-02): PAGE_BG now matches
+// full-graph-viewer.html's own --field (#080e14) exactly, so the iframe
+// behind the panels no longer has a visible navy-vs-deep-field seam at its
+// edge. Text/border tint shifted from blue-white to green-white to match.
+export const PAGE_BG = '#080e14'
 export const FONT_STACK = "'Avenir Next', 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif"
-export const TEXT_PRIMARY = 'rgba(238,242,252,0.95)'
-export const TEXT_SOFT = 'rgba(205,215,238,0.8)'
-export const TEXT_FAINT = 'rgba(205,215,238,0.55)'
-export const BORDER_SOFT = '1px solid rgba(160,178,224,0.16)'
+export const TEXT_PRIMARY = 'rgba(232,239,228,0.95)'
+export const TEXT_SOFT = 'rgba(205,220,208,0.8)'
+export const TEXT_FAINT = 'rgba(205,220,208,0.55)'
+export const BORDER_SOFT = '1px solid rgba(140,178,150,0.16)'
 
 export const CARD: CSSProperties = {
-  background: '#182036',
+  background: '#141f18',
   border: BORDER_SOFT,
   borderRadius: 18,
-  boxShadow: '0 6px 22px rgba(5,9,22,0.3)',
+  boxShadow: '0 6px 22px rgba(3,8,5,0.35)',
 }
+
+// Accent families, same retheme. Indigo (search/primary actions) becomes
+// forest green; violet (tutor/Jesse/nudge) becomes brand lime, matching
+// the raccoon mark's own color everywhere else in the product. Cyan
+// (materials/homework) and the existing zone greens/amber/red are left
+// alone on purpose: Fable 5's scoping pass flagged that collapsing every
+// accent to one green would lose the semantic color coding between
+// search, tutor chat, and materials, so materials keeps its own identity.
+export const ACCENT_FOREST = '#3d6b4f'
+export const ACCENT_FOREST_SOFT = '#5fa578'
+export const ACCENT_FOREST_PALE = '#a8d4b5'
+export const ACCENT_LIME = '#c4f547'
+export const ACCENT_LIME_INK = '#0c1207'
 
 export function Eyebrow({ color, children }: { color: string; children: ReactNode }) {
   return (

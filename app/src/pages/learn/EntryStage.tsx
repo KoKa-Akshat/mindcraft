@@ -24,7 +24,7 @@ export default function EntryStage({ onFocusSearch, onUploadHomework, nudgeLabel
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 18 }}>
           <button
             onClick={onFocusSearch}
-            style={{ textAlign: 'left', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(99,102,241,0.35)', background: 'rgba(99,102,241,0.1)', color: TEXT_PRIMARY, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
+            style={{ textAlign: 'left', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(61,107,79,0.35)', background: 'rgba(61,107,79,0.1)', color: TEXT_PRIMARY, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
           >
             Help me learn something new
           </button>
@@ -37,7 +37,7 @@ export default function EntryStage({ onFocusSearch, onUploadHomework, nudgeLabel
           {nudgeLabel && (
             <button
               onClick={onPracticeNudge}
-              style={{ textAlign: 'left', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(167,139,250,0.35)', background: 'rgba(167,139,250,0.08)', color: TEXT_PRIMARY, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
+              style={{ textAlign: 'left', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(196,245,71,0.35)', background: 'rgba(196,245,71,0.08)', color: TEXT_PRIMARY, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
             >
               Show me what I'm weak on ({nudgeLabel})
             </button>

@@ -62,8 +62,8 @@ export default function MaterialsPanel({
                   onClick={() => onSelectQuestion(i)}
                   style={{
                     textAlign: 'left', padding: '11px 13px', borderRadius: 11, cursor: 'pointer',
-                    border: `1px solid ${active ? 'rgba(94,200,240,0.6)' : 'rgba(205,215,238,0.13)'}`,
-                    background: active ? 'rgba(94,200,240,0.12)' : 'rgba(205,215,238,0.04)',
+                    border: `1px solid ${active ? 'rgba(94,200,240,0.6)' : 'rgba(205,220,208,0.13)'}`,
+                    background: active ? 'rgba(94,200,240,0.12)' : 'rgba(205,220,208,0.04)',
                     color: TEXT_PRIMARY, fontSize: 14, lineHeight: 1.55,
                   }}
                 >
@@ -86,7 +86,7 @@ export default function MaterialsPanel({
           </div>
           <button
             onClick={onClearMaterials}
-            style={{ marginTop: 12, fontSize: 12, padding: '5px 12px', borderRadius: 8, border: '1px solid rgba(205,215,238,0.2)', background: 'transparent', color: TEXT_FAINT, cursor: 'pointer', alignSelf: 'flex-start' }}
+            style={{ marginTop: 12, fontSize: 12, padding: '5px 12px', borderRadius: 8, border: '1px solid rgba(205,220,208,0.2)', background: 'transparent', color: TEXT_FAINT, cursor: 'pointer', alignSelf: 'flex-start' }}
           >
             Clear and upload a different file
           </button>

@@ -13,7 +13,7 @@ export interface NeighborsCardProps {
 export default function NeighborsCard({ activeLabel, resolvedLabel, neighbors, isStudied, onOpenNeighbor }: NeighborsCardProps) {
   return (
     <div style={{ ...CARD, padding: '20px 22px', flexShrink: 0 }}>
-      <Eyebrow color="#818CF8">Related concepts</Eyebrow>
+      <Eyebrow color="#5fa578">Related concepts</Eyebrow>
       <p style={{ margin: '6px 0 12px', fontSize: 13, color: TEXT_FAINT, lineHeight: 1.5 }}>
         Real graph edges from {activeLabel || resolvedLabel}: what comes before it, what it unlocks, and what connects across subjects.
       </p>
@@ -24,13 +24,13 @@ export default function NeighborsCard({ activeLabel, resolvedLabel, neighbors, i
             key={`${n.relation}-${n.id}`}
             className="lrn-neighbor"
             onClick={() => onOpenNeighbor(n.id)}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', padding: '11px 13px', borderRadius: 11, border: '1px solid rgba(205,215,238,0.13)', background: 'rgba(205,215,238,0.04)', color: TEXT_PRIMARY, cursor: 'pointer', fontSize: 14 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', padding: '11px 13px', borderRadius: 11, border: '1px solid rgba(205,220,208,0.13)', background: 'rgba(205,220,208,0.04)', color: TEXT_PRIMARY, cursor: 'pointer', fontSize: 14 }}
           >
             <span style={{ flex: 1, minWidth: 0 }}>
               {n.label}
               <span style={{ display: 'block', fontSize: 11.5, color: TEXT_FAINT, marginTop: 2 }}>{n.group}</span>
             </span>
-            <span style={{ flexShrink: 0, fontSize: 10, fontWeight: 700, letterSpacing: 0.5, color: n.relation === 'prerequisite' ? '#8BE85C' : n.relation === 'next' ? '#818CF8' : '#A78BFA', border: '1px solid currentColor', borderRadius: 6, padding: '2px 7px', opacity: 0.85 }}>
+            <span style={{ flexShrink: 0, fontSize: 10, fontWeight: 700, letterSpacing: 0.5, color: n.relation === 'prerequisite' ? '#8BE85C' : n.relation === 'next' ? '#5fa578' : '#c4f547', border: '1px solid currentColor', borderRadius: 6, padding: '2px 7px', opacity: 0.85 }}>
               {n.relation === 'prerequisite' ? 'BEFORE' : n.relation === 'next' ? 'NEXT' : 'CROSS'}
             </span>
             {isStudied(n.id) && <span style={{ flexShrink: 0, fontSize: 10.5, fontWeight: 700, color: '#f2b84b', border: '1px solid rgba(242,184,75,0.4)', borderRadius: 6, padding: '2px 7px' }}>✓</span>}

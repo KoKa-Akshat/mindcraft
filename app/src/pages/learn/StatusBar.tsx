@@ -25,7 +25,7 @@ export default function StatusBar({
   hasPath, path, pathIndex, matches, resolveMeta, showPanels, onBackToGraph,
 }: StatusBarProps) {
   return (
-    <div style={{ padding: '10px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, borderBottom: BORDER_SOFT, background: 'rgba(205,215,238,0.03)', color: outOfDomain ? '#FF7B7B' : belowThreshold ? '#F0C060' : TEXT_FAINT }}>
+    <div style={{ padding: '10px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, borderBottom: BORDER_SOFT, background: 'rgba(205,220,208,0.03)', color: outOfDomain ? '#FF7B7B' : belowThreshold ? '#F0C060' : TEXT_FAINT }}>
       <span style={{ flex: 1, minWidth: 0 }}>
         {outOfDomain ? (
           <>Closest match was <b>{resolved.label}</b> at only {(resolved.score * 100).toFixed(0)}%, which is noise, not a real signal. Nothing in the {resolveMeta ? `${resolveMeta.indexed}-lesson library` : 'library'} is actually about this, so it is not shown as a match.</>
@@ -49,7 +49,7 @@ export default function StatusBar({
         )}
       </span>
       {showPanels && (
-        <button onClick={onBackToGraph} style={{ flexShrink: 0, fontSize: 12, padding: '5px 13px', borderRadius: 9, border: '1px solid rgba(205,215,238,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}>
+        <button onClick={onBackToGraph} style={{ flexShrink: 0, fontSize: 12, padding: '5px 13px', borderRadius: 9, border: '1px solid rgba(205,220,208,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}>
           Back to full graph
         </button>
       )}

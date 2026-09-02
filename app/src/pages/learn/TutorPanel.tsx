@@ -37,7 +37,7 @@ export default function TutorPanel({ messages, input, onInputChange, onSend, sen
 
   return (
     <div style={{ ...CARD, padding: '18px 20px', flexShrink: 0 }}>
-      <Eyebrow color="#A78BFA">Talk it through with Jesse</Eyebrow>
+      <Eyebrow color="#c4f547">Talk it through with Jesse</Eyebrow>
       <p style={{ margin: '6px 0 12px', fontSize: 12.5, lineHeight: 1.5, color: TEXT_FAINT }}>
         Jesse will never just hand over the answer, tell it what you have tried and it will help you get unstuck.
       </p>
@@ -53,8 +53,8 @@ export default function TutorPanel({ messages, input, onInputChange, onSend, sen
                 borderRadius: 12,
                 fontSize: 13.5,
                 lineHeight: 1.55,
-                background: m.role === 'user' ? 'rgba(99,102,241,0.18)' : m.fallback ? 'rgba(240,192,96,0.1)' : 'rgba(167,139,250,0.1)',
-                border: `1px solid ${m.role === 'user' ? 'rgba(99,102,241,0.3)' : m.fallback ? 'rgba(240,192,96,0.3)' : 'rgba(167,139,250,0.3)'}`,
+                background: m.role === 'user' ? 'rgba(61,107,79,0.18)' : m.fallback ? 'rgba(240,192,96,0.1)' : 'rgba(196,245,71,0.1)',
+                border: `1px solid ${m.role === 'user' ? 'rgba(61,107,79,0.3)' : m.fallback ? 'rgba(240,192,96,0.3)' : 'rgba(196,245,71,0.3)'}`,
                 color: TEXT_PRIMARY,
               }}
             >
@@ -65,7 +65,7 @@ export default function TutorPanel({ messages, input, onInputChange, onSend, sen
             <div
               style={{
                 alignSelf: 'flex-start', padding: '9px 13px', borderRadius: 12, fontSize: 13,
-                background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.3)', color: TEXT_FAINT,
+                background: 'rgba(196,245,71,0.1)', border: '1px solid rgba(196,245,71,0.3)', color: TEXT_FAINT,
               }}
             >
               Jesse is thinking...
@@ -79,12 +79,12 @@ export default function TutorPanel({ messages, input, onInputChange, onSend, sen
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && !sending && onSend()}
           placeholder="What have you tried so far?"
-          style={{ flex: 1, padding: '10px 13px', borderRadius: 10, border: '1px solid rgba(167,139,250,0.3)', background: 'rgba(167,139,250,0.05)', color: TEXT_PRIMARY, fontSize: 13.5 }}
+          style={{ flex: 1, padding: '10px 13px', borderRadius: 10, border: '1px solid rgba(196,245,71,0.3)', background: 'rgba(196,245,71,0.05)', color: TEXT_PRIMARY, fontSize: 13.5 }}
         />
         <button
           onClick={onSend}
           disabled={sending || !input.trim()}
-          style={{ padding: '10px 18px', borderRadius: 10, border: 'none', background: sending || !input.trim() ? 'rgba(167,139,250,0.35)' : '#A78BFA', color: '#1E1533', fontWeight: 600, fontSize: 13, cursor: sending || !input.trim() ? 'default' : 'pointer' }}
+          style={{ padding: '10px 18px', borderRadius: 10, border: 'none', background: sending || !input.trim() ? 'rgba(196,245,71,0.35)' : '#c4f547', color: '#0c1207', fontWeight: 600, fontSize: 13, cursor: sending || !input.trim() ? 'default' : 'pointer' }}
         >
           {sending ? '...' : 'Send'}
         </button>

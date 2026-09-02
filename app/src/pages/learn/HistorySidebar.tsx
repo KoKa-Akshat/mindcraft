@@ -43,7 +43,7 @@ export default function HistorySidebar({ sessions, loading, open, onToggle, onOp
         style={{
           position: 'absolute', top: 16, left: 16, zIndex: 6,
           padding: '9px 14px', borderRadius: 999,
-          border: BORDER_SOFT, background: 'rgba(24,32,54,0.9)', backdropFilter: 'blur(6px)',
+          border: BORDER_SOFT, background: 'rgba(20,31,24,0.9)', backdropFilter: 'blur(6px)',
           color: TEXT_PRIMARY, fontSize: 12.5, fontWeight: 600, cursor: 'pointer',
         }}
       >
@@ -52,7 +52,7 @@ export default function HistorySidebar({ sessions, loading, open, onToggle, onOp
 
       {open && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 5, display: 'flex' }}>
-          <div onClick={onToggle} style={{ flex: 1, background: 'rgba(5,9,22,0.45)' }} />
+          <div onClick={onToggle} style={{ flex: 1, background: 'rgba(3,8,5,0.45)' }} />
           <div style={{ ...CARD, width: 320, maxWidth: '85%', height: '100%', borderRadius: 0, borderLeft: BORDER_SOFT, display: 'flex', flexDirection: 'column', padding: '60px 0 16px' }}>
             <div style={{ padding: '0 18px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: TEXT_PRIMARY }}>Your sessions with Jesse</div>
@@ -74,8 +74,8 @@ export default function HistorySidebar({ sessions, loading, open, onToggle, onOp
                   style={{
                     display: 'block', width: '100%', textAlign: 'left', padding: '11px 12px', marginBottom: 6,
                     borderRadius: 10, cursor: 'pointer',
-                    border: s.conceptId === activeConceptId ? '1px solid rgba(167,139,250,0.5)' : '1px solid transparent',
-                    background: s.conceptId === activeConceptId ? 'rgba(167,139,250,0.12)' : 'rgba(255,255,255,0.03)',
+                    border: s.conceptId === activeConceptId ? '1px solid rgba(196,245,71,0.5)' : '1px solid transparent',
+                    background: s.conceptId === activeConceptId ? 'rgba(196,245,71,0.12)' : 'rgba(255,255,255,0.03)',
                   }}
                 >
                   <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_PRIMARY, marginBottom: 3 }}>{s.conceptLabel}</div>
