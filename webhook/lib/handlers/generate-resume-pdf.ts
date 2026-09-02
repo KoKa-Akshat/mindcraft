@@ -1,32 +1,41 @@
 /**
  * POST /api/generate-resume-pdf
  *
- * Renders a ready-to-send PDF for the Resume Helper on Desk OS (2026-08-31):
- * either the student's resume (deterministic layout from the ResumeDraft the
- * resume-agent conversation already builds, no LLM, no platform spend) or a
- * per-role cover letter (short LLM-written body via the platform Gemini key
- * as of 2026-09-02, was Anthropic until that key was found out of credits
- * in production, same discovery as discover-internships.ts's fix; runs
- * behind the same auth+budget discipline as
+ * Renders a ready-to-send Word document (.docx, 2026-09-02, was PDF until
+ * the founder asked for editable files) for the Resume Helper on Desk OS:
+ * either the student's resume (deterministic layout from the ResumeDraft
+ * the resume-agent conversation already builds, no LLM, no platform
+ * spend) or a per-role cover letter (short LLM-written body via the
+ * platform Gemini key, was Anthropic until that key was found out of
+ * credits in production; runs behind the same auth+budget discipline as
  * generate-lesson-outline.ts/discover-internships.ts: verifyToken ->
  * checkPlatformBudget -> checkAndRecordAttempt -> real call, with an
- * honest template fallback that is labeled as such via the
- * x-mc-letter-source response header, never passed off as generated).
+ * honest template fallback labeled as such via the x-mc-letter-source
+ * response header, never passed off as generated).
  *
- * PDF library choice: pdf-lib. Pure JS, no native modules, no font files, no
- * headless browser, about 1MB installed. api/tts.ts already sits near
- * Vercel's 250MB uncompressed function-size limit, so anything
- * Chromium-shaped (puppeteer, playwright-pdf) was off the table, and pdfkit
- * drags in fontkit plus AFM data. pdf-lib's StandardFonts cover a resume
- * fine.
+ * Route path kept as /api/generate-resume-pdf on purpose despite no
+ * longer generating a PDF: this route is multiplexed through
+ * api/app-actions.ts and mapped in vercel.json, and the client
+ * (resumeHelper.js) fetches this exact URL, so renaming the route would
+ * need three coordinated changes for a purely cosmetic gain. What
+ * actually changed is the file format returned, not the endpoint.
  *
- * Never writes to Firestore. The client decides what to do with the bytes
- * (download) and owns any resumeReady/coverLetterReady bookkeeping on
- * users/{uid}/jobOS/state, matching the "board never changes silently"
- * discipline in JobOSStore.
+ * Library choice: docx (pure JS, no native modules, no font files, no
+ * headless browser), same constraint pdf-lib was originally chosen
+ * under (api/tts.ts already sits near Vercel's 250MB uncompressed
+ * function-size limit). Real side benefit over the old PDF approach,
+ * not just format-matching: Word's own text runs are full Unicode, so
+ * the old enc()/wrap() functions that manually stripped anything
+ * outside Latin-1 (pdf-lib's StandardFonts could not encode emoji or
+ * CJK) are gone entirely, nothing to strip anymore.
+ *
+ * Never writes to Firestore. The client decides what to do with the
+ * bytes (download) and owns any resumeReady/coverLetterReady
+ * bookkeeping on users/{uid}/jobOS/state, matching the "board never
+ * changes silently" discipline in JobOSStore.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb } from 'pdf-lib'
+import { BorderStyle, Document, Packer, Paragraph, TextRun } from 'docx'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
 import { checkAndRecordAttempt, checkPlatformBudget } from '../generationBudget'
@@ -117,144 +126,71 @@ function clean(draft: DraftBody | undefined): Required<DraftBody> {
   }
 }
 
-/** pdf-lib's WinAnsi standard fonts cannot encode every glyph students paste
- *  in (smart quotes survive, but emoji or CJK would throw). Replace anything
- *  outside Latin-1 with a plain space instead of failing the whole PDF. */
-function enc(s: string): string {
-  return s.replace(/[^ -~\u00a0-ÿ]/g, ' ').replace(/\s+/g, ' ').trim()
+const INK = '1a1c1f'
+const SOFT = '61696d'
+const RULE = 'd1d6d9'
+
+/** Section heading styled like the old PDF's (small caps label, soft
+ *  gray, a thin rule underneath via a paragraph border), one Paragraph. */
+function heading(label: string): Paragraph {
+  return new Paragraph({
+    children: [new TextRun({ text: label.toUpperCase(), bold: true, size: 18, color: SOFT })],
+    spacing: { before: 240, after: 120 },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: RULE, space: 4 } },
+  })
 }
 
-function wrap(text: string, font: PDFFont, size: number, maxWidth: number): string[] {
-  const words = enc(text).split(' ').filter(Boolean)
-  const lines: string[] = []
-  let line = ''
-  for (const word of words) {
-    const probe = line ? `${line} ${word}` : word
-    if (font.widthOfTextAtSize(probe, size) <= maxWidth) {
-      line = probe
-    } else {
-      if (line) lines.push(line)
-      line = word
-    }
-  }
-  if (line) lines.push(line)
-  return lines
+function body(text: string, opts: { bold?: boolean; size?: number; color?: string; indent?: number; spacingAfter?: number } = {}): Paragraph {
+  return new Paragraph({
+    children: [new TextRun({ text, bold: opts.bold, size: opts.size ?? 20, color: opts.color ?? INK })],
+    indent: opts.indent ? { left: opts.indent } : undefined,
+    spacing: { after: opts.spacingAfter ?? 60 },
+  })
 }
 
-const PAGE_W = 612
-const PAGE_H = 792
-const MARGIN = 54
-const INK = rgb(0.1, 0.11, 0.12)
-const SOFT = rgb(0.38, 0.4, 0.42)
-const RULE = rgb(0.82, 0.84, 0.85)
-
-class Sheet {
-  doc: PDFDocument
-  page: PDFPage
-  y: number
-  regular: PDFFont
-  bold: PDFFont
-
-  constructor(doc: PDFDocument, regular: PDFFont, bold: PDFFont) {
-    this.doc = doc
-    this.regular = regular
-    this.bold = bold
-    this.page = doc.addPage([PAGE_W, PAGE_H])
-    this.y = PAGE_H - MARGIN
-  }
-
-  need(height: number) {
-    if (this.y - height < MARGIN) {
-      this.page = this.doc.addPage([PAGE_W, PAGE_H])
-      this.y = PAGE_H - MARGIN
-    }
-  }
-
-  text(s: string, opts: { size?: number; bold?: boolean; color?: ReturnType<typeof rgb>; gapAfter?: number; indent?: number } = {}) {
-    const size = opts.size ?? 10
-    const font = opts.bold ? this.bold : this.regular
-    const indent = opts.indent ?? 0
-    const lines = wrap(s, font, size, PAGE_W - MARGIN * 2 - indent)
-    for (const line of lines) {
-      this.need(size + 4)
-      this.page.drawText(line, {
-        x: MARGIN + indent,
-        y: this.y - size,
-        size,
-        font,
-        color: opts.color ?? INK,
-      })
-      this.y -= size + 3
-    }
-    this.y -= opts.gapAfter ?? 0
-  }
-
-  heading(label: string) {
-    this.need(30)
-    this.y -= 10
-    this.page.drawText(enc(label).toUpperCase(), {
-      x: MARGIN,
-      y: this.y - 9,
-      size: 9,
-      font: this.bold,
-      color: SOFT,
-    })
-    this.y -= 14
-    this.page.drawLine({
-      start: { x: MARGIN, y: this.y },
-      end: { x: PAGE_W - MARGIN, y: this.y },
-      thickness: 0.7,
-      color: RULE,
-    })
-    this.y -= 8
-  }
-}
-
-async function newSheet(): Promise<Sheet> {
-  const doc = await PDFDocument.create()
-  const regular = await doc.embedFont(StandardFonts.Helvetica)
-  const bold = await doc.embedFont(StandardFonts.HelveticaBold)
-  return new Sheet(doc, regular, bold)
-}
-
-export async function buildResumePdf(draftIn: DraftBody | undefined, linksIn: string[] = []): Promise<Uint8Array> {
+export async function buildResumeDocx(draftIn: DraftBody | undefined, linksIn: string[] = []): Promise<Buffer> {
   const d = clean(draftIn)
   const links = linksIn.map((l) => clip(l, 200)).filter(Boolean).slice(0, 6)
-  const sheet = await newSheet()
+  const children: Paragraph[] = []
 
-  sheet.text(d.name || 'Your name', { size: 20, bold: true, gapAfter: 2 })
-  if (d.headline) sheet.text(d.headline, { size: 11, color: SOFT, gapAfter: 2 })
-  const contact = [d.email, d.location, d.school, d.linkedinUrl].filter(Boolean).join('  ·  ')
-  if (contact) sheet.text(contact, { size: 9, color: SOFT })
+  children.push(new Paragraph({
+    children: [new TextRun({ text: d.name || 'Your name', bold: true, size: 40 })],
+    spacing: { after: 40 },
+  }))
+  if (d.headline) children.push(body(d.headline, { size: 22, color: SOFT, spacingAfter: 40 }))
+  const contact = [d.email, d.location, d.school, d.linkedinUrl].filter(Boolean).join('  |  ')
+  if (contact) children.push(body(contact, { size: 18, color: SOFT, spacingAfter: 200 }))
 
   if (d.roles.length) {
-    sheet.heading('Experience')
+    children.push(heading('Experience'))
     for (const role of d.roles) {
       const head = [role.title, role.org].filter(Boolean).join(', ')
       if (!head) continue
-      sheet.text(role.when ? `${head}  ·  ${role.when}` : head, { size: 10.5, bold: true })
-      for (const bullet of role.bullets || []) sheet.text(`-  ${bullet}`, { size: 10, indent: 10 })
-      sheet.y -= 5
+      children.push(body(role.when ? `${head}  |  ${role.when}` : head, { bold: true, size: 21, spacingAfter: 40 }))
+      for (const bullet of role.bullets || []) children.push(body(`-  ${bullet}`, { indent: 200, spacingAfter: 40 }))
+      children.push(new Paragraph({ children: [], spacing: { after: 80 } }))
     }
   }
   if (d.education.length || d.school) {
-    sheet.heading('Education')
+    children.push(heading('Education'))
     const rows = d.education.length ? d.education : [d.school]
-    for (const row of rows) sheet.text(row, { size: 10 })
+    for (const row of rows) children.push(body(row))
   }
   if (d.projects.length) {
-    sheet.heading('Projects')
-    for (const p of d.projects) sheet.text(`-  ${p}`, { size: 10, indent: 10 })
+    children.push(heading('Projects'))
+    for (const p of d.projects) children.push(body(`-  ${p}`, { indent: 200 }))
   }
   if (d.skills.length) {
-    sheet.heading('Skills')
-    sheet.text(d.skills.join('  ·  '), { size: 10 })
+    children.push(heading('Skills'))
+    children.push(body(d.skills.join('  |  ')))
   }
   if (links.length) {
-    sheet.heading('Links')
-    for (const l of links) sheet.text(l, { size: 9.5 })
+    children.push(heading('Links'))
+    for (const l of links) children.push(body(l, { size: 19 }))
   }
-  return sheet.doc.save()
+
+  const doc = new Document({ sections: [{ children }] })
+  return Packer.toBuffer(doc)
 }
 
 /** Deterministic body used when no LLM reply is available. Plain, honest,
@@ -314,15 +250,16 @@ async function letterBody(
   }
   // The system prompt asks for no greeting line and no sign-off (this file
   // already adds its own "Dear X team," and "Sincerely, Name" around
-  // whatever paragraphs come back, see buildCoverLetterPdf below), but the
-  // model does not reliably comply, confirmed empirically while wiring up
-  // this Gemini switch: a real test call came back with its own "Dear
-  // JPMorgan Hiring Team," opener and "Sincerely, Test Student" closer.
-  // Left uncaught, that becomes a real paragraph via the split below and
-  // doubles up with the wrapper's own greeting/sign-off in the final PDF.
-  // Strip both defensively rather than trust prompt adherence.
+  // whatever paragraphs come back, see buildCoverLetterDocx below), but
+  // the model does not reliably comply, confirmed empirically while
+  // wiring up the Gemini switch: a real test call came back with its own
+  // "Dear JPMorgan Hiring Team," opener and "Sincerely, Test Student"
+  // closer. Left uncaught, that becomes a real paragraph via the split
+  // below and doubles up with the wrapper's own greeting/sign-off in the
+  // final document. Strip both defensively rather than trust prompt
+  // adherence.
   const cleaned = String(raw || '')
-    .replace(/[\u2014\u2013]/g, ', ')
+    .replace(/[—–]/g, ', ')
     .replace(/\r/g, '')
     .trim()
     .replace(/^(Dear[^\n]*,|Hello,|Hi[^\n]*,)\s*\n+/i, '')
@@ -333,28 +270,28 @@ async function letterBody(
   return { paragraphs: templateLetterBody(d, role), source: 'template' }
 }
 
-export async function buildCoverLetterPdf(
+export async function buildCoverLetterDocx(
   draftIn: DraftBody | undefined,
   role: TargetRole,
   paragraphs: string[],
-): Promise<Uint8Array> {
+): Promise<Buffer> {
   const d = clean(draftIn)
-  const sheet = await newSheet()
+  const children: Paragraph[] = []
 
-  sheet.text(d.name || 'Your name', { size: 16, bold: true, gapAfter: 1 })
-  const contact = [d.email, d.location].filter(Boolean).join('  ·  ')
-  if (contact) sheet.text(contact, { size: 9, color: SOFT })
-  sheet.y -= 14
+  children.push(new Paragraph({ children: [new TextRun({ text: d.name || 'Your name', bold: true, size: 32 })], spacing: { after: 20 } }))
+  const contact = [d.email, d.location].filter(Boolean).join('  |  ')
+  if (contact) children.push(body(contact, { size: 18, color: SOFT, spacingAfter: 280 }))
   const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  sheet.text(today, { size: 10, color: SOFT, gapAfter: 10 })
-  const target = [clip(role.role, 160), clip(role.company, 120)].filter(Boolean).join('  ·  ')
-  if (target) sheet.text(`Re: ${target}`, { size: 10.5, bold: true, gapAfter: 10 })
-  sheet.text(role.company ? `Dear ${clip(role.company, 120)} team,` : 'Hello,', { size: 10.5, gapAfter: 8 })
-  for (const p of paragraphs) sheet.text(p, { size: 10.5, gapAfter: 8 })
-  sheet.y -= 4
-  sheet.text('Sincerely,', { size: 10.5, gapAfter: 2 })
-  sheet.text(d.name || 'A MindCraft student', { size: 10.5, bold: true })
-  return sheet.doc.save()
+  children.push(body(today, { size: 20, color: SOFT, spacingAfter: 200 }))
+  const target = [clip(role.role, 160), clip(role.company, 120)].filter(Boolean).join('  |  ')
+  if (target) children.push(body(`Re: ${target}`, { bold: true, size: 21, spacingAfter: 200 }))
+  children.push(body(role.company ? `Dear ${clip(role.company, 120)} team,` : 'Hello,', { size: 21, spacingAfter: 160 }))
+  for (const p of paragraphs) children.push(body(p, { size: 21, spacingAfter: 160 }))
+  children.push(body('Sincerely,', { size: 21, spacingAfter: 40 }))
+  children.push(body(d.name || 'A MindCraft student', { bold: true, size: 21 }))
+
+  const doc = new Document({ sections: [{ children }] })
+  return Packer.toBuffer(doc)
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -365,20 +302,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as PdfBody
-  const kind = body.kind === 'coverLetter' ? 'coverLetter' : body.kind === 'resume' ? 'resume' : ''
+  const body_ = (req.body || {}) as PdfBody
+  const kind = body_.kind === 'coverLetter' ? 'coverLetter' : body_.kind === 'resume' ? 'resume' : ''
   if (!kind) return res.status(400).json({ error: 'kind must be resume or coverLetter' })
+
+  const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
   try {
     if (kind === 'resume') {
       // Deterministic layout, no model call, no platform spend: auth only.
-      const bytes = await buildResumePdf(body.draft, Array.isArray(body.links) ? body.links.map(String) : [])
-      res.setHeader('Content-Type', 'application/pdf')
-      res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"')
-      return res.status(200).send(Buffer.from(bytes))
+      const bytes = await buildResumeDocx(body_.draft, Array.isArray(body_.links) ? body_.links.map(String) : [])
+      res.setHeader('Content-Type', DOCX_MIME)
+      res.setHeader('Content-Disposition', 'attachment; filename="resume.docx"')
+      return res.status(200).send(bytes)
     }
 
-    const role = body.role || {}
+    const role = body_.role || {}
     if (!clip(role.company, 120) && !clip(role.role, 160)) {
       return res.status(400).json({ error: 'coverLetter needs a role with company or role' })
     }
@@ -402,16 +341,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
 
-    const d = clean(body.draft)
-    const key = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
-    const { paragraphs, source } = await letterBody(d, role, key, body.byok)
-    const bytes = await buildCoverLetterPdf(body.draft, role, paragraphs)
-    res.setHeader('Content-Type', 'application/pdf')
-    res.setHeader('Content-Disposition', 'attachment; filename="cover-letter.pdf"')
+    const d = clean(body_.draft)
+    const key = typeof body_.studentGeminiKey === 'string' ? body_.studentGeminiKey.trim() : ''
+    const { paragraphs, source } = await letterBody(d, role, key, body_.byok)
+    const bytes = await buildCoverLetterDocx(body_.draft, role, paragraphs)
+    res.setHeader('Content-Type', DOCX_MIME)
+    res.setHeader('Content-Disposition', 'attachment; filename="cover-letter.docx"')
     res.setHeader('x-mc-letter-source', source)
-    return res.status(200).send(Buffer.from(bytes))
+    return res.status(200).send(bytes)
   } catch (err) {
     console.error('[generate-resume-pdf] error:', err)
-    return res.status(502).json({ error: 'PDF generation failed' })
+    return res.status(502).json({ error: 'Document generation failed' })
   }
 }

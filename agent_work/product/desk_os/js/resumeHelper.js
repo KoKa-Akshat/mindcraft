@@ -15,8 +15,9 @@
  *     real evidence-backed /api/discover-internships endpoint and NOTHING
  *     reaches the board without an explicit "Add to board" tap, matching
  *     JobOSStore's "the board never changes silently" discipline. Resume and
- *     cover letter cells call /api/generate-resume-pdf and download the
- *     bytes; resumeReady/coverLetterReady flip true only after a PDF was
+ *     cover letter cells call /api/generate-resume-pdf (still the route
+ *     name, the handler now returns a real .docx) and download the
+ *     bytes; resumeReady/coverLetterReady flip true only after a doc was
  *     really generated.
  *
  * Data layout (all under the SIGNED-IN student's own uid, resolved fresh
@@ -204,7 +205,7 @@ export function createResumeHelper({ root, onToast }) {
     if (forwardBtn) forwardBtn.hidden = step !== 'build';
     if (soft) {
       soft.textContent = step === 'jobs'
-        ? 'Openings on your board. Titles link to the real posting; PDFs are ready to send.'
+        ? 'Openings on your board. Titles link to the real posting; docs are ready to send.'
         : 'Jesse builds your profile from a real resume, then finds real openings with links.';
     }
     rememberStep(uid);
@@ -638,8 +639,8 @@ export function createResumeHelper({ root, onToast }) {
           <td>${esc(r.company || '')}</td>
           <td>${esc(r.location || '')}</td>
           <td>${esc(r.deadline || '')}</td>
-          <td><button type="button" class="rh-pdf ${r.resumeReady ? 'is-ready' : ''}" data-rh-pdf="resume" data-role-id="${esc(r.id)}">${r.resumeReady ? 'Resume PDF ✓' : 'Resume PDF'}</button></td>
-          <td><button type="button" class="rh-pdf ${r.coverLetterReady ? 'is-ready' : ''}" data-rh-pdf="coverLetter" data-role-id="${esc(r.id)}">${r.coverLetterReady ? 'Letter PDF ✓' : 'Letter PDF'}</button></td>
+          <td><button type="button" class="rh-pdf ${r.resumeReady ? 'is-ready' : ''}" data-rh-pdf="resume" data-role-id="${esc(r.id)}">${r.resumeReady ? 'Resume ✓' : 'Resume'}</button></td>
+          <td><button type="button" class="rh-pdf ${r.coverLetterReady ? 'is-ready' : ''}" data-rh-pdf="coverLetter" data-role-id="${esc(r.id)}">${r.coverLetterReady ? 'Letter ✓' : 'Letter'}</button></td>
           <td><span class="rh-status-chip">${esc(r.processStatus || 'Not Started')}</span></td>
         </tr>`;
     }).join('');
@@ -651,12 +652,12 @@ export function createResumeHelper({ root, onToast }) {
     const role = openRoles().find((r) => r.id === roleId);
     if (!role) return;
     if (kind === 'resume' && !draft.name && !draft.skills.length) {
-      onToast?.('Build your profile first, the PDF needs it');
+      onToast?.('Build your profile first, the doc needs it');
       setStep('build', fire.user.uid);
       return;
     }
     const original = button?.textContent;
-    if (button) { button.disabled = true; button.textContent = 'Making PDF…'; }
+    if (button) { button.disabled = true; button.textContent = 'Making doc…'; }
     try {
       const token = await fire.user.getIdToken();
       const res = await fetch(`${WEBHOOK_BASE}/api/generate-resume-pdf`, {
@@ -673,7 +674,7 @@ export function createResumeHelper({ root, onToast }) {
         }),
       });
       if (res.status === 404) {
-        onToast?.('PDF service is not deployed yet. Deploy the webhook first.');
+        onToast?.('Document service is not deployed yet. Deploy the webhook first.');
         return;
       }
       if (res.status === 429) {
@@ -681,13 +682,13 @@ export function createResumeHelper({ root, onToast }) {
         onToast?.(data.reason || 'Daily generation limit reached.');
         return;
       }
-      if (!res.ok) { onToast?.('PDF failed. Try again.'); return; }
+      if (!res.ok) { onToast?.('Document failed. Try again.'); return; }
       const blob = await res.blob();
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       const who = (draft.name || 'student').toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const co = (role.company || 'role').toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      a.download = kind === 'resume' ? `resume-${who}.pdf` : `cover-letter-${who}-${co}.pdf`;
+      a.download = kind === 'resume' ? `resume-${who}.docx` : `cover-letter-${who}-${co}.docx`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -696,15 +697,15 @@ export function createResumeHelper({ root, onToast }) {
       await mutateBoard((state) => {
         const i = (state.roles || []).findIndex((r) => r.id === roleId);
         if (i >= 0) state.roles[i] = { ...state.roles[i], [flag]: true };
-        logEvent(state, 'pdf', `${kind} PDF generated · ${role.company}`);
+        logEvent(state, 'pdf', `${kind} doc generated · ${role.company}`);
         return state;
       });
     } catch {
       // A fetch() that throws here is either a real network problem or the
-      // PDF endpoint not being deployed yet (an undeployed route 404s with
-      // no CORS headers, which surfaces as a thrown TypeError, so the 404
-      // branch above never gets a chance).
-      onToast?.('PDF failed. If this keeps happening, the PDF service is not deployed yet.');
+      // document endpoint not being deployed yet (an undeployed route 404s
+      // with no CORS headers, which surfaces as a thrown TypeError, so the
+      // 404 branch above never gets a chance).
+      onToast?.('Document failed. If this keeps happening, the document service is not deployed yet.');
     } finally {
       if (button) { button.disabled = false; if (original) button.textContent = original; }
     }
