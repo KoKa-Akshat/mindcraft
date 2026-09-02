@@ -170,28 +170,28 @@
   }
 
   /* ---------- nav ---------- */
-  /* Just the mascot and a Login pill, fixed top right, no bar. The mascot's
-     own fill color swaps between the lime accent and the dark ink depending
-     on which section is behind it (see the section-observer script near the
-     bottom), so it stays legible over both the dark sections and the light
-     stage-desk ones without ever needing a background chip of its own. The
-     Login pill is a solid lime fill so it reads fine over either. */
+  /* Mascot + Login pill, fixed top right, no bar. The mascot stays a fixed
+     forest green everywhere now (no more swapping with the section behind
+     it), so the Login pill next to it is styled as its complementary
+     partner rather than matching it: a deeper forest fill with a chalk
+     label, not the same lime the primary CTAs use, so the two nav items
+     read as one branded pair instead of two identical chips, and Login
+     doesn't compete visually with "Claim your desk" below. Both are solid,
+     opaque fills, so neither needs the old light/dark section handling. */
   .mascot-nav{position:fixed; z-index:80; top:max(14px,env(safe-area-inset-top,0px)); right:max(14px,env(safe-area-inset-right,0px)); display:flex; align-items:center; gap:12px;}
   .mascot-link{display:block; width:38px; height:38px; flex-shrink:0;}
   .mascot-icon{
-    display:block; width:100%; height:100%; background-color:var(--lime);
+    display:block; width:100%; height:100%; background-color:var(--leaf2);
     -webkit-mask:url('img/raccoon-logo.png') center/contain no-repeat;
     mask:url('img/raccoon-logo.png') center/contain no-repeat;
     filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
-    transition:background-color .35s ease;
   }
-  .mascot-nav.on-light .mascot-icon{background-color:var(--ink); filter:drop-shadow(0 6px 14px rgba(20,58,46,.22));}
   .mascot-login{
     padding:9px 18px; border-radius:999px; font-size:13px; font-weight:600;
-    background:var(--lime); color:var(--lime-ink); white-space:nowrap;
-    box-shadow:0 6px 14px rgba(0,0,0,.2); transition:background .15s ease;
+    background:var(--leaf); color:var(--chalk); white-space:nowrap;
+    box-shadow:0 6px 14px rgba(0,0,0,.2); transition:background .15s ease, color .15s ease;
   }
-  .mascot-login:hover{background:#d8ff72;}
+  .mascot-login:hover{background:var(--leaf2); color:var(--field);}
   /* ---------- hero ----------
      Editorial, left aligned, on warm paper. The old version centered a
      typewriter headline in a lot of open air; this one composes the page
@@ -711,7 +711,7 @@
     border-radius:16px; overflow:hidden;
     background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
   }
-  .research-card img{width:100%; height:300px; object-fit:contain; display:block; background:#fff; flex:none;}
+  .research-card img{width:100%; height:300px; padding:24px 20px 0; box-sizing:border-box; object-fit:contain; display:block; background:#fff; flex:none;}
   .research-card figcaption{padding:18px 20px 22px; flex:1; display:flex; flex-direction:column;}
   .research-card h3{font-size:15px; margin-bottom:8px;}
   .research-card .bullets{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
@@ -1213,34 +1213,6 @@
       });
     }, {threshold:.4});
     io.observe(stats);
-  })();
-
-  // ----- mascot nav: icon fill color adapts to the section behind it -----
-  (function(){
-    var nav = document.getElementById('mascotNav');
-    if(!nav) return;
-    var sections = document.querySelectorAll('section[id]');
-    function updateTheme(){
-      var y = 40;
-      var current = null;
-      sections.forEach(function(s){
-        var r = s.getBoundingClientRect();
-        if(r.top <= y && r.bottom > y) current = s;
-      });
-      // A light section's first and last ~90px are its dark seam fades
-      // (except the very top of the hero, which has no fade), so the icon
-      // only flips to its dark-ink fill once it is over actual paper.
-      var light = false;
-      if(current && current.classList.contains('stage-desk')){
-        var r2 = current.getBoundingClientRect();
-        var topClear = current.id === 'top' || (y - r2.top) > 90;
-        light = topClear && (r2.bottom - y) > 90;
-      }
-      nav.classList.toggle('on-light', light);
-    }
-    document.addEventListener('scroll', updateTheme, {passive:true});
-    window.addEventListener('resize', updateTheme);
-    updateTheme();
   })();
 
   // ----- top scroll-progress bar -----
