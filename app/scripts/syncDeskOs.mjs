@@ -24,6 +24,9 @@ cpSync(src, dest, {
     const base = path.split(/[/\\]/).pop() || ''
     if (base === 'node_modules' || base === '.DS_Store') return false
     if (base === 'tests') return false
+    // Internal planning docs, not part of the product, no reason to ship
+    // to production (found shipping there in a repo cleanup audit).
+    if (base.endsWith('.md')) return false
     return true
   },
 })

@@ -3198,23 +3198,11 @@ body.is-hub-chrome .sky { opacity: 0; }
   margin: 0;
   font-size: 20px;
 }
-.hub-nav-left {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-.hub-logo {
-  margin: 0;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  font: 700 18px/1 var(--sans);
-  letter-spacing: -0.03em;
-  color: #1a1a1a;
-  cursor: pointer;
-}
-.hub-logo span { color: #3d6b4f; }
-.hub-logo:hover { opacity: 0.8; }
+/* .hub-tabs kept despite being unused right now (dead-code audit,
+   2026-09-02): the Desk OS dashboard redesign's next phase reuses this
+   exact class for the real Home/Resume/Tutors tab row, see the scoped G1
+   plan. Everything else in this old nav-left/nav-right block (.hub-logo,
+   .hub-user, the wrapper divs) had no such plan and is gone. */
 .hub-tabs {
   display: flex;
   gap: 4px;
@@ -3231,23 +3219,6 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-tabs button.is-active {
   background: #ececef;
   color: #111;
-}
-.hub-nav-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.hub-user {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  font: 500 13px/1.2 var(--sans);
-  color: #222;
-}
-.hub-user [data-hub-email] {
-  font: 400 12px/1.2 var(--sans);
-  color: #888;
 }
 .hub-nav-actions {
   display: flex;
@@ -3756,60 +3727,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   gap: 22px;
   margin-bottom: 8px;
 }
-.hub-mastery-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-.hub-greet {
-  margin: 0 0 8px;
-  font: italic 400 28px/1.15 var(--serif);
-  letter-spacing: -0.02em;
-  color: #1a1a1a;
-}
-.hub-goal {
-  margin: 0;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(45, 74, 56, 0.06);
-  border: 1px solid rgba(45, 74, 56, 0.12);
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-.hub-goal-label {
-  font: 600 11px/1 var(--sans);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #3d5a45;
-}
-.hub-goal-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.hub-goal-row select {
-  flex: 1 1 140px;
-  min-width: 0;
-  border: 1px solid rgba(45, 74, 56, 0.16);
-  background: rgba(255, 255, 255, 0.88);
-  border-radius: 10px;
-  padding: 9px 11px;
-  font: 500 13px/1.2 var(--sans);
-  color: #1f2a22;
-}
-.hub-goal-row select:focus {
-  outline: none;
-  border-color: rgba(61, 107, 79, 0.45);
-  box-shadow: 0 0 0 3px rgba(61, 107, 79, 0.1);
-}
-.hub-goal-echo {
-  margin: 0;
-  font: 400 12px/1.4 var(--sans);
-  color: #5a6b5e;
-}
 .hub-call {
   position: relative;
   flex: none;
@@ -4124,7 +4041,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-orb-hero { padding: 0; }
 }
 @media (max-width: 720px) {
-  .hub-mastery-head { flex-direction: column; }
   .hub-orb-row { gap: 14px; }
   .hub-orb-stage-hero { width: 210px; height: 210px; perspective: 900px; }
   .hub-orb-stage-hero .hub-cube { --s: 100px; }
