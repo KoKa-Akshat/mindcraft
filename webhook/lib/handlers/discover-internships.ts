@@ -201,26 +201,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const isCollege = typeof age === 'number' && age >= 19
     const queries = buildQueries(age, grade, program, interests, location)
-    // TEMP diagnostic logging (2026-09-02, remove once the "zero
-    // candidates" report is root-caused): this endpoint has no visibility
-    // today into WHY a real request comes back empty, search failing
-    // silently vs extraction failing silently vs genuinely no results are
-    // presently indistinguishable from the outside.
-    console.log('[discover-internships] input:', { age, isCollege, grade, program, interests, location, queries })
+    // TEMP diagnostic (2026-09-02, remove once the "zero candidates"
+    // report is root-caused): server-side console.log calls after the
+    // first one in this invocation were not showing up in Vercel logs at
+    // all (confirmed empirically, likely a log-buffering/flush issue on
+    // an invocation this short), so the diagnostic info goes directly in
+    // the JSON response instead, under a "debug" key, guaranteed visible
+    // in the browser network tab regardless of server-side log behavior.
     const searchBundle = await Promise.all(
       queries.map(async (query) => {
-        const results = await googleSearch(query, 5).catch((e) => {
-          console.error('[discover-internships] search failed for query:', query, e)
-          return []
-        })
-        console.log('[discover-internships] search results:', query, '->', results.length)
+        const results = await googleSearch(query, 5).catch(() => [])
         return { query, results }
       }),
     )
     const totalResults = searchBundle.reduce((n, b) => n + b.results.length, 0)
+    const debug = {
+      age, isCollege, interests, location,
+      queries,
+      resultsPerQuery: searchBundle.map((b) => ({ query: b.query, count: b.results.length })),
+    }
     if (totalResults === 0) {
-      console.log('[discover-internships] zero total search results, returning empty')
-      return res.status(200).json({ status: 'ok', candidates: [], reason: 'No live search results this run' })
+      return res.status(200).json({ status: 'ok', candidates: [], reason: 'No live search results this run', debug })
     }
 
     // Platform extraction now goes through Gemini, not Anthropic (2026-09-02):
@@ -235,10 +236,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const text = studentGeminiKey
       ? await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle, isCollege), 1800)
       : (await callGemini(safeExtractionPrompt(searchBundle, isCollege), { system: '', maxTokens: 1800 })) ?? ''
-    console.log('[discover-internships] extraction raw text length:', text.length, 'preview:', text.slice(0, 300))
     const candidates = parseCandidates(text)
-    console.log('[discover-internships] parsed candidates:', candidates.length)
-    return res.status(200).json({ status: 'ok', candidates })
+    ;(debug as Record<string, unknown>).extractionTextLength = text.length
+    ;(debug as Record<string, unknown>).extractionPreview = text.slice(0, 500)
+    return res.status(200).json({ status: 'ok', candidates, debug })
   } catch (err) {
     console.error('[discover-internships] error:', err)
     return res.status(502).json({ status: 'error', reason: String(err) })
