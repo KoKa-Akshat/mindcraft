@@ -479,27 +479,25 @@ service cloud.firestore {
       }
     }
 
-    // Tutor-created, location-pinned public events (TUTORS_EVENTS build,
-    // 2026-08-31): office hours at a cafe, a study meetup, anything a tutor
-    // wants every MindCraft student to see live on their map. Any signed-in
-    // user may read (the whole point is students discovering events on the
-    // Desk OS Events tab and, later, other maps). Create requires the caller
-    // to (a) name themselves as tutorId, (b) actually hold the tutor or
-    // admin role on their own users/{uid} doc (Admin-SDK-written, so it
-    // cannot be spoofed client-side, same defense flagged_questions uses),
-    // and (c) ship a minimally well-formed event: string title, numeric
-    // lat/lng, numeric startAt/endAt in ms epoch (the same time shape
-    // sessions.scheduledAt already uses). Update and delete stay with the
-    // owning tutor, and tutorId is immutable post-create so an event can
-    // never be reassigned to someone else.
+    // Location-pinned public events (TUTORS_EVENTS build, 2026-08-31;
+    // generalized to any signed-in host, 2026-09-02): office hours at a
+    // cafe, a study meetup, anything a tutor OR a student wants nearby
+    // MindCraft users to see live on the map. Any signed-in user may read
+    // (the whole point is discovering events on the web app's Events page).
+    // Create requires the caller to (a) name themselves as hostId, (b) ship
+    // a minimally well-formed event: string title, numeric lat/lng, numeric
+    // startAt/endAt in ms epoch (the same time shape sessions.scheduledAt
+    // already uses), endAt after startAt, and (c) keep the window to at
+    // most 24 hours, a spam/abuse rail now that any signed-in user can post,
+    // not just role-checked tutors. Update and delete stay with the owning
+    // host, and hostId is immutable post-create so an event can never be
+    // reassigned to someone else. Collection name kept as tutorEvents
+    // (an internal id, not user-facing) rather than a rename + migration
+    // for what is otherwise a same-shape generalization.
     match /tutorEvents/{eventId} {
       allow read: if request.auth != null;
       allow create: if request.auth != null
-        && request.resource.data.tutorId == request.auth.uid
-        && (
-          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tutor'
-          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-        )
+        && request.resource.data.hostId == request.auth.uid
         && request.resource.data.title is string
         && request.resource.data.title.size() > 0
         && request.resource.data.title.size() <= 120
@@ -507,12 +505,13 @@ service cloud.firestore {
         && request.resource.data.lng is number
         && request.resource.data.startAt is number
         && request.resource.data.endAt is number
-        && request.resource.data.endAt > request.resource.data.startAt;
+        && request.resource.data.endAt > request.resource.data.startAt
+        && request.resource.data.endAt - request.resource.data.startAt <= 86400000;
       allow update: if request.auth != null
-        && resource.data.tutorId == request.auth.uid
-        && request.resource.data.tutorId == resource.data.tutorId;
+        && resource.data.hostId == request.auth.uid
+        && request.resource.data.hostId == resource.data.hostId;
       allow delete: if request.auth != null
-        && resource.data.tutorId == request.auth.uid;
+        && resource.data.hostId == request.auth.uid;
     }
 
     match /knowledge_graphs/{studentId} {

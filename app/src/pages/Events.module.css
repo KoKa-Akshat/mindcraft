@@ -1,0 +1,234 @@
+/* Events.module.css — dark JARVIS-aesthetic, matches KnowledgeGraph.module.css's shell */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--f);
+}
+
+.page {
+  margin-left: 0;
+  flex: 1;
+  padding: 0 28px 28px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mapWrap {
+  /* position:relative anchors the outer GoogleMap's absolute+inset
+     container (MAIN_MAP_STYLE in Events.tsx) — deliberately not a
+     width/height:100% child, see that constant's own comment for why. */
+  position: relative;
+  flex: 1;
+  min-height: 480px;
+  margin-top: 16px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 200, 0.14);
+}
+
+.hint {
+  margin: 0;
+  padding: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx-dim, rgba(230, 240, 245, 0.6));
+}
+
+.fab {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #00d2c8;
+  color: #06201d;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(0, 210, 200, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+.fab:hover {
+  transform: scale(1.06);
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  background: rgba(10, 16, 20, 0.92);
+  color: #fff;
+  border: 1px solid rgba(0, 210, 200, 0.3);
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 5;
+}
+
+.infoCard {
+  display: grid;
+  gap: 4px;
+  min-width: 200px;
+  max-width: 260px;
+  color: #1a1a1a;
+}
+.infoCard strong {
+  font-size: 14px;
+}
+.infoCard em {
+  font-style: normal;
+  font-size: 12px;
+  color: #555;
+}
+.infoCard p {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #333;
+}
+.hostedBy {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #777;
+}
+.takeDownBtn {
+  margin-top: 8px;
+  align-self: start;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(138, 58, 58, 0.4);
+  background: transparent;
+  color: #8a3a3a;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 10, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+.modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 90%;
+  overflow-y: auto;
+  background: #0e1518;
+  border: 1px solid rgba(0, 210, 200, 0.2);
+  border-radius: 18px;
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+}
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(230, 240, 245, 0.6);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.field {
+  display: grid;
+  gap: 5px;
+}
+.field span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(230, 240, 245, 0.55);
+}
+.timeRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 10px;
+}
+.input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 210, 200, 0.2);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
+}
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 210, 200, 0.2);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  resize: vertical;
+  box-sizing: border-box;
+}
+.mapFrame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 200, 0.2);
+}
+.primary {
+  justify-self: start;
+  min-height: 42px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 12px;
+  background: #00d2c8;
+  color: #06201d;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.primary:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+@media (max-width: 640px) {
+  .timeRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}

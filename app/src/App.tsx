@@ -38,6 +38,7 @@ import DevUnifiedLearn from './pages/DevUnifiedLearn' // THROWAWAY, remove with 
 // Production promotion of the DevUnifiedLearn prototype, wired to the real
 // migrated content library, real auth, and the real generation endpoints.
 import Learn           from './pages/Learn'
+import Events          from './pages/Events'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -411,6 +412,7 @@ export default function App() {
             exists so it can be linked and bookmarked directly, with ?q= to
             run a search on arrival. */}
         <Route path="/learn"               element={<AuthGuard><Learn /></AuthGuard>} />
+        <Route path="/events"              element={<AuthGuard><Events /></AuthGuard>} />
         <Route path="/parent"              element={<AuthGuard><ParentDashboard /></AuthGuard>} />
         <Route path="/tutor"               element={<AuthGuard><TutorDashboard /></AuthGuard>} />
         <Route path="/tutor/session/:id"   element={<AuthGuard><SessionDetail /></AuthGuard>} />

@@ -1,19 +1,16 @@
 /**
- * TutorEventsPanel.tsx (TUTORS_EVENTS build, 2026-08-31)
+ * TutorEventsPanel.tsx (TUTORS_EVENTS build, 2026-08-31; tutorEvents
+ * generalized to any signed-in host, 2026-09-02, see pages/Events.tsx)
  *
  * The tutor's "Create Event" tab: pin a spot on the map (a cafe, a library,
  * campus), give it a title and a time window, and set it live. Live events
- * land in the new top-level `tutorEvents` collection, which every signed-in
- * student's Desk OS map watches with onSnapshot, so a posted event shows up
- * on student maps the moment it saves.
+ * land in the `tutorEvents` collection (name kept for continuity, no longer
+ * tutor-exclusive), which the app's Events page reads with onSnapshot, so a
+ * posted event shows up on every signed-in user's map the moment it saves.
  *
  * Map interaction reuses the exact pattern TutorLocationPin.tsx shipped:
  * same @react-google-maps/api loader and key, Autocomplete search, click to
  * drop the pin, drag to fine-tune, reverse geocode for a readable label.
- *
- * Until the tutorEvents firestore.rules block on this branch is deployed,
- * writes and reads both fail closed. Every failure path here says that out
- * loud instead of pretending the event saved.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -36,7 +33,7 @@ const GOOGLE_MAPS_API_KEY = (import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string 
 const MAP_LIBRARIES: Libraries = ['places']
 const MAP_STYLE = { width: '100%', height: '100%' }
 
-const RULES_HINT = 'The tutorEvents backend rules are not deployed in this environment yet, so events cannot save. Akshat needs to deploy the new firestore.rules block first.'
+const SAVE_ERROR_HINT = 'Could not save the event. Check your connection and try again.'
 
 interface TutorEvent {
   id: string
@@ -91,7 +88,7 @@ export default function TutorEventsPanel({ user, tutorName, initialLatLng, onToa
   // Own events, live. Sorted client-side so no composite index is needed.
   useEffect(() => {
     const unsub = onSnapshot(
-      query(collection(db, 'tutorEvents'), where('tutorId', '==', user.uid)),
+      query(collection(db, 'tutorEvents'), where('hostId', '==', user.uid)),
       snap => {
         setListBlocked(false)
         setEvents(
@@ -155,8 +152,8 @@ export default function TutorEventsPanel({ user, tutorName, initialLatLng, onToa
     setSaving(true)
     try {
       await addDoc(collection(db, 'tutorEvents'), {
-        tutorId: user.uid,
-        tutorName,
+        hostId: user.uid,
+        hostName: tutorName,
         title: cleanTitle,
         notes: notes.trim(),
         locationLabel: locationLabel.trim() || `${pin.lat.toFixed(4)}, ${pin.lng.toFixed(4)}`,
@@ -169,9 +166,8 @@ export default function TutorEventsPanel({ user, tutorName, initialLatLng, onToa
       setTitle('')
       setNotes('')
       onToast('Event is live. Students see it on their map now')
-    } catch (err: unknown) {
-      const code = (err as { code?: string })?.code || ''
-      onToast(code === 'permission-denied' ? RULES_HINT : 'Could not save the event. Try again')
+    } catch {
+      onToast(SAVE_ERROR_HINT)
     } finally {
       setSaving(false)
     }
@@ -314,7 +310,7 @@ export default function TutorEventsPanel({ user, tutorName, initialLatLng, onToa
           <span className={s.cardLabel}>Your events</span>
         </div>
         {listBlocked ? (
-          <p className={s.hint}>{RULES_HINT}</p>
+          <p className={s.hint}>Could not load your events. Refresh and try again.</p>
         ) : upcoming.length === 0 && past.length === 0 ? (
           <p className={s.hint}>Nothing posted yet. Your first event shows here and on every student map.</p>
         ) : (

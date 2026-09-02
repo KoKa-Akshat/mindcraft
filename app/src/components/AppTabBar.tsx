@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import s from './AppTabBar.module.css'
 
-export type AppTabId = 'dashboard' | 'practice' | 'solver' | 'map' | 'admin'
+export type AppTabId = 'dashboard' | 'practice' | 'solver' | 'map' | 'events' | 'admin'
 
 const BASE_TABS: { id: AppTabId; label: string }[] = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'practice',  label: 'Practice' },
   { id: 'solver',    label: 'Problem Solver' },
   { id: 'map',       label: 'Knowledge Map' },
+  { id: 'events',    label: 'Events' },
 ]
 
 type Props = {
@@ -27,6 +28,7 @@ export default function AppTabBar({ active, className, isAdmin }: Props) {
       case 'practice':  navigate('/practice'); break
       case 'solver':    navigate('/practice?homeworkHelp=1'); break
       case 'map':       navigate('/knowledge-graph'); break
+      case 'events':    navigate('/events'); break
       case 'admin':     navigate('/admin'); break
     }
   }
