@@ -47,6 +47,15 @@ const EMPTY_DRAFT = {
   linkedinUrl: '', drive: false,
 };
 
+/** Tap-to-send first messages for a brand new profile (no upload yet).
+ *  Each one is a complete, honest sentence a student could really send, so
+ *  a tap sends it as-is rather than dropping placeholder text into the box. */
+const STARTER_PROMPTS = [
+  "I don't have a resume yet, help me build one from scratch",
+  "I'm looking for summer internships",
+  'Ask me the right questions to build my profile',
+];
+
 /** Mirrors JobOSStore.emptyStarter() so a web-created board decodes as the
  *  Swift JobOSState on iOS. Every non-Optional field must be present. */
 function emptyBoard() {
@@ -148,6 +157,7 @@ export function createResumeHelper({ root, onToast }) {
   const stepJobs = el('[data-rh-step-jobs]');
   const statusEl = el('[data-rh-status]');
   const transcript = el('[data-rh-transcript]');
+  const starters = el('[data-rh-starters]');
   const chatForm = el('[data-rh-chat]');
   const chatInput = el('[data-rh-chat-input]');
   const fileResume = el('[data-rh-file-resume]');
@@ -215,6 +225,10 @@ export function createResumeHelper({ root, onToast }) {
 
   function bubble(kind, text) {
     if (!transcript) return;
+    // Any real message from the student retires the starter chips, not
+    // just a tap on one of them: typing a first message or uploading a
+    // file is just as much "past the empty state" as tapping a chip.
+    if (kind === 'you' && starters && !starters.hidden) starters.hidden = true;
     const div = document.createElement('div');
     div.className = `rh-bubble ${kind === 'you' ? 'is-you' : 'is-jesse'}`;
     div.textContent = text;
@@ -231,7 +245,10 @@ export function createResumeHelper({ root, onToast }) {
   function greetOnce() {
     if (greeted) return;
     greeted = true;
-    if (transcript && !transcript.childElementCount) {
+    // .rh-bubble count, not childElementCount: the (hidden-by-default)
+    // starters container also lives inside .rh-transcript, so it would
+    // otherwise make this look non-empty on the very first render.
+    if (transcript && !transcript.querySelector('.rh-bubble')) {
       // "Welcome back" only when there is real draft substance; a name alone
       // can come from the auth profile prefill, and that student still needs
       // the upload pitch.
@@ -239,6 +256,17 @@ export function createResumeHelper({ root, onToast }) {
       bubble('jesse', substantive
         ? `Welcome back${draft.name ? `, ${String(draft.name).split(/\s+/)[0]}` : ''}. Edit anything on the right, or open the jobs table.`
         : 'Hi, I am Jesse. Upload a resume and I will do my magic: a profile you can edit, then real openings with links, resumes, and cover letters.');
+      if (!substantive && starters) {
+        starters.innerHTML = STARTER_PROMPTS.map((text) => `
+          <button type="button" class="rh-starter" data-rh-starter="${esc(text)}">${esc(text)}</button>
+        `).join('');
+        starters.hidden = false;
+        // bubble() just appended the greeting as transcript's new last
+        // child; re-parenting (not cloning) starters here moves it below
+        // that greeting instead of leaving it in its original DOM slot
+        // above every message.
+        transcript.appendChild(starters);
+      }
     }
   }
 
@@ -817,6 +845,12 @@ export function createResumeHelper({ root, onToast }) {
       void addCandidate(Number(t.dataset.rhAddCand));
     } else if (t.dataset.rhPdf) {
       void downloadPdf(t.dataset.rhPdf, t.dataset.roleId, t);
+    } else if (t.dataset.rhStarter) {
+      if (thinking) return;
+      const text = t.dataset.rhStarter;
+      if (starters) starters.hidden = true;
+      bubble('you', text);
+      void askJesse(text);
     }
   });
 

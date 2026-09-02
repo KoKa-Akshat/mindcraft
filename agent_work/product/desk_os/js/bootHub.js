@@ -204,96 +204,6 @@ function goalOptionsFor(inst) {
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
-/**
- * Hero cube face texture (2026-09-02, built against the founder's own
- * reference image): a real constellation of connected nodes per face,
- * ported from index.html's own constellation() function on the marketing
- * page's hero canvas (same node+edge algorithm, same devicePixelRatio
- * handling), not reinvented. Colors swapped from that page's brand lime to
- * a warm gold to match the reference image's glass-and-light look instead
- * of the marketing page's dark-hero look. One canvas per cube face (all 6,
- * even though only 3 are visible at any instant, since cubeTurn keeps
- * spinning it) so the texture never pops in/out as faces rotate into view.
- */
-function paintConstellation(canvas) {
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W = 0;
-  let H = 0;
-  let nodes = [];
-  let raf = null;
-  function seed() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth;
-    H = canvas.clientHeight;
-    if (!W || !H) return false;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.max(10, Math.floor((W * H) / 1800));
-    nodes = [];
-    for (let i = 0; i < count; i++) {
-      nodes.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.08,
-        vy: (Math.random() - 0.5) * 0.08,
-        r: Math.random() * 1.3 + 0.6,
-      });
-    }
-    return true;
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const d = dx * dx + dy * dy;
-        if (d < 3200) {
-          ctx.strokeStyle = `rgba(255, 225, 160, ${(0.35 * (1 - d / 3200)).toFixed(3)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-    for (let k = 0; k < nodes.length; k++) {
-      const n = nodes[k];
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, 7);
-      ctx.fillStyle = 'rgba(255, 240, 200, 0.95)';
-      ctx.shadowColor = 'rgba(255, 225, 150, 0.85)';
-      ctx.shadowBlur = 5;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-      if (!reduced) {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > W) n.vx *= -1;
-        if (n.y < 0 || n.y > H) n.vy *= -1;
-      }
-    }
-    if (!reduced) raf = requestAnimationFrame(draw);
-  }
-  if (seed()) draw();
-  window.addEventListener('resize', () => {
-    if (raf) cancelAnimationFrame(raf);
-    if (seed()) draw();
-  });
-}
-
-function paintCubeFaces(hub) {
-  const canvases = [...(hub?.querySelectorAll('[data-cube-canvas]') || [])];
-  canvases.forEach((cv) => paintConstellation(cv));
-}
-
 export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen, onHomeOpen }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
@@ -301,26 +211,34 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const hubEmail = hub?.querySelector('[data-hub-email]');
   const hubFirst = hub?.querySelector('[data-hub-first]');
   const hubGreetWord = hub?.querySelector('[data-hub-greet-word]');
+  const hubDate = hub?.querySelector('[data-hub-date]');
   const goalInstance = hub?.querySelector('[data-hub-goal-instance]');
   const goalType = hub?.querySelector('[data-hub-goal-type]');
   const goalEcho = hub?.querySelector('[data-hub-goal-echo]');
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
-  const masteryNav = hub?.querySelector('[data-hub-mastery-nav]');
-  const masteryCube = hub?.querySelector('.hub-cube');
-  const jesseNav = hub?.querySelector('[data-hub-jesse-nav]');
+  const masteryNavs = [...(hub?.querySelectorAll('[data-hub-mastery-nav]') || [])];
+  const jesseNavs = [...(hub?.querySelectorAll('[data-hub-jesse-nav]') || [])];
+  const resumeNavs = [...(hub?.querySelectorAll('[data-hub-resume-nav]') || [])];
   const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
   const jesseBox = hub?.querySelector('[data-jesse-scene]');
-  const jesseOwl = hub?.querySelector('.jesse-owl');
   const jesseStageName = hub?.querySelector('[data-jesse-stage-name]');
   const jesseCountEl = hub?.querySelector('[data-jesse-count]');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
-  // Dashboard tab row (2026-09-02 rebuild). tab2Row + heroCard are the
-  // "Workspace" surface, hidden for tutors same as tabBtns2's own hidden
-  // state is irrelevant to them; see paintRoleSurfaces below.
   const tab2Row = hub?.querySelector('[data-hub-tabs2]');
-  const heroCard = hub?.querySelector('.hub-hero-card');
+  const heroCard = hub?.querySelector('[data-hub-workspace]');
   const tab2Btns = [...(hub?.querySelectorAll('[data-hub-tab2]') || [])];
+  let activeDashboardTab = 'home';
+
+  function selectDashboardTab(tab) {
+    activeDashboardTab = ['home', 'resume', 'tutors'].includes(tab) ? tab : 'home';
+    tab2Btns.forEach((button) => {
+      const selected = button.dataset.hubTab2 === activeDashboardTab;
+      button.classList.toggle('is-active', selected);
+      button.setAttribute('aria-selected', String(selected));
+    });
+    paintRoleSurfaces();
+  }
 
   // No hardcoded fallback identity here (this used to default to the
   // founder's own name/email, meaning every real student saw
@@ -341,6 +259,13 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hubEmail) hubEmail.textContent = user.email;
     if (hubFirst) hubFirst.textContent = String(user.name || 'there').split(/\s+/)[0];
     if (hubGreetWord) hubGreetWord.textContent = greetWord();
+    if (hubDate) {
+      hubDate.textContent = new Intl.DateTimeFormat(undefined, {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+      }).format(new Date());
+    }
     paintJesse(user);
     paintRoleSurfaces();
     return user;
@@ -355,7 +280,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   function paintRoleSurfaces() {
     const tutor = (getRole() || 'student') === 'tutor';
     if (tab2Row) tab2Row.hidden = tutor;
-    if (heroCard) heroCard.hidden = tutor;
+    if (heroCard) heroCard.hidden = tutor || activeDashboardTab !== 'home';
     if (tutorTiles) tutorTiles.hidden = !tutor;
   }
 
@@ -446,18 +371,18 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (jesseStageName) jesseStageName.textContent = stage.name;
     if (jesseCountEl) {
       if (known) {
-        jesseCountEl.textContent = count === 1 ? '1 learn action' : `${count} learn actions`;
+        jesseCountEl.textContent = count === 1 ? '1 learning moment' : `${count} learning moments`;
         jesseCountEl.classList.remove('is-unknown');
       } else {
-        jesseCountEl.textContent = 'no activity recorded';
+        jesseCountEl.textContent = 'no learning moments yet';
         jesseCountEl.classList.add('is-unknown');
       }
     }
-    if (jesseNav) {
-      jesseNav.setAttribute(
+    if (jesseBox) {
+      jesseBox.setAttribute(
         'aria-label',
         `Tutors and events near you. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
-          + (known ? `, from ${count} real learn actions.` : '.'),
+          + (known ? `, from ${count} real learning moments.` : '.'),
       );
     }
   }
@@ -552,7 +477,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hub) { hub.hidden = true; hub.classList.add('hidden'); }
   }
 
-  let cubeFacesPainted = false;
   function showHub() {
     boot?.classList.add('hidden');
     if (boot) boot.hidden = true;
@@ -560,15 +484,8 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     hub.hidden = false;
     hub.classList.remove('hidden');
     renderHub();
-    // Canvas sizing needs real layout (clientWidth/Height), which only
-    // exists once hub.hidden is false, so this can't run any earlier than
-    // here. Painted once; the cube's own faces never resize independently
-    // of the window, and paintConstellation already has its own resize
-    // listener for that case.
-    if (!cubeFacesPainted) {
-      cubeFacesPainted = true;
-      paintCubeFaces(hub);
-    }
+    selectDashboardTab('home');
+    onHomeOpen?.();
   }
 
   function hideAll() {
@@ -578,58 +495,34 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hub) hub.hidden = true;
   }
 
-  // Clicking the Mastery cube goes to Learn, same destination as the
-  // Dashboard tab (2026-09-01 ask, replacing the Set Goal picker and
-  // "Start your mastery check-in" call button that used to sit around it).
-  // The cube already has a slow ambient spin (cubeTurn); this layers one
-  // quick full turn on top as click feedback, then navigates once it's
-  // played, matching CLICK_SPIN_MS to the CSS animation's own duration.
-  // 2026-08-31: a TUTOR's cube goes to their own dashboard (/tutor, the
-  // existing React tutor page with Calendly, Meet, Location, and now
-  // Events), not to the student Learn experience.
-  const CLICK_SPIN_MS = 500;
-  masteryNav?.addEventListener('click', () => {
-    masteryCube?.classList.add('is-click-spin');
-    const dest = (getRole() || 'student') === 'tutor' ? '/tutor' : '/learn';
-    window.setTimeout(() => {
-      window.location.href = dest;
-    }, CLICK_SPIN_MS);
-  });
-
-  // Jesse (second pass, 2026-09-02): opens Tutors and events, folded back
-  // onto him after one round as a separate "Map" box, one fewer box per the
-  // founder. Still hops on click first, purely for delight, same feedback
-  // he always had; the class is removed after it plays so every click hops
-  // again.
-  const JESSE_HOP_MS = 520;
-  jesseNav?.addEventListener('click', () => {
-    jesseOwl?.classList.add('is-hop');
-    window.setTimeout(() => jesseOwl?.classList.remove('is-hop'), JESSE_HOP_MS);
-    onMapOpen?.();
-  });
-
-  // Raccoon: opens the Resume Helper. Its own dedicated box (was Jesse's
-  // click behavior originally, then a separate "Unlock" box for one round),
-  // a direct "show mine, hide the other" against Jesse's Map above rather
-  // than a shared toggle, since they are two independently reachable
-  // destinations, not two faces of one control.
-  const resumeNav = hub?.querySelector('[data-hub-resume-nav]');
-  resumeNav?.addEventListener('click', () => onResumeOpen?.());
-
-  // Dashboard tab row (2026-09-02 rebuild): the tutors/resume buttons carry
-  // BOTH data-hub-tab2 (for the active-underline styling here) and the
-  // existing data-hub-jesse-nav / data-hub-resume-nav (for the real
-  // open-panel behavior wired just above), so this only has to own the
-  // visual is-active sync, not duplicate the opening logic. "home" is not
-  // a panel at all, just "close whichever panel is open," since the
-  // tabs+cube stay visible above any opened panel either way (same layout
-  // the old icon row always had).
-  tab2Btns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      tab2Btns.forEach((b) => b.classList.toggle('is-active', b === btn));
-      if (btn.dataset.hubTab2 === 'home') onHomeOpen?.();
+  masteryNavs.forEach((nav) => {
+    nav.addEventListener('click', () => {
+      window.location.href = (getRole() || 'student') === 'tutor' ? '/tutor' : '/learn';
     });
   });
+
+  jesseNavs.forEach((nav) => {
+    nav.addEventListener('click', () => {
+      selectDashboardTab('tutors');
+      onMapOpen?.();
+    });
+  });
+
+  resumeNavs.forEach((nav) => {
+    nav.addEventListener('click', () => {
+      selectDashboardTab('resume');
+      onResumeOpen?.();
+    });
+  });
+
+  tab2Btns
+    .filter((button) => button.dataset.hubTab2 === 'home')
+    .forEach((button) => {
+      button.addEventListener('click', () => {
+        selectDashboardTab('home');
+        onHomeOpen?.();
+      });
+    });
 
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
