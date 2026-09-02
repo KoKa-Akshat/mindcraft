@@ -154,3 +154,86 @@ Worth a real look if the founder wants either as an actual feature later.
 - `node --check js/resumeHelper.js` clean, CSS brace count balanced
   before and after the ~400-line block replacement, `npm run build`
   (tsc + vite) clean.
+
+## Round three: the Workspace hero's card is now the real knowledge map
+
+The founder shared a screenshot of the actual Knowledge Map (the dark,
+colored-cluster force graph) and asked for it to replace the static "next
+page" paper-sheet visual, auto-rotating, "blending into the color we have",
+with a search bar that comes down on click instead of navigating away
+immediately.
+
+**Reused the real thing, did not rebuild it.** `app/public/full-graph-viewer.html`
+is the exact 3d-force-graph viewer `/learn` itself already embeds
+(`Learn.tsx:909`), reading the real `full-concept-graph.json` (4,118
+concepts), and it already auto-rotates on load (`controls.autoRotate`,
+turns off the moment someone drags). The hero's paper-sheet card
+(`.hub-paper-sheet`, kept for its rotated/shadowed "paper" chrome) now
+holds this same file in an iframe instead of static text — same-origin, so
+its root-relative `fetch('/full-concept-graph.json')` resolves correctly
+regardless of being embedded under `/desk-os/`.
+
+- **"Blending into the color we have"**: a `.hub-graph-vignette` overlay
+  (`box-shadow: inset 0 0 70px 18px var(--desk-paper)`) softens the dark
+  canvas into the paper card's cream edges instead of ending in a hard
+  rectangle. Recoloring the graph's own subject-hue palette for a light
+  background was out of scope — that's the tuned, working visualization
+  Learn also depends on, not something to fork.
+- **Click reveals search, doesn't navigate**: a transparent `.hub-graph-veil`
+  button covers the card until the first click, which hides itself and
+  slides `.hub-graph-search` up from the bottom (CSS transition, respects
+  `prefers-reduced-motion`). After that the veil is gone and the 3D map
+  itself is interactive (drag to orbit, click a node — its own existing
+  behavior, untouched). Submitting the search form navigates to
+  `/learn?q=<text>` — the same real `?q=` deep link `Learn.tsx` already
+  runs one search from on mount, not a new endpoint.
+- Two small, backward-compatible additions to `full-graph-viewer.html`
+  itself (affects Learn's own real map too, not just this embed):
+  `controls.autoRotate` now respects `prefers-reduced-motion`, and a new
+  opt-in `?hideLegend` param (Learn's own embed doesn't pass it, so its
+  behavior is unchanged) fully hides the coverage-key panel, which
+  competed with the new search bar for the same bottom-left corner at
+  this card's much smaller size.
+- Real bug caught by screenshot, not assumed: `.hub-paper-raccoon`
+  (z-index 4) sat on top of `.hub-paper-sheet` (z-index 3) at the card's
+  bottom-right corner — fine for the old static card, but it silently
+  covered the new search bar's submit button once added there. Moved the
+  raccoon to the right edge, vertically centered (`top:50%`), the one
+  spot clear of the bookmark ribbon (top), the graph tag pill (top-left),
+  and the search bar (bottom) at every card height this hero renders at.
+  Also switched the search input from `type="search"` to `type="text"`:
+  Chromium's native clear-icon on search inputs was rendering in the same
+  corner as the custom submit button.
+- Removed the now-dead `.hub-sheet-*`/`.hub-thread` CSS (the old static
+  card's title/kicker/Ask-Work-Keep-dots content) and the mobile-breakpoint
+  overrides that targeted them.
+
+**Not built: a "friends online" indicator**, the other half of the
+founder's ask. There is no presence/online system anywhere in this
+codebase — `friends.js`'s "Call a friend" list (`users/{uid}/friends`) is a
+personal contact list with no online/offline signal at all, and it only
+loads its data lazily when its own panel opens, not eagerly on hub load.
+Showing a real "N online" count would need an actual heartbeat/presence
+write path, a genuine feature, not a styling change. Showing a fake number
+would violate this project's working rule (established earlier this
+session with alumni data, tutor availability, "zero is an honest answer"
+for job search) never to invent a stat this codebase doesn't actually
+back. Skipped rather than faked; worth scoping as its own feature if the
+founder wants it.
+
+### Verification (round three)
+
+- Playwright: entered as Student, screenshotted the hero before/after
+  clicking the veil, filled the search input, submitted it, and confirmed
+  the resulting URL was the real `/learn?q=quadratic%20equations` deep
+  link — not just that a form existed.
+- Caught the raccoon/submit-button overlap and the native search-clear-icon
+  collision by looking at real screenshots and a `boundingBox()` check on
+  the submit button, not by inspecting CSS in isolation.
+- Responsive: 834×1194 and 390×844, zero horizontal overflow at either,
+  raccoon and search bar both confirmed clear of every other element in
+  the stack at both sizes.
+- Confirmed `Learn.tsx`'s own `full-graph-viewer.html` embed (`?hideSubjects`
+  only, no `?hideLegend`) is unaffected by both additions to that shared
+  file — real backward-compatibility check, not an assumption.
+- `npm run build` (tsc + vite) clean.

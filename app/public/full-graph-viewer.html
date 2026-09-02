@@ -175,7 +175,9 @@
     }
   }
 
-  const hideSubjects = new URLSearchParams(location.search).has('hideSubjects');
+  const params = new URLSearchParams(location.search);
+  const hideSubjects = params.has('hideSubjects');
+  const hideLegend = params.has('hideLegend');
   if (hideSubjects) document.getElementById('subjectBlock').hidden = true;
 
   function renderLegend(data) {
@@ -195,7 +197,7 @@
     document.getElementById('totals').textContent =
       `${c.nodes} concepts, ${c.edges} links, ${c.subjects} subjects. ` +
       `${c.withLesson} have a lesson, ${c.withSim} have a sim.`;
-    legend.hidden = false;
+    legend.hidden = hideLegend;
   }
 
   function showFocus(node, missingId) {
@@ -286,7 +288,7 @@
       graph.d3Force('link').distance(l => 26 + (1 - (l.weight || 0.5)) * 22);
 
       const controls = graph.controls();
-      controls.autoRotate = true;
+      controls.autoRotate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       controls.autoRotateSpeed = 0.35;
       controls.addEventListener('start', () => { controls.autoRotate = false; });
     })

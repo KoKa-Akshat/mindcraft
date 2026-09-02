@@ -192,22 +192,27 @@
             <div class="hub-workspace-object">
               <span class="hub-paper-back hub-paper-back-one" aria-hidden="true"></span>
               <span class="hub-paper-back hub-paper-back-two" aria-hidden="true"></span>
-              <button type="button" class="hub-paper-sheet" data-hub-mastery-nav aria-label="Open Learn">
-                <span class="hub-sheet-head">
-                  <span class="hub-sheet-kicker">Your next page</span>
-                  <span class="hub-sheet-mark">Learn</span>
-                </span>
-                <strong class="hub-sheet-title">What do you want to understand?</strong>
-                <span class="hub-thread" aria-hidden="true">
-                  <span><i></i>Ask</span>
-                  <span><i></i>Work</span>
-                  <span><i></i>Keep</span>
-                </span>
-                <span class="hub-sheet-foot">
-                  <span>Ready when you are</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-                </span>
-              </button>
+              <!-- The real concept graph (same 3d-force-graph viewer /learn's
+                   own map uses, full-graph-viewer.html, already auto-rotates
+                   on load) standing in for the old static "next page" card
+                   (2026-09-02 ask). A div, not a button: it holds an iframe
+                   plus a real form, which a <button> can't contain. First
+                   click on the veil reveals the search bar instead of
+                   navigating immediately; typing and submitting goes to
+                   /learn?q=... same real deep link the Dashboard search
+                   already uses (Learn.tsx's own ?q= effect). -->
+              <div class="hub-paper-sheet hub-graph-sheet" data-hub-graph-sheet aria-label="Your knowledge map">
+                <span class="hub-graph-tag">Your knowledge map</span>
+                <iframe class="hub-graph-frame" data-hub-graph-frame src="/full-graph-viewer.html?hideSubjects&amp;hideLegend" title="Your knowledge map" loading="lazy" tabindex="-1"></iframe>
+                <div class="hub-graph-vignette" aria-hidden="true"></div>
+                <button type="button" class="hub-graph-veil" data-hub-graph-veil aria-label="Search MindCraft"></button>
+                <form class="hub-graph-search" data-hub-graph-search hidden autocomplete="off">
+                  <input data-hub-graph-search-input type="text" maxlength="160" placeholder="What do you want to understand?" aria-label="Ask MindCraft" />
+                  <button type="submit" aria-label="Search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                  </button>
+                </form>
+              </div>
               <span class="hub-bookmark" aria-hidden="true"></span>
               <img class="hub-paper-raccoon" src="img/orbs/raccoon-logo.png" alt="" aria-hidden="true" />
 

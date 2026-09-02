@@ -6133,7 +6133,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-signout:focus-visible,
 .hub-tabs2 button:focus-visible,
 .hub-hero-cta:focus-visible,
-.hub-paper-sheet:focus-visible,
+.hub-graph-veil:focus-visible,
 .hub-jesse-slip:focus-visible,
 .hub-tutor-tile:focus-visible {
   outline: 3px solid var(--desk-forest);
@@ -6285,103 +6285,105 @@ body.is-hub-chrome .sky { opacity: 0; }
   transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
 }
 
-.hub-paper-sheet::before {
-  content: "";
-  position: absolute;
-  inset: 86px 41px 70px;
-  pointer-events: none;
-  border-top: 1px solid rgba(20, 58, 46, 0.08);
-  border-bottom: 1px solid rgba(20, 58, 46, 0.08);
-}
-
 .hub-paper-sheet:hover {
   transform: rotate(-0.8deg) translateY(-5px);
   box-shadow: 0 31px 66px rgba(20, 58, 46, 0.16), 0 2px 0 rgba(20, 58, 46, 0.08);
 }
 
-.hub-sheet-head,
-.hub-sheet-foot {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+/* The graph card: same rotated-paper chrome as .hub-paper-sheet above
+   (position/tilt/shadow/radius/border), but edge-to-edge content instead
+   of text padding, and a real focusable button + form inside instead of
+   the whole card being one <button>. */
+.hub-graph-sheet {
+  padding: 0;
+  cursor: default;
 }
-
-.hub-sheet-kicker {
-  color: var(--desk-muted);
-  font: 700 12px/1.2 var(--sans);
-  letter-spacing: 0;
-}
-
-.hub-sheet-mark {
-  padding: 6px 9px;
-  border-radius: 3px;
-  background: var(--desk-ink);
-  color: var(--desk-paper);
-  font: 750 11px/1 var(--sans);
-  letter-spacing: 0;
-}
-
-.hub-sheet-title {
-  position: relative;
-  z-index: 1;
-  max-width: 11ch;
-  margin-top: 38px;
-  color: var(--desk-ink);
-  font: 400 45px/1.02 var(--serif);
-  letter-spacing: 0;
-}
-
-.hub-thread {
-  position: relative;
-  z-index: 1;
-  margin: 50px 8px 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.hub-thread::before {
-  content: "";
+.hub-graph-tag {
   position: absolute;
-  top: 7px;
-  left: 14%;
-  right: 14%;
-  height: 1px;
-  background: rgba(20, 58, 46, 0.28);
+  z-index: 3;
+  top: 14px;
+  left: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(8, 14, 20, 0.55);
+  backdrop-filter: blur(6px);
+  color: #e8efe4;
+  font: 700 10.5px/1 var(--sans);
+  letter-spacing: 0.02em;
+  pointer-events: none;
 }
-
-.hub-thread > span {
-  position: relative;
+.hub-graph-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #080e14;
+}
+/* Fades the graph's dark canvas into the paper card's own edges instead of
+   ending in a hard rectangle, the "blend into the page" ask: a soft ring
+   of --desk-paper creeping in from all four sides over the WebGL canvas. */
+.hub-graph-vignette {
+  position: absolute;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
+  box-shadow: inset 0 0 70px 18px var(--desk-paper);
+  opacity: 0.5;
+}
+.hub-graph-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.hub-graph-veil[hidden] { display: none !important; }
+.hub-graph-search {
+  position: absolute;
+  z-index: 3;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  color: var(--desk-muted);
-  font: 700 11px/1 var(--sans);
-  letter-spacing: 0;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(8, 14, 20, 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(8, 14, 20, 0.3);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 220ms var(--ease), transform 220ms var(--ease);
 }
-
-.hub-thread i {
-  width: 15px;
-  height: 15px;
-  border: 2px solid var(--desk-ink);
+.hub-graph-search.is-open {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hub-graph-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #e8efe4;
+  font: 500 14px/1.2 var(--sans);
+  outline: none;
+}
+.hub-graph-search input::placeholder { color: rgba(232, 239, 228, 0.55); }
+.hub-graph-search button[type="submit"] {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 0;
   border-radius: 50%;
-  background: var(--desk-paper);
+  background: var(--lime);
+  color: #1f2a22;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 }
-.hub-thread > span:nth-child(2) i { background: var(--desk-sage); }
-.hub-thread > span:last-child i { background: var(--lime); }
-
-.hub-sheet-foot {
-  margin-top: auto;
-  padding-top: 19px;
-  color: var(--desk-ink);
-  font: 750 12px/1 var(--sans);
-  letter-spacing: 0;
-}
-.hub-sheet-foot svg { width: 18px; height: 18px; }
+.hub-graph-search button[type="submit"]:hover { background: #b3e63a; }
 
 .hub-bookmark {
   position: absolute;
@@ -6397,15 +6399,23 @@ body.is-hub-chrome .sky { opacity: 0; }
   box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.1);
 }
 
+/* Moved from the bottom-right corner to the right edge, vertically
+   centered (2026-09-02, alongside the knowledge-map card replacing the
+   old paper-sheet content). The bottom is where the click-to-reveal
+   search bar now lives (needs its full width including the submit
+   button), the top-right is .hub-bookmark's strip and the top-left is
+   .hub-graph-tag's pill — mid-right, on a fixed z-index tied to the card
+   rather than a fixed pixel offset, is the one edge clear of all three at
+   every card height this hero renders at. */
 .hub-paper-raccoon {
   position: absolute;
   z-index: 4;
-  right: 1px;
-  bottom: 77px;
-  width: 86px;
-  height: 86px;
+  right: -6px;
+  top: 50%;
+  width: 78px;
+  height: 78px;
   object-fit: contain;
-  transform: rotate(5deg);
+  transform: translateY(-50%) rotate(6deg);
   filter: drop-shadow(0 7px 9px rgba(20, 58, 46, 0.16));
   pointer-events: none;
 }
@@ -6605,12 +6615,9 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-workspace-object { height: 430px; }
   .hub-paper-back-one { inset: 37px 7px 82px 28px; }
   .hub-paper-back-two { inset: 29px 18px 88px 12px; }
-  .hub-paper-sheet { inset: 17px 12px 92px 13px; padding: 27px 27px 24px; }
-  .hub-paper-sheet::before { inset: 67px 26px 60px; }
-  .hub-sheet-title { margin-top: 28px; font-size: 35px; }
-  .hub-thread { margin-top: 34px; }
+  .hub-paper-sheet { inset: 17px 12px 92px 13px; }
   .hub-bookmark { top: 9px; right: 38px; height: 72px; }
-  .hub-paper-raccoon { right: -8px; bottom: 76px; width: 70px; height: 70px; }
+  .hub-paper-raccoon { right: -8px; width: 62px; height: 62px; }
   .hub-jesse-slip { left: 0; bottom: 2px; width: calc(100% - 22px); }
   .hub-tutor-tiles { padding: 44px 0 56px; }
   .hub-tutor-intro { margin-bottom: 31px; }
@@ -6622,9 +6629,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-brand { font-size: 24px; }
   .hub-hero-copy h1 { font-size: 42px; }
   .hub-workspace-object { height: 412px; }
-  .hub-paper-sheet { padding-inline: 23px; }
-  .hub-sheet-title { max-width: 10ch; font-size: 32px; }
-  .hub-thread { margin-inline: 0; }
   .hub-jesse-slip { grid-template-columns: 52px minmax(0, 1fr) 16px; gap: 8px; }
   .hub-jesse-slip > img { width: 52px; }
 }
@@ -6632,6 +6636,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   .hub-hero-cta,
   .hub-paper-sheet,
+  .hub-graph-search,
   .hub-jesse-slip,
   .hub-tutor-tile,
   .hub-jesse-slip > img { transition: none; }

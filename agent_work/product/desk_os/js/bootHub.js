@@ -217,6 +217,9 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const goalEcho = hub?.querySelector('[data-hub-goal-echo]');
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
   const masteryNavs = [...(hub?.querySelectorAll('[data-hub-mastery-nav]') || [])];
+  const graphVeil = hub?.querySelector('[data-hub-graph-veil]');
+  const graphSearchForm = hub?.querySelector('[data-hub-graph-search]');
+  const graphSearchInput = hub?.querySelector('[data-hub-graph-search-input]');
   const jesseNavs = [...(hub?.querySelectorAll('[data-hub-jesse-nav]') || [])];
   const resumeNavs = [...(hub?.querySelectorAll('[data-hub-resume-nav]') || [])];
   const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
@@ -499,6 +502,28 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     nav.addEventListener('click', () => {
       window.location.href = (getRole() || 'student') === 'tutor' ? '/tutor' : '/learn';
     });
+  });
+
+  // The knowledge-map card (2026-09-02 ask): first click reveals the search
+  // bar in place rather than navigating immediately, same "explore first,
+  // ask when ready" as the graph itself. After that the veil steps aside so
+  // the 3D map underneath (drag to orbit, click a node) is reachable too.
+  graphVeil?.addEventListener('click', () => {
+    if (!graphSearchForm) return;
+    graphSearchForm.hidden = false;
+    graphVeil.hidden = true;
+    window.requestAnimationFrame(() => {
+      graphSearchForm.classList.add('is-open');
+      graphSearchInput?.focus();
+    });
+  });
+  graphSearchForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (graphSearchInput?.value || '').trim();
+    // Same real deep link the Dashboard search already uses: Learn.tsx runs
+    // one search on mount off a ?q= param. An empty query still opens Learn,
+    // just without pre-filling one.
+    window.location.href = q ? `/learn?q=${encodeURIComponent(q)}` : '/learn';
   });
 
   jesseNavs.forEach((nav) => {
