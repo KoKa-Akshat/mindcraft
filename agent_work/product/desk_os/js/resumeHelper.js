@@ -514,6 +514,14 @@ export function createResumeHelper({ root, onToast }) {
         body: JSON.stringify({
           interests: draft.skills.slice(0, 5),
           location: draft.location || undefined,
+          // Same age already on the draft (asked for once, up front, per
+          // resume-agent.ts's own system prompt), so the search queries can
+          // finally tell a college student from a high schooler. Was never
+          // sent here before; discover-internships.ts's buildQueries() had
+          // no age input at all and stayed unconditionally high-school
+          // phrased even after resume-agent.ts's own suggestFromDraft
+          // fallback was fixed for exactly this on 2026-09-01.
+          age: draft.age || undefined,
         }),
       });
       const data = await res.json().catch(() => ({}));

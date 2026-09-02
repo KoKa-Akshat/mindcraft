@@ -46,15 +46,26 @@ export interface InternshipCandidate {
   verificationStatus: 'link_verified' | 'unverified'
 }
 
-function buildQueries(grade: number | undefined, program: string | undefined, interests: string[], location: string | undefined): string[] {
-  // High-school-appropriate phrasing, deliberately NOT "college internship"
-  // — this codebase's existing Macalester seed data assumes a college
-  // audience, but CLAUDE.md documents MindCraft's real students as high
-  // schoolers, so discovery queries are scoped to what's actually
-  // realistic and open to them (pre-college summer programs, teen research
-  // programs, local junior placements), not a college-internship board.
+// Age-aware phrasing (2026-09-02): this used to unconditionally assume
+// every student is a high schooler, phrasing every query as "teen research
+// internship" / "pre-college program", regardless of who was actually
+// asking. resume-agent.ts's own suggestFromDraft() fallback was fixed for
+// this exact bug on 2026-09-01 (see its own doc comment, which names this
+// function as the original source of the assumption) but this function,
+// the one that actually runs the real search, was never updated to match.
+// Same 19+ threshold, same "stay conservative, do not sniff experience out
+// of free text" reasoning as that fix.
+function buildQueries(age: number | undefined, grade: number | undefined, program: string | undefined, interests: string[], location: string | undefined): string[] {
   const topic = interests.length > 0 ? interests.slice(0, 3).join(' ') : (program ? `${program} prep` : 'STEM')
   const loc = location?.trim() || ''
+  const isCollege = typeof age === 'number' && age >= 19
+  if (isCollege) {
+    return [
+      `${topic} internship college student apply`,
+      `${topic} internship ${loc}`.trim(),
+      `entry level ${topic} job new grad ${loc}`.trim(),
+    ].slice(0, 3)
+  }
   const gradeHint = grade ? `high school grade ${grade}` : 'high school student'
   const queries = [
     `${topic} summer program for ${gradeHint} 2027 apply`,
@@ -84,7 +95,7 @@ async function resolveProfile(uid: string, body: { grade?: number; program?: str
   return { grade, program, location }
 }
 
-function safeExtractionPrompt(searchBundle: { query: string; results: SearchResult[] }[]): string {
+function safeExtractionPrompt(searchBundle: { query: string; results: SearchResult[] }[], isCollege: boolean): string {
   const blocks = searchBundle
     .map(
       ({ query, results }) =>
@@ -93,14 +104,15 @@ function safeExtractionPrompt(searchBundle: { query: string; results: SearchResu
     )
     .join('\n\n---\n\n')
 
-  return `You are extracting REAL internship / summer-program candidates for a high-school student from real Google search results below. Every field you output must be directly evidenced by a specific search result — never invent a company, program, deadline, or URL that isn't in the text below.
+  const audience = isCollege ? 'a college student' : 'a high-school student'
+  return `You are extracting REAL internship / job candidates for ${audience} from real Google search results below. Every field you output must be directly evidenced by a specific search result — never invent a company, program, deadline, or URL that isn't in the text below.
 
 ${blocks}
 
 Rules:
 - Only include a candidate if a search result names a specific, real program or opportunity (not a generic "browse jobs" homepage).
 - If a result's own URL is a direct posting/program page, use it as roleUrl and set verificationStatus to "link_verified". If you're inferring from a snippet that only implies a program exists but the URL is a generic homepage or aggregator, still include the candidate with your best URL, but set verificationStatus to "unverified" — never upgrade a guess to "link_verified".
-- "why" must be one sentence describing why this fits a high schooler, grounded in the snippet text.
+- "why" must be one sentence describing why this fits ${audience}, grounded in the snippet text.
 - Return 0-6 candidates. Zero is a completely valid and expected answer if nothing in the results is a real, specific opportunity.
 
 Return ONLY a JSON array, no prose, no markdown fences:
@@ -138,10 +150,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { grade?: number; program?: string; interests?: string[]; location?: string; studentGeminiKey?: string }
+  const body = (req.body || {}) as { grade?: number; program?: string; interests?: string[]; location?: string; studentGeminiKey?: string; age?: string | number }
   const interests = Array.isArray(body.interests) ? body.interests.map(String).slice(0, 5) : []
   const { grade, program, location } = await resolveProfile(uid, body)
   const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
+  const parsedAge = typeof body.age === 'number' ? body.age : parseInt(String(body.age ?? ''), 10)
+  const age = Number.isFinite(parsedAge) ? parsedAge : undefined
 
   // BYOK does NOT bypass these checks here (unlike generate-lesson-outline.ts) -
   // this endpoint's real cost isn't only the LLM extraction call, it's 2-3
@@ -168,7 +182,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const queries = buildQueries(grade, program, interests, location)
+    const isCollege = typeof age === 'number' && age >= 19
+    const queries = buildQueries(age, grade, program, interests, location)
     const searchBundle = await Promise.all(
       queries.map(async (query) => ({ query, results: await googleSearch(query, 5).catch(() => []) })),
     )
@@ -182,12 +197,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Search cost still lands on the platform (see the checks above,
       // unconditionally run) - only the extraction call itself moves to
       // the student's key, so nothing to record here.
-      text = await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle), 1800)
+      text = await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle, isCollege), 1800)
     } else {
       const message = await client.messages.create({
         model: MODEL,
         max_tokens: 1800,
-        messages: [{ role: 'user', content: safeExtractionPrompt(searchBundle) }],
+        messages: [{ role: 'user', content: safeExtractionPrompt(searchBundle, isCollege) }],
       })
       const costUsd =
         (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
