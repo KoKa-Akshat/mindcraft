@@ -50,6 +50,57 @@ export async function callAnthropic(user: string, options: AnthropicChatOptions)
   }
 }
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? ''
+const GEMINI_MODEL_DEFAULT = 'gemini-flash-lite-latest' // '-1.5-flash' is retired (404), '-latest' is a rolling alias, see researchAgent.ts's own note on this exact staleness trap
+
+export interface GeminiChatOptions {
+  model?: string
+  maxTokens: number
+  temperature?: number
+  system: string
+}
+
+/**
+ * Calls Gemini with the platform's own GEMINI_API_KEY (2026-09-02 addition):
+ * a second platform-level fallback alongside callAnthropic, added after the
+ * platform ANTHROPIC_API_KEY was found out of credits in production
+ * (discover-internships.ts's real failure, confirmed via Vercel logs, not
+ * assumed: "Your credit balance is too low to access the Anthropic API").
+ * Same never-throws, null-on-any-failure contract as callAnthropic/callGroq.
+ * Raw fetch to the Generative Language API rather than the @google/genai
+ * SDK studentGemini.ts uses — matches the existing raw-fetch platform-key
+ * pattern already proven in researchAgent.ts's summarizeSignals, not a
+ * third different way to call Gemini in this repo.
+ */
+export async function callGemini(user: string, options: GeminiChatOptions): Promise<string | null> {
+  if (!GEMINI_API_KEY) return null
+  try {
+    const model = options.model || GEMINI_MODEL_DEFAULT
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          generationConfig: {
+            maxOutputTokens: options.maxTokens,
+            temperature: options.temperature ?? 0.3,
+          },
+          contents: [{ role: 'user', parts: [{ text: `${options.system}\n\n${user}` }] }],
+        }),
+      },
+    )
+    if (!res.ok) return null
+    const data = (await res.json()) as {
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+    }
+    const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('') ?? ''
+    return text.trim() || null
+  } catch {
+    return null
+  }
+}
+
 export interface GroqChatOptions {
   model: string
   maxTokens: number

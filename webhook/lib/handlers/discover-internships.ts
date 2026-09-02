@@ -5,36 +5,34 @@
  * closes the one gap that made this feature's "Apply today" board pure
  * scaffolding: there was no real search behind it, only an LLM-suggested
  * (company, role, why, query) tuple stub fed by resume-chat conversation
- * (JobOSStore.ingestFromJesse). This runs 2-3 REAL Google Custom Search
- * queries (the one real live-web-search capability in this repo, shared
- * with researchAgent.ts via lib/googleSearch.ts — no Anthropic web-search
- * tool exists here) and extracts genuinely evidenced candidates via Claude,
- * never inventing a posting that isn't backed by a real search result.
+ * (JobOSStore.ingestFromJesse). This runs 2-3 REAL web searches via
+ * lib/googleSearch.ts (Serper as of 2026-09-02, shared with
+ * researchAgent.ts — the one real live-web-search capability in this
+ * repo) and extracts genuinely evidenced candidates via the platform
+ * Gemini key (callGemini, also switched 2026-09-02 after the platform
+ * Anthropic key was found out of credits in production), never inventing
+ * a posting that isn't backed by a real search result.
  *
- * Same auth+budget discipline as generate-lesson-outline.ts/generate-sim.ts:
- * verifyToken -> checkPlatformBudget -> checkAndRecordAttempt -> real call
- * -> recordActualSpend. NEVER writes to Firestore or JobOSStore itself —
- * returns candidates only. The client decides what reaches the board
- * (tap "Add to board"), matching this feature's existing "the board never
- * changes silently" discipline (JobOSStore.markApplied always requires a
- * real confirm; addRole is always an explicit client call).
+ * Auth+budget discipline (search cost) same as
+ * generate-lesson-outline.ts/generate-sim.ts: verifyToken ->
+ * checkPlatformBudget -> checkAndRecordAttempt -> real call. No per-call
+ * cost tracking on the extraction step itself, callGemini/
+ * studentGeminiComplete's usage is cheap enough this file does not meter
+ * it the way the old Anthropic call was metered. NEVER writes to
+ * Firestore or JobOSStore itself — returns candidates only. The client
+ * decides what reaches the board (tap "Add to board"), matching this
+ * feature's existing "the board never changes silently" discipline
+ * (JobOSStore.markApplied always requires a real confirm; addRole is
+ * always an explicit client call).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
 import { db } from '../firebase'
-import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
+import { checkAndRecordAttempt, checkPlatformBudget } from '../generationBudget'
 import { googleSearch, type SearchResult } from '../googleSearch'
 import { studentGeminiComplete } from '../studentGemini'
-
-const client = new Anthropic()
-const MODEL = 'claude-haiku-4-5-20251001'
-
-// Same published-rate cost accounting generate-lesson-outline.ts uses —
-// real usage-based cost, not a flat per-call guess.
-const INPUT_USD_PER_MTOK = 1.0
-const OUTPUT_USD_PER_MTOK = 5.0
+import { callGemini } from '../llmChat'
 
 export interface InternshipCandidate {
   company: string
@@ -159,10 +157,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // BYOK does NOT bypass these checks here (unlike generate-lesson-outline.ts) -
   // this endpoint's real cost isn't only the LLM extraction call, it's 2-3
-  // real Google Custom Search queries first (see file header), which a
-  // student's Gemini key cannot pay for and which recordActualSpend below
-  // has never tracked in costUsd anyway (a real, pre-existing gap, not
-  // introduced or fixed here). Letting a student key skip the attempt cap
+  // real search queries first (see file header), which a student's Gemini
+  // key cannot pay for. Letting a student key skip the attempt cap
   // would mean unlimited free-to-them Search API usage against MindCraft's
   // own quota/billing - a real exposure the other BYOK'd handlers don't
   // share, so the cap stays active regardless of whether a key is present.
@@ -192,27 +188,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ status: 'ok', candidates: [], reason: 'No live search results this run' })
     }
 
-    let text: string
-    if (studentGeminiKey) {
-      // Search cost still lands on the platform (see the checks above,
-      // unconditionally run) - only the extraction call itself moves to
-      // the student's key, so nothing to record here.
-      text = await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle, isCollege), 1800)
-    } else {
-      const message = await client.messages.create({
-        model: MODEL,
-        max_tokens: 1800,
-        messages: [{ role: 'user', content: safeExtractionPrompt(searchBundle, isCollege) }],
-      })
-      const costUsd =
-        (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
-        (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
-      recordActualSpend(costUsd).catch((e) => {
-        console.error('discover-internships: failed to record platform spend', e)
-      })
-      const textBlock = message.content.find((b) => b.type === 'text')
-      text = textBlock && 'text' in textBlock ? textBlock.text : ''
-    }
+    // Platform extraction now goes through Gemini, not Anthropic (2026-09-02):
+    // the platform ANTHROPIC_API_KEY was found out of credits in production
+    // (confirmed via Vercel logs: "Your credit balance is too low to access
+    // the Anthropic API"), so this endpoint was failing on every single
+    // real search, silently to the student ("Search did not come back").
+    // callGemini never throws, returns null on any failure (including no
+    // key configured), same contract studentGeminiComplete already has, so
+    // a Gemini-side failure here reads as zero candidates, an honest
+    // answer this file already treats as valid, not a 502.
+    const text = studentGeminiKey
+      ? await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle, isCollege), 1800)
+      : (await callGemini(safeExtractionPrompt(searchBundle, isCollege), { system: '', maxTokens: 1800 })) ?? ''
     const candidates = parseCandidates(text)
     return res.status(200).json({ status: 'ok', candidates })
   } catch (err) {
