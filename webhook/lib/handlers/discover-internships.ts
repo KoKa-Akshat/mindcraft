@@ -33,6 +33,7 @@ import { checkAndRecordAttempt, checkPlatformBudget } from '../generationBudget'
 import { googleSearch, type SearchResult } from '../googleSearch'
 import { studentGeminiComplete } from '../studentGemini'
 import { callGemini } from '../llmChat'
+import { matchAlumniCompanies, isAlumniCompany } from '../alumniCompanies'
 
 export interface InternshipCandidate {
   company: string
@@ -42,6 +43,12 @@ export interface InternshipCandidate {
   deadline: string | null
   roleUrl: string
   verificationStatus: 'link_verified' | 'unverified'
+  // Real signal, not decorative (2026-09-02): true only when the extracted
+  // company name matches a real Macalester alumni employer (see
+  // lib/alumniCompanies.ts), so the client can show "an alum works here"
+  // instead of leaving that connection invisible after the alumni-weighted
+  // query already found it.
+  alumniConnection: boolean
 }
 
 // Age-aware phrasing (2026-09-02): this used to unconditionally assume
@@ -58,11 +65,21 @@ function buildQueries(age: number | undefined, grade: number | undefined, progra
   const loc = location?.trim() || ''
   const isCollege = typeof age === 'number' && age >= 19
   if (isCollege) {
-    return [
+    // Alumni-weighted queries (2026-09-02): real Macalester alumni employer
+    // data (see lib/alumniCompanies.ts for what this is and is not), matched
+    // against the student's own topic. Put first when there is a real match,
+    // since a company an alumnus actually works at is a stronger, more
+    // specific lead than a generic "college student apply" query, generic
+    // queries still run as the remaining slots (also a real safety net when
+    // nothing matches, matchAlumniCompanies returns empty, not a guess).
+    const alumniMatches = matchAlumniCompanies(topic, 2)
+    const queries = [
+      ...alumniMatches.map((company) => `${topic} internship ${company} apply`),
       `${topic} internship college student apply`,
-      `${topic} internship ${loc}`.trim(),
       `entry level ${topic} job new grad ${loc}`.trim(),
-    ].slice(0, 3)
+      `${topic} internship ${loc}`.trim(),
+    ]
+    return queries.slice(0, 3)
   }
   const gradeHint = grade ? `high school grade ${grade}` : 'high school student'
   const queries = [
@@ -126,15 +143,19 @@ function parseCandidates(text: string): InternshipCandidate[] {
     return parsed
       .filter((c) => c && typeof c.company === 'string' && typeof c.role === 'string' && c.company.trim() && c.role.trim())
       .slice(0, 6)
-      .map((c) => ({
-        company: String(c.company).slice(0, 120),
-        role: String(c.role).slice(0, 160),
-        location: typeof c.location === 'string' ? c.location.slice(0, 100) : '',
-        why: typeof c.why === 'string' ? c.why.slice(0, 300) : '',
-        deadline: typeof c.deadline === 'string' && c.deadline.trim() ? c.deadline.slice(0, 40) : null,
-        roleUrl: typeof c.roleUrl === 'string' ? c.roleUrl.slice(0, 500) : '',
-        verificationStatus: c.verificationStatus === 'link_verified' ? 'link_verified' : 'unverified',
-      }))
+      .map((c) => {
+        const company = String(c.company).slice(0, 120)
+        return {
+          company,
+          role: String(c.role).slice(0, 160),
+          location: typeof c.location === 'string' ? c.location.slice(0, 100) : '',
+          why: typeof c.why === 'string' ? c.why.slice(0, 300) : '',
+          deadline: typeof c.deadline === 'string' && c.deadline.trim() ? c.deadline.slice(0, 40) : null,
+          roleUrl: typeof c.roleUrl === 'string' ? c.roleUrl.slice(0, 500) : '',
+          verificationStatus: c.verificationStatus === 'link_verified' ? 'link_verified' : 'unverified',
+          alumniConnection: isAlumniCompany(company),
+        }
+      })
   } catch {
     return []
   }
