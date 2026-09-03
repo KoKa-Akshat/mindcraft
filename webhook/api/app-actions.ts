@@ -50,6 +50,7 @@ import simplifyChapter from '../lib/handlers/simplify-chapter'
 import generateResumePdf from '../lib/handlers/generate-resume-pdf'
 import learnTutor from '../lib/handlers/learn-tutor'
 import learnTutorHistory from '../lib/handlers/learn-tutor-history'
+import learnScopeAgent from '../lib/handlers/learn-scope-agent'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -106,6 +107,9 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   // pdf-lib is pure JS (~1MB), so it does not move this function anywhere
   // near the 250MB size limit the way a headless renderer would.
   'generate-resume-pdf': generateResumePdf,
+  // Fun Lessons' pre-search chooser (2026-09-02): a few clarifying
+  // questions before handing off to the real concept-resolve search.
+  'learn-scope-agent': learnScopeAgent,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

@@ -216,14 +216,10 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const goalType = hub?.querySelector('[data-hub-goal-type]');
   const goalEcho = hub?.querySelector('[data-hub-goal-echo]');
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
-  const masteryNavs = [...(hub?.querySelectorAll('[data-hub-mastery-nav]') || [])];
   const graphVeil = hub?.querySelector('[data-hub-graph-veil]');
   const jesseNavs = [...(hub?.querySelectorAll('[data-hub-jesse-nav]') || [])];
   const resumeNavs = [...(hub?.querySelectorAll('[data-hub-resume-nav]') || [])];
   const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
-  const jesseBox = hub?.querySelector('[data-jesse-scene]');
-  const jesseStageName = hub?.querySelector('[data-jesse-stage-name]');
-  const jesseCountEl = hub?.querySelector('[data-jesse-count]');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
   const tab2Row = hub?.querySelector('[data-hub-tabs2]');
@@ -267,7 +263,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
         day: 'numeric',
       }).format(new Date());
     }
-    paintJesse(user);
     paintRoleSurfaces();
     return user;
   }
@@ -328,64 +323,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     try { localStorage.setItem(GOAL_FOCUS_KEY, inst.id); } catch { /* ignore */ }
     paintGoalEcho(inst, goal);
     paintMastery(list);
-  }
-
-  /**
-   * Jesse's growth curve, driven only by the real handed off learn count
-   * (users/{uid}.learnActivityCount, which the /learn page bumps at three
-   * genuine moments: a search resolving to a real concept, a real chapter
-   * landing on screen, a check question actually answered). Nothing on this
-   * side ever invents activity: with no handed off count Jesse shows an
-   * unknown state, and a count of 0 is honestly stage 0.
-   *
-   * Threshold reasoning: one sincere /learn session produces roughly 4 to 8
-   * of those events (a search or two, a few chapters, a check answer), so:
-   *   stage 0, Hatchling, 0+: brand new, nothing proven yet, still in the
-   *     egg.
-   *   stage 1, Fledgling, 3+: reachable inside the very first real session;
-   *     an early honest win that teaches the mechanic (learning grows him).
-   *   stage 2, Student, 10+: a couple of real sessions; earns his glasses.
-   *   stage 3, Scholar, 25+: several sessions across days; earns his book.
-   *   stage 4, Sage, 60+: a sustained habit over weeks; earns the cap.
-   *     Deliberately far out so the top stage means something.
-   */
-  const JESSE_STAGES = [
-    { min: 60, idx: 4, name: 'Sage' },
-    { min: 25, idx: 3, name: 'Scholar' },
-    { min: 10, idx: 2, name: 'Student' },
-    { min: 3, idx: 1, name: 'Fledgling' },
-    { min: 0, idx: 0, name: 'Hatchling' },
-  ];
-
-  function jesseStageFor(count) {
-    return JESSE_STAGES.find((s) => count >= s.min) || JESSE_STAGES[JESSE_STAGES.length - 1];
-  }
-
-  /** Honest pet: stage comes only from the real learn count, dash when unknown. */
-  function paintJesse(user) {
-    if (!jesseBox) return;
-    const raw = Number(user?.learnCount);
-    const known = Number.isFinite(raw) && raw >= 0;
-    const count = known ? Math.floor(raw) : 0;
-    const stage = jesseStageFor(count);
-    jesseBox.dataset.jesseStage = String(stage.idx);
-    if (jesseStageName) jesseStageName.textContent = stage.name;
-    if (jesseCountEl) {
-      if (known) {
-        jesseCountEl.textContent = count === 1 ? '1 learning moment' : `${count} learning moments`;
-        jesseCountEl.classList.remove('is-unknown');
-      } else {
-        jesseCountEl.textContent = 'no learning moments yet';
-        jesseCountEl.classList.add('is-unknown');
-      }
-    }
-    if (jesseBox) {
-      jesseBox.setAttribute(
-        'aria-label',
-        `Tutors and events near you. Real learning on Learn grows Jesse. Jesse is a ${stage.name.toLowerCase()}`
-          + (known ? `, from ${count} real learning moments.` : '.'),
-      );
-    }
   }
 
   /** Honest estimate beside the cube · dash when we do not know */
@@ -496,17 +433,13 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (hub) hub.hidden = true;
   }
 
-  masteryNavs.forEach((nav) => {
-    nav.addEventListener('click', () => {
-      window.location.href = (getRole() || 'student') === 'tutor' ? '/tutor' : '/learn';
-    });
-  });
-
-  // The knowledge-map card (2026-09-02): a plain click-through to /learn,
-  // same as the "Open Learn" CTA beside it. An in-card search reveal was
-  // tried and reverted the same day — the founder's actual ask was a real
-  // bottom search bar on /learn's own entry screen (EntryStage.tsx), not a
-  // second search UI living here too.
+  // The knowledge-map card is the only Workspace-tab affordance now
+  // (2026-09-02: the "Open Learn" CTA, paper-stack, bookmark, raccoon, and
+  // Jesse slip that used to surround it are gone) — a plain click-through
+  // to /learn. Not role-branched: heroCard (this card's own container) is
+  // hidden entirely for tutor accounts via paintRoleSurfaces(), so a tutor
+  // never reaches this click in the first place; the old /tutor branch
+  // here was already unreachable for that reason before this simplified.
   graphVeil?.addEventListener('click', () => {
     window.location.href = '/learn';
   });

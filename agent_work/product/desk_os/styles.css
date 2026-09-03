@@ -4079,22 +4079,9 @@ body.is-hub-chrome .sky { opacity: 0; }
   font: 400 15px/1.5 var(--sans);
   color: #667069;
 }
-.hub-hero-cta {
-  align-self: flex-start;
-  border: none;
-  border-radius: 999px;
-  padding: 13px 26px;
-  font: 600 14px/1 var(--sans);
-  color: #f6f5f0;
-  background: #12251c;
-  cursor: pointer;
-  transition: background .15s ease;
-}
-.hub-hero-cta:hover { background: #1d3a2b; }
 @media (max-width: 900px) {
   .hub-hero-card { flex-direction: column; text-align: center; padding: 32px 24px; }
   .hub-hero-copy { max-width: none; align-items: center; }
-  .hub-hero-cta { align-self: center; }
   .hub-orb-stage-hero { width: 260px; height: 260px; perspective: 1050px; }
   .hub-orb-stage-hero .hub-cube { --s: 140px; }
 }
@@ -5596,9 +5583,14 @@ body.is-hub-chrome .sky { opacity: 0; }
 .rh-jesse-face {
   width: 34px;
   height: 34px;
+  padding: 5px;
   border-radius: 50%;
-  object-fit: cover;
+  /* contain, not cover: the raccoon mark (2026-09-02, swapped in place of
+     the owl) is a full-body silhouette with real transparent margin,
+     cover would crop into it at this small a size. */
+  object-fit: contain;
   background: rgba(20, 58, 46, 0.06);
+  box-sizing: border-box;
 }
 .rh-jesse-status { margin: 2px 0 0; font: 500 11px/1.2 var(--sans); color: var(--desk-forest); }
 
@@ -6132,9 +6124,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-settings:focus-visible,
 .hub-signout:focus-visible,
 .hub-tabs2 button:focus-visible,
-.hub-hero-cta:focus-visible,
 .hub-graph-veil:focus-visible,
-.hub-jesse-slip:focus-visible,
 .hub-tutor-tile:focus-visible {
   outline: 3px solid var(--desk-forest);
   outline-offset: 3px;
@@ -6196,32 +6186,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   letter-spacing: 0;
 }
 
-.hub-hero-cta {
-  min-width: 170px;
-  min-height: 52px;
-  margin-top: 28px;
-  padding: 0 17px 0 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 26px;
-  border: 1px solid var(--desk-ink);
-  border-radius: 6px;
-  background: var(--desk-ink);
-  color: var(--desk-paper);
-  font: 750 14px/1 var(--sans);
-  letter-spacing: 0;
-  box-shadow: 0 7px 0 rgba(20, 58, 46, 0.14);
-  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
-}
-
-.hub-hero-cta svg { width: 18px; height: 18px; }
-.hub-hero-cta:hover {
-  background: #1d6541;
-  transform: translateY(-2px);
-  box-shadow: 0 9px 0 rgba(20, 58, 46, 0.12);
-}
-
 .hub-hero-copy .hub-human-loop {
   width: 100%;
   margin: 38px 0 0;
@@ -6233,70 +6197,26 @@ body.is-hub-chrome .sky { opacity: 0; }
 }
 .hub-human-loop strong { color: var(--desk-ink); }
 
+/* One clean object, not a page in a paper stack (2026-09-02: dropped the
+   paper-back layers, bookmark ribbon, raccoon, and Jesse slip that used to
+   surround it) — .hub-workspace-object and .hub-graph-sheet are the same
+   element now, straight (no tilt), filling its full box edge to edge. */
 .hub-workspace-object {
   position: relative;
   width: 100%;
-  max-width: 620px;
-  height: 540px;
+  max-width: 680px;
+  height: 600px;
   justify-self: end;
-  isolation: isolate;
-}
-
-.hub-paper-back,
-.hub-paper-sheet {
-  position: absolute;
-  display: block;
-  border-radius: 6px;
-}
-
-.hub-paper-back-one {
-  z-index: 0;
-  inset: 52px 19px 82px 46px;
-  background: var(--desk-ink);
-  transform: rotate(4.2deg);
-  box-shadow: 0 24px 44px rgba(20, 58, 46, 0.15);
-}
-
-.hub-paper-back-two {
-  z-index: 1;
-  inset: 39px 37px 88px 27px;
-  background: #dce7dc;
-  border: 1px solid rgba(20, 58, 46, 0.17);
-  transform: rotate(-3.2deg);
-}
-
-.hub-paper-sheet {
-  z-index: 3;
-  inset: 25px 30px 92px 31px;
-  width: auto;
-  height: auto;
-  padding: 38px 42px 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(20, 58, 46, 0.21);
   background: var(--desk-paper);
-  color: var(--desk-ink);
-  text-align: left;
-  cursor: pointer;
-  transform: rotate(-0.8deg);
   box-shadow: 0 24px 58px rgba(20, 58, 46, 0.13), 0 2px 0 rgba(20, 58, 46, 0.08);
   transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
 }
-
-.hub-paper-sheet:hover {
-  transform: rotate(-0.8deg) translateY(-5px);
+.hub-workspace-object:hover {
+  transform: translateY(-5px);
   box-shadow: 0 31px 66px rgba(20, 58, 46, 0.16), 0 2px 0 rgba(20, 58, 46, 0.08);
-}
-
-/* The graph card: same rotated-paper chrome as .hub-paper-sheet above
-   (position/tilt/shadow/radius/border), but edge-to-edge content instead
-   of text padding, and a real focusable button + form inside instead of
-   the whole card being one <button>. */
-.hub-graph-sheet {
-  padding: 0;
-  cursor: default;
 }
 .hub-graph-tag {
   position: absolute;
@@ -6340,96 +6260,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   cursor: pointer;
 }
 
-.hub-bookmark {
-  position: absolute;
-  z-index: 4;
-  top: 15px;
-  right: 66px;
-  width: 13px;
-  height: 92px;
-  background: var(--lime);
-  border: 1px solid var(--desk-ink);
-  border-top: 0;
-  transform: rotate(-0.8deg);
-  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.1);
-}
-
-/* Moved from the bottom-right corner to the right edge, vertically
-   centered (2026-09-02, alongside the knowledge-map card replacing the
-   old paper-sheet content). The bottom is where the click-to-reveal
-   search bar now lives (needs its full width including the submit
-   button), the top-right is .hub-bookmark's strip and the top-left is
-   .hub-graph-tag's pill — mid-right, on a fixed z-index tied to the card
-   rather than a fixed pixel offset, is the one edge clear of all three at
-   every card height this hero renders at. */
-.hub-paper-raccoon {
-  position: absolute;
-  z-index: 4;
-  right: -6px;
-  top: 50%;
-  width: 78px;
-  height: 78px;
-  object-fit: contain;
-  transform: translateY(-50%) rotate(6deg);
-  filter: drop-shadow(0 7px 9px rgba(20, 58, 46, 0.16));
-  pointer-events: none;
-}
-
-.hub-jesse-slip {
-  position: absolute;
-  z-index: 6;
-  left: 1px;
-  bottom: 4px;
-  width: min(355px, calc(100% - 36px));
-  min-height: 82px;
-  padding: 10px 13px 10px 10px;
-  display: grid;
-  grid-template-columns: 62px minmax(0, 1fr) 18px;
-  align-items: center;
-  gap: 11px;
-  border: 1px solid rgba(20, 58, 46, 0.22);
-  border-radius: 6px;
-  background: var(--desk-paper);
-  color: var(--desk-ink);
-  text-align: left;
-  box-shadow: 0 14px 30px rgba(20, 58, 46, 0.13);
-  cursor: pointer;
-  transform: rotate(1.4deg);
-  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
-}
-.hub-jesse-slip:hover {
-  transform: rotate(0deg) translateY(-3px);
-  box-shadow: 0 18px 34px rgba(20, 58, 46, 0.16);
-}
-.hub-jesse-slip > img {
-  width: 62px;
-  height: 53px;
-  object-fit: contain;
-  transform-origin: 50% 80%;
-  transition: transform 180ms var(--ease), opacity 180ms ease;
-}
-.hub-jesse-slip[data-jesse-stage="0"] > img { transform: scale(0.72); opacity: 0.72; }
-.hub-jesse-slip[data-jesse-stage="1"] > img { transform: scale(0.84); opacity: 0.82; }
-.hub-jesse-slip[data-jesse-stage="2"] > img { transform: scale(0.94); opacity: 0.9; }
-.hub-jesse-slip[data-jesse-stage="3"] > img { transform: scale(1.02); opacity: 0.96; }
-.hub-jesse-slip[data-jesse-stage="4"] > img { transform: scale(1.08); opacity: 1; }
-.hub-jesse-slip > span { min-width: 0; }
-.hub-jesse-slip strong {
-  display: block;
-  font: 750 13px/1.25 var(--sans);
-  letter-spacing: 0;
-}
-.hub-jesse-slip small {
-  display: block;
-  margin-top: 4px;
-  overflow: hidden;
-  color: var(--desk-muted);
-  font: 600 10.5px/1.3 var(--sans);
-  letter-spacing: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.hub-jesse-slip > svg { width: 18px; height: 18px; }
 
 .hub-tutor-tiles {
   width: 100%;
@@ -6565,15 +6395,8 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-greet { margin-bottom: 13px; font-size: 12px; }
   .hub-hero-copy h1 { font-size: 46px; line-height: 1; }
   .hub-hero-copy .hub-hero-prompt { margin-top: 17px; font-size: 16px; }
-  .hub-hero-cta { margin-top: 23px; }
   .hub-hero-copy .hub-human-loop { margin-top: 31px; }
   .hub-workspace-object { height: 430px; }
-  .hub-paper-back-one { inset: 37px 7px 82px 28px; }
-  .hub-paper-back-two { inset: 29px 18px 88px 12px; }
-  .hub-paper-sheet { inset: 17px 12px 92px 13px; }
-  .hub-bookmark { top: 9px; right: 38px; height: 72px; }
-  .hub-paper-raccoon { right: -8px; width: 62px; height: 62px; }
-  .hub-jesse-slip { left: 0; bottom: 2px; width: calc(100% - 22px); }
   .hub-tutor-tiles { padding: 44px 0 56px; }
   .hub-tutor-intro { margin-bottom: 31px; }
   .hub-tutor-intro h1 { font-size: 44px; }
@@ -6584,14 +6407,9 @@ body.is-hub-chrome .sky { opacity: 0; }
   .hub-brand { font-size: 24px; }
   .hub-hero-copy h1 { font-size: 42px; }
   .hub-workspace-object { height: 412px; }
-  .hub-jesse-slip { grid-template-columns: 52px minmax(0, 1fr) 16px; gap: 8px; }
-  .hub-jesse-slip > img { width: 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hub-hero-cta,
-  .hub-paper-sheet,
-  .hub-jesse-slip,
-  .hub-tutor-tile,
-  .hub-jesse-slip > img { transition: none; }
+  .hub-workspace-object,
+  .hub-tutor-tile { transition: none; }
 }

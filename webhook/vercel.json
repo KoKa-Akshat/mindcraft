@@ -55,7 +55,8 @@
     { "source": "/api/simplify-chapter", "destination": "/api/app-actions?action=simplify-chapter" },
     { "source": "/api/generate-resume-pdf", "destination": "/api/app-actions?action=generate-resume-pdf" },
     { "source": "/api/learn-tutor", "destination": "/api/app-actions?action=learn-tutor" },
-    { "source": "/api/learn-tutor-history", "destination": "/api/app-actions?action=learn-tutor-history" }
+    { "source": "/api/learn-tutor-history", "destination": "/api/app-actions?action=learn-tutor-history" },
+    { "source": "/api/learn-scope-agent", "destination": "/api/app-actions?action=learn-scope-agent" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },

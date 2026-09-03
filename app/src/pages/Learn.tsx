@@ -951,7 +951,6 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
 
         {!searchedQuery && !materials && !routeCardsFor && (
           <EntryStage
-            onFocusSearch={() => entrySearchInputRef.current?.focus()}
             onUploadHomework={() => topUploadFileRef.current?.click()}
             nudgeLabel={nudge && !nudgeDismissed ? nudge.label : null}
             onPracticeNudge={() => {

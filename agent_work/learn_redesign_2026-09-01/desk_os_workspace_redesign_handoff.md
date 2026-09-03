@@ -316,3 +316,101 @@ Same day, next ask, covering five separate items:
   the one item in this round that would have shipped a real regression if
   skipped.
 - `npm run build` (tsc + vite) clean.
+
+## Round five: Fun Lessons becomes a real conversation, Desk OS hero stripped to one object
+
+Two unrelated halves of the same message, both shipped.
+
+### Fun Lessons: a real multi-turn scoping conversation, not a one-shot box
+
+The founder's ask: click Fun Lessons, Jesse asks what you're preparing for
+or want to learn, asks real follow-ups, then decides what to show once it
+knows enough — not the single "type your topic" reveal from round four.
+
+Built a new backend, `webhook/lib/handlers/learn-scope-agent.ts` (routed
+through `app-actions.ts` + `vercel.json`, same Hobby-cap pattern every
+other handler here uses — the deployment already sits at exactly 12
+functions), mirroring `resume-agent.ts`'s established shape (no auth
+required, `callAnthropic → callGemini → callGroq → BYOK` waterfall,
+strict-JSON model contract, honest fallback if every provider fails) but
+scoped narrowly: the model's ONLY job is turning a few exchanges into a
+good search query (`ready`/`searchQuery`), never inventing lesson content
+itself. Once `ready` fires, the real handoff is to the exact same
+`runSearch()` pipeline everything else on this page already uses — same
+discipline as Practice Probe's real-bank-only rule and
+discover-internships' honesty filter: the LLM proposes a query, the real
+concept library decides what gets taught.
+
+Client: new `app/src/lib/learnScope.ts` (mirrors `learnTutor.ts`'s shape,
+no-auth to match the handler), and a new `scope` mode in `EntryStage.tsx`
+— a compact conversation card (small scrollback, Jesse/You labeled lines,
+one input) that opens on "Fun Lessons," calls the real endpoint each
+turn, and hands off to `onSearch(searchQuery)` the moment it's ready.
+
+**Real bug caught by actually running the conversation, not just reading
+the code:** a live multi-turn test against the real API reached a 4th
+clarifying question before the model called itself ready — a fine
+individual answer, but not the hard guarantee "never trap the student in
+endless questions" needs (this project's `sanitizeText` and `discover-
+internships`'s aggregator-page fix already established that "never dead-
+end the user" is a hard requirement here, not a suggestion). Added a
+code-side cap: after 3 real student turns, force a handoff on the current
+message regardless of what the model wants. Re-ran the same test after
+the fix; a second live run actually converged on its own by turn 3 with a
+genuinely good query ("quadratic factoring sign errors") — confirms real
+model variance run to run, and that the cap is a backstop for the slow
+runs, not the common case.
+
+**Also answered, not built:** the founder asked in the same message how
+sim (interactive simulation) selection is decided today, floating "voice
+sims" as a maybe. Real answer, given directly rather than assumed: sims
+are either a fixed pre-built Firestore doc keyed by concept id
+(`concept-library-sims/{conceptId}`, only fetched when the concept's own
+`hasSim` flag is true), or generated on demand through a real backend
+pipeline (`/api/generate-sim`: fit-check, generate, headless render,
+structural rubric, vision gate) when no pre-built one exists — no LLM is
+involved in the matching step itself, only in generation. "Voice sims"
+specifically was not scoped or built this round; flagged back rather than
+guessed at.
+
+### Desk OS Workspace hero: the graph is the only thing there now
+
+"No need to have logo / mascot or Jesse is nearby thing or the page under
+it — just put that one neat thing." Removed, from `.hub-workspace-object`:
+the paper-back-one/two stacked-paper layers, the bookmark ribbon, the
+raccoon mascot, the "Jesse is nearby" slip, and the "Open Learn" CTA
+button in the copy column beside it (redundant now — clicking the graph
+card already launches `/learn`, unchanged). `.hub-workspace-object` and
+`.hub-graph-sheet` collapsed into one element: straight (no tilt, this
+was "a page in a paper stack," now it's the one object), filling its
+whole box edge to edge, sized up (`680×600`, was `620×540`) now that
+nothing else needs to share the space. Removed the now-fully-dead
+`paintJesse()`/`JESSE_STAGES` growth-stage system from `bootHub.js` (the
+slip was its only consumer) and the now-empty `masteryNavs` wiring,
+rather than leaving orphaned no-op code behind.
+
+Also: the Resume Helper's Jesse avatar (`.rh-jesse-face`) was showing
+`mascot-ivory.png`, an illustrated owl — the founder called it "the
+eagle" and asked for "our mascot" instead. Swapped to `raccoon-logo.png`
+(confirmed by actually looking at both image files, not guessed from the
+filename), and switched `object-fit` from `cover` to `contain` since the
+raccoon is a full-body silhouette with real transparent margin, not a
+face-cropped portrait like the owl was — `cover` would have zoomed into
+one corner of it at this small a size.
+
+### Verification (round five)
+
+- Ran the actual new backend handler locally against the real Anthropic/
+  Gemini/Groq waterfall (a small `tsx` harness posting real conversation
+  turns), not just a code read — this is what caught the 4-turn
+  convergence issue and confirmed the fix, and confirmed a real
+  `searchQuery` comes back, not a stub.
+- Static style previews (same technique as prior rounds) for the scope
+  conversation card, since `/learn` is auth-gated here.
+- Real screenshots (this environment can reach Desk OS unauthenticated)
+  of the simplified hero at desktop/iPad/phone — zero horizontal overflow
+  at any width, confirmed the raccoon-swap renders correctly via the same
+  screenshot pass.
+- `npx tsc --noEmit` clean on every touched file (webhook and app,
+  separately) after each round of edits, not just once at the end.
+- `npm run build` (tsc + vite) clean.

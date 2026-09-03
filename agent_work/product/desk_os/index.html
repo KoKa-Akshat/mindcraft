@@ -182,42 +182,20 @@
               <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
               <h1>Start with what is in front of you.</h1>
               <p class="hub-hero-prompt">A question. A draft. An idea.</p>
-              <button type="button" class="hub-hero-cta" data-hub-mastery-nav>
-                <span>Open Learn</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-              </button>
               <p class="hub-human-loop"><strong>AI keeps the thread.</strong> People help you move it.</p>
             </div>
 
-            <div class="hub-workspace-object">
-              <span class="hub-paper-back hub-paper-back-one" aria-hidden="true"></span>
-              <span class="hub-paper-back hub-paper-back-two" aria-hidden="true"></span>
-              <!-- The real concept graph (same 3d-force-graph viewer /learn's
-                   own map uses, full-graph-viewer.html, already auto-rotates
-                   on load) standing in for the old static "next page" card
-                   (2026-09-02 ask). A div, not a button: it holds an iframe,
-                   which a <button> can't contain. The veil button on top of
-                   it is a plain click-through to /learn, same destination as
-                   the "Open Learn" CTA beside it — the real search bar this
-                   ask wanted lives on /learn's own entry screen instead
-                   (EntryStage.tsx), not a second one here. -->
-              <div class="hub-paper-sheet hub-graph-sheet" data-hub-graph-sheet aria-label="Your knowledge map">
-                <span class="hub-graph-tag">Your knowledge map</span>
-                <iframe class="hub-graph-frame" data-hub-graph-frame src="/full-graph-viewer.html?hideSubjects&amp;hideLegend" title="Your knowledge map" loading="lazy" tabindex="-1"></iframe>
-                <div class="hub-graph-vignette" aria-hidden="true"></div>
-                <button type="button" class="hub-graph-veil" data-hub-graph-veil aria-label="Open Learn"></button>
-              </div>
-              <span class="hub-bookmark" aria-hidden="true"></span>
-              <img class="hub-paper-raccoon" src="img/orbs/raccoon-logo.png" alt="" aria-hidden="true" />
-
-              <button type="button" class="hub-jesse-slip" data-hub-jesse-nav data-jesse-scene data-jesse-stage="0" aria-label="Open tutors and events">
-                <img src="img/orbs/mascot.png" alt="" aria-hidden="true" />
-                <span>
-                  <strong>Jesse is nearby</strong>
-                  <small><span data-jesse-stage-name>Hatchling</span> · <span data-jesse-count>no learning moments yet</span></small>
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-              </button>
+            <!-- Just the graph now (2026-09-02 ask): the paper-stack frame,
+                 bookmark ribbon, raccoon mascot, and "Jesse is nearby" slip
+                 are gone, along with the "Open Learn" CTA beside it in the
+                 copy column — clicking the graph itself already launches
+                 /learn (the veil button below, unchanged), so a second,
+                 separate way to do the same thing was redundant chrome. -->
+            <div class="hub-workspace-object hub-graph-sheet" data-hub-graph-sheet aria-label="Your knowledge map">
+              <span class="hub-graph-tag">Your knowledge map</span>
+              <iframe class="hub-graph-frame" data-hub-graph-frame src="/full-graph-viewer.html?hideSubjects&amp;hideLegend" title="Your knowledge map" loading="lazy" tabindex="-1"></iframe>
+              <div class="hub-graph-vignette" aria-hidden="true"></div>
+              <button type="button" class="hub-graph-veil" data-hub-graph-veil aria-label="Open Learn"></button>
             </div>
           </div>
 
@@ -347,7 +325,7 @@
 
             <div class="rh-chat-col">
               <div class="rh-jesse-top">
-                <img class="rh-jesse-face" src="img/orbs/mascot-ivory.png" alt="" />
+                <img class="rh-jesse-face" src="img/orbs/raccoon-logo.png" alt="" />
                 <div>
                   <strong>Jesse</strong>
                   <p class="rh-jesse-status" data-rh-status>Ready when you are</p>

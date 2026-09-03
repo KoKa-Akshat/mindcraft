@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { ACCENT_FOREST, CARD, FONT_STACK, TEXT_FAINT, TEXT_PRIMARY, TEXT_SOFT } from './shared'
+import { askLearnScope, type ScopeTurn } from '../../lib/learnScope'
 
 export interface EntryStageProps {
-  onFocusSearch: () => void
   onUploadHomework: () => void
   nudgeLabel: string | null
   onPracticeNudge: () => void
@@ -44,10 +44,12 @@ function getSpeechRecognition(): (new () => SpeechRecognitionLike) | null {
   return w.SpeechRecognition || w.webkitSpeechRecognition || null
 }
 
-type Mode = 'default' | 'chooser' | 'voice'
+type Mode = 'default' | 'chooser' | 'voice' | 'scope'
 type VoiceStatus = 'listening' | 'unsupported' | 'error'
 
 const OPTION_BTN_BASE = { textAlign: 'left' as const, padding: '14px 16px', borderRadius: 12, fontSize: 14, fontWeight: 600, cursor: 'pointer' as const }
+
+const SCOPE_OPENING = 'What are you preparing for, or what do you want to learn?'
 
 /** The very first thing a student sees on a blank /learn: a greeting from
  * Jesse and a few real starting points, instead of a bare search box or the
@@ -63,13 +65,59 @@ const OPTION_BTN_BASE = { textAlign: 'left' as const, padding: '14px 16px', bord
  * pipeline everything else here already uses). Unsupported browsers get an
  * honest message and a way back, never a silently broken mic. */
 export default function EntryStage({
-  onFocusSearch, onUploadHomework, nudgeLabel, onPracticeNudge,
+  onUploadHomework, nudgeLabel, onPracticeNudge,
   query, onQueryChange, onSearch, searchLoading, searchInputRef,
 }: EntryStageProps) {
   const [mode, setMode] = useState<Mode>('default')
   const [voiceStatus, setVoiceStatus] = useState<VoiceStatus>('listening')
   const [voiceError, setVoiceError] = useState('')
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null)
+
+  // Fun Lessons (2026-09-02 ask): Jesse asks what the student is preparing
+  // for, then real follow-ups, until it knows enough to search — not a
+  // single-shot "type your topic" box. scopeHistory is the full exchange so
+  // far (both sides), sent back each turn the same stateless way every
+  // other conversational handler here already works; the actual "what to
+  // teach" decision always stays with the real search once ready fires,
+  // this conversation only ever refines the query string.
+  const [scopeHistory, setScopeHistory] = useState<ScopeTurn[]>([])
+  const [scopeInput, setScopeInput] = useState('')
+  const [scopeLoading, setScopeLoading] = useState(false)
+  const [scopeError, setScopeError] = useState('')
+  const scopeInputRef = useRef<HTMLInputElement>(null)
+
+  function startScope() {
+    setScopeHistory([{ role: 'jesse', text: SCOPE_OPENING }])
+    setScopeInput('')
+    setScopeError('')
+    setMode('scope')
+    window.setTimeout(() => scopeInputRef.current?.focus(), 60)
+  }
+
+  async function submitScope() {
+    const text = scopeInput.trim()
+    if (!text || scopeLoading) return
+    const nextHistory: ScopeTurn[] = [...scopeHistory, { role: 'user', text }]
+    setScopeHistory(nextHistory)
+    setScopeInput('')
+    setScopeLoading(true)
+    setScopeError('')
+    try {
+      const result = await askLearnScope(text, scopeHistory)
+      if (result.ready) {
+        setMode('default')
+        onQueryChange(result.searchQuery || text)
+        onSearch(result.searchQuery || text)
+        return
+      }
+      setScopeHistory([...nextHistory, { role: 'jesse', text: result.reply }])
+      window.setTimeout(() => scopeInputRef.current?.focus(), 60)
+    } catch {
+      setScopeError("Could not reach Jesse. Try again, or type your question in the bar below.")
+    } finally {
+      setScopeLoading(false)
+    }
+  }
 
   useEffect(() => {
     if (mode !== 'voice') return
@@ -149,11 +197,11 @@ export default function EntryStage({
             <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: TEXT_SOFT }}>Pick one to begin.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 18 }}>
               <button
-                onClick={() => { setMode('default'); onFocusSearch() }}
+                onClick={startScope}
                 style={{ ...OPTION_BTN_BASE, border: '1px solid rgba(61,107,79,0.35)', background: 'rgba(61,107,79,0.1)', color: TEXT_PRIMARY }}
               >
                 Fun Lessons
-                <div style={{ fontWeight: 400, fontSize: 12, color: TEXT_SOFT, marginTop: 3 }}>Type what you want to understand, Jesse finds the real lesson.</div>
+                <div style={{ fontWeight: 400, fontSize: 12, color: TEXT_SOFT, marginTop: 3 }}>Tell Jesse what you're preparing for, it finds the real lesson.</div>
               </button>
               <button
                 onClick={() => setMode('voice')}
@@ -206,6 +254,45 @@ export default function EntryStage({
                 {voiceStatus === 'listening' ? 'Cancel' : 'Back'}
               </button>
             </div>
+          </>
+        )}
+
+        {mode === 'scope' && (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16, maxHeight: 180, overflowY: 'auto', textAlign: 'left' }}>
+              {scopeHistory.map((turn, i) => (
+                <p key={i} style={{ margin: 0, fontSize: 13.5, lineHeight: 1.5, color: turn.role === 'jesse' ? TEXT_PRIMARY : TEXT_SOFT }}>
+                  <strong style={{ color: turn.role === 'jesse' ? ACCENT_FOREST : TEXT_FAINT, fontWeight: 700, fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.4 }}>
+                    {turn.role === 'jesse' ? 'Jesse' : 'You'}
+                  </strong>
+                  <br />
+                  {turn.text}
+                </p>
+              ))}
+              {scopeLoading && <p style={{ margin: 0, fontSize: 12.5, color: TEXT_FAINT }}>Jesse is thinking...</p>}
+            </div>
+            {scopeError && <p style={{ margin: '0 0 12px', fontSize: 12.5, color: '#FF7B7B' }}>{scopeError}</p>}
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                ref={scopeInputRef}
+                className="lrn-input"
+                value={scopeInput}
+                onChange={(e) => setScopeInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && submitScope()}
+                placeholder="Type your answer..."
+                disabled={scopeLoading}
+                style={{ flex: 1, minWidth: 0, padding: '11px 14px', borderRadius: 12, border: '1px solid rgba(140,178,150,0.25)', background: 'rgba(205,220,208,0.05)', color: TEXT_PRIMARY, fontSize: 14, fontFamily: FONT_STACK, outline: 'none' }}
+              />
+              <button onClick={submitScope} disabled={scopeLoading || !scopeInput.trim()} style={{ flex: 'none', padding: '11px 18px', borderRadius: 12, border: 'none', background: ACCENT_FOREST, color: 'white', fontWeight: 600, fontSize: 13, cursor: scopeLoading ? 'default' : 'pointer' }}>
+                {scopeLoading ? '...' : 'Send'}
+              </button>
+            </div>
+            <button
+              onClick={() => setMode('default')}
+              style={{ marginTop: 14, background: 'none', border: 'none', color: TEXT_FAINT, fontSize: 12.5, cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              Back
+            </button>
           </>
         )}
       </div>
