@@ -531,10 +531,21 @@ export function createResumeHelper({ root, onToast }) {
       bubble('jesse', "MindCraft's own key is resting right now, so I am working off simpler rules. Add your own key in Settings, top right, and I will get sharper.");
     }
     if (Array.isArray(data.suggestedRoles) && data.suggestedRoles.length) {
-      bubble('jesse', 'Directions worth searching: ' + data.suggestedRoles.map((r) => r.role).filter(Boolean).join(' · ')
-        + '. Open Jobs on the left and I will look for real openings.');
+      bubble('jesse', 'Directions worth searching: ' + data.suggestedRoles.map((r) => r.role).filter(Boolean).join(' · '));
     }
     if (data.readyToApply && jobsRailBtn) jobsRailBtn.classList.add('is-ready');
+    // A real signal the backend already computes (resume-agent.ts's own
+    // open_apply detection, regex + model) that used to just sit unused:
+    // this used to tell the student to go click "Open Jobs" and search
+    // themselves instead of the agent doing either. action fires once per
+    // request (an explicit ask, not a persistent state like readyToApply
+    // above), so it is the right signal to act on directly rather than
+    // something that would double-search on every later message.
+    if (data.action === 'open_apply') {
+      selectRail('jobs');
+      bubble('jesse', "Looking for real openings now.");
+      void runDiscovery();
+    }
   }
 
   // ---------- discovery ----------
@@ -592,18 +603,23 @@ export function createResumeHelper({ root, onToast }) {
     }
     if (!candidatesEl) return;
     candidatesEl.hidden = candidates.length === 0;
-    candidatesEl.innerHTML = candidates.map((c, i) => `
+    candidatesEl.innerHTML = candidates.map((c, i) => {
+      const url = safeUrl(c.roleUrl);
+      const title = url
+        ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(c.role)}</a>`
+        : esc(c.role);
+      return `
       <article class="rh-candidate">
         <div>
-          <strong>${esc(c.role)}</strong>
+          <strong>${title}</strong>
           <span class="rh-cand-co">${esc(c.company)}${c.location ? ` · ${esc(c.location)}` : ''}</span>
           <p>${esc(c.why || '')}</p>
-          ${safeUrl(c.roleUrl) ? `<a href="${esc(safeUrl(c.roleUrl))}" target="_blank" rel="noopener noreferrer">${esc(safeUrl(c.roleUrl))}</a>` : ''}
           <span class="rh-verify ${c.verificationStatus === 'link_verified' ? 'is-verified' : ''}">${c.verificationStatus === 'link_verified' ? 'link verified' : 'unverified'}</span>
         </div>
         <button type="button" data-rh-add-cand="${i}">Add to board</button>
       </article>
-    `).join('');
+    `;
+    }).join('');
   }
 
   async function addCandidate(i) {

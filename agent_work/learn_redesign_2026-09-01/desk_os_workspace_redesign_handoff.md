@@ -414,3 +414,73 @@ one corner of it at this small a size.
 - `npx tsc --noEmit` clean on every touched file (webhook and app,
   separately) after each round of edits, not just once at the end.
 - `npm run build` (tsc + vite) clean.
+
+## Round six: Tutors & events cleanup, plus a real bug from a mid-turn interrupt
+
+Three small, unrelated Tutors & events fixes in one message, plus a second
+message that arrived mid-turn about Resume Helper.
+
+### Tutors & events
+
+- **Real CSS bug, found and fixed**: `.tm-tabs .tm-create.is-active` (the
+  "+ Add event" button once active) set a dark background but never set
+  `color` — a higher-specificity, unrelated rule (`.tm-chips
+  button.is-active`) was winning the color property and setting it to the
+  *same* dark value as the background, i.e. invisible black-on-black text.
+  Added an explicit `color: #fff` directly on the winning selector rather
+  than relying on cascade order to sort itself out.
+- **Removed `.tm-upload`** (the "Upload a homework problem" button beside
+  the tutor-search input) — genuinely didn't make sense in a
+  tutor/location search bar, per the founder's own read. Its dependent
+  `.tm-stuck-on` "what I need help with" display was never populated by
+  anything else (confirmed via search before removing), so it went too
+  rather than leaving dead, unreachable UI behind.
+- **A real Location field** in the event-creation form, directly under
+  Title: previously the only cue was a hint paragraph floating above the
+  form ("Click the map on the left..."), easy to miss scanning top to
+  bottom. The map itself still does the actual pin placement (unchanged,
+  `placingEvent`/`map.on('click', ...)` in `tutorMap.js`) — the new
+  Location row is a real field with live status text ("Tap to pin it on
+  the map" -> "Pinned, drag it on the map to adjust") that, when clicked,
+  puts a brief highlight glow on the map pane so the connection between
+  the two is obvious rather than assumed.
+
+### Resume Helper (from a message that arrived mid-turn)
+
+- **Candidate titles are now real links.** The web-sourced/"On your
+  board" role list already linked its title to the real posting; the
+  *discovered candidates* list (before adding to board) did not — it
+  showed the role name as plain text and the raw URL as a separate line
+  below. Made the title itself the link, matching the board list's own
+  pattern exactly, dropped the now-redundant raw-URL line.
+- **A real signal that was already computed server-side and just never
+  acted on.** `resume-agent.ts` already detects "the student is asking to
+  find/apply for jobs now" (`action: 'open_apply'`, regex + model) and
+  returns it on every chat turn — the client only ever read
+  `readyToApply` (a persistent draft-completeness flag, used for a UI
+  glow) and silently dropped `action` entirely. The chat reply even told
+  the student to "open Jobs and I will look for real openings" instead of
+  the agent doing either. Wired `action === 'open_apply'` to genuinely
+  switch the rail to Jobs and call the real `runDiscovery()` — the
+  founder's own "what would it take" question turned out to be "wire up a
+  signal that already exists," not new backend work.
+
+### Verification (round six)
+
+- Screenshots of the Tutors search bar (upload button gone) and the event
+  form (Location row in place, correct order) against the local static
+  build, since a real `+ Add event` click is gated on a signed-in
+  `fireUser` this environment doesn't have — worked around by directly
+  toggling the same hidden/class state `openEventForm()`/
+  `placePendingMarker()` set, to verify the real CSS/markup those
+  functions drive rather than skip verification entirely.
+- Confirmed the map-highlight class actually applies and the "pinned"
+  status text/border state render correctly, not just that the click
+  handler exists.
+- Double-checked the "Pinned - drag it..." string is a plain ASCII hyphen
+  byte-by-byte (a screenshot's font rendering made it look longer) before
+  trusting it against the no-em-dash rule, rather than eyeballing a
+  screenshot and assuming.
+- `node --check` on every touched `.js` file, CSS brace-count balance
+  before and after each edit.
+- `npm run build` (tsc + vite) clean.

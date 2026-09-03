@@ -30,8 +30,6 @@
 
 import { ensureFire } from './fire.js';
 
-const WEBHOOK_BASE = 'https://mindcraft-webhook.vercel.app';
-
 /** Demo-only data for the unauthenticated marketing demo. Never shown to a
  *  real signed-in student. */
 const DEMO_TUTORS = [
@@ -162,13 +160,10 @@ export function createTutorMap({ root, onToast }) {
   const headLabel = root.querySelector('[data-tm-head-label]');
   const tabs = [...root.querySelectorAll('[data-tm-tab]')];
   const createBtn = root.querySelector('[data-tm-create]');
-  const uploadBtn = root.querySelector('[data-tm-upload]');
-  const uploadInput = root.querySelector('[data-tm-upload-input]');
-  const stuckOn = root.querySelector('[data-tm-stuck-on]');
-  const stuckText = root.querySelector('[data-tm-stuck-text]');
-  const stuckClear = root.querySelector('[data-tm-stuck-clear]');
   const eventForm = root.querySelector('[data-tm-event-form]');
-  const eventHint = root.querySelector('[data-tm-event-hint]');
+  const efLocation = root.querySelector('[data-tm-ef-location]');
+  const efLocationStatus = root.querySelector('[data-tm-ef-location-status]');
+  const mapPane = root.querySelector('.hub-tutor-pane.map');
   const efTitle = root.querySelector('[data-tm-ef-title]');
   const efDate = root.querySelector('[data-tm-ef-date]');
   const efStart = root.querySelector('[data-tm-ef-start]');
@@ -387,7 +382,8 @@ export function createTutorMap({ root, onToast }) {
         pendingLatLng = { lat: p.lat, lng: p.lng };
       });
     }
-    if (eventHint) eventHint.textContent = 'Drag the pin to adjust, then fill in the details below.';
+    if (efLocationStatus) efLocationStatus.textContent = 'Pinned - drag it on the map to adjust';
+    if (efLocation) efLocation.classList.add('is-set');
     updatePostEnabled();
   }
 
@@ -411,7 +407,8 @@ export function createTutorMap({ root, onToast }) {
     placingEvent = true;
     if (createBtn) createBtn.classList.add('is-active');
     if (eventForm) eventForm.hidden = false;
-    if (eventHint) eventHint.textContent = 'Click the map on the left to place your event.';
+    if (efLocationStatus) efLocationStatus.textContent = 'Tap to pin it on the map';
+    if (efLocation) efLocation.classList.remove('is-set');
     if (efTitle) efTitle.value = '';
     if (efDate) efDate.value = todayIso();
     if (efStart) efStart.value = '16:00';
@@ -651,54 +648,15 @@ export function createTutorMap({ root, onToast }) {
     runSearch(input?.value);
   });
 
-  // Upload a homework problem so a student can show a tutor what they are
-  // stuck on before booking. Same POST /api/parse-homework pipeline Learn.tsx
-  // and HomeworkSession.tsx already use (transcribe-only, never solves), a
-  // real Firebase ID token required. Photos only for now, not PDFs: the
-  // React client rasterizes a PDF client-side via pdf.js first, and this
-  // static hub does not carry that dependency yet. Only ever shown on this
-  // panel, not attached to a booking anywhere yet, that is a real gap, not
-  // a hidden claim.
-  uploadBtn?.addEventListener('click', () => uploadInput?.click());
-  uploadInput?.addEventListener('change', async () => {
-    const file = uploadInput.files?.[0];
-    uploadInput.value = '';
-    if (!file) return;
-    const fire = await ensureFire();
-    if (!fire?.user) { onToast?.('Sign in to upload a homework problem'); return; }
-
-    onToast?.('Reading your problem...');
-    try {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-      const token = await fire.user.getIdToken();
-      const res = await fetch(`${WEBHOOK_BASE}/api/parse-homework`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ pages: [{ imageBase64: dataUrl }] }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (data?.unavailable || !data?.questions?.length) {
-        onToast?.(data?.unavailable
-          ? 'The homework reader is resting right now, try again in a bit.'
-          : 'Could not find a question on that page, try a clearer photo.');
-        return;
-      }
-      const q = data.questions[0];
-      if (stuckText) stuckText.textContent = q.text;
-      if (stuckOn) stuckOn.hidden = false;
-      onToast?.('Added, show this to a tutor when you book.');
-    } catch {
-      onToast?.('Could not read that file, try again.');
-    }
-  });
-  stuckClear?.addEventListener('click', () => {
-    if (stuckOn) stuckOn.hidden = true;
-    if (stuckText) stuckText.textContent = '';
+  // The Location row in the event form draws the eye to the real map
+  // (still the only thing that actually places a pin, live the whole time
+  // the form is open) rather than placing one itself — a brief highlight
+  // pulse on the map pane, not new placement logic.
+  efLocation?.addEventListener('click', () => {
+    if (!mapPane) return;
+    mapPane.classList.add('is-highlighted');
+    mapPane.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' });
+    window.setTimeout(() => mapPane.classList.remove('is-highlighted'), 1200);
   });
 
   tabs.forEach((btn) => {

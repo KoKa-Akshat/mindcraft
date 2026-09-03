@@ -3462,6 +3462,14 @@ body.is-hub-chrome .sky { opacity: 0; }
   display: flex;
   flex-direction: column;
   position: relative;
+  transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+/* The Location field's click target (2026-09-02): a brief glow on the map
+   pane, not a new interaction of its own — the map already places the pin
+   on its own click handler the whole time the event form is open. */
+.hub-tutor-pane.map.is-highlighted {
+  border-color: rgba(196, 245, 71, 0.7);
+  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.4);
 }
 .tm-search {
   display: flex;
@@ -3498,50 +3506,6 @@ body.is-hub-chrome .sky { opacity: 0; }
   cursor: pointer;
 }
 .tm-search button:hover { background: #3d6b4f; }
-.tm-upload {
-  flex: none;
-  width: 40px;
-  padding: 0 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tm-upload svg { width: 17px; height: 17px; }
-.tm-stuck-on {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #eef4ef;
-  border-bottom: 1px solid #dbe6dd;
-  flex: none;
-}
-.tm-stuck-on[hidden] { display: none !important; }
-.tm-stuck-label {
-  flex: none;
-  font: 700 10px/1.3 var(--sans);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #3d6b4f;
-  padding-top: 2px;
-}
-.tm-stuck-on p {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-  font: 600 12.5px/1.4 var(--sans);
-  color: #1a1a1a;
-}
-.tm-stuck-clear {
-  flex: none;
-  border: 0;
-  background: transparent;
-  color: #6b7a70;
-  font: 600 15px/1 var(--sans);
-  cursor: pointer;
-  padding: 0 2px;
-}
-.tm-stuck-clear:hover { color: #1a1a1a; }
 .tm-map {
   flex: 1;
   min-height: 0;
@@ -5396,8 +5360,14 @@ body.is-hub-chrome .sky { opacity: 0; }
   color: #fff;
 }
 .tm-tabs .tm-create.is-active {
+  /* color explicit here, not inherited (2026-09-02 fix): .tm-chips
+     button.is-active's own color:#1f2a22 rule has higher specificity than
+     this selector, so without this line it silently won over the color:
+     #fff two rules up, giving this button dark text on its own dark
+     background, i.e. invisible. */
   background: #1f2a22;
   border-color: #1f2a22;
+  color: #fff;
 }
 .tm-event-form {
   display: flex;
@@ -5411,11 +5381,42 @@ body.is-hub-chrome .sky { opacity: 0; }
   flex: none;
 }
 .tm-event-form[hidden] { display: none !important; }
-.tm-event-hint {
-  margin: 0;
-  font: 600 11.5px/1.4 var(--sans);
-  color: #3d6b4f;
+/* A real field row, not a floating hint paragraph disconnected from the
+   form's own inputs (2026-09-02 ask): sits right under Title, same visual
+   language as .tm-ef-input. Clicking it doesn't place a pin itself (the
+   map, still the only thing that does that, listens for clicks the whole
+   time this form is open) — it just highlights the map pane so a student
+   scanning the form top to bottom actually notices where to look. */
+.tm-ef-location {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px dashed #c5d6cb;
+  border-radius: 10px;
+  padding: 9px 11px;
+  background: #fff;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
 }
+.tm-ef-location:hover { background: #eef4ef; }
+.tm-ef-location.is-set { border-style: solid; border-color: #3d6b4f; }
+.tm-ef-location-label {
+  flex: none;
+  font: 700 12.5px/1.3 var(--sans);
+  color: #1a1a1a;
+}
+.tm-ef-location-status {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 11.5px/1.3 var(--sans);
+  color: #6b7a70;
+}
+.tm-ef-location.is-set .tm-ef-location-status { color: #3d6b4f; }
 .tm-ef-row {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
@@ -5797,10 +5798,11 @@ body.is-hub-chrome .sky { opacity: 0; }
   border-radius: 8px;
   background: #fff;
 }
-.rh-candidate strong { font: 700 13px/1.25 var(--sans); color: var(--desk-ink); display: block; }
+.rh-candidate strong { font: 700 13px/1.25 var(--sans); color: var(--desk-ink); display: block; overflow-wrap: anywhere; }
+.rh-candidate strong a { color: var(--desk-ink); text-decoration: underline; text-decoration-color: rgba(36, 122, 77, 0.5); }
+.rh-candidate strong a:hover { color: var(--desk-forest); }
 .rh-cand-co { font: 600 11.5px/1.3 var(--sans); color: var(--desk-forest); }
 .rh-candidate p { margin: 4px 0; font: 400 11.5px/1.4 var(--sans); color: var(--desk-muted); }
-.rh-candidate a { font: 500 11px/1.3 var(--sans); color: var(--desk-forest); overflow-wrap: anywhere; }
 .rh-verify {
   display: inline-block;
   margin-left: 6px;
