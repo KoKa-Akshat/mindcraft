@@ -87,7 +87,13 @@ interface BookServiceJobPayload {
   estimated_cost_usd?: number
 }
 
-async function handleStart(uid: string, rawTopic: string, res: VercelResponse, studentGeminiKey?: string) {
+async function handleStart(
+  uid: string,
+  rawTopic: string,
+  res: VercelResponse,
+  studentGeminiKey?: string,
+  studentAnthropicKey?: string,
+) {
   const topic = rawTopic.trim().slice(0, MAX_TOPIC)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const subjectId = onDemandSubjectId(topic)
@@ -100,15 +106,19 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse, s
     return res.status(200).json({ status: 'passed', cached: true, book: cached })
   }
 
-  // BYOK (2026-08-25) — same partial bypass as generate-sim.ts: when the
-  // student's own Gemini key is present, skip the platform checks for the
-  // START of this job (the expensive per-chapter prose/sim/discussion
-  // generation spends their quota, not ours), but every judge/gate call
-  // still runs on MindCraft's Anthropic account regardless (see
-  // content-engine's _run_book_job doc comment on the deliberate "one
-  // calibrated grader for everyone" line), so recordActualSpend on the
-  // terminal poll below still runs and still bills the platform budget
-  // for that real, smaller remaining cost.
+  // BYOK (2026-08-25, extended 2026-09-03) — same partial bypass as
+  // generate-sim.ts: when the student's own Gemini key is present, skip
+  // the platform checks for the START of this job (the expensive
+  // per-chapter prose/sim/discussion generation spends their quota, not
+  // ours). Judge/gate calls used to run on MindCraft's Anthropic account
+  // regardless of BYOK — a deliberate "one calibrated grader for
+  // everyone" call, but it meant the platform's Anthropic account having
+  // no credit (a real, recurring outage) blocked every book generation
+  // outright with no way around it. content-engine's _run_book_job now
+  // judges with the student's own Anthropic key when studentAnthropicKey
+  // is also sent, so that stage is no longer unconditionally
+  // platform-billed either — recordActualSpend below still runs and still
+  // reflects whatever real remaining cost the content-engine reports.
   if (!studentGeminiKey) {
     const platformBudget = await checkPlatformBudget(uid)
     if (!platformBudget.allowed) {
@@ -144,6 +154,7 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse, s
       body: JSON.stringify({
         topic,
         ...(studentGeminiKey ? { student_gemini_key: studentGeminiKey } : {}),
+        ...(studentAnthropicKey ? { student_anthropic_key: studentAnthropicKey } : {}),
       }),
     })
     const data = (await serviceRes.json().catch(() => ({}))) as { job_id?: string }
@@ -266,13 +277,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; jobId?: string; studentGeminiKey?: string }
+  const body = (req.body || {}) as { topic?: string; jobId?: string; studentGeminiKey?: string; studentAnthropicKey?: string }
   if (typeof body.jobId === 'string' && body.jobId) {
     return handlePoll(body.jobId, res)
   }
   if (typeof body.topic === 'string' && body.topic) {
     const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
-    return handleStart(uid, body.topic, res, studentGeminiKey || undefined)
+    const studentAnthropicKey = typeof body.studentAnthropicKey === 'string' ? body.studentAnthropicKey.trim() : ''
+    return handleStart(uid, body.topic, res, studentGeminiKey || undefined, studentAnthropicKey || undefined)
   }
   return res.status(400).json({ error: 'topic (start) or jobId (poll) required' })
 }

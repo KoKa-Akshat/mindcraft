@@ -48,6 +48,19 @@ export const ACCENT_FOREST_PALE = '#a8d4b5'
 export const ACCENT_LIME = '#c4f547'
 export const ACCENT_LIME_INK = '#0c1207'
 
+// Paper tones (LIVING_BOOK build, 2026-09-03): the exact same reading-copy
+// palette Desk OS's real paper cards already use (agent_work/product/
+// desk_os/styles.css --paper-*/--ink-*), reused here so a book page reads
+// as the same material across the marketing-facing desk hub and the app.
+export const PAPER_BASE = '#f7f3ee'
+export const PAPER_RAISED = '#fbf8f3'
+export const PAPER_RECESSED = '#efe9e0'
+export const PAPER_EDGE = '#e6ddd0'
+export const INK_SYSTEM = '#1c1a17'
+export const INK_PENCIL = '#6f6a61'
+export const INK_SOFT = '#8a8478'
+export const SERIF_STACK = "'Georgia', 'Iowan Old Style', serif"
+
 export function Eyebrow({ color, children }: { color: string; children: ReactNode }) {
   return (
     <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.3, textTransform: 'uppercase', color }}>

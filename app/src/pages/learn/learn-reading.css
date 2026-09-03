@@ -1,0 +1,197 @@
+/**
+ * pages/learn/learn-reading.css
+ *
+ * The "lrn-*" class layer Learn.tsx/PathRamp.tsx/ReadingPane.tsx/
+ * StatusBar.tsx were converted to reference (inline styles moved out to real
+ * CSS, plus a paper-toned reading page). This file itself went missing from
+ * that in-progress, uncommitted work, which broke `npm run build` for
+ * everyone on this checkout. Reconstructed 2026-09-03 directly from the
+ * removed inline styles still visible in `git diff` for each of those
+ * files, so every value below traces back to something that was actually
+ * there before, not a guess — the one deliberate exception is the paper
+ * section (.lrn-reading-paper and its children), where a few colors
+ * (.lrn-chapter-badge, .lrn-chapter-working, .lrn-reading-note) were
+ * darkened from their original dark-background values, which would have
+ * been unreadable on the cream paper ColdCheckPrompt's new tone="paper"
+ * already establishes (#FFFDF8 / #143A2E, see HomeworkCards.module.css's
+ * .paperCheck). If the original author of this refactor had a different
+ * file in mind, replace this one outright — nothing here is load-bearing
+ * beyond unblocking the build with real, working styles.
+ */
+
+@keyframes lrnRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Shared scrollbars / hovers / focus (unchanged from the old inline
+   <style> block; still relied on by NeighborsCard, MaterialsPanel,
+   EntryStage, RightColumn) ────────────────────────────────────────────── */
+.lrn-col { scrollbar-width: thin; scrollbar-color: rgba(205,220,208,0.2) transparent; }
+.lrn-col::-webkit-scrollbar { width: 8px; }
+.lrn-col::-webkit-scrollbar-thumb { background: rgba(205,220,208,0.16); border-radius: 4px; }
+.lrn-neighbor { transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+.lrn-neighbor:hover { background: rgba(61,107,79,0.15) !important; border-color: rgba(95,165,120,0.55) !important; transform: translateX(3px); }
+.lrn-input:focus { outline: none; border-color: rgba(95,165,120,0.7) !important; box-shadow: 0 0 0 3px rgba(61,107,79,0.2); }
+.lrn-qrow { transition: background .15s ease, border-color .15s ease; }
+.lrn-qrow:hover { background: rgba(94,200,240,0.1) !important; border-color: rgba(94,200,240,0.45) !important; }
+
+/* ── Shell (Learn.tsx) ───────────────────────────────────────────────── */
+.lrn-app {
+  width: 100%;
+  background: #080e14;
+  color: rgba(232,239,228,0.95);
+  font-family: 'Avenir Next', 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lrn-stage { flex: 1; min-height: 0; position: relative; }
+
+.lrn-graph-layer {
+  position: absolute; inset: 0; z-index: 2; opacity: 1; pointer-events: auto;
+  transition: opacity 0.6s ease;
+}
+.lrn-graph-layer--reading { z-index: 0; opacity: 0.55; pointer-events: none; }
+
+.lrn-workspace {
+  position: absolute; inset: 20px 16px 16px 16px; border-radius: 18px; z-index: 1;
+  display: flex; gap: 16px; padding: 10px 12px 12px; background: transparent;
+}
+
+.lrn-main-column {
+  flex: 1 1 58%;
+  min-width: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 4px;
+  animation: lrnRise 0.55s ease both;
+}
+.lrn-workspace--sim .lrn-main-column { flex: 0 0 32%; }
+
+/* ── Path ramp (PathRamp.tsx) ────────────────────────────────────────── */
+.lrn-path {
+  background: #141f18;
+  border: 1px solid rgba(140,178,150,0.16);
+  border-radius: 18px;
+  box-shadow: 0 6px 22px rgba(3,8,5,0.35);
+  padding: 16px 18px;
+  flex-shrink: 0;
+}
+.lrn-path-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.lrn-path-heading h2 { margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.2px; color: rgba(232,239,228,0.95); }
+.lrn-path-count { font-size: 11.5px; color: rgba(205,220,208,0.55); white-space: nowrap; }
+.lrn-path-count.is-loading { color: #8BE85C; }
+.lrn-path-intro { margin: 6px 0 10px; font-size: 13px; line-height: 1.55; color: rgba(205,220,208,0.55); }
+.lrn-path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.lrn-path-step-wrap { display: flex; align-items: center; gap: 6px; }
+.lrn-path-line { font-size: 11px; color: rgba(205,220,208,0.3); }
+.lrn-path-line::before { content: '\203A'; }
+
+.lrn-path-step {
+  display: flex; align-items: center; gap: 5px; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid rgba(205,220,208,0.18);
+  background: rgba(205,220,208,0.04);
+  color: rgba(205,220,208,0.8);
+  font-family: inherit;
+}
+.lrn-path-step.is-done { border-color: rgba(88,204,2,0.32); background: rgba(88,204,2,0.07); }
+.lrn-path-step.is-current { font-weight: 700; border-color: #58CC02; background: rgba(88,204,2,0.18); color: #8BE85C; }
+.lrn-path-number { font-size: 10px; opacity: 0.7; display: inline-flex; align-items: center; }
+.lrn-path-sim { font-size: 9px; font-weight: 700; letter-spacing: 0.3px; color: #F0C060; text-transform: uppercase; }
+
+.lrn-path-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.lrn-button {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; padding: 8px 15px; border-radius: 9px;
+  border: none; cursor: pointer; font-family: inherit;
+}
+.lrn-button:disabled { cursor: default; opacity: 0.4; }
+.lrn-button--quiet { font-weight: 500; font-size: 12.5px; padding: 7px 13px; border: 1px solid rgba(205,220,208,0.2); background: transparent; color: rgba(205,220,208,0.8); }
+.lrn-button--forest { background: #58CC02; color: #0a1a00; }
+.lrn-path-finish { font-size: 12.5px; color: rgba(205,220,208,0.55); }
+
+/* ── Shared eyebrow label (PathRamp + ReadingPane) ──────────────────── */
+.lrn-kicker {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: #58CC02;
+}
+
+/* ── Reading paper (ReadingPane.tsx) ─────────────────────────────────── */
+.lrn-reading-paper {
+  background: #FFFDF8;
+  color: #143A2E;
+  border-radius: 18px;
+  box-shadow: 0 6px 22px rgba(3,8,5,0.35);
+  padding: 28px 30px 26px;
+  display: flex; flex-direction: column; gap: 22px;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  animation: lrnRise 0.55s ease both;
+}
+.lrn-chapter-header { display: flex; flex-direction: column; gap: 6px; }
+.lrn-chapter-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.lrn-chapter-header h1 { margin: 4px 0 0; font-size: 25px; font-weight: 700; line-height: 1.3; letter-spacing: -0.2px; }
+.lrn-chapter-summary { margin: 0; font-size: 15px; line-height: 1.65; color: rgba(20,58,46,0.72); font-style: italic; }
+
+.lrn-chapter-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+  color: #2A7FA0; border: 1px solid rgba(42,127,160,0.4); background: rgba(94,200,240,0.14);
+  border-radius: 6px; padding: 2px 8px;
+}
+.lrn-chapter-working { font-size: 11.5px; color: #2A7FA0; }
+.lrn-reading-toggle {
+  display: inline-flex; align-items: center; gap: 5px; margin-left: auto;
+  font-size: 11.5px; padding: 4px 11px; border-radius: 7px;
+  border: 1px solid rgba(20,58,46,0.22); background: transparent; color: #143A2E;
+  cursor: pointer; font-family: inherit;
+}
+.lrn-reading-toggle:hover { background: rgba(20,58,46,0.06); }
+
+.lrn-reading-note { margin: 6px 0 0; font-size: 12px; line-height: 1.55; color: #2A7FA0; }
+.lrn-reading-note--muted { color: rgba(20,58,46,0.55); }
+
+.lrn-article-body { display: flex; flex-direction: column; gap: 22px; }
+.lrn-reading-section { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; border-top: 1px solid rgba(20,58,46,0.1); }
+.lrn-reading-section:first-child { padding-top: 0; border-top: none; }
+.lrn-section-index { font-size: 11px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: rgba(20,58,46,0.4); }
+.lrn-reading-section p { margin: 0; font-size: 16.5px; line-height: 1.75; color: #143A2E; max-width: 64ch; }
+.lrn-reading-section p + p { margin-top: 12px; }
+
+.lrn-check-section { padding-top: 22px; border-top: 1px solid rgba(20,58,46,0.14); display: flex; flex-direction: column; gap: 14px; }
+.lrn-check-heading { display: flex; align-items: center; gap: 10px; }
+.lrn-check-heading h2 { margin: 2px 0 0; font-size: 17px; font-weight: 700; color: #143A2E; }
+.lrn-check-icon { display: inline-flex; color: #247A4D; flex-shrink: 0; }
+.lrn-check-prompt { margin-top: 4px; }
+.lrn-check-result { font-size: 13.5px; color: rgba(20,58,46,0.72); margin: 10px 0 0; }
+.lrn-check-status { font-size: 13px; color: rgba(20,58,46,0.55); margin: 8px 0 0; line-height: 1.6; }
+
+/* ── Status bar (StatusBar.tsx) ──────────────────────────────────────── */
+.lrn-status {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px; font-size: 13px; flex-shrink: 0;
+  border-bottom: 1px solid rgba(140,178,150,0.16);
+  background: rgba(205,220,208,0.03);
+  color: rgba(205,220,208,0.55);
+}
+.lrn-status--warning { color: #FF7B7B; }
+.lrn-status-icon { display: inline-flex; flex-shrink: 0; color: rgba(205,220,208,0.6); }
+.lrn-status--warning .lrn-status-icon { color: #FF7B7B; }
+.lrn-status-copy { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.lrn-status-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(205,220,208,0.45); }
+.lrn-status-copy strong { font-size: 13.5px; font-weight: 700; color: rgba(232,239,228,0.95); }
+.lrn-status--warning .lrn-status-copy strong { color: #FF7B7B; }
+.lrn-status-detail { font-size: 12px; color: rgba(205,220,208,0.55); }
+.lrn-status-meta { display: flex; align-items: center; gap: 10px; font-size: 11.5px; color: rgba(205,220,208,0.5); flex-shrink: 0; white-space: nowrap; }
+.lrn-status-meta .is-tentative { color: #F0C060; }
+.lrn-status-back {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  font-size: 12px; padding: 5px 13px; border-radius: 9px;
+  border: 1px solid rgba(205,220,208,0.25); background: transparent; color: rgba(205,220,208,0.8);
+  cursor: pointer; font-family: inherit;
+}
+.lrn-status-back:hover { background: rgba(205,220,208,0.06); }

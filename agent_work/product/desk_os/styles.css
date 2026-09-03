@@ -3430,17 +3430,23 @@ body.is-hub-chrome .sky { opacity: 0; }
   margin-top: 22px;
   margin-bottom: 12px;
 }
-.hub-tutors-head { margin-bottom: 10px; }
+/* These three were missed by the 2026-09-02 "Desk workspace redesign" pass
+   (everything below .hub-tutor-duo picked up --desk-ink/--serif; this head
+   never did) — still the pre-redesign sans/near-black styling, visibly
+   inconsistent with "The Desk"/"Jobs"/the hero h1 next to it. Brought in
+   line with .hub-hero-copy h1 / .rh-side-head h3's real serif + --desk-ink
+   language, 2026-09-03. */
+.hub-tutors-head { margin-bottom: 22px; }
 .hub-tutors-title {
   margin: 0 0 6px;
-  font: 700 22px/1.15 var(--sans);
-  letter-spacing: -0.03em;
-  color: #111;
+  font: 400 38px/1.1 var(--serif);
+  letter-spacing: 0;
+  color: var(--desk-ink);
 }
 .hub-tutors-soft {
   margin: 0;
-  font: 400 14px/1.4 var(--sans);
-  color: #666;
+  font: 500 14px/1.4 var(--sans);
+  color: var(--desk-muted);
 }
 .hub-tutor-duo {
   display: grid;
@@ -5941,6 +5947,34 @@ body.is-hub-chrome .sky { opacity: 0; }
 .rh-role-row a:hover { text-decoration: underline; }
 .rh-soft-note { font: 400 12px/1.4 var(--sans); color: var(--desk-muted); }
 
+.rh-board-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 6px 2px 4px; }
+.rh-board-empty-icon {
+  display: grid; place-items: center;
+  width: 40px; height: 40px; margin-bottom: 4px;
+  border-radius: 10px;
+  background: rgba(36, 122, 77, 0.08);
+  color: var(--desk-forest);
+}
+.rh-board-empty-icon svg { width: 19px; height: 19px; }
+.rh-board-empty strong { font: 700 14px/1.3 var(--sans); color: var(--desk-ink); }
+.rh-board-empty p { margin: 0; font: 500 12px/1.5 var(--sans); color: var(--desk-muted); max-width: 32ch; }
+.rh-board-steps {
+  width: 100%;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 58, 46, 0.1);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.rh-board-step { display: flex; gap: 10px; align-items: flex-start; }
+.rh-board-step span {
+  flex: none; display: grid; place-items: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--desk-ink); color: var(--desk-paper);
+  font: 700 10px/1 var(--sans);
+}
+.rh-board-step strong { display: block; font: 700 12px/1.3 var(--sans); color: var(--desk-ink); margin-bottom: 2px; }
+.rh-board-step p { margin: 0; font: 500 11.5px/1.5 var(--sans); color: var(--desk-muted); }
+
 /* ---------- documents side panel ---------- */
 .rh-documents { display: flex; flex-direction: column; gap: 8px; }
 .rh-doc-row {
@@ -6188,6 +6222,77 @@ body.is-hub-chrome .sky { opacity: 0; }
   letter-spacing: 0;
 }
 
+.hub-hero-search {
+  width: 100%;
+  margin: 26px 0 0;
+  display: flex;
+  gap: 10px;
+}
+.hub-hero-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 58, 46, 0.18);
+  background: var(--desk-paper);
+  color: var(--desk-ink);
+  font: 500 15px/1.3 var(--sans);
+}
+.hub-hero-search-input::placeholder { color: var(--desk-muted); }
+.hub-hero-search-input:focus {
+  outline: none;
+  border-color: var(--desk-forest);
+  box-shadow: 0 0 0 4px rgba(36, 122, 77, 0.14);
+}
+.hub-hero-search-btn {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: var(--desk-ink);
+  color: var(--desk-paper);
+  cursor: pointer;
+  transition: background 160ms var(--ease);
+}
+.hub-hero-search-btn:hover { background: var(--desk-forest); }
+.hub-hero-search-btn svg { width: 19px; height: 19px; }
+
+.hub-hero-search-result {
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  background: rgba(36, 122, 77, 0.08);
+  border: 1px solid rgba(36, 122, 77, 0.22);
+  font: 500 13px/1.4 var(--sans);
+  color: var(--desk-ink);
+}
+.hub-hero-search-result.is-empty {
+  background: rgba(20, 58, 46, 0.05);
+  border-color: rgba(20, 58, 46, 0.14);
+  color: var(--desk-muted);
+}
+.hub-hero-search-go {
+  flex: none;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--desk-ink);
+  color: var(--desk-paper);
+  font: 700 11.5px/1 var(--sans);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 160ms var(--ease);
+}
+.hub-hero-search-go:hover { background: var(--desk-forest); }
+
 .hub-hero-copy .hub-human-loop {
   width: 100%;
   margin: 38px 0 0;
@@ -6328,6 +6433,26 @@ body.is-hub-chrome .sky { opacity: 0; }
   color: var(--desk-muted);
   font: 500 12px/1.45 var(--sans);
   letter-spacing: 0;
+}
+
+/* .hub-tutor-tile started life as an <a> (the tutor-role dashboard grid
+   above); hub-quick-grid reuses the same class on a <button> for the
+   student-facing quick launch below the hero, so it needs the resets an
+   anchor gets for free. */
+button.hub-tutor-tile { text-align: left; font-family: inherit; cursor: pointer; }
+
+.hub-quick-grid {
+  grid-column: 1 / -1;
+  align-self: start;
+  width: 100%;
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.hub-quick-grid .hub-tutor-tile { min-height: 168px; }
+@media (max-width: 850px) {
+  .hub-quick-grid { grid-template-columns: 1fr; }
 }
 
 .hub-tutors { margin-top: 24px; }

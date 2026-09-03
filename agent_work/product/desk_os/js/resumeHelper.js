@@ -685,7 +685,24 @@ export function createResumeHelper({ root, onToast }) {
     }
     const rows = openRoles();
     if (!rows.length) {
-      tableEl.innerHTML = '<span class="rh-soft-note">Nothing on the board yet. Hit "Find openings for me" above, then add what you like.</span>';
+      // Real empty state (2026-09-03 ask): a bare "Sign in to see your
+      // board"-style line left ~600px of blank card below it on anything
+      // but a short window. This fills that space with what the board
+      // actually does, not filler — the same real search/save/apply flow
+      // "Find openings for me" above already runs.
+      tableEl.innerHTML = `
+        <div class="rh-board-empty">
+          <span class="rh-board-empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+          </span>
+          <strong>Nothing on the board yet</strong>
+          <p>Hit "Find openings for me" above, or just ask Jesse in chat. Real matches you like land here.</p>
+          <div class="rh-board-steps">
+            <div class="rh-board-step"><span>1</span><div><strong>Search</strong><p>Jesse finds real, verified openings from your profile.</p></div></div>
+            <div class="rh-board-step"><span>2</span><div><strong>Save</strong><p>Add the ones worth tracking to this board.</p></div></div>
+            <div class="rh-board-step"><span>3</span><div><strong>Apply</strong><p>A tailored resume and cover letter are ready per role.</p></div></div>
+          </div>
+        </div>`;
       return;
     }
     tableEl.innerHTML = rows.map((r) => {

@@ -35,6 +35,7 @@ import FirstSpark      from './pages/FirstSpark'
 // Production promotion of the DevUnifiedLearn prototype, wired to the real
 // migrated content library, real auth, and the real generation endpoints.
 import Learn           from './pages/Learn'
+import BookReader       from './pages/learn/BookReader'
 import Events          from './pages/Events'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
@@ -406,6 +407,10 @@ export default function App() {
             exists so it can be linked and bookmarked directly, with ?q= to
             run a search on arrival. */}
         <Route path="/learn"               element={<AuthGuard><Learn /></AuthGuard>} />
+        {/* The living book (2026-09-03): opened from EntryStage's scope chat
+            once it resolves a topic to a concept. ?topic= is the student's
+            own words; the page resolves it to a real concept itself. */}
+        <Route path="/learn/book"          element={<AuthGuard><BookReader /></AuthGuard>} />
         <Route path="/events"              element={<AuthGuard><Events /></AuthGuard>} />
         <Route path="/parent"              element={<AuthGuard><ParentDashboard /></AuthGuard>} />
         <Route path="/tutor"               element={<AuthGuard><TutorDashboard /></AuthGuard>} />

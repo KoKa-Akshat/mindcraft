@@ -217,6 +217,12 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const goalEcho = hub?.querySelector('[data-hub-goal-echo]');
   const hubMasteryPct = hub?.querySelector('[data-hub-mastery-pct]');
   const graphVeil = hub?.querySelector('[data-hub-graph-veil]');
+  const graphFrame = hub?.querySelector('[data-hub-graph-frame]');
+  const heroSearchForm = hub?.querySelector('[data-hub-hero-search]');
+  const heroSearchInput = hub?.querySelector('[data-hub-hero-search-input]');
+  const heroSearchResult = hub?.querySelector('[data-hub-hero-search-result]');
+  const heroSearchResultText = hub?.querySelector('[data-hub-hero-search-result-text]');
+  const heroSearchGo = hub?.querySelector('[data-hub-hero-search-go]');
   const jesseNavs = [...(hub?.querySelectorAll('[data-hub-jesse-nav]') || [])];
   const resumeNavs = [...(hub?.querySelectorAll('[data-hub-resume-nav]') || [])];
   const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
@@ -442,6 +448,81 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   // here was already unreachable for that reason before this simplified.
   graphVeil?.addEventListener('click', () => {
     window.location.href = '/learn';
+  });
+
+  // Hero search (2026-09-03 ask): a real search over the same real
+  // full-concept-graph.json the map card already renders (fetched once,
+  // lazily, on first search — the graph iframe fetches its own copy
+  // independently, this never touches or waits on that one). Matching here
+  // is a light client-side label match, not the real ML semantic search
+  // /learn uses (that needs an auth token + an embedding model this static
+  // shell does not carry), so a miss here is never presented as "nothing
+  // exists" — the fallback always offers the real search instead. A hit
+  // posts the exact same {type:'highlight'} message Learn.tsx already sends
+  // this same viewer (see full-graph-viewer.html's message listener), which
+  // is what actually drives the fly-to-node camera animation.
+  let graphNodesPromise = null;
+  function loadGraphNodes() {
+    if (!graphNodesPromise) {
+      graphNodesPromise = fetch('/full-concept-graph.json')
+        .then((r) => r.json())
+        .then((data) => Array.isArray(data.nodes) ? data.nodes : [])
+        .catch(() => []);
+    }
+    return graphNodesPromise;
+  }
+
+  function scoreNode(node, needle) {
+    const name = String(node.name || '').toLowerCase();
+    if (!name) return 0;
+    if (name === needle) return 4;
+    if (name.startsWith(needle)) return 3;
+    if (name.includes(needle)) return 2;
+    const words = needle.split(/\s+/).filter(Boolean);
+    if (words.length && words.every((w) => name.includes(w))) return 1;
+    return 0;
+  }
+
+  async function findBestNode(query) {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return null;
+    const nodes = await loadGraphNodes();
+    let best = null;
+    let bestScore = 0;
+    for (const node of nodes) {
+      const score = scoreNode(node, needle);
+      if (score > bestScore) { bestScore = score; best = node; }
+    }
+    return best;
+  }
+
+  function showHeroSearchResult(text, { empty = false } = {}) {
+    if (!heroSearchResult || !heroSearchResultText) return;
+    heroSearchResultText.textContent = text;
+    heroSearchResult.classList.toggle('is-empty', empty);
+    heroSearchResult.hidden = false;
+  }
+
+  heroSearchForm?.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const query = (heroSearchInput?.value || '').trim();
+    if (!query) return;
+    showHeroSearchResult('Searching your knowledge map...');
+    if (heroSearchGo) heroSearchGo.dataset.query = query;
+    const node = await findBestNode(query);
+    if (node) {
+      graphFrame?.contentWindow?.postMessage({ type: 'highlight', nodeId: node.id, neighborIds: [] }, '*');
+      showHeroSearchResult(`Found "${node.name}" on the map.`);
+      if (heroSearchGo) heroSearchGo.textContent = `Open ${node.name} in Learn →`;
+    } else {
+      showHeroSearchResult(`Nothing obvious on the map for "${query}" yet, but Learn's real search is smarter than this quick match.`, { empty: true });
+      if (heroSearchGo) heroSearchGo.textContent = 'Search in Learn →';
+    }
+  });
+
+  heroSearchGo?.addEventListener('click', () => {
+    const query = heroSearchGo.dataset.query || heroSearchInput?.value || '';
+    window.location.href = `/learn?q=${encodeURIComponent(query)}`;
   });
 
   jesseNavs.forEach((nav) => {

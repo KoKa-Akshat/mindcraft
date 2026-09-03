@@ -182,6 +182,28 @@
               <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
               <h1>Start with what is in front of you.</h1>
               <p class="hub-hero-prompt">A question. A draft. An idea.</p>
+
+              <form class="hub-hero-search" data-hub-hero-search>
+                <input
+                  type="text"
+                  class="hub-hero-search-input"
+                  data-hub-hero-search-input
+                  placeholder="Search your knowledge map..."
+                  autocomplete="off"
+                  aria-label="Search your knowledge map"
+                />
+                <button type="submit" class="hub-hero-search-btn" aria-label="Search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </svg>
+                </button>
+              </form>
+              <div class="hub-hero-search-result" data-hub-hero-search-result hidden>
+                <span data-hub-hero-search-result-text></span>
+                <button type="button" class="hub-hero-search-go" data-hub-hero-search-go>Open in Learn &rarr;</button>
+              </div>
+
               <p class="hub-human-loop"><strong>AI keeps the thread.</strong> People help you move it.</p>
             </div>
 
@@ -196,6 +218,41 @@
               <iframe class="hub-graph-frame" data-hub-graph-frame src="/full-graph-viewer.html?hideSubjects&amp;hideLegend" title="Your knowledge map" loading="lazy" tabindex="-1"></iframe>
               <div class="hub-graph-vignette" aria-hidden="true"></div>
               <button type="button" class="hub-graph-veil" data-hub-graph-veil aria-label="Open Learn"></button>
+            </div>
+
+            <!-- Quick launch (2026-09-03 ask): the other two real surfaces,
+                 same tile look the tutor role's dashboard already uses, reusing
+                 data-hub-resume-nav/data-hub-jesse-nav so bootHub.js's existing
+                 click wiring (querySelectorAll on those attributes) picks these
+                 up with no new JS — also fills what used to be a bare void
+                 below the hero card on anything but a short window. A third
+                 child of .hub-hero-card on purpose, not a sibling: hidden/
+                 shown by the SAME heroCard.hidden toggle paintRoleSurfaces()
+                 already does, so it never leaks onto the other two tabs. -->
+            <div class="hub-quick-grid" data-hub-quick-grid>
+            <button type="button" class="hub-tutor-tile" data-hub-resume-nav>
+              <span class="hub-tutor-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14 2.8H6.5a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.3Z"></path>
+                  <path d="M14 2.8v5.5h5.5M8 13h8M8 17h5"></path>
+                </svg>
+              </span>
+              <span class="hub-tutor-tile-kicker">Resume studio</span>
+              <strong>Build with Jesse</strong>
+              <span class="hub-tutor-tile-soft">Real openings, a tailored resume and cover letter per role.</span>
+            </button>
+            <button type="button" class="hub-tutor-tile" data-hub-jesse-nav>
+              <span class="hub-tutor-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M16 20v-1.8a3.7 3.7 0 0 0-3.7-3.7H6.2a3.7 3.7 0 0 0-3.7 3.7V20"></path>
+                  <circle cx="9.2" cy="7.4" r="3.4"></circle>
+                  <path d="M15.6 10.7a3.4 3.4 0 0 0 0-6.6M21.5 20v-1.8a3.7 3.7 0 0 0-2.8-3.6"></path>
+                </svg>
+              </span>
+              <span class="hub-tutor-tile-kicker">Tutors &amp; events</span>
+              <strong>Find help nearby</strong>
+              <span class="hub-tutor-tile-soft">Real tutors on the map, live events as they post them.</span>
+            </button>
             </div>
           </div>
 

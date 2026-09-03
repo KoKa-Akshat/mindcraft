@@ -4,17 +4,17 @@
 <title>The Desk by MindCraft</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
+<meta name="description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
 <link rel="canonical" href="https://joinmindcraft.com/">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Desk by MindCraft">
-<meta property="og:description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta property="og:description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta property="og:url" content="https://joinmindcraft.com/">
 <meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Desk by MindCraft">
-<meta name="twitter:description" content="Interact with Jesse. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta name="twitter:description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need.">
 <meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -209,7 +209,7 @@
   .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.38; pointer-events:none; transition:transform .2s linear;}
   .hero-stage{
     position:relative; z-index:2; width:100%; max-width:1180px; margin:0 auto;
-    padding:clamp(86px,11vh,130px) clamp(20px,4vw,48px) clamp(36px,5vh,56px); text-align:left;
+    padding:clamp(50px,6.5vh,90px) clamp(20px,4vw,48px) clamp(36px,5vh,56px); text-align:left;
   }
   .hero-kicker{
     display:flex; align-items:center; gap:10px; margin-bottom:clamp(18px,3vh,30px);
@@ -218,7 +218,7 @@
   }
   .hero-kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--leaf); flex:none;}
   .hero h1{
-    color:var(--chalk); font-size:clamp(46px,9vw,122px); line-height:1.0; letter-spacing:-.022em;
+    color:var(--chalk); font-size:clamp(34px,5.4vw,64px); line-height:1.08; letter-spacing:-.022em;
     font-weight:600;
   }
   /* line-mask reveal: each line rises out of its own overflow-hidden row.
@@ -231,27 +231,50 @@
   .hero h1 .hl > span{display:inline-block; transform:translateY(140%); animation:lineUp 1s var(--ease) forwards;}
   .hero h1 .hl:nth-child(2) > span{animation-delay:.12s;}
   @keyframes lineUp{to{transform:none;}}
-  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); position:relative; white-space:nowrap;}
-  /* the marker underline draws itself once the lines have landed */
-  .hero h1 em svg{
-    position:absolute; left:-.02em; right:-.04em; bottom:-.16em; width:calc(100% + .06em); height:.22em;
-    overflow:visible; pointer-events:none;
-  }
-  .hero h1 em svg path{
-    fill:none; stroke:var(--lime); stroke-width:14; stroke-linecap:round;
-    stroke-dasharray:520; stroke-dashoffset:520; animation:drawSwash .7s .95s ease-out forwards;
-  }
-  @keyframes drawSwash{to{stroke-dashoffset:0;}}
-  /* "the world" shows first, matching the original headline, then swaps to
-     "Jesse" a beat later (script near the end of the file). Fade only, the
-     line's own width can change freely since nothing else sits beside it. */
-  #heroWordLine{display:inline-block; transition:opacity .4s ease;}
-  #heroWordLine.is-swapping{opacity:0;}
+  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); white-space:nowrap;}
   .hero .lead{
     margin:clamp(26px,3.8vh,38px) 0 0; max-width:52ch; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62;
     color:var(--chalk-dim); animation:rise .9s .3s var(--ease) both;
   }
   .hero .lead strong{color:var(--chalk); font-weight:600;}
+  /* Rotating proof line under the title (2026-09-03, moved the marker
+     underline here from the title): three frames on a loop — one
+     highlighted line, two bullets, one line + two bullets — with the
+     hand-drawn swash marking the whole rotator, drawn once on load rather
+     than per frame. All three frames are always in the DOM, stacked in the
+     same grid cell (grid-area 1/1) rather than shown/hidden one at a time,
+     so the container's height is always the TALLEST frame's height and
+     never reflows/flickers as frames swap — only opacity crossfades. */
+  .hero-rotator{
+    position:relative; margin:clamp(30px,4.2vh,42px) 0 0; padding-bottom:.3em; max-width:52ch;
+    display:grid; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62; color:var(--chalk-dim);
+    animation:rise .9s .3s var(--ease) both;
+  }
+  .hero-rotator-frame{
+    grid-area:1/1; align-self:start; margin:0;
+    opacity:0; visibility:hidden; transition:opacity .5s ease;
+  }
+  .hero-rotator-frame.is-active{opacity:1; visibility:visible;}
+  .hero-rotator-frame strong{color:var(--chalk); font-weight:600;}
+  .hero-rotator-frame ul{margin:0; padding-left:1.15em;}
+  .hero-rotator-frame p + ul{margin-top:8px;}
+  .hero-rotator-frame li{margin:0 0 6px;}
+  .hero-rotator-frame li:last-child{margin-bottom:0;}
+  .hero-rotator-frame p{margin:0;}
+  /* A stable divider under the whole rotator, not a tight text-hug — frame
+     length varies a lot (one line vs. a line-plus-two-bullets) so a mark
+     that hugs the text would either float far below short frames or cut
+     through long ones. Pinned to the reserved box's own bottom, thin and
+     quiet, it reads as "this zone is dynamic" rather than misaligned. */
+  .hero-rotator-swash{
+    position:absolute; left:-.5%; right:-.5%; bottom:0; width:101%; height:6px;
+    overflow:visible; pointer-events:none;
+  }
+  .hero-rotator-swash path{
+    fill:none; stroke:var(--lime); stroke-width:3; stroke-linecap:round;
+    stroke-dasharray:1200; stroke-dashoffset:1200; animation:drawSwash .8s 1.05s ease-out forwards;
+  }
+  @keyframes drawSwash{to{stroke-dashoffset:0;}}
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,3.6vh,34px); animation:rise .9s .42s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
@@ -781,10 +804,24 @@
   <div class="hero-stage">
     <p class="hero-kicker">The Desk by MindCraft</p>
     <h1>
-      <span class="hl"><span>Interact with</span></span>
-      <span class="hl"><span id="heroWordLine">the <em>world<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.</span></span>
+      <span class="hl"><span>The M in MindCraft is for</span></span>
+      <span class="hl"><span><em>&ldquo;making education fun again.&rdquo;</em></span></span>
     </h1>
-    <p class="lead">The M in MindCraft is for &ldquo;making education fun again.&rdquo; Meet our remarkably slow AI and our remarkable tutors and students, then collaborate and build.</p>
+    <div class="hero-rotator" id="heroRotator">
+      <p class="hero-rotator-frame is-active">Our students write and publish <strong>royalty books</strong>.</p>
+      <ul class="hero-rotator-frame">
+        <li>MindCrafters gather to peer review each other's work.</li>
+        <li>Students also meet their tutor 1:1 to review learning goals and outcomes.</li>
+      </ul>
+      <div class="hero-rotator-frame">
+        <p>Parents as well as Teachers can use our platform to teach/learn anything.</p>
+        <ul>
+          <li>Parents: support your kid with interactive, simplified whitepapers.</li>
+          <li>Teachers: create homework that auto-tracks progress, or find new ways to teach in class.</li>
+        </ul>
+      </div>
+      <svg class="hero-rotator-swash" viewBox="0 0 1200 10" aria-hidden="true" preserveAspectRatio="none"><path d="M6 6 C 320 2, 880 2, 1194 7"/></svg>
+    </div>
     <div class="hero-ctas">
       <a class="btn primary" href="#claim">Claim your desk</a>
       <a class="btn soft" href="#desk">Step into the studio</a>
@@ -1165,25 +1202,23 @@
     els.forEach(function(e){ io.observe(e); });
   })();
 
-  // ----- hero headline: "the world" first, then swaps to "Jesse" -----
-  // Shows the original phrasing for a beat (so it reads, and its own
-  // underline finishes drawing, drawSwash settles at ~1.65s) before fading
-  // to the new one. Reduced motion skips straight to the final state.
+  // ----- hero rotator: books -> peer review/tutor bullets -> parents and
+  // teachers, on a loop (2026-09-03). All frames stay in the DOM stacked in
+  // the same grid cell (see .hero-rotator-frame CSS) so the container's
+  // height never changes and swapping is a pure opacity crossfade, no
+  // reflow/flicker. Reduced motion leaves the first frame alone.
   (function(){
-    var el = document.getElementById('heroWordLine');
-    if(!el) return;
-    var jesseHTML = '<em>Jesse<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em>.';
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      el.innerHTML = jesseHTML;
-      return;
+    var root = document.getElementById('heroRotator');
+    if(!root) return;
+    var frames = Array.prototype.slice.call(root.querySelectorAll('.hero-rotator-frame'));
+    if(frames.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var idx = 0;
+    function advance(){
+      frames[idx].classList.remove('is-active');
+      idx = (idx + 1) % frames.length;
+      frames[idx].classList.add('is-active');
     }
-    setTimeout(function(){
-      el.classList.add('is-swapping');
-      setTimeout(function(){
-        el.innerHTML = jesseHTML;
-        el.classList.remove('is-swapping');
-      }, 400);
-    }, 2100);
+    setInterval(advance, 3800);
   })();
 
   // ----- library numbers count up to their real totals on first sight -----

@@ -302,6 +302,37 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Personal "reading copy" of a resolved concept (LIVING_BOOK build,
+    // 2026-09-03): author name plus any notes a student tags to a sim/page.
+    // Never holds the actual lesson prose or sim HTML, that stays in
+    // conceptLibrary and is read live every time the book reopens, so a
+    // later content fix there is never stale in an old personal copy. Same
+    // owner-only shape as binder_items: a student creates/updates/deletes
+    // only their own copy, a linked parent may read it.
+    match /student_books/{docId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow update: if request.auth != null
+        && resource.data.studentId == request.auth.uid
+        && request.resource.data.studentId == request.auth.uid;
+      // resource == null first: openStudentBook() does a plain getDoc-by-id
+      // to check whether a book already exists BEFORE creating one, and a
+      // read rule that dereferences resource.data on a document that does
+      // not exist yet errors out and denies as "Missing or insufficient
+      // permissions" instead of returning "not found" — the real bug behind
+      // every first-time student's book failing to open, 2026-09-03. Safe to
+      // allow broadly: when resource is null there is no data to leak, the
+      // request just resolves to "does not exist."
+      allow read: if request.auth != null && (
+        resource == null
+        || resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if request.auth != null && resource.data.studentId == request.auth.uid;
+    }
+
     // Phase 3 of the Learn refactor: one doc per student, a capped list of
     // recent tutor-chat sessions (concept id/label, last message preview,
     // timestamp) that powers the HistorySidebar. Written only by the
