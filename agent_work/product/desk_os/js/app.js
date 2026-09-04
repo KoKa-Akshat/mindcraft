@@ -43,12 +43,13 @@ import { createFieldBookCook } from './fieldbook.js?v=r9b';
 import { createSatellites } from './satellites.js?v=r9b';
 import { createActBookOverlay } from './actBook.js?v=r9b';
 import { openConnectGuide } from './connectGuide.js?v=r9b';
-import { createBootHub } from './bootHub.js?v=workspace3';
+import { createBootHub } from './bootHub.js?v=simstudio1';
 import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9b';
 import { createTutorMap } from './tutorMap.js?v=te1';
 import { createResumeHelper } from './resumeHelper.js?v=rh1';
 import { createFriends } from './friends.js?v=te1';
 import { createSettings } from './settings.js?v=s1';
+import { createSimStudio } from './simStudio.js?v=ss1';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
 import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
@@ -221,6 +222,8 @@ let friendsPanel = null;
 let workflowMarket = null;
 /** @type {ReturnType<typeof createHubCall> | null} */
 let hubCall = null;
+/** @type {ReturnType<typeof createSimStudio> | null} */
+let simStudio = null;
 /** @type {string | null} */
 let bookBlobUrl = null;
 let entered = false;
@@ -655,6 +658,12 @@ function closeDashboardPanels() {
 }
 
 function ensureBootHub() {
+  if (!simStudio) {
+    simStudio = createSimStudio({
+      root: document.getElementById('hubSimStudio'),
+      onToast: (msg) => showToast(msg),
+    });
+  }
   if (bootHub || !els.bootStage || !els.hubStage) return bootHub;
   bootHub = createBootHub({
     boot: els.bootStage,
@@ -663,6 +672,10 @@ function ensureBootHub() {
     onResumeOpen: () => showResumePanel(),
     onHomeOpen: () => closeDashboardPanels(),
     onMapOpen: () => showTutorMapPanel(),
+    onSimOpen: () => {
+      closeDashboardPanels();
+      simStudio?.open();
+    },
     onCreateInstance: () => {
       bootHub?.hideAll();
       ensureBookStudio()?.show();

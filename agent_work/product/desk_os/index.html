@@ -129,8 +129,13 @@
     <section class="hub-stage hidden" id="hubStage" aria-label="MindCraft dashboard" hidden>
       <header class="hub-nav">
         <div class="hub-brand-lockup">
-          <span class="hub-brand">The Desk</span>
-          <span class="hub-today" data-hub-date>Today</span>
+          <span class="hub-brand-mark" aria-hidden="true">
+            <img src="img/orbs/mascot-ivory.png" alt="" />
+          </span>
+          <span class="hub-brand-copy">
+            <span class="hub-brand">The Desk</span>
+            <span class="hub-today" data-hub-date>Today</span>
+          </span>
         </div>
 
         <nav class="hub-tabs2" data-hub-tabs2 role="tablist" aria-label="Dashboard sections">
@@ -140,6 +145,15 @@
               <path d="M3.5 9.5h17M9 9.5V20"></path>
             </svg>
             <span>Workspace</span>
+          </button>
+          <button type="button" data-hub-tab2="sim" data-hub-sim-nav role="tab" aria-selected="false" aria-controls="hubSimStudio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="5" cy="12" r="2.2"></circle>
+              <circle cx="19" cy="6" r="2.2"></circle>
+              <circle cx="19" cy="18" r="2.2"></circle>
+              <path d="M7.2 11.3 16.8 6.7M7.2 12.7l9.6 4.6"></path>
+            </svg>
+            <span>Sim Studio</span>
           </button>
           <button type="button" data-hub-tab2="resume" data-hub-resume-nav role="tab" aria-selected="false" aria-controls="hubResume">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -180,8 +194,8 @@
           <div class="hub-hero-card" id="hubWorkspace" role="tabpanel" data-hub-workspace>
             <div class="hub-hero-copy">
               <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
-              <h1>Start with what is in front of you.</h1>
-              <p class="hub-hero-prompt">A question. A draft. An idea.</p>
+              <h1>What are you <span>curious</span> about?</h1>
+              <p class="hub-hero-prompt">Bring a question, a half-built idea, or something you cannot stop noticing.</p>
 
               <form class="hub-hero-search" data-hub-hero-search>
                 <input
@@ -199,12 +213,20 @@
                   </svg>
                 </button>
               </form>
+              <div class="hub-starter-row" aria-label="Question starters">
+                <button type="button" data-hub-starter="Why do city streets get so hot?">City heat</button>
+                <button type="button" data-hub-starter="How does rhythm change a song?">Rhythm</button>
+                <button type="button" data-hub-starter="Help me turn my notes into a book">My notes</button>
+              </div>
               <div class="hub-hero-search-result" data-hub-hero-search-result hidden>
                 <span data-hub-hero-search-result-text></span>
                 <button type="button" class="hub-hero-search-go" data-hub-hero-search-go>Open in Learn &rarr;</button>
               </div>
 
-              <p class="hub-human-loop"><strong>AI keeps the thread.</strong> People help you move it.</p>
+              <div class="hub-human-loop">
+                <span class="hub-jesse-mark" aria-hidden="true"><img src="img/orbs/mascot-ivory.png" alt="" /></span>
+                <p><strong>Jesse keeps the thread.</strong> You do the thinking.</p>
+              </div>
             </div>
 
             <!-- Just the graph now (2026-09-02 ask): the paper-stack frame,
@@ -214,7 +236,7 @@
                  /learn (the veil button below, unchanged), so a second,
                  separate way to do the same thing was redundant chrome. -->
             <div class="hub-workspace-object hub-graph-sheet" data-hub-graph-sheet aria-label="Your knowledge map">
-              <span class="hub-graph-tag">Your knowledge map</span>
+              <span class="hub-graph-tag">Your map is alive</span>
               <iframe class="hub-graph-frame" data-hub-graph-frame src="/full-graph-viewer.html?hideSubjects&amp;hideLegend" title="Your knowledge map" loading="lazy" tabindex="-1"></iframe>
               <div class="hub-graph-vignette" aria-hidden="true"></div>
               <button type="button" class="hub-graph-veil" data-hub-graph-veil aria-label="Open Learn"></button>
@@ -230,6 +252,19 @@
                  shown by the SAME heroCard.hidden toggle paintRoleSurfaces()
                  already does, so it never leaks onto the other two tabs. -->
             <div class="hub-quick-grid" data-hub-quick-grid>
+            <button type="button" class="hub-tutor-tile" data-hub-sim-nav>
+              <span class="hub-tutor-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="5" cy="12" r="2.2"></circle>
+                  <circle cx="19" cy="6" r="2.2"></circle>
+                  <circle cx="19" cy="18" r="2.2"></circle>
+                  <path d="M7.2 11.3 16.8 6.7M7.2 12.7l9.6 4.6"></path>
+                </svg>
+              </span>
+              <span class="hub-tutor-tile-kicker">Sim Studio</span>
+              <strong>Build a living system</strong>
+              <span class="hub-tutor-tile-soft">Wire experiments together and watch each value travel.</span>
+            </button>
             <button type="button" class="hub-tutor-tile" data-hub-resume-nav>
               <span class="hub-tutor-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -255,6 +290,78 @@
             </button>
             </div>
           </div>
+
+          <section class="hub-sim-studio" id="hubSimStudio" role="tabpanel" aria-label="Sim Studio" data-hub-sim-studio hidden>
+            <header class="sim-studio-head">
+              <div>
+                <p class="sim-studio-kicker">Sim Studio</p>
+                <h1>Build the system.</h1>
+                <p>Chain small experiments into something only you could make.</p>
+              </div>
+              <div class="sim-studio-live" aria-live="polite">
+                <span aria-hidden="true"></span>
+                <strong data-sim-status>Live flow warming up</strong>
+              </div>
+            </header>
+
+            <div class="sim-workbench">
+              <aside class="sim-library" aria-label="Simulation parts">
+                <div class="sim-library-head">
+                  <span>Parts bin</span>
+                  <small>3 ready</small>
+                </div>
+                <div class="sim-library-items">
+                  <button type="button" class="sim-library-item is-sun" draggable="true" data-sim-template="sun">
+                    <span class="sim-library-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2.3M12 19.7V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.3M19.7 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path></svg>
+                    </span>
+                    <span><strong>Sun dial</strong><small>Angle in, light out</small></span>
+                  </button>
+                  <button type="button" class="sim-library-item is-shade" draggable="true" data-sim-template="shade">
+                    <span class="sim-library-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h16M6 14l2-7h8l2 7M8 14v6M16 14v6"></path></svg>
+                    </span>
+                    <span><strong>Shade lab</strong><small>Light in, heat out</small></span>
+                  </button>
+                  <button type="button" class="sim-library-item is-plant" draggable="true" data-sim-template="plant">
+                    <span class="sim-library-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M12 14c-4.5 0-7-2.5-7-7 4.5 0 7 2.5 7 7ZM12 11c4.5 0 7-2.5 7-7-4.5 0-7 2.5-7 7Z"></path></svg>
+                    </span>
+                    <span><strong>Plant bed</strong><small>Climate in, growth out</small></span>
+                  </button>
+                </div>
+              </aside>
+
+              <section class="sim-board-shell" aria-label="Simulation wiring board">
+                <div class="sim-board-toolbar">
+                  <span class="sim-flow-label"><i aria-hidden="true"></i>Values moving live</span>
+                  <div class="sim-board-actions">
+                    <button type="button" data-sim-clear-wires title="Clear wires" aria-label="Clear wires">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M8 10v8M12 10v8M16 10v8M6 7l1 14h10l1-14"></path></svg>
+                    </button>
+                    <button type="button" data-sim-reset title="Reset board" aria-label="Reset board">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="sim-board-viewport" data-sim-viewport>
+                  <div class="sim-board" data-sim-board tabindex="0" aria-label="Live simulation canvas">
+                    <svg class="sim-wire-layer" data-sim-wires aria-hidden="true"></svg>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <dialog class="sim-solo-dialog" data-sim-solo-dialog>
+              <header>
+                <strong data-sim-solo-title>Simulation</strong>
+                <button type="button" data-sim-solo-close aria-label="Close simulation">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+                </button>
+              </header>
+              <div class="sim-solo-mount" data-sim-solo-mount></div>
+            </dialog>
+          </section>
 
           <!-- Tutor tools replace the student workspace for tutor accounts. -->
           <div class="hub-tutor-tiles" data-hub-tutor-tiles hidden>
@@ -737,6 +844,6 @@
 
   <div class="toast" id="toast" role="status"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script type="module" src="js/app.js?v=workspace3"></script>
+  <script type="module" src="js/app.js?v=simstudio1"></script>
 </body>
 </html>

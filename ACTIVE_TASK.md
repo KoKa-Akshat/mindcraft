@@ -4,6 +4,12 @@
 
 ---
 
+## DeskOS playful landing and Sim Studio (2026-09-04)
+
+The student hub now opens on a brighter paper workspace with Jesse, curiosity starters, a framed live knowledge map, and three colorful launch cards. Sim Studio is a new hub tab with a draggable 1480 by 820 canvas, generic input and output ports declared by sandboxed iframes, live `postMessage` value flow, pointer wiring, cycle protection, focused single-sim play, clear, reset, and three seed sims. Source: `agent_work/product/desk_os/`.
+
+Verified with JS syntax checks, all 3 existing DeskOS tests, a Playwright protocol and gesture suite at desktop, iPad portrait, and phone sizes, and `cd app && npm run build`. Firebase version `ab1b568180e7097d` is active despite the known final 400 response. Live `/login` serves `index-BgeutC1R.js`; deployed DeskOS HTML and `simStudio.js` SHA-256 hashes exactly match `app/dist`. The real graph was inspected in the built bundle. A physical iPad browser pass remains open.
+
 ## DeskOS Workspace paper redesign (2026-09-02)
 
 The live DeskOS source now has a compact persistent Workspace / Resume studio / Tutors & events header and a cream paper Learn surface instead of the oversized particle cube. Jesse's real learn-activity stage has a small activity slip, tutor accounts retain their three working tool links, and tabs now replace the Workspace surface correctly. Source: `agent_work/product/desk_os/`. Local DeskOS tests, TypeScript, production build, and Playwright checks at desktop, phone, both iPad orientations, and tutor role pass. A concurrent Claude session incorporated the shared-tree Workspace work in `f803bafb`, then refined Resume in `946bb3a1`; both are on `main`, the latest deploy workflow passed, and production markers were verified directly. A physical iPad browser pass remains open.

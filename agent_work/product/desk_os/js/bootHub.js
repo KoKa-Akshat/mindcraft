@@ -120,6 +120,7 @@ function ensureCatalog() {
  *   onOpenInstance: (inst: object) => void,
  *   onCreateInstance?: () => void,
  *   onSignOut: () => void,
+ *   onSimOpen?: () => void,
  * }} opts
  */
 const GOALS_KEY = 'deskOs.instanceGoals';
@@ -204,7 +205,7 @@ function goalOptionsFor(inst) {
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
-export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen, onHomeOpen }) {
+export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onSignOut, onResumeOpen, onMapOpen, onHomeOpen, onSimOpen }) {
   const bootTitle = boot?.querySelector('[data-boot-title]');
   const bootDots = boot?.querySelector('[data-boot-dots]');
   const hubName = hub?.querySelector('[data-hub-name]');
@@ -223,8 +224,11 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   const heroSearchResult = hub?.querySelector('[data-hub-hero-search-result]');
   const heroSearchResultText = hub?.querySelector('[data-hub-hero-search-result-text]');
   const heroSearchGo = hub?.querySelector('[data-hub-hero-search-go]');
+  const starterPrompts = [...(hub?.querySelectorAll('[data-hub-starter]') || [])];
   const jesseNavs = [...(hub?.querySelectorAll('[data-hub-jesse-nav]') || [])];
   const resumeNavs = [...(hub?.querySelectorAll('[data-hub-resume-nav]') || [])];
+  const simNavs = [...(hub?.querySelectorAll('[data-hub-sim-nav]') || [])];
+  const simStudio = hub?.querySelector('[data-hub-sim-studio]');
   const tutorTiles = hub?.querySelector('[data-hub-tutor-tiles]');
   const tabBtns = [...(hub?.querySelectorAll('[data-hub-tab]') || [])];
   const panels = [...(hub?.querySelectorAll('[data-hub-panel]') || [])];
@@ -234,7 +238,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
   let activeDashboardTab = 'home';
 
   function selectDashboardTab(tab) {
-    activeDashboardTab = ['home', 'resume', 'tutors'].includes(tab) ? tab : 'home';
+    activeDashboardTab = ['home', 'sim', 'resume', 'tutors'].includes(tab) ? tab : 'home';
     tab2Btns.forEach((button) => {
       const selected = button.dataset.hubTab2 === activeDashboardTab;
       button.classList.toggle('is-active', selected);
@@ -283,6 +287,11 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     const tutor = (getRole() || 'student') === 'tutor';
     if (tab2Row) tab2Row.hidden = tutor;
     if (heroCard) heroCard.hidden = tutor || activeDashboardTab !== 'home';
+    if (simStudio) {
+      const showSim = !tutor && activeDashboardTab === 'sim';
+      simStudio.hidden = !showSim;
+      simStudio.dispatchEvent(new CustomEvent(showSim ? 'simstudio:show' : 'simstudio:hide'));
+    }
     if (tutorTiles) tutorTiles.hidden = !tutor;
   }
 
@@ -525,6 +534,20 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     window.location.href = `/learn?q=${encodeURIComponent(query)}`;
   });
 
+  starterPrompts.forEach((button) => {
+    button.addEventListener('click', () => {
+      const prompt = button.dataset.hubStarter?.trim() || '';
+      if (!prompt || !heroSearchInput || !heroSearchForm) return;
+      heroSearchInput.value = prompt;
+      heroSearchInput.focus();
+      if (typeof heroSearchForm.requestSubmit === 'function') {
+        heroSearchForm.requestSubmit();
+      } else {
+        heroSearchForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+    });
+  });
+
   jesseNavs.forEach((nav) => {
     nav.addEventListener('click', () => {
       selectDashboardTab('tutors');
@@ -536,6 +559,13 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     nav.addEventListener('click', () => {
       selectDashboardTab('resume');
       onResumeOpen?.();
+    });
+  });
+
+  simNavs.forEach((nav) => {
+    nav.addEventListener('click', () => {
+      selectDashboardTab('sim');
+      onSimOpen?.();
     });
   });
 
