@@ -1,0 +1,6190 @@
+{
+  "subject_id": "p5-textbook",
+  "title": "The Art of Processing: Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-09-05",
+  "groups": {
+    "FND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "PRIM": {
+      "classifier_name": "2D Shape & Geometry",
+      "color": "DarkGreen"
+    },
+    "CLR": {
+      "classifier_name": "Color Theory & Pixels",
+      "color": "Gold"
+    },
+    "FLOW": {
+      "classifier_name": "Control Flow & Arrays",
+      "color": "Teal"
+    },
+    "XFORM": {
+      "classifier_name": "Matrix Transformations",
+      "color": "DodgerBlue"
+    },
+    "TRIG": {
+      "classifier_name": "Animation & Trigonometry",
+      "color": "LimeGreen"
+    },
+    "NOISE": {
+      "classifier_name": "Randomness & Perlin Noise",
+      "color": "DarkGoldenrod"
+    },
+    "VEC": {
+      "classifier_name": "Vector Math & Physics",
+      "color": "MediumPurple"
+    },
+    "INP": {
+      "classifier_name": "User Input & Sensing",
+      "color": "HotPink"
+    },
+    "DOM": {
+      "classifier_name": "DOM Controls & HTML",
+      "color": "LightSkyBlue"
+    },
+    "JS": {
+      "classifier_name": "Modern ES6+ JavaScript",
+      "color": "Orange"
+    },
+    "WEBGL": {
+      "classifier_name": "3D WebGL Graphics",
+      "color": "DarkSlateBlue"
+    },
+    "SND": {
+      "classifier_name": "Audio Synthesis & Sound",
+      "color": "Crimson"
+    },
+    "FFT": {
+      "classifier_name": "Signal Processing & FFT",
+      "color": "DarkRed"
+    },
+    "IMG": {
+      "classifier_name": "Image & Video Processing",
+      "color": "OliveDrab"
+    },
+    "TYPO": {
+      "classifier_name": "Generative Typography",
+      "color": "DarkOrchid"
+    },
+    "TOOL": {
+      "classifier_name": "Development Tools",
+      "color": "Peru"
+    },
+    "PED": {
+      "classifier_name": "Pedagogy & Computation",
+      "color": "DeepPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "p5-textbook::coordinate-system",
+      "label": "Coordinate System",
+      "subject_id": "p5-textbook",
+      "dependencies": [],
+      "taxonomy_id": "FND",
+      "level": "foundational"
+    },
+    {
+      "id": "p5-textbook::canvas-element",
+      "label": "Canvas Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::setup-function",
+      "label": "Setup Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::draw-function",
+      "label": "Draw Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::frame-rate",
+      "label": "Frame Rate",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::draw-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::frame-count",
+      "label": "Frame Count",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::draw-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pixel-grid",
+      "label": "Pixel Grid",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::canvas-width",
+      "label": "Canvas Width",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::canvas-height",
+      "label": "Canvas Height",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-canvas-function",
+      "label": "Create Canvas Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::background-color-function",
+      "label": "Background Color Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::preload-function",
+      "label": "Preload Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-loop-function",
+      "label": "No Loop Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::draw-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::redraw-function",
+      "label": "Redraw Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::no-loop-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::loop-control-function",
+      "label": "Loop Control Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::no-loop-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::window-resized-event",
+      "label": "Window Resized Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::resize-canvas-function",
+      "label": "Resize Canvas Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::window-resized-event"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::full-screen-mode",
+      "label": "Full Screen Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::resize-canvas-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::display-density",
+      "label": "Display Density",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pixel-grid"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pixel-density-control",
+      "label": "Pixel Density Control",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::display-density"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::console-log-debugging",
+      "label": "Console Log Debugging",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::statement-semicolon-syntax",
+      "label": "Statement Semicolon Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::code-comments-syntax",
+      "label": "Code Comments Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::statement-semicolon-syntax"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::script-inclusion-tag",
+      "label": "Script Inclusion Tag",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-js-library-import",
+      "label": "p5.js Library Import",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::script-inclusion-tag"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cdn-script-loading",
+      "label": "CDN Script Loading",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-js-library-import"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::global-mode-execution",
+      "label": "Global Mode Execution",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::instance-mode-execution",
+      "label": "Instance Mode Execution",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::global-mode-execution"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-constructor-function",
+      "label": "p5 Constructor Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::instance-mode-execution"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::render-cycle-loop",
+      "label": "Render Cycle Loop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::draw-function"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::delta-time-tracking",
+      "label": "Delta Time Tracking",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::frame-rate"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::target-frame-rate-setting",
+      "label": "Target Frame Rate Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::frame-rate"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::canvas-aspect-ratio",
+      "label": "Canvas Aspect Ratio",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-width",
+        "p5-textbook::canvas-height"
+      ],
+      "taxonomy_id": "FND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::point-primitive",
+      "label": "Point Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::line-primitive",
+      "label": "Line Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rectangle-primitive",
+      "label": "Rectangle Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ellipse-primitive",
+      "label": "Ellipse Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::circle-shortcut-function",
+      "label": "Circle Shortcut Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::square-shortcut-function",
+      "label": "Square Shortcut Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::triangle-primitive",
+      "label": "Triangle Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::quad-primitive",
+      "label": "Quad Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::arc-shape-primitive",
+      "label": "Arc Shape Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ellipse-mode-center",
+      "label": "Ellipse Mode Center",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ellipse-mode-corner",
+      "label": "Ellipse Mode Corner",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rect-mode-center",
+      "label": "Rect Mode Center",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rect-mode-corner",
+      "label": "Rect Mode Corner",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::begin-shape-function",
+      "label": "Begin Shape Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::end-shape-function",
+      "label": "End Shape Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vertex-coordinates",
+      "label": "Vertex Coordinates",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::close-shape-parameter",
+      "label": "Close Shape Parameter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::end-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::begin-contour-function",
+      "label": "Begin Contour Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::end-contour-function",
+      "label": "End Contour Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-contour-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::b-zier-curve-function",
+      "label": "Bézier Curve Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::b-zier-control-points",
+      "label": "Bézier Control Points",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::b-zier-curve-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::b-zier-vertex-function",
+      "label": "Bézier Vertex Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::b-zier-curve-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::curve-shape-function",
+      "label": "Curve Shape Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::begin-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::curve-tightness-setting",
+      "label": "Curve Tightness Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::curve-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::curve-vertex-function",
+      "label": "Curve Vertex Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::curve-shape-function"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::corner-radius-rectangle",
+      "label": "Corner Radius Rectangle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shape-stroke-weight",
+      "label": "Shape Stroke Weight",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::point-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::stroke-cap-style",
+      "label": "Stroke Cap Style",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::line-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::stroke-join-style",
+      "label": "Stroke Join Style",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-stroke-function",
+      "label": "No Stroke Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::shape-stroke-weight"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-fill-function",
+      "label": "No Fill Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::smooth-rendering",
+      "label": "Smooth Rendering",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-smooth-rendering",
+      "label": "No Smooth Rendering",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::smooth-rendering"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::bounding-box-calculation",
+      "label": "Bounding Box Calculation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shape-area-computation",
+      "label": "Shape Area Computation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rectangle-primitive",
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rgb-color-space",
+      "label": "RGB Color Space",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rgba-alpha-channel",
+      "label": "RGBA Alpha Channel",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hsb-color-space",
+      "label": "HSB Color Space",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hsl-color-space",
+      "label": "HSL Color Space",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::color-mode-setting",
+      "label": "Color Mode Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fill-color-function",
+      "label": "Fill Color Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::stroke-color-function",
+      "label": "Stroke Color Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::grayscale-value-syntax",
+      "label": "Grayscale Value Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hex-color-code-strings",
+      "label": "Hex Color Code Strings",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::web-named-color-strings",
+      "label": "Web Named Color Strings",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-color-object",
+      "label": "p5 Color Object",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::red-channel-extraction",
+      "label": "Red Channel Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::green-channel-extraction",
+      "label": "Green Channel Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::blue-channel-extraction",
+      "label": "Blue Channel Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::alpha-value-extraction",
+      "label": "Alpha Value Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hue-component-extraction",
+      "label": "Hue Component Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space",
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::saturation-extraction",
+      "label": "Saturation Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space",
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::brightness-extraction",
+      "label": "Brightness Extraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space",
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::color-interpolation-lerp",
+      "label": "Color Interpolation Lerp",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::palette-color-array",
+      "label": "Palette Color Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-color-object"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::complimentary-color-logic",
+      "label": "Complimentary Color Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::triadic-palette-generator",
+      "label": "Triadic Palette Generator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hsb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-pixels-function",
+      "label": "Load Pixels Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pixel-grid"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::update-pixels-function",
+      "label": "Update Pixels Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-pixels-function"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pixels-array-indexing",
+      "label": "Pixels Array Indexing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-pixels-function"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::get-pixel-color",
+      "label": "Get Pixel Color",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pixel-grid"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::set-pixel-color",
+      "label": "Set Pixel Color",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::update-pixels-function"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::color-blend-modes",
+      "label": "Color Blend Modes",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgba-alpha-channel"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::multiply-blend-mode",
+      "label": "Multiply Blend Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::color-blend-modes"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::screen-blend-mode",
+      "label": "Screen Blend Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::color-blend-modes"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::additive-color-mixing",
+      "label": "Additive Color Mixing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::subtractive-color-mixing",
+      "label": "Subtractive Color Mixing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::color-contrast-ratio",
+      "label": "Color Contrast Ratio",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::brightness-extraction"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::color-accessibility-palette",
+      "label": "Color Accessibility Palette",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::palette-color-array"
+      ],
+      "taxonomy_id": "CLR",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::let-variable-declaration",
+      "label": "Let Variable Declaration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::const-constant-variable",
+      "label": "Const Constant Variable",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::global-variable-scope",
+      "label": "Global Variable Scope",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::local-block-scope",
+      "label": "Local Block Scope",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::if-conditional-branch",
+      "label": "If Conditional Branch",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::else-conditional-branch",
+      "label": "Else Conditional Branch",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::else-if-chained-logic",
+      "label": "Else If Chained Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::else-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::relational-operators",
+      "label": "Relational Operators",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::logical-and-operator",
+      "label": "Logical AND Operator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::relational-operators"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::logical-or-operator",
+      "label": "Logical OR Operator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::relational-operators"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::logical-not-operator",
+      "label": "Logical NOT Operator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::relational-operators"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ternary-operator-syntax",
+      "label": "Ternary Operator Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::switch-statement-syntax",
+      "label": "Switch Statement Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::while-loop-construct",
+      "label": "While Loop Construct",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::for-loop-construct",
+      "label": "For Loop Construct",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::while-loop-construct"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::loop-counter-variable",
+      "label": "Loop Counter Variable",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::for-loop-construct"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::infinite-loop-prevention",
+      "label": "Infinite Loop Prevention",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::while-loop-construct"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::nested-for-loops",
+      "label": "Nested For Loops",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::for-loop-construct"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::2d-grid-iteration",
+      "label": "2D Grid Iteration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::nested-for-loops"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-data-structure",
+      "label": "Array Data Structure",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-element-indexing",
+      "label": "Array Element Indexing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-push-method",
+      "label": "Array Push Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-pop-method",
+      "label": "Array Pop Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-length-property",
+      "label": "Array Length Property",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::for-of-loop-iteration",
+      "label": "For Of Loop Iteration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::for-each-array-method",
+      "label": "For Each Array Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-splice-removal",
+      "label": "Array Splice Removal",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-concat-joining",
+      "label": "Array Concat Joining",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::2d-matrix-array",
+      "label": "2D Matrix Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-reverse-ordering",
+      "label": "Array Reverse Ordering",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-sort-ordering",
+      "label": "Array Sort Ordering",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::boolean-flag-variable",
+      "label": "Boolean Flag Variable",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::state-machine-logic",
+      "label": "State Machine Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::switch-statement-syntax",
+        "p5-textbook::boolean-flag-variable"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::break-and-continue-keywords",
+      "label": "Break and Continue Keywords",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::for-loop-construct"
+      ],
+      "taxonomy_id": "FLOW",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::translate-function",
+      "label": "Translate Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rotate-function",
+      "label": "Rotate Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::scale-function",
+      "label": "Scale Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::push-function",
+      "label": "Push Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::translate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pop-function",
+      "label": "Pop Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::push-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::matrix-stack-operations",
+      "label": "Matrix Stack Operations",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::push-function",
+        "p5-textbook::pop-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::transformation-order-logic",
+      "label": "Transformation Order Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::translate-function",
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::origin-point-relocation",
+      "label": "Origin Point Relocation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::translate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::radians-angle-system",
+      "label": "Radians Angle System",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::degrees-angle-system",
+      "label": "Degrees Angle System",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::radians-angle-system"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::angle-mode-setting",
+      "label": "Angle Mode Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::radians-angle-system",
+        "p5-textbook::degrees-angle-system"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shear-x-transformation",
+      "label": "Shear X Transformation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::translate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shear-y-transformation",
+      "label": "Shear Y Transformation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::translate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::uniform-scaling",
+      "label": "Uniform Scaling",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scale-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::non-uniform-scaling",
+      "label": "Non Uniform Scaling",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scale-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::negative-scale-reflection",
+      "label": "Negative Scale Reflection",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scale-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hierarchical-transformation",
+      "label": "Hierarchical Transformation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::matrix-stack-operations"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::solar-system-transformation",
+      "label": "Solar System Transformation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hierarchical-transformation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::robot-joint-transformation",
+      "label": "Robot Joint Transformation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hierarchical-transformation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::reset-matrix-function",
+      "label": "Reset Matrix Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::matrix-stack-operations"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::apply-matrix-function",
+      "label": "Apply Matrix Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::reset-matrix-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::get-current-matrix",
+      "label": "Get Current Matrix",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::apply-matrix-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::screen-to-local-coordinates",
+      "label": "Screen to Local Coordinates",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::origin-point-relocation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::local-to-screen-coordinates",
+      "label": "Local to Screen Coordinates",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::origin-point-relocation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pivot-point-selection",
+      "label": "Pivot Point Selection",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rotate-function",
+        "p5-textbook::origin-point-relocation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::center-rotation-pattern",
+      "label": "Center Rotation Pattern",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pivot-point-selection"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::corner-rotation-pattern",
+      "label": "Corner Rotation Pattern",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pivot-point-selection"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::isolated-canvas-layers",
+      "label": "Isolated Canvas Layers",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pop-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::nested-transformation-trees",
+      "label": "Nested Transformation Trees",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hierarchical-transformation"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rotation-speed-variable",
+      "label": "Rotation Speed Variable",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillating-rotation-angle",
+      "label": "Oscillating Rotation Angle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::scale-factor-animation",
+      "label": "Scale Factor Animation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scale-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::transform-matrix-inversion",
+      "label": "Transform Matrix Inversion",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::apply-matrix-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::affine-transformation-model",
+      "label": "Affine Transformation Model",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::apply-matrix-function"
+      ],
+      "taxonomy_id": "XFORM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::linear-motion-logic",
+      "label": "Linear Motion Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::frame-rate"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::position-displacement",
+      "label": "Position Displacement",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::linear-motion-logic"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::constant-velocity",
+      "label": "Constant Velocity",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::position-displacement"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sine-function-math",
+      "label": "Sine Function Math",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::radians-angle-system"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cosine-function-math",
+      "label": "Cosine Function Math",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::radians-angle-system"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::tangent-function-math",
+      "label": "Tangent Function Math",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::radians-angle-system"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wave-amplitude-parameter",
+      "label": "Wave Amplitude Parameter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wave-frequency-parameter",
+      "label": "Wave Frequency Parameter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wave-phase-offset",
+      "label": "Wave Phase Offset",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::harmonic-motion-wave",
+      "label": "Harmonic Motion Wave",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math",
+        "p5-textbook::wave-amplitude-parameter"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::circle-polar-coordinates",
+      "label": "Circle Polar Coordinates",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math",
+        "p5-textbook::cosine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::polar-to-cartesian-formula",
+      "label": "Polar to Cartesian Formula",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cartesian-to-polar-formula",
+      "label": "Cartesian to Polar Formula",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::arc-tangent-atan2-function",
+      "label": "Arc Tangent Atan2 Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::tangent-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::angle-between-coordinates",
+      "label": "Angle Between Coordinates",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::arc-tangent-atan2-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rotational-tracking-motion",
+      "label": "Rotational Tracking Motion",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::angle-between-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::map-range-function",
+      "label": "Map Range Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::linear-motion-logic"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::constrain-value-function",
+      "label": "Constrain Value Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::map-range-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::linear-interpolation-lerp",
+      "label": "Linear Interpolation Lerp",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::map-range-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::distance-formula-dist",
+      "label": "Distance Formula Dist",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::linear-motion-logic"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::square-distance-metric",
+      "label": "Square Distance Metric",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::distance-formula-dist"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::lissajous-curve-generator",
+      "label": "Lissajous Curve Generator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math",
+        "p5-textbook::cosine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::spiral-pattern-generation",
+      "label": "Spiral Pattern Generation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::damped-harmonic-oscillation",
+      "label": "Damped Harmonic Oscillation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::harmonic-motion-wave"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pendulum-swing-simulation",
+      "label": "Pendulum Swing Simulation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::harmonic-motion-wave",
+        "p5-textbook::angle-between-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wave-interference-pattern",
+      "label": "Wave Interference Pattern",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::harmonic-motion-wave"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::circular-orbit-simulation",
+      "label": "Circular Orbit Simulation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::elliptical-path-trajectory",
+      "label": "Elliptical Path Trajectory",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::easing-function-in",
+      "label": "Easing Function In",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::linear-interpolation-lerp"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::easing-function-out",
+      "label": "Easing Function Out",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::easing-function-in"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::easing-function-in-out",
+      "label": "Easing Function In Out",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::easing-function-in"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::frame-independent-motion",
+      "label": "Frame Independent Motion",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::delta-time-tracking"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::step-motion-accumulator",
+      "label": "Step Motion Accumulator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::linear-motion-logic"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::trigonometric-lookup-table",
+      "label": "Trigonometric Lookup Table",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::random-function-float",
+      "label": "Random Function Float",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::random-range-function",
+      "label": "Random Range Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::random-seed-setting",
+      "label": "Random Seed Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::random-gaussian-normal",
+      "label": "Random Gaussian Normal",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::standard-deviation-spread",
+      "label": "Standard Deviation Spread",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-gaussian-normal"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mean-center-value",
+      "label": "Mean Center Value",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-gaussian-normal"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::random-walk-algorithm",
+      "label": "Random Walk Algorithm",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::levy-flight-algorithm",
+      "label": "Levy Flight Algorithm",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-walk-algorithm"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::perlin-noise-concept",
+      "label": "Perlin Noise Concept",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-function-1d",
+      "label": "Noise Function 1D",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-function-2d",
+      "label": "Noise Function 2D",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-function-3d",
+      "label": "Noise Function 3D",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-scale-increment",
+      "label": "Noise Scale Increment",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-1d"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-detail-octaves",
+      "label": "Noise Detail Octaves",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-falloff-ratio",
+      "label": "Noise Falloff Ratio",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-detail-octaves"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-seed-function",
+      "label": "Noise Seed Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::smooth-noise-landscape",
+      "label": "Smooth Noise Landscape",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-2d"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-animated-terrain",
+      "label": "Noise Animated Terrain",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-2d",
+        "p5-textbook::noise-scale-increment"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-flow-field-concept",
+      "label": "Noise Flow Field Concept",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-2d"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-field-direction",
+      "label": "Vector Field Direction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-flow-field-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::organic-curve-generation",
+      "label": "Organic Curve Generation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-1d"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-texture-map",
+      "label": "Noise Texture Map",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-function-2d",
+        "p5-textbook::update-pixels-function"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wobbly-circle-generator",
+      "label": "Wobbly Circle Generator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::circle-polar-coordinates",
+        "p5-textbook::noise-function-1d"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::perlin-noise-vs-random",
+      "label": "Perlin Noise vs Random",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float",
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::simplex-noise-derivative",
+      "label": "Simplex Noise Derivative",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::worley-cell-noise",
+      "label": "Worley Cell Noise",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::perlin-noise-concept",
+        "p5-textbook::distance-formula-dist"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::monte-carlo-selection",
+      "label": "Monte Carlo Selection",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::weighted-random-choice",
+      "label": "Weighted Random Choice",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shuffle-array-order",
+      "label": "Shuffle Array Order",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure",
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::stochastic-tree-growth",
+      "label": "Stochastic Tree Growth",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-walk-algorithm"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::brownian-motion-model",
+      "label": "Brownian Motion Model",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::random-walk-algorithm"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cloud-texture-generator",
+      "label": "Cloud Texture Generator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-texture-map"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::marble-texture-generator",
+      "label": "Marble Texture Generator",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-texture-map",
+        "p5-textbook::sine-function-math"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::noise-displacement-map",
+      "label": "Noise Displacement Map",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::noise-texture-map"
+      ],
+      "taxonomy_id": "NOISE",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-vector-class-concept",
+      "label": "p5 Vector Class Concept",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-vector-function",
+      "label": "Create Vector Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-addition-add",
+      "label": "Vector Addition Add",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-subtraction-sub",
+      "label": "Vector Subtraction Sub",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-scalar-multiply",
+      "label": "Vector Scalar Multiply",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-scalar-divide",
+      "label": "Vector Scalar Divide",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-magnitude-mag",
+      "label": "Vector Magnitude Mag",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-magnitude-sq",
+      "label": "Vector Magnitude Sq",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-magnitude-mag"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-normalize-method",
+      "label": "Vector Normalize Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-magnitude-mag"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-set-mag-method",
+      "label": "Vector Set Mag Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-normalize-method"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-limit-magnitude",
+      "label": "Vector Limit Magnitude",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-magnitude-mag"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-heading-angle",
+      "label": "Vector Heading Angle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept",
+        "p5-textbook::arc-tangent-atan2-function"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-from-angle",
+      "label": "Vector From Angle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-heading-angle"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-random-2d",
+      "label": "Vector Random 2D",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-from-angle",
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-dot-product",
+      "label": "Vector Dot Product",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-cross-product",
+      "label": "Vector Cross Product",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-distance-dist",
+      "label": "Vector Distance Dist",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-angle-between",
+      "label": "Vector Angle Between",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-dot-product"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vector-lerp-method",
+      "label": "Vector Lerp Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept",
+        "p5-textbook::linear-interpolation-lerp"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::velocity-motion-vector",
+      "label": "Velocity Motion Vector",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-addition-add"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::acceleration-force-vector",
+      "label": "Acceleration Force Vector",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::velocity-motion-vector"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::accumulate-forces-newton",
+      "label": "Accumulate Forces Newton",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::acceleration-force-vector"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mass-attribute-scalar",
+      "label": "Mass Attribute Scalar",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::accumulate-forces-newton"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::gravity-force-simulation",
+      "label": "Gravity Force Simulation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::accumulate-forces-newton",
+        "p5-textbook::mass-attribute-scalar"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::friction-drag-simulation",
+      "label": "Friction Drag Simulation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-normalize-method",
+        "p5-textbook::accumulate-forces-newton"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fluid-resistance-model",
+      "label": "Fluid Resistance Model",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::friction-drag-simulation"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::gravitational-attraction",
+      "label": "Gravitational Attraction",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::gravity-force-simulation"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::elastic-collision-bouncing",
+      "label": "Elastic Collision Bouncing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-subtraction-sub",
+        "p5-textbook::velocity-motion-vector"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-class-object",
+      "label": "Particle Class Object",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-vector-class-concept",
+        "p5-textbook::velocity-motion-vector",
+        "p5-textbook::acceleration-force-vector"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-system-manager",
+      "label": "Particle System Manager",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::particle-class-object",
+        "p5-textbook::array-push-method"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-lifespan-decay",
+      "label": "Particle Lifespan Decay",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::particle-class-object"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-emitter-location",
+      "label": "Particle Emitter Location",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::particle-system-manager"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::flocking-boids-steering",
+      "label": "Flocking Boids Steering",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::particle-system-manager"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::spring-force-hooke-law",
+      "label": "Spring Force Hooke Law",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vector-subtraction-sub",
+        "p5-textbook::accumulate-forces-newton"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-x-position",
+      "label": "Mouse X Position",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-y-position",
+      "label": "Mouse Y Position",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::previous-mouse-x-pmousex",
+      "label": "Previous Mouse X PmouseX",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::previous-mouse-y-pmousey",
+      "label": "Previous Mouse Y PmouseY",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-y-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-is-pressed-flag",
+      "label": "Mouse Is Pressed Flag",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-button-value",
+      "label": "Mouse Button Value",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-pressed-event",
+      "label": "Mouse Pressed Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-released-event",
+      "label": "Mouse Released Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-moved-event",
+      "label": "Mouse Moved Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-dragged-event",
+      "label": "Mouse Dragged Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-clicked-event",
+      "label": "Mouse Clicked Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-pressed-event"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mouse-wheel-event",
+      "label": "Mouse Wheel Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-is-pressed-flag",
+      "label": "Key Is Pressed Flag",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::if-conditional-branch"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-variable-character",
+      "label": "Key Variable Character",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-code-number",
+      "label": "Key Code Number",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-pressed-event",
+      "label": "Key Pressed Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-released-event",
+      "label": "Key Released Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::key-typed-event",
+      "label": "Key Typed Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::touch-touches-array",
+      "label": "Touch Touches Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::touch-started-event",
+      "label": "Touch Started Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::touch-touches-array"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::touch-moved-event",
+      "label": "Touch Moved Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::touch-touches-array"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::touch-ended-event",
+      "label": "Touch Ended Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::touch-touches-array"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::device-orientation-tilt",
+      "label": "Device Orientation Tilt",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::device-motion-acceleration",
+      "label": "Device Motion Acceleration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::device-orientation-tilt"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shake-gesture-event",
+      "label": "Shake Gesture Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::device-motion-acceleration"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hit-test-point-rect",
+      "label": "Hit Test Point Rect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position",
+        "p5-textbook::mouse-y-position",
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hit-test-point-circle",
+      "label": "Hit Test Point Circle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position",
+        "p5-textbook::mouse-y-position",
+        "p5-textbook::distance-formula-dist"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hover-focus-state",
+      "label": "Hover Focus State",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hit-test-point-rect"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::drag-and-drop-element",
+      "label": "Drag and Drop Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-dragged-event",
+        "p5-textbook::hit-test-point-rect"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cursor-appearance-pointer",
+      "label": "Cursor Appearance Pointer",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-cursor-function",
+      "label": "No Cursor Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::cursor-appearance-pointer"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::request-pointer-lock",
+      "label": "Request Pointer Lock",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::cursor-appearance-pointer"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::virtual-gamepad-input",
+      "label": "Virtual Gamepad Input",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::key-is-pressed-flag"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::multi-touch-gesture-pinch",
+      "label": "Multi Touch Gesture Pinch",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::touch-touches-array"
+      ],
+      "taxonomy_id": "INP",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-button-element",
+      "label": "Create Button Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-slider-control",
+      "label": "Create Slider Control",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-input-textbox",
+      "label": "Create Input Textbox",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-select-dropdown",
+      "label": "Create Select Dropdown",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-checkbox-control",
+      "label": "Create Checkbox Control",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-radio-buttons",
+      "label": "Create Radio Buttons",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-color-picker",
+      "label": "Create Color Picker",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-paragraph-tag",
+      "label": "Create Paragraph Tag",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-div-container",
+      "label": "Create Div Container",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-span-text-inline",
+      "label": "Create Span Text Inline",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-img-element",
+      "label": "Create Img Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-position",
+      "label": "DOM Element Position",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-size",
+      "label": "DOM Element Size",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-style-css",
+      "label": "DOM Element Style CSS",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-class-add",
+      "label": "DOM Element Class Add",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::dom-element-style-css"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-value-get",
+      "label": "DOM Element Value Get",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-slider-control"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-element-value-set",
+      "label": "DOM Element Value Set",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-slider-control"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-mouse-pressed-event",
+      "label": "DOM Mouse Pressed Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-changed-event",
+      "label": "DOM Changed Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-slider-control",
+        "p5-textbook::create-select-dropdown"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-input-event",
+      "label": "DOM Input Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-input-textbox"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::parent-container-attachment",
+      "label": "Parent Container Attachment",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-div-container"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::child-element-removal",
+      "label": "Child Element Removal",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::parent-container-attachment"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::canvas-parent-wrapper",
+      "label": "Canvas Parent Wrapper",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element",
+        "p5-textbook::create-div-container"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::hide-dom-element",
+      "label": "Hide DOM Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::show-dom-element",
+      "label": "Show DOM Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::hide-dom-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::select-html-element",
+      "label": "Select HTML Element",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::select-all-html-elements",
+      "label": "Select All HTML Elements",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::select-html-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::html5-canvas-integration",
+      "label": "HTML5 Canvas Integration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::css-flexbox-layout",
+      "label": "CSS Flexbox Layout",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::dom-element-style-css"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::css-grid-styling",
+      "label": "CSS Grid Styling",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::dom-element-style-css"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::responsive-layout-handler",
+      "label": "Responsive Layout Handler",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::dom-element-position",
+        "p5-textbook::dom-element-size"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dom-drag-file-event",
+      "label": "DOM Drag File Event",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::drag-and-drop-element",
+        "p5-textbook::create-div-container"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::file-input-button",
+      "label": "File Input Button",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-input-textbox"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::embedded-iframe-canvas",
+      "label": "Embedded iFrame Canvas",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "DOM",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::function-declaration-syntax",
+      "label": "Function Declaration Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::function-parameters-arguments",
+      "label": "Function Parameters Arguments",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::function-return-statement",
+      "label": "Function Return Statement",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::arrow-function-expression",
+      "label": "Arrow Function Expression",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::callback-function-logic",
+      "label": "Callback Function Logic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::anonymous-function-usage",
+      "label": "Anonymous Function Usage",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::es6-class-declaration",
+      "label": "ES6 Class Declaration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::class-constructor-method",
+      "label": "Class Constructor Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::class-method-definition",
+      "label": "Class Method Definition",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::class-instance-instantiation",
+      "label": "Class Instance Instantiation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::class-constructor-method"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::this-keyword-binding",
+      "label": "This Keyword Binding",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::class-inheritance-extends",
+      "label": "Class Inheritance Extends",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::super-constructor-call",
+      "label": "Super Constructor Call",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::class-inheritance-extends"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::static-method-definition",
+      "label": "Static Method Definition",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::object-literal-syntax",
+      "label": "Object Literal Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::let-variable-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::object-property-access",
+      "label": "Object Property Access",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::object-literal-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::object-destructuring",
+      "label": "Object Destructuring",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::object-literal-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-destructuring",
+      "label": "Array Destructuring",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::spread-operator-array",
+      "label": "Spread Operator Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rest-parameters-function",
+      "label": "Rest Parameters Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-parameters-arguments"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-map-higher-order",
+      "label": "Array Map Higher Order",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure",
+        "p5-textbook::callback-function-logic"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-filter-method",
+      "label": "Array Filter Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure",
+        "p5-textbook::callback-function-logic"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::array-reduce-method",
+      "label": "Array Reduce Method",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure",
+        "p5-textbook::callback-function-logic"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::promise-object-async",
+      "label": "Promise Object Async",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::callback-function-logic"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::async-keyword-function",
+      "label": "Async Keyword Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::promise-object-async"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::await-keyword-expression",
+      "label": "Await Keyword Expression",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::async-keyword-function"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fetch-api-web-request",
+      "label": "Fetch API Web Request",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::promise-object-async"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::json-parse-string",
+      "label": "JSON Parse String",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fetch-api-web-request"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::json-stringify-object",
+      "label": "JSON Stringify Object",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::json-parse-string"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-json-p5-function",
+      "label": "Load JSON p5 Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::json-parse-string"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::es6-module-import-export",
+      "label": "ES6 Module Import Export",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::es6-class-declaration"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::try-catch-error-handling",
+      "label": "Try Catch Error Handling",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::function-declaration-syntax"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::local-storage-persistence",
+      "label": "Local Storage Persistence",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::json-stringify-object"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::set-data-structure",
+      "label": "Set Data Structure",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::array-data-structure"
+      ],
+      "taxonomy_id": "JS",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::webgl-renderer-mode",
+      "label": "WEBGL Renderer Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-coordinate-system",
+      "label": "3D Coordinate System",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system",
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::z-axis-depth-position",
+      "label": "Z Axis Depth Position",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::box-3d-primitive",
+      "label": "Box 3D Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sphere-3d-primitive",
+      "label": "Sphere 3D Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cylinder-3d-primitive",
+      "label": "Cylinder 3D Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cone-3d-primitive",
+      "label": "Cone 3D Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::torus-3d-primitive",
+      "label": "Torus 3D Primitive",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::plane-3d-geometry",
+      "label": "Plane 3D Geometry",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ellipsoid-3d-geometry",
+      "label": "Ellipsoid 3D Geometry",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::orbit-control-camera",
+      "label": "Orbit Control Camera",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode",
+        "p5-textbook::mouse-x-position"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::camera-position-setting",
+      "label": "Camera Position Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::perspective-camera-mode",
+      "label": "Perspective Camera Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::camera-position-setting"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ortho-camera-mode",
+      "label": "Ortho Camera Mode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::camera-position-setting"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ambient-light-source",
+      "label": "Ambient Light Source",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode",
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::directional-light-source",
+      "label": "Directional Light Source",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ambient-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::point-light-source",
+      "label": "Point Light Source",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ambient-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::spot-light-source",
+      "label": "Spot Light Source",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ambient-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::normal-material-shading",
+      "label": "Normal Material Shading",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::basic-material-shading",
+      "label": "Basic Material Shading",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ambient-material-shading",
+      "label": "Ambient Material Shading",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::ambient-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::specular-material-shading",
+      "label": "Specular Material Shading",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::point-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shininess-parameter",
+      "label": "Shininess Parameter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::specular-material-shading"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::texture-mapping-function",
+      "label": "Texture Mapping Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode",
+        "p5-textbook::create-img-element"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-shader-function",
+      "label": "Create Shader Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-shader-p5-files",
+      "label": "Load Shader p5 Files",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-shader-function"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::shader-uniform-variables",
+      "label": "Shader Uniform Variables",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-shader-function"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fragment-shader-filter",
+      "label": "Fragment Shader Filter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-shader-function"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vertex-shader-displacement",
+      "label": "Vertex Shader Displacement",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-shader-function"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-model-obj-import",
+      "label": "3D Model OBJ Import",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-model-function",
+      "label": "Load Model Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-model-obj-import"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-mesh-vertex-array",
+      "label": "3D Mesh Vertex Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::3d-model-obj-import"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-lighting-model-combined",
+      "label": "3D Lighting Model Combined",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::directional-light-source",
+        "p5-textbook::point-light-source"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::z-buffer-depth-test",
+      "label": "Z Buffer Depth Test",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::z-axis-depth-position"
+      ],
+      "taxonomy_id": "WEBGL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-sound-library-include",
+      "label": "p5 Sound Library Include",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-js-library-import"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::user-start-audio-context",
+      "label": "User Start Audio Context",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-sound-file",
+      "label": "Load Sound File",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include",
+        "p5-textbook::preload-function"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-file-play",
+      "label": "Sound File Play",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-sound-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-file-stop",
+      "label": "Sound File Stop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-sound-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-file-pause",
+      "label": "Sound File Pause",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-sound-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-file-loop",
+      "label": "Sound File Loop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-sound-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-is-playing-status",
+      "label": "Sound Is Playing Status",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sound-file-play"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::set-volume-level",
+      "label": "Set Volume Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sound-pan-spatial",
+      "label": "Sound Pan Spatial",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::playback-rate-speed",
+      "label": "Playback Rate Speed",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-sound-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-oscillator-class",
+      "label": "p5 Oscillator Class",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-wave-sine",
+      "label": "Oscillator Wave Sine",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-wave-square",
+      "label": "Oscillator Wave Square",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-wave-triangle",
+      "label": "Oscillator Wave Triangle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-wave-sawtooth",
+      "label": "Oscillator Wave Sawtooth",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-start-stop",
+      "label": "Oscillator Start Stop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::oscillator-frequency-set",
+      "label": "Oscillator Frequency Set",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::adsr-envelope-class",
+      "label": "ADSR Envelope Class",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::envelope-attack-time",
+      "label": "Envelope Attack Time",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::adsr-envelope-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::envelope-decay-time",
+      "label": "Envelope Decay Time",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::adsr-envelope-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::envelope-sustain-level",
+      "label": "Envelope Sustain Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::adsr-envelope-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::envelope-release-time",
+      "label": "Envelope Release Time",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::adsr-envelope-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::play-envelope-trigger",
+      "label": "Play Envelope Trigger",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::adsr-envelope-class",
+        "p5-textbook::p5-oscillator-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-noise-white-pink",
+      "label": "p5 Noise White Pink",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-filter-lowpass",
+      "label": "Audio Filter Lowpass",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-filter-highpass",
+      "label": "Audio Filter Highpass",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-filter-bandpass",
+      "label": "Audio Filter Bandpass",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::reverb-sound-effect",
+      "label": "Reverb Sound Effect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::delay-sound-effect",
+      "label": "Delay Sound Effect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-distortion-effect",
+      "label": "Audio Distortion Effect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::polyphonic-synthesizer",
+      "label": "Polyphonic Synthesizer",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-oscillator-class",
+        "p5-textbook::adsr-envelope-class"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::midi-note-to-frequency",
+      "label": "Midi Note to Frequency",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::oscillator-frequency-set"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-node-signal-route",
+      "label": "Audio Node Signal Route",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-audioin-microphone",
+      "label": "p5 AudioIn Microphone",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include",
+        "p5-textbook::user-start-audio-context"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::microphone-start-input",
+      "label": "Microphone Start Input",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-audioin-microphone"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::microphone-stop-input",
+      "label": "Microphone Stop Input",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-audioin-microphone"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::microphone-get-level",
+      "label": "Microphone Get Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-audioin-microphone"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-amplitude-class",
+      "label": "p5 Amplitude Class",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::amplitude-get-level",
+      "label": "Amplitude Get Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-amplitude-class"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::smooth-amplitude-level",
+      "label": "Smooth Amplitude Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::amplitude-get-level",
+        "p5-textbook::linear-interpolation-lerp"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-fft-class-concept",
+      "label": "p5 FFT Class Concept",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-analyze-spectrum",
+      "label": "FFT Analyze Spectrum",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-fft-class-concept"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-frequency-bins-array",
+      "label": "FFT Frequency Bins Array",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-get-energy-bass",
+      "label": "FFT Get Energy Bass",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-get-energy-lowmid",
+      "label": "FFT Get Energy LowMid",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-get-energy-mid",
+      "label": "FFT Get Energy Mid",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-get-energy-highmid",
+      "label": "FFT Get Energy HighMid",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-get-energy-treble",
+      "label": "FFT Get Energy Treble",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fft-waveform-time-domain",
+      "label": "FFT Waveform Time Domain",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-fft-class-concept"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::spectrum-frequency-chart",
+      "label": "Spectrum Frequency Chart",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array",
+        "p5-textbook::for-loop-construct"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::circular-audio-visualizer",
+      "label": "Circular Audio Visualizer",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array",
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::beat-detection-threshold",
+      "label": "Beat Detection Threshold",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::amplitude-get-level"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::beat-detection-energy-peak",
+      "label": "Beat Detection Energy Peak",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-get-energy-bass",
+        "p5-textbook::beat-detection-threshold"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-reactive-pulse-scale",
+      "label": "Audio Reactive Pulse Scale",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::amplitude-get-level",
+        "p5-textbook::scale-function"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-reactive-color-shift",
+      "label": "Audio Reactive Color Shift",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-get-energy-bass",
+        "p5-textbook::hsb-color-space"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-burst-on-beat",
+      "label": "Particle Burst on Beat",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::beat-detection-energy-peak",
+        "p5-textbook::particle-system-manager"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::fast-fourier-transform-math",
+      "label": "Fast Fourier Transform Math",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-fft-class-concept"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-spectrogram-plot",
+      "label": "Audio Spectrogram Plot",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array",
+        "p5-textbook::update-pixels-function"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-pitch-detection",
+      "label": "Audio Pitch Detection",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::frequency-centroid-math",
+      "label": "Frequency Centroid Math",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-analyze-spectrum"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::logarithmic-frequency-scale",
+      "label": "Logarithmic Frequency Scale",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::octave-band-splitting",
+      "label": "Octave Band Splitting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-input-peak-hold",
+      "label": "Audio Input Peak Hold",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::amplitude-get-level"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::audio-visual-eq-bars",
+      "label": "Audio Visual EQ Bars",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array",
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-audio-reactive-visual",
+      "label": "3D Audio Reactive Visual",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fft-frequency-bins-array",
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::microphone-feedback-gate",
+      "label": "Microphone Feedback Gate",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-audioin-microphone"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::acoustic-signal-processing",
+      "label": "Acoustic Signal Processing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-fft-class-concept"
+      ],
+      "taxonomy_id": "FFT",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-image-function",
+      "label": "Load Image Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::preload-function",
+        "p5-textbook::create-img-element"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-drawing-function",
+      "label": "Image Drawing Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-resize-function",
+      "label": "Image Resize Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-tint-function",
+      "label": "Image Tint Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function",
+        "p5-textbook::rgb-color-space"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::no-tint-function",
+      "label": "No Tint Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-tint-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-crop-subrectangle",
+      "label": "Image Crop Subrectangle",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-drawing-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-image-blank",
+      "label": "Create Image Blank",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-image-class-object",
+      "label": "p5 Image Class Object",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-pixel-array-load",
+      "label": "Image Pixel Array Load",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-image-class-object",
+        "p5-textbook::load-pixels-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-grayscale",
+      "label": "Image Filter Grayscale",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-invert",
+      "label": "Image Filter Invert",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-threshold",
+      "label": "Image Filter Threshold",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-blur",
+      "label": "Image Filter Blur",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-posterize",
+      "label": "Image Filter Posterize",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-erode",
+      "label": "Image Filter Erode",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::image-filter-dilate",
+      "label": "Image Filter Dilate",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-capture-webcam",
+      "label": "Create Capture Webcam",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element",
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::video-capture-hide-dom",
+      "label": "Video Capture Hide DOM",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-capture-webcam",
+        "p5-textbook::hide-dom-element"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::webcam-pixel-mirroring",
+      "label": "Webcam Pixel Mirroring",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-capture-webcam",
+        "p5-textbook::negative-scale-reflection"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::webcam-motion-difference",
+      "label": "Webcam Motion Difference",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-capture-webcam",
+        "p5-textbook::load-pixels-function",
+        "p5-textbook::distance-formula-dist"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::slit-scan-video-effect",
+      "label": "Slit Scan Video Effect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-capture-webcam",
+        "p5-textbook::image-crop-subrectangle"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::asciify-image-converter",
+      "label": "ASCIIfy Image Converter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-pixel-array-load",
+        "p5-textbook::brightness-extraction"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::halftone-dot-image-screen",
+      "label": "Halftone Dot Image Screen",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-pixel-array-load",
+        "p5-textbook::ellipse-primitive"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pixelate-image-mosaic",
+      "label": "Pixelate Image Mosaic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-pixel-array-load",
+        "p5-textbook::rectangle-primitive"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::convolution-matrix-filter",
+      "label": "Convolution Matrix Filter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::image-pixel-array-load",
+        "p5-textbook::2d-grid-iteration"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::sobel-edge-detection-filter",
+      "label": "Sobel Edge Detection Filter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::convolution-matrix-filter"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::save-canvas-image-file",
+      "label": "Save Canvas Image File",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::save-frames-animation-gif",
+      "label": "Save Frames Animation GIF",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::save-canvas-image-file"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::graphics-offscreen-buffer",
+      "label": "Graphics Offscreen Buffer",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::create-graphics-function",
+      "label": "Create Graphics Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::graphics-offscreen-buffer"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::offscreen-texture-render",
+      "label": "Offscreen Texture Render",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-graphics-function",
+        "p5-textbook::texture-mapping-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mask-image-alpha-shape",
+      "label": "Mask Image Alpha Shape",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-image-function"
+      ],
+      "taxonomy_id": "IMG",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-drawing-function",
+      "label": "Text Drawing Function",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::coordinate-system"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-size-setting",
+      "label": "Text Size Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-align-alignment",
+      "label": "Text Align Alignment",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::load-font-file",
+      "label": "Load Font File",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::preload-function",
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-font-setting",
+      "label": "Text Font Setting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-font-file"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-font-class-object",
+      "label": "p5 Font Class Object",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-font-file"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-bounds-bounding-box",
+      "label": "Text Bounds Bounding Box",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-font-class-object"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-to-points-vector",
+      "label": "Text To Points Vector",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-font-class-object"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::font-glyph-outlines",
+      "label": "Font Glyph Outlines",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::particle-typography-effect",
+      "label": "Particle Typography Effect",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector",
+        "p5-textbook::particle-system-manager"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::wobbly-text-particle-point",
+      "label": "Wobbly Text Particle Point",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector",
+        "p5-textbook::noise-function-1d"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::kinetic-typography-motion",
+      "label": "Kinetic Typography Motion",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function",
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-leading-spacing",
+      "label": "Text Leading Spacing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-style-bold-italic",
+      "label": "Text Style Bold Italic",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-ascent-descent-metric",
+      "label": "Text Ascent Descent Metric",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-bounds-bounding-box"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-wrap-word-container",
+      "label": "Text Wrap Word Container",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::system-web-font-stack",
+      "label": "System Web Font Stack",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-font-setting"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::otf-ttf-font-support",
+      "label": "OTF TTF Font Support",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::load-font-file"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::variable-font-parameters",
+      "label": "Variable Font Parameters",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-font-class-object"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::3d-text-extrusion-webgl",
+      "label": "3D Text Extrusion WebGL",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-font-class-object",
+        "p5-textbook::webgl-renderer-mode"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-path-following-arc",
+      "label": "Text Path Following Arc",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector",
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::interactive-text-input-typo",
+      "label": "Interactive Text Input Typo",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::create-input-textbox",
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::generative-type-grid",
+      "label": "Generative Type Grid",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector",
+        "p5-textbook::2d-grid-iteration"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::deconstructed-letterforms",
+      "label": "Deconstructed Letterforms",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::ascii-art-text-canvas",
+      "label": "ASCII Art Text Canvas",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function",
+        "p5-textbook::2d-grid-iteration"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-stroke-fill-combo",
+      "label": "Text Stroke Fill Combo",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function",
+        "p5-textbook::fill-color-function",
+        "p5-textbook::stroke-color-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::per-character-rotation",
+      "label": "Per Character Rotation",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function",
+        "p5-textbook::rotate-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::dynamic-font-scaling",
+      "label": "Dynamic Font Scaling",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-size-setting",
+        "p5-textbook::map-range-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::kerning-letter-spacing",
+      "label": "Kerning Letter Spacing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-drawing-function"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::svg-font-path-parsing",
+      "label": "SVG Font Path Parsing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::text-to-points-vector"
+      ],
+      "taxonomy_id": "TYPO",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-web-editor-interface",
+      "label": "p5 Web Editor Interface",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::web-editor-sketch-file",
+      "label": "Web Editor Sketch File",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-web-editor-interface"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::web-editor-asset-sidebar",
+      "label": "Web Editor Asset Sidebar",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-web-editor-interface"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vs-code-code-editor",
+      "label": "VS Code Code Editor",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::live-server-vs-extension",
+      "label": "Live Server VS Extension",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vs-code-code-editor"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::browser-developer-console",
+      "label": "Browser Developer Console",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::console-log-debugging"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::browser-element-inspector",
+      "label": "Browser Element Inspector",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::browser-developer-console"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::browser-network-tab",
+      "label": "Browser Network Tab",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::fetch-api-web-request",
+        "p5-textbook::browser-developer-console"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::javascript-breakpoints",
+      "label": "JavaScript Breakpoints",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::browser-developer-console"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::debugger-keyword-syntax",
+      "label": "Debugger Keyword Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::javascript-breakpoints"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-sound-local-host-cors",
+      "label": "p5 Sound Local Host CORS",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include",
+        "p5-textbook::live-server-vs-extension"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::cors-security-policy",
+      "label": "CORS Security Policy",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-local-host-cors"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::local-web-server-python",
+      "label": "Local Web Server Python",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::live-server-vs-extension",
+        "p5-textbook::cors-security-policy"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::git-version-control",
+      "label": "Git Version Control",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vs-code-code-editor"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::github-repository-hosting",
+      "label": "GitHub Repository Hosting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::git-version-control"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::github-pages-deployment",
+      "label": "GitHub Pages Deployment",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::github-repository-hosting"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::mkdocs-material-textbook",
+      "label": "MkDocs Material Textbook",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::github-pages-deployment"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-accessibility-library",
+      "label": "p5 Accessibility Library",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::canvas-element"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::screen-reader-description",
+      "label": "Screen Reader Description",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-accessibility-library"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::text-output-accessible",
+      "label": "Text Output Accessible",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-accessibility-library"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::grid-output-accessible",
+      "label": "Grid Output Accessible",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-accessibility-library"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-sound-recording-tool",
+      "label": "p5 Sound Recording Tool",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-sound-library-include",
+        "p5-textbook::save-canvas-image-file"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::minified-library-production",
+      "label": "Minified Library Production",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-js-library-import"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::source-maps-debugging",
+      "label": "Source Maps Debugging",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::minified-library-production",
+        "p5-textbook::browser-developer-console"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::npm-package-manager",
+      "label": "npm Package Manager",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vs-code-code-editor"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::bundler-vite-webpack",
+      "label": "Bundler Vite Webpack",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::npm-package-manager"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::eslint-code-formatter",
+      "label": "ESLint Code Formatter",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vs-code-code-editor"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::prettier-code-formatting",
+      "label": "Prettier Code Formatting",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::vs-code-code-editor"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::p5-cli-command-tool",
+      "label": "p5 CLI Command Tool",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::npm-package-manager"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::offline-p5-reference-guide",
+      "label": "Offline p5 Reference Guide",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-web-editor-interface"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::computational-thinking-concept",
+      "label": "Computational Thinking Concept",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::algorithmic-decomposition",
+      "label": "Algorithmic Decomposition",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::computational-thinking-concept"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pattern-recognition-visual",
+      "label": "Pattern Recognition Visual",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::computational-thinking-concept"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::abstraction-problem-solving",
+      "label": "Abstraction Problem Solving",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::computational-thinking-concept"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::algorithm-design-step",
+      "label": "Algorithm Design Step",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::algorithmic-decomposition",
+        "p5-textbook::abstraction-problem-solving"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::live-coding-demonstration",
+      "label": "Live Coding Demonstration",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::pair-programming-practice",
+      "label": "Pair Programming Practice",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::live-coding-demonstration"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::code-review-peer-rubric",
+      "label": "Code Review Peer Rubric",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pair-programming-practice"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::scaffolding-starter-code",
+      "label": "Scaffolding Starter Code",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::setup-function"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::parsons-problems-syntax",
+      "label": "Parsons Problems Syntax",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scaffolding-starter-code"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::predict-output-exercises",
+      "label": "Predict Output Exercises",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scaffolding-starter-code"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::debugging-mental-model",
+      "label": "Debugging Mental Model",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::console-log-debugging",
+        "p5-textbook::algorithmic-decomposition"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::common-misconception-background",
+      "label": "Common Misconception Background",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::background-color-function",
+        "p5-textbook::draw-function"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::common-misconception-pushpop",
+      "label": "Common Misconception PushPop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::push-function",
+        "p5-textbook::pop-function"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::common-misconception-scope",
+      "label": "Common Misconception Scope",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::global-variable-scope",
+        "p5-textbook::local-block-scope"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::common-misconception-audio",
+      "label": "Common Misconception Audio",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::user-start-audio-context"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::creative-coding-art-history",
+      "label": "Creative Coding Art History",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::computational-thinking-concept"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::vera-moln-r-generative-art",
+      "label": "Vera Molnár Generative Art",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::creative-coding-art-history",
+        "p5-textbook::random-function-float"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::john-whitney-computer-motion",
+      "label": "John Whitney Computer Motion",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::creative-coding-art-history",
+        "p5-textbook::circle-polar-coordinates"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::manfred-mohr-algorithmic-art",
+      "label": "Manfred Mohr Algorithmic Art",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::creative-coding-art-history",
+        "p5-textbook::3d-coordinate-system"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::casey-reas-ben-fry-processing",
+      "label": "Casey Reas Ben Fry Processing",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::creative-coding-art-history"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::interactive-microsim-design",
+      "label": "Interactive MicroSim Design",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::abstraction-problem-solving",
+        "p5-textbook::create-button-element"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::differentiated-challenge-level",
+      "label": "Differentiated Challenge Level",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::scaffolding-starter-code"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::inclusive-mentoring-workshop",
+      "label": "Inclusive Mentoring Workshop",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::pair-programming-practice"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::formative-code-assessment",
+      "label": "Formative Code Assessment",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::code-review-peer-rubric"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::summative-capstone-project",
+      "label": "Summative Capstone Project",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::algorithm-design-step",
+        "p5-textbook::interactive-microsim-design"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::rubric-creativity-code-quality",
+      "label": "Rubric Creativity Code Quality",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::summative-capstone-project"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::student-portfolio-showcase",
+      "label": "Student Portfolio Showcase",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::github-pages-deployment",
+        "p5-textbook::summative-capstone-project"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::universal-design-learning-udl",
+      "label": "Universal Design Learning UDL",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-accessibility-library",
+        "p5-textbook::inclusive-mentoring-workshop"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::visual-math-pedagogy",
+      "label": "Visual Math Pedagogy",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::sine-function-math",
+        "p5-textbook::abstraction-problem-solving"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::acoustic-signal-pedagogy",
+      "label": "Acoustic Signal Pedagogy",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::p5-fft-class-concept",
+        "p5-textbook::abstraction-problem-solving"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "p5-textbook::artistic-computational-synthesis",
+      "label": "Artistic Computational Synthesis",
+      "subject_id": "p5-textbook",
+      "dependencies": [
+        "p5-textbook::computational-thinking-concept",
+        "p5-textbook::creative-coding-art-history",
+        "p5-textbook::summative-capstone-project"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    }
+  ]
+}

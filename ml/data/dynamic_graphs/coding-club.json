@@ -1,0 +1,6791 @@
+{
+  "subject_id": "coding-club",
+  "title": "Coding Clubs: How to Create, Organize, Promote and Manage a Sustainable Coding Club",
+  "version": "0.1.0",
+  "created": "2026-09-05",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Coding Club Foundations",
+      "color": "SteelBlue"
+    },
+    "GOV": {
+      "classifier_name": "Governance And Charter",
+      "color": "DarkSlateBlue"
+    },
+    "LAUNCH": {
+      "classifier_name": "Launching And Session Design",
+      "color": "DarkGreen"
+    },
+    "PEOPLE": {
+      "classifier_name": "Mentors Students And Ratios",
+      "color": "LimeGreen"
+    },
+    "SCHED": {
+      "classifier_name": "Scheduling Registration And Events",
+      "color": "Gold"
+    },
+    "CT": {
+      "classifier_name": "Computational Thinking And Curriculum",
+      "color": "DarkGoldenrod"
+    },
+    "PHYS": {
+      "classifier_name": "Physical Computing And Electronics",
+      "color": "Khaki"
+    },
+    "KITS": {
+      "classifier_name": "Project Kits And Hardware",
+      "color": "Teal"
+    },
+    "TECH": {
+      "classifier_name": "Devices And IT Management",
+      "color": "DodgerBlue"
+    },
+    "DATA": {
+      "classifier_name": "Data Tracking And Communication",
+      "color": "LightSkyBlue"
+    },
+    "MOTIV": {
+      "classifier_name": "Motivation And Recognition",
+      "color": "Crimson"
+    },
+    "DEI": {
+      "classifier_name": "Diversity Equity And Access",
+      "color": "DarkRed"
+    },
+    "FUND": {
+      "classifier_name": "Budget Funding And Partnerships",
+      "color": "MediumPurple"
+    },
+    "AI": {
+      "classifier_name": "AI Agents For Club Management",
+      "color": "Indigo"
+    },
+    "BOARD": {
+      "classifier_name": "Oversight And Sustainability",
+      "color": "SaddleBrown"
+    }
+  },
+  "concepts": [
+    {
+      "id": "coding-club::coding-club",
+      "label": "Coding Club",
+      "subject_id": "coding-club",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "coding-club::maker-space",
+      "label": "Maker Space",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::stem-education",
+      "label": "STEM Education",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::maker-space"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::computer-science-education",
+      "label": "Computer Science Education",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::stem-education"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::digital-literacy",
+      "label": "Digital Literacy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computer-science-education"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::after-school-program",
+      "label": "After School Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::digital-literacy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::extracurricular-learning",
+      "label": "Extracurricular Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::after-school-program"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::informal-learning",
+      "label": "Informal Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::extracurricular-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::peer-learning",
+      "label": "Peer Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::informal-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::hands-on-learning",
+      "label": "Hands On Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peer-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::project-based-learning",
+      "label": "Project Based Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::hands-on-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-sustainability",
+      "label": "Club Sustainability",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::project-based-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::single-leader-dependency",
+      "label": "Single Leader Dependency",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::club-sustainability"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::leadership-succession",
+      "label": "Leadership Succession",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::single-leader-dependency"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leadership-succession"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::post-event-notes",
+      "label": "Post Event Notes",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::continuous-improvement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::lessons-learned-log",
+      "label": "Lessons Learned Log",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::post-event-notes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-evolution",
+      "label": "Club Evolution",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::lessons-learned-log"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::hybrid-club-model",
+      "label": "Hybrid Club Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::club-evolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-in-education",
+      "label": "AI In Education",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::hybrid-club-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-in-education"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-powered-club-tools",
+      "label": "AI Powered Club Tools",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::generative-ai"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-powered-club-tools"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::microsim",
+      "label": "MicroSim",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::microsim"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::interactive-simulation",
+      "label": "Interactive Simulation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::learning-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-history",
+      "label": "Club History",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::interactive-simulation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-benefits",
+      "label": "Club Benefits",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-history"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::library-coding-club",
+      "label": "Library Coding Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-benefits"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::bookstore-coding-club",
+      "label": "Bookstore Coding Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::library-coding-club"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::community-center-club",
+      "label": "Community Center Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::bookstore-coding-club"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::school-based-club",
+      "label": "School Based Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::community-center-club"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-mission-statement",
+      "label": "Club Mission Statement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::school-based-club"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-vision",
+      "label": "Club Vision",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-mission-statement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::target-audience",
+      "label": "Target Audience",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-vision"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::course-reading-level",
+      "label": "Course Reading Level",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::target-audience"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-charter",
+      "label": "Club Charter",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-values",
+      "label": "Club Values",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::code-of-conduct",
+      "label": "Code Of Conduct",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-values"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::volunteer-background-check",
+      "label": "Volunteer Background Check",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::code-of-conduct"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::child-safety-policy",
+      "label": "Child Safety Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::volunteer-background-check"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::liability-considerations",
+      "label": "Liability Considerations",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::child-safety-policy"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parental-consent-form",
+      "label": "Parental Consent Form",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::liability-considerations"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::photo-release-form",
+      "label": "Photo Release Form",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parental-consent-form"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-privacy-policy",
+      "label": "Data Privacy Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::photo-release-form"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::anti-harassment-policy",
+      "label": "Anti Harassment Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-privacy-policy"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::conflict-resolution-process",
+      "label": "Conflict Resolution Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::anti-harassment-policy"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-bylaws",
+      "label": "Club Bylaws",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::conflict-resolution-process"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::decision-making-process",
+      "label": "Decision Making Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::club-bylaws"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::roles-and-responsibilities",
+      "label": "Roles And Responsibilities",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::decision-making-process"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-leader-role",
+      "label": "Club Leader Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::roles-and-responsibilities"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::assistant-leader-role",
+      "label": "Assistant Leader Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-leader-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-role",
+      "label": "Mentor Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::assistant-leader-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-role",
+      "label": "Student Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parent-role",
+      "label": "Parent Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::student-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::volunteer-coordinator-role",
+      "label": "Volunteer Coordinator Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::governance-structure",
+      "label": "Governance Structure",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::volunteer-coordinator-role"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::advisory-committee",
+      "label": "Advisory Committee",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::governance-structure"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-policies-handbook",
+      "label": "Club Policies Handbook",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::advisory-committee"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::incident-reporting-process",
+      "label": "Incident Reporting Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-policies-handbook"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::emergency-contact-list",
+      "label": "Emergency Contact List",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::incident-reporting-process"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::insurance-considerations",
+      "label": "Insurance Considerations",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::emergency-contact-list"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::venue-agreement",
+      "label": "Venue Agreement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::insurance-considerations"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-registration-with-venue",
+      "label": "Club Registration With Venue",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::venue-agreement"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::legal-compliance-basics",
+      "label": "Legal Compliance Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-registration-with-venue"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::trademark-and-branding",
+      "label": "Trademark And Branding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::legal-compliance-basics"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-naming-convention",
+      "label": "Club Naming Convention",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::trademark-and-branding"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-logo-design",
+      "label": "Club Logo Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-naming-convention"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::gauging-interest-survey",
+      "label": "Gauging Interest Survey",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::club-charter"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::interest-survey-analysis",
+      "label": "Interest Survey Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::establishing-a-new-club",
+      "label": "Establishing A New Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::interest-survey-analysis"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-feasibility-assessment",
+      "label": "Club Feasibility Assessment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-new-club"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::founding-team",
+      "label": "Founding Team",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-feasibility-assessment"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::first-club-meeting",
+      "label": "First Club Meeting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::founding-team"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::meeting-agenda-design",
+      "label": "Meeting Agenda Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::first-club-meeting"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::promoting-first-meeting",
+      "label": "Promoting First Meeting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::meeting-agenda-design"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::flyer-design",
+      "label": "Flyer Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::promoting-first-meeting"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::social-media-promotion",
+      "label": "Social Media Promotion",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::flyer-design"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::word-of-mouth-promotion",
+      "label": "Word Of Mouth Promotion",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::social-media-promotion"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::starting-small-strategy",
+      "label": "Starting Small Strategy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::word-of-mouth-promotion"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::first-three-students",
+      "label": "First Three Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::starting-small-strategy"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::pilot-cohort",
+      "label": "Pilot Cohort",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::first-three-students"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::walk-in-experience",
+      "label": "Walk In Experience",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::pilot-cohort"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::first-impression-design",
+      "label": "First Impression Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::walk-in-experience"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parent-perception",
+      "label": "Parent Perception",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::first-impression-design"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-perception",
+      "label": "Student Perception",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-perception"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::elevator-pitch",
+      "label": "Elevator Pitch",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::student-perception"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::value-proposition-statement",
+      "label": "Value Proposition Statement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::elevator-pitch"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-growth-strategy",
+      "label": "Club Growth Strategy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::value-proposition-statement"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scaling-a-club",
+      "label": "Scaling A Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-growth-strategy"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::multi-site-expansion",
+      "label": "Multi Site Expansion",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::scaling-a-club"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::franchise-model",
+      "label": "Franchise Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::multi-site-expansion"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-branding",
+      "label": "Club Branding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::franchise-model"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::welcome-statement-design",
+      "label": "Welcome Statement Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-branding"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::onboarding-new-students",
+      "label": "Onboarding New Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::welcome-statement-design"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::onboarding-new-mentors",
+      "label": "Onboarding New Mentors",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::onboarding-new-students"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::word-of-mouth-referral",
+      "label": "Word Of Mouth Referral",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::onboarding-new-mentors"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::community-outreach",
+      "label": "Community Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::word-of-mouth-referral"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::school-partnership-outreach",
+      "label": "School Partnership Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::community-outreach"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::library-partnership-outreach",
+      "label": "Library Partnership Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::school-partnership-outreach"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::local-media-coverage",
+      "label": "Local Media Coverage",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::library-partnership-outreach"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::press-release-writing",
+      "label": "Press Release Writing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::local-media-coverage"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::grand-opening-event",
+      "label": "Grand Opening Event",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::press-release-writing"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-anniversary-event",
+      "label": "Club Anniversary Event",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::grand-opening-event"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-milestone-tracking",
+      "label": "Club Milestone Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::club-anniversary-event"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::success-story-sharing",
+      "label": "Success Story Sharing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-milestone-tracking"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::testimonial-collection",
+      "label": "Testimonial Collection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::success-story-sharing"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-newsletter",
+      "label": "Club Newsletter",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::testimonial-collection"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-website",
+      "label": "Club Website",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-newsletter"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-social-media-account",
+      "label": "Club Social Media Account",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-website"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::classroom-layout",
+      "label": "Classroom Layout",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::first-club-meeting",
+        "coding-club::club-social-media-account"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::monitors-facing-inward",
+      "label": "Monitors Facing Inward",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::classroom-layout"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::center-table-design",
+      "label": "Center Table Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::monitors-facing-inward"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::challenge-card-display",
+      "label": "Challenge Card Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::center-table-design"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::seating-arrangement",
+      "label": "Seating Arrangement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::challenge-card-display"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::power-strip-placement",
+      "label": "Power Strip Placement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::seating-arrangement"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cable-management",
+      "label": "Cable Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::power-strip-placement"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::noise-level-management",
+      "label": "Noise Level Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::cable-management"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::lighting-considerations",
+      "label": "Lighting Considerations",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::noise-level-management"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::room-temperature-comfort",
+      "label": "Room Temperature Comfort",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::lighting-considerations"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::storage-for-kits",
+      "label": "Storage For Kits",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::room-temperature-comfort"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::charging-station-setup",
+      "label": "Charging Station Setup",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::storage-for-kits"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::whiteboard-usage",
+      "label": "Whiteboard Usage",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::charging-station-setup"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-time-block",
+      "label": "Session Time Block",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::whiteboard-usage"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-warm-up-activity",
+      "label": "Session Warm Up Activity",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-time-block"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-wrap-up-activity",
+      "label": "Session Wrap Up Activity",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-warm-up-activity"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::transition-between-activities",
+      "label": "Transition Between Activities",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-wrap-up-activity"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::small-group-rotation",
+      "label": "Small Group Rotation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::transition-between-activities"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::station-based-learning",
+      "label": "Station Based Learning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::small-group-rotation"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::safety-zone-marking",
+      "label": "Safety Zone Marking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::station-based-learning"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::emergency-exit-awareness",
+      "label": "Emergency Exit Awareness",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::safety-zone-marking"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::first-aid-kit-location",
+      "label": "First Aid Kit Location",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::emergency-exit-awareness"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::accessibility-of-space",
+      "label": "Accessibility Of Space",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::first-aid-kit-location"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::restroom-break-policy",
+      "label": "Restroom Break Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::accessibility-of-space"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::snack-and-water-policy",
+      "label": "Snack And Water Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::restroom-break-policy"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::visitor-check-in-process",
+      "label": "Visitor Check In Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::snack-and-water-policy"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::photography-during-session",
+      "label": "Photography During Session",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::visitor-check-in-process"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-cleanup-routine",
+      "label": "Session Cleanup Routine",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::photography-during-session"
+      ],
+      "taxonomy_id": "LAUNCH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor",
+      "label": "Mentor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student",
+      "label": "Student",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::volunteer-mentor",
+      "label": "Volunteer Mentor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::professional-mentor",
+      "label": "Professional Mentor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::volunteer-mentor"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::peer-mentor",
+      "label": "Peer Mentor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::professional-mentor"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-to-mentor-ratio",
+      "label": "Student To Mentor Ratio",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peer-mentor"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::why-three-to-one-works",
+      "label": "Why Three To One Works",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::student-to-mentor-ratio"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::adding-mentors",
+      "label": "Adding Mentors",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::why-three-to-one-works"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::adding-students",
+      "label": "Adding Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::adding-mentors"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-capacity-planning",
+      "label": "Mentor Capacity Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::adding-students"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-availability-tracking",
+      "label": "Mentor Availability Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-capacity-planning"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-skill-matching",
+      "label": "Mentor Skill Matching",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-availability-tracking"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-skill-level",
+      "label": "Student Skill Level",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::mentor-skill-matching"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-age-range",
+      "label": "Student Age Range",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-skill-level"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-grouping-strategy",
+      "label": "Student Grouping Strategy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-age-range"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mixed-age-grouping",
+      "label": "Mixed Age Grouping",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-grouping-strategy"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sibling-pairing",
+      "label": "Sibling Pairing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mixed-age-grouping"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::returning-student",
+      "label": "Returning Student",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sibling-pairing"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::new-student-placement",
+      "label": "New Student Placement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::returning-student"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::waiting-list-management",
+      "label": "Waiting List Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::new-student-placement"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-to-student-introduction",
+      "label": "Mentor To Student Introduction",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::waiting-list-management"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-check-in-routine",
+      "label": "Mentor Check In Routine",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-to-student-introduction"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-check-in-routine",
+      "label": "Student Check In Routine",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-check-in-routine"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-feedback-collection",
+      "label": "Mentor Feedback Collection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-check-in-routine"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-feedback-collection",
+      "label": "Student Feedback Collection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::mentor-feedback-collection"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parent-volunteer-role",
+      "label": "Parent Volunteer Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-feedback-collection"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::teen-mentor-program",
+      "label": "Teen Mentor Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-volunteer-role"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::college-mentor-recruitment",
+      "label": "College Mentor Recruitment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::teen-mentor-program"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::retired-professional-mentor",
+      "label": "Retired Professional Mentor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::college-mentor-recruitment"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-burnout-prevention",
+      "label": "Mentor Burnout Prevention",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::retired-professional-mentor"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-appreciation",
+      "label": "Mentor Appreciation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::mentor-burnout-prevention"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-attendance-tracking",
+      "label": "Student Attendance Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-appreciation"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-attendance-tracking",
+      "label": "Mentor Attendance Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-attendance-tracking"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::no-show-policy",
+      "label": "No Show Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-attendance-tracking"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::substitute-mentor-plan",
+      "label": "Substitute Mentor Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::no-show-policy"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-pairing-consistency",
+      "label": "Mentor Pairing Consistency",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::substitute-mentor-plan"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::one-on-one-mentoring",
+      "label": "One On One Mentoring",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::mentor-pairing-consistency"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::small-group-mentoring",
+      "label": "Small Group Mentoring",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::one-on-one-mentoring"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::whole-class-instruction",
+      "label": "Whole Class Instruction",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::small-group-mentoring"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-student-rapport",
+      "label": "Mentor Student Rapport",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::whole-class-instruction"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::building-trust-with-students",
+      "label": "Building Trust With Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-student-rapport"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-confidence-building",
+      "label": "Student Confidence Building",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::building-trust-with-students"
+      ],
+      "taxonomy_id": "PEOPLE",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-scheduling",
+      "label": "Session Scheduling",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::mentor"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::selecting-a-date-and-time",
+      "label": "Selecting A Date And Time",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::alternating-saturday-model",
+      "label": "Alternating Saturday Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::selecting-a-date-and-time"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::weekday-after-school-model",
+      "label": "Weekday After School Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::alternating-saturday-model"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::semester-based-schedule",
+      "label": "Semester Based Schedule",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::weekday-after-school-model"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::drop-in-model",
+      "label": "Drop In Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::semester-based-schedule"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::recurring-session-series",
+      "label": "Recurring Session Series",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::drop-in-model"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::holiday-schedule-planning",
+      "label": "Holiday Schedule Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recurring-session-series"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::working-around-holidays",
+      "label": "Working Around Holidays",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::holiday-schedule-planning"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::school-calendar-alignment",
+      "label": "School Calendar Alignment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::working-around-holidays"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-system",
+      "label": "Registration System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::school-calendar-alignment"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::online-registration-form",
+      "label": "Online Registration Form",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-system"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::eventbrite-case-study",
+      "label": "Eventbrite Case Study",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::online-registration-form"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-capacity-limit",
+      "label": "Registration Capacity Limit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::eventbrite-case-study"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registering-mentors-first",
+      "label": "Registering Mentors First",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-capacity-limit"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-gated-enrollment",
+      "label": "Mentor Gated Enrollment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registering-mentors-first"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::limiting-students-by-mentors",
+      "label": "Limiting Students By Mentors",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-gated-enrollment"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::waiting-list-signup",
+      "label": "Waiting List Signup",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::limiting-students-by-mentors"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-confirmation-email",
+      "label": "Registration Confirmation Email",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::waiting-list-signup"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-reminder-email",
+      "label": "Registration Reminder Email",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-confirmation-email"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cancellation-policy",
+      "label": "Cancellation Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-reminder-email"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::refund-policy",
+      "label": "Refund Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::cancellation-policy"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-check-in-system",
+      "label": "Session Check In System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::refund-policy"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::qr-code-check-in",
+      "label": "QR Code Check In",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-check-in-system"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::attendance-sheet",
+      "label": "Attendance Sheet",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::qr-code-check-in"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::post-event-survey",
+      "label": "Post Event Survey",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::attendance-sheet"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::survey-question-design",
+      "label": "Survey Question Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::post-event-survey"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::survey-response-analysis",
+      "label": "Survey Response Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::survey-question-design"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::event-debriefing-meeting",
+      "label": "Event Debriefing Meeting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::survey-response-analysis"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::event-retrospective-checklist",
+      "label": "Event Retrospective Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::event-debriefing-meeting"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::tracking-what-was-learned",
+      "label": "Tracking What Was Learned",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::event-retrospective-checklist"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::proactive-mentor-engagement",
+      "label": "Proactive Mentor Engagement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::tracking-what-was-learned"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-capacity-planning",
+      "label": "Session Capacity Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::proactive-mentor-engagement"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::multi-session-series-planning",
+      "label": "Multi Session Series Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-capacity-planning"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::summer-camp-format",
+      "label": "Summer Camp Format",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::multi-session-series-planning"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::weeklong-intensive-format",
+      "label": "Weeklong Intensive Format",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::summer-camp-format"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::single-session-workshop",
+      "label": "Single Session Workshop",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::weeklong-intensive-format"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::field-trip-coordination",
+      "label": "Field Trip Coordination",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::single-session-workshop"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::guest-speaker-scheduling",
+      "label": "Guest Speaker Scheduling",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::field-trip-coordination"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::competition-event-scheduling",
+      "label": "Competition Event Scheduling",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::guest-speaker-scheduling"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::showcase-event-planning",
+      "label": "Showcase Event Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::competition-event-scheduling"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::family-night-event",
+      "label": "Family Night Event",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::showcase-event-planning"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::open-house-event",
+      "label": "Open House Event",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::family-night-event"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-software-comparison",
+      "label": "Registration Software Comparison",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::open-house-event"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::payment-processing-for-fees",
+      "label": "Payment Processing For Fees",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-software-comparison"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scholarship-application-process",
+      "label": "Scholarship Application Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::payment-processing-for-fees"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::session-reminder-notification",
+      "label": "Session Reminder Notification",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::scholarship-application-process"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::calendar-sync-for-families",
+      "label": "Calendar Sync For Families",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-reminder-notification"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::time-zone-consideration",
+      "label": "Time Zone Consideration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::calendar-sync-for-families"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::weather-cancellation-policy",
+      "label": "Weather Cancellation Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::time-zone-consideration"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::makeup-session-policy",
+      "label": "Makeup Session Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::weather-cancellation-policy"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::end-of-term-celebration",
+      "label": "End Of Term Celebration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::makeup-session-policy"
+      ],
+      "taxonomy_id": "SCHED",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::computational-thinking-skills",
+      "label": "Computational Thinking Skills",
+      "subject_id": "coding-club",
+      "dependencies": [],
+      "taxonomy_id": "CT",
+      "level": "foundational"
+    },
+    {
+      "id": "coding-club::decomposition-skill",
+      "label": "Decomposition Skill",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::pattern-recognition-skill",
+      "label": "Pattern Recognition Skill",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::decomposition-skill"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::abstraction-skill",
+      "label": "Abstraction Skill",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::pattern-recognition-skill"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::algorithm-design-skill",
+      "label": "Algorithm Design Skill",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::abstraction-skill"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::debugging-skill",
+      "label": "Debugging Skill",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::algorithm-design-skill"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::keyboarding-skills",
+      "label": "Keyboarding Skills",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::debugging-skill"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::typing-practice-tool",
+      "label": "Typing Practice Tool",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::keyboarding-skills"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scratch-programming",
+      "label": "Scratch Programming",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::typing-practice-tool"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scratch-sprite",
+      "label": "Scratch Sprite",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::scratch-programming"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scratch-block-coding",
+      "label": "Scratch Block Coding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::scratch-sprite"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scratch-project-sharing",
+      "label": "Scratch Project Sharing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::scratch-block-coding"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::block-based-to-text-transition",
+      "label": "Block Based To Text Transition",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::scratch-project-sharing"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-programming",
+      "label": "Python Programming",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::block-based-to-text-transition"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-syntax-basics",
+      "label": "Python Syntax Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-programming"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-variable",
+      "label": "Python Variable",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-syntax-basics"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-loop",
+      "label": "Python Loop",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-variable"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-conditional",
+      "label": "Python Conditional",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-loop"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::python-function",
+      "label": "Python Function",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::python-conditional"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::turtle-graphics",
+      "label": "Turtle Graphics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-programming",
+        "coding-club::python-function"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::turtle-graphics-challenge",
+      "label": "Turtle Graphics Challenge",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::turtle-graphics"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::curriculum-design",
+      "label": "Curriculum Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::turtle-graphics-challenge"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::lesson-sequencing",
+      "label": "Lesson Sequencing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::curriculum-design"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::skill-progression-ladder",
+      "label": "Skill Progression Ladder",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::lesson-sequencing"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::challenge-based-curriculum",
+      "label": "Challenge Based Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::skill-progression-ladder"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::project-based-curriculum",
+      "label": "Project Based Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::challenge-based-curriculum"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::curriculum-pacing-guide",
+      "label": "Curriculum Pacing Guide",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::project-based-curriculum"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::beginner-track-curriculum",
+      "label": "Beginner Track Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::curriculum-pacing-guide"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::intermediate-track-curriculum",
+      "label": "Intermediate Track Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::beginner-track-curriculum"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::advanced-track-curriculum",
+      "label": "Advanced Track Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::intermediate-track-curriculum"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::self-paced-learning-path",
+      "label": "Self Paced Learning Path",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::advanced-track-curriculum"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::peer-code-review",
+      "label": "Peer Code Review",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::self-paced-learning-path"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::pair-programming",
+      "label": "Pair Programming",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peer-code-review"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::code-along-session",
+      "label": "Code Along Session",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::pair-programming"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::live-coding-demonstration",
+      "label": "Live Coding Demonstration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::code-along-session"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::coding-challenge-card",
+      "label": "Coding Challenge Card",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::live-coding-demonstration"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::concept-challenge-card",
+      "label": "Concept Challenge Card",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::coding-challenge-card"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::designing-challenge-cards",
+      "label": "Designing Challenge Cards",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::concept-challenge-card"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::printing-challenge-cards",
+      "label": "Printing Challenge Cards",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::designing-challenge-cards"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::learning-map",
+      "label": "Learning Map",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::printing-challenge-cards"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::skill-badge-system",
+      "label": "Skill Badge System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::learning-map"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::badge-and-sticker-reward",
+      "label": "Badge And Sticker Reward",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::skill-badge-system"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::portfolio-of-student-work",
+      "label": "Portfolio Of Student Work",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::badge-and-sticker-reward"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::show-and-tell-session",
+      "label": "Show And Tell Session",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::portfolio-of-student-work"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::code-sharing-platform",
+      "label": "Code Sharing Platform",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::show-and-tell-session"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::version-control-basics",
+      "label": "Version Control Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::code-sharing-platform"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::online-coding-platform",
+      "label": "Online Coding Platform",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::version-control-basics"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::offline-coding-environment",
+      "label": "Offline Coding Environment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::online-coding-platform"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::unplugged-coding-activity",
+      "label": "Unplugged Coding Activity",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::computational-thinking-skills",
+        "coding-club::offline-coding-environment"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::coding-vocabulary-building",
+      "label": "Coding Vocabulary Building",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::unplugged-coding-activity"
+      ],
+      "taxonomy_id": "CT",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::physical-computing",
+      "label": "Physical Computing",
+      "subject_id": "coding-club",
+      "dependencies": [],
+      "taxonomy_id": "PHYS",
+      "level": "foundational"
+    },
+    {
+      "id": "coding-club::electrical-safety-rules",
+      "label": "Electrical Safety Rules",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::breadboard-basics",
+      "label": "Breadboard Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::electrical-safety-rules"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::jumper-wire",
+      "label": "Jumper Wire",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::breadboard-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::resistor-basics",
+      "label": "Resistor Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::jumper-wire"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::led-basics",
+      "label": "LED Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::resistor-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::blinking-light-circuit",
+      "label": "Blinking Light Circuit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::led-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::push-button-switch",
+      "label": "Push Button Switch",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::blinking-light-circuit"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::digital-input",
+      "label": "Digital Input",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::push-button-switch"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::digital-output",
+      "label": "Digital Output",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::digital-input"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::analog-input",
+      "label": "Analog Input",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::digital-output"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::analog-output",
+      "label": "Analog Output",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::analog-input"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::voltage-basics",
+      "label": "Voltage Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::analog-output"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::current-basics",
+      "label": "Current Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::voltage-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::short-circuit-hazard",
+      "label": "Short Circuit Hazard",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::current-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::static-electricity-precaution",
+      "label": "Static Electricity Precaution",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::short-circuit-hazard"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::battery-safety",
+      "label": "Battery Safety",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::static-electricity-precaution"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::soldering-safety-basics",
+      "label": "Soldering Safety Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::battery-safety"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::multimeter-usage",
+      "label": "Multimeter Usage",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::soldering-safety-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::circuit-diagram-reading",
+      "label": "Circuit Diagram Reading",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::multimeter-usage"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sensor-basics",
+      "label": "Sensor Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::circuit-diagram-reading"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::light-sensor",
+      "label": "Light Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sensor-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::temperature-sensor",
+      "label": "Temperature Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::light-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::humidity-sensor",
+      "label": "Humidity Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::temperature-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::motion-sensor",
+      "label": "Motion Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::humidity-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sound-sensor",
+      "label": "Sound Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motion-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::distance-sensor",
+      "label": "Distance Sensor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sound-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::display-basics",
+      "label": "Display Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::distance-sensor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::oled-display",
+      "label": "OLED Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::display-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::led-matrix-display",
+      "label": "LED Matrix Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oled-display"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::seven-segment-display",
+      "label": "Seven Segment Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::led-matrix-display"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::motor-basics",
+      "label": "Motor Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::seven-segment-display"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::dc-motor",
+      "label": "DC Motor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motor-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::servo-motor",
+      "label": "Servo Motor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::dc-motor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::stepper-motor",
+      "label": "Stepper Motor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::servo-motor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-chassis",
+      "label": "Robot Chassis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::stepper-motor"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::floor-robot",
+      "label": "Floor Robot",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::robot-chassis"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::table-robot",
+      "label": "Table Robot",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::floor-robot"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::collision-avoidance-robot",
+      "label": "Collision Avoidance Robot",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::distance-sensor",
+        "coding-club::robot-chassis",
+        "coding-club::table-robot"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-sensor-integration",
+      "label": "Robot Sensor Integration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sensor-basics",
+        "coding-club::collision-avoidance-robot"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-motor-control",
+      "label": "Robot Motor Control",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motor-basics",
+        "coding-club::robot-sensor-integration"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::usb-cable-basics",
+      "label": "USB Cable Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robot-motor-control"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::usb-a-connector",
+      "label": "USB A Connector",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::usb-cable-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::usb-c-connector",
+      "label": "USB C Connector",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::usb-a-connector"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::power-supply-selection",
+      "label": "Power Supply Selection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::usb-c-connector"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::component-storage-system",
+      "label": "Component Storage System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::power-supply-selection"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::wire-stripping-technique",
+      "label": "Wire Stripping Technique",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::component-storage-system"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::prototyping-board",
+      "label": "Prototyping Board",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::wire-stripping-technique"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::circuit-troubleshooting",
+      "label": "Circuit Troubleshooting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::multimeter-usage",
+        "coding-club::prototyping-board"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::component-identification",
+      "label": "Component Identification",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::circuit-troubleshooting"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::datasheet-reading",
+      "label": "Datasheet Reading",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::component-identification"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::electronics-vocabulary",
+      "label": "Electronics Vocabulary",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::datasheet-reading"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::safe-disposal-of-electronics",
+      "label": "Safe Disposal Of Electronics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::electronics-vocabulary"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::static-safe-handling",
+      "label": "Static Safe Handling",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::safe-disposal-of-electronics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::component-testing-procedure",
+      "label": "Component Testing Procedure",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::multimeter-usage",
+        "coding-club::static-safe-handling"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::physical-computing",
+        "coding-club::electrical-safety-rules"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::micropython-basics",
+      "label": "MicroPython Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-programming",
+        "coding-club::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::micropython-syntax",
+      "label": "MicroPython Syntax",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::micropython-basics"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::micropython-loop",
+      "label": "MicroPython Loop",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::micropython-syntax"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::neopixel-led-strip",
+      "label": "NeoPixel LED Strip",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::micropython-loop"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::led-strip-wiring",
+      "label": "LED Strip Wiring",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::neopixel-led-strip"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::moving-rainbow-kit",
+      "label": "Moving Rainbow Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::led-strip-wiring"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::moving-rainbow-pattern",
+      "label": "Moving Rainbow Pattern",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::moving-rainbow-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::led-noodle-project",
+      "label": "LED Noodle Project",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::moving-rainbow-kit",
+        "coding-club::moving-rainbow-pattern"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::halloween-costume-lighting",
+      "label": "Halloween Costume Lighting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::led-noodle-project"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::holiday-light-pattern",
+      "label": "Holiday Light Pattern",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::halloween-costume-lighting"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::fourth-of-july-pattern",
+      "label": "Fourth Of July Pattern",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::holiday-light-pattern"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::color-wheel-programming",
+      "label": "Color Wheel Programming",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::fourth-of-july-pattern"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::brightness-control-code",
+      "label": "Brightness Control Code",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::color-wheel-programming"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::animation-timing-code",
+      "label": "Animation Timing Code",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::brightness-control-code"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-kit",
+      "label": "Robot Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::animation-timing-code"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-kit-assembly",
+      "label": "Robot Kit Assembly",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::electrical-safety-rules",
+        "coding-club::robot-chassis",
+        "coding-club::robot-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::remote-control-distraction-risk",
+      "label": "Remote Control Distraction Risk",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robot-kit-assembly"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::autonomous-robot-behavior",
+      "label": "Autonomous Robot Behavior",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::remote-control-distraction-risk"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-face-kit",
+      "label": "Robot Face Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oled-display",
+        "coding-club::robot-chassis",
+        "coding-club::autonomous-robot-behavior"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-emotion-display",
+      "label": "Robot Emotion Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robot-face-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::display-kit",
+      "label": "Display Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robot-emotion-display"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sensor-kit",
+      "label": "Sensor Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::display-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::gyroscope-kit",
+      "label": "Gyroscope Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sensor-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::gyroscope-orientation-data",
+      "label": "Gyroscope Orientation Data",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::gyroscope-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::motion-kit",
+      "label": "Motion Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gyroscope-orientation-data"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::accelerometer-data",
+      "label": "Accelerometer Data",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motion-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sound-kit",
+      "label": "Sound Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::accelerometer-data"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::classroom-noise-challenge",
+      "label": "Classroom Noise Challenge",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sound-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::microphone-kit",
+      "label": "Microphone Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::classroom-noise-challenge"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sound-spectrum-kit",
+      "label": "Sound Spectrum Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::microphone-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::frequency-spectrum-display",
+      "label": "Frequency Spectrum Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sound-spectrum-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-sounds-kit",
+      "label": "Robot Sounds Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::frequency-spectrum-display"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robot-display-kit",
+      "label": "Robot Display Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robot-sounds-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::iot-project-kit",
+      "label": "IoT Project Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::light-sensor",
+        "coding-club::temperature-sensor",
+        "coding-club::humidity-sensor",
+        "coding-club::robot-display-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::light-temp-humidity-monitor",
+      "label": "Light Temp Humidity Monitor",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::iot-project-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::nightlight-project",
+      "label": "NightLight Project",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::light-temp-humidity-monitor"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-assembly-instructions",
+      "label": "Kit Assembly Instructions",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::nightlight-project"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-component-checklist",
+      "label": "Kit Component Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-assembly-instructions"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-difficulty-rating",
+      "label": "Kit Difficulty Rating",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-component-checklist"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-cost-comparison",
+      "label": "Kit Cost Comparison",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-difficulty-rating"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-reuse-strategy",
+      "label": "Kit Reuse Strategy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-cost-comparison"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-storage-bin",
+      "label": "Kit Storage Bin",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::kit-reuse-strategy"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-return-process",
+      "label": "Kit Return Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-storage-bin"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-damage-assessment",
+      "label": "Kit Damage Assessment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-return-process"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-loaner-program",
+      "label": "Kit Loaner Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-damage-assessment"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-documentation-sheet",
+      "label": "Kit Documentation Sheet",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-loaner-program"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-wiring-diagram",
+      "label": "Kit Wiring Diagram",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-documentation-sheet"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-code-template",
+      "label": "Kit Code Template",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::kit-wiring-diagram"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-debugging-guide",
+      "label": "Kit Debugging Guide",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-code-template"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-upgrade-path",
+      "label": "Kit Upgrade Path",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-debugging-guide"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-vendor-selection",
+      "label": "Kit Vendor Selection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-upgrade-path"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-bulk-purchasing",
+      "label": "Kit Bulk Purchasing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-vendor-selection"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-unboxing-procedure",
+      "label": "Kit Unboxing Procedure",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-bulk-purchasing"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::kit-safety-checklist",
+      "label": "Kit Safety Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::raspberry-pi-pico",
+        "coding-club::kit-unboxing-procedure"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::signal-processing-basics",
+      "label": "Signal Processing Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sound-sensor",
+        "coding-club::kit-safety-checklist"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::real-time-audio-processing",
+      "label": "Real Time Audio Processing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::signal-processing-basics"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::fast-fourier-transform-basics",
+      "label": "Fast Fourier Transform Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::real-time-audio-processing"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::smartwatch-display-kit",
+      "label": "Smartwatch Display Kit",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::fast-fourier-transform-basics"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::wearable-electronics-basics",
+      "label": "Wearable Electronics Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::smartwatch-display-kit"
+      ],
+      "taxonomy_id": "KITS",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::laptop-purchasing",
+      "label": "Laptop Purchasing",
+      "subject_id": "coding-club",
+      "dependencies": [],
+      "taxonomy_id": "TECH",
+      "level": "foundational"
+    },
+    {
+      "id": "coding-club::laptop-configuration",
+      "label": "Laptop Configuration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::chromebook-management",
+      "label": "Chromebook Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-configuration"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::windows-device-management",
+      "label": "Windows Device Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::chromebook-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::macos-device-management",
+      "label": "MacOS Device Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::windows-device-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-login-account",
+      "label": "Student Login Account",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::macos-device-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::shared-device-account",
+      "label": "Shared Device Account",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::student-login-account"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::individual-device-account",
+      "label": "Individual Device Account",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::shared-device-account"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-imaging-process",
+      "label": "Device Imaging Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::individual-device-account"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-inventory-tracking",
+      "label": "Device Inventory Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-imaging-process"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-charging-cart",
+      "label": "Device Charging Cart",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-inventory-tracking"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-labeling-system",
+      "label": "Device Labeling System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-charging-cart"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-loaner-agreement",
+      "label": "Device Loaner Agreement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::device-labeling-system"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::screen-time-management",
+      "label": "Screen Time Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-loaner-agreement"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::content-filtering-software",
+      "label": "Content Filtering Software",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::screen-time-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parental-control-software",
+      "label": "Parental Control Software",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::content-filtering-software"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-security-policy",
+      "label": "Device Security Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-privacy-policy",
+        "coding-club::parental-control-software"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::password-management-for-kids",
+      "label": "Password Management For Kids",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-security-policy"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-repair-basics",
+      "label": "Device Repair Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::password-management-for-kids"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-cleaning-routine",
+      "label": "Device Cleaning Routine",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-repair-basics"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::wifi-network-setup",
+      "label": "Wifi Network Setup",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::device-cleaning-routine"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::guest-wifi-access",
+      "label": "Guest Wifi Access",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::wifi-network-setup"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::network-bandwidth-planning",
+      "label": "Network Bandwidth Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::guest-wifi-access"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::firewall-basics-for-clubs",
+      "label": "Firewall Basics For Clubs",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::network-bandwidth-planning"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-software-updates",
+      "label": "Device Software Updates",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::firewall-basics-for-clubs"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::app-installation-policy",
+      "label": "App Installation Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-software-updates"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::browser-bookmark-management",
+      "label": "Browser Bookmark Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::app-installation-policy"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::class-bookmark-folder",
+      "label": "Class Bookmark Folder",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::browser-bookmark-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-bookmark-folder",
+      "label": "Student Bookmark Folder",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::class-bookmark-folder"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::offline-mode-preparation",
+      "label": "Offline Mode Preparation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-bookmark-folder"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::backup-device-plan",
+      "label": "Backup Device Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::offline-mode-preparation"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-donation-program",
+      "label": "Device Donation Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::backup-device-plan"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::refurbished-device-sourcing",
+      "label": "Refurbished Device Sourcing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-donation-program"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-end-of-life-plan",
+      "label": "Device End Of Life Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::refurbished-device-sourcing"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::peripheral-device-management",
+      "label": "Peripheral Device Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-end-of-life-plan"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::headphone-management",
+      "label": "Headphone Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peripheral-device-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mouse-and-keyboard-setup",
+      "label": "Mouse And Keyboard Setup",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::headphone-management"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::external-storage-device",
+      "label": "External Storage Device",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mouse-and-keyboard-setup"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cloud-storage-for-devices",
+      "label": "Cloud Storage For Devices",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::external-storage-device"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-troubleshooting-checklist",
+      "label": "Device Troubleshooting Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::cloud-storage-for-devices"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::it-volunteer-role",
+      "label": "IT Volunteer Role",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-troubleshooting-checklist"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-setup-time-budget",
+      "label": "Device Setup Time Budget",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::it-volunteer-role"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::device-return-checklist",
+      "label": "Device Return Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::device-setup-time-budget"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::shared-drive-organization",
+      "label": "Shared Drive Organization",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::device-return-checklist"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::saving-student-data",
+      "label": "Saving Student Data",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::laptop-purchasing"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-data-privacy",
+      "label": "Student Data Privacy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-privacy-policy",
+        "coding-club::saving-student-data"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::tracking-student-progress",
+      "label": "Tracking Student Progress",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-data-privacy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::progress-dashboard",
+      "label": "Progress Dashboard",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::tracking-student-progress"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::simple-spreadsheet-tracking",
+      "label": "Simple Spreadsheet Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::progress-dashboard"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::spreadsheet-template-design",
+      "label": "Spreadsheet Template Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::simple-spreadsheet-tracking"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::managing-email-communication",
+      "label": "Managing Email Communication",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::spreadsheet-template-design"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::email-list-segmentation",
+      "label": "Email List Segmentation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::managing-email-communication"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::setting-up-a-calendar",
+      "label": "Setting Up A Calendar",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::email-list-segmentation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::shared-calendar-access",
+      "label": "Shared Calendar Access",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::setting-up-a-calendar"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::notification-system",
+      "label": "Notification System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::shared-calendar-access"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::email-and-chat-tools",
+      "label": "Email And Chat Tools",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::notification-system"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::group-messaging-app",
+      "label": "Group Messaging App",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::email-and-chat-tools"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::forms-and-feedback-tools",
+      "label": "Forms And Feedback Tools",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::group-messaging-app"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::survey-tool-selection",
+      "label": "Survey Tool Selection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::forms-and-feedback-tools"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::feedback-loop-design",
+      "label": "Feedback Loop Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::survey-tool-selection"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-backup-routine",
+      "label": "Data Backup Routine",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::feedback-loop-design"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-retention-policy",
+      "label": "Data Retention Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-backup-routine"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::consent-for-data-collection",
+      "label": "Consent For Data Collection",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::data-retention-policy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::anonymized-reporting",
+      "label": "Anonymized Reporting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::consent-for-data-collection"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parent-communication-log",
+      "label": "Parent Communication Log",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::anonymized-reporting"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-communication-log",
+      "label": "Mentor Communication Log",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-communication-log"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::automated-reminder-system",
+      "label": "Automated Reminder System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-communication-log"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sms-notification",
+      "label": "SMS Notification",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::automated-reminder-system"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::newsletter-automation",
+      "label": "Newsletter Automation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::sms-notification"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-visualization-basics",
+      "label": "Data Visualization Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::newsletter-automation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::attendance-data-analysis",
+      "label": "Attendance Data Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-visualization-basics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::retention-rate-tracking",
+      "label": "Retention Rate Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::attendance-data-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::enrollment-trend-analysis",
+      "label": "Enrollment Trend Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::retention-rate-tracking"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-growth-metrics",
+      "label": "Student Growth Metrics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::enrollment-trend-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::skill-mastery-tracking",
+      "label": "Skill Mastery Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::student-growth-metrics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::digital-portfolio-system",
+      "label": "Digital Portfolio System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::portfolio-of-student-work",
+        "coding-club::skill-mastery-tracking"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::parent-access-portal",
+      "label": "Parent Access Portal",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::digital-portfolio-system"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-export-process",
+      "label": "Data Export Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-access-portal"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::spreadsheet-formula-basics",
+      "label": "Spreadsheet Formula Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-export-process"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::pivot-table-basics",
+      "label": "Pivot Table Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::spreadsheet-formula-basics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-entry-standardization",
+      "label": "Data Entry Standardization",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::saving-student-data",
+        "coding-club::pivot-table-basics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::duplicate-record-cleanup",
+      "label": "Duplicate Record Cleanup",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-entry-standardization"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::data-sharing-agreement",
+      "label": "Data Sharing Agreement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::duplicate-record-cleanup"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::third-party-tool-vetting",
+      "label": "Third Party Tool Vetting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::data-sharing-agreement"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cloud-document-sharing",
+      "label": "Cloud Document Sharing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::third-party-tool-vetting"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::file-naming-convention",
+      "label": "File Naming Convention",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::cloud-document-sharing"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::motivating-students",
+      "label": "Motivating Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student",
+        "coding-club::computational-thinking-skills"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::intrinsic-motivation",
+      "label": "Intrinsic Motivation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motivating-students"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::extrinsic-reward-system",
+      "label": "Extrinsic Reward System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::intrinsic-motivation"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::challenge-card-system",
+      "label": "Challenge Card System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::extrinsic-reward-system"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::learning-map-display",
+      "label": "Learning Map Display",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::challenge-card-system"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::badge-design",
+      "label": "Badge Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::learning-map-display"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sticker-reward-system",
+      "label": "Sticker Reward System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motivating-students",
+        "coding-club::badge-design"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::progress-tracker-poster",
+      "label": "Progress Tracker Poster",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sticker-reward-system"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::leaderboard-consideration",
+      "label": "Leaderboard Consideration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::progress-tracker-poster"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::friendly-competition-design",
+      "label": "Friendly Competition Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leaderboard-consideration"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::collaborative-challenge-design",
+      "label": "Collaborative Challenge Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::friendly-competition-design"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::growth-mindset-coaching",
+      "label": "Growth Mindset Coaching",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::collaborative-challenge-design"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::celebrating-small-wins",
+      "label": "Celebrating Small Wins",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motivating-students",
+        "coding-club::growth-mindset-coaching"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::public-recognition-event",
+      "label": "Public Recognition Event",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::celebrating-small-wins"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::certificate-of-completion",
+      "label": "Certificate Of Completion",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::public-recognition-event"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-showcase-wall",
+      "label": "Student Showcase Wall",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::certificate-of-completion"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::peer-recognition-activity",
+      "label": "Peer Recognition Activity",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-showcase-wall"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::encouragement-language",
+      "label": "Encouragement Language",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peer-recognition-activity"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::handling-frustration",
+      "label": "Handling Frustration",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motivating-students",
+        "coding-club::encouragement-language"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::persistence-coaching",
+      "label": "Persistence Coaching",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::handling-frustration"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::failure-as-learning-tool",
+      "label": "Failure As Learning Tool",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::persistence-coaching"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-goal-setting",
+      "label": "Student Goal Setting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::failure-as-learning-tool"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::personal-project-choice",
+      "label": "Personal Project Choice",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-goal-setting"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-voice-and-choice",
+      "label": "Student Voice And Choice",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::personal-project-choice"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::gamification-elements",
+      "label": "Gamification Elements",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::motivating-students",
+        "coding-club::student-voice-and-choice"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::point-system-design",
+      "label": "Point System Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gamification-elements"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::level-up-system",
+      "label": "Level Up System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::point-system-design"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::student-interest-survey",
+      "label": "Student Interest Survey",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::level-up-system"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::passion-project-time",
+      "label": "Passion Project Time",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student-interest-survey"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-praise-technique",
+      "label": "Mentor Praise Technique",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::passion-project-time"
+      ],
+      "taxonomy_id": "MOTIV",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::recruiting-minorities",
+      "label": "Recruiting Minorities",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::gauging-interest-survey",
+        "coding-club::mentor"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::recruiting-girls-and-women",
+      "label": "Recruiting Girls And Women",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-minorities"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::underserved-community-outreach",
+      "label": "Underserved Community Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-girls-and-women"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::language-accessibility",
+      "label": "Language Accessibility",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::underserved-community-outreach"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::translated-materials",
+      "label": "Translated Materials",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::language-accessibility"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::low-income-family-support",
+      "label": "Low Income Family Support",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::translated-materials"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::no-fee-club-model",
+      "label": "No Fee Club Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-minorities",
+        "coding-club::low-income-family-support"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::why-no-fees-matters",
+      "label": "Why No Fees Matters",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::no-fee-club-model"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scholarship-fund",
+      "label": "Scholarship Fund",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::why-no-fees-matters"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::free-device-loan-program",
+      "label": "Free Device Loan Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::laptop-purchasing",
+        "coding-club::scholarship-fund"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::transportation-barrier-solution",
+      "label": "Transportation Barrier Solution",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::free-device-loan-program"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::accessible-session-timing",
+      "label": "Accessible Session Timing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::transportation-barrier-solution"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::disability-accommodation",
+      "label": "Disability Accommodation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-minorities",
+        "coding-club::accessible-session-timing"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::assistive-technology-option",
+      "label": "Assistive Technology Option",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::disability-accommodation"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::culturally-responsive-teaching",
+      "label": "Culturally Responsive Teaching",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::assistive-technology-option"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::representation-in-curriculum",
+      "label": "Representation In Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::culturally-responsive-teaching"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::female-mentor-recruitment",
+      "label": "Female Mentor Recruitment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::representation-in-curriculum"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::role-model-visibility",
+      "label": "Role Model Visibility",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::female-mentor-recruitment"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::community-trust-building",
+      "label": "Community Trust Building",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-minorities",
+        "coding-club::role-model-visibility"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::faith-based-venue-partnership",
+      "label": "Faith Based Venue Partnership",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::community-trust-building"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::rural-community-outreach",
+      "label": "Rural Community Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::faith-based-venue-partnership"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::urban-community-outreach",
+      "label": "Urban Community Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::rural-community-outreach"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::immigrant-family-outreach",
+      "label": "Immigrant Family Outreach",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::urban-community-outreach"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::equity-audit-of-club",
+      "label": "Equity Audit Of Club",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::immigrant-family-outreach"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::inclusive-marketing-materials",
+      "label": "Inclusive Marketing Materials",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recruiting-minorities",
+        "coding-club::equity-audit-of-club"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::bias-awareness-training",
+      "label": "Bias Awareness Training",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::inclusive-marketing-materials"
+      ],
+      "taxonomy_id": "DEI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::establishing-a-budget",
+      "label": "Establishing A Budget",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::budget-line-item",
+      "label": "Budget Line Item",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::recurring-cost-planning",
+      "label": "Recurring Cost Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::budget-line-item"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::one-time-cost-planning",
+      "label": "One Time Cost Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::recurring-cost-planning"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cost-per-student-estimate",
+      "label": "Cost Per Student Estimate",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::one-time-cost-planning"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::raising-funds",
+      "label": "Raising Funds",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::cost-per-student-estimate"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::grant-writing-basics",
+      "label": "Grant Writing Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget",
+        "coding-club::raising-funds"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::grant-proposal-structure",
+      "label": "Grant Proposal Structure",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::grant-writing-basics"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::grant-application-tracking",
+      "label": "Grant Application Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::grant-proposal-structure"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::community-support-drive",
+      "label": "Community Support Drive",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::grant-application-tracking"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::crowdfunding-campaign",
+      "label": "Crowdfunding Campaign",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::community-support-drive"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::corporate-sponsorship",
+      "label": "Corporate Sponsorship",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::crowdfunding-campaign"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::in-kind-donation",
+      "label": "In Kind Donation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget",
+        "coding-club::corporate-sponsorship"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::fundraising-event-planning",
+      "label": "Fundraising Event Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::in-kind-donation"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::local-company-partnership",
+      "label": "Local Company Partnership",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::fundraising-event-planning"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::strategic-partnership-building",
+      "label": "Strategic Partnership Building",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::local-company-partnership"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::vendor-discount-negotiation",
+      "label": "Vendor Discount Negotiation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::strategic-partnership-building"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::nonprofit-fiscal-sponsorship",
+      "label": "Nonprofit Fiscal Sponsorship",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::vendor-discount-negotiation"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::budget-tracking-spreadsheet",
+      "label": "Budget Tracking Spreadsheet",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget",
+        "coding-club::nonprofit-fiscal-sponsorship"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::expense-reporting-process",
+      "label": "Expense Reporting Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::budget-tracking-spreadsheet"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::reimbursement-policy",
+      "label": "Reimbursement Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::expense-reporting-process"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::donation-receipt-process",
+      "label": "Donation Receipt Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::reimbursement-policy"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::annual-budget-review",
+      "label": "Annual Budget Review",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::donation-receipt-process"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::emergency-fund-reserve",
+      "label": "Emergency Fund Reserve",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::annual-budget-review"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::equipment-depreciation-planning",
+      "label": "Equipment Depreciation Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget",
+        "coding-club::emergency-fund-reserve"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::membership-fee-model",
+      "label": "Membership Fee Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::equipment-depreciation-planning"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sliding-scale-fee-model",
+      "label": "Sliding Scale Fee Model",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::membership-fee-model"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::community-foundation-grant",
+      "label": "Community Foundation Grant",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sliding-scale-fee-model"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::school-district-funding",
+      "label": "School District Funding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::community-foundation-grant"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::pta-partnership-funding",
+      "label": "PTA Partnership Funding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::school-district-funding"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::library-funding-partnership",
+      "label": "Library Funding Partnership",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::establishing-a-budget",
+        "coding-club::pta-partnership-funding"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::robotics-club-overlap-funding",
+      "label": "Robotics Club Overlap Funding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::library-funding-partnership"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::shared-resource-agreement",
+      "label": "Shared Resource Agreement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::robotics-club-overlap-funding"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::partnership-proposal-template",
+      "label": "Partnership Proposal Template",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::shared-resource-agreement"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sponsor-recognition-plan",
+      "label": "Sponsor Recognition Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::partnership-proposal-template"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::cost-benefit-analysis",
+      "label": "Cost Benefit Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::sponsor-recognition-plan"
+      ],
+      "taxonomy_id": "FUND",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-basics",
+      "label": "AI Agent Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::coding-club",
+        "coding-club::saving-student-data"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::leveraging-ai-agents",
+      "label": "Leveraging AI Agents",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::planning-ai-agent",
+      "label": "Planning AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leveraging-ai-agents"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::communication-ai-agent",
+      "label": "Communication AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::planning-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::registration-ai-agent",
+      "label": "Registration AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::registration-system",
+        "coding-club::ai-agent-basics",
+        "coding-club::communication-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::scheduling-ai-agent",
+      "label": "Scheduling AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::registration-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::reminder-ai-agent",
+      "label": "Reminder AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::automated-reminder-system",
+        "coding-club::ai-agent-basics",
+        "coding-club::scheduling-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-coaching-ai-agent",
+      "label": "Mentor Coaching AI Agent",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-feedback-collection",
+        "coding-club::reminder-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::influence-graph-concept",
+      "label": "Influence Graph Concept",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-coaching-ai-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::building-an-influence-graph",
+      "label": "Building An Influence Graph",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::learning-graph",
+        "coding-club::influence-graph-concept"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::targeting-mentor-populations",
+      "label": "Targeting Mentor Populations",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::building-an-influence-graph"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-managed-mailing-list",
+      "label": "AI Managed Mailing List",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::managing-email-communication",
+        "coding-club::targeting-mentor-populations"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-generated-announcement",
+      "label": "AI Generated Announcement",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::managing-email-communication",
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-managed-mailing-list"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-drafted-newsletter",
+      "label": "AI Drafted Newsletter",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-generated-announcement"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-survey-analysis",
+      "label": "AI Survey Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::post-event-survey",
+        "coding-club::survey-response-analysis",
+        "coding-club::ai-drafted-newsletter"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-sentiment-analysis",
+      "label": "AI Sentiment Analysis",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-survey-analysis"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-chatbot-for-parents",
+      "label": "AI Chatbot For Parents",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::parent-communication-log",
+        "coding-club::ai-sentiment-analysis"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-chatbot-for-students",
+      "label": "AI Chatbot For Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::student",
+        "coding-club::ai-chatbot-for-parents"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::prompt-engineering-basics",
+      "label": "Prompt Engineering Basics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-chatbot-for-students"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::reviewing-ai-output",
+      "label": "Reviewing AI Output",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::prompt-engineering-basics"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-output-quality-check",
+      "label": "AI Output Quality Check",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::reviewing-ai-output"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-guardrails",
+      "label": "AI Agent Guardrails",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-output-quality-check"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-oversight",
+      "label": "AI Agent Oversight",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-guardrails"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::human-in-the-loop-review",
+      "label": "Human In The Loop Review",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-oversight"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-ethics-for-clubs",
+      "label": "AI Ethics For Clubs",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::human-in-the-loop-review"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-bias-awareness",
+      "label": "AI Bias Awareness",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-ethics-for-clubs"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-data-privacy-risk",
+      "label": "AI Data Privacy Risk",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-bias-awareness"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-tool-selection-criteria",
+      "label": "AI Tool Selection Criteria",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-data-privacy-risk"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-curriculum-design",
+      "label": "AI Assisted Curriculum Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-tool-selection-criteria"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-generated-challenge-card",
+      "label": "AI Generated Challenge Card",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-assisted-curriculum-design"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-lesson-customization",
+      "label": "AI Assisted Lesson Customization",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-generated-challenge-card"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::building-student-mental-models",
+      "label": "Building Student Mental Models",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-assisted-lesson-customization"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::customizing-lessons-with-ai",
+      "label": "Customizing Lessons With AI",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::building-student-mental-models"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-mentor-matching",
+      "label": "AI Assisted Mentor Matching",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-skill-matching",
+        "coding-club::customizing-lessons-with-ai"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-scheduling-optimization",
+      "label": "AI Scheduling Optimization",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::session-scheduling",
+        "coding-club::ai-assisted-mentor-matching"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-cost-management",
+      "label": "AI Agent Cost Management",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-scheduling-optimization"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-vendor-comparison",
+      "label": "AI Agent Vendor Comparison",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-agent-cost-management"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-grant-writing",
+      "label": "AI Assisted Grant Writing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::grant-writing-basics",
+        "coding-club::ai-agent-vendor-comparison"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-social-media",
+      "label": "AI Assisted Social Media",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::social-media-promotion",
+        "coding-club::ai-assisted-grant-writing"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-generated-website-content",
+      "label": "AI Generated Website Content",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-website",
+        "coding-club::ai-assisted-social-media"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-translation",
+      "label": "AI Assisted Translation",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::language-accessibility",
+        "coding-club::ai-generated-website-content"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-voice-assistant-use",
+      "label": "AI Voice Assistant Use",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-assisted-translation"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-assisted-debugging-help",
+      "label": "AI Assisted Debugging Help",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-voice-assistant-use"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-tutor-for-students",
+      "label": "AI Tutor For Students",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::python-programming",
+        "coding-club::ai-assisted-debugging-help"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-code-review-assistant",
+      "label": "AI Code Review Assistant",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::peer-code-review",
+        "coding-club::ai-tutor-for-students"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-workflow-design",
+      "label": "AI Agent Workflow Design",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-code-review-assistant"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-integration-testing",
+      "label": "AI Agent Integration Testing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-workflow-design"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-rollout-plan",
+      "label": "AI Agent Rollout Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-integration-testing"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::ai-agent-training-for-leaders",
+      "label": "AI Agent Training For Leaders",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::ai-agent-basics",
+        "coding-club::ai-agent-rollout-plan"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::coaching-leaders-with-ai",
+      "label": "Coaching Leaders With AI",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leadership-succession",
+        "coding-club::ai-agent-training-for-leaders"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::oversight-board",
+      "label": "Oversight Board",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-charter",
+        "coding-club::saving-student-data",
+        "coding-club::establishing-a-budget"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::board-roles-and-duties",
+      "label": "Board Roles And Duties",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oversight-board"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::board-meeting-cadence",
+      "label": "Board Meeting Cadence",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::board-roles-and-duties"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::board-member-recruitment",
+      "label": "Board Member Recruitment",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::board-meeting-cadence"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::board-term-limits",
+      "label": "Board Term Limits",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::board-member-recruitment"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::succession-planning",
+      "label": "Succession Planning",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::board-term-limits"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-inventory-system",
+      "label": "Club Inventory System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::kit-storage-bin",
+        "coding-club::oversight-board",
+        "coding-club::succession-planning"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::inventory-sticker-printing",
+      "label": "Inventory Sticker Printing",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-inventory-system"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::qr-code-on-kits",
+      "label": "QR Code On Kits",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::inventory-sticker-printing"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::asset-tagging-process",
+      "label": "Asset Tagging Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::qr-code-on-kits"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::inventory-audit-process",
+      "label": "Inventory Audit Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::asset-tagging-process"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::lost-item-policy",
+      "label": "Lost Item Policy",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::inventory-audit-process"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::equipment-checkout-system",
+      "label": "Equipment Checkout System",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oversight-board",
+        "coding-club::lost-item-policy"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::equipment-return-tracking",
+      "label": "Equipment Return Tracking",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::equipment-checkout-system"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::advanced-mentor-recruiting",
+      "label": "Advanced Mentor Recruiting",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor",
+        "coding-club::mentor-skill-matching",
+        "coding-club::equipment-return-tracking"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::finding-qualified-mentors",
+      "label": "Finding Qualified Mentors",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::advanced-mentor-recruiting"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-interview-process",
+      "label": "Mentor Interview Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::finding-qualified-mentors"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-training-curriculum",
+      "label": "Mentor Training Curriculum",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-feedback-collection",
+        "coding-club::mentor-interview-process"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::bringing-out-mentor-strengths",
+      "label": "Bringing Out Mentor Strengths",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oversight-board",
+        "coding-club::mentor-training-curriculum"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-certification-program",
+      "label": "Mentor Certification Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::bringing-out-mentor-strengths"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::mentor-peer-support-program",
+      "label": "Mentor Peer Support Program",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-certification-program"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::leadership-pipeline-development",
+      "label": "Leadership Pipeline Development",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::mentor-peer-support-program"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::documenting-club-procedures",
+      "label": "Documenting Club Procedures",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leadership-pipeline-development"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::standard-operating-procedure",
+      "label": "Standard Operating Procedure",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::documenting-club-procedures"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::knowledge-transfer-process",
+      "label": "Knowledge Transfer Process",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oversight-board",
+        "coding-club::standard-operating-procedure"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::new-leader-onboarding",
+      "label": "New Leader Onboarding",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::leadership-succession",
+        "coding-club::knowledge-transfer-process"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-playbook-document",
+      "label": "Club Playbook Document",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::new-leader-onboarding"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::annual-strategic-plan",
+      "label": "Annual Strategic Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-playbook-document"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::club-health-metrics",
+      "label": "Club Health Metrics",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::annual-strategic-plan"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::sustainability-checklist",
+      "label": "Sustainability Checklist",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-health-metrics"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::multi-year-vision-plan",
+      "label": "Multi Year Vision Plan",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::oversight-board",
+        "coding-club::sustainability-checklist"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    },
+    {
+      "id": "coding-club::building-sustainable-clubs",
+      "label": "Building Sustainable Clubs",
+      "subject_id": "coding-club",
+      "dependencies": [
+        "coding-club::club-sustainability",
+        "coding-club::multi-year-vision-plan"
+      ],
+      "taxonomy_id": "BOARD",
+      "level": "core"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "subject_id": "prompt-class",
-  "title": "Prompt Engineering: From Fundamentals to Agentic AI",
+  "title": "Agent Orchestration: From Prompt Engineering to Managing AI Agent Teams",
   "version": "0.1.0",
-  "created": "2026-08-18",
+  "created": "2026-09-05",
   "groups": {
     "FOUND": {
       "classifier_name": "Foundation Concepts",
@@ -2823,7 +2823,8 @@
       "subject_id": "prompt-class",
       "dependencies": [
         "prompt-class::large-language-model",
-        "prompt-class::foundation-model"
+        "prompt-class::foundation-model",
+        "prompt-class::model-families-and-tiers"
       ],
       "taxonomy_id": "EVAL",
       "level": "core"
@@ -3453,6 +3454,17 @@
         "prompt-class::course-content-generator"
       ],
       "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::model-families-and-tiers",
+      "label": "Model Families and Tiers",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
       "level": "core"
     }
   ]

@@ -1,0 +1,6327 @@
+{
+  "subject_id": "ibook-skills",
+  "title": "Using Agent Skills to Create Intelligent Textbooks",
+  "version": "0.1.0",
+  "created": "2026-09-05",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations of AI and Intelligent Books",
+      "color": "SteelBlue"
+    },
+    "SKARCH": {
+      "classifier_name": "Agent Skill Architecture",
+      "color": "DarkSlateBlue"
+    },
+    "SKDEV": {
+      "classifier_name": "Skill Development and Portability",
+      "color": "DarkGreen"
+    },
+    "PYTOOL": {
+      "classifier_name": "Python Tooling and Automation",
+      "color": "LimeGreen"
+    },
+    "TOKEN": {
+      "classifier_name": "Token Optimization and Measurement",
+      "color": "Gold"
+    },
+    "CDESIGN": {
+      "classifier_name": "Course Design and Pedagogy",
+      "color": "DarkGoldenrod"
+    },
+    "LGRAPH": {
+      "classifier_name": "Learning Graphs",
+      "color": "DeepPink"
+    },
+    "CONTENT": {
+      "classifier_name": "Chapter and Content Generation",
+      "color": "Teal"
+    },
+    "SUPPORT": {
+      "classifier_name": "Supporting Content",
+      "color": "LightSkyBlue"
+    },
+    "MSIM": {
+      "classifier_name": "Interactive Simulations",
+      "color": "Crimson"
+    },
+    "MEDIA": {
+      "classifier_name": "Images, Infographics, and Media",
+      "color": "Orange"
+    },
+    "DOMAIN": {
+      "classifier_name": "Domain-Specific Skill Extension",
+      "color": "SaddleBrown"
+    },
+    "PLATFORM": {
+      "classifier_name": "Platform, Tooling, and Deployment",
+      "color": "MediumPurple"
+    },
+    "PUBLISH": {
+      "classifier_name": "Publishing, Metrics, and Promotion",
+      "color": "OliveDrab"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ibook-skills::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::artificial-intelligence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token",
+      "label": "Token",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::tokenization",
+      "label": "Tokenization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::context-window",
+      "label": "Context Window",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::prompt",
+      "label": "Prompt",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::prompt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::prompt",
+        "ibook-skills::prompt-engineering"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::nondeterminism-in-llm-output",
+      "label": "Nondeterminism in LLM Output",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::hallucination",
+      "label": "Hallucination",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::nondeterminism-in-llm-output"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::grounding-and-verification",
+      "label": "Grounding and Verification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::hallucination"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::python",
+      "label": "Python",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "PYTOOL",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::markdown-formatting",
+      "label": "Markdown Formatting",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "PLATFORM",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::terminal-commands",
+      "label": "Terminal Commands",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "PLATFORM",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::directory-navigation",
+      "label": "Directory Navigation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::shell-scripting",
+      "label": "Shell Scripting",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands",
+        "ibook-skills::directory-navigation"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git",
+      "label": "Git",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "PLATFORM",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::git-repository-structure",
+      "label": "Git Repository Structure",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directory-navigation",
+        "ibook-skills::git"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::version-control-basics",
+      "label": "Version Control Basics",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::git-repository-structure"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::github-integration",
+      "label": "GitHub Integration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::git-repository-structure"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::visual-studio-code",
+      "label": "Visual Studio Code",
+      "subject_id": "ibook-skills",
+      "dependencies": [],
+      "taxonomy_id": "PLATFORM",
+      "level": "foundational"
+    },
+    {
+      "id": "ibook-skills::vs-code-terminal",
+      "label": "VS Code Terminal",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands",
+        "ibook-skills::visual-studio-code"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::ai-coding-agent",
+      "label": "AI Coding Agent",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::prompt-engineering"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::tool-use-by-agents",
+      "label": "Tool Use by Agents",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::system-prompt",
+        "ibook-skills::ai-coding-agent"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::agentic-workflow",
+      "label": "Agentic Workflow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::tool-use-by-agents"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::human-in-the-loop",
+      "label": "Human in the Loop",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::nondeterminism-in-llm-output",
+        "ibook-skills::agentic-workflow"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claude-code-interface",
+      "label": "Claude Code Interface",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands",
+        "ibook-skills::ai-coding-agent"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::ide-agent-integration",
+      "label": "IDE Agent Integration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::visual-studio-code",
+        "ibook-skills::claude-code-interface"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chat-versus-agent-interfaces",
+      "label": "Chat Versus Agent Interfaces",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::claude-code-interface"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::iterative-refinement",
+      "label": "Iterative Refinement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::prompt-engineering",
+        "ibook-skills::human-in-the-loop"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::artificial-intelligence",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::level-1-static-content",
+      "label": "Level 1 Static Content",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::level-2-interactive-content",
+      "label": "Level 2 Interactive Content",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::level-1-static-content"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::level-3-adaptive-content",
+      "label": "Level 3 Adaptive Content",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::level-2-interactive-content"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::level-4-chatbot-integration",
+      "label": "Level 4 Chatbot Integration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::level-3-adaptive-content"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::level-5-autonomous-ai",
+      "label": "Level 5 Autonomous AI",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::level-4-chatbot-integration"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::five-levels-of-intelligence",
+      "label": "Five Levels of Intelligence",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::level-1-static-content",
+        "ibook-skills::level-2-interactive-content",
+        "ibook-skills::level-3-adaptive-content",
+        "ibook-skills::level-4-chatbot-integration",
+        "ibook-skills::level-5-autonomous-ai"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::experience-api",
+      "label": "Experience API",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::level-3-adaptive-content"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-record-store",
+      "label": "Learning Record Store",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::level-3-adaptive-content",
+        "ibook-skills::experience-api"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::open-educational-resources",
+      "label": "Open Educational Resources",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::creative-commons-licensing",
+      "label": "Creative Commons Licensing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::open-educational-resources"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::textbook-generation-pipeline",
+      "label": "Textbook Generation Pipeline",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agentic-workflow",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quality-gate",
+      "label": "Quality Gate",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::iterative-refinement",
+        "ibook-skills::textbook-generation-pipeline"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mkdocs",
+      "label": "MkDocs",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mkdocs-material-theme",
+      "label": "MkDocs Material Theme",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::mkdocs"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mkdocs-yml-configuration",
+      "label": "mkdocs.yml Configuration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::mkdocs"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::navigation-structure",
+      "label": "Navigation Structure",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::blank-line-before-lists",
+      "label": "Blank Line Before Lists",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::mkdocs"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::agent-skill",
+      "label": "Agent Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::tool-use-by-agents",
+        "ibook-skills::agentic-workflow"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::agent-skills-open-standard",
+      "label": "Agent Skills Open Standard",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agentic-workflow",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-md-file",
+      "label": "SKILL.md File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::yaml-frontmatter",
+      "label": "YAML Frontmatter",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::skill-md-file"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-name-field",
+      "label": "Skill Name Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-md-file",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-description-field",
+      "label": "Skill Description Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-license-field",
+      "label": "Skill License Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::creative-commons-licensing",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::compatibility-field",
+      "label": "Compatibility Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skills-open-standard",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-metadata-field",
+      "label": "Skill Metadata Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skills-open-standard",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::allowed-tools-field",
+      "label": "Allowed Tools Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::yaml-frontmatter",
+        "ibook-skills::tool-use-by-agents"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::vendor-extension-fields",
+      "label": "Vendor Extension Fields",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::yaml-frontmatter",
+        "ibook-skills::agent-skills-open-standard"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::frontmatter-contract",
+      "label": "Frontmatter Contract",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skills-open-standard",
+        "ibook-skills::skill-name-field",
+        "ibook-skills::skill-description-field"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-directory-structure",
+      "label": "Skill Directory Structure",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directory-navigation",
+        "ibook-skills::skill-md-file"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::references-directory",
+      "label": "References Directory",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::skill-directory-structure"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::scripts-directory",
+      "label": "Scripts Directory",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-directory-structure",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::assets-directory",
+      "label": "Assets Directory",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directory-navigation",
+        "ibook-skills::skill-directory-structure"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::progressive-disclosure",
+      "label": "Progressive Disclosure",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-md-file",
+        "ibook-skills::references-directory"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::metadata-loading-budget",
+      "label": "Metadata Loading Budget",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::progressive-disclosure",
+        "ibook-skills::skill-description-field"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::body-loading-budget",
+      "label": "Body Loading Budget",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::progressive-disclosure",
+        "ibook-skills::skill-md-file"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reference-loading-budget",
+      "label": "Reference Loading Budget",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::progressive-disclosure",
+        "ibook-skills::references-directory"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-trigger-matching",
+      "label": "Skill Trigger Matching",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::skill-description-field"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::trigger-keyword-table",
+      "label": "Trigger Keyword Table",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-description-field",
+        "ibook-skills::skill-trigger-matching"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::false-trigger-misfire",
+      "label": "False Trigger Misfire",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-description-field",
+        "ibook-skills::skill-trigger-matching"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::meta-skill",
+      "label": "Meta-Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::progressive-disclosure",
+        "ibook-skills::trigger-keyword-table"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-routing-table",
+      "label": "Skill Routing Table",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::meta-skill",
+        "ibook-skills::trigger-keyword-table"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::on-demand-guide-loading",
+      "label": "On-Demand Guide Loading",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::meta-skill",
+        "ibook-skills::references-directory",
+        "ibook-skills::reference-loading-budget"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::thirty-skill-loading-limit",
+      "label": "Thirty Skill Loading Limit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::metadata-loading-budget"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-consolidation",
+      "label": "Skill Consolidation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::meta-skill",
+        "ibook-skills::thirty-skill-loading-limit"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::archived-skill",
+      "label": "Archived Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::references-directory",
+        "ibook-skills::skill-consolidation"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-alias-map",
+      "label": "Skill Alias Map",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::archived-skill",
+        "ibook-skills::skill-routing-table"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::model-selection-per-skill",
+      "label": "Model Selection Per Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::yaml-frontmatter",
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::opus-versus-sonnet-routing",
+      "label": "Opus Versus Sonnet Routing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::model-selection-per-skill"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-versioning",
+      "label": "Skill Versioning",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-md-file",
+        "ibook-skills::version-control-basics"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-workflow-instructions",
+      "label": "Skill Workflow Instructions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agentic-workflow",
+        "ibook-skills::skill-md-file"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-execution-context",
+      "label": "Skill Execution Context",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::tool-use-by-agents"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-composition",
+      "label": "Skill Composition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::skill-workflow-instructions"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-naming-conventions",
+      "label": "Skill Naming Conventions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-name-field",
+        "ibook-skills::skill-directory-structure"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::supporting-assets-in-skills",
+      "label": "Supporting Assets in Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-directory-structure",
+        "ibook-skills::assets-directory"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reference-docs-in-skills",
+      "label": "Reference Docs in Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::references-directory",
+        "ibook-skills::on-demand-guide-loading"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::template-files-in-skills",
+      "label": "Template Files in Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::assets-directory"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-library",
+      "label": "Skill Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::skill-consolidation"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-library-maintenance",
+      "label": "Skill Library Maintenance",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-library",
+        "ibook-skills::skill-versioning"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skills-versus-prompts",
+      "label": "Skills Versus Prompts",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::prompt"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-discoverability",
+      "label": "Skill Discoverability",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-description-field",
+        "ibook-skills::skill-trigger-matching"
+      ],
+      "taxonomy_id": "SKARCH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-creator-skill",
+      "label": "Skill Creator Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::skill-workflow-instructions"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::writing-a-skill-description",
+      "label": "Writing a Skill Description",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-description-field",
+        "ibook-skills::skill-discoverability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::description-trigger-testing",
+      "label": "Description Trigger Testing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::writing-a-skill-description",
+        "ibook-skills::skill-trigger-matching"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-evaluation-harness",
+      "label": "Skill Evaluation Harness",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::nondeterminism-in-llm-output",
+        "ibook-skills::description-trigger-testing"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-benchmarking",
+      "label": "Skill Benchmarking",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::description-trigger-testing",
+        "ibook-skills::skill-evaluation-harness"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-variance-analysis",
+      "label": "Skill Variance Analysis",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-benchmarking",
+        "ibook-skills::nondeterminism-in-llm-output"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-testing-and-debugging",
+      "label": "Skill Testing and Debugging",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-evaluation-harness",
+        "ibook-skills::skill-execution-context"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-failure-modes",
+      "label": "Skill Failure Modes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-testing-and-debugging",
+        "ibook-skills::false-trigger-misfire"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::error-analysis-in-skills",
+      "label": "Error Analysis in Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-testing-and-debugging",
+        "ibook-skills::skill-failure-modes"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::improving-skill-quality",
+      "label": "Improving Skill Quality",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::error-analysis-in-skills",
+        "ibook-skills::skill-variance-analysis"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-packaging",
+      "label": "Skill Packaging",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-directory-structure",
+        "ibook-skills::skill-library"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-distribution-methods",
+      "label": "Skill Distribution Methods",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-packaging",
+        "ibook-skills::github-integration"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::symbolic-link-installation",
+      "label": "Symbolic Link Installation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-packaging",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::global-skill-installation",
+      "label": "Global Skill Installation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directory-navigation",
+        "ibook-skills::symbolic-link-installation"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::project-specific-skills",
+      "label": "Project-Specific Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::global-skill-installation",
+        "ibook-skills::git-repository-structure"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bk-install-skills-script",
+      "label": "bk-install-skills Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::symbolic-link-installation",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::stale-symlink-cleanup",
+      "label": "Stale Symlink Cleanup",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::symbolic-link-installation",
+        "ibook-skills::bk-install-skills-script"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::listing-available-skills",
+      "label": "Listing Available Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-discoverability",
+        "ibook-skills::global-skill-installation"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::invoking-a-skill",
+      "label": "Invoking a Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::listing-available-skills",
+        "ibook-skills::skill-execution-context"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::slash-command-invocation",
+      "label": "Slash Command Invocation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-code-interface",
+        "ibook-skills::invoking-a-skill"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claude-command",
+      "label": "Claude Command",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::slash-command-invocation",
+        "ibook-skills::claude-code-interface"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::command-definition-file",
+      "label": "Command Definition File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-command",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skills-versus-commands",
+      "label": "Skills Versus Commands",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-command",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::runbook-command",
+      "label": "Runbook Command",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-command",
+        "ibook-skills::textbook-generation-pipeline"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::ibook-runbook",
+      "label": "ibook Runbook",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::runbook-command",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::read-only-state-detection",
+      "label": "Read-Only State Detection",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ibook-runbook",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-portability",
+      "label": "Skill Portability",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skills-open-standard",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::agents-md-convention",
+      "label": "AGENTS.md Convention",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::openai-codex",
+      "label": "OpenAI Codex",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::google-antigravity",
+      "label": "Google Antigravity",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cursor-ide",
+      "label": "Cursor IDE",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::github-copilot",
+      "label": "GitHub Copilot",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::ai-coding-agent",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cross-platform-skill-testing",
+      "label": "Cross-Platform Skill Testing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-portability",
+        "ibook-skills::skill-testing-and-debugging"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::graceful-capability-degradation",
+      "label": "Graceful Capability Degradation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::cross-platform-skill-testing",
+        "ibook-skills::skill-portability"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::image-understanding-dependency",
+      "label": "Image Understanding Dependency",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::graceful-capability-degradation",
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::permission-management",
+      "label": "Permission Management",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::allowed-tools-field",
+        "ibook-skills::skill-execution-context"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::script-execution-permissions",
+      "label": "Script Execution Permissions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::permission-management",
+        "ibook-skills::scripts-directory"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::security-in-skill-execution",
+      "label": "Security in Skill Execution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::permission-management",
+        "ibook-skills::script-execution-permissions"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::file-access-permissions",
+      "label": "File Access Permissions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directory-navigation",
+        "ibook-skills::permission-management"
+      ],
+      "taxonomy_id": "SKDEV",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-budget",
+      "label": "Token Budget",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token",
+        "ibook-skills::context-window"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-cost-model",
+      "label": "Token Cost Model",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::input-versus-output-tokens",
+      "label": "Input Versus Output Tokens",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token",
+        "ibook-skills::token-cost-model"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-frugality-principle",
+      "label": "Token Frugality Principle",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::token-cost-model"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claude-pro-plan-limits",
+      "label": "Claude Pro Plan Limits",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::token-cost-model"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claude-max-plan-limits",
+      "label": "Claude Max Plan Limits",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-cost-model",
+        "ibook-skills::claude-pro-plan-limits"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::four-hour-usage-window",
+      "label": "Four-Hour Usage Window",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::claude-pro-plan-limits"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::five-hour-usage-window",
+      "label": "Five-Hour Usage Window",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-pro-plan-limits",
+        "ibook-skills::four-hour-usage-window"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::tokens-per-minute-limit",
+      "label": "Tokens Per Minute Limit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::claude-pro-plan-limits"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::rate-limit-handling",
+      "label": "Rate Limit Handling",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::tokens-per-minute-limit",
+        "ibook-skills::four-hour-usage-window"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::context-window-management",
+      "label": "Context Window Management",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::context-window",
+        "ibook-skills::token-budget"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::context-compaction",
+      "label": "Context Compaction",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::context-window",
+        "ibook-skills::context-window-management"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::sub-agent-startup-overhead",
+      "label": "Sub-Agent Startup Overhead",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::system-prompt",
+        "ibook-skills::token-budget"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::serial-agent-execution",
+      "label": "Serial Agent Execution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agentic-workflow",
+        "ibook-skills::sub-agent-startup-overhead"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::parallel-agent-execution",
+      "label": "Parallel Agent Execution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agentic-workflow",
+        "ibook-skills::sub-agent-startup-overhead"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::serial-versus-parallel-tradeoff",
+      "label": "Serial Versus Parallel Tradeoff",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::serial-agent-execution",
+        "ibook-skills::parallel-agent-execution"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::marginal-token-cost",
+      "label": "Marginal Token Cost",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::sub-agent-startup-overhead",
+        "ibook-skills::serial-versus-parallel-tradeoff"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary-token-benchmark",
+      "label": "Glossary Token Benchmark",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::marginal-token-cost",
+        "ibook-skills::serial-agent-execution"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-cost-per-term",
+      "label": "Token Cost Per Term",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary-token-benchmark",
+        "ibook-skills::marginal-token-cost"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::file-layout-as-token-strategy",
+      "label": "File Layout as Token Strategy",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-frugality-principle",
+        "ibook-skills::context-window-management"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::separate-references-files",
+      "label": "Separate References Files",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-frugality-principle",
+        "ibook-skills::file-layout-as-token-strategy"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::separate-quiz-files",
+      "label": "Separate Quiz Files",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-frugality-principle",
+        "ibook-skills::file-layout-as-token-strategy"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::batch-script-substitution",
+      "label": "Batch Script Substitution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-frugality-principle",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::deterministic-work-offloading",
+      "label": "Deterministic Work Offloading",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::batch-script-substitution",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quality-gate-short-circuit",
+      "label": "Quality Gate Short-Circuit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quality-gate",
+        "ibook-skills::token-frugality-principle"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cached-quality-score",
+      "label": "Cached Quality Score",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quality-gate",
+        "ibook-skills::quality-gate-short-circuit"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::selective-file-reading",
+      "label": "Selective File Reading",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::context-window-management",
+        "ibook-skills::token-frugality-principle"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::grep-before-read",
+      "label": "Grep Before Read",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands",
+        "ibook-skills::selective-file-reading"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-cost-estimation",
+      "label": "Token Cost Estimation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-cost-model",
+        "ibook-skills::token-frugality-principle"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-usage-hook",
+      "label": "Skill Usage Hook",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-execution-context",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::stop-hook",
+      "label": "Stop Hook",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::shell-scripting",
+        "ibook-skills::skill-usage-hook"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::jsonl-usage-log",
+      "label": "JSONL Usage Log",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::shell-scripting",
+        "ibook-skills::skill-usage-hook"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-usage-analytics",
+      "label": "Skill Usage Analytics",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::jsonl-usage-log",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::elapsed-time-measurement",
+      "label": "Elapsed Time Measurement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-usage-hook",
+        "ibook-skills::skill-usage-analytics"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-usage-dashboard",
+      "label": "Token Usage Dashboard",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-usage-analytics",
+        "ibook-skills::elapsed-time-measurement"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cost-per-book-estimate",
+      "label": "Cost Per Book Estimate",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-cost-estimation",
+        "ibook-skills::token-usage-dashboard"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::budget-constrained-authoring",
+      "label": "Budget-Constrained Authoring",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::cost-per-book-estimate",
+        "ibook-skills::token-frugality-principle"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-waste-antipatterns",
+      "label": "Token Waste Antipatterns",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-frugality-principle",
+        "ibook-skills::serial-versus-parallel-tradeoff"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::optimizing-claude-usage",
+      "label": "Optimizing Claude Usage",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::budget-constrained-authoring",
+        "ibook-skills::rate-limit-handling"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::token-management-strategies",
+      "label": "Token Management Strategies",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::file-layout-as-token-strategy",
+        "ibook-skills::deterministic-work-offloading",
+        "ibook-skills::quality-gate-short-circuit"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-token-budgeting",
+      "label": "Chapter Token Budgeting",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::token-budget",
+        "ibook-skills::token-management-strategies"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::python-standard-library",
+      "label": "Python Standard Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::pip-package-management",
+      "label": "pip Package Management",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::virtual-environment",
+      "label": "Virtual Environment",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::pip-package-management"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::shebang-line",
+      "label": "Shebang Line",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::command-line-arguments",
+      "label": "Command-Line Arguments",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::shebang-line",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::python-scripts-in-skills",
+      "label": "Python Scripts in Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::scripts-directory",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::model-versus-script-division",
+      "label": "Model Versus Script Division",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::deterministic-work-offloading"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::deterministic-computation",
+      "label": "Deterministic Computation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::model-versus-script-division",
+        "ibook-skills::nondeterminism-in-llm-output"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::idempotent-script-design",
+      "label": "Idempotent Script Design",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::deterministic-computation"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::script-exit-codes",
+      "label": "Script Exit Codes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::command-line-arguments",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dry-run-mode",
+      "label": "Dry Run Mode",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::idempotent-script-design",
+        "ibook-skills::command-line-arguments"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::verbose-output-mode",
+      "label": "Verbose Output Mode",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::command-line-arguments",
+        "ibook-skills::script-exit-codes"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::json-serialization",
+      "label": "JSON Serialization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::python-standard-library"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::csv-parsing-in-python",
+      "label": "CSV Parsing in Python",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::python-standard-library"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::markdown-parsing-in-python",
+      "label": "Markdown Parsing in Python",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-standard-library",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::regular-expressions",
+      "label": "Regular Expressions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-standard-library",
+        "ibook-skills::markdown-parsing-in-python"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::file-globbing",
+      "label": "File Globbing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-standard-library",
+        "ibook-skills::directory-navigation"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::path-handling",
+      "label": "Path Handling",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-standard-library",
+        "ibook-skills::directory-navigation"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::shell-script-wrapper",
+      "label": "Shell Script Wrapper",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::shell-scripting",
+        "ibook-skills::python-scripts-in-skills"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bk-command-family",
+      "label": "bk Command Family",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::shell-script-wrapper",
+        "ibook-skills::bk-install-skills-script"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-description",
+      "label": "Course Description",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::textbook-generation-pipeline"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-title",
+      "label": "Course Title",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::course-description"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::target-audience-definition",
+      "label": "Target Audience Definition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::course-description"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reading-level-specification",
+      "label": "Reading Level Specification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::target-audience-definition"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-prerequisites",
+      "label": "Course Prerequisites",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::target-audience-definition"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::main-topics-covered",
+      "label": "Main Topics Covered",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::course-title"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::topics-excluded-from-scope",
+      "label": "Topics Excluded From Scope",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::main-topics-covered"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::descriptive-context",
+      "label": "Descriptive Context",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::main-topics-covered"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-outcomes",
+      "label": "Learning Outcomes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::course-description"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::learning-outcomes"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bloom-s-1956-original",
+      "label": "Bloom's 1956 Original",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-outcomes",
+        "ibook-skills::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bloom-s-2001-revision",
+      "label": "Bloom's 2001 Revision",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-taxonomy",
+        "ibook-skills::bloom-s-1956-original"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::remember-level",
+      "label": "Remember Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-taxonomy",
+        "ibook-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::understand-level",
+      "label": "Understand Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-2001-revision",
+        "ibook-skills::remember-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::apply-level",
+      "label": "Apply Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-2001-revision",
+        "ibook-skills::understand-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::analyze-level",
+      "label": "Analyze Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-2001-revision",
+        "ibook-skills::apply-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::evaluate-level",
+      "label": "Evaluate Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-2001-revision",
+        "ibook-skills::analyze-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::create-level",
+      "label": "Create Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::bloom-s-2001-revision",
+        "ibook-skills::evaluate-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::action-verbs-for-outcomes",
+      "label": "Action Verbs for Outcomes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-outcomes",
+        "ibook-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cognitive-level-distribution",
+      "label": "Cognitive Level Distribution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::remember-level",
+        "ibook-skills::understand-level",
+        "ibook-skills::apply-level",
+        "ibook-skills::analyze-level",
+        "ibook-skills::evaluate-level",
+        "ibook-skills::create-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::create-level",
+        "ibook-skills::textbook-generation-pipeline"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-description-rubric",
+      "label": "Course Description Rubric",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description",
+        "ibook-skills::cognitive-level-distribution"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-description-score",
+      "label": "Course Description Score",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description-rubric",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::course-description-analyzer",
+      "label": "Course Description Analyzer",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::course-description-score",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::instructional-scaffolding",
+      "label": "Instructional Scaffolding",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-outcomes",
+        "ibook-skills::reading-level-specification"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::define-before-display-rule",
+      "label": "Define Before Display Rule",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reading-level-specification",
+        "ibook-skills::instructional-scaffolding"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::worked-examples",
+      "label": "Worked Examples",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::instructional-scaffolding",
+        "ibook-skills::apply-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::practice-exercises",
+      "label": "Practice Exercises",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::worked-examples",
+        "ibook-skills::apply-level"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reading-level-consistency",
+      "label": "Reading Level Consistency",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reading-level-specification",
+        "ibook-skills::instructional-scaffolding"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::flesch-kincaid-grade-level",
+      "label": "Flesch-Kincaid Grade Level",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reading-level-specification",
+        "ibook-skills::reading-level-consistency"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::pedagogical-mascot",
+      "label": "Pedagogical Mascot",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::instructional-scaffolding"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mascot-voice-and-placement",
+      "label": "Mascot Voice and Placement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::instructional-scaffolding",
+        "ibook-skills::pedagogical-mascot"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mascot-admonition-types",
+      "label": "Mascot Admonition Types",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::pedagogical-mascot",
+        "ibook-skills::mascot-voice-and-placement"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mascot-self-introduction",
+      "label": "Mascot Self-Introduction",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mascot-voice-and-placement",
+        "ibook-skills::mascot-admonition-types"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-pathway",
+      "label": "Learning Pathway",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-outcomes",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::assessing-student-understanding",
+      "label": "Assessing Student Understanding",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-outcomes",
+        "ibook-skills::cognitive-level-distribution"
+      ],
+      "taxonomy_id": "CDESIGN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-pathway",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept",
+      "label": "Concept",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::learning-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-label",
+      "label": "Concept Label",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::concept"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::title-case-convention",
+      "label": "Title Case Convention",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::concept-label"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::label-length-limit",
+      "label": "Label Length Limit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::concept-label"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::atomic-concept",
+      "label": "Atomic Concept",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::concept"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-granularity",
+      "label": "Concept Granularity",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::atomic-concept"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-enumeration",
+      "label": "Concept Enumeration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::main-topics-covered"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-list-file",
+      "label": "Concept List File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-enumeration",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::conceptid-field",
+      "label": "ConceptID Field",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::concept-enumeration"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-dependency",
+      "label": "Learning Dependency",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::learning-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dependency-edge",
+      "label": "Dependency Edge",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::learning-dependency"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::prerequisite-relationship",
+      "label": "Prerequisite Relationship",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-dependency",
+        "ibook-skills::course-prerequisites"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::pipe-delimited-dependencies",
+      "label": "Pipe-Delimited Dependencies",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::conceptid-field"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-csv-format",
+      "label": "Learning Graph CSV Format",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::pipe-delimited-dependencies",
+        "ibook-skills::csv-parsing-in-python"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::directed-acyclic-graph",
+      "label": "Directed Acyclic Graph",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::dependency-edge"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cycle-detection",
+      "label": "Cycle Detection",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::self-dependency-check",
+      "label": "Self-Dependency Check",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::cycle-detection"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::foundational-concept",
+      "label": "Foundational Concept",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directed-acyclic-graph",
+        "ibook-skills::prerequisite-relationship"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::terminal-node",
+      "label": "Terminal Node",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::orphaned-node",
+      "label": "Orphaned Node",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::disconnected-subgraph",
+      "label": "Disconnected Subgraph",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::orphaned-node",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::linear-chain-detection",
+      "label": "Linear Chain Detection",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directed-acyclic-graph",
+        "ibook-skills::dependency-edge"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::indegree-analysis",
+      "label": "Indegree Analysis",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::outdegree-analysis",
+      "label": "Outdegree Analysis",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::directed-acyclic-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dependency-chain-length",
+      "label": "Dependency Chain Length",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::directed-acyclic-graph",
+        "ibook-skills::indegree-analysis"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::average-dependencies",
+      "label": "Average Dependencies",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::dependency-edge",
+        "ibook-skills::indegree-analysis"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-quality-score",
+      "label": "Learning Graph Quality Score",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::cycle-detection",
+        "ibook-skills::disconnected-subgraph",
+        "ibook-skills::average-dependencies"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quality-metrics-report",
+      "label": "Quality Metrics Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-quality-score",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::graph-remediation",
+      "label": "Graph Remediation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quality-metrics-report",
+        "ibook-skills::learning-graph-quality-score"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-taxonomy",
+      "label": "Concept Taxonomy",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::concept-enumeration"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::taxonomyid",
+      "label": "TaxonomyID",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::title-case-convention",
+        "ibook-skills::concept-taxonomy"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::taxonomy-category-naming",
+      "label": "Taxonomy Category Naming",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-taxonomy",
+        "ibook-skills::title-case-convention"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::taxonomy-distribution",
+      "label": "Taxonomy Distribution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-taxonomy",
+        "ibook-skills::taxonomyid"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::category-over-representation",
+      "label": "Category Over-Representation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-taxonomy",
+        "ibook-skills::taxonomy-distribution"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::taxonomy-names-json-file",
+      "label": "taxonomy-names.json File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::taxonomyid",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::color-config-json-file",
+      "label": "color-config.json File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::taxonomyid",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-json-schema",
+      "label": "Learning Graph JSON Schema",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::json-serialization",
+        "ibook-skills::learning-graph"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::metadata-section",
+      "label": "Metadata Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::json-serialization",
+        "ibook-skills::learning-graph-json-schema"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::groups-section",
+      "label": "Groups Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-json-schema",
+        "ibook-skills::taxonomyid"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::nodes-section",
+      "label": "Nodes Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-json-schema",
+        "ibook-skills::conceptid-field"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::edges-section",
+      "label": "Edges Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-json-schema",
+        "ibook-skills::dependency-edge"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::vis-network-json-format",
+      "label": "vis-network JSON Format",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-json-schema",
+        "ibook-skills::nodes-section",
+        "ibook-skills::edges-section"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dublin-core-metadata",
+      "label": "Dublin Core Metadata",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::json-serialization",
+        "ibook-skills::metadata-section"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-viewer",
+      "label": "Learning Graph Viewer",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::vis-network-json-format"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::graph-legend-and-colors",
+      "label": "Graph Legend and Colors",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::groups-section",
+        "ibook-skills::learning-graph-viewer"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-search-in-viewer",
+      "label": "Concept Search in Viewer",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-label",
+        "ibook-skills::learning-graph-viewer"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-generator",
+      "label": "Learning Graph Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::graph-review-workflow",
+      "label": "Graph Review Workflow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-generator",
+        "ibook-skills::graph-remediation"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-list-review",
+      "label": "Concept List Review",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept-list-file",
+        "ibook-skills::graph-review-workflow"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::learning-graph-as-roadmap",
+      "label": "Learning Graph as Roadmap",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::learning-pathway"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::multiple-learning-pathways",
+      "label": "Multiple Learning Pathways",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph-as-roadmap",
+        "ibook-skills::learning-pathway"
+      ],
+      "taxonomy_id": "LGRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::analyze-graph-py-script",
+      "label": "analyze-graph.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::learning-graph-quality-score"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::csv-to-json-py-script",
+      "label": "csv-to-json.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::vis-network-json-format"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::add-taxonomy-py-script",
+      "label": "add-taxonomy.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::taxonomyid"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::validate-learning-graph-py",
+      "label": "validate-learning-graph.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::learning-graph-json-schema"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::taxonomy-distribution-py",
+      "label": "taxonomy-distribution.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::taxonomy-distribution"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::check-loops-py-script",
+      "label": "check-loops.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::cycle-detection"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::json-schema-validation",
+      "label": "JSON Schema Validation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::validate-learning-graph-py",
+        "ibook-skills::learning-graph-json-schema"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-chapter-generator",
+      "label": "Book Chapter Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::learning-graph",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-structure-design",
+      "label": "Chapter Structure Design",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-chapter-generator",
+        "ibook-skills::learning-graph"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-concept-assignment",
+      "label": "Chapter Concept Assignment",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-structure-design",
+        "ibook-skills::concept"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-coverage-exactly-once",
+      "label": "Concept Coverage Exactly Once",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-concept-assignment",
+        "ibook-skills::concept-enumeration"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dependency-ordered-chapters",
+      "label": "Dependency-Ordered Chapters",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-structure-design",
+        "ibook-skills::prerequisite-relationship"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-index-file",
+      "label": "Chapter Index File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-structure-design",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-summary",
+      "label": "Chapter Summary",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-structure-design",
+        "ibook-skills::chapter-index-file"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-concept-list",
+      "label": "Chapter Concept List",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-index-file",
+        "ibook-skills::chapter-concept-assignment"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-content-generator",
+      "label": "Chapter Content Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-index-file",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::section-organization",
+      "label": "Section Organization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::chapter-summary"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::prerequisite-ordering-in-text",
+      "label": "Prerequisite Ordering in Text",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::section-organization",
+        "ibook-skills::dependency-ordered-chapters"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::admonition-blocks",
+      "label": "Admonition Blocks",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::note-and-tip-admonitions",
+      "label": "Note and Tip Admonitions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::admonition-blocks"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::question-admonition",
+      "label": "Question Admonition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::admonition-blocks"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::details-disclosure-block",
+      "label": "Details Disclosure Block",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::admonition-blocks"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::math-equation-support",
+      "label": "Math Equation Support",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mathjax-configuration",
+      "label": "MathJax Configuration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::math-equation-support",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::latex-equation-syntax",
+      "label": "LaTeX Equation Syntax",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::math-equation-support"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::equation-numbering",
+      "label": "Equation Numbering",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::math-equation-support",
+        "ibook-skills::latex-equation-syntax"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::content-element-types",
+      "label": "Content Element Types",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::section-organization"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::diagram-specification-block",
+      "label": "Diagram Specification Block",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::details-disclosure-block",
+        "ibook-skills::content-element-types"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::drawing-specification-block",
+      "label": "Drawing Specification Block",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::details-disclosure-block",
+        "ibook-skills::content-element-types"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-review-workflow",
+      "label": "Chapter Review Workflow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::document-status-indicator",
+      "label": "Document Status Indicator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-review-workflow",
+        "ibook-skills::navigation-structure"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::content-generation-guide",
+      "label": "Content Generation Guide",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::mascot-voice-and-placement"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::instructor-guide",
+      "label": "Instructor Guide",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::assessing-student-understanding"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::lesson-plan",
+      "label": "Lesson Plan",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::instructor-guide",
+        "ibook-skills::learning-outcomes"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::supplementary-content",
+      "label": "Supplementary Content",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::instructor-guide"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-image-placement",
+      "label": "Chapter Image Placement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::chapter-content-generator"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-reading-level-audit",
+      "label": "Chapter Reading Level Audit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reading-level-consistency",
+        "ibook-skills::chapter-content-generator"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::content-quality-standards",
+      "label": "Content Quality Standards",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::encouraging-tone",
+      "label": "Encouraging Tone",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::content-quality-standards",
+        "ibook-skills::reading-level-specification"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-navigation-entry",
+      "label": "Chapter Navigation Entry",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-index-file",
+        "ibook-skills::navigation-structure"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-metrics",
+      "label": "Chapter Metrics",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-index-file",
+        "ibook-skills::chapter-content-generator"
+      ],
+      "taxonomy_id": "CONTENT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary",
+      "label": "Glossary",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary-generator",
+      "label": "Glossary Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::iso-11179-standards",
+      "label": "ISO 11179 Standards",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::concept",
+        "ibook-skills::glossary"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::precise-definition",
+      "label": "Precise Definition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concise-definition",
+      "label": "Concise Definition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::distinct-definition",
+      "label": "Distinct Definition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::non-circular-definition",
+      "label": "Non-Circular Definition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::definitions-without-rules",
+      "label": "Definitions Without Rules",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::term-extraction",
+      "label": "Term Extraction",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::concept-list-file"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary-term-ordering",
+      "label": "Glossary Term Ordering",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::term-extraction"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary-anchor-links",
+      "label": "Glossary Anchor Links",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary",
+        "ibook-skills::level-2-interactive-content"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::glossary-quality-report",
+      "label": "Glossary Quality Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::glossary-generator",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::faq",
+      "label": "FAQ",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::intelligent-textbook",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::faq-generator",
+      "label": "FAQ Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::faq",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::faq-categorization",
+      "label": "FAQ Categorization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::faq",
+        "ibook-skills::faq-generator"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::faq-coverage-gaps",
+      "label": "FAQ Coverage Gaps",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::faq-generator",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chatbot-training-json",
+      "label": "Chatbot Training JSON",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::faq",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::retrieval-augmented-generation",
+      "label": "Retrieval Augmented Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chatbot-training-json",
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz",
+      "label": "Quiz",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::level-3-adaptive-content",
+        "ibook-skills::assessing-student-understanding"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz-generator",
+      "label": "Quiz Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz",
+        "ibook-skills::agent-skill"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::multiple-choice-question",
+      "label": "Multiple-Choice Question",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::assessing-student-understanding",
+        "ibook-skills::quiz"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::distractor-design",
+      "label": "Distractor Design",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz",
+        "ibook-skills::multiple-choice-question"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::distractor-plausibility",
+      "label": "Distractor Plausibility",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::multiple-choice-question",
+        "ibook-skills::distractor-design"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::answer-distribution-balance",
+      "label": "Answer Distribution Balance",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz-generator",
+        "ibook-skills::multiple-choice-question"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz-bloom-distribution",
+      "label": "Quiz Bloom Distribution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz",
+        "ibook-skills::cognitive-level-distribution"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz-explanation-text",
+      "label": "Quiz Explanation Text",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::multiple-choice-question",
+        "ibook-skills::distractor-plausibility"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz-bank-json",
+      "label": "Quiz Bank JSON",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz-generator",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::quiz-analytics",
+      "label": "Quiz Analytics",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::quiz",
+        "ibook-skills::assessing-student-understanding"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reference-generator",
+      "label": "Reference Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::curated-reference-list",
+      "label": "Curated Reference List",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::reference-generator"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::crediting-pedagogical-authors",
+      "label": "Crediting Pedagogical Authors",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reference-generator",
+        "ibook-skills::curated-reference-list"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::url-verification",
+      "label": "URL Verification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::curated-reference-list",
+        "ibook-skills::grounding-and-verification"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::wikipedia-as-a-source",
+      "label": "Wikipedia as a Source",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::curated-reference-list",
+        "ibook-skills::url-verification"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reference-file-separation",
+      "label": "Reference File Separation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::curated-reference-list",
+        "ibook-skills::separate-references-files"
+      ],
+      "taxonomy_id": "SUPPORT",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim",
+      "label": "MicroSim",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::level-3-adaptive-content",
+        "ibook-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-directory-structure",
+      "label": "MicroSim Directory Structure",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::directory-navigation"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::main-html-file",
+      "label": "main.html File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::microsim-directory-structure"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::style-css-file",
+      "label": "style.css File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::microsim-directory-structure"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::script-js-file",
+      "label": "script.js File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::microsim-directory-structure"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::data-json-file",
+      "label": "data.json File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-directory-structure",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-metadata-json",
+      "label": "MicroSim metadata.json",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-directory-structure",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-index-md-file",
+      "label": "MicroSim index.md File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-directory-structure",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::file-separation-principle",
+      "label": "File Separation Principle",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::main-html-file",
+        "ibook-skills::style-css-file",
+        "ibook-skills::script-js-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::inline-code-antipattern",
+      "label": "Inline Code Antipattern",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-directory-structure",
+        "ibook-skills::file-separation-principle"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-metadata-schema",
+      "label": "MicroSim Metadata Schema",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-metadata-json",
+        "ibook-skills::json-schema-validation"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::search-metadata-section",
+      "label": "Search Metadata Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-metadata-json",
+        "ibook-skills::microsim-metadata-schema"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::educational-metadata-section",
+      "label": "Educational Metadata Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-metadata-schema",
+        "ibook-skills::cognitive-level-distribution"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::technical-metadata-section",
+      "label": "Technical Metadata Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-metadata-json",
+        "ibook-skills::microsim-metadata-schema"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-generator",
+      "label": "MicroSim Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::meta-skill"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::visualization-library-routing",
+      "label": "Visualization Library Routing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-generator",
+        "ibook-skills::skill-routing-table"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::ambiguous-term-clarification",
+      "label": "Ambiguous Term Clarification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-generator",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::p5-js-library",
+      "label": "p5.js Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::script-js-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::p5-js-setup-function",
+      "label": "p5.js Setup Function",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::p5-js-library"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::p5-js-draw-loop",
+      "label": "p5.js Draw Loop",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-setup-function"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::canvas-container-sizing",
+      "label": "Canvas Container Sizing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-setup-function",
+        "ibook-skills::style-css-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::p5-js-built-in-controls",
+      "label": "p5.js Built-In Controls",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::level-3-adaptive-content",
+        "ibook-skills::p5-js-library"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::slider-control",
+      "label": "Slider Control",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-built-in-controls"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::button-control",
+      "label": "Button Control",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-built-in-controls"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::checkbox-control",
+      "label": "Checkbox Control",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-built-in-controls"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::dropdown-select-control",
+      "label": "Dropdown Select Control",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-built-in-controls"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::text-input-control",
+      "label": "Text Input Control",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-built-in-controls"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::seeded-randomness",
+      "label": "Seeded Randomness",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::deterministic-computation"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chart-js-library",
+      "label": "Chart.js Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::plotly-library",
+      "label": "Plotly Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::vis-network-library",
+      "label": "vis-network Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::vis-network-json-format"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::vis-timeline-library",
+      "label": "vis-timeline Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::leaflet-map-library",
+      "label": "Leaflet Map Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mermaid-diagram-syntax",
+      "label": "Mermaid Diagram Syntax",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::visualization-library-routing",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::venn-diagram-generator",
+      "label": "Venn Diagram Generator",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::visualization-library-routing",
+        "ibook-skills::script-js-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bubble-chart-matrix",
+      "label": "Bubble Chart Matrix",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chart-js-library",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::comparison-table-sim",
+      "label": "Comparison Table Sim",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::visualization-library-routing",
+        "ibook-skills::script-js-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::clickable-matrix-table",
+      "label": "Clickable Matrix Table",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::comparison-table-sim"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::causal-loop-diagram",
+      "label": "Causal Loop Diagram",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::vis-network-library",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::reinforcing-loop",
+      "label": "Reinforcing Loop",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::vis-network-library",
+        "ibook-skills::causal-loop-diagram"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::balancing-loop",
+      "label": "Balancing Loop",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::vis-network-library",
+        "ibook-skills::causal-loop-diagram"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::systems-archetype",
+      "label": "Systems Archetype",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::reinforcing-loop",
+        "ibook-skills::balancing-loop"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::concept-classifier-sim",
+      "label": "Concept Classifier Sim",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::concept"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::celebration-animation",
+      "label": "Celebration Animation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::p5-js-draw-loop"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::docker-python-lab",
+      "label": "Docker Python Lab",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::visualization-library-routing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::runnable-code-block",
+      "label": "Runnable Code Block",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python",
+        "ibook-skills::docker-python-lab"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::bloom-level-to-interaction",
+      "label": "Bloom Level to Interaction",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::cognitive-level-distribution"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::iframe-embedding",
+      "label": "Iframe Embedding",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::main-html-file",
+        "ibook-skills::microsim-index-md-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::canvas-height-directive",
+      "label": "CANVAS_HEIGHT Directive",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::iframe-embedding",
+        "ibook-skills::canvas-container-sizing"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::iframe-height-synchronization",
+      "label": "Iframe Height Synchronization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::canvas-height-directive",
+        "ibook-skills::iframe-embedding"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::responsive-sim-layout",
+      "label": "Responsive Sim Layout",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::canvas-container-sizing",
+        "ibook-skills::style-css-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::fullscreen-sim-button",
+      "label": "Fullscreen Sim Button",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::iframe-embedding",
+        "ibook-skills::microsim-index-md-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::accessible-color-schemes",
+      "label": "Accessible Color Schemes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::style-css-file",
+        "ibook-skills::responsive-sim-layout"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::font-size-for-readability",
+      "label": "Font Size for Readability",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::style-css-file",
+        "ibook-skills::responsive-sim-layout"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-screen-capture",
+      "label": "MicroSim Screen Capture",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::shell-scripting"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::batch-screenshot-capture",
+      "label": "Batch Screenshot Capture",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-screen-capture",
+        "ibook-skills::shell-script-wrapper"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-index-catalog",
+      "label": "MicroSim Index Catalog",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-index-md-file",
+        "ibook-skills::microsim-screen-capture"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-quality-score",
+      "label": "MicroSim Quality Score",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::microsim-standardization",
+      "label": "MicroSim Standardization",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-quality-score",
+        "ibook-skills::file-separation-principle"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::visual-layout-review",
+      "label": "Visual Layout Review",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-quality-score",
+        "ibook-skills::microsim-screen-capture"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::iframe-control-visibility",
+      "label": "Iframe Control Visibility",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::iframe-embedding",
+        "ibook-skills::visual-layout-review"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::diagram-coverage-report",
+      "label": "Diagram Coverage Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::diagram-specification-block",
+        "ibook-skills::microsim-quality-score"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::sim-lifecycle-status",
+      "label": "Sim Lifecycle Status",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-generator",
+        "ibook-skills::microsim-quality-score"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::sim-scaffolding-workflow",
+      "label": "Sim Scaffolding Workflow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::microsim-generator",
+        "ibook-skills::sim-lifecycle-status"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::batch-sim-generation",
+      "label": "Batch Sim Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::sim-scaffolding-workflow",
+        "ibook-skills::diagram-specification-block"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::sequential-sim-execution",
+      "label": "Sequential Sim Execution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::batch-sim-generation",
+        "ibook-skills::serial-versus-parallel-tradeoff"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::extract-sim-specs-py-script",
+      "label": "extract-sim-specs.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::diagram-specification-block"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::generate-sim-scaffold-py",
+      "label": "generate-sim-scaffold.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::sim-scaffolding-workflow"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::add-iframes-to-chapter-py",
+      "label": "add-iframes-to-chapter.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::iframe-embedding"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::sync-iframe-heights-py",
+      "label": "sync-iframe-heights.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::iframe-height-synchronization"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::validate-sims-py-script",
+      "label": "validate-sims.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::microsim-quality-score"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::calculate-quality-score-py",
+      "label": "calculate-quality-score.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::microsim-quality-score"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::generate-sims-index-py",
+      "label": "generate-sims-index.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::microsim-index-catalog"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::update-mkdocs-nav-py-script",
+      "label": "update-mkdocs-nav.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::navigation-structure"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::diagram-report-py-script",
+      "label": "diagram-report.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::diagram-coverage-report"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::batch-utility-token-savings",
+      "label": "Batch Utility Token Savings",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::extract-sim-specs-py-script",
+        "ibook-skills::batch-script-substitution",
+        "ibook-skills::token-waste-antipatterns"
+      ],
+      "taxonomy_id": "TOKEN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::text-to-image-model",
+      "label": "Text-to-Image Model",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::artificial-intelligence"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::text-rendering-in-images",
+      "label": "Text Rendering in Images",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::text-to-image-model"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::image-prompt-engineering",
+      "label": "Image Prompt Engineering",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-image-model",
+        "ibook-skills::prompt-engineering"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::one-shot-generation-risk",
+      "label": "One-Shot Generation Risk",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-image-model",
+        "ibook-skills::hallucination"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::fact-fabrication-rate",
+      "label": "Fact Fabrication Rate",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::one-shot-generation-risk",
+        "ibook-skills::hallucination"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::baked-in-text-problem",
+      "label": "Baked-In Text Problem",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-rendering-in-images",
+        "ibook-skills::one-shot-generation-risk"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::separating-facts-from-pixels",
+      "label": "Separating Facts From Pixels",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::baked-in-text-problem",
+        "ibook-skills::grounding-and-verification"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::verified-infographic-pipeline",
+      "label": "Verified Infographic Pipeline",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::separating-facts-from-pixels",
+        "ibook-skills::fact-fabrication-rate"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claim-planning-phase",
+      "label": "Claim Planning Phase",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::grounding-and-verification",
+        "ibook-skills::verified-infographic-pipeline"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::source-discovery-phase",
+      "label": "Source Discovery Phase",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claim-planning-phase",
+        "ibook-skills::grounding-and-verification"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::passage-level-verification",
+      "label": "Passage-Level Verification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::source-discovery-phase",
+        "ibook-skills::grounding-and-verification"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claim-verification-report",
+      "label": "Claim Verification Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::passage-level-verification"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::layout-specification-lock",
+      "label": "Layout Specification Lock",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claim-verification-report",
+        "ibook-skills::verified-infographic-pipeline"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::verbatim-text-prompt",
+      "label": "Verbatim Text Prompt",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::layout-specification-lock",
+        "ibook-skills::image-prompt-engineering"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::substitution-prohibition",
+      "label": "Substitution Prohibition",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::fact-fabrication-rate",
+        "ibook-skills::verbatim-text-prompt"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::asymmetric-content-handling",
+      "label": "Asymmetric Content Handling",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::layout-specification-lock",
+        "ibook-skills::fact-fabrication-rate"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::rendered-image-audit",
+      "label": "Rendered Image Audit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::verbatim-text-prompt",
+        "ibook-skills::claim-verification-report"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::source-sidecar-file",
+      "label": "Source Sidecar File",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claim-verification-report",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::audit-trail-preservation",
+      "label": "Audit Trail Preservation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::source-sidecar-file",
+        "ibook-skills::rendered-image-audit"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::interactive-infographic-overlay",
+      "label": "Interactive Infographic Overlay",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::baked-in-text-problem",
+        "ibook-skills::script-js-file"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::annotation-free-illustration",
+      "label": "Annotation-Free Illustration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::interactive-infographic-overlay",
+        "ibook-skills::image-prompt-engineering"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::callout-overlay-engine",
+      "label": "Callout Overlay Engine",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::interactive-infographic-overlay"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::grid-overlay-engine",
+      "label": "Grid Overlay Engine",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::script-js-file",
+        "ibook-skills::interactive-infographic-overlay"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::callout-marker-coordinates",
+      "label": "Callout Marker Coordinates",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::callout-overlay-engine",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::leader-line-rendering",
+      "label": "Leader Line Rendering",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::callout-overlay-engine",
+        "ibook-skills::callout-marker-coordinates"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::overlay-explore-mode",
+      "label": "Overlay Explore Mode",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::callout-overlay-engine",
+        "ibook-skills::interactive-infographic-overlay"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::overlay-quiz-mode",
+      "label": "Overlay Quiz Mode",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::overlay-explore-mode",
+        "ibook-skills::quiz"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::editable-marker-positions",
+      "label": "Editable Marker Positions",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::callout-marker-coordinates",
+        "ibook-skills::overlay-explore-mode"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::freely-licensed-images",
+      "label": "Freely-Licensed Images",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::creative-commons-licensing",
+        "ibook-skills::chapter-image-placement"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::wikimedia-commons-sourcing",
+      "label": "Wikimedia Commons Sourcing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::creative-commons-licensing",
+        "ibook-skills::freely-licensed-images"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::government-archive-images",
+      "label": "Government Archive Images",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::creative-commons-licensing",
+        "ibook-skills::freely-licensed-images"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::image-attribution",
+      "label": "Image Attribution",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::freely-licensed-images",
+        "ibook-skills::creative-commons-licensing"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::cover-image-generation",
+      "label": "Cover Image Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-image-model",
+        "ibook-skills::image-prompt-engineering"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::site-logo-and-favicon",
+      "label": "Site Logo and Favicon",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::cover-image-generation",
+        "ibook-skills::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::social-media-preview-card",
+      "label": "Social Media Preview Card",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::cover-image-generation",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::open-graph-meta-tags",
+      "label": "Open Graph Meta Tags",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-yml-configuration",
+        "ibook-skills::social-media-preview-card"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::image-compression",
+      "label": "Image Compression",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::freely-licensed-images",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::marp-slide-deck",
+      "label": "MARP Slide Deck",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::slide-deck-publishing",
+      "label": "Slide Deck Publishing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::marp-slide-deck",
+        "ibook-skills::navigation-structure"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::powerpoint-lecture-deck",
+      "label": "PowerPoint Lecture Deck",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::lesson-plan",
+        "ibook-skills::marp-slide-deck"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::speaker-notes",
+      "label": "Speaker Notes",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::powerpoint-lecture-deck",
+        "ibook-skills::lesson-plan"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::illustrated-story-format",
+      "label": "Illustrated Story Format",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-image-model",
+        "ibook-skills::chapter-content-generator"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::graphic-novel-format",
+      "label": "Graphic Novel Format",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-image-model",
+        "ibook-skills::illustrated-story-format"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::text-to-speech-narration",
+      "label": "Text-to-Speech Narration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::large-language-model"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::elevenlabs-voice-settings",
+      "label": "ElevenLabs Voice Settings",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::large-language-model",
+        "ibook-skills::text-to-speech-narration"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::audio-streaming-playback",
+      "label": "Audio Streaming Playback",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-speech-narration",
+        "ibook-skills::main-html-file"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::pronounce-button",
+      "label": "Pronounce Button",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::text-to-speech-narration",
+        "ibook-skills::glossary"
+      ],
+      "taxonomy_id": "MEDIA",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::generate-favicon-py-script",
+      "label": "generate-favicon.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::site-logo-and-favicon"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::trim-padding-from-image-py",
+      "label": "trim-padding-from-image.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::image-compression"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::compress-images-py-script",
+      "label": "compress-images.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::image-compression"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::crop-screenshot-py-script",
+      "label": "crop-screenshot.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::microsim-screen-capture"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::generate-images-py-script",
+      "label": "generate-images.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::illustrated-story-format"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::domain-specific-skill",
+      "label": "Domain-Specific Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::agent-skill",
+        "ibook-skills::skill-library"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::core-versus-domain-skills",
+      "label": "Core Versus Domain Skills",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::skill-library"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::domain-vocabulary-gap",
+      "label": "Domain Vocabulary Gap",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::core-versus-domain-skills"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::project-local-skill-directory",
+      "label": "Project-Local Skill Directory",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::project-specific-skills"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::domain-skill-standards",
+      "label": "Domain Skill Standards",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::skill-library-maintenance"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::circuit-schematic-generation",
+      "label": "Circuit Schematic Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::text-to-image-model"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::schemdraw-library",
+      "label": "Schemdraw Library",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::circuit-schematic-generation",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::prose-to-circuit-translation",
+      "label": "Prose to Circuit Translation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::schemdraw-library",
+        "ibook-skills::prompt-engineering"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::schematic-verification",
+      "label": "Schematic Verification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::prose-to-circuit-translation",
+        "ibook-skills::grounding-and-verification"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::solderless-breadboard",
+      "label": "Solderless Breadboard",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::microsim"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::breadboard-tie-points",
+      "label": "Breadboard Tie Points",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::solderless-breadboard"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::component-placement",
+      "label": "Component Placement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::solderless-breadboard",
+        "ibook-skills::breadboard-tie-points"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::jumper-wire-routing",
+      "label": "Jumper Wire Routing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::breadboard-tie-points",
+        "ibook-skills::component-placement"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::animated-current-flow",
+      "label": "Animated Current Flow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::jumper-wire-routing",
+        "ibook-skills::p5-js-draw-loop"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::digital-circuit-simulation",
+      "label": "Digital Circuit Simulation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::animated-current-flow",
+        "ibook-skills::p5-js-library"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::voltage-and-current-scope",
+      "label": "Voltage and Current Scope",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::p5-js-library",
+        "ibook-skills::digital-circuit-simulation"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::hands-on-lab-design",
+      "label": "Hands-On Lab Design",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::domain-specific-skill",
+        "ibook-skills::practice-exercises"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::lab-rubric-scoring",
+      "label": "Lab Rubric Scoring",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::hands-on-lab-design",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::parts-kit-buildability",
+      "label": "Parts Kit Buildability",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::hands-on-lab-design",
+        "ibook-skills::reading-level-specification"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::frontmatter-quality-score",
+      "label": "Frontmatter Quality Score",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::lab-rubric-scoring",
+        "ibook-skills::yaml-frontmatter"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::automated-work-item-filing",
+      "label": "Automated Work Item Filing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::lab-rubric-scoring",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::todo-backlog-generation",
+      "label": "TODO Backlog Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::lab-rubric-scoring",
+        "ibook-skills::automated-work-item-filing"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::domain-skill-case-study",
+      "label": "Domain Skill Case Study",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::core-versus-domain-skills",
+        "ibook-skills::hands-on-lab-design"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::mkdocs-plugins",
+      "label": "MkDocs Plugins",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs",
+        "ibook-skills::pip-package-management"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::search-configuration",
+      "label": "Search Configuration",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::mkdocs-plugins"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::code-syntax-highlighting",
+      "label": "Code Syntax Highlighting",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::image-zoom-lightbox",
+      "label": "Image Zoom Lightbox",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::mkdocs-plugins"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::comment-system",
+      "label": "Comment System",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::mkdocs-plugins"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::page-feedback-widget",
+      "label": "Page Feedback Widget",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::custom-404-page",
+      "label": "Custom 404 Page",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::pedagogical-mascot"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::about-page",
+      "label": "About Page",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::home-page-template",
+      "label": "Home Page Template",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-material-theme",
+        "ibook-skills::cover-image-generation"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::site-build-command",
+      "label": "Site Build Command",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::local-development-server",
+      "label": "Local Development Server",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::terminal-commands",
+        "ibook-skills::site-build-command"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::strict-build-mode",
+      "label": "Strict Build Mode",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::site-build-command",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-installer-skill",
+      "label": "Book Installer Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs",
+        "ibook-skills::meta-skill"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::textbook-scaffold",
+      "label": "Textbook Scaffold",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-installer-skill",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::feature-installation-routing",
+      "label": "Feature Installation Routing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-installer-skill",
+        "ibook-skills::skill-routing-table"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::feature-auto-detection",
+      "label": "Feature Auto-Detection",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::feature-installation-routing",
+        "ibook-skills::python"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::feature-checklist",
+      "label": "Feature Checklist",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::feature-auto-detection",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git-add-command",
+      "label": "Git Add Command",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git-commit",
+      "label": "Git Commit",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git-add-command",
+        "ibook-skills::version-control-basics"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git-push",
+      "label": "Git Push",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git-commit",
+        "ibook-skills::github-integration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git-status",
+      "label": "Git Status",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::git-branching",
+      "label": "Git Branching",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::version-control-basics"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::never-use-master-branch",
+      "label": "Never Use Master Branch",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::git",
+        "ibook-skills::git-branching"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::github-pages-deployment",
+      "label": "GitHub Pages Deployment",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::github-integration",
+        "ibook-skills::site-build-command"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::gh-deploy-command",
+      "label": "gh-deploy Command",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::github-pages-deployment",
+        "ibook-skills::terminal-commands"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::deployment-verification",
+      "label": "Deployment Verification",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::gh-deploy-command",
+        "ibook-skills::strict-build-mode"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::google-analytics-ga4",
+      "label": "Google Analytics GA4",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::github-pages-deployment",
+        "ibook-skills::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::measurement-id",
+      "label": "Measurement ID",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::mkdocs-yml-configuration",
+        "ibook-skills::google-analytics-ga4"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::github-projects-kanban",
+      "label": "GitHub Projects Kanban",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::github-integration",
+        "ibook-skills::textbook-generation-pipeline"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::auto-commit-hook",
+      "label": "Auto-Commit Hook",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-usage-hook",
+        "ibook-skills::git-commit"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::claude-md-project-memory",
+      "label": "CLAUDE.md Project Memory",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-code-interface",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::project-instruction-files",
+      "label": "Project Instruction Files",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::claude-md-project-memory",
+        "ibook-skills::agents-md-convention"
+      ],
+      "taxonomy_id": "PLATFORM",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::detect-features-py-script",
+      "label": "detect_features.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::feature-auto-detection"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::analyze-reading-levels-py",
+      "label": "analyze-reading-levels.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::flesch-kincaid-grade-level"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-metrics",
+      "label": "Book Metrics",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::textbook-generation-pipeline",
+        "ibook-skills::chapter-metrics"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-metrics-json-hub",
+      "label": "book-metrics.json Hub",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::json-serialization"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::canonical-metrics-principle",
+      "label": "Canonical Metrics Principle",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::book-metrics-json-hub"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::word-count-metric",
+      "label": "Word Count Metric",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::chapter-content-generator",
+        "ibook-skills::book-metrics"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::equivalent-page-count",
+      "label": "Equivalent Page Count",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::word-count-metric"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::equation-count",
+      "label": "Equation Count",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::math-equation-support"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::chapter-metrics-report",
+      "label": "Chapter Metrics Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::chapter-metrics"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::site-metrics-collection",
+      "label": "Site Metrics Collection",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::github-pages-deployment"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-metrics-py-script",
+      "label": "book-metrics.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::book-metrics-json-hub"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::collect-site-metrics-py",
+      "label": "collect-site-metrics.py",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::site-metrics-collection"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-status-report",
+      "label": "Book Status Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-metrics",
+        "ibook-skills::quality-gate"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-publisher-skill",
+      "label": "Book Publisher Skill",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::meta-skill",
+        "ibook-skills::book-metrics"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::readme-generation",
+      "label": "README Generation",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-publisher-skill",
+        "ibook-skills::github-integration"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::repository-badges",
+      "label": "Repository Badges",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::github-integration",
+        "ibook-skills::readme-generation"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::getting-started-section",
+      "label": "Getting Started Section",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::readme-generation"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::linkedin-announcement-post",
+      "label": "LinkedIn Announcement Post",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-publisher-skill",
+        "ibook-skills::canonical-metrics-principle"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::linkedin-carousel-document",
+      "label": "LinkedIn Carousel Document",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::linkedin-announcement-post",
+        "ibook-skills::powerpoint-lecture-deck"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::carousel-slide-patterns",
+      "label": "Carousel Slide Patterns",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::powerpoint-lecture-deck",
+        "ibook-skills::linkedin-carousel-document"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::press-release",
+      "label": "Press Release",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-publisher-skill",
+        "ibook-skills::canonical-metrics-principle"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::ap-style-writing",
+      "label": "AP Style Writing",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::press-release"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::announcement-preview-image",
+      "label": "Announcement Preview Image",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::linkedin-announcement-post",
+        "ibook-skills::social-media-preview-card"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-completion-workflow",
+      "label": "Book Completion Workflow",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::textbook-generation-pipeline",
+        "ibook-skills::supplementary-content"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::book-launch-checklist",
+      "label": "Book Launch Checklist",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::book-completion-workflow",
+        "ibook-skills::deployment-verification"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::session-logging",
+      "label": "Session Logging",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::jsonl-usage-log",
+        "ibook-skills::markdown-formatting"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::session-log-format",
+      "label": "Session Log Format",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::markdown-formatting",
+        "ibook-skills::session-logging"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::design-decision-record",
+      "label": "Design Decision Record",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::session-logging",
+        "ibook-skills::session-log-format"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::analyze-skills-py-script",
+      "label": "analyze-skills.py Script",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::python-scripts-in-skills",
+        "ibook-skills::skill-usage-analytics"
+      ],
+      "taxonomy_id": "PYTOOL",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::skill-usage-report",
+      "label": "Skill Usage Report",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::analyze-skills-py-script",
+        "ibook-skills::token-usage-dashboard"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::continuous-book-improvement",
+      "label": "Continuous Book Improvement",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::skill-usage-report",
+        "ibook-skills::improving-skill-quality"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    },
+    {
+      "id": "ibook-skills::capstone-textbook-project",
+      "label": "Capstone Textbook Project",
+      "subject_id": "ibook-skills",
+      "dependencies": [
+        "ibook-skills::capstone-project",
+        "ibook-skills::book-launch-checklist"
+      ],
+      "taxonomy_id": "PUBLISH",
+      "level": "core"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "subject_id": "learning-python",
-  "title": "Beginning Python — From Blocks to Code with Monty",
+  "title": "Learning Python — From Blocks to Code with Monty",
   "version": "0.1.0",
-  "created": "2026-08-18",
+  "created": "2026-09-05",
   "groups": {
     "ENV": {
       "classifier_name": "Environment & Tools",
@@ -4946,6 +4946,28 @@
         "learning-python::syntax-vs-runtime-vs-logic-errors"
       ],
       "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::uv",
+      "label": "uv",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::virtual-environments",
+        "learning-python::running-scripts-from-terminal"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::rust",
+      "label": "Rust",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::command-line-basics"
+      ],
+      "taxonomy_id": "ENV",
       "level": "core"
     }
   ]

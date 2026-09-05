@@ -2,7 +2,7 @@
   "subject_id": "learning-graphs__docs",
   "title": "Learning Graphs: The Key to Intelligent Textbooks",
   "version": "0.1.0",
-  "created": "2026-08-18",
+  "created": "2026-09-05",
   "groups": {
     "FOUND": {
       "classifier_name": "Concept Graph Foundations",
@@ -4140,6 +4140,112 @@
         "learning-graphs__docs::readiness-estimation"
       ],
       "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::recursive-importance-measure",
+      "label": "Recursive Importance Measure",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-graph"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::pagerank",
+      "label": "PageRank",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::recursive-importance-measure"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-impact-score-cis",
+      "label": "Concept Impact Score (CIS)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::pagerank",
+        "learning-graphs__docs::directed-acyclic-graph-dag",
+        "learning-graphs__docs::indegree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::single-pass-dag-computation",
+      "label": "Single-Pass DAG Computation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::topological-sort",
+        "learning-graphs__docs::concept-impact-score-cis"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::global-normalization",
+      "label": "Global Normalization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-impact-score-cis"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::elaboration-score",
+      "label": "Elaboration Score",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::global-normalization"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::elaboration-tier",
+      "label": "Elaboration Tier",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::elaboration-score"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::chapter-partitioning-problem",
+      "label": "Chapter Partitioning Problem",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph",
+        "learning-graphs__docs::content-generation-pipeline"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::within-chapter-concept-ordering",
+      "label": "Within-Chapter Concept Ordering",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::topological-sort",
+        "learning-graphs__docs::chapter-partitioning-problem"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-budget-allocation",
+      "label": "Content-Budget Allocation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::elaboration-tier",
+        "learning-graphs__docs::chapter-partitioning-problem"
+      ],
+      "taxonomy_id": "TEXTBOOK",
       "level": "core"
     }
   ]

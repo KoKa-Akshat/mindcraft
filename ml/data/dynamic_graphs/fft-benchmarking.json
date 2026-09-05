@@ -2,7 +2,7 @@
   "subject_id": "fft-benchmarking",
   "title": "Benchmarking FFT",
   "version": "0.1.0",
-  "created": "2026-08-18",
+  "created": "2026-09-05",
   "groups": {
     "MATH": {
       "classifier_name": "Mathematical Foundations",
@@ -71,6 +71,10 @@
     "LABM": {
       "classifier_name": "Laboratory Method",
       "color": "Khaki"
+    },
+    "MLED": {
+      "classifier_name": "Wake Word / Edge ML",
+      "color": "Wheat"
     }
   },
   "concepts": [
@@ -3125,9 +3129,7 @@
       "id": "fft-benchmarking::productive-failure",
       "label": "Productive Failure",
       "subject_id": "fft-benchmarking",
-      "dependencies": [
-        "fft-benchmarking::pitch-detection"
-      ],
+      "dependencies": [],
       "taxonomy_id": "LABM",
       "level": "foundational"
     },
@@ -6100,6 +6102,155 @@
         "fft-benchmarking::honest-reporting"
       ],
       "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::wake-word-detection",
+      "label": "Wake Word Detection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::inmp441-microphone",
+        "fft-benchmarking::real-time-budget"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::keyword-spotting-model",
+      "label": "Keyword Spotting Model",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-detection"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::on-device-inference",
+      "label": "On Device Inference",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::keyword-spotting-model"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::false-accept-rate",
+      "label": "False Accept Rate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-detection",
+        "fft-benchmarking::signal-to-noise-ratio"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::false-reject-rate",
+      "label": "False Reject Rate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-detection"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::wake-word-enrollment",
+      "label": "Wake Word Enrollment",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::keyword-spotting-model"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::custom-trigger-phrase",
+      "label": "Custom Trigger Phrase",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-enrollment"
+      ],
+      "taxonomy_id": "MLED",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dual-core-partitioning",
+      "label": "Dual Core Partitioning",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::rp2350-chip"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::inter-core-communication",
+      "label": "Inter Core Communication",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dual-core-partitioning",
+        "fft-benchmarking::audio-buffer"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::always-on-listening",
+      "label": "Always On Listening",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-detection",
+        "fft-benchmarking::real-time-budget"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pico-2-w-wireless",
+      "label": "Pico 2 W Wireless",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::raspberry-pi-pico-2"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::post-wake-audio-capture",
+      "label": "Post Wake Audio Capture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wake-word-detection",
+        "fft-benchmarking::audio-buffer"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cloud-speech-to-text",
+      "label": "Cloud Speech To Text",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::post-wake-audio-capture",
+        "fft-benchmarking::pico-2-w-wireless",
+        "fft-benchmarking::voice-recognition"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::edge-cloud-split",
+      "label": "Edge Cloud Split",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::on-device-inference",
+        "fft-benchmarking::cloud-speech-to-text"
+      ],
+      "taxonomy_id": "VAPP",
       "level": "core"
     }
   ]
