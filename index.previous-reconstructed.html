@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0E1319">
+<meta name="description" content="MindCraft is a learning world where kids solve problems, run simulations, build projects, and turn what they understand into work they can keep.">
+<link rel="icon" type="image/png" href="img/brand/MindCraft-social-profile.png?v=20260905">
+<link rel="apple-touch-icon" href="img/brand/MindCraft-social-profile.png?v=20260905">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MindCraft World | Learn by building">
+<meta property="og:description" content="MindCraft is a learning world where kids solve problems, run simulations, build projects, and turn what they understand into work they can keep.">
+<meta property="og:url" content="https://joinmindcraft.com/">
+<meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-world.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-world.jpg">
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>MindCraft World | Learn by building</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:ital,wght@0,350..800;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* Colour is committed, not tasteful. Solid blocks, real saturation, and the
+   page runs night to daylight because the story does. Hues are the world's
+   own: lime is light coming back, sky is water, terracotta is the pot the
+   seedling arrives in. */
+:root{
+  --night:#0E1319; --cream:#FFFBF0; --cream-2:#FBF3E2;
+  --ink:#12171C; --ink-2:#4C5660; --ink-3:#7B8792;
+  --lime:#C4F547; --lime-deep:#5F8C0B;
+  --sky:#2E93DC; --sky-pale:#D6ECFA; --sky-deep:#124A72;
+  --terra:#DD5F22; --berry:#C1357A;
+  --rule:#E7DFCC;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream); color:var(--ink); margin:0;
+  font-family:Figtree, ui-sans-serif, system-ui, sans-serif;
+  font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px; margin:0 auto; padding:0 28px}
+.col{max-width:660px}
+h1,h2,h3{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  margin:0; text-wrap:balance; letter-spacing:-.02em; line-height:1.03}
+h1{font-size:clamp(2.9rem,7vw,5rem); font-weight:800}
+h2{font-size:clamp(2rem,4vw,3.1rem); font-weight:700}
+h3{font-size:1.22rem; font-weight:700; line-height:1.2}
+p{margin:0}
+.lede{font-size:clamp(1.1rem,1.6vw,1.3rem); line-height:1.5}
+.eyebrow{font:500 .72rem/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.18em; text-transform:uppercase}
+.stack{display:flex; flex-direction:column}
+.g10{gap:10px}.g18{gap:18px}.g26{gap:26px}.g40{gap:40px}
+section{padding:clamp(62px,8vw,104px) 0}
+
+.night{background:var(--night); color:var(--cream)}
+.night .eyebrow{color:var(--lime)}
+.night .lede{color:#A9B6C2}
+.sky{background:var(--sky); color:#fff}
+.sky .eyebrow{color:#CBE9FB}
+.sky .lede{color:#E8F4FD}
+.limeband{background:var(--lime); color:#1B2609}
+.limeband .eyebrow{color:#42600A}
+.cream2{background:var(--cream-2)}
+
+.mast{padding:22px 0; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap}
+.brand{font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:1.28rem;
+  letter-spacing:-.02em; display:flex; align-items:center; gap:9px}
+.brand span{color:var(--lime)}
+.mast-r{display:flex; align-items:center; gap:20px}
+.mast .eyebrow{color:#7B8792}
+.loginlink{color:var(--cream); text-decoration:none; font-weight:700; font-size:.92rem;
+  border:1.5px solid #33414F; border-radius:8px; padding:8px 15px}
+.loginlink:hover{border-color:var(--lime); color:var(--lime)}
+.loginlink:focus-visible{outline:3px solid var(--lime); outline-offset:2px}
+
+.hero{padding-top:clamp(26px,4vw,46px)}
+.hero h1 em{color:var(--lime); font-style:normal}
+.demo{display:grid; grid-template-columns:290px 1fr; border-radius:16px; overflow:hidden;
+  background:var(--cream); color:var(--ink);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 40px 80px -34px #000, 0 0 100px -22px rgba(196,245,71,.28)}
+@media(max-width:760px){.demo{grid-template-columns:1fr}}
+.stage{background:linear-gradient(180deg,#DDF0FB 0%,#E9F2DA 100%); padding:16px; display:grid; place-items:center}
+.panelside{padding:24px}
+.panel-title{font:500 .68rem/1 "JetBrains Mono",monospace; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--sky-deep); margin-bottom:18px}
+.ctl{display:flex; flex-direction:column; gap:8px; margin-bottom:18px}
+.ctl-top{display:flex; justify-content:space-between; align-items:baseline}
+.ctl-top b{font-weight:700; font-size:.98rem}
+.ctl-top span{font:400 .82rem "JetBrains Mono",monospace; color:var(--ink-3); font-variant-numeric:tabular-nums}
+input[type=range]{width:100%; accent-color:var(--terra); height:24px; cursor:pointer}
+input[type=range]:focus-visible{outline:3px solid var(--sky); outline-offset:3px}
+.readout{border-top:2px solid var(--rule); padding-top:16px; min-height:78px}
+.verdict{font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:1.08rem; margin-bottom:6px}
+.verdict.bad{color:var(--terra)} .verdict.good{color:var(--lime-deep)}
+.readout p{color:var(--ink-2); font-size:.94rem; line-height:1.5}
+.hint{margin-top:14px; font:400 .75rem "JetBrains Mono",monospace; color:var(--ink-3)}
+
+.three{display:grid; grid-template-columns:repeat(3,1fr); gap:30px}
+@media(max-width:820px){.three{grid-template-columns:1fr}}
+.spec{border-top:5px solid var(--terra); padding-top:16px}
+.spec:nth-child(2){border-top-color:var(--sky)}
+.spec:nth-child(3){border-top-color:var(--berry)}
+.spec p{color:var(--ink-2); font-size:.97rem; margin-top:8px}
+
+ul.sharp{margin:0; padding-left:22px; list-style:square; display:flex; flex-direction:column;
+  gap:13px; font-size:1.06rem; line-height:1.45}
+ul.sharp li::marker{color:var(--terra); font-size:1.1em}
+ul.sharp b{font-weight:800}
+
+.figs{display:grid; grid-template-columns:repeat(4,1fr); gap:24px}
+@media(max-width:820px){.figs{grid-template-columns:repeat(2,1fr)}}
+.fig .v{font-family:"Bricolage Grotesque",sans-serif; font-weight:800;
+  font-size:clamp(2.1rem,3.8vw,3rem); line-height:1; font-variant-numeric:tabular-nums; color:var(--terra)}
+.fig:nth-child(2) .v{color:var(--sky)} .fig:nth-child(3) .v{color:var(--lime-deep)}
+.fig:nth-child(4) .v{color:var(--berry)}
+.fig .k{font-size:.88rem; color:var(--ink-2); margin-top:9px; line-height:1.4}
+
+/* Where the people building this studied. Typographic rather than crests:
+   using a university's mark without permission is a trademark problem, and
+   the names carry it anyway. They arrive one at a time, which is the only
+   animation on the page and is worth spending here because the section is
+   otherwise a wall of text with a hole in the top right. */
+.who{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,52px); align-items:start}
+@media(max-width:860px){.who{grid-template-columns:1fr}}
+.bubbles{position:relative; min-height:250px}
+@media(max-width:860px){.bubbles{min-height:0; display:flex; flex-wrap:wrap; gap:10px}}
+.bub{
+  position:absolute; display:inline-flex; align-items:center; justify-content:center;
+  font-family:"Bricolage Grotesque",sans-serif; font-weight:700; white-space:nowrap;
+  border-radius:999px; padding:13px 22px; font-size:.98rem; letter-spacing:-.01em;
+  box-shadow:0 6px 18px -10px rgba(18,23,28,.35);
+  opacity:0; transform:scale(.6) translateY(10px);
+  transition:opacity 460ms cubic-bezier(.2,.9,.25,1.2), transform 460ms cubic-bezier(.2,.9,.25,1.2);
+}
+@media(max-width:860px){.bub{position:static !important; opacity:1; transform:none}}
+.bub.in{opacity:1; transform:scale(1) translateY(0)}
+.bub:nth-child(1){background:#0E1319; color:#FFFBF0;              top:6px;   left:2%}
+.bub:nth-child(2){background:#2E93DC; color:#fff;                 top:74px;  left:36%}
+.bub:nth-child(3){background:#C4F547; color:#1B2609;              top:2px;   left:56%}
+.bub:nth-child(4){background:#FFFBF0; color:#12171C; box-shadow:0 0 0 2px #E7DFCC, 0 6px 18px -10px rgba(18,23,28,.3); top:146px; left:6%}
+.bub:nth-child(5){background:#C1357A; color:#fff;                 top:150px; left:52%}
+.bub small{display:block; font:500 .58rem/1 "JetBrains Mono",monospace; letter-spacing:.14em;
+  text-transform:uppercase; opacity:.62; margin-top:3px}
+.bub i{font-style:normal; text-align:center}
+@media(prefers-reduced-motion:reduce){.bub{opacity:1; transform:none; transition:none}}
+.people{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+@media(max-width:760px){.people{grid-template-columns:1fr}}
+.person{display:flex; gap:16px; align-items:flex-start; background:var(--cream);
+  border-radius:14px; padding:20px; box-shadow:0 2px 0 var(--rule)}
+.person img{width:64px; height:64px; border-radius:50%; object-fit:cover; flex:0 0 64px}
+.person .nm{font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:1.08rem}
+.person .rl{font-size:.88rem; color:var(--ink-2); margin-top:5px; line-height:1.45}
+
+.promise ul{margin:0; padding-left:22px; list-style:square; display:flex; flex-direction:column; gap:13px}
+.promise ul li::marker{color:#1B2609}
+.promise b{font-weight:800}
+
+.seat-row{display:flex; gap:11px; flex-wrap:wrap}
+.seat input{flex:1 1 200px; min-width:0; font:inherit; font-size:1rem;
+  padding:15px 16px; border-radius:10px; border:2px solid var(--rule); background:#fff; color:var(--ink)}
+.seat input:focus-visible{outline:3px solid var(--sky); outline-offset:2px; border-color:var(--sky)}
+.cta{display:inline-flex; align-items:center; gap:10px; background:var(--night); color:var(--cream);
+  border:none; cursor:pointer; font:inherit; font-weight:800; font-size:1.02rem;
+  padding:15px 30px; border-radius:10px; text-decoration:none; transition:transform 150ms ease}
+.cta:hover{transform:translateY(-2px)}
+.cta:focus-visible{outline:3px solid var(--sky); outline-offset:3px}
+.sub{font-size:.88rem; margin-top:12px; color:var(--ink-3)}
+.vh{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+footer{background:var(--night); color:#7B8792; padding:44px 0 60px; font-size:.88rem}
+.social{display:flex; gap:18px; flex-wrap:wrap; margin-top:14px}
+.social a{color:#A9B6C2; text-decoration:none; border-bottom:1px solid #33414F}
+.social a:hover{color:var(--lime); border-color:var(--lime)}
+@media(prefers-reduced-motion:reduce){*{transition:none !important} html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   Devices. Appended rather than woven in, so the copy and layout above stay
+   exactly as written and this can be lifted out in one piece.
+
+   Measured on the live page at 375, 393, 412, 820 and 1440. Nothing scrolled
+   sideways, so the failures were all touch and tablet layout rather than
+   overflow.
+   ========================================================================== */
+
+/* 1. Touch targets. Apple and Google both say 44px; the sliders measured 24
+      and the footer links 24, one of them 9px wide. The demo is the product,
+      and a 24px slider on a phone is a product nobody can use. The thumb stays
+      the size it looks, the hittable area grows around it. */
+input[type=range]{
+  height:44px; padding:10px 0; background:transparent;
+  touch-action:pan-y; -webkit-tap-highlight-color:transparent;
+}
+input[type=range]::-webkit-slider-runnable-track{height:6px; border-radius:3px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:26px; height:26px; margin-top:-10px;
+  border-radius:50%; background:var(--terra); border:3px solid var(--cream);
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+input[type=range]::-moz-range-track{height:6px; border-radius:3px}
+input[type=range]::-moz-range-thumb{
+  width:26px; height:26px; border-radius:50%; background:var(--terra);
+  border:3px solid var(--cream); box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+
+.social a{display:inline-flex; align-items:center; min-height:44px; padding:0 2px}
+.loginlink{min-height:44px; display:inline-flex; align-items:center}
+.cta{min-height:48px}
+.seat input{min-height:48px}
+a, button, input[type=range]{-webkit-tap-highlight-color:rgba(196,245,71,.22)}
+
+</style>
+
+<div class="night">
+<div class="wrap">
+  <header class="mast">
+    <div class="brand">
+      <svg viewBox="0 0 200 220" width="19" height="21" aria-hidden="true">
+        <g transform="translate(100 118) scale(0.84)" fill="#C4F547">
+          <path d="M0 62 C0 30 0 6 0 -74" stroke="#C4F547" stroke-width="13" stroke-linecap="round" fill="none"/>
+          <path d="M0 26 q-50 -30 -99 -10 q33 46 99 10 z"/><path d="M0 26 q50 -30 99 -10 q-33 46 -99 10 z"/>
+          <path d="M0 -50 q-25 -22 -47 -12 q17 28 47 12 z"/><path d="M0 -50 q25 -22 47 -12 q-17 28 -47 12 z"/>
+        </g>
+      </svg>
+      MindCraft <span>World</span>
+    </div>
+    <div class="mast-r">
+      <span class="eyebrow">Ages 10 and up</span>
+      <a class="loginlink" href="https://mindcraft-93858.web.app/login">Log in</a>
+    </div>
+  </header>
+
+  <section class="hero stack g40">
+    <div class="col stack g26">
+      <h1>A world where kids learn by <em>figuring things out.</em></h1>
+      <p class="lede">Your child starts with a real problem, like helping a struggling plant. They observe, make a prediction, test an idea, and explain what changed. <b>Jesse helps them think, but never gives them the answer.</b></p>
+    </div>
+
+    <div class="demo">
+      <div class="stage">
+        <svg viewBox="0 0 200 230" width="100%" style="max-width:220px" role="img" aria-label="A bean seedling that responds to water and nutrients">
+          <ellipse cx="100" cy="212" rx="46" ry="7" fill="#000" opacity=".09"/>
+          <path d="M62 168 h76 l-8 44 h-60 z" fill="#DD5F22" opacity=".92"/>
+          <path d="M58 160 h84 v12 h-84 z" fill="#B94B18"/>
+          <rect x="62" y="160" width="76" height="7" fill="#4A3B2A"/>
+          <rect id="water" x="62" y="158" width="76" height="4" fill="#2E93DC" opacity="0"/>
+          <path id="stem" d="M100 162 C100 130 100 110 100 78" stroke="#4E8C4A" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <g id="leaves"></g>
+        </svg>
+      </div>
+      <div class="panelside">
+        <div class="panel-title">The seedling &middot; day 11</div>
+        <div class="ctl">
+          <div class="ctl-top"><b>Water</b><span id="wv">85 mL/day</span></div>
+          <input id="w" type="range" min="0" max="100" value="85" aria-label="Water">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><b>Nutrients</b><span id="nv">15 mg/L</span></div>
+          <input id="n" type="range" min="0" max="100" value="15" aria-label="Nutrients">
+        </div>
+        <div class="readout">
+          <div class="verdict bad" id="verdict">Losing its oldest leaves</div>
+          <p id="detail">Water is standing on the soil, and the lowest leaves are yellowing from the edges inward.</p>
+        </div>
+        <div class="hint" id="hint">What would you change first?</div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+
+<div class="cream2"><div class="wrap">
+<section>
+  <div class="col stack g26">
+    <div class="eyebrow" id="wjh-eyebrow" style="color:#DD5F22">Try it yourself</div>
+    <h2 id="wjh-head">What would you change first?</h2>
+    <ul class="sharp" id="wjh-list"></ul>
+  </div>
+</section>
+</div></div>
+
+<div class="wrap">
+<section>
+  <div class="stack g40">
+    <div class="col stack g18">
+      <div class="eyebrow" style="color:#C1357A">What makes it learning</div>
+      <h2>They have to make an idea work.</h2>
+      <p class="lede" style="color:var(--ink-2)">A child can ask for help, but MindCraft will not finish the problem for them. They observe what is happening, predict what a change will do, test it, and explain what they learned. That process becomes the evidence.</p>
+    </div>
+    <div class="three">
+      <div class="spec"><h3>No answers to copy</h3><p>Jesse gives the next useful hint, not the solution. Your child still has to do the thinking.</p></div>
+      <div class="spec"><h3>Things they can test</h3><p>Plants, circuits, markets, and other systems respond to what they change. Every model shows its assumptions and limits.</p></div>
+      <div class="spec"><h3>Work they can keep</h3><p>Their simulations, notes, and explanations become projects and books they can share, publish, and build on.</p></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sky"><div class="wrap">
+<section>
+  <div class="col stack g26">
+    <div class="eyebrow">Why it feels like a world</div>
+    <h2>The world has problems that need a curious kid.</h2>
+    <p class="lede">One field is dying while another field eleven minutes away is thriving. A tree has gone quiet. A machine works, but nobody remembers why. Each mystery gives a child something real to investigate.</p>
+    <p class="lede">Kids do not move through a list of lessons. They help characters, repair systems, and leave the world changed by what they understood.</p>
+  </div>
+</section>
+</div></div>
+
+<div class="wrap">
+<section>
+  <div class="stack g26">
+    <div class="col"><h2>There is a lot underneath the story.</h2></div>
+    <div class="figs">
+      <div class="fig"><div class="v">28,631</div><div class="k">concepts connected by real prerequisite paths, from algebra and circuits to philosophy</div></div>
+      <div class="fig"><div class="v">108</div><div class="k">subjects already mapped in the library</div></div>
+      <div class="fig"><div class="v">4,061</div><div class="k">simulations students can run, question, and change</div></div>
+      <div class="fig"><div class="v">1</div><div class="k">learning system that helps choose what each student is ready to work on next</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="cream2"><div class="wrap">
+<section>
+  <div class="stack g40">
+    <div class="who">
+      <div class="stack g18">
+        <div class="eyebrow" style="color:#124A72">Built by students and educators</div>
+        <h2>We remember what school felt like. We also know we need help.</h2>
+        <p class="lede" style="color:var(--ink-2)">MindCraft started with university students who wanted learning to feel more like making something. We work with people who have spent decades on knowledge systems, education, and how people learn together.</p>
+      </div>
+      <div class="bubbles" id="bubbles" aria-label="Where the team studied">
+        <span class="bub"><i>Oxford</i></span>
+        <span class="bub"><i>Macalester</i></span>
+        <span class="bub"><i>UNC</i></span>
+        <span class="bub"><i>Kenyon</i></span>
+        <span class="bub"><i>UWC</i></span>
+      </div>
+    </div>
+    <div class="people">
+      <div class="person">
+        <img src="img/advisors/dan-mccreary.jpg" alt="Dan McCreary">
+        <div><div class="nm">Dan McCreary</div>
+          <div class="rl">Dan has spent forty years building enterprise knowledge graphs in healthcare. He co-authored <em>Making Sense of NoSQL</em> and created the MicroSims approach that shapes our simulation work.</div></div>
+      </div>
+      <div class="person">
+        <img src="img/advisors/ingrid-erickson.jpg" alt="Ingrid Erickson">
+        <div><div class="nm">Ingrid Erickson</div>
+          <div class="rl">Ingrid is an associate professor at Syracuse University's iSchool with a PhD from Stanford. She studies how AI changes the way people work and learn together.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<div class="limeband"><div class="wrap">
+<section>
+  <div class="col stack g26 promise">
+    <div class="eyebrow">For parents</div>
+    <h2>A few things we will not compromise on.</h2>
+    <ul>
+      <li><b>Your child's work belongs to them.</b> We do not use it to train models.</li>
+      <li><b>We do not turn behavior into labels.</b> We look at what your child can demonstrate, not how quickly they get there.</li>
+      <li><b>There are no ads, loot boxes, or purchases inside the world.</b></li>
+      <li><b>Every model is inspectable.</b> It shows where it came from, what it assumes, and where it can be wrong.</li>
+    </ul>
+  </div>
+</section>
+</div></div>
+
+<div class="wrap">
+<section>
+  <div class="col stack g26">
+    <h2>Let your child try the first mission.</h2>
+    <p class="lede" style="color:var(--ink-2)">They will start with one struggling plant and no answer key. What happens next depends on what they notice, test, and change.</p>
+    <form id="seatForm" class="seat" novalidate>
+      <div class="seat-row">
+        <label class="vh" for="seatName">Your name</label>
+        <input id="seatName" type="text" placeholder="Your name" autocomplete="name" required>
+        <label class="vh" for="seatEmail">Email</label>
+        <input id="seatEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <button class="cta" type="submit" id="seatBtn">Join early access</button>
+      </div>
+      <div class="sub" id="seatMsg">It is free while we build. No card and no ads. Your note goes directly to the two founders.</div>
+    </form>
+  </div>
+</section>
+</div>
+
+<footer><div class="wrap"><div class="col stack g10">
+  <div>MindCraft World is being built now. Early families can try the first mission and help shape what comes next.</div>
+  <div class="eyebrow" style="color:#5C6875">For kids who keep asking why</div>
+  <div class="social">
+    <a href="https://www.instagram.com/joinmindcraft/">Instagram</a>
+    <a href="https://www.linkedin.com/company/joinmindcraft">LinkedIn</a>
+    <a href="https://x.com/joinmindcraft">X</a>
+    <a href="mailto:founders@joinmindcraft.com">founders@joinmindcraft.com</a>
+    <a href="/desk.html">The Desk</a>
+  </div>
+</div></div></footer>
+
+<script>
+(() => {
+  const W=document.getElementById('w'), N=document.getElementById('n');
+  const wv=document.getElementById('wv'), nv=document.getElementById('nv');
+  const verdict=document.getElementById('verdict'), detail=document.getElementById('detail');
+  const hint=document.getElementById('hint');
+  const leaves=document.getElementById('leaves'), stem=document.getElementById('stem'), water=document.getElementById('water');
+  const eyebrow=document.getElementById('wjh-eyebrow'), head=document.getElementById('wjh-head'),
+        list=document.getElementById('wjh-list');
+
+  // Six leaves in opposite pairs. Index 0 is the oldest and lowest, and
+  // magnesium being mobile is why that one yellows first.
+  const nodes=[];
+  for(let i=0;i<3;i++) for(const side of [-1,1]){
+    const y=148-i*26;
+    const g=document.createElementNS('http://www.w3.org/2000/svg','path');
+    g.setAttribute('d',`M100 ${y} q${side*26} -12 ${side*38} -3 q${-side*13} 16 ${-side*38} 3 z`);
+    g.style.transition='fill 400ms ease, opacity 400ms ease, transform 500ms ease';
+    g.style.transformOrigin=`100px ${y}px`;
+    leaves.appendChild(g); nodes.push({el:g,age:i});
+  }
+  const mix=(a,b,t)=>{const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+    const [r1,g1,b1]=p(a),[r2,g2,b2]=p(b);
+    const c=(x,y)=>Math.round(x+(y-x)*t).toString(16).padStart(2,'0');
+    return `#${c(r1,r2)}${c(g1,g2)}${c(b1,b2)}`;};
+
+  let everDrowned=false, touched=null;
+
+  // Every line here has to be true of the state on screen right now. Static
+  // bullets under a live demo contradict the thing the reader just did.
+  function report(healthy,drown,thirst){
+    if(drown>0.45 && touched==='water') everDrowned=true;
+    let eb,h,items;
+    if(touched===null){
+      eb='Try it yourself'; h='What would you change first?';
+      items=['The plant is eleven days old and losing leaves.',
+             'The soil is wet. The oldest leaves are turning yellow.',
+             'Move one slider and watch what changes.'];
+    } else if(healthy && everDrowned){
+      eb='What happened'; h='You tested one idea, saw it fail, and changed course.';
+      items=['<b>The extra water made things worse.</b>',
+             'The leaf pattern pointed to a different problem.',
+             'Changing the nutrients helped the plant recover.'];
+    } else if(healthy){
+      eb='What happened'; h='You noticed what the plant was telling you.';
+      items=['The soil was already wet.',
+             'The oldest leaves were yellow, while new growth stayed green.',
+             'You changed one thing and checked the result.'];
+    } else if(drown>0.45 && touched==='water'){
+      eb='What happened'; h='More water made it worse.';
+      items=['The soil was already holding too much water.',
+             'Wet roots struggle to take up nutrients.',
+             'Try changing one thing at a time.'];
+    } else if(thirst>0.35){
+      eb='What happened'; h='Now it really is short on water.';
+      items=['Every leaf droops at once, not just the old ones.',
+             'That is different from the original pattern.',
+             'Compare the two before your next move.'];
+    } else if(touched==='nutrients'){
+      eb='What happened'; h='That helped.';
+      items=['The yellowing stops spreading upward.',
+             'The oldest leaves stay yellow. Existing damage does not disappear.',
+             'Watch what happens as you keep changing the amount.'];
+    } else {
+      eb='What happened'; h='Almost nothing changed.';
+      items=['That result is still useful.',
+             'The oldest leaves are yellowing first.',
+             'Try one other variable and compare.'];
+    }
+    eyebrow.textContent=eb; head.textContent=h;
+    list.innerHTML=items.map(t=>`<li>${t}</li>`).join('');
+  }
+
+  function render(){
+    const w=+W.value, n=+N.value;
+    wv.textContent=`${w} mL/day`; nv.textContent=`${n} mg/L`;
+    const drown=Math.max(0,(w-62)/38), thirst=Math.max(0,(34-w)/34);
+    const starve=Math.max(0,(58-n)/58)*(1-drown*0.35)+drown*0.55;
+
+    water.setAttribute('opacity',(drown*0.8).toFixed(2));
+    stem.setAttribute('stroke',mix('#4E8C4A','#A8B463',Math.min(1,starve)));
+    nodes.forEach(({el,age})=>{
+      const sev=Math.max(0,Math.min(1,starve*1.5-age*0.42)), dry=Math.max(0,Math.min(1,thirst*1.2));
+      el.setAttribute('fill',mix('#4E8C4A','#D4AF1E',sev));
+      el.style.opacity=String(1-dry*0.45);
+      el.style.transform=`rotate(${(sev*16+dry*20).toFixed(1)}deg)`;
+    });
+
+    const healthy=starve<0.18&&thirst<0.1&&drown<0.12;
+    if(healthy){verdict.textContent='Recovering'; verdict.className='verdict good';
+      detail.textContent='New growth is green and the stem has stiffened.';
+      hint.textContent='This is the MindCraft loop: notice, test, revise.';}
+    else if(drown>0.45&&touched==='water'){verdict.textContent='Worse, not better'; verdict.className='verdict bad';
+      detail.textContent='Water is standing on the soil. Wet roots struggle to take up nutrients.';
+      hint.textContent='Look at which leaves changed first.';}
+    else if(thirst>0.35){verdict.textContent='Wilting'; verdict.className='verdict bad';
+      detail.textContent='Now it is genuinely short of water. Every leaf droops at once, not just the old ones.';
+      hint.textContent='Compare this with the original leaf pattern.';}
+    else if(starve>0.3){verdict.textContent='Losing its oldest leaves'; verdict.className='verdict bad';
+      detail.textContent = drown>0.45
+        ? 'Water is standing on the soil, and the lowest leaves are yellowing from the edges inward.'
+        : 'The lowest leaves are yellowing from the edges inward while the new growth stays green.';
+      hint.textContent=touched?'Water changed very little. What else can you test?':'What would you change first?';}
+    else {verdict.textContent='Steadying'; verdict.className='verdict good';
+      detail.textContent='The yellowing has stopped spreading upward. Keep going.';
+      hint.textContent='The oldest leaves stay yellow, but the new growth can recover.';}
+
+    report(healthy,drown,thirst);
+  }
+  W.addEventListener('input',()=>{touched='water'; render();});
+  N.addEventListener('input',()=>{touched='nutrients'; render();});
+  render();
+})();
+
+(() => {
+  // One at a time, 170ms apart, once. A cluster that all appears together is
+  // a logo wall; a cluster that arrives in sequence reads as people joining.
+  const box=document.getElementById('bubbles');
+  if(!box) return;
+  const bubs=[...box.querySelectorAll('.bub')];
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    bubs.forEach(b=>b.classList.add('in')); return;
+  }
+  new IntersectionObserver((entries,obs)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      bubs.forEach((b,i)=>setTimeout(()=>b.classList.add('in'), i*170));
+      obs.disconnect();
+    });
+  },{threshold:.35}).observe(box);
+})();
+
+(() => {
+  const f=document.getElementById('seatForm'), msg=document.getElementById('seatMsg'), btn=document.getElementById('seatBtn');
+  if(!f) return;
+  f.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const name=document.getElementById('seatName').value.trim();
+    const email=document.getElementById('seatEmail').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      msg.style.color='#DD5F22'; msg.textContent='Please check that email address. Nothing was sent.';
+      document.getElementById('seatEmail').focus(); return;
+    }
+    btn.disabled=true; btn.textContent='Sending...';
+    // Same endpoint the homepage claim form posts to, so these land with the
+    // founders alongside every other lead rather than somewhere new.
+    fetch('https://mindcraft-webhook.vercel.app/api/marketing-lead',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,name,role:'parent',source:'joinmindcraft_world_page',
+        note:'Requested early access from the World page.',page:location.pathname})
+    }).then(r=>{ if(!r.ok) throw new Error(String(r.status));
+      msg.style.color='#5F8C0B';
+      msg.textContent='Got it. We will write to you from founders@joinmindcraft.com.';
+      btn.textContent='Sent'; f.querySelectorAll('input').forEach(i=>i.disabled=true);
+    }).catch(()=>{ msg.style.color='#DD5F22';
+      msg.textContent='That did not go through. You can email founders@joinmindcraft.com instead.';
+      btn.disabled=false; btn.textContent='Join early access'; });
+  });
+})();
+</script>
+
+</body>
+</html>
