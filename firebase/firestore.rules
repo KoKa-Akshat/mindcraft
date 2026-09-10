@@ -571,5 +571,77 @@ service cloud.firestore {
     match /marketing_settings/{docId} {
       allow read, write: if isAdmin();
     }
+
+    // ====================================================================
+    // COMPOUND
+    // ====================================================================
+    // Compound is a separate product that shares this project. It was going
+    // to live in `mindcraft-world` under founders@joinmindcraft.com, and the
+    // shipped config pointed there, but that account is not the one the CLI
+    // can reach. Rather than keep two projects and two Google accounts for a
+    // company of one, Compound moved here, where Google sign-in is already
+    // on and joinmindcraft.com is already an authorised domain.
+    //
+    // Everything below is an addition. No rule above this line was edited,
+    // because this file is the entire published ruleset for the project and
+    // a careless deploy here takes the live app down with it.
+    //
+    // Compound keeps its OWN allowlist rather than reusing `login_allowlist`.
+    // That is deliberate: `login_allowlist` admits people to MindCraft, and
+    // Compound is an invited, paid product. One list for both would quietly
+    // hand every MindCraft account a Compound seat.
+    // ====================================================================
+
+    // True when the caller's verified Google email is on Compound's list.
+    // The email comes off the ID token, so a client cannot claim somebody
+    // else's by sending a different string.
+    function compoundInvited() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/compound/access)
+        && request.auth.token.email.lower()
+           in get(/databases/$(database)/documents/compound/access).data.emails;
+    }
+
+    // The allowlist itself.
+    //
+    // Readable by anybody signed in, because the login page has to read it to
+    // find out whether the person signing in belongs here, and that read
+    // necessarily happens before we know the answer. It is a set of invited
+    // families, not a credential.
+    //
+    // Writable only by an admin, matching how `login_allowlist` above is
+    // gated. An invited family cannot add another family.
+    match /compound/access {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // A family's own ledger, one document per signed-in person keyed by uid.
+    //
+    // Flat and top level, not `compound/families/{uid}`, because that path is
+    // three segments and Firestore documents live at even depth: the nested
+    // version would have matched a collection and granted nothing.
+    //
+    // `uid` is compared against the path rather than a field in the document,
+    // because a field can be written and a path cannot. `compoundInvited()`
+    // is checked on every call, so removing a family from the list actually
+    // removes their access rather than only hiding a button from them.
+    match /compound_families/{uid} {
+      allow read, write: if request.auth != null
+        && request.auth.uid == uid && compoundInvited();
+
+      match /{document=**} {
+        allow read, write: if request.auth != null
+          && request.auth.uid == uid && compoundInvited();
+      }
+    }
+
+    // Anything else under `compound` is denied by the default, and there is
+    // deliberately no catch-all rule here saying so. A `match` with `if false`
+    // reads like a deny to the next person, but rules are OR'd: it would sit
+    // underneath the allow above and change nothing, while looking like it
+    // did the work.
+
   }
 }
