@@ -1,0 +1,2384 @@
+{
+  "schema_version": 1,
+  "generated_date": "2026-08-29",
+  "source_manifest": "image_prompts.md",
+  "total_images": 264,
+  "items": [
+    {
+      "concept_id": "algebra-1::absolute-value",
+      "subject": "algebra-1",
+      "chapter_title": "Measuring Distance from Zero",
+      "slot": "opening",
+      "filename": "algebra-1__absolute-value__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::absolute-value",
+      "subject": "algebra-1",
+      "chapter_title": "Measuring Distance from Zero",
+      "slot": "closing",
+      "filename": "algebra-1__absolute-value__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::arithmetic-sequence",
+      "subject": "algebra-1",
+      "chapter_title": "Arithmetic Sequences: Counting by a Fixed Step",
+      "slot": "opening",
+      "filename": "algebra-1__arithmetic-sequence__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::arithmetic-sequence",
+      "subject": "algebra-1",
+      "chapter_title": "Arithmetic Sequences: Counting by a Fixed Step",
+      "slot": "closing",
+      "filename": "algebra-1__arithmetic-sequence__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::associative-property",
+      "subject": "algebra-1",
+      "chapter_title": "Regrouping Without Changing the Answer: The Associative Property",
+      "slot": "opening",
+      "filename": "algebra-1__associative-property__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::associative-property",
+      "subject": "algebra-1",
+      "chapter_title": "Regrouping Without Changing the Answer: The Associative Property",
+      "slot": "closing",
+      "filename": "algebra-1__associative-property__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::coefficient",
+      "subject": "algebra-1",
+      "chapter_title": "Scaling a Variable: What Coefficients Really Do",
+      "slot": "opening",
+      "filename": "algebra-1__coefficient__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::coefficient",
+      "subject": "algebra-1",
+      "chapter_title": "Scaling a Variable: What Coefficients Really Do",
+      "slot": "closing",
+      "filename": "algebra-1__coefficient__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::commutative-property",
+      "subject": "algebra-1",
+      "chapter_title": "Order Doesn't Always Matter: The Commutative Property",
+      "slot": "opening",
+      "filename": "algebra-1__commutative-property__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::commutative-property",
+      "subject": "algebra-1",
+      "chapter_title": "Order Doesn't Always Matter: The Commutative Property",
+      "slot": "closing",
+      "filename": "algebra-1__commutative-property__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::constant",
+      "subject": "algebra-1",
+      "chapter_title": "The Numbers That Never Change: Meeting Constants",
+      "slot": "opening",
+      "filename": "algebra-1__constant__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "algebra-1::constant",
+      "subject": "algebra-1",
+      "chapter_title": "The Numbers That Never Change: Meeting Constants",
+      "slot": "closing",
+      "filename": "algebra-1__constant__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::distributive-property",
+      "subject": "algebra-1",
+      "chapter_title": "Multiplying Across a Sum: The Distributive Property",
+      "slot": "opening",
+      "filename": "algebra-1__distributive-property__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::distributive-property",
+      "subject": "algebra-1",
+      "chapter_title": "Multiplying Across a Sum: The Distributive Property",
+      "slot": "closing",
+      "filename": "algebra-1__distributive-property__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::equation",
+      "subject": "algebra-1",
+      "chapter_title": "When Two Expressions Balance: Understanding Equations",
+      "slot": "opening",
+      "filename": "algebra-1__equation__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::equation",
+      "subject": "algebra-1",
+      "chapter_title": "When Two Expressions Balance: Understanding Equations",
+      "slot": "closing",
+      "filename": "algebra-1__equation__closing.png",
+      "width": 1369,
+      "height": 1149
+    },
+    {
+      "concept_id": "algebra-1::expression",
+      "subject": "algebra-1",
+      "chapter_title": "Putting Terms Together: What an Expression Really Is",
+      "slot": "opening",
+      "filename": "algebra-1__expression__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::expression",
+      "subject": "algebra-1",
+      "chapter_title": "Putting Terms Together: What an Expression Really Is",
+      "slot": "closing",
+      "filename": "algebra-1__expression__closing.png",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "concept_id": "algebra-1::identity-property",
+      "subject": "algebra-1",
+      "chapter_title": "The Numbers That Change Nothing: Identity Elements",
+      "slot": "opening",
+      "filename": "algebra-1__identity-property__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::identity-property",
+      "subject": "algebra-1",
+      "chapter_title": "The Numbers That Change Nothing: Identity Elements",
+      "slot": "closing",
+      "filename": "algebra-1__identity-property__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::inequality",
+      "subject": "algebra-1",
+      "chapter_title": "Beyond Equal: Comparing Expressions with Inequalities",
+      "slot": "opening",
+      "filename": "algebra-1__inequality__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::inequality",
+      "subject": "algebra-1",
+      "chapter_title": "Beyond Equal: Comparing Expressions with Inequalities",
+      "slot": "closing",
+      "filename": "algebra-1__inequality__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::number",
+      "subject": "algebra-1",
+      "chapter_title": "What Is a Number?",
+      "slot": "opening",
+      "filename": "algebra-1__number__opening.png",
+      "width": 1144,
+      "height": 1375
+    },
+    {
+      "concept_id": "algebra-1::number",
+      "subject": "algebra-1",
+      "chapter_title": "What Is a Number?",
+      "slot": "closing",
+      "filename": "algebra-1__number__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::order-of-operations",
+      "subject": "algebra-1",
+      "chapter_title": "PEMDAS and the Rules That Keep Math Consistent",
+      "slot": "opening",
+      "filename": "algebra-1__order-of-operations__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::order-of-operations",
+      "subject": "algebra-1",
+      "chapter_title": "PEMDAS and the Rules That Keep Math Consistent",
+      "slot": "closing",
+      "filename": "algebra-1__order-of-operations__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::term",
+      "subject": "algebra-1",
+      "chapter_title": "Building Blocks of Algebra: Understanding Terms",
+      "slot": "opening",
+      "filename": "algebra-1__term__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "algebra-1::term",
+      "subject": "algebra-1",
+      "chapter_title": "Building Blocks of Algebra: Understanding Terms",
+      "slot": "closing",
+      "filename": "algebra-1__term__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "algebra-1::variable",
+      "subject": "algebra-1",
+      "chapter_title": "Letters That Hold a Place: Understanding Variables",
+      "slot": "opening",
+      "filename": "algebra-1__variable__opening.png",
+      "width": 1306,
+      "height": 1204
+    },
+    {
+      "concept_id": "algebra-1::variable",
+      "subject": "algebra-1",
+      "chapter_title": "Letters That Hold a Place: Understanding Variables",
+      "slot": "closing",
+      "filename": "algebra-1__variable__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::atomic-structure",
+      "subject": "biology",
+      "chapter_title": "The Building Blocks of Matter",
+      "slot": "opening",
+      "filename": "biology__atomic-structure__opening.png",
+      "width": 1314,
+      "height": 1197
+    },
+    {
+      "concept_id": "biology::atomic-structure",
+      "subject": "biology",
+      "chapter_title": "The Building Blocks of Matter",
+      "slot": "closing",
+      "filename": "biology__atomic-structure__closing.png",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "concept_id": "biology::chemical-bonds",
+      "subject": "biology",
+      "chapter_title": "Why Atoms Stick Together: An Overview of Chemical Bonding",
+      "slot": "opening",
+      "filename": "biology__chemical-bonds__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::chemical-bonds",
+      "subject": "biology",
+      "chapter_title": "Why Atoms Stick Together: An Overview of Chemical Bonding",
+      "slot": "closing",
+      "filename": "biology__chemical-bonds__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::cohesion-and-adhesion",
+      "subject": "biology",
+      "chapter_title": "How a Tree Moves Water to the Top of the Canopy Without a Pump",
+      "slot": "opening",
+      "filename": "biology__cohesion-and-adhesion__opening.png",
+      "width": 1197,
+      "height": 1314
+    },
+    {
+      "concept_id": "biology::cohesion-and-adhesion",
+      "subject": "biology",
+      "chapter_title": "How a Tree Moves Water to the Top of the Canopy Without a Pump",
+      "slot": "closing",
+      "filename": "biology__cohesion-and-adhesion__closing.png",
+      "width": 1149,
+      "height": 1369
+    },
+    {
+      "concept_id": "biology::controlled-experiments",
+      "subject": "biology",
+      "chapter_title": "Isolating One Cause: Why Every Good Experiment Needs a Control",
+      "slot": "opening",
+      "filename": "biology__controlled-experiments__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::controlled-experiments",
+      "subject": "biology",
+      "chapter_title": "Isolating One Cause: Why Every Good Experiment Needs a Control",
+      "slot": "closing",
+      "filename": "biology__controlled-experiments__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::covalent-bonds",
+      "subject": "biology",
+      "chapter_title": "Sharing Electrons: Covalent Bonds and the Molecules of Life",
+      "slot": "opening",
+      "filename": "biology__covalent-bonds__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::covalent-bonds",
+      "subject": "biology",
+      "chapter_title": "Sharing Electrons: Covalent Bonds and the Molecules of Life",
+      "slot": "closing",
+      "filename": "biology__covalent-bonds__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::ecology-overview",
+      "subject": "biology",
+      "chapter_title": "Ecology: Life at Every Scale",
+      "slot": "opening",
+      "filename": "biology__ecology-overview__opening.png",
+      "width": 1199,
+      "height": 1312
+    },
+    {
+      "concept_id": "biology::ecology-overview",
+      "subject": "biology",
+      "chapter_title": "Ecology: Life at Every Scale",
+      "slot": "closing",
+      "filename": "biology__ecology-overview__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::elements-of-life",
+      "subject": "biology",
+      "chapter_title": "The Short List of Atoms That Build Every Living Thing",
+      "slot": "opening",
+      "filename": "biology__elements-of-life__opening.png",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "concept_id": "biology::elements-of-life",
+      "subject": "biology",
+      "chapter_title": "The Short List of Atoms That Build Every Living Thing",
+      "slot": "closing",
+      "filename": "biology__elements-of-life__closing.png",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "concept_id": "biology::hydrogen-bonds",
+      "subject": "biology",
+      "chapter_title": "The Weak Bond That Holds DNA Together and Lets It Come Apart",
+      "slot": "opening",
+      "filename": "biology__hydrogen-bonds__opening.png",
+      "width": 1149,
+      "height": 1369
+    },
+    {
+      "concept_id": "biology::hydrogen-bonds",
+      "subject": "biology",
+      "chapter_title": "The Weak Bond That Holds DNA Together and Lets It Come Apart",
+      "slot": "closing",
+      "filename": "biology__hydrogen-bonds__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::hypothesis-testing",
+      "subject": "biology",
+      "chapter_title": "Turning a Guess Into Something You Can Actually Check",
+      "slot": "opening",
+      "filename": "biology__hypothesis-testing__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::hypothesis-testing",
+      "subject": "biology",
+      "chapter_title": "Turning a Guess Into Something You Can Actually Check",
+      "slot": "closing",
+      "filename": "biology__hypothesis-testing__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::independent-and-dependent-variables",
+      "subject": "biology",
+      "chapter_title": "The Cause You Change and the Effect You Measure",
+      "slot": "opening",
+      "filename": "biology__independent-and-dependent-variables__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "biology::independent-and-dependent-variables",
+      "subject": "biology",
+      "chapter_title": "The Cause You Change and the Effect You Measure",
+      "slot": "closing",
+      "filename": "biology__independent-and-dependent-variables__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::ionic-bonds",
+      "subject": "biology",
+      "chapter_title": "When Atoms Trade Electrons: Ionic Bonds and the Chemistry of Nerve Signals",
+      "slot": "opening",
+      "filename": "biology__ionic-bonds__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "biology::ionic-bonds",
+      "subject": "biology",
+      "chapter_title": "When Atoms Trade Electrons: Ionic Bonds and the Chemistry of Nerve Signals",
+      "slot": "closing",
+      "filename": "biology__ionic-bonds__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "biology::scientific-method",
+      "subject": "biology",
+      "chapter_title": "How Biologists Ask Questions and Trust the Answers",
+      "slot": "opening",
+      "filename": "biology__scientific-method__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "biology::scientific-method",
+      "subject": "biology",
+      "chapter_title": "How Biologists Ask Questions and Trust the Answers",
+      "slot": "closing",
+      "filename": "biology__scientific-method__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::van-der-waals-forces",
+      "subject": "biology",
+      "chapter_title": "The Weakest Force in Chemistry Holds Up a Gecko",
+      "slot": "opening",
+      "filename": "biology__van-der-waals-forces__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::van-der-waals-forces",
+      "subject": "biology",
+      "chapter_title": "The Weakest Force in Chemistry Holds Up a Gecko",
+      "slot": "closing",
+      "filename": "biology__van-der-waals-forces__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::water-polarity",
+      "subject": "biology",
+      "chapter_title": "Why Water Is Not Just Another Molecule",
+      "slot": "opening",
+      "filename": "biology__water-polarity__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "biology::water-polarity",
+      "subject": "biology",
+      "chapter_title": "Why Water Is Not Just Another Molecule",
+      "slot": "closing",
+      "filename": "biology__water-polarity__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::architecture",
+      "subject": "blockchain",
+      "chapter_title": "What Architecture Means",
+      "slot": "opening",
+      "filename": "blockchain__architecture__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::architecture",
+      "subject": "blockchain",
+      "chapter_title": "What Architecture Means",
+      "slot": "closing",
+      "filename": "blockchain__architecture__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::asymmetric-encryption",
+      "subject": "blockchain",
+      "chapter_title": "Two Keys That Solve a Problem One Key Cannot",
+      "slot": "opening",
+      "filename": "blockchain__asymmetric-encryption__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "blockchain::asymmetric-encryption",
+      "subject": "blockchain",
+      "chapter_title": "Two Keys That Solve a Problem One Key Cannot",
+      "slot": "closing",
+      "filename": "blockchain__asymmetric-encryption__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::client-server-model",
+      "subject": "blockchain",
+      "chapter_title": "Who's in Charge? The Client-Server Model and Its Tradeoffs",
+      "slot": "opening",
+      "filename": "blockchain__client-server-model__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::client-server-model",
+      "subject": "blockchain",
+      "chapter_title": "Who's in Charge? The Client-Server Model and Its Tradeoffs",
+      "slot": "closing",
+      "filename": "blockchain__client-server-model__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::digital-trust",
+      "subject": "blockchain",
+      "chapter_title": "Trust Without a Face: The Problem of the Digital Stranger",
+      "slot": "opening",
+      "filename": "blockchain__digital-trust__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "blockchain::digital-trust",
+      "subject": "blockchain",
+      "chapter_title": "Trust Without a Face: The Problem of the Digital Stranger",
+      "slot": "closing",
+      "filename": "blockchain__digital-trust__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::encryption",
+      "subject": "blockchain",
+      "chapter_title": "Locking Information in Plain Sight: What Encryption Actually Does",
+      "slot": "opening",
+      "filename": "blockchain__encryption__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::encryption",
+      "subject": "blockchain",
+      "chapter_title": "Locking Information in Plain Sight: What Encryption Actually Does",
+      "slot": "closing",
+      "filename": "blockchain__encryption__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::internet-architecture",
+      "subject": "blockchain",
+      "chapter_title": "A Network of Networks: How the Internet Was Built to Survive",
+      "slot": "opening",
+      "filename": "blockchain__internet-architecture__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::internet-architecture",
+      "subject": "blockchain",
+      "chapter_title": "A Network of Networks: How the Internet Was Built to Survive",
+      "slot": "closing",
+      "filename": "blockchain__internet-architecture__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::key-pair-generation",
+      "subject": "blockchain",
+      "chapter_title": "Where Keys Come From: Randomness, Math, and the Birth of a Key Pair",
+      "slot": "opening",
+      "filename": "blockchain__key-pair-generation__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::key-pair-generation",
+      "subject": "blockchain",
+      "chapter_title": "Where Keys Come From: Randomness, Math, and the Birth of a Key Pair",
+      "slot": "closing",
+      "filename": "blockchain__key-pair-generation__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::network-fundamentals",
+      "subject": "blockchain",
+      "chapter_title": "Nodes, Links, and Messages: How Networks Actually Work",
+      "slot": "opening",
+      "filename": "blockchain__network-fundamentals__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::network-fundamentals",
+      "subject": "blockchain",
+      "chapter_title": "Nodes, Links, and Messages: How Networks Actually Work",
+      "slot": "closing",
+      "filename": "blockchain__network-fundamentals__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::peer-to-peer-networks",
+      "subject": "blockchain",
+      "chapter_title": "No One in Charge: How Peer-to-Peer Networks Distribute Control",
+      "slot": "opening",
+      "filename": "blockchain__peer-to-peer-networks__opening.png",
+      "width": 1329,
+      "height": 1183
+    },
+    {
+      "concept_id": "blockchain::peer-to-peer-networks",
+      "subject": "blockchain",
+      "chapter_title": "No One in Charge: How Peer-to-Peer Networks Distribute Control",
+      "slot": "closing",
+      "filename": "blockchain__peer-to-peer-networks__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::private-key",
+      "subject": "blockchain",
+      "chapter_title": "The Key You Never Give Away: Custody, Control, and the Private Key",
+      "slot": "opening",
+      "filename": "blockchain__private-key__opening.png",
+      "width": 1369,
+      "height": 1149
+    },
+    {
+      "concept_id": "blockchain::private-key",
+      "subject": "blockchain",
+      "chapter_title": "The Key You Never Give Away: Custody, Control, and the Private Key",
+      "slot": "closing",
+      "filename": "blockchain__private-key__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::public-key",
+      "subject": "blockchain",
+      "chapter_title": "The Key You Give Away: Understanding the Public Key",
+      "slot": "opening",
+      "filename": "blockchain__public-key__opening.png",
+      "width": 1314,
+      "height": 1197
+    },
+    {
+      "concept_id": "blockchain::public-key",
+      "subject": "blockchain",
+      "chapter_title": "The Key You Give Away: Understanding the Public Key",
+      "slot": "closing",
+      "filename": "blockchain__public-key__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::sunk-cost-fallacy",
+      "subject": "blockchain",
+      "chapter_title": "Chasing the Money Already Spent",
+      "slot": "opening",
+      "filename": "blockchain__sunk-cost-fallacy__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "blockchain::sunk-cost-fallacy",
+      "subject": "blockchain",
+      "chapter_title": "Chasing the Money Already Spent",
+      "slot": "closing",
+      "filename": "blockchain__sunk-cost-fallacy__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "blockchain::symmetric-encryption",
+      "subject": "blockchain",
+      "chapter_title": "One Key, Two Directions: The Logic of Symmetric Encryption",
+      "slot": "opening",
+      "filename": "blockchain__symmetric-encryption__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::symmetric-encryption",
+      "subject": "blockchain",
+      "chapter_title": "One Key, Two Directions: The Logic of Symmetric Encryption",
+      "slot": "closing",
+      "filename": "blockchain__symmetric-encryption__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "blockchain::trust",
+      "subject": "blockchain",
+      "chapter_title": "Why Trust Is a Shortcut, Not a Weakness",
+      "slot": "opening",
+      "filename": "blockchain__trust__opening.png",
+      "width": 1306,
+      "height": 1204
+    },
+    {
+      "concept_id": "blockchain::trust",
+      "subject": "blockchain",
+      "chapter_title": "Why Trust Is a Shortcut, Not a Weakness",
+      "slot": "closing",
+      "filename": "blockchain__trust__closing.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "calculus::composite-function",
+      "subject": "calculus",
+      "chapter_title": "Chaining Functions: When One Output Becomes Another's Input",
+      "slot": "opening",
+      "filename": "calculus__composite-function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::composite-function",
+      "subject": "calculus",
+      "chapter_title": "Chaining Functions: When One Output Becomes Another's Input",
+      "slot": "closing",
+      "filename": "calculus__composite-function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::coordinate-system",
+      "subject": "calculus",
+      "chapter_title": "Locating Points with Numbers",
+      "slot": "opening",
+      "filename": "calculus__coordinate-system__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::coordinate-system",
+      "subject": "calculus",
+      "chapter_title": "Locating Points with Numbers",
+      "slot": "closing",
+      "filename": "calculus__coordinate-system__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::differential",
+      "subject": "calculus",
+      "chapter_title": "Naming the Small Change: dx and dy",
+      "slot": "opening",
+      "filename": "calculus__differential__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::differential",
+      "subject": "calculus",
+      "chapter_title": "Naming the Small Change: dx and dy",
+      "slot": "closing",
+      "filename": "calculus__differential__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::domain-and-range",
+      "subject": "calculus",
+      "chapter_title": "Domain and Range",
+      "slot": "opening",
+      "filename": "calculus__domain-and-range__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::domain-and-range",
+      "subject": "calculus",
+      "chapter_title": "Domain and Range",
+      "slot": "closing",
+      "filename": "calculus__domain-and-range__closing.png",
+      "width": 1334,
+      "height": 1179
+    },
+    {
+      "concept_id": "calculus::even-and-odd-functions",
+      "subject": "calculus",
+      "chapter_title": "Mirror Images and Point Symmetry: Even and Odd Functions",
+      "slot": "opening",
+      "filename": "calculus__even-and-odd-functions__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::even-and-odd-functions",
+      "subject": "calculus",
+      "chapter_title": "Mirror Images and Point Symmetry: Even and Odd Functions",
+      "slot": "closing",
+      "filename": "calculus__even-and-odd-functions__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::exponential-function",
+      "subject": "calculus",
+      "chapter_title": "Exponential Functions: When the Exponent Does the Work",
+      "slot": "opening",
+      "filename": "calculus__exponential-function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::exponential-function",
+      "subject": "calculus",
+      "chapter_title": "Exponential Functions: When the Exponent Does the Work",
+      "slot": "closing",
+      "filename": "calculus__exponential-function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::function",
+      "subject": "calculus",
+      "chapter_title": "What a Function Really Is",
+      "slot": "opening",
+      "filename": "calculus__function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::function",
+      "subject": "calculus",
+      "chapter_title": "What a Function Really Is",
+      "slot": "closing",
+      "filename": "calculus__function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::function-notation",
+      "subject": "calculus",
+      "chapter_title": "Naming Outputs: The f(x) Notation",
+      "slot": "opening",
+      "filename": "calculus__function-notation__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::function-notation",
+      "subject": "calculus",
+      "chapter_title": "Naming Outputs: The f(x) Notation",
+      "slot": "closing",
+      "filename": "calculus__function-notation__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::function-transformations",
+      "subject": "calculus",
+      "chapter_title": "Shift, Flip, Stretch: Reading a Graph's Transformations from Its Formula",
+      "slot": "opening",
+      "filename": "calculus__function-transformations__opening.png",
+      "width": 1199,
+      "height": 1312
+    },
+    {
+      "concept_id": "calculus::function-transformations",
+      "subject": "calculus",
+      "chapter_title": "Shift, Flip, Stretch: Reading a Graph's Transformations from Its Formula",
+      "slot": "closing",
+      "filename": "calculus__function-transformations__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::graphing-functions",
+      "subject": "calculus",
+      "chapter_title": "Turning Formulas into Pictures: A Practical Guide to Graphing",
+      "slot": "opening",
+      "filename": "calculus__graphing-functions__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::graphing-functions",
+      "subject": "calculus",
+      "chapter_title": "Turning Formulas into Pictures: A Practical Guide to Graphing",
+      "slot": "closing",
+      "filename": "calculus__graphing-functions__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::inverse-function",
+      "subject": "calculus",
+      "chapter_title": "Undoing a Function: The Search for f Inverse",
+      "slot": "opening",
+      "filename": "calculus__inverse-function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::inverse-function",
+      "subject": "calculus",
+      "chapter_title": "Undoing a Function: The Search for f Inverse",
+      "slot": "closing",
+      "filename": "calculus__inverse-function__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::logarithmic-function",
+      "subject": "calculus",
+      "chapter_title": "Undoing Exponential Growth: Logarithmic Functions as Inverses",
+      "slot": "opening",
+      "filename": "calculus__logarithmic-function__opening.png",
+      "width": 1331,
+      "height": 1181
+    },
+    {
+      "concept_id": "calculus::logarithmic-function",
+      "subject": "calculus",
+      "chapter_title": "Undoing Exponential Growth: Logarithmic Functions as Inverses",
+      "slot": "closing",
+      "filename": "calculus__logarithmic-function__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::piecewise-function",
+      "subject": "calculus",
+      "chapter_title": "Rules That Change Midstream: Working with Piecewise Functions",
+      "slot": "opening",
+      "filename": "calculus__piecewise-function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::piecewise-function",
+      "subject": "calculus",
+      "chapter_title": "Rules That Change Midstream: Working with Piecewise Functions",
+      "slot": "closing",
+      "filename": "calculus__piecewise-function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::polynomial-function",
+      "subject": "calculus",
+      "chapter_title": "Sums of Powers: Polynomial Functions and Their Long Run Behavior",
+      "slot": "opening",
+      "filename": "calculus__polynomial-function__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::polynomial-function",
+      "subject": "calculus",
+      "chapter_title": "Sums of Powers: Polynomial Functions and Their Long Run Behavior",
+      "slot": "closing",
+      "filename": "calculus__polynomial-function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::radian-measure",
+      "subject": "calculus",
+      "chapter_title": "Measuring Angles by Arc Length: Why Calculus Prefers Radians",
+      "slot": "opening",
+      "filename": "calculus__radian-measure__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "calculus::radian-measure",
+      "subject": "calculus",
+      "chapter_title": "Measuring Angles by Arc Length: Why Calculus Prefers Radians",
+      "slot": "closing",
+      "filename": "calculus__radian-measure__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::rational-function",
+      "subject": "calculus",
+      "chapter_title": "Fractions of Polynomials: Asymptotes, Holes, and the Behavior of Rational Functions",
+      "slot": "opening",
+      "filename": "calculus__rational-function__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::rational-function",
+      "subject": "calculus",
+      "chapter_title": "Fractions of Polynomials: Asymptotes, Holes, and the Behavior of Rational Functions",
+      "slot": "closing",
+      "filename": "calculus__rational-function__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::trigonometric-function",
+      "subject": "calculus",
+      "chapter_title": "Ratios in a Right Triangle: The Birth of Sine, Cosine, and Tangent",
+      "slot": "opening",
+      "filename": "calculus__trigonometric-function__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::trigonometric-function",
+      "subject": "calculus",
+      "chapter_title": "Ratios in a Right Triangle: The Birth of Sine, Cosine, and Tangent",
+      "slot": "closing",
+      "filename": "calculus__trigonometric-function__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "calculus::unit-circle",
+      "subject": "calculus",
+      "chapter_title": "One Circle, Every Angle: Extending Trigonometry with the Unit Circle",
+      "slot": "opening",
+      "filename": "calculus__unit-circle__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "calculus::unit-circle",
+      "subject": "calculus",
+      "chapter_title": "One Circle, Every Angle: Extending Trigonometry with the Unit Circle",
+      "slot": "closing",
+      "filename": "calculus__unit-circle__closing.png",
+      "width": 1199,
+      "height": 1312
+    },
+    {
+      "concept_id": "chemistry::atoms",
+      "subject": "chemistry",
+      "chapter_title": "Inside the Atom: The Building Blocks of Matter",
+      "slot": "opening",
+      "filename": "chemistry__atoms__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::atoms",
+      "subject": "chemistry",
+      "chapter_title": "Inside the Atom: The Building Blocks of Matter",
+      "slot": "closing",
+      "filename": "chemistry__atoms__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::chemical-changes",
+      "subject": "chemistry",
+      "chapter_title": "Making Something New: Chemical Changes and Chemical Reactions",
+      "slot": "opening",
+      "filename": "chemistry__chemical-changes__opening.png",
+      "width": 1306,
+      "height": 1204
+    },
+    {
+      "concept_id": "chemistry::chemical-changes",
+      "subject": "chemistry",
+      "chapter_title": "Making Something New: Chemical Changes and Chemical Reactions",
+      "slot": "closing",
+      "filename": "chemistry__chemical-changes__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::chemical-properties",
+      "subject": "chemistry",
+      "chapter_title": "What a Substance Can Become: Chemical Properties",
+      "slot": "opening",
+      "filename": "chemistry__chemical-properties__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::chemical-properties",
+      "subject": "chemistry",
+      "chapter_title": "What a Substance Can Become: Chemical Properties",
+      "slot": "closing",
+      "filename": "chemistry__chemical-properties__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::compounds",
+      "subject": "chemistry",
+      "chapter_title": "When Elements Combine: The Chemistry of Compounds",
+      "slot": "opening",
+      "filename": "chemistry__compounds__opening.png",
+      "width": 1314,
+      "height": 1197
+    },
+    {
+      "concept_id": "chemistry::compounds",
+      "subject": "chemistry",
+      "chapter_title": "When Elements Combine: The Chemistry of Compounds",
+      "slot": "closing",
+      "filename": "chemistry__compounds__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::conservation-laws",
+      "subject": "chemistry",
+      "chapter_title": "Nothing Is Created, Nothing Is Destroyed",
+      "slot": "opening",
+      "filename": "chemistry__conservation-laws__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::conservation-laws",
+      "subject": "chemistry",
+      "chapter_title": "Nothing Is Created, Nothing Is Destroyed",
+      "slot": "closing",
+      "filename": "chemistry__conservation-laws__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::electromagnetic-spectrum",
+      "subject": "chemistry",
+      "chapter_title": "The Electromagnetic Spectrum",
+      "slot": "opening",
+      "filename": "chemistry__electromagnetic-spectrum__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::electromagnetic-spectrum",
+      "subject": "chemistry",
+      "chapter_title": "The Electromagnetic Spectrum",
+      "slot": "closing",
+      "filename": "chemistry__electromagnetic-spectrum__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::elements",
+      "subject": "chemistry",
+      "chapter_title": "One Kind of Atom: Understanding Elements and the Periodic Table",
+      "slot": "opening",
+      "filename": "chemistry__elements__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::elements",
+      "subject": "chemistry",
+      "chapter_title": "One Kind of Atom: Understanding Elements and the Periodic Table",
+      "slot": "closing",
+      "filename": "chemistry__elements__closing.png",
+      "width": 1329,
+      "height": 1183
+    },
+    {
+      "concept_id": "chemistry::energy",
+      "subject": "chemistry",
+      "chapter_title": "What Energy Is and Why It Matters",
+      "slot": "opening",
+      "filename": "chemistry__energy__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "chemistry::energy",
+      "subject": "chemistry",
+      "chapter_title": "What Energy Is and Why It Matters",
+      "slot": "closing",
+      "filename": "chemistry__energy__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::gas-pressure",
+      "subject": "chemistry",
+      "chapter_title": "What Gas Pressure Really Is",
+      "slot": "opening",
+      "filename": "chemistry__gas-pressure__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::gas-pressure",
+      "subject": "chemistry",
+      "chapter_title": "What Gas Pressure Really Is",
+      "slot": "closing",
+      "filename": "chemistry__gas-pressure__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::matter",
+      "subject": "chemistry",
+      "chapter_title": "What Everything Is Made Of: An Introduction to Matter",
+      "slot": "opening",
+      "filename": "chemistry__matter__opening.png",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "concept_id": "chemistry::matter",
+      "subject": "chemistry",
+      "chapter_title": "What Everything Is Made Of: An Introduction to Matter",
+      "slot": "closing",
+      "filename": "chemistry__matter__closing.png",
+      "width": 1369,
+      "height": 1149
+    },
+    {
+      "concept_id": "chemistry::measurement",
+      "subject": "chemistry",
+      "chapter_title": "Turning Observation Into Data: Measurement in Chemistry",
+      "slot": "opening",
+      "filename": "chemistry__measurement__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::measurement",
+      "subject": "chemistry",
+      "chapter_title": "Turning Observation Into Data: Measurement in Chemistry",
+      "slot": "closing",
+      "filename": "chemistry__measurement__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::mixtures",
+      "subject": "chemistry",
+      "chapter_title": "Mixed Together, Not Bonded: Understanding Mixtures",
+      "slot": "opening",
+      "filename": "chemistry__mixtures__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::mixtures",
+      "subject": "chemistry",
+      "chapter_title": "Mixed Together, Not Bonded: Understanding Mixtures",
+      "slot": "closing",
+      "filename": "chemistry__mixtures__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::physical-changes",
+      "subject": "chemistry",
+      "chapter_title": "Same Substance, New Form: Physical Changes",
+      "slot": "opening",
+      "filename": "chemistry__physical-changes__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "chemistry::physical-changes",
+      "subject": "chemistry",
+      "chapter_title": "Same Substance, New Form: Physical Changes",
+      "slot": "closing",
+      "filename": "chemistry__physical-changes__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::physical-properties",
+      "subject": "chemistry",
+      "chapter_title": "Describing Matter Without Changing It: Physical Properties",
+      "slot": "opening",
+      "filename": "chemistry__physical-properties__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "chemistry::physical-properties",
+      "subject": "chemistry",
+      "chapter_title": "Describing Matter Without Changing It: Physical Properties",
+      "slot": "closing",
+      "filename": "chemistry__physical-properties__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::scientific-method",
+      "subject": "chemistry",
+      "chapter_title": "How Chemists Know What They Know: The Scientific Method",
+      "slot": "opening",
+      "filename": "chemistry__scientific-method__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::scientific-method",
+      "subject": "chemistry",
+      "chapter_title": "How Chemists Know What They Know: The Scientific Method",
+      "slot": "closing",
+      "filename": "chemistry__scientific-method__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::si-units",
+      "subject": "chemistry",
+      "chapter_title": "A Common Language for Numbers: SI Units in Chemistry",
+      "slot": "opening",
+      "filename": "chemistry__si-units__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "chemistry::si-units",
+      "subject": "chemistry",
+      "chapter_title": "A Common Language for Numbers: SI Units in Chemistry",
+      "slot": "closing",
+      "filename": "chemistry__si-units__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::branch",
+      "subject": "circuits",
+      "chapter_title": "Branches: The Paths Current Travels",
+      "slot": "opening",
+      "filename": "circuits__branch__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "circuits::branch",
+      "subject": "circuits",
+      "chapter_title": "Branches: The Paths Current Travels",
+      "slot": "closing",
+      "filename": "circuits__branch__closing.png",
+      "width": 1327,
+      "height": 1185
+    },
+    {
+      "concept_id": "circuits::circuit-schematic-symbols",
+      "subject": "circuits",
+      "chapter_title": "Reading the Map: A First Look at Circuit Schematic Symbols",
+      "slot": "opening",
+      "filename": "circuits__circuit-schematic-symbols__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::circuit-schematic-symbols",
+      "subject": "circuits",
+      "chapter_title": "Reading the Map: A First Look at Circuit Schematic Symbols",
+      "slot": "closing",
+      "filename": "circuits__circuit-schematic-symbols__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::complex-numbers",
+      "subject": "circuits",
+      "chapter_title": "Complex Numbers: A New Kind of Number for a New Kind of Problem",
+      "slot": "opening",
+      "filename": "circuits__complex-numbers__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::complex-numbers",
+      "subject": "circuits",
+      "chapter_title": "Complex Numbers: A New Kind of Number for a New Kind of Problem",
+      "slot": "closing",
+      "filename": "circuits__complex-numbers__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::conductance",
+      "subject": "circuits",
+      "chapter_title": "Flipping the Fraction: Conductance as the Inverse of Resistance",
+      "slot": "opening",
+      "filename": "circuits__conductance__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::conductance",
+      "subject": "circuits",
+      "chapter_title": "Flipping the Fraction: Conductance as the Inverse of Resistance",
+      "slot": "closing",
+      "filename": "circuits__conductance__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::current",
+      "subject": "circuits",
+      "chapter_title": "Current: Charge on the Move",
+      "slot": "opening",
+      "filename": "circuits__current__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::current",
+      "subject": "circuits",
+      "chapter_title": "Current: Charge on the Move",
+      "slot": "closing",
+      "filename": "circuits__current__closing.png",
+      "width": 1331,
+      "height": 1181
+    },
+    {
+      "concept_id": "circuits::current-divider",
+      "subject": "circuits",
+      "chapter_title": "The Current Divider",
+      "slot": "opening",
+      "filename": "circuits__current-divider__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::current-divider",
+      "subject": "circuits",
+      "chapter_title": "The Current Divider",
+      "slot": "closing",
+      "filename": "circuits__current-divider__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::current-source",
+      "subject": "circuits",
+      "chapter_title": "The Current Source",
+      "slot": "opening",
+      "filename": "circuits__current-source__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "circuits::current-source",
+      "subject": "circuits",
+      "chapter_title": "The Current Source",
+      "slot": "closing",
+      "filename": "circuits__current-source__closing.png",
+      "width": 1306,
+      "height": 1204
+    },
+    {
+      "concept_id": "circuits::dependent-sources",
+      "subject": "circuits",
+      "chapter_title": "Sources That Take Orders: Understanding Dependent Sources",
+      "slot": "opening",
+      "filename": "circuits__dependent-sources__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::dependent-sources",
+      "subject": "circuits",
+      "chapter_title": "Sources That Take Orders: Understanding Dependent Sources",
+      "slot": "closing",
+      "filename": "circuits__dependent-sources__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::electric-charge",
+      "subject": "circuits",
+      "chapter_title": "Electric Charge: The Property Behind Every Circuit",
+      "slot": "opening",
+      "filename": "circuits__electric-charge__opening.png",
+      "width": 1491,
+      "height": 1055
+    },
+    {
+      "concept_id": "circuits::electric-charge",
+      "subject": "circuits",
+      "chapter_title": "Electric Charge: The Property Behind Every Circuit",
+      "slot": "closing",
+      "filename": "circuits__electric-charge__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::electrical-energy",
+      "subject": "circuits",
+      "chapter_title": "Where the Joules Go: Understanding Electrical Energy",
+      "slot": "opening",
+      "filename": "circuits__electrical-energy__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::electrical-energy",
+      "subject": "circuits",
+      "chapter_title": "Where the Joules Go: Understanding Electrical Energy",
+      "slot": "closing",
+      "filename": "circuits__electrical-energy__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::electrical-ground",
+      "subject": "circuits",
+      "chapter_title": "Zero Volts, By Agreement: Understanding Electrical Ground",
+      "slot": "opening",
+      "filename": "circuits__electrical-ground__opening.png",
+      "width": 1199,
+      "height": 1312
+    },
+    {
+      "concept_id": "circuits::electrical-ground",
+      "subject": "circuits",
+      "chapter_title": "Zero Volts, By Agreement: Understanding Electrical Ground",
+      "slot": "closing",
+      "filename": "circuits__electrical-ground__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::inductance",
+      "subject": "circuits",
+      "chapter_title": "Inductance: Why Current Fights to Stay the Same",
+      "slot": "opening",
+      "filename": "circuits__inductance__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::inductance",
+      "subject": "circuits",
+      "chapter_title": "Inductance: Why Current Fights to Stay the Same",
+      "slot": "closing",
+      "filename": "circuits__inductance__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::inductor",
+      "subject": "circuits",
+      "chapter_title": "The Inductor: Storing Energy in a Magnetic Field",
+      "slot": "opening",
+      "filename": "circuits__inductor__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "circuits::inductor",
+      "subject": "circuits",
+      "chapter_title": "The Inductor: Storing Energy in a Magnetic Field",
+      "slot": "closing",
+      "filename": "circuits__inductor__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::node",
+      "subject": "circuits",
+      "chapter_title": "Where Wires Meet: The Node and Kirchhoff's Current Law",
+      "slot": "opening",
+      "filename": "circuits__node__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::node",
+      "subject": "circuits",
+      "chapter_title": "Where Wires Meet: The Node and Kirchhoff's Current Law",
+      "slot": "closing",
+      "filename": "circuits__node__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::ohm-s-law",
+      "subject": "circuits",
+      "chapter_title": "Tying Voltage, Current, and Resistance Together",
+      "slot": "opening",
+      "filename": "circuits__ohm-s-law__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::ohm-s-law",
+      "subject": "circuits",
+      "chapter_title": "Tying Voltage, Current, and Resistance Together",
+      "slot": "closing",
+      "filename": "circuits__ohm-s-law__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::parallel-circuits",
+      "subject": "circuits",
+      "chapter_title": "Splitting the Path",
+      "slot": "opening",
+      "filename": "circuits__parallel-circuits__opening.png",
+      "width": 1314,
+      "height": 1197
+    },
+    {
+      "concept_id": "circuits::parallel-circuits",
+      "subject": "circuits",
+      "chapter_title": "Splitting the Path",
+      "slot": "closing",
+      "filename": "circuits__parallel-circuits__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::power",
+      "subject": "circuits",
+      "chapter_title": "How Fast the Work Gets Done: Electrical Power",
+      "slot": "opening",
+      "filename": "circuits__power__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::power",
+      "subject": "circuits",
+      "chapter_title": "How Fast the Work Gets Done: Electrical Power",
+      "slot": "closing",
+      "filename": "circuits__power__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::resistance",
+      "subject": "circuits",
+      "chapter_title": "The Circuit's Friction: Resistance and Ohm's Law",
+      "slot": "opening",
+      "filename": "circuits__resistance__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::resistance",
+      "subject": "circuits",
+      "chapter_title": "The Circuit's Friction: Resistance and Ohm's Law",
+      "slot": "closing",
+      "filename": "circuits__resistance__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::series-circuits",
+      "subject": "circuits",
+      "chapter_title": "One Path, One Current: How Series Circuits Behave",
+      "slot": "opening",
+      "filename": "circuits__series-circuits__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::series-circuits",
+      "subject": "circuits",
+      "chapter_title": "One Path, One Current: How Series Circuits Behave",
+      "slot": "closing",
+      "filename": "circuits__series-circuits__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::series-parallel-circuits",
+      "subject": "circuits",
+      "chapter_title": "Divide and Conquer: Simplifying Series-Parallel Networks",
+      "slot": "opening",
+      "filename": "circuits__series-parallel-circuits__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::series-parallel-circuits",
+      "subject": "circuits",
+      "chapter_title": "Divide and Conquer: Simplifying Series-Parallel Networks",
+      "slot": "closing",
+      "filename": "circuits__series-parallel-circuits__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::thevenin-s-theorem",
+      "subject": "circuits",
+      "chapter_title": "Replacing a Whole Circuit with One Source and One Resistor",
+      "slot": "opening",
+      "filename": "circuits__thevenin-s-theorem__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::thevenin-s-theorem",
+      "subject": "circuits",
+      "chapter_title": "Replacing a Whole Circuit with One Source and One Resistor",
+      "slot": "closing",
+      "filename": "circuits__thevenin-s-theorem__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::voltage",
+      "subject": "circuits",
+      "chapter_title": "Voltage: The Push Behind the Current",
+      "slot": "opening",
+      "filename": "circuits__voltage__opening.png",
+      "width": 1233,
+      "height": 1276
+    },
+    {
+      "concept_id": "circuits::voltage",
+      "subject": "circuits",
+      "chapter_title": "Voltage: The Push Behind the Current",
+      "slot": "closing",
+      "filename": "circuits__voltage__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::voltage-divider",
+      "subject": "circuits",
+      "chapter_title": "Splitting the Difference: The Voltage Divider Circuit",
+      "slot": "opening",
+      "filename": "circuits__voltage-divider__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::voltage-divider",
+      "subject": "circuits",
+      "chapter_title": "Splitting the Difference: The Voltage Divider Circuit",
+      "slot": "closing",
+      "filename": "circuits__voltage-divider__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "circuits::voltage-source",
+      "subject": "circuits",
+      "chapter_title": "The Circuit's Engine: Ideal and Real Voltage Sources",
+      "slot": "opening",
+      "filename": "circuits__voltage-source__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "circuits::voltage-source",
+      "subject": "circuits",
+      "chapter_title": "The Circuit's Engine: Ideal and Real Voltage Sources",
+      "slot": "closing",
+      "filename": "circuits__voltage-source__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::abstraction",
+      "subject": "computer-science",
+      "chapter_title": "Abstraction: Hiding the Details You Don't Need",
+      "slot": "opening",
+      "filename": "computer-science__abstraction__opening.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "computer-science::abstraction",
+      "subject": "computer-science",
+      "chapter_title": "Abstraction: Hiding the Details You Don't Need",
+      "slot": "closing",
+      "filename": "computer-science__abstraction__closing.png",
+      "width": 1313,
+      "height": 1198
+    },
+    {
+      "concept_id": "computer-science::algorithms",
+      "subject": "computer-science",
+      "chapter_title": "Algorithms: Precise Recipes for Solving Problems",
+      "slot": "opening",
+      "filename": "computer-science__algorithms__opening.png",
+      "width": 1392,
+      "height": 1130
+    },
+    {
+      "concept_id": "computer-science::algorithms",
+      "subject": "computer-science",
+      "chapter_title": "Algorithms: Precise Recipes for Solving Problems",
+      "slot": "closing",
+      "filename": "computer-science__algorithms__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::ascii-and-unicode",
+      "subject": "computer-science",
+      "chapter_title": "ASCII and Unicode: From English Letters to Every Written Language",
+      "slot": "opening",
+      "filename": "computer-science__ascii-and-unicode__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "computer-science::ascii-and-unicode",
+      "subject": "computer-science",
+      "chapter_title": "ASCII and Unicode: From English Letters to Every Written Language",
+      "slot": "closing",
+      "filename": "computer-science__ascii-and-unicode__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::binary-number-system",
+      "subject": "computer-science",
+      "chapter_title": "Counting in Twos: The Binary Number System",
+      "slot": "opening",
+      "filename": "computer-science__binary-number-system__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::binary-number-system",
+      "subject": "computer-science",
+      "chapter_title": "Counting in Twos: The Binary Number System",
+      "slot": "closing",
+      "filename": "computer-science__binary-number-system__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::bits-and-bytes",
+      "subject": "computer-science",
+      "chapter_title": "From Single Digits to Bytes",
+      "slot": "opening",
+      "filename": "computer-science__bits-and-bytes__opening.png",
+      "width": 1331,
+      "height": 1181
+    },
+    {
+      "concept_id": "computer-science::bits-and-bytes",
+      "subject": "computer-science",
+      "chapter_title": "From Single Digits to Bytes",
+      "slot": "closing",
+      "filename": "computer-science__bits-and-bytes__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::character-encoding",
+      "subject": "computer-science",
+      "chapter_title": "Character Encoding: How Letters Become Numbers",
+      "slot": "opening",
+      "filename": "computer-science__character-encoding__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::character-encoding",
+      "subject": "computer-science",
+      "chapter_title": "Character Encoding: How Letters Become Numbers",
+      "slot": "closing",
+      "filename": "computer-science__character-encoding__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::computational-thinking",
+      "subject": "computer-science",
+      "chapter_title": "Computational Thinking: Thinking Like a Problem Solver Before You Code",
+      "slot": "opening",
+      "filename": "computer-science__computational-thinking__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::computational-thinking",
+      "subject": "computer-science",
+      "chapter_title": "Computational Thinking: Thinking Like a Problem Solver Before You Code",
+      "slot": "closing",
+      "filename": "computer-science__computational-thinking__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "computer-science::computer-hardware",
+      "subject": "computer-science",
+      "chapter_title": "Inside the Machine: The Physical Parts That Make Computing Possible",
+      "slot": "opening",
+      "filename": "computer-science__computer-hardware__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::computer-hardware",
+      "subject": "computer-science",
+      "chapter_title": "Inside the Machine: The Physical Parts That Make Computing Possible",
+      "slot": "closing",
+      "filename": "computer-science__computer-hardware__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "computer-science::computer-science",
+      "subject": "computer-science",
+      "chapter_title": "So, What Is Computer Science, Really?",
+      "slot": "opening",
+      "filename": "computer-science__computer-science__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::computer-science",
+      "subject": "computer-science",
+      "chapter_title": "So, What Is Computer Science, Really?",
+      "slot": "closing",
+      "filename": "computer-science__computer-science__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::cpu-and-memory",
+      "subject": "computer-science",
+      "chapter_title": "The Fetch Execute Cycle: How a CPU Actually Runs a Program",
+      "slot": "opening",
+      "filename": "computer-science__cpu-and-memory__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::cpu-and-memory",
+      "subject": "computer-science",
+      "chapter_title": "The Fetch Execute Cycle: How a CPU Actually Runs a Program",
+      "slot": "closing",
+      "filename": "computer-science__cpu-and-memory__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::decomposition",
+      "subject": "computer-science",
+      "chapter_title": "Decomposition: Breaking Big Problems Into Small Ones",
+      "slot": "opening",
+      "filename": "computer-science__decomposition__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "computer-science::decomposition",
+      "subject": "computer-science",
+      "chapter_title": "Decomposition: Breaking Big Problems Into Small Ones",
+      "slot": "closing",
+      "filename": "computer-science__decomposition__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::linear-search",
+      "subject": "computer-science",
+      "chapter_title": "Linear Search: Checking Every Door",
+      "slot": "opening",
+      "filename": "computer-science__linear-search__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::linear-search",
+      "subject": "computer-science",
+      "chapter_title": "Linear Search: Checking Every Door",
+      "slot": "closing",
+      "filename": "computer-science__linear-search__closing.png",
+      "width": 1331,
+      "height": 1181
+    },
+    {
+      "concept_id": "computer-science::pattern-recognition",
+      "subject": "computer-science",
+      "chapter_title": "Pattern Recognition: Spotting Repetition Before You Automate It",
+      "slot": "opening",
+      "filename": "computer-science__pattern-recognition__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "computer-science::pattern-recognition",
+      "subject": "computer-science",
+      "chapter_title": "Pattern Recognition: Spotting Repetition Before You Automate It",
+      "slot": "closing",
+      "filename": "computer-science__pattern-recognition__closing.png",
+      "width": 1329,
+      "height": 1183
+    },
+    {
+      "concept_id": "computer-science::problem-solving",
+      "subject": "computer-science",
+      "chapter_title": "Problem Solving: Putting the Whole Toolkit to Work",
+      "slot": "opening",
+      "filename": "computer-science__problem-solving__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::problem-solving",
+      "subject": "computer-science",
+      "chapter_title": "Problem Solving: Putting the Whole Toolkit to Work",
+      "slot": "closing",
+      "filename": "computer-science__problem-solving__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::stepwise-refinement",
+      "subject": "computer-science",
+      "chapter_title": "Stepwise Refinement: From Rough Plan to Working Code",
+      "slot": "opening",
+      "filename": "computer-science__stepwise-refinement__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "computer-science::stepwise-refinement",
+      "subject": "computer-science",
+      "chapter_title": "Stepwise Refinement: From Rough Plan to Working Code",
+      "slot": "closing",
+      "filename": "computer-science__stepwise-refinement__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::bit",
+      "subject": "networking",
+      "chapter_title": "The Bit: Networking's Smallest Unit",
+      "slot": "opening",
+      "filename": "networking__bit__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::bit",
+      "subject": "networking",
+      "chapter_title": "The Bit: Networking's Smallest Unit",
+      "slot": "closing",
+      "filename": "networking__bit__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::client",
+      "subject": "networking",
+      "chapter_title": "Clients: The End Systems That Ask First",
+      "slot": "opening",
+      "filename": "networking__client__opening.png",
+      "width": 1316,
+      "height": 1195
+    },
+    {
+      "concept_id": "networking::client",
+      "subject": "networking",
+      "chapter_title": "Clients: The End Systems That Ask First",
+      "slot": "closing",
+      "filename": "networking__client__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::communication-link",
+      "subject": "networking",
+      "chapter_title": "Communication Links: The Physical Paths Between Nodes",
+      "slot": "opening",
+      "filename": "networking__communication-link__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::communication-link",
+      "subject": "networking",
+      "chapter_title": "Communication Links: The Physical Paths Between Nodes",
+      "slot": "closing",
+      "filename": "networking__communication-link__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::computer-network",
+      "subject": "networking",
+      "chapter_title": "What Makes a Network",
+      "slot": "opening",
+      "filename": "networking__computer-network__opening.png",
+      "width": 1329,
+      "height": 1183
+    },
+    {
+      "concept_id": "networking::computer-network",
+      "subject": "networking",
+      "chapter_title": "What Makes a Network",
+      "slot": "closing",
+      "filename": "networking__computer-network__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::cryptography-basics",
+      "subject": "networking",
+      "chapter_title": "Securing Bits: The Basics of Cryptography",
+      "slot": "opening",
+      "filename": "networking__cryptography-basics__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::cryptography-basics",
+      "subject": "networking",
+      "chapter_title": "Securing Bits: The Basics of Cryptography",
+      "slot": "closing",
+      "filename": "networking__cryptography-basics__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::end-system",
+      "subject": "networking",
+      "chapter_title": "End Systems: Where the Network Begins and Ends",
+      "slot": "opening",
+      "filename": "networking__end-system__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::end-system",
+      "subject": "networking",
+      "chapter_title": "End Systems: Where the Network Begins and Ends",
+      "slot": "closing",
+      "filename": "networking__end-system__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::host",
+      "subject": "networking",
+      "chapter_title": "What Counts as a Host: The Basic Unit of a Network",
+      "slot": "opening",
+      "filename": "networking__host__opening.png",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "concept_id": "networking::host",
+      "subject": "networking",
+      "chapter_title": "What Counts as a Host: The Basic Unit of a Network",
+      "slot": "closing",
+      "filename": "networking__host__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::ip-address",
+      "subject": "networking",
+      "chapter_title": "IP Addresses: Giving Every Interface a Findable Place",
+      "slot": "opening",
+      "filename": "networking__ip-address__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::ip-address",
+      "subject": "networking",
+      "chapter_title": "IP Addresses: Giving Every Interface a Findable Place",
+      "slot": "closing",
+      "filename": "networking__ip-address__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::mac-address",
+      "subject": "networking",
+      "chapter_title": "MAC Addresses: The Identity Built Into Every Interface",
+      "slot": "opening",
+      "filename": "networking__mac-address__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::mac-address",
+      "subject": "networking",
+      "chapter_title": "MAC Addresses: The Identity Built Into Every Interface",
+      "slot": "closing",
+      "filename": "networking__mac-address__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::network-core",
+      "subject": "networking",
+      "chapter_title": "The Network Core: A Mesh of Switches Moving Everyone's Data",
+      "slot": "opening",
+      "filename": "networking__network-core__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::network-core",
+      "subject": "networking",
+      "chapter_title": "The Network Core: A Mesh of Switches Moving Everyone's Data",
+      "slot": "closing",
+      "filename": "networking__network-core__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::network-edge",
+      "subject": "networking",
+      "chapter_title": "The Network Edge: Where Hosts Meet the Network",
+      "slot": "opening",
+      "filename": "networking__network-edge__opening.png",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "concept_id": "networking::network-edge",
+      "subject": "networking",
+      "chapter_title": "The Network Edge: Where Hosts Meet the Network",
+      "slot": "closing",
+      "filename": "networking__network-edge__closing.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::network-interface",
+      "subject": "networking",
+      "chapter_title": "Network Interfaces: Where a Host Meets Its Link",
+      "slot": "opening",
+      "filename": "networking__network-interface__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::network-interface",
+      "subject": "networking",
+      "chapter_title": "Network Interfaces: Where a Host Meets Its Link",
+      "slot": "closing",
+      "filename": "networking__network-interface__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::network-node",
+      "subject": "networking",
+      "chapter_title": "Nodes: Every Point Where the Network Connects",
+      "slot": "opening",
+      "filename": "networking__network-node__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::network-node",
+      "subject": "networking",
+      "chapter_title": "Nodes: Every Point Where the Network Connects",
+      "slot": "closing",
+      "filename": "networking__network-node__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::port-number",
+      "subject": "networking",
+      "chapter_title": "Port Numbers: Sorting Traffic to the Right Application",
+      "slot": "opening",
+      "filename": "networking__port-number__opening.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::port-number",
+      "subject": "networking",
+      "chapter_title": "Port Numbers: Sorting Traffic to the Right Application",
+      "slot": "closing",
+      "filename": "networking__port-number__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::server",
+      "subject": "networking",
+      "chapter_title": "Servers: The End Systems That Wait to Be Asked",
+      "slot": "opening",
+      "filename": "networking__server__opening.png",
+      "width": 1295,
+      "height": 1215
+    },
+    {
+      "concept_id": "networking::server",
+      "subject": "networking",
+      "chapter_title": "Servers: The End Systems That Wait to Be Asked",
+      "slot": "closing",
+      "filename": "networking__server__closing.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "concept_id": "networking::slow-start",
+      "subject": "networking",
+      "chapter_title": "Slow Start: Probing Bandwidth Quickly",
+      "slot": "opening",
+      "filename": "networking__slow-start__opening.png",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "concept_id": "networking::slow-start",
+      "subject": "networking",
+      "chapter_title": "Slow Start: Probing Bandwidth Quickly",
+      "slot": "closing",
+      "filename": "networking__slow-start__closing.png",
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

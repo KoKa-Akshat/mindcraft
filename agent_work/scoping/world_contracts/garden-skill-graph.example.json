@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "graphId": "garden:spring-restoration",
+  "version": "0.1.0",
+  "title": "Garden Spring Restoration",
+  "summary": "Connect sunlight, shade, temperature, water, and nutrients to model plant growth.",
+  "blocks": [
+    {
+      "instanceId": "sun",
+      "blockId": "garden:solar-irradiance",
+      "blockVersion": "0.1.0",
+      "contentHash": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "instanceId": "canopy",
+      "blockId": "garden:shade-attenuation",
+      "blockVersion": "0.1.0",
+      "contentHash": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "instanceId": "soil_heat",
+      "blockId": "garden:thermal-balance",
+      "blockVersion": "0.1.0",
+      "contentHash": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "instanceId": "soil_water",
+      "blockId": "core:bounded-reservoir",
+      "blockVersion": "0.1.0",
+      "contentHash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "initialState": {
+        "level": 60
+      },
+      "parameters": {
+        "minimum": 0,
+        "maximum": 100,
+        "leakPerTick": 0.05
+      }
+    },
+    {
+      "instanceId": "plant",
+      "blockId": "garden:plant-growth",
+      "blockVersion": "0.1.0",
+      "contentHash": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "sun_to_canopy",
+      "from": {
+        "instanceId": "sun",
+        "portId": "light_pct"
+      },
+      "to": {
+        "instanceId": "canopy",
+        "portId": "incoming_light_pct"
+      }
+    },
+    {
+      "edgeId": "canopy_to_heat",
+      "from": {
+        "instanceId": "canopy",
+        "portId": "transmitted_light_pct"
+      },
+      "to": {
+        "instanceId": "soil_heat",
+        "portId": "light_pct"
+      }
+    },
+    {
+      "edgeId": "canopy_to_plant",
+      "from": {
+        "instanceId": "canopy",
+        "portId": "shade_pct"
+      },
+      "to": {
+        "instanceId": "plant",
+        "portId": "shade_pct"
+      }
+    },
+    {
+      "edgeId": "heat_to_plant",
+      "from": {
+        "instanceId": "soil_heat",
+        "portId": "temperature_c"
+      },
+      "to": {
+        "instanceId": "plant",
+        "portId": "temperature_c"
+      }
+    },
+    {
+      "edgeId": "water_to_plant",
+      "from": {
+        "instanceId": "soil_water",
+        "portId": "level_pct"
+      },
+      "to": {
+        "instanceId": "plant",
+        "portId": "moisture_pct"
+      }
+    }
+  ],
+  "boundaryInputs": {
+    "sun_angle_deg": {
+      "instanceId": "sun",
+      "portId": "angle_deg"
+    },
+    "canopy_pct": {
+      "instanceId": "canopy",
+      "portId": "canopy_pct"
+    },
+    "water_input_pct": {
+      "instanceId": "soil_water",
+      "portId": "inflow_pct"
+    },
+    "fertilizer_pct": {
+      "instanceId": "plant",
+      "portId": "fertilizer_pct"
+    }
+  },
+  "boundaryOutputs": {
+    "growth_mm_per_day": {
+      "instanceId": "plant",
+      "portId": "growth_mm_per_day"
+    },
+    "soil_temperature_c": {
+      "instanceId": "soil_heat",
+      "portId": "temperature_c"
+    },
+    "soil_moisture_pct": {
+      "instanceId": "soil_water",
+      "portId": "level_pct"
+    }
+  },
+  "seed": "garden-spring-restoration-example-v1",
+  "tickMs": 1000,
+  "checkpointPolicy": {
+    "afterInputEvents": 10,
+    "afterSimulatedSeconds": 60
+  }
+}

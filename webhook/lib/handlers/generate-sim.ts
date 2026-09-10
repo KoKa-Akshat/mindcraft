@@ -107,7 +107,14 @@ async function persistToLibrary(result: GeneratedSimResult, jobId: string): Prom
   })
 }
 
-async function handleStart(uid: string, rawTopic: string, res: VercelResponse, studentGeminiKey?: string) {
+interface StudentByok {
+  provider: 'openai' | 'groq' | 'gemini' | 'openrouter' | 'anthropic' | 'custom'
+  apiKey: string
+  model?: string
+  baseUrl?: string
+}
+
+async function handleStart(uid: string, rawTopic: string, res: VercelResponse, studentGeminiKey?: string, studentByok?: StudentByok) {
   const topic = rawTopic.trim().slice(0, MAX_TOPIC)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const topicSlug = slugifyTopic(topic)
@@ -138,7 +145,13 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse, s
   // correct or the fix has no teeth (see content-engine's own commit
   // fixing _Usage.to_payload from flat-pricing everything at Anthropic
   // rates regardless of provider).
-  if (!studentGeminiKey) {
+  // 2026-09-04, explicit founder ask: ANY provider a student has set in
+  // Settings (not just Gemini) should power live generation and skip the
+  // platform budget the same way studentGeminiKey already does, see
+  // content-engine's build_byok_generator for the actual dispatch this
+  // enables. studentByok is only meaningful with both a provider and a key.
+  const hasStudentKey = !!studentGeminiKey || !!(studentByok?.provider && studentByok?.apiKey)
+  if (!hasStudentKey) {
     const platformBudget = await checkPlatformBudget(uid)
     if (!platformBudget.allowed) {
       return res.status(429).json({
@@ -180,6 +193,16 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse, s
         topic,
         topic_slug: topicSlug,
         ...(studentGeminiKey ? { student_gemini_key: studentGeminiKey } : {}),
+        ...(studentByok?.provider && studentByok?.apiKey
+          ? {
+              student_byok: {
+                provider: studentByok.provider,
+                api_key: studentByok.apiKey,
+                model: studentByok.model,
+                base_url: studentByok.baseUrl,
+              },
+            }
+          : {}),
       }),
     })
     const data = (await serviceRes.json().catch(() => ({}))) as { job_id?: string }
@@ -282,13 +305,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; jobId?: string; studentGeminiKey?: string }
+  const body = (req.body || {}) as {
+    topic?: string
+    jobId?: string
+    studentGeminiKey?: string
+    studentByok?: Partial<StudentByok>
+  }
   if (typeof body.jobId === 'string' && body.jobId) {
     return handlePoll(body.jobId, res)
   }
   if (typeof body.topic === 'string' && body.topic) {
     const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
-    return handleStart(uid, body.topic, res, studentGeminiKey || undefined)
+    const rawByok = body.studentByok
+    const studentByok: StudentByok | undefined =
+      rawByok && typeof rawByok.provider === 'string' && typeof rawByok.apiKey === 'string' && rawByok.apiKey
+        ? {
+            provider: rawByok.provider as StudentByok['provider'],
+            apiKey: rawByok.apiKey,
+            model: typeof rawByok.model === 'string' ? rawByok.model : undefined,
+            baseUrl: typeof rawByok.baseUrl === 'string' ? rawByok.baseUrl : undefined,
+          }
+        : undefined
+    return handleStart(uid, body.topic, res, studentGeminiKey || undefined, studentByok)
   }
   return res.status(400).json({ error: 'topic (start) or jobId (poll) required' })
 }

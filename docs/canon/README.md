@@ -18,6 +18,7 @@ These are the living contracts. Prefer them over chat memory. Do not invent para
 | 5 | **Product UI** | [`FABLE5_VISION.md`](../../FABLE5_VISION.md) | Design tokens / area briefs (Product lane) |
 | 6 | **LLM contracts** | [`AGENT_RULEBOOK.md`](../../AGENT_RULEBOOK.md) | What agents can/cannot say or invent |
 | 7 | **Dashboard paper** | [`DASHBOARD_NOTEBOOK_SPEC.md`](../../DASHBOARD_NOTEBOOK_SPEC.md) | Field Journal / notebook system |
+| 8 | **World narrative** | [`STORY_DIRECTOR.md`](./STORY_DIRECTOR.md) | MindCraft World story bible, content-gating rubric, reconciled against `/world-builder` (AGENT_RULEBOOK §1.7) and the Research Constitution |
 
 Session logistics: [`CURSOR_HANDOFF.md`](../../CURSOR_HANDOFF.md) · ship log: [`ACTIVE_TASK.md`](../../ACTIVE_TASK.md) · full stack brief: [`CLAUDE.md`](../../CLAUDE.md).
 

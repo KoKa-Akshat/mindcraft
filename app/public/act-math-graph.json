@@ -1,0 +1,641 @@
+{
+  "nodes": [
+    {
+      "id": "fractions_decimals",
+      "label": "Fractions and Decimals",
+      "group": "foundational"
+    },
+    {
+      "id": "ratios_proportions",
+      "label": "Ratios and Proportions",
+      "group": "foundational"
+    },
+    {
+      "id": "order_of_operations",
+      "label": "Order of Operations",
+      "group": "foundational"
+    },
+    {
+      "id": "basic_equations",
+      "label": "Basic One-Variable Equations",
+      "group": "foundational"
+    },
+    {
+      "id": "linear_equations",
+      "label": "Linear Equations",
+      "group": "core"
+    },
+    {
+      "id": "functions_basics",
+      "label": "Basics of Functions",
+      "group": "core"
+    },
+    {
+      "id": "right_triangle_geometry",
+      "label": "Right Triangle Geometry",
+      "group": "core"
+    },
+    {
+      "id": "trigonometry_basics",
+      "label": "Trigonometry Basics",
+      "group": "core"
+    },
+    {
+      "id": "limits_continuity",
+      "label": "Limits and Continuity",
+      "group": "advanced"
+    },
+    {
+      "id": "derivatives",
+      "label": "Derivatives",
+      "group": "advanced"
+    },
+    {
+      "id": "linear_inequalities",
+      "label": "Linear Inequalities",
+      "group": "core"
+    },
+    {
+      "id": "systems_of_linear_equations",
+      "label": "Systems of Linear Equations",
+      "group": "core"
+    },
+    {
+      "id": "exponent_rules",
+      "label": "Exponent Rules",
+      "group": "core"
+    },
+    {
+      "id": "polynomials",
+      "label": "Polynomial Operations",
+      "group": "core"
+    },
+    {
+      "id": "factoring_polynomials",
+      "label": "Factoring Polynomials",
+      "group": "core"
+    },
+    {
+      "id": "radical_expressions",
+      "label": "Radical Expressions",
+      "group": "core"
+    },
+    {
+      "id": "quadratic_equations",
+      "label": "Quadratic Equations",
+      "group": "core"
+    },
+    {
+      "id": "descriptive_statistics",
+      "label": "Descriptive Statistics",
+      "group": "core"
+    },
+    {
+      "id": "basic_probability",
+      "label": "Basic Probability",
+      "group": "core"
+    },
+    {
+      "id": "exponential_functions",
+      "label": "Exponential Functions",
+      "group": "core"
+    },
+    {
+      "id": "logarithmic_functions",
+      "label": "Logarithmic Functions",
+      "group": "core"
+    },
+    {
+      "id": "sequences_series",
+      "label": "Sequences and Series",
+      "group": "core"
+    },
+    {
+      "id": "lines_angles",
+      "label": "Lines and Angles",
+      "group": "core"
+    },
+    {
+      "id": "triangles_congruence",
+      "label": "Triangles and Congruence",
+      "group": "core"
+    },
+    {
+      "id": "circles_geometry",
+      "label": "Geometry of Circles",
+      "group": "core"
+    },
+    {
+      "id": "area_volume",
+      "label": "Area and Volume",
+      "group": "core"
+    },
+    {
+      "id": "geometric_transformations",
+      "label": "Geometric Transformations",
+      "group": "core"
+    },
+    {
+      "id": "rational_expressions",
+      "label": "Rational Expressions",
+      "group": "core"
+    },
+    {
+      "id": "complex_numbers",
+      "label": "Complex Numbers",
+      "group": "advanced"
+    },
+    {
+      "id": "vectors",
+      "label": "Vectors",
+      "group": "advanced"
+    },
+    {
+      "id": "matrices",
+      "label": "Matrices",
+      "group": "advanced"
+    },
+    {
+      "id": "conic_sections",
+      "label": "Conic Sections",
+      "group": "advanced"
+    },
+    {
+      "id": "probability_distributions",
+      "label": "Probability Distributions",
+      "group": "advanced"
+    },
+    {
+      "id": "applications_of_derivatives",
+      "label": "Applications of Derivatives",
+      "group": "advanced"
+    },
+    {
+      "id": "integrals",
+      "label": "Integrals",
+      "group": "advanced"
+    },
+    {
+      "id": "applications_of_integrals",
+      "label": "Applications of Integrals",
+      "group": "advanced"
+    },
+    {
+      "id": "inferential_statistics",
+      "label": "Inferential Statistics",
+      "group": "advanced"
+    },
+    {
+      "id": "number_properties",
+      "label": "Number Properties, Factors, and Divisibility",
+      "group": "foundational"
+    },
+    {
+      "id": "measurement_units",
+      "label": "Units, Measurement, and Dimensional Reasoning",
+      "group": "foundational"
+    },
+    {
+      "id": "algebraic_manipulation",
+      "label": "Algebraic Structure and Symbolic Manipulation",
+      "group": "foundational"
+    },
+    {
+      "id": "representation_translation",
+      "label": "Representation Translation and Mathematical Modeling",
+      "group": "cross_cutting"
+    },
+    {
+      "id": "act_strategy",
+      "label": "ACT Mathematical Strategy and Test-Taking Heuristics",
+      "group": "cross_cutting"
+    }
+  ],
+  "edges": [
+    {
+      "from": "fractions_decimals",
+      "to": "ratios_proportions",
+      "weight": 0.554
+    },
+    {
+      "from": "fractions_decimals",
+      "to": "basic_probability",
+      "weight": 0.406
+    },
+    {
+      "from": "fractions_decimals",
+      "to": "polynomials",
+      "weight": 0.36
+    },
+    {
+      "from": "ratios_proportions",
+      "to": "basic_equations",
+      "weight": 0.437
+    },
+    {
+      "from": "ratios_proportions",
+      "to": "trigonometry_basics",
+      "weight": 0.432
+    },
+    {
+      "from": "ratios_proportions",
+      "to": "measurement_units",
+      "weight": 0.4
+    },
+    {
+      "from": "order_of_operations",
+      "to": "exponent_rules",
+      "weight": 0.491
+    },
+    {
+      "from": "order_of_operations",
+      "to": "polynomials",
+      "weight": 0.458
+    },
+    {
+      "from": "basic_equations",
+      "to": "systems_of_linear_equations",
+      "weight": 0.602
+    },
+    {
+      "from": "basic_equations",
+      "to": "polynomials",
+      "weight": 0.525
+    },
+    {
+      "from": "basic_equations",
+      "to": "linear_equations",
+      "weight": 0.503
+    },
+    {
+      "from": "linear_equations",
+      "to": "systems_of_linear_equations",
+      "weight": 0.599
+    },
+    {
+      "from": "linear_equations",
+      "to": "lines_angles",
+      "weight": 0.585
+    },
+    {
+      "from": "linear_equations",
+      "to": "linear_inequalities",
+      "weight": 0.541
+    },
+    {
+      "from": "functions_basics",
+      "to": "logarithmic_functions",
+      "weight": 0.516
+    },
+    {
+      "from": "functions_basics",
+      "to": "linear_equations",
+      "weight": 0.487
+    },
+    {
+      "from": "functions_basics",
+      "to": "derivatives",
+      "weight": 0.48
+    },
+    {
+      "from": "right_triangle_geometry",
+      "to": "trigonometry_basics",
+      "weight": 0.556
+    },
+    {
+      "from": "right_triangle_geometry",
+      "to": "triangles_congruence",
+      "weight": 0.491
+    },
+    {
+      "from": "right_triangle_geometry",
+      "to": "lines_angles",
+      "weight": 0.458
+    },
+    {
+      "from": "trigonometry_basics",
+      "to": "lines_angles",
+      "weight": 0.508
+    },
+    {
+      "from": "trigonometry_basics",
+      "to": "triangles_congruence",
+      "weight": 0.405
+    },
+    {
+      "from": "trigonometry_basics",
+      "to": "circles_geometry",
+      "weight": 0.387
+    },
+    {
+      "from": "limits_continuity",
+      "to": "derivatives",
+      "weight": 0.487
+    },
+    {
+      "from": "limits_continuity",
+      "to": "functions_basics",
+      "weight": 0.453
+    },
+    {
+      "from": "derivatives",
+      "to": "applications_of_derivatives",
+      "weight": 0.487
+    },
+    {
+      "from": "derivatives",
+      "to": "linear_equations",
+      "weight": 0.448
+    },
+    {
+      "from": "derivatives",
+      "to": "lines_angles",
+      "weight": 0.402
+    },
+    {
+      "from": "linear_inequalities",
+      "to": "basic_equations",
+      "weight": 0.421
+    },
+    {
+      "from": "linear_inequalities",
+      "to": "systems_of_linear_equations",
+      "weight": 0.363
+    },
+    {
+      "from": "linear_inequalities",
+      "to": "functions_basics",
+      "weight": 0.361
+    },
+    {
+      "from": "systems_of_linear_equations",
+      "to": "lines_angles",
+      "weight": 0.413
+    },
+    {
+      "from": "systems_of_linear_equations",
+      "to": "quadratic_equations",
+      "weight": 0.39
+    },
+    {
+      "from": "exponent_rules",
+      "to": "polynomials",
+      "weight": 0.67
+    },
+    {
+      "from": "exponent_rules",
+      "to": "logarithmic_functions",
+      "weight": 0.546
+    },
+    {
+      "from": "exponent_rules",
+      "to": "radical_expressions",
+      "weight": 0.516
+    },
+    {
+      "from": "polynomials",
+      "to": "factoring_polynomials",
+      "weight": 0.788
+    },
+    {
+      "from": "polynomials",
+      "to": "radical_expressions",
+      "weight": 0.568
+    },
+    {
+      "from": "polynomials",
+      "to": "quadratic_equations",
+      "weight": 0.532
+    },
+    {
+      "from": "factoring_polynomials",
+      "to": "quadratic_equations",
+      "weight": 0.64
+    },
+    {
+      "from": "factoring_polynomials",
+      "to": "radical_expressions",
+      "weight": 0.538
+    },
+    {
+      "from": "factoring_polynomials",
+      "to": "exponent_rules",
+      "weight": 0.498
+    },
+    {
+      "from": "radical_expressions",
+      "to": "rational_expressions",
+      "weight": 0.543
+    },
+    {
+      "from": "radical_expressions",
+      "to": "logarithmic_functions",
+      "weight": 0.379
+    },
+    {
+      "from": "quadratic_equations",
+      "to": "linear_equations",
+      "weight": 0.469
+    },
+    {
+      "from": "quadratic_equations",
+      "to": "basic_equations",
+      "weight": 0.382
+    },
+    {
+      "from": "quadratic_equations",
+      "to": "right_triangle_geometry",
+      "weight": 0.367
+    },
+    {
+      "from": "descriptive_statistics",
+      "to": "basic_probability",
+      "weight": 0.393
+    },
+    {
+      "from": "basic_probability",
+      "to": "probability_distributions",
+      "weight": 0.407
+    },
+    {
+      "from": "exponential_functions",
+      "to": "logarithmic_functions",
+      "weight": 0.645
+    },
+    {
+      "from": "exponential_functions",
+      "to": "functions_basics",
+      "weight": 0.46
+    },
+    {
+      "from": "exponential_functions",
+      "to": "exponent_rules",
+      "weight": 0.422
+    },
+    {
+      "from": "logarithmic_functions",
+      "to": "polynomials",
+      "weight": 0.432
+    },
+    {
+      "from": "logarithmic_functions",
+      "to": "basic_equations",
+      "weight": 0.371
+    },
+    {
+      "from": "lines_angles",
+      "to": "ratios_proportions",
+      "weight": 0.351
+    },
+    {
+      "from": "triangles_congruence",
+      "to": "circles_geometry",
+      "weight": 0.375
+    },
+    {
+      "from": "circles_geometry",
+      "to": "geometric_transformations",
+      "weight": 0.532
+    },
+    {
+      "from": "circles_geometry",
+      "to": "conic_sections",
+      "weight": 0.527
+    },
+    {
+      "from": "circles_geometry",
+      "to": "right_triangle_geometry",
+      "weight": 0.438
+    },
+    {
+      "from": "area_volume",
+      "to": "integrals",
+      "weight": 0.432
+    },
+    {
+      "from": "area_volume",
+      "to": "measurement_units",
+      "weight": 0.407
+    },
+    {
+      "from": "area_volume",
+      "to": "conic_sections",
+      "weight": 0.367
+    },
+    {
+      "from": "geometric_transformations",
+      "to": "vectors",
+      "weight": 0.519
+    },
+    {
+      "from": "geometric_transformations",
+      "to": "matrices",
+      "weight": 0.464
+    },
+    {
+      "from": "geometric_transformations",
+      "to": "conic_sections",
+      "weight": 0.461
+    },
+    {
+      "from": "rational_expressions",
+      "to": "polynomials",
+      "weight": 0.493
+    },
+    {
+      "from": "rational_expressions",
+      "to": "factoring_polynomials",
+      "weight": 0.455
+    },
+    {
+      "from": "rational_expressions",
+      "to": "complex_numbers",
+      "weight": 0.442
+    },
+    {
+      "from": "complex_numbers",
+      "to": "matrices",
+      "weight": 0.369
+    },
+    {
+      "from": "vectors",
+      "to": "matrices",
+      "weight": 0.582
+    },
+    {
+      "from": "vectors",
+      "to": "measurement_units",
+      "weight": 0.414
+    },
+    {
+      "from": "vectors",
+      "to": "circles_geometry",
+      "weight": 0.386
+    },
+    {
+      "from": "matrices",
+      "to": "conic_sections",
+      "weight": 0.361
+    },
+    {
+      "from": "probability_distributions",
+      "to": "inferential_statistics",
+      "weight": 0.535
+    },
+    {
+      "from": "probability_distributions",
+      "to": "integrals",
+      "weight": 0.371
+    },
+    {
+      "from": "applications_of_derivatives",
+      "to": "applications_of_integrals",
+      "weight": 0.657
+    },
+    {
+      "from": "applications_of_derivatives",
+      "to": "integrals",
+      "weight": 0.389
+    },
+    {
+      "from": "integrals",
+      "to": "applications_of_integrals",
+      "weight": 0.691
+    },
+    {
+      "from": "measurement_units",
+      "to": "representation_translation",
+      "weight": 0.398
+    },
+    {
+      "from": "algebraic_manipulation",
+      "to": "geometric_transformations",
+      "weight": 0.456
+    },
+    {
+      "from": "algebraic_manipulation",
+      "to": "rational_expressions",
+      "weight": 0.435
+    },
+    {
+      "from": "algebraic_manipulation",
+      "to": "exponent_rules",
+      "weight": 0.422
+    },
+    {
+      "from": "representation_translation",
+      "to": "geometric_transformations",
+      "weight": 0.388
+    },
+    {
+      "from": "representation_translation",
+      "to": "algebraic_manipulation",
+      "weight": 0.371
+    },
+    {
+      "from": "act_strategy",
+      "to": "polynomials",
+      "weight": 0.35
+    }
+  ]
+}

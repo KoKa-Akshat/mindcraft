@@ -285,11 +285,21 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
    */
   function paintRoleSurfaces() {
     const tutor = (getRole() || 'student') === 'tutor';
-    if (tab2Row) tab2Row.hidden = tutor;
+    // The tab row is retired for students too now (2026-09-04 ask: one
+    // integrated world, not a set of pages to switch between). The buttons
+    // and their real wiring stay exactly as they are, underneath the world
+    // instead of visible above it, resumeNavs/jesseNavs/simNavs still work
+    // unchanged, this only hides the strip that used to switch pages.
+    if (tab2Row) tab2Row.hidden = true;
     if (heroCard) heroCard.hidden = tutor || activeDashboardTab !== 'home';
     if (simStudio) {
       const showSim = !tutor && activeDashboardTab === 'sim';
       simStudio.hidden = !showSim;
+      // Full-screen console (2026-09-04 ask): while the student world is the
+      // active surface, the whole shell goes edge to edge (see the
+      // .hub-stage.is-world-mode rules in styles.css). Scoped to showSim so
+      // the tutor role's classic header + tiles layout is never touched.
+      hub?.classList.toggle('is-world-mode', showSim);
       simStudio.dispatchEvent(new CustomEvent(showSim ? 'simstudio:show' : 'simstudio:hide'));
     }
     if (tutorTiles) tutorTiles.hidden = !tutor;
@@ -437,8 +447,10 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     hub.hidden = false;
     hub.classList.remove('hidden');
     renderHub();
-    selectDashboardTab('home');
-    onHomeOpen?.();
+    // The world is the landing now (2026-09-04 ask): no separate Workspace
+    // dashboard on boot, log in and you are already standing in it.
+    selectDashboardTab('sim');
+    onSimOpen?.();
   }
 
   function hideAll() {
@@ -450,7 +462,7 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
 
   // The knowledge-map card is the only Workspace-tab affordance now
   // (2026-09-02: the "Open Learn" CTA, paper-stack, bookmark, raccoon, and
-  // Jesse slip that used to surround it are gone) — a plain click-through
+  // Jesse slip that used to surround it are gone), a plain click-through
   // to /learn. Not role-branched: heroCard (this card's own container) is
   // hidden entirely for tutor accounts via paintRoleSurfaces(), so a tutor
   // never reaches this click in the first place; the old /tutor branch
@@ -461,12 +473,12 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
 
   // Hero search (2026-09-03 ask): a real search over the same real
   // full-concept-graph.json the map card already renders (fetched once,
-  // lazily, on first search — the graph iframe fetches its own copy
+  // lazily, on first search; the graph iframe fetches its own copy
   // independently, this never touches or waits on that one). Matching here
   // is a light client-side label match, not the real ML semantic search
   // /learn uses (that needs an auth token + an embedding model this static
   // shell does not carry), so a miss here is never presented as "nothing
-  // exists" — the fallback always offers the real search instead. A hit
+  // exists"; the fallback always offers the real search instead. A hit
   // posts the exact same {type:'highlight'} message Learn.tsx already sends
   // this same viewer (see full-graph-viewer.html's message listener), which
   // is what actually drives the fly-to-node camera animation.
@@ -598,10 +610,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
         p.hidden = p.dataset.hubPanel !== tab;
       });
     });
-  });
-
-  hub?.querySelector('[data-hub-signout]')?.addEventListener('click', () => {
-    onSignOut?.();
   });
 
   goalInstance?.addEventListener('change', () => {

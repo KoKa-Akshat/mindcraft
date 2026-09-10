@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindcraft.app/schemas/world/skill-block-manifest-v1.json",
+  "title": "MindCraft Skill Block Manifest v1",
+  "description": "A deterministic, offline-capable computation block. This is not an AI agent or prompt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "blockId",
+    "version",
+    "title",
+    "summary",
+    "category",
+    "execution",
+    "timing",
+    "runtime",
+    "ports",
+    "dependencies",
+    "constraints",
+    "resume",
+    "provenance",
+    "assumptions",
+    "limitations",
+    "license",
+    "validationStatus"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "blockId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(?::[a-z][a-z0-9-]*)+$",
+      "examples": ["core:add", "garden:plant-growth"]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "category": {
+      "enum": ["primitive", "model", "adapter", "system"]
+    },
+    "execution": {
+      "enum": ["pure", "stateful"]
+    },
+    "timing": {
+      "enum": ["event", "fixed-tick", "analytic-advance"]
+    },
+    "authoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "sourceRef", "sourceHash"],
+      "properties": {
+        "language": {
+          "enum": ["python-restricted-v1", "mindcraft-ir-v1", "rust"]
+        },
+        "sourceRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceHash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "artifactRef", "contentHash"],
+      "properties": {
+        "kind": {
+          "enum": ["mindcraft-ir-v1", "wasm-v1"]
+        },
+        "artifactRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contentHash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "ports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/port"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["blockId", "version", "contentHash"],
+        "properties": {
+          "blockId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "contentHash": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxMemoryBytes", "maxStepMs", "network", "filesystem", "dom"],
+      "properties": {
+        "maxMemoryBytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 67108864
+        },
+        "maxStepMs": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 50
+        },
+        "network": {
+          "const": false
+        },
+        "filesystem": {
+          "const": false
+        },
+        "dom": {
+          "const": false
+        }
+      }
+    },
+    "resume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "enum": ["none", "analytic-advance", "bounded-replay"]
+        },
+        "maxReplaySteps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "bounded-replay"
+              }
+            }
+          },
+          "then": {
+            "required": ["maxReplaySteps"]
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/provenance"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "creator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "displayName"],
+      "properties": {
+        "kind": {
+          "enum": ["student", "tutor", "staff", "community"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        }
+      }
+    },
+    "remixOf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blockId", "version", "contentHash"],
+      "properties": {
+        "blockId": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "contentHash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "validationStatus": {
+      "enum": ["draft", "sandboxed", "verified", "public"]
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "direction", "valueType", "required"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "direction": {
+          "enum": ["input", "output"]
+        },
+        "valueType": {
+          "enum": ["boolean", "integer", "scalar", "vector2", "vector3", "enum", "pulse"]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "default": {},
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "sourceType", "locator", "checkedAt"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceType": {
+          "enum": ["paper", "textbook", "dataset", "standard", "expert-review", "primary-source"]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

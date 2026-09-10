@@ -1,6 +1,6 @@
+import { BookOpen, CheckCircle2, Rows3 } from 'lucide-react'
 import ColdCheckPrompt from '../../components/ColdCheckPrompt'
 import type { CheckQuestion, ConceptChapter } from '../../lib/conceptLibrary'
-import { CARD, Eyebrow, TEXT_FAINT, TEXT_PRIMARY, TEXT_SOFT } from './shared'
 
 export interface ReadingPaneProps {
   chapter: ConceptChapter
@@ -20,80 +20,80 @@ export interface ReadingPaneProps {
   onAnswered: (correct: boolean) => void
 }
 
-/** Chapter header + reading paragraphs + the check question at the end.
- * Purely presentational, simplify/check-question fetching and the reading
- * flow's own state live in Learn.tsx. */
+/** The continuous chapter page and its closing independent check. */
 export default function ReadingPane({
   chapter, usingSimplified, simplifying, simplifiedBody, showSimplified, onToggleSimplified,
   simplifyMeta, searchedQuery, simplifyFailed, chunks, checkQuestion, checkLoading,
   checkFailed, checkResult, onAnswered,
 }: ReadingPaneProps) {
   return (
-    <>
-      <div style={{ ...CARD, padding: '22px 24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          <Eyebrow color="#58CC02">Chapter</Eyebrow>
-          {usingSimplified && (
-            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 0.6, color: '#5EC8F0', border: '1px solid rgba(94,200,240,0.5)', background: 'rgba(94,200,240,0.12)', borderRadius: 6, padding: '2px 8px' }}>
-              SIMPLIFIED
-            </span>
-          )}
-          {simplifying && <span style={{ fontSize: 11.5, color: 'rgba(94,200,240,0.8)' }}>simplifying for your question...</span>}
+    <article className="lrn-reading-paper">
+      <header className="lrn-chapter-header">
+        <div className="lrn-chapter-meta">
+          <span className="lrn-kicker"><BookOpen size={14} aria-hidden="true" /> Chapter</span>
+          {usingSimplified && <span className="lrn-chapter-badge">Simplified</span>}
+          {simplifying && <span className="lrn-chapter-working">Simplifying for your question...</span>}
           {simplifiedBody && (
-            <button
-              onClick={onToggleSimplified}
-              style={{ marginLeft: 'auto', fontSize: 11.5, padding: '4px 11px', borderRadius: 7, border: '1px solid rgba(205,220,208,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}
-            >
-              {showSimplified ? 'show full original' : 'show simplified'}
+            <button onClick={onToggleSimplified} className="lrn-reading-toggle">
+              <Rows3 size={15} aria-hidden="true" />
+              {showSimplified ? 'Show full original' : 'Show simplified'}
             </button>
           )}
         </div>
-        <div style={{ fontSize: 25, fontWeight: 700, lineHeight: 1.3, margin: '10px 0 8px', letterSpacing: -0.2 }}>{chapter.title}</div>
-        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: TEXT_SOFT, fontStyle: 'italic' }}>{chapter.summary}</p>
+
+        <h1>{chapter.title}</h1>
+        <p className="lrn-chapter-summary">{chapter.summary}</p>
         {usingSimplified && simplifyMeta && (
-          <p style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.55, color: 'rgba(94,200,240,0.75)' }}>
-            Auto-shortened by {simplifyMeta.reductionPct}% for how you asked ("{searchedQuery}"), then independently checked by a second model to confirm no formula, number, or conclusion was lost. Toggle above for the full original.
+          <p className="lrn-reading-note">
+            Auto-shortened by {simplifyMeta.reductionPct}% for how you asked ("{searchedQuery}"), then independently checked by a second model to confirm no formula, number, or conclusion was lost. The full original stays available above.
           </p>
         )}
         {!usingSimplified && simplifyFailed && (
-          <p style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.55, color: TEXT_FAINT }}>
-            Showing the full original chapter: the auto-simplified version was not used ({simplifyFailed}).
+          <p className="lrn-reading-note lrn-reading-note--muted">
+            Showing the full original chapter because the simplified version did not pass its check ({simplifyFailed}).
           </p>
         )}
+      </header>
+
+      <div className="lrn-article-body">
+        {chunks.map((group, i) => (
+          <section className="lrn-reading-section" key={`${usingSimplified ? 's' : 'o'}-${i}`}>
+            <span className="lrn-section-index">Section {i + 1} of {chunks.length}</span>
+            {group.map((p, j) => <p key={j}>{p}</p>)}
+          </section>
+        ))}
       </div>
 
-      {chunks.map((group, i) => (
-        <div key={`${usingSimplified ? 's' : 'o'}-${i}`} style={{ ...CARD, padding: '20px 24px', flexShrink: 0 }}>
-          <Eyebrow color="rgba(205,220,208,0.4)">Part {i + 1} of {chunks.length}</Eyebrow>
-          {group.map((p, j) => (
-            <p key={j} style={{ margin: '12px 0 0', fontSize: 16.5, lineHeight: 1.75, color: TEXT_PRIMARY, maxWidth: '64ch' }}>{p}</p>
-          ))}
+      <section className="lrn-check-section">
+        <div className="lrn-check-heading">
+          <span className="lrn-check-icon"><CheckCircle2 size={19} aria-hidden="true" /></span>
+          <div>
+            <span className="lrn-kicker">Make it stick</span>
+            <h2>Try one on your own</h2>
+          </div>
         </div>
-      ))}
-
-      <div style={{ ...CARD, padding: '20px 24px', flexShrink: 0 }}>
-        <Eyebrow color="#5fa578">Cement understanding</Eyebrow>
         {checkQuestion ? (
           <>
-            <div style={{ marginTop: 10 }}>
+            <div className="lrn-check-prompt">
               <ColdCheckPrompt
                 key={checkQuestion.id}
                 question={checkQuestion as never}
                 onResult={({ correct }) => onAnswered(correct)}
+                tone="paper"
               />
             </div>
-            {checkResult && <p style={{ fontSize: 13.5, color: TEXT_SOFT, margin: '10px 0 0' }}>{checkResult}</p>}
+            {checkResult && <p className="lrn-check-result">{checkResult}</p>}
           </>
         ) : checkLoading ? (
-          <p style={{ fontSize: 13, color: TEXT_FAINT, margin: '8px 0 0', lineHeight: 1.6 }}>
-            Generating a check question for this concept and independently re-solving it before you see it...
+          <p className="lrn-check-status">
+            Generating a check question and independently re-solving it before you see it...
           </p>
         ) : (
-          <p style={{ fontSize: 13, color: TEXT_FAINT, margin: '8px 0 0', lineHeight: 1.6 }}>
-            No check question for this concept right now{checkFailed ? `: ${checkFailed}` : '.'} You can keep reading; this concept just will not be marked studied, since nothing was answered.
+          <p className="lrn-check-status">
+            No check question is ready for this concept{checkFailed ? `: ${checkFailed}` : '.'} You can keep reading, but this concept will not be marked studied until you answer one.
           </p>
         )}
-      </div>
-    </>
+      </section>
+    </article>
   )
 }

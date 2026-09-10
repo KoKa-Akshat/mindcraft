@@ -20,9 +20,10 @@ import s from './HomeworkCards.module.css'
 interface Props {
   question: Question
   onResult: (result: { correct: boolean; selectedIndex: number }) => void
+  tone?: 'default' | 'paper'
 }
 
-export default function ColdCheckPrompt({ question, onResult }: Props) {
+export default function ColdCheckPrompt({ question, onResult, tone = 'default' }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
   const [checked, setChecked] = useState(false)
 
@@ -42,11 +43,12 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
   }
 
   const correct = selected === question.correctIndex
+  const paper = tone === 'paper'
 
   return (
-    <div className={s.card} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <div className={`${s.card} ${paper ? s.paperCheck : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, color: '#F0C060', textTransform: 'uppercase' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0, color: paper ? '#8A5A23' : '#F0C060', textTransform: 'uppercase' }}>
           Quick check, on your own
         </span>
       </div>
@@ -57,10 +59,10 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {question.choices.map((choice, i) => {
-          let borderColor = 'rgba(255,255,255,0.15)'
-          if (checked && i === question.correctIndex) borderColor = '#58CC02'
-          else if (checked && i === selected) borderColor = '#FF6B6B'
-          else if (!checked && i === selected) borderColor = '#6366F1'
+          let borderColor = paper ? 'rgba(20,58,46,0.18)' : 'rgba(255,255,255,0.15)'
+          if (checked && i === question.correctIndex) borderColor = paper ? '#247A4D' : '#58CC02'
+          else if (checked && i === selected) borderColor = paper ? '#B64D48' : '#FF6B6B'
+          else if (!checked && i === selected) borderColor = paper ? '#247A4D' : '#6366F1'
 
           return (
             <button
@@ -70,9 +72,9 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
               style={{
                 textAlign: 'left',
                 padding: '10px 14px',
-                borderRadius: 10,
+                borderRadius: paper ? 6 : 10,
                 border: `1.5px solid ${borderColor}`,
-                background: 'rgba(255,255,255,0.03)',
+                background: paper && !checked && i === selected ? 'rgba(36,122,77,0.08)' : paper ? '#FFFDF8' : 'rgba(255,255,255,0.03)',
                 color: 'inherit',
                 cursor: checked ? 'default' : 'pointer',
                 fontSize: 14,
@@ -91,9 +93,9 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
           style={{
             alignSelf: 'flex-start',
             padding: '10px 20px',
-            borderRadius: 10,
+            borderRadius: paper ? 6 : 10,
             border: 'none',
-            background: selected === null ? 'rgba(255,255,255,0.1)' : '#6366F1',
+            background: selected === null ? (paper ? '#D9DDD7' : 'rgba(255,255,255,0.1)') : (paper ? '#143A2E' : '#6366F1'),
             color: 'white',
             fontWeight: 600,
             cursor: selected === null ? 'default' : 'pointer',
@@ -103,7 +105,7 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
         </button>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontSize: 14, color: correct ? '#58CC02' : '#FF6B6B', fontWeight: 600 }}>
+          <div style={{ fontSize: 14, color: correct ? (paper ? '#247A4D' : '#58CC02') : (paper ? '#B64D48' : '#FF6B6B'), fontWeight: 600 }}>
             {correct ? 'Got it on your own, that\'s the real proof.' : 'Not quite. Worth a second look before this one\'s "done."'}
           </div>
           <button
@@ -111,9 +113,9 @@ export default function ColdCheckPrompt({ question, onResult }: Props) {
             style={{
               alignSelf: 'flex-start',
               padding: '10px 20px',
-              borderRadius: 10,
+              borderRadius: paper ? 6 : 10,
               border: 'none',
-              background: '#6366F1',
+              background: paper ? '#143A2E' : '#6366F1',
               color: 'white',
               fontWeight: 600,
               cursor: 'pointer',

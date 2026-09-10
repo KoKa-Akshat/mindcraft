@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8e9">
+  <title>MindCraft Knowledge World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="world-shell" id="worldShell">
+    <canvas id="worldCanvas" aria-label="Your interactive MindCraft knowledge world"></canvas>
+
+    <div class="world-loading" id="worldLoading" role="status" aria-live="polite">
+      <span class="loading-mark" aria-hidden="true"></span>
+      <strong>Growing your world</strong>
+    </div>
+
+    <header class="world-topbar">
+      <a class="world-brand" href="#" aria-label="MindCraft Knowledge World home">
+        <span class="brand-cube" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>MindCraft</strong><small>Maya's world</small></span>
+      </a>
+
+      <section class="mission-strip" aria-label="Current mission">
+        <span class="mission-kicker">Today</span>
+        <div class="mission-copy">
+          <strong>Keep the garden alive until sunset</strong>
+          <span><i id="missionFill"></i></span>
+        </div>
+        <b id="missionScore">1 / 3</b>
+      </section>
+
+      <div class="world-actions">
+        <button type="button" class="icon-button" id="overviewButton" aria-label="World overview" title="World overview">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg>
+        </button>
+        <button type="button" class="icon-button" id="soundButton" aria-label="Toggle world sound" title="Toggle world sound" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <aside class="world-vitals" aria-label="World status">
+      <span><i class="vital-dot is-green"></i><b id="worldLevel">Level 7</b></span>
+      <span><i class="vital-dot is-gold"></i><b id="worldEnergy">84 energy</b></span>
+      <span><i class="vital-dot is-coral"></i><b id="worldBooks">2 books</b></span>
+    </aside>
+
+    <div class="hover-label" id="hoverLabel" hidden>
+      <small id="hoverEyebrow">Living system</small>
+      <strong id="hoverTitle">Garden</strong>
+    </div>
+
+    <section class="focus-note" id="focusNote" aria-live="polite" hidden>
+      <button type="button" class="focus-close" id="focusClose" aria-label="Close" title="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      </button>
+      <p id="focusEyebrow">Living system</p>
+      <h1 id="focusTitle">Maya's garden</h1>
+      <p id="focusBody">Light, water, and soil are working together right now.</p>
+      <div class="focus-metrics" id="focusMetrics"></div>
+      <button type="button" class="focus-action" id="focusAction">Open live flow</button>
+    </section>
+
+    <section class="flow-deck" id="flowDeck" aria-label="Live simulation flow" hidden>
+      <header>
+        <div>
+          <small id="flowKicker">Garden system</small>
+          <strong id="flowTitle">Watch one change move through everything</strong>
+        </div>
+        <span class="live-badge"><i></i> live</span>
+        <button type="button" class="flow-close" id="flowClose" aria-label="Close flow" title="Close flow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+        </button>
+      </header>
+      <div class="flow-track" id="flowTrack"></div>
+      <div class="node-control" id="nodeControl">
+        <label for="nodeSlider"><span id="nodeControlLabel">Sun angle</span><output id="nodeControlValue">72%</output></label>
+        <input id="nodeSlider" type="range" min="0" max="100" value="72">
+        <p id="nodeControlHint">This changes the light reaching every block downstream.</p>
+      </div>
+    </section>
+
+    <section class="hearth-workspace" id="hearthWorkspace" aria-label="Learning hearth" hidden>
+      <header>
+        <span class="hearth-flame" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div><small>Learning hearth</small><h2>Turn a question into a world.</h2></div>
+        <button type="button" class="workspace-close" data-close-workspace aria-label="Close learning hearth" title="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+        </button>
+      </header>
+      <form id="curiosityForm">
+        <label for="curiosityInput">What are you trying to understand?</label>
+        <div><input id="curiosityInput" value="Why do data centers need so much water?"><button type="submit">Begin</button></div>
+      </form>
+      <ol class="learning-path" aria-label="Learning path">
+        <li class="is-done"><span>1</span><b>Notice</b><small>Ask a real question</small></li>
+        <li class="is-current"><span>2</span><b>Model</b><small>Find the moving parts</small></li>
+        <li><span>3</span><b>Test</b><small>Build the sim</small></li>
+        <li><span>4</span><b>Publish</b><small>Grow your book</small></li>
+      </ol>
+      <div class="hearth-response" id="hearthResponse">
+        <span>Jesse's first nudge</span>
+        <p>Start with what you can observe. What enters the data center, and what leaves it?</p>
+      </div>
+      <footer><span><b>Data Centers for Humans</b><small>Chapter 3 of 8</small></span><i><b style="width: 38%"></b></i></footer>
+    </section>
+
+    <section class="build-dock" aria-label="Unlocked simulation blocks">
+      <div class="avatar-chip">
+        <img src="../desk_os/img/orbs/mascot-ivory.png" alt="Jesse, your MindCraft guide">
+        <span><strong>Jesse</strong><small id="jesseLine">The garden is thinking.</small></span>
+      </div>
+      <div class="hotbar" id="hotbar" role="toolbar" aria-label="Build blocks">
+        <button type="button" class="hotbar-item is-active" data-build="sun" aria-pressed="true" title="Sun collector">
+          <span class="block-glyph glyph-sun" aria-hidden="true"><i></i></span><small>Sun</small><kbd>1</kbd>
+        </button>
+        <button type="button" class="hotbar-item" data-build="water" aria-pressed="false" title="Water tank">
+          <span class="block-glyph glyph-water" aria-hidden="true"><i></i></span><small>Water</small><kbd>2</kbd>
+        </button>
+        <button type="button" class="hotbar-item" data-build="sensor" aria-pressed="false" title="Sensor">
+          <span class="block-glyph glyph-sensor" aria-hidden="true"><i></i></span><small>Sensor</small><kbd>3</kbd>
+        </button>
+        <button type="button" class="hotbar-item is-locked" data-build="fan" aria-pressed="false" aria-disabled="true" title="Unlock at the Learning Hearth">
+          <span class="block-glyph glyph-fan" aria-hidden="true"><i></i></span><small>Fan</small><kbd>4</kbd>
+        </button>
+      </div>
+      <button type="button" class="build-button" id="buildButton" aria-pressed="false">
+        <span aria-hidden="true">+</span><strong>Build</strong>
+      </button>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}
+  </script>
+  <script type="module" src="world.js"></script>
+</body>
+</html>

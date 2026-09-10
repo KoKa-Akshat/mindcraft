@@ -5,11 +5,11 @@ import {
   fetchConceptContent, generateSim, resolveConcept,
   type ConceptContent, type ConceptMatch, type GeneratedSim, type PathStep,
 } from '../../lib/conceptLibrary'
-import { generateBook } from '../../lib/generatedBooks'
+import { generateBook, type GeneratedBook } from '../../lib/generatedBooks'
 import { pagesFromFile, parseHomeworkPages } from '../../lib/homework'
 import { recordLearnActivity } from '../../lib/learnActivity'
 import { askTutor } from '../../lib/learnTutor'
-import { addBookNote, openStudentBook, savePageEdit, type BookNote, type PageEdit, type StudentBook } from '../../lib/studentBooks'
+import { addBookNote, openStudentBook, saveBookChapters, savePageEdit, type BookChapter, type BookNote, type PageEdit, type StudentBook } from '../../lib/studentBooks'
 import type { HomeworkQuestion } from '../../types'
 import {
   ACCENT_LIME, FONT_STACK, INK_PENCIL, INK_SOFT, INK_SYSTEM,
@@ -27,20 +27,16 @@ const BUILD_CAPTIONS = [
   'setting the cover…',
 ]
 
-type Screen = 'intake' | 'cover' | 'zone' | 'read'
+type Screen = 'intake' | 'cover' | 'zone' | 'read' | 'add'
 
 /** One page in the reading path — a step in the real prerequisite ramp, an
  * uploaded worksheet question resolved to its own concept, or (2026-09-03:
  * "if nothing is in the library use the AI to generate it") one section of
  * a freshly AI-generated book. Unified so ReadPage/the pager never
- * special-case which one they're looking at. */
-interface Chapter {
-  conceptId: string
-  label: string
-  hasSim: boolean
-  question?: HomeworkQuestion
-  generated?: { body: string; summary?: string; simHtml?: string }
-}
+ * special-case which one they're looking at. Since the growing-book change
+ * (2026-09-03 follow-up) the shape is persisted per book, so it lives in
+ * lib/studentBooks.ts as BookChapter and is aliased here. */
+type Chapter = BookChapter
 
 interface ChatMsg {
   role: 'user' | 'assistant'
@@ -57,6 +53,40 @@ function chapterFromStep(s: PathStep): Chapter {
 function stepsFrom(best: ConceptMatch, ramp: PathStep[]): PathStep[] {
   if (ramp.length > 1) return ramp
   return [{ conceptId: best.conceptId, label: best.label, hasLesson: best.hasLesson, hasSim: best.hasSim, subject: best.subject }]
+}
+
+/** The topic-resolve half of opening a book, shared verbatim between the
+ * first open (the mount effect) and mid-book "Add a chapter" (2026-09-03
+ * growing-book ask: the same intake again, appending instead of
+ * replacing). Same near-tie guard, ramp validity check, and foundation-vs-
+ * direct call Learn.tsx's own search() uses. */
+async function resolveTopicSteps(topicText: string): Promise<
+  | { kind: 'ramp'; chosen: ConceptMatch; chapters: Chapter[]; startAtFoundation: boolean }
+  | { kind: 'generate'; closest?: ConceptMatch }
+> {
+  const data = await resolveConcept(topicText, 5)
+  const ms = data.matches
+  if (!ms.length) return { kind: 'generate' }
+  if (ms[0].score < NO_COVERAGE_FLOOR) return { kind: 'generate', closest: ms[0] }
+  const withContent = ms.find((m) => m.hasLesson && ms[0].score - m.score <= NEAR_TIE)
+  const chosen = withContent ?? ms[0]
+  const returned = Array.isArray(data.path) ? data.path : []
+  const ramp = returned.length > 1 && returned[returned.length - 1].conceptId === chosen.conceptId ? returned : []
+  const startAtFoundation = ramp.length > 1 && chosen.score < RAMP_CONFIDENCE_CEILING
+  return { kind: 'ramp', chosen, chapters: stepsFrom(chosen, ramp).map(chapterFromStep), startAtFoundation }
+}
+
+/** A generated book's sections, flattened into the same Chapter shape every
+ * other page uses. The real reading unit of a generated book is the
+ * SECTION, one per concept (see lib/generatedBooks.ts), so the grouped
+ * chapters flatten. */
+function chaptersFromGenerated(generated: GeneratedBook): Chapter[] {
+  return generated.chapters.flatMap((ch) => ch.sections.map((s) => ({
+    conceptId: s.concept_id,
+    label: s.title,
+    hasSim: !!s.sim_html,
+    generated: { body: s.body, summary: s.summary, simHtml: s.sim_html },
+  })))
 }
 
 const mono: React.CSSProperties = { fontFamily: "'IBM Plex Mono', ui-monospace, monospace", letterSpacing: '0.08em', textTransform: 'uppercase' }
@@ -137,16 +167,14 @@ export default function BookReader() {
   const [phase, setPhase] = useState<'resolving' | 'generating' | 'ready' | 'out_of_domain' | 'no_match' | 'error'>('resolving')
   const [genCaption, setGenCaption] = useState('')
   const [genProgress, setGenProgress] = useState<{ chaptersReady: number; totalChapters: number } | null>(null)
-  // Distinguishes a generated book's flat page list (no zone-card choice —
-  // every section is just the next page) from an uploaded worksheet's, so
-  // ZonePage's copy can say the right thing without a new prop threading
-  // through every call site.
-  const [chaptersKind, setChaptersKind] = useState<'upload' | 'generated' | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [best, setBest] = useState<ConceptMatch | null>(null)
-  const [rampSteps, setRampSteps] = useState<Chapter[]>([])
+  // The whole growing book, always: the original ramp's chapters first
+  // (rampCount of them), then everything appended since: worksheet
+  // questions, generated sections, added topics. Mirrored to the
+  // student_books doc (see lib/studentBooks.ts) so it survives a reload.
   const [steps, setSteps] = useState<Chapter[]>([])
-  const [uploadedChapters, setUploadedChapters] = useState<Chapter[] | null>(null)
+  const [rampCount, setRampCount] = useState(0)
   const [book, setBook] = useState<StudentBook | null>(null)
 
   const [readIndex, setReadIndex] = useState(0)
@@ -157,7 +185,25 @@ export default function BookReader() {
   const [simGenerating, setSimGenerating] = useState(false)
   const [simGenStatus, setSimGenStatus] = useState('')
   const [simGenFailed, setSimGenFailed] = useState('')
-  const [generatedSim, setGeneratedSim] = useState<GeneratedSim | null>(null)
+  // Sims generated this session, keyed by concept, filled by the manual
+  // button AND by the background pre-generation below, read at render time,
+  // so a sim that finished for chapter N+1 is already sitting there when
+  // the student turns the page (and still there if they page back later).
+  const [readySims, setReadySims] = useState<Record<string, GeneratedSim>>({})
+  const simJobs = useRef(new Map<string, Promise<{ sim: GeneratedSim | null; reason?: string }>>())
+  const simPrefetchTried = useRef(new Set<string>())
+  // In-flight chapter reads, so the read-ahead prefetch and the on-
+  // navigation load of the same chapter share one Firestore fetch instead
+  // of issuing two. Settled entries are dropped: fetchConceptContent's own
+  // session memo answers repeats from then on.
+  const contentJobs = useRef(new Map<string, Promise<ConceptContent | null>>())
+
+  // Bumped every time the mount effect opens a different book (the bottom
+  // search bar can switch books at any moment, and stays visible while an
+  // append is generating for minutes). An append captures the token when it
+  // starts and drops its result if the book changed underneath it, so a
+  // slow add can never write one book's chapters into another's state.
+  const bookRunRef = useRef(0)
 
   const [noteOpen, setNoteOpen] = useState(false)
   const [noteDraft, setNoteDraft] = useState('')
@@ -168,6 +214,11 @@ export default function BookReader() {
   const [uploadError, setUploadError] = useState('')
   const uploadInputRef = useRef<HTMLInputElement>(null)
   const [homeworkDraft, setHomeworkDraft] = useState('')
+
+  // Mid-book "Add a chapter" intake (2026-09-03 growing-book ask).
+  const [addTopicDraft, setAddTopicDraft] = useState('')
+  const [addBusy, setAddBusy] = useState('')
+  const [addError, setAddError] = useState('')
 
   // A real, moveable Jesse chat floating over the book (2026-09-03 ask):
   // same guarded /api/learn-tutor Jesse already uses elsewhere on Learn, not
@@ -204,20 +255,23 @@ export default function BookReader() {
   // leaks into the next.
   useEffect(() => {
     let cancelled = false
-    setUploadedChapters(null)
-    setChaptersKind(null)
+    bookRunRef.current += 1
     setUploadError('')
     setPageContent(null)
-    setGeneratedSim(null)
+    setReadySims({})
     setGenCaption('')
     setGenProgress(null)
+    setRampCount(0)
+    setAddTopicDraft('')
+    setAddBusy('')
+    setAddError('')
+    simPrefetchTried.current.clear()
     if (homeworkMode) {
       setScreen('intake')
       setPhase('ready')
       setBook(null)
       setBest(null)
       setSteps([])
-      setRampSteps([])
       return
     }
     setScreen('cover')
@@ -226,6 +280,27 @@ export default function BookReader() {
     setPhase('resolving')
     setErrorMsg('')
     const authorName = user?.displayName?.trim() || user?.email?.split('@')[0] || 'A MindCraft student'
+
+    // Opens (or creates) the persistent reading copy and lands its chapter
+    // list in state. An existing book's own accumulated chapters always win
+    // over the freshly built ones; that is the growing book surviving a
+    // reload. A book with none yet (created before chapters were persisted
+    // at all) is backfilled with the fresh build right here.
+    async function openWithChapters(bookConceptId: string, bookLabel: string, built: Chapter[], builtRampCount: number) {
+      const opened = await openStudentBook(uid, authorName, topic, bookConceptId, bookLabel, { chapters: built, rampCount: builtRampCount })
+      if (cancelled) return null
+      let chapters = opened.chapters ?? []
+      let rc = opened.rampCount ?? 0
+      if (!chapters.length) {
+        chapters = built
+        rc = builtRampCount
+        saveBookChapters(uid, bookConceptId, built, builtRampCount).catch(() => { /* re-persisted on the next append */ })
+      }
+      setSteps(chapters)
+      setRampCount(rc)
+      setBook({ ...opened, chapters, rampCount: rc })
+      return { chapters, rampCount: rc }
+    }
 
     // Nothing in the library: generate it for real instead of dead-ending
     // (2026-09-03 ask — the real, gated /api/generate-book pipeline, same
@@ -244,48 +319,30 @@ export default function BookReader() {
         setPhase(closestLabel ? 'out_of_domain' : 'no_match')
         return
       }
-      const flat: Chapter[] = generated.chapters.flatMap((ch) => ch.sections.map((s) => ({
-        conceptId: s.concept_id,
-        label: s.title,
-        hasSim: !!s.sim_html,
-        generated: { body: s.body, summary: s.summary, simHtml: s.sim_html },
-      })))
+      const flat = chaptersFromGenerated(generated)
       setBest({ conceptId: generated.subject_id, label: generated.title, subject: '', subjectTitle: '', level: '', hasLesson: true, hasSim: false, score: 1 })
-      setRampSteps([])
-      setSteps(flat)
-      setUploadedChapters(flat)
-      setChaptersKind('generated')
+      const landed = await openWithChapters(generated.subject_id, generated.title, flat, 0)
+      if (!landed) return
       setReadIndex(0)
-      const opened = await openStudentBook(uid, authorName, topic, generated.subject_id, generated.title)
-      if (cancelled) return
-      setBook(opened)
       recordLearnActivity(uid, 'learn_book_generated', { subjectId: generated.subject_id, topic, sections: flat.length })
       setPhase('ready')
     }
 
     ;(async () => {
       try {
-        const data = await resolveConcept(topic, 5)
+        const resolved = await resolveTopicSteps(topic)
         if (cancelled) return
-        const ms = data.matches
-        if (!ms.length) { await generateFallback(undefined); return }
-        if (ms[0].score < NO_COVERAGE_FLOOR) { setBest(ms[0]); await generateFallback(ms[0].label); return }
-        const withContent = ms.find((m) => m.hasLesson && ms[0].score - m.score <= NEAR_TIE)
-        const chosen = withContent ?? ms[0]
-        const returned = Array.isArray(data.path) ? data.path : []
-        const ramp = returned.length > 1 && returned[returned.length - 1].conceptId === chosen.conceptId ? returned : []
-        const startAtFoundation = ramp.length > 1 && chosen.score < RAMP_CONFIDENCE_CEILING
-        const builtSteps = stepsFrom(chosen, ramp).map(chapterFromStep)
-
+        if (resolved.kind === 'generate') {
+          if (resolved.closest) setBest(resolved.closest)
+          await generateFallback(resolved.closest?.label)
+          return
+        }
+        const { chosen, chapters: builtSteps, startAtFoundation } = resolved
         setBest(chosen)
-        setRampSteps(builtSteps)
-        setSteps(builtSteps)
-        setChaptersKind(null)
-        setReadIndex(startAtFoundation ? 0 : builtSteps.length - 1)
-
-        const opened = await openStudentBook(uid, authorName, topic, chosen.conceptId, chosen.label)
-        if (cancelled) return
-        setBook(opened)
+        const landed = await openWithChapters(chosen.conceptId, chosen.label, builtSteps, builtSteps.length)
+        if (!landed) return
+        const directIdx = Math.max(0, landed.chapters.findIndex((c) => c.conceptId === chosen.conceptId))
+        setReadIndex(startAtFoundation ? 0 : directIdx)
         recordLearnActivity(uid, 'learn_book_opened', { conceptId: chosen.conceptId, topic })
         setPhase('ready')
       } catch (e) {
@@ -294,6 +351,21 @@ export default function BookReader() {
     })()
     return () => { cancelled = true }
   }, [topic, uid, user, homeworkMode])
+
+  // Loads one chapter's content through the shared in-flight map, so a
+  // read-ahead prefetch already running for it is joined instead of
+  // duplicated into a second Firestore fetch.
+  function loadContent(conceptId: string): Promise<ConceptContent | null> {
+    const inflight = contentJobs.current.get(conceptId)
+    if (inflight) return inflight
+    const p = fetchConceptContent(conceptId)
+    contentJobs.current.set(conceptId, p)
+    p.then(
+      () => contentJobs.current.delete(conceptId),
+      () => contentJobs.current.delete(conceptId),
+    )
+    return p
+  }
 
   // Load the current reading page's real chapter + sim whenever the step
   // changes (zone pick, paging through the ramp, or a picked upload
@@ -307,7 +379,6 @@ export default function BookReader() {
     const step = steps[readIndex]
     let cancelled = false
     setContentError('')
-    setGeneratedSim(null)
     setSimGenFailed('')
     setNoteOpen(false)
     setNoteDraft('')
@@ -325,23 +396,75 @@ export default function BookReader() {
       return
     }
     setContentLoading(true)
-    fetchConceptContent(step.conceptId)
+    loadContent(step.conceptId)
       .then((c) => { if (!cancelled) setPageContent(c) })
       .catch((e) => { if (!cancelled) setContentError(String(e instanceof Error ? e.message : e)) })
       .finally(() => { if (!cancelled) setContentLoading(false) })
     return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen, readIndex, steps])
+
+  // Read ahead (2026-09-03 ask: paging forward should feel instant, never
+  // a spinner): while chapter N is open, chapter N+1 and N+2 load in the
+  // background into fetchConceptContent's session memo, which the
+  // on-navigation load above then answers from. Generated chapters carry
+  // their content inline, so only library chapters need it.
+  useEffect(() => {
+    if (screen !== 'read') return
+    for (const offset of [1, 2]) {
+      const ahead = steps[readIndex + offset]
+      if (ahead && !ahead.generated) void loadContent(ahead.conceptId).catch(() => { /* retried on navigation */ })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, readIndex, steps])
+
+  // One sim-generation job per concept, shared between the background
+  // pre-generation below and the manual button, so landing on a page whose
+  // sim is already being written joins that job instead of paying for a
+  // second run. A pass lands in readySims (rendered immediately, even
+  // mid-read); a non-pass clears the slot so the manual button can retry
+  // with its own stated reason.
+  function startSimJob(conceptId: string, conceptLabel: string, onStatus?: (s: string) => void) {
+    const existing = simJobs.current.get(conceptId)
+    if (existing) return existing
+    const job = generateSim(conceptLabel, { onStatus })
+    simJobs.current.set(conceptId, job)
+    job.then(
+      ({ sim }) => {
+        simJobs.current.delete(conceptId)
+        if (sim) setReadySims((m) => ({ ...m, [conceptId]: sim }))
+      },
+      () => simJobs.current.delete(conceptId),
+    )
+    return job
+  }
+
+  // Pre-generate the NEXT chapter's sim while this one is read (2026-09-03
+  // ask: "pre generate sims"). Deliberately narrow, because the pipeline is
+  // genuinely expensive and budget-gated server-side: only the immediate
+  // next chapter, only when the library has no built sim for it, one
+  // background job at a time, at most one attempt per concept per session.
+  // A failed attempt stays silent here; the manual button on that page
+  // still works and reports its own reason.
+  useEffect(() => {
+    if (screen !== 'read' || phase !== 'ready') return
+    const next = steps[readIndex + 1]
+    if (!next || next.generated || next.hasSim) return
+    if (readySims[next.conceptId] || simJobs.current.size > 0 || simPrefetchTried.current.has(next.conceptId)) return
+    simPrefetchTried.current.add(next.conceptId)
+    void startSimJob(next.conceptId, next.label)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, phase, readIndex, steps])
 
   async function runSimGeneration() {
     if (!pageContent || simGenerating) return
     setSimGenerating(true)
     setSimGenFailed('')
-    const { sim, reason } = await generateSim(pageContent.label, {
-      onStatus: (s) => setSimGenStatus(s),
-    })
+    const inflight = simJobs.current.get(pageContent.conceptId)
+    if (inflight) setSimGenStatus('Already generating in the background, catching up...')
+    const { sim, reason } = await (inflight ?? startSimJob(pageContent.conceptId, pageContent.label, setSimGenStatus))
     setSimGenerating(false)
     if (sim) {
-      setGeneratedSim(sim)
       recordLearnActivity(uid, 'learn_sim_generated', { conceptId: pageContent.conceptId })
     } else {
       setSimGenFailed(reason || 'The sim did not come through.')
@@ -377,28 +500,89 @@ export default function BookReader() {
     savePageEdit(uid, bookConceptId, conceptId, merged).catch(() => { /* local state already updated; retried on next edit */ })
   }
 
-  // Shared by both real intake paths below: resolve each question to its
-  // own concept, same as Learn.tsx's loadSimForQuestion, and land the
-  // results as real navigable chapters on this book's front page rather
-  // than auto-jumping straight into reading one. Merges onto any chapters
-  // already there (a second upload, or upload after writing some by hand)
-  // instead of replacing them.
+  // Shared by both real homework intake paths below: resolve each question
+  // to its own concept, same as Learn.tsx's loadSimForQuestion, and APPEND
+  // the results as real navigable chapters at the end of this book
+  // (2026-09-03 growing-book ask) instead of replacing what is already
+  // there. Also the landing point for worksheet uploads made mid-book from
+  // the front page or the add-a-chapter page. Question chapters are never
+  // deduplicated by concept: two questions can legitimately land on the
+  // same concept and each stays its own page.
   async function commitChapters(chapters: Chapter[], sourceLabel: string) {
     if (!chapters.length) return false
-    const merged = uploadedChapters ? [...uploadedChapters, ...chapters] : chapters
-    setUploadedChapters(merged)
-    setChaptersKind('upload')
-    setSteps(merged)
-    if (!book) {
-      const anchor = merged[0]
+    const run = bookRunRef.current
+    let target = book
+    if (!target) {
+      const anchor = chapters[0]
       const authorName = user?.displayName?.trim() || user?.email?.split('@')[0] || 'A MindCraft student'
-      const opened = await openStudentBook(uid, authorName, sourceLabel, anchor.conceptId, anchor.label)
-      setBook(opened)
+      target = await openStudentBook(uid, authorName, sourceLabel, anchor.conceptId, anchor.label)
     }
-    setReadIndex(0)
+    if (run !== bookRunRef.current) return false
+    // A homework book reopened on the same anchor concept resumes its own
+    // persisted chapters, so a fresh session's upload appends to them.
+    const base = steps.length ? steps : (target.chapters ?? [])
+    const merged = [...base, ...chapters]
+    setSteps(merged)
+    setBook({ ...target, chapters: merged })
+    saveBookChapters(uid, target.conceptId, merged).catch(() => { /* state keeps this session's copy; re-persisted on the next append */ })
+    setReadIndex(base.length)
     setScreen('zone')
     recordLearnActivity(uid, 'learn_book_worksheet_uploaded', { count: chapters.length })
     return true
+  }
+
+  // "Add a chapter" by topic (2026-09-03 growing-book ask): the same topic
+  // intake the book opened with, run again mid-book (the library ramp when
+  // coverage exists, the real generate-book pipeline when it does not), and
+  // the result APPENDS onto the end of this same book. Concepts the book
+  // already holds are not appended twice; asking for something already in
+  // the book just opens that chapter.
+  async function addTopicChapters() {
+    const topicText = addTopicDraft.trim()
+    if (!topicText || addBusy || !book) return
+    const run = bookRunRef.current
+    setAddError('')
+    setAddBusy('Looking in the library...')
+    try {
+      const resolved = await resolveTopicSteps(topicText)
+      let incoming: Chapter[]
+      if (resolved.kind === 'ramp') {
+        incoming = resolved.chapters
+      } else {
+        setAddBusy('Nothing in the library covers that yet, writing it for real. This can take a few minutes...')
+        const { book: generated, reason } = await generateBook(topicText, {
+          onStatus: setAddBusy,
+          onProgress: (p) => setAddBusy(`${p.chaptersReady} of ${p.totalChapters} chapters ready...`),
+        })
+        if (!generated || !generated.chapters?.some((c) => c.sections?.length)) {
+          setAddError(reason || `Nothing in the library covers "${topicText}", and generating it did not come through.`)
+          return
+        }
+        incoming = chaptersFromGenerated(generated)
+      }
+      if (run !== bookRunRef.current) return
+      const have = new Set(steps.map((s) => s.conceptId))
+      const fresh = incoming.filter((c) => !have.has(c.conceptId))
+      if (!fresh.length) {
+        const already = steps.findIndex((s) => s.conceptId === incoming[incoming.length - 1].conceptId)
+        setAddTopicDraft('')
+        setReadIndex(Math.max(0, already))
+        setScreen('read')
+        return
+      }
+      const merged = [...steps, ...fresh]
+      setSteps(merged)
+      setBook({ ...book, chapters: merged })
+      saveBookChapters(uid, book.conceptId, merged).catch(() => { /* state keeps this session's copy; re-persisted on the next append */ })
+      recordLearnActivity(uid, 'learn_book_chapter_added', { topic: topicText, count: fresh.length })
+      setAddTopicDraft('')
+      setReadIndex(steps.length)
+      setScreen('read')
+    } catch (e) {
+      setAddError(String(e instanceof Error ? e.message : e))
+    } finally {
+      setAddBusy('')
+    }
   }
 
   async function chaptersFromQuestions(questions: HomeworkQuestion[]): Promise<Chapter[]> {
@@ -496,19 +680,15 @@ export default function BookReader() {
     setScreen('read')
   }
 
-  function backToRamp() {
-    setUploadedChapters(null)
-    setChaptersKind(null)
-    setSteps(rampSteps)
-    setScreen('zone')
-  }
-
   function goNext() {
+    if (screen === 'intake' || screen === 'add') return
     if (screen === 'cover') { if (phase === 'ready') setScreen('zone'); return }
     if (screen === 'zone') return
     if (readIndex < steps.length - 1) setReadIndex((i) => i + 1)
   }
   function goPrev() {
+    if (screen === 'intake') return
+    if (screen === 'add') { setScreen('zone'); return }
     if (screen === 'read') {
       if (readIndex > 0) { setReadIndex((i) => i - 1); return }
       setScreen('zone')
@@ -543,10 +723,27 @@ export default function BookReader() {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: PAGE_BG, color: '#f5f5f5', display: 'flex', flexDirection: 'column', fontFamily: FONT_STACK }}>
-      <style>{'.lrn-book-para:hover .lrn-book-para-controls { opacity: 1 !important; }'}</style>
+      <style>{`
+        .lrn-book-para:hover .lrn-book-para-controls { opacity: 1 !important; }
+        @media (max-width: 920px) {
+          .lrn-book-cols { flex-direction: column !important; overflow-y: auto !important; }
+          .lrn-book-col-text, .lrn-book-col-sim { flex: none !important; overflow-y: visible !important; }
+          .lrn-book-col-sim { border-left: none !important; border-top: 1px solid ${PAPER_EDGE}; }
+        }
+      `}</style>
       <div style={{ flex: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '18px 32px', fontSize: 11.5, color: 'rgba(245,245,245,0.55)' }}>
         <Link to="/learn" style={{ color: 'inherit', textDecoration: 'none' }}>&larr; Back to the graph</Link>
-        <span style={{ ...mono, fontSize: 10.5 }}>Your book</span>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
+          {phase === 'ready' && book && screen !== 'add' && screen !== 'intake' && (
+            <button
+              onClick={() => setScreen('add')}
+              style={{ ...mono, fontSize: 10.5, color: ACCENT_LIME, background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+            >
+              + Add a chapter
+            </button>
+          )}
+          <span style={{ ...mono, fontSize: 10.5 }}>Your book</span>
+        </div>
       </div>
 
       <div style={{ flex: 1, minHeight: 0, position: 'relative', padding: '0 32px' }}>
@@ -566,6 +763,23 @@ export default function BookReader() {
           />
         )}
 
+        {phase === 'ready' && screen === 'add' && (
+          <AddChapterPage
+            topicDraft={addTopicDraft}
+            onTopicDraftChange={setAddTopicDraft}
+            onSubmitTopic={() => void addTopicChapters()}
+            addBusy={addBusy}
+            addError={addError}
+            homeworkDraft={homeworkDraft}
+            onHomeworkDraftChange={setHomeworkDraft}
+            onSubmitText={() => void submitHomeworkText()}
+            onTriggerUpload={() => uploadInputRef.current?.click()}
+            uploadBusy={uploadBusy}
+            uploadError={uploadError}
+            onBack={() => setScreen('zone')}
+          />
+        )}
+
         {(phase !== 'error' && phase !== 'no_match') && screen === 'cover' && (
           <CoverPage
             phase={phase}
@@ -579,21 +793,18 @@ export default function BookReader() {
           />
         )}
 
-        {phase === 'ready' && screen === 'zone' && (best || uploadedChapters) && (
+        {phase === 'ready' && screen === 'zone' && steps.length > 0 && (
           <ZonePage
             resolvedLabel={best?.label ?? ''}
-            hasFoundation={rampSteps.length > 1}
-            foundationLabel={rampSteps[0]?.label}
-            rampLength={rampSteps.length}
-            onPickFoundation={() => { setSteps(rampSteps); pickZone(0) }}
-            onPickDirect={() => { setSteps(rampSteps); pickZone(rampSteps.length - 1) }}
+            rampCount={rampCount}
+            chapters={steps}
+            onPickFoundation={() => pickZone(0)}
+            onPickDirect={() => pickZone(Math.min(Math.max(rampCount - 1, 0), steps.length - 1))}
+            onPickChapter={pickZone}
+            onAddChapter={() => setScreen('add')}
             onTriggerUpload={() => uploadInputRef.current?.click()}
             uploadBusy={uploadBusy}
             uploadError={uploadError}
-            chapters={uploadedChapters}
-            chaptersKind={chaptersKind}
-            onPickChapter={pickZone}
-            onBackToRamp={rampSteps.length > 0 ? backToRamp : undefined}
           />
         )}
 
@@ -605,7 +816,7 @@ export default function BookReader() {
             content={pageContent}
             loading={contentLoading}
             error={contentError}
-            generatedSim={generatedSim}
+            generatedSim={readySims[currentStep.conceptId] ?? null}
             simGenerating={simGenerating}
             simGenStatus={simGenStatus}
             simGenFailed={simGenFailed}
@@ -634,7 +845,7 @@ export default function BookReader() {
         </div>
       )}
 
-      {screen !== 'intake' && (phase === 'ready' || screen !== 'cover') && phase !== 'error' && phase !== 'no_match' && (
+      {screen !== 'intake' && screen !== 'add' && (phase === 'ready' || screen !== 'cover') && phase !== 'error' && phase !== 'no_match' && (
         <div style={{ flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, padding: '10px 0 90px' }}>
           <PagerBtn onClick={goPrev} disabled={!canGoPrev}>&larr; Prev</PagerBtn>
           <span style={{ ...mono, fontSize: 10.5, color: 'rgba(245,245,245,0.5)' }}>
@@ -818,6 +1029,59 @@ function CoverPage({
   )
 }
 
+function OrDivider({ word = 'or' }: { word?: string }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '26px 0', ...mono, fontSize: 10, color: INK_SOFT }}>
+      <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
+      {word}
+      <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
+    </div>
+  )
+}
+
+/** The homework half of intake: write the questions in, one per line, or
+ * upload a photo/PDF. One component, used by both the first-open
+ * IntakePage and mid-book AddChapterPage, so the two front doors onto the
+ * same parse-homework pipeline can never drift apart. */
+function HomeworkIntake({
+  draft, onDraftChange, onSubmitText, onTriggerUpload, busy, error, submitLabel,
+}: {
+  draft: string; onDraftChange: (v: string) => void; onSubmitText: () => void
+  onTriggerUpload: () => void; busy: string; error: string; submitLabel: string
+}) {
+  return (
+    <>
+      <textarea
+        value={draft}
+        onChange={(e) => onDraftChange(e.target.value)}
+        placeholder={'e.g.\nWhat is the derivative of x^2?\nSolve for x: 2x + 4 = 10'}
+        rows={5}
+        disabled={!!busy}
+        style={{ width: '100%', resize: 'vertical', padding: '14px 16px', borderRadius: 6, border: `1px solid ${PAPER_EDGE}`, background: PAPER_RAISED, color: INK_SYSTEM, fontFamily: FONT_STACK, fontSize: 14, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }}
+      />
+      <button
+        onClick={onSubmitText}
+        disabled={!draft.trim() || !!busy}
+        style={{ alignSelf: 'flex-start', padding: '11px 22px', borderRadius: 999, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 13.5, cursor: draft.trim() && !busy ? 'pointer' : 'default', opacity: draft.trim() && !busy ? 1 : 0.6 }}
+      >
+        {submitLabel}
+      </button>
+
+      <OrDivider />
+
+      <button
+        onClick={onTriggerUpload}
+        disabled={!!busy}
+        style={{ border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, padding: '16px 18px', background: PAPER_RAISED, cursor: 'pointer', textAlign: 'left', fontFamily: FONT_STACK }}
+      >
+        <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>Upload a photo or PDF</div>
+        <div style={{ fontSize: 13, lineHeight: 1.5, color: INK_PENCIL }}>{busy || 'Every question gets pulled out and turned into its own page.'}</div>
+      </button>
+      {error && <p style={{ fontSize: 12.5, color: '#b23b3b', margin: '10px 0 0' }}>{error}</p>}
+    </>
+  )
+}
+
 /** Homework Help's real intake (2026-09-03 ask): write it in, one question
  * per line, or upload a photo/PDF — either way every question becomes its
  * own page in a real book. Homework Help's own upload pipeline is
@@ -839,109 +1103,119 @@ function IntakePage({
         <p style={{ fontSize: 14, lineHeight: 1.6, color: INK_PENCIL, margin: '0 0 26px' }}>
           Write each question on its own line, or upload a photo or PDF. Either way, every question becomes its own page in a real book, with a sim if one exists.
         </p>
-        <textarea
-          value={draft}
-          onChange={(e) => onDraftChange(e.target.value)}
-          placeholder={'e.g.\nWhat is the derivative of x^2?\nSolve for x: 2x + 4 = 10'}
-          rows={5}
-          disabled={!!busy}
-          style={{ width: '100%', resize: 'vertical', padding: '14px 16px', borderRadius: 6, border: `1px solid ${PAPER_EDGE}`, background: PAPER_RAISED, color: INK_SYSTEM, fontFamily: FONT_STACK, fontSize: 14, outline: 'none', marginBottom: 12 }}
+        <HomeworkIntake
+          draft={draft}
+          onDraftChange={onDraftChange}
+          onSubmitText={onSubmitText}
+          onTriggerUpload={onTriggerUpload}
+          busy={busy}
+          error={error}
+          submitLabel="Build the book"
         />
-        <button
-          onClick={onSubmitText}
-          disabled={!draft.trim() || !!busy}
-          style={{ alignSelf: 'flex-start', padding: '11px 22px', borderRadius: 999, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 13.5, cursor: draft.trim() && !busy ? 'pointer' : 'default', opacity: draft.trim() && !busy ? 1 : 0.6 }}
-        >
-          Build the book
-        </button>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '26px 0', ...mono, fontSize: 10, color: INK_SOFT }}>
-          <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
-          or
-          <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
-        </div>
-
-        <button
-          onClick={onTriggerUpload}
-          disabled={!!busy}
-          style={{ border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, padding: '16px 18px', background: PAPER_RAISED, cursor: 'pointer', textAlign: 'left', fontFamily: FONT_STACK }}
-        >
-          <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>Upload a photo or PDF</div>
-          <div style={{ fontSize: 13, lineHeight: 1.5, color: INK_PENCIL }}>{busy || 'Every question gets pulled out and turned into its own page.'}</div>
-        </button>
-        {error && <p style={{ fontSize: 12.5, color: '#b23b3b', margin: '10px 0 0' }}>{error}</p>}
       </div>
     </div>
   )
 }
 
-function ZonePage({
-  resolvedLabel, hasFoundation, foundationLabel, rampLength, onPickFoundation, onPickDirect,
-  onTriggerUpload, uploadBusy, uploadError, chapters, chaptersKind, onPickChapter, onBackToRamp,
+/** Mid-book intake (2026-09-03 growing-book ask): the same ways in the book
+ * opened with (describe a topic, write the questions, or upload them),
+ * run again from inside the book, appending new chapters onto the end of
+ * it instead of starting a new book. */
+function AddChapterPage({
+  topicDraft, onTopicDraftChange, onSubmitTopic, addBusy, addError,
+  homeworkDraft, onHomeworkDraftChange, onSubmitText, onTriggerUpload, uploadBusy, uploadError, onBack,
 }: {
-  resolvedLabel: string; hasFoundation: boolean; foundationLabel: string | undefined; rampLength: number
-  onPickFoundation: () => void; onPickDirect: () => void
-  onTriggerUpload: () => void; uploadBusy: string; uploadError: string
-  chapters: Chapter[] | null; chaptersKind: 'upload' | 'generated' | null; onPickChapter: (i: number) => void; onBackToRamp?: () => void
+  topicDraft: string; onTopicDraftChange: (v: string) => void; onSubmitTopic: () => void
+  addBusy: string; addError: string
+  homeworkDraft: string; onHomeworkDraftChange: (v: string) => void; onSubmitText: () => void
+  onTriggerUpload: () => void; uploadBusy: string; uploadError: string; onBack: () => void
 }) {
-  const isGenerated = chaptersKind === 'generated'
   return (
     <div style={pageShellStyle}>
-      <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px 40px', maxWidth: 900, margin: '0 auto', width: '100%' }}>
-        <div style={{ ...mono, fontSize: 11, color: INK_PENCIL, marginBottom: 10 }}>Page one</div>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px', maxWidth: 640, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ ...mono, fontSize: 11, color: INK_PENCIL, marginBottom: 10 }}>Add a chapter</div>
+        <h1 style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(30px, 5vw, 42px)', margin: '0 0 14px' }}>
+          What next?
+        </h1>
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: INK_PENCIL, margin: '0 0 26px' }}>
+          Same ways in as always. New chapters land at the end of this book and stay in it, so it keeps growing with you.
+        </p>
+        <input
+          value={topicDraft}
+          onChange={(e) => onTopicDraftChange(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && onSubmitTopic()}
+          placeholder="Describe what you want to learn next..."
+          disabled={!!addBusy}
+          style={{ width: '100%', padding: '14px 16px', borderRadius: 6, border: `1px solid ${PAPER_EDGE}`, background: PAPER_RAISED, color: INK_SYSTEM, fontFamily: FONT_STACK, fontSize: 14, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }}
+        />
+        <button
+          onClick={onSubmitTopic}
+          disabled={!topicDraft.trim() || !!addBusy}
+          style={{ alignSelf: 'flex-start', padding: '11px 22px', borderRadius: 999, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 13.5, cursor: topicDraft.trim() && !addBusy ? 'pointer' : 'default', opacity: topicDraft.trim() && !addBusy ? 1 : 0.6 }}
+        >
+          Add it to the book
+        </button>
+        {addBusy && <p style={{ fontSize: 12.5, color: INK_PENCIL, margin: '10px 0 0' }}>{addBusy}</p>}
+        {addError && <p style={{ fontSize: 12.5, color: '#b23b3b', margin: '10px 0 0' }}>{addError}</p>}
 
-        {chapters ? (
+        <OrDivider word="or homework" />
+
+        <HomeworkIntake
+          draft={homeworkDraft}
+          onDraftChange={onHomeworkDraftChange}
+          onSubmitText={onSubmitText}
+          onTriggerUpload={onTriggerUpload}
+          busy={uploadBusy}
+          error={uploadError}
+          submitLabel="Add these chapters"
+        />
+
+        <button
+          onClick={onBack}
+          style={{ alignSelf: 'flex-start', marginTop: 26, background: 'none', border: 'none', color: INK_SOFT, fontSize: 12.5, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+        >
+          &larr; Back to page one
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/** The book's front page: the original ramp's ways in (when there is one),
+ * the full table of contents (every chapter this book has accumulated,
+ * across sessions and topics), and the ways it grows (add a chapter,
+ * upload a worksheet). */
+function ZonePage({
+  resolvedLabel, rampCount, chapters, onPickFoundation, onPickDirect,
+  onPickChapter, onAddChapter, onTriggerUpload, uploadBusy, uploadError,
+}: {
+  resolvedLabel: string; rampCount: number; chapters: Chapter[]
+  onPickFoundation: () => void; onPickDirect: () => void
+  onPickChapter: (i: number) => void; onAddChapter: () => void
+  onTriggerUpload: () => void; uploadBusy: string; uploadError: string
+}) {
+  const hasRamp = rampCount >= 1 && !!resolvedLabel
+  return (
+    <div style={pageShellStyle}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px 40px', maxWidth: 1080, margin: '0 auto', width: '100%' }}>
+        <div style={{ ...mono, fontSize: 11, color: INK_PENCIL, marginBottom: 10 }}>Page one</div>
+        <h2 style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(28px, 5vw, 38px)', margin: '0 0 16px', textWrap: 'balance' }}>
+          {hasRamp ? 'Where that landed' : 'Your book, chapter by chapter'}
+        </h2>
+        <p style={{ fontSize: 14.5, lineHeight: 1.65, color: INK_PENCIL, maxWidth: '56ch', margin: '0 0 26px' }}>
+          {hasRamp
+            ? `“${resolvedLabel}” is where that resolved to. Pick a way in, drop into any chapter, or add another.`
+            : `${chapters.length} chapter${chapters.length === 1 ? '' : 's'} so far. Drop into any of them, or add another.`}
+        </p>
+
+        {hasRamp && (
           <>
-            <h2 style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(28px, 5vw, 38px)', margin: '0 0 16px', textWrap: 'balance' }}>
-              {isGenerated ? 'Written for you, chapter by chapter' : 'Your worksheet, chapter by chapter'}
-            </h2>
-            <p style={{ fontSize: 14.5, lineHeight: 1.65, color: INK_PENCIL, maxWidth: '56ch', margin: '0 0 26px' }}>
-              {isGenerated
-                ? `${chapters.length} page${chapters.length === 1 ? '' : 's'}, generated for real just now — nothing in the library covered this. Pick one.`
-                : `${chapters.length} question${chapters.length === 1 ? '' : 's'}, each its own page in. Pick one.`}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {chapters.map((c, i) => (
-                <button
-                  key={i}
-                  onClick={() => onPickChapter(i)}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
-                    textAlign: 'left', border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, padding: '14px 16px',
-                    background: PAPER_RAISED, cursor: 'pointer', fontFamily: FONT_STACK,
-                  }}
-                >
-                  <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, minWidth: 0 }}>
-                    <span style={{ ...mono, fontSize: 10.5, color: '#5f7a12', flexShrink: 0 }}>{String(i + 1).padStart(2, '0')}</span>
-                    <span style={{ fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.question?.text || c.label}</span>
-                  </span>
-                  {c.hasSim && <span style={{ ...mono, fontSize: 9.5, color: '#8A5A23', flexShrink: 0 }}>sim</span>}
-                </button>
-              ))}
-            </div>
-            {onBackToRamp && (
-              <button
-                onClick={onBackToRamp}
-                style={{ marginTop: 22, background: 'none', border: 'none', color: INK_SOFT, fontSize: 12.5, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-              >
-                Or read "{resolvedLabel}" instead
-              </button>
-            )}
-          </>
-        ) : (
-          <>
-            <h2 style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(28px, 5vw, 38px)', margin: '0 0 16px', textWrap: 'balance' }}>
-              Where that landed
-            </h2>
-            <p style={{ fontSize: 14.5, lineHeight: 1.65, color: INK_PENCIL, maxWidth: '56ch', margin: '0 0 26px' }}>
-              &ldquo;{resolvedLabel}&rdquo; is where that resolved to. Pick where you actually want to start.
-            </p>
             <div style={{ ...mono, fontSize: 11, color: INK_SOFT, marginBottom: 14 }}>Ways in</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 640 }}>
-              {hasFoundation && foundationLabel && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 640, marginBottom: 30 }}>
+              {rampCount > 1 && chapters[0] && (
                 <ZoneCard
-                  label="COMFORT ZONE" accent="#5f7a12" dist={`${rampLength - 1} step${rampLength - 1 === 1 ? '' : 's'} back`}
-                  title={`Start at the foundation: ${foundationLabel}`}
+                  label="COMFORT ZONE" accent="#5f7a12" dist={`${rampCount - 1} step${rampCount - 1 === 1 ? '' : 's'} back`}
+                  title={`Start at the foundation: ${chapters[0].label}`}
                   detail="Build up from what you already have. Slower, sturdier."
                   onClick={onPickFoundation}
                 />
@@ -952,16 +1226,47 @@ function ZonePage({
                 detail="Skip the ramp, read this concept directly."
                 onClick={onPickDirect}
               />
-              <ZoneCard
-                label="WORTH FIXING" accent={INK_PENCIL} dist="upload"
-                title="Working from a worksheet instead?"
-                detail={uploadBusy || "Upload it — every question becomes its own chapter in this book, with a sim if one exists."}
-                onClick={onTriggerUpload}
-              />
-              {uploadError && <p style={{ fontSize: 12.5, color: '#b23b3b', margin: '2px 0 0' }}>{uploadError}</p>}
             </div>
           </>
         )}
+
+        <div style={{ ...mono, fontSize: 11, color: INK_SOFT, marginBottom: 14 }}>The chapters</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 30 }}>
+          {chapters.map((c, i) => (
+            <button
+              key={`${c.conceptId}_${i}`}
+              onClick={() => onPickChapter(i)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+                textAlign: 'left', border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, padding: '14px 16px',
+                background: PAPER_RAISED, cursor: 'pointer', fontFamily: FONT_STACK,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, minWidth: 0 }}>
+                <span style={{ ...mono, fontSize: 10.5, color: '#5f7a12', flexShrink: 0 }}>{String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.question?.text || c.label}</span>
+              </span>
+              {c.hasSim && <span style={{ ...mono, fontSize: 9.5, color: '#8A5A23', flexShrink: 0 }}>sim</span>}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ ...mono, fontSize: 11, color: INK_SOFT, marginBottom: 14 }}>Grow it</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 640 }}>
+          <ZoneCard
+            label="ADD A CHAPTER" accent="#5f7a12" dist="anything"
+            title="Learn something new in this same book"
+            detail="Describe it, write the questions, or upload them. New chapters land at the end and stay here."
+            onClick={onAddChapter}
+          />
+          <ZoneCard
+            label="WORTH FIXING" accent={INK_PENCIL} dist="upload"
+            title="Working from a worksheet?"
+            detail={uploadBusy || 'Upload it: every question becomes its own chapter in this book, with a sim if one exists.'}
+            onClick={onTriggerUpload}
+          />
+          {uploadError && <p style={{ fontSize: 12.5, color: '#b23b3b', margin: '2px 0 0' }}>{uploadError}</p>}
+        </div>
       </div>
     </div>
   )
@@ -1069,82 +1374,170 @@ function ReadPage({
 
   return (
     <div style={{ ...pageShellStyle, background: paperColor, color: inkColor }}>
-      <div style={{ flex: 1, overflowY: 'auto', padding: '48px 64px 40px', maxWidth: 780, margin: '0 auto', width: '100%' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...mono, fontSize: 10.5, color: INK_SOFT, marginBottom: 8 }}>
-          <span>Chapter {stepNumber} of {stepCount}</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span>{content?.subjectTitle || ''}</span>
+      <div style={{ flex: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...mono, fontSize: 10.5, color: INK_SOFT, padding: '16px 28px 12px', borderBottom: `1px solid ${PAPER_EDGE}` }}>
+        <span>Chapter {stepNumber} of {stepCount}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span>{content?.subjectTitle || ''}</span>
+          <button
+            onClick={() => setColorsOpen((v) => !v)}
+            title="Change page colors"
+            style={{ width: 20, height: 20, borderRadius: '50%', border: `1px solid ${PAPER_EDGE}`, background: `linear-gradient(135deg, ${paperColor} 50%, ${inkColor} 50%)`, cursor: 'pointer', padding: 0 }}
+            aria-label="Change page colors"
+          />
+        </div>
+      </div>
+
+      {colorsOpen && (
+        <div style={{ flex: 'none', display: 'flex', gap: 8, padding: '10px 28px 0', flexWrap: 'wrap' }}>
+          {PAGE_COLOR_SWATCHES.map((s) => (
             <button
-              onClick={() => setColorsOpen((v) => !v)}
-              title="Change page colors"
-              style={{ width: 20, height: 20, borderRadius: '50%', border: `1px solid ${PAPER_EDGE}`, background: `linear-gradient(135deg, ${paperColor} 50%, ${inkColor} 50%)`, cursor: 'pointer', padding: 0 }}
-              aria-label="Change page colors"
+              key={s.label}
+              onClick={() => { onUpdateEdit({ paperColor: s.paper, inkColor: s.ink }); setColorsOpen(false) }}
+              title={s.label}
+              style={{
+                width: 26, height: 26, borderRadius: '50%', cursor: 'pointer', padding: 0,
+                background: s.paper, border: `2px solid ${s.paper === paperColor ? '#5f7a12' : PAPER_EDGE}`,
+              }}
+              aria-label={`Use ${s.label} colors`}
             />
-          </div>
+          ))}
+        </div>
+      )}
+
+      {/* Full-space spread (2026-09-03 ask: "use the whole vertical and
+          horizontal space ... text on the left and sims on the right"):
+          reading text in the left column, the sim filling the right, each
+          scrolling on its own. Below 920px the columns stack (see the
+          media rule in BookReader's style tag) so a phone still reads. */}
+      <div className="lrn-book-cols" style={{ flex: 1, minHeight: 0, display: 'flex' }}>
+        <div className="lrn-book-col-text" style={{ flex: '1 1 56%', minWidth: 0, overflowY: 'auto', padding: '26px 40px 44px' }}>
+          {editingTitle ? (
+            <input
+              autoFocus
+              value={titleDraft}
+              onChange={(e) => setTitleDraft(e.target.value)}
+              onBlur={commitTitle}
+              onKeyDown={(e) => e.key === 'Enter' && commitTitle()}
+              style={{
+                fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(24px, 4.4vw, 32px)', margin: '0 0 20px',
+                width: '100%', background: 'transparent', border: 'none', borderBottom: `1px solid ${inkColor}`, color: 'inherit', outline: 'none', padding: 0,
+              }}
+            />
+          ) : (
+            <h2
+              onClick={() => setEditingTitle(true)}
+              title="Click to edit"
+              style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(24px, 4.4vw, 32px)', margin: '0 0 20px', cursor: 'text' }}
+            >
+              {title}
+            </h2>
+          )}
+
+          {step.question && (
+            <div style={{ border: `1px dashed ${PAPER_EDGE}`, borderRadius: 2, padding: '12px 14px', marginBottom: 16, background: PAPER_RECESSED }}>
+              <div style={{ ...mono, fontSize: 9.5, color: INK_SOFT, marginBottom: 4 }}>From your upload{step.question.number ? `, question ${step.question.number}` : ''}</div>
+              <p style={{ fontSize: 13.5, lineHeight: 1.5, color: INK_SYSTEM, margin: 0 }}>{step.question.text}</p>
+            </div>
+          )}
+
+          {loading && <p style={{ fontSize: 13, color: INK_SOFT }}>Turning to this page...</p>}
+          {error && <p style={{ fontSize: 13, color: '#b23b3b' }}>{error}</p>}
+
+          {!loading && !error && (
+            <>
+              {paras.length ? (
+                paras.map((p, i) => (
+                  <div key={i} className="lrn-book-para" style={{ position: 'relative', margin: i === 0 ? 0 : '12px 0 0', maxWidth: '78ch' }}>
+                    {editingIndex === i ? (
+                      <textarea
+                        autoFocus
+                        value={paraDraft}
+                        onChange={(e) => setParaDraft(e.target.value)}
+                        onBlur={() => commitPara(i)}
+                        rows={Math.max(2, Math.ceil(paraDraft.length / 80))}
+                        style={{ width: '100%', resize: 'vertical', fontSize: 14.5, lineHeight: 1.72, fontFamily: 'inherit', color: 'inherit', background: 'transparent', border: `1px dashed ${inkColor}`, borderRadius: 4, padding: 6, outline: 'none' }}
+                      />
+                    ) : (
+                      <p
+                        onClick={() => startEditPara(i)}
+                        title="Click to edit"
+                        style={{ fontSize: 14.5, lineHeight: 1.72, color: 'inherit', margin: 0, cursor: 'text', paddingRight: 44 }}
+                      >
+                        {p}
+                      </p>
+                    )}
+                    {editingIndex !== i && (
+                      <div className="lrn-book-para-controls" style={{ position: 'absolute', top: 0, right: 0, display: 'flex', flexDirection: 'column', gap: 2, opacity: 0 }}>
+                        <button onClick={() => moveParagraph(i, -1)} disabled={i === 0} aria-label="Move paragraph up" style={{ width: 20, height: 20, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: 'inherit', cursor: i === 0 ? 'default' : 'pointer', opacity: i === 0 ? 0.3 : 1, fontSize: 10, padding: 0, borderRadius: 3 }}>&uarr;</button>
+                        <button onClick={() => moveParagraph(i, 1)} disabled={i === paras.length - 1} aria-label="Move paragraph down" style={{ width: 20, height: 20, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: 'inherit', cursor: i === paras.length - 1 ? 'default' : 'pointer', opacity: i === paras.length - 1 ? 0.3 : 1, fontSize: 10, padding: 0, borderRadius: 3 }}>&darr;</button>
+                      </div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p style={{ fontSize: 13.5, color: INK_SOFT }}>No written chapter for this concept yet.</p>
+              )}
+
+              {notes.length > 0 && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '26px 0 12px', ...mono, fontSize: 10, color: INK_SOFT }}>
+                    <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
+                    your notes
+                    <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
+                  </div>
+                  {notes.map((n) => (
+                    <div key={n.id} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', background: PAPER_RECESSED, border: `1px dashed ${PAPER_EDGE}`, borderRadius: 2, padding: '12px 14px', marginTop: 10 }}>
+                      <span style={{ width: 8, height: 8, marginTop: 5, borderRadius: '50%', background: ACCENT_LIME, boxShadow: '0 0 0 4px rgba(196,245,71,0.25)', flexShrink: 0 }} />
+                      <p style={{ fontSize: 13.5, lineHeight: 1.55, color: INK_SYSTEM, fontStyle: 'italic', margin: 0 }}>&ldquo;{n.text}&rdquo;</p>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {noteOpen ? (
+                <div style={{ marginTop: 16 }}>
+                  <textarea
+                    ref={noteRef}
+                    value={noteDraft}
+                    onChange={(e) => onNoteDraftChange(e.target.value)}
+                    placeholder="What do you want to remember here?"
+                    rows={2}
+                    style={{ width: '100%', resize: 'vertical', padding: '10px 12px', borderRadius: 8, border: `1px solid ${PAPER_EDGE}`, background: PAPER_RAISED, color: INK_SYSTEM, fontFamily: FONT_STACK, fontSize: 13, outline: 'none' }}
+                  />
+                  <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                    <button onClick={onSaveNote} disabled={noteSaving || !noteDraft.trim()} style={{ padding: '7px 16px', borderRadius: 999, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 12.5, cursor: noteSaving ? 'default' : 'pointer' }}>
+                      {noteSaving ? 'Saving...' : 'Save note'}
+                    </button>
+                    <button onClick={onCancelNote} style={{ padding: '7px 16px', borderRadius: 999, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: INK_PENCIL, fontWeight: 600, fontSize: 12.5, cursor: 'pointer' }}>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={onOpenNote}
+                  style={{ marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 6, ...mono, fontSize: 10.5, color: INK_PENCIL, border: `1px solid ${PAPER_EDGE}`, borderRadius: 999, padding: '7px 13px', cursor: 'pointer', background: 'transparent' }}
+                >
+                  <span style={{ color: '#5f7a12', fontWeight: 600 }}>+</span> Tag your own note to this page
+                </button>
+              )}
+            </>
+          )}
         </div>
 
-        {colorsOpen && (
-          <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-            {PAGE_COLOR_SWATCHES.map((s) => (
-              <button
-                key={s.label}
-                onClick={() => { onUpdateEdit({ paperColor: s.paper, inkColor: s.ink }); setColorsOpen(false) }}
-                title={s.label}
-                style={{
-                  width: 26, height: 26, borderRadius: '50%', cursor: 'pointer', padding: 0,
-                  background: s.paper, border: `2px solid ${s.paper === paperColor ? '#5f7a12' : PAPER_EDGE}`,
-                }}
-                aria-label={`Use ${s.label} colors`}
-              />
-            ))}
-          </div>
-        )}
-
-        {editingTitle ? (
-          <input
-            autoFocus
-            value={titleDraft}
-            onChange={(e) => setTitleDraft(e.target.value)}
-            onBlur={commitTitle}
-            onKeyDown={(e) => e.key === 'Enter' && commitTitle()}
-            style={{
-              fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(24px, 4.4vw, 32px)', margin: '0 0 20px',
-              width: '100%', background: 'transparent', border: 'none', borderBottom: `1px solid ${inkColor}`, color: 'inherit', outline: 'none', padding: 0,
-            }}
-          />
-        ) : (
-          <h2
-            onClick={() => setEditingTitle(true)}
-            title="Click to edit"
-            style={{ fontFamily: SERIF_STACK, fontStyle: 'italic', fontSize: 'clamp(24px, 4.4vw, 32px)', margin: '0 0 20px', cursor: 'text' }}
-          >
-            {title}
-          </h2>
-        )}
-
-        {step.question && (
-          <div style={{ border: `1px dashed ${PAPER_EDGE}`, borderRadius: 2, padding: '12px 14px', marginBottom: 16, background: PAPER_RECESSED }}>
-            <div style={{ ...mono, fontSize: 9.5, color: INK_SOFT, marginBottom: 4 }}>From your upload{step.question.number ? `, question ${step.question.number}` : ''}</div>
-            <p style={{ fontSize: 13.5, lineHeight: 1.5, color: INK_SYSTEM, margin: 0 }}>{step.question.text}</p>
-          </div>
-        )}
-
-        {loading && <p style={{ fontSize: 13, color: INK_SOFT }}>Turning to this page...</p>}
-        {error && <p style={{ fontSize: 13, color: '#b23b3b' }}>{error}</p>}
-
-        {!loading && !error && (
-          <>
-            <div style={{ border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, background: INK_SYSTEM, marginBottom: 16, overflow: 'hidden' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', ...mono, fontSize: 10, color: 'rgba(245,245,245,0.65)', borderBottom: '1px solid rgba(245,245,245,0.1)' }}>
+        <div className="lrn-book-col-sim" style={{ flex: '1 1 44%', minWidth: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', borderLeft: `1px solid ${PAPER_EDGE}`, padding: '26px 28px 44px' }}>
+          {!loading && !error && (
+            <div style={{ flex: 1, minHeight: 360, display: 'flex', flexDirection: 'column', border: `1px solid ${PAPER_EDGE}`, borderRadius: 2, background: INK_SYSTEM, overflow: 'hidden' }}>
+              <div style={{ flex: 'none', display: 'flex', justifyContent: 'space-between', padding: '9px 14px', ...mono, fontSize: 10, color: 'rgba(245,245,245,0.65)', borderBottom: '1px solid rgba(245,245,245,0.1)' }}>
                 <span>Simulation</span>
                 {(sim || generatedSim) && <span style={{ color: ACCENT_LIME }}>&#9679; live</span>}
               </div>
               {sim ? (
-                <iframe title="sim" srcDoc={sim.html} sandbox="allow-scripts" style={{ width: '100%', height: 320, border: 'none', background: 'white', display: 'block' }} />
+                <iframe title="sim" srcDoc={sim.html} sandbox="allow-scripts" style={{ width: '100%', flex: 1, minHeight: 320, border: 'none', background: 'white', display: 'block' }} />
               ) : generatedSim ? (
-                <iframe title="generated-sim" srcDoc={generatedSim.html} sandbox="allow-scripts" style={{ width: '100%', height: 320, border: 'none', background: 'white', display: 'block' }} />
+                <iframe title="generated-sim" srcDoc={generatedSim.html} sandbox="allow-scripts" style={{ width: '100%', flex: 1, minHeight: 320, border: 'none', background: 'white', display: 'block' }} />
               ) : (
-                <div style={{ padding: '18px 16px', color: 'rgba(245,245,245,0.75)' }}>
+                <div style={{ flex: 1, padding: '18px 16px', color: 'rgba(245,245,245,0.75)' }}>
                   <p style={{ fontSize: 12.5, lineHeight: 1.6, margin: '0 0 10px' }}>No simulation exists yet for this concept.</p>
                   <button
                     onClick={onRunSimGeneration}
@@ -1158,85 +1551,8 @@ function ReadPage({
                 </div>
               )}
             </div>
-
-            {paras.length ? (
-              paras.map((p, i) => (
-                <div key={i} className="lrn-book-para" style={{ position: 'relative', margin: i === 0 ? 0 : '12px 0 0', maxWidth: '62ch' }}>
-                  {editingIndex === i ? (
-                    <textarea
-                      autoFocus
-                      value={paraDraft}
-                      onChange={(e) => setParaDraft(e.target.value)}
-                      onBlur={() => commitPara(i)}
-                      rows={Math.max(2, Math.ceil(paraDraft.length / 80))}
-                      style={{ width: '100%', resize: 'vertical', fontSize: 14.5, lineHeight: 1.72, fontFamily: 'inherit', color: 'inherit', background: 'transparent', border: `1px dashed ${inkColor}`, borderRadius: 4, padding: 6, outline: 'none' }}
-                    />
-                  ) : (
-                    <p
-                      onClick={() => startEditPara(i)}
-                      title="Click to edit"
-                      style={{ fontSize: 14.5, lineHeight: 1.72, color: 'inherit', margin: 0, cursor: 'text', paddingRight: 44 }}
-                    >
-                      {p}
-                    </p>
-                  )}
-                  {editingIndex !== i && (
-                    <div className="lrn-book-para-controls" style={{ position: 'absolute', top: 0, right: 0, display: 'flex', flexDirection: 'column', gap: 2, opacity: 0 }}>
-                      <button onClick={() => moveParagraph(i, -1)} disabled={i === 0} aria-label="Move paragraph up" style={{ width: 20, height: 20, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: 'inherit', cursor: i === 0 ? 'default' : 'pointer', opacity: i === 0 ? 0.3 : 1, fontSize: 10, padding: 0, borderRadius: 3 }}>&uarr;</button>
-                      <button onClick={() => moveParagraph(i, 1)} disabled={i === paras.length - 1} aria-label="Move paragraph down" style={{ width: 20, height: 20, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: 'inherit', cursor: i === paras.length - 1 ? 'default' : 'pointer', opacity: i === paras.length - 1 ? 0.3 : 1, fontSize: 10, padding: 0, borderRadius: 3 }}>&darr;</button>
-                    </div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p style={{ fontSize: 13.5, color: INK_SOFT }}>No written chapter for this concept yet.</p>
-            )}
-
-            {notes.length > 0 && (
-              <>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '26px 0 12px', ...mono, fontSize: 10, color: INK_SOFT }}>
-                  <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
-                  your notes
-                  <span style={{ flex: 1, height: 1, background: PAPER_EDGE }} />
-                </div>
-                {notes.map((n) => (
-                  <div key={n.id} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', background: PAPER_RECESSED, border: `1px dashed ${PAPER_EDGE}`, borderRadius: 2, padding: '12px 14px', marginTop: 10 }}>
-                    <span style={{ width: 8, height: 8, marginTop: 5, borderRadius: '50%', background: ACCENT_LIME, boxShadow: '0 0 0 4px rgba(196,245,71,0.25)', flexShrink: 0 }} />
-                    <p style={{ fontSize: 13.5, lineHeight: 1.55, color: INK_SYSTEM, fontStyle: 'italic', margin: 0 }}>&ldquo;{n.text}&rdquo;</p>
-                  </div>
-                ))}
-              </>
-            )}
-
-            {noteOpen ? (
-              <div style={{ marginTop: 16 }}>
-                <textarea
-                  ref={noteRef}
-                  value={noteDraft}
-                  onChange={(e) => onNoteDraftChange(e.target.value)}
-                  placeholder="What do you want to remember here?"
-                  rows={2}
-                  style={{ width: '100%', resize: 'vertical', padding: '10px 12px', borderRadius: 8, border: `1px solid ${PAPER_EDGE}`, background: PAPER_RAISED, color: INK_SYSTEM, fontFamily: FONT_STACK, fontSize: 13, outline: 'none' }}
-                />
-                <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-                  <button onClick={onSaveNote} disabled={noteSaving || !noteDraft.trim()} style={{ padding: '7px 16px', borderRadius: 999, border: 'none', background: '#3d6b4f', color: 'white', fontWeight: 600, fontSize: 12.5, cursor: noteSaving ? 'default' : 'pointer' }}>
-                    {noteSaving ? 'Saving...' : 'Save note'}
-                  </button>
-                  <button onClick={onCancelNote} style={{ padding: '7px 16px', borderRadius: 999, border: `1px solid ${PAPER_EDGE}`, background: 'transparent', color: INK_PENCIL, fontWeight: 600, fontSize: 12.5, cursor: 'pointer' }}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={onOpenNote}
-                style={{ marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 6, ...mono, fontSize: 10.5, color: INK_PENCIL, border: `1px solid ${PAPER_EDGE}`, borderRadius: 999, padding: '7px 13px', cursor: 'pointer', background: 'transparent' }}
-              >
-                <span style={{ color: '#5f7a12', fontWeight: 600 }}>+</span> Tag your own note to this page
-              </button>
-            )}
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )

@@ -29,3 +29,22 @@ export function readByokConfig(): ByokConfig | null {
     return null
   }
 }
+
+/** Same shape/key the Desk OS settings panel writes (settings.js's own form
+ * submit handler) — this is the first React-side writer, so a key saved here
+ * is read the same way by either surface. */
+export function writeByokConfig(config: ByokConfig): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(config))
+  } catch {
+    /* ignore */
+  }
+}
+
+export function clearByokConfig(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+  } catch {
+    /* ignore */
+  }
+}

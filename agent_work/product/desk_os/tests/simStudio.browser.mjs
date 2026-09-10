@@ -38,17 +38,10 @@ async function waitForValue(readValue, predicate, label) {
   assert.fail(`${label}: last value was ${value}`);
 }
 
+// The tab row that used to gate this is retired (2026-09-04: one
+// integrated world, not pages to switch between), boot lands here directly,
+// nothing to click or tap-target-check anymore.
 async function waitForStudio(page) {
-  const nav = page.locator('[data-hub-sim-nav]').first();
-  await nav.waitFor({ state: 'visible' });
-  assert.equal(await nav.isEnabled(), true);
-  const box = await nav.boundingBox();
-  assert.ok(box && box.width >= 44 && box.height >= 44, 'Sim Studio tab has a usable tap target');
-  const receivesTap = await page.evaluate(({ x, y }) => {
-    return Boolean(document.elementFromPoint(x, y)?.closest('[data-hub-sim-nav]'));
-  }, { x: box.x + box.width / 2, y: box.y + box.height / 2 });
-  assert.equal(receivesTap, true);
-  await nav.evaluate((button) => button.click());
   await page.locator('#hubSimStudio').waitFor({ state: 'visible' });
   await page.waitForFunction(() => (
     document.querySelectorAll('[data-sim-node]:not(.is-loading)').length === 3
@@ -64,20 +57,19 @@ try {
 
   await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
   await page.locator('#hubStage').waitFor({ state: 'visible' });
-  await page.locator('#hubWorkspace').waitFor({ state: 'visible' });
-  assert.match(await page.locator('#hubWorkspace h1').innerText(), /curious/i);
 
-  await nativeClick(page.locator('[data-hub-starter]').first());
-  assert.equal(
-    await page.locator('[data-hub-hero-search-input]').inputValue(),
-    'Why do city streets get so hot?',
-  );
-  await page.locator('[data-hub-hero-search-result]').waitFor({ state: 'visible' });
+  // The world is the landing now (2026-09-04 ask): boot goes straight into
+  // Sim Studio, no click into it, no separate Workspace dashboard first.
+  await waitForStudio(page);
+  assert.equal(await page.locator('[data-hub-tab2="sim"]').getAttribute('aria-selected'), 'true');
+  assert.equal(await page.locator('#hubWorkspace').isHidden(), true);
 
   const landingShot = '/private/tmp/mindcraft-deskos-landing-desktop.png';
   await capture(page, landingShot, { fullPage: true });
 
-  await waitForStudio(page);
+  // The tab row itself is gone from view (2026-09-04: one integrated world,
+  // not a set of pages), Workspace is retired, not just deprioritized.
+  assert.equal(await page.locator('.hub-tabs2').isHidden(), true);
   assert.equal(await page.locator('.sim-wire').count(), 3);
   assert.match(await page.locator('[data-sim-status]').innerText(), /3 sims live, 3 wires/);
 
@@ -103,7 +95,17 @@ try {
     /8\.7 %/,
   );
 
+  // The Parts bin + wiring board live inside the Workshop building now
+  // (2026-09-04, one integrated world: #simWorkbench ships hidden and is
+  // adopted into the in-world overlay on open), so open the Workshop the
+  // same way a student would to reach the real drag targets. The drags
+  // themselves are unchanged.
+  await page.locator('[data-world-object="workshop"]').evaluate((button) => button.click());
+  await page.locator('[data-world-overlay-mount] #simWorkbench').waitFor({ state: 'visible' });
+  await page.locator('[data-sim-viewport]').scrollIntoViewIfNeeded();
+
   const sunNode = page.locator('[data-sim-node^="sun-"]').first();
+  await sunNode.scrollIntoViewIfNeeded();
   const sunHeader = sunNode.locator('.sim-node-head');
   const nodeBoxBefore = await sunNode.boundingBox();
   const headerBox = await sunHeader.boundingBox();
@@ -119,6 +121,10 @@ try {
   assert.equal(await page.locator('.sim-wire').count(), 0);
   const outputPort = sunNode.locator('[data-direction="output"][data-port-id="light"]');
   const inputPort = page.locator('[data-sim-node^="shade-"] [data-direction="input"][data-port-id="light"]');
+  // Wires finish on a real pointerup over the target port, so the drop
+  // point must actually be inside the overlay mount's visible area; the
+  // shade node sits lower than one overlay-screen, scroll it into reach.
+  await inputPort.scrollIntoViewIfNeeded();
   const outputBox = await outputPort.boundingBox();
   const inputBox = await inputPort.boundingBox();
   assert.ok(outputBox && inputBox);
@@ -141,6 +147,12 @@ try {
   await page.waitForFunction(() => document.querySelectorAll('[data-sim-node]').length === 4);
   assert.equal(await page.locator('[data-sim-node]').count(), 4);
 
+  // Back out to the world: the workbench returns to its hidden home slot
+  // and the closing screenshot shows the scene, not the overlay.
+  await page.locator('[data-world-overlay-close]').evaluate((button) => button.click());
+  await page.waitForFunction(() => document.querySelector('[data-world-overlay]')?.hidden === true);
+  assert.equal(await page.locator('#simWorkbench').isHidden(), true);
+
   const studioShot = '/private/tmp/mindcraft-sim-studio-desktop.png';
   await capture(page, studioShot, { fullPage: true });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), true);
@@ -156,7 +168,10 @@ try {
     const errors = [];
     responsivePage.on('pageerror', (error) => errors.push(error.message));
     await responsivePage.goto(baseUrl, { waitUntil: 'domcontentloaded' });
-    await responsivePage.locator('#hubWorkspace').waitFor({ state: 'visible' });
+
+    // The world is the landing now: boots straight into it, no Workspace
+    // dashboard first (2026-09-04 ask), same as the desktop pass above.
+    await waitForStudio(responsivePage);
     assert.equal(
       await responsivePage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
       true,
@@ -164,7 +179,7 @@ try {
     const landingPath = `/private/tmp/mindcraft-deskos-landing-${viewport.name}.png`;
     await capture(responsivePage, landingPath);
 
-    await waitForStudio(responsivePage);
+    assert.equal(await responsivePage.locator('.hub-tabs2').isHidden(), true);
     assert.equal(
       await responsivePage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
       true,

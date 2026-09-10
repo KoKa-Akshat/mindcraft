@@ -19,7 +19,7 @@
        matches the dark theme instantly at parse time, before any network
        fetch, so the handoff reads as intentional instead of a broken flash. -->
   <style>html,body{background:#080e14}</style>
-  <link rel="stylesheet" href="styles.css?v=workspace3" />
+  <link rel="stylesheet" href="styles.css?v=world2" />
 </head>
 <body>
   <div class="app" id="appShell" data-mode="gate" data-surface="gate">
@@ -172,21 +172,6 @@
           </button>
         </nav>
 
-        <div class="hub-nav-actions">
-          <button type="button" class="hub-friends-btn" data-hub-friends aria-label="Call a friend">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            <span>Call</span>
-          </button>
-          <button type="button" class="hub-settings" data-hub-settings aria-label="Settings">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 13a7.6 7.6 0 0 0 .1-1 7.6 7.6 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3h-4l-.4 2.9a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.4L6.5 11a7.6 7.6 0 0 0-.1 1 7.6 7.6 0 0 0 .1 1l-2 1.6 2 3.4 2.4-1a7.7 7.7 0 0 0 1.7 1l.4 2.9h4l.4-2.9a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6Z"></path>
-            </svg>
-          </button>
-          <button type="button" class="hub-signout" data-hub-signout>Sign out</button>
-        </div>
       </header>
 
       <main class="hub-main" data-hub-panel="dashboard">
@@ -232,7 +217,7 @@
             <!-- Just the graph now (2026-09-02 ask): the paper-stack frame,
                  bookmark ribbon, raccoon mascot, and "Jesse is nearby" slip
                  are gone, along with the "Open Learn" CTA beside it in the
-                 copy column — clicking the graph itself already launches
+                 copy column: clicking the graph itself already launches
                  /learn (the veil button below, unchanged), so a second,
                  separate way to do the same thing was redundant chrome. -->
             <div class="hub-workspace-object hub-graph-sheet" data-hub-graph-sheet aria-label="Your knowledge map">
@@ -246,7 +231,7 @@
                  same tile look the tutor role's dashboard already uses, reusing
                  data-hub-resume-nav/data-hub-jesse-nav so bootHub.js's existing
                  click wiring (querySelectorAll on those attributes) picks these
-                 up with no new JS — also fills what used to be a bare void
+                 up with no new JS; it also fills what used to be a bare void
                  below the hero card on anything but a short window. A third
                  child of .hub-hero-card on purpose, not a sibling: hidden/
                  shown by the SAME heroCard.hidden toggle paintRoleSurfaces()
@@ -298,13 +283,60 @@
                 <h1>Build the system.</h1>
                 <p>Chain small experiments into something only you could make.</p>
               </div>
-              <div class="sim-studio-live" aria-live="polite">
-                <span aria-hidden="true"></span>
-                <strong data-sim-status>Live flow warming up</strong>
-              </div>
             </header>
 
-            <div class="sim-workbench">
+            <!-- The walkable world (2026-09-04): a top-down blocky garden.
+                 simWorld.js renders the tiles, objects, and character, and
+                 owns the in-world overlay below. The overlay is a panel over
+                 the scene, never a full-screen dialog: the world stays
+                 visible and dimmed around whatever is open. -->
+            <section class="sim-world" aria-label="Your world">
+              <div class="sim-world-frame" data-sim-world>
+                <!-- In-game HUD (2026-09-04 ask): Call + Settings live inside
+                     the console now, top right over the scene, next to the
+                     live-flow status pill that used to sit in the page header
+                     above. Single owners, moved not duplicated: app.js still
+                     finds both buttons by data attribute, settings.js owns
+                     Sign out inside the Settings panel. -->
+                <div class="sim-world-hud" data-world-hud>
+                  <div class="sim-studio-live" aria-live="polite">
+                    <span aria-hidden="true"></span>
+                    <strong data-sim-status>Live flow warming up</strong>
+                  </div>
+                  <button type="button" class="hub-friends-btn" data-hub-friends aria-label="Call a friend">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    <span>Call</span>
+                  </button>
+                  <button type="button" class="hub-settings" data-hub-settings aria-label="Settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 13a7.6 7.6 0 0 0 .1-1 7.6 7.6 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3h-4l-.4 2.9a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.4L6.5 11a7.6 7.6 0 0 0-.1 1 7.6 7.6 0 0 0 .1 1l-2 1.6 2 3.4 2.4-1a7.7 7.7 0 0 0 1.7 1l.4 2.9h4l.4-2.9a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6Z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="sim-world-stage" data-world-stage tabindex="0" aria-label="Garden world. Move with arrow keys or WASD, walk up to something to open it."></div>
+                <div class="sim-world-overlay" data-world-overlay hidden>
+                  <div class="sim-world-overlay-panel" data-world-overlay-panel role="dialog" aria-modal="false" aria-label="World object">
+                    <header class="sim-world-overlay-head">
+                      <strong data-world-overlay-title>Object</strong>
+                      <a data-world-overlay-full href="/learn" target="_blank" rel="noopener" hidden>Open full page</a>
+                      <button type="button" data-world-overlay-close aria-label="Close and return to the world">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+                      </button>
+                    </header>
+                    <div class="sim-world-overlay-body">
+                      <div class="sim-solo-doc sim-world-overlay-doc" data-world-overlay-doc hidden></div>
+                      <div class="sim-world-overlay-mount" data-world-overlay-mount></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="sim-world-hint">Walk with arrow keys or WASD. The world is bigger than the screen, so explore: step up to the plant or a building to open the real thing, the world stays around you.</p>
+            </section>
+
+            <div class="sim-workbench" id="simWorkbench" hidden>
               <aside class="sim-library" aria-label="Simulation parts">
                 <div class="sim-library-head">
                   <span>Parts bin</span>
@@ -330,6 +362,28 @@
                     <span><strong>Plant bed</strong><small>Climate in, growth out</small></span>
                   </button>
                 </div>
+
+                <div class="sim-invent">
+                  <div class="sim-library-head">
+                    <span>Invent a sim</span>
+                  </div>
+                  <form class="sim-invent-form" data-sim-invent-form>
+                    <input
+                      type="text"
+                      data-sim-invent-input
+                      placeholder="Describe anything, a CPU, a switch, a data center..."
+                      maxlength="200"
+                      autocomplete="off"
+                    />
+                    <button type="submit" data-sim-invent-submit>Build it</button>
+                  </form>
+                </div>
+
+                <div class="sim-library-head">
+                  <span>Library</span>
+                  <small data-sim-library-status>Loading...</small>
+                </div>
+                <div class="sim-library-items" data-sim-library-list></div>
               </aside>
 
               <section class="sim-board-shell" aria-label="Simulation wiring board">
@@ -359,7 +413,10 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
                 </button>
               </header>
-              <div class="sim-solo-mount" data-sim-solo-mount></div>
+              <div class="sim-solo-body">
+                <div class="sim-solo-doc" data-sim-solo-doc hidden></div>
+                <div class="sim-solo-mount" data-sim-solo-mount></div>
+              </div>
             </dialog>
           </section>
 
@@ -423,7 +480,7 @@
                    generalization, see firestore.rules' tutorEvents block).
                    Pin placement itself still happens by clicking the real
                    map in the pane to the left (data-tm-map, live the whole
-                   time this form is open) — the Location row right below
+                   time this form is open); the Location row right below
                    just makes that step explicit instead of relying on a
                    student noticing a hint paragraph disconnected from the
                    form's own fields (2026-09-02 ask). Clicking it draws the
@@ -459,7 +516,7 @@
              founder shared of a competitor's job-search copilot. Center
              chat is the constant: it never swaps out. The left rail only
              decides which section shows in the right panel, exactly like
-             that reference — nothing here renders "jobs", "profile" or
+             that reference: nothing here renders "jobs", "profile" or
              "documents" as separate pages. All data lives under the
              signed-in student's own uid: users/{uid}/jobOS/resumeDraft
              (the editable draft) and users/{uid}/jobOS/state (the shared
@@ -844,6 +901,6 @@
 
   <div class="toast" id="toast" role="status"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script type="module" src="js/app.js?v=simstudio1"></script>
+  <script type="module" src="js/app.js?v=world2"></script>
 </body>
 </html>

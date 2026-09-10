@@ -49,7 +49,7 @@ import { createTutorMap } from './tutorMap.js?v=te1';
 import { createResumeHelper } from './resumeHelper.js?v=rh1';
 import { createFriends } from './friends.js?v=te1';
 import { createSettings } from './settings.js?v=s1';
-import { createSimStudio } from './simStudio.js?v=ss1';
+import { createSimStudio } from './simStudio.js?v=world2';
 import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
 import { createHubCall } from './hubCall.js?v=r9b';
 import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
@@ -662,6 +662,23 @@ function ensureBootHub() {
     simStudio = createSimStudio({
       root: document.getElementById('hubSimStudio'),
       onToast: (msg) => showToast(msg),
+      // The world's Careers office hosts the ONE real Resume Helper inside
+      // its in-world overlay. These close over the module-scoped instance
+      // (created later in boot), so order is safe: by the time a student
+      // can click a building, resumeHelper exists.
+      resumePanel: {
+        open: () => { void resumeHelper?.open(); },
+        close: () => resumeHelper?.close(),
+      },
+      // Same lazy-bridge shape as resumePanel above, closing over the
+      // module-scoped tutorMap instance created later in boot. There is no
+      // dedicated tutorMap.close(): the existing showTutorMapPanel() never
+      // had one either, hiding els.hubTutorMap directly IS how it already
+      // closes (see closeDashboardPanels above).
+      tutorMapPanel: {
+        open: () => { resumeHelper?.close(); tutorMap?.open(); },
+        close: () => { if (els.hubTutorMap) els.hubTutorMap.hidden = true; },
+      },
     });
   }
   if (bootHub || !els.bootStage || !els.hubStage) return bootHub;
@@ -683,20 +700,7 @@ function ensureBootHub() {
       els.appShell.dataset.mode = 'studio';
       document.title = 'MindCraft · Cook a Field Book';
     },
-    // A real signed-in student needs a real Firebase sign-out, which only
-    // the React app can do (this static shell has no Firebase SDK of its
-    // own); the local-only reset below would leave the real session signed
-    // in underneath, so a reload would just bounce them right back in.
-    // The local demo (unauthenticated /try/desk) keeps the local reset,
-    // there is no real session there to sign out of. See DeskSignOutRedirect
-    // in App.tsx for the real half of this.
-    onSignOut: () => {
-      if (isRealSession) {
-        window.location.href = '/desk-sign-out';
-        return;
-      }
-      signOutToGate();
-    },
+    onSignOut: handleSignOut,
   });
   return bootHub;
 }
@@ -853,6 +857,22 @@ function openInstance(inst) {
     fieldBook?.syncNav();
     layoutDeskHome(fieldBook?.getNote());
   });
+}
+
+// A real signed-in student needs a real Firebase sign-out, which only the
+// React app can do (this static shell has no Firebase SDK of its own); the
+// local-only reset below would leave the real session signed in underneath,
+// so a reload would just bounce them right back in. The local demo
+// (unauthenticated /try/desk) keeps the local reset, there is no real
+// session there to sign out of. See DeskSignOutRedirect in App.tsx for the
+// real half of this. Shared by the old top-nav sign-out button and the one
+// now inside Settings (2026-09-04 ask), one real implementation either way.
+function handleSignOut() {
+  if (isRealSession) {
+    window.location.href = '/desk-sign-out';
+    return;
+  }
+  signOutToGate();
 }
 
 function signOutToGate() {
@@ -2112,6 +2132,7 @@ function wire() {
   createSettings({
     button: document.querySelector('[data-hub-settings]'),
     onToast: (msg) => showToast(msg),
+    onSignOut: handleSignOut,
   });
   workflowMarket = createWorkflowMarket({
     root: els.workflowMarket,

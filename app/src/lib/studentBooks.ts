@@ -3,14 +3,26 @@
  *
  * The student's personal "reading copy" of a resolved concept (the
  * founder's 2026-09-03 "living book" ask): who opened it and any notes they
- * tag to a sim/page. Deliberately thin — the real lesson prose and sim HTML
- * are never duplicated here, they are read live from conceptLibrary (see
- * lib/conceptLibrary.ts) every time the book reopens, so a later content
- * fix there is never stale in an old personal copy. See firestore.rules'
- * student_books block for the ownership rule this relies on.
+ * tag to a sim/page. Deliberately thin for LIBRARY content: the real lesson
+ * prose and sim HTML are never duplicated here, they are read live from
+ * conceptLibrary (see lib/conceptLibrary.ts) every time the book reopens,
+ * so a later content fix there is never stale in an old personal copy. See
+ * firestore.rules' student_books block for the ownership rule this relies
+ * on.
+ *
+ * 2026-09-03 follow-up ("over time this becomes a big big book of their
+ * learning"): the doc now also carries the book's accumulated CHAPTER LIST,
+ * so chapters added mid-book (a second topic, another worksheet) survive a
+ * reload instead of dying with React state. Library chapters stay thin
+ * (conceptId only, content read live); AI-generated chapters carry their
+ * body/sim inline because they were never migrated into conceptLibrary and
+ * there is nowhere else to read them back from. That inline payload is the
+ * doc's known growth limit (Firestore caps a doc at 1MB) and the thing to
+ * revisit if generated books get big.
  */
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import type { HomeworkQuestion } from '../types'
 
 export const STUDENT_BOOKS = 'student_books'
 
@@ -34,6 +46,18 @@ export interface PageEdit {
   inkColor?: string
 }
 
+/** One page in the book, persisted. Same unified shape BookReader renders:
+ * a real prerequisite-ramp concept, an uploaded-worksheet question resolved
+ * to its concept, or one section of an AI-generated book (which carries its
+ * content inline, see the file doc comment). */
+export interface BookChapter {
+  conceptId: string
+  label: string
+  hasSim: boolean
+  question?: HomeworkQuestion
+  generated?: { body: string; summary?: string; simHtml?: string }
+}
+
 export interface StudentBook {
   studentId: string
   authorName: string
@@ -44,6 +68,30 @@ export interface StudentBook {
   createdAt: number
   notes: BookNote[]
   pageEdits?: Record<string, PageEdit>
+  /** The accumulated chapter list: the whole growing book, in reading
+   * order. Absent on books created before 2026-09-03's growing-book change;
+   * BookReader backfills it from the freshly resolved ramp on next open. */
+  chapters?: BookChapter[]
+  /** How many leading chapters form the ORIGINAL prerequisite ramp, so the
+   * front page can keep offering "start at the foundation" vs "go straight
+   * there" after the book has grown past it. 0 for homework/generated-first
+   * books, which have no ramp. */
+  rampCount?: number
+}
+
+/** Firestore rejects `undefined` field values outright (unlike JSON, which
+ * just drops them), so optional Chapter fields are omitted rather than
+ * passed through. */
+function chapterForStorage(c: BookChapter): Record<string, unknown> {
+  const out: Record<string, unknown> = { conceptId: c.conceptId, label: c.label, hasSim: c.hasSim }
+  if (c.question) out.question = c.question
+  if (c.generated) {
+    const g: Record<string, unknown> = { body: c.generated.body }
+    if (c.generated.summary !== undefined) g.summary = c.generated.summary
+    if (c.generated.simHtml !== undefined) g.simHtml = c.generated.simHtml
+    out.generated = g
+  }
+  return out
 }
 
 export function bookDocId(uid: string, conceptId: string): string {
@@ -59,13 +107,17 @@ export async function loadStudentBook(uid: string, conceptId: string): Promise<S
 
 /** Opens the student's reading copy for this concept, creating it the first
  * time. Idempotent by construction (doc id is deterministic), so reopening
- * the same topic never creates a second copy or loses existing notes. */
+ * the same topic never creates a second copy or loses existing notes.
+ * `initial` seeds the chapter list + ramp size on CREATION only; an
+ * existing book's own accumulated chapters always win over a fresh build,
+ * that is the whole point of the growing book. */
 export async function openStudentBook(
   uid: string,
   authorName: string,
   topic: string,
   conceptId: string,
   conceptLabel: string,
+  initial?: { chapters: BookChapter[]; rampCount: number },
 ): Promise<StudentBook> {
   const existing = await loadStudentBook(uid, conceptId)
   if (existing) return existing
@@ -78,9 +130,28 @@ export async function openStudentBook(
     conceptLabel,
     createdAt: Date.now(),
     notes: [],
+    ...(initial ? { chapters: initial.chapters, rampCount: initial.rampCount } : {}),
   }
-  await setDoc(doc(db, STUDENT_BOOKS, bookDocId(uid, conceptId)), book)
+  const payload: Record<string, unknown> = { ...book }
+  if (initial) payload.chapters = initial.chapters.map(chapterForStorage)
+  await setDoc(doc(db, STUDENT_BOOKS, bookDocId(uid, conceptId)), payload)
   return book
+}
+
+/** Replaces the book's persisted chapter list with the full accumulated
+ * one. Whole-list replace on purpose: appends, and only appends, flow
+ * through here, and the list IS the book's reading order, so a partial
+ * arrayUnion could never express it. `rampCount` is written only when
+ * given (backfilling a pre-growing-book doc); appends leave it alone. */
+export async function saveBookChapters(
+  uid: string,
+  bookConceptId: string,
+  chapters: BookChapter[],
+  rampCount?: number,
+): Promise<void> {
+  const patch: Record<string, unknown> = { chapters: chapters.map(chapterForStorage) }
+  if (rampCount !== undefined) patch.rampCount = rampCount
+  await updateDoc(doc(db, STUDENT_BOOKS, bookDocId(uid, bookConceptId)), patch)
 }
 
 /** Tags a note to a specific page (concept) within the book. `bookConceptId`

@@ -27,6 +27,7 @@ import { doc, getDoc, getDocs, setDoc, collection, query as fsQuery, where } fro
 import { auth, db } from '../firebase'
 import { WEBHOOK_BASE } from './mlApi'
 import { embedQuery } from './queryEmbedder'
+import { readByokConfig } from './byokSettings'
 
 export const CONCEPT_LIBRARY = 'conceptLibrary'
 export const CONCEPT_LIBRARY_SIMS = 'conceptLibrarySims'
@@ -337,6 +338,17 @@ export interface GeneratedSim {
  *
  * onStatus lets the caller narrate the wait truthfully instead of guessing.
  */
+/** Forwards whatever key the student set in Settings, any of the 6
+ * providers ByokConfig supports, not just Gemini, see generate-sim.ts's
+ * StudentByok and content-engine's build_byok_generator for the dispatch
+ * this powers (2026-09-04 ask). Empty when no key is set, unchanged
+ * platform-billed behavior. */
+function simByokFields(): { studentByok?: { provider: string; apiKey: string; model?: string; baseUrl?: string } } {
+  const byok = readByokConfig()
+  if (!byok?.apiKey || !byok?.provider) return {}
+  return { studentByok: { provider: byok.provider, apiKey: byok.apiKey, model: byok.model, baseUrl: byok.baseUrl } }
+}
+
 export async function generateSim(
   topic: string,
   opts: { pollMs?: number; maxWaitMs?: number; onStatus?: (s: string) => void } = {},
@@ -351,7 +363,7 @@ export async function generateSim(
     const res = await fetch(`${WEBHOOK_BASE}/api/generate-sim`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ topic }),
+      body: JSON.stringify({ topic, ...simByokFields() }),
     })
     const data = await res.json().catch(() => ({}))
     if (data?.status === 'passed' && data?.result?.html) {

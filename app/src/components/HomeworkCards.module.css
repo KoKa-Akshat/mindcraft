@@ -86,6 +86,19 @@
   pointer-events: none;
 }
 
+.paperCheck {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #143a2e;
+  overflow: visible;
+}
+
+.paperCheck::before {
+  display: none;
+}
+
 /* ── Card animations ────────────────────────────────────────────────────────── */
 
 .slideIn {

@@ -85,6 +85,7 @@ import RouteCards from './learn/RouteCards'
 import TutorPanel, { type TutorMessage } from './learn/TutorPanel'
 import { askTutor } from '../lib/learnTutor'
 import HistorySidebar from './learn/HistorySidebar'
+import SettingsPanel from '../components/shell/SettingsPanel'
 import { loadLearnSessions, fetchTutorHistory, type LearnSessionSummary } from '../lib/learnSessions'
 import { PAGE_BG, FONT_STACK, TEXT_PRIMARY, type NeighborRow, type MaterialsState, type LibraryCounts, type QuestionSimState } from './learn/shared'
 
@@ -211,6 +212,10 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
   // default again, reopens on toggle. Search/upload still live in this
   // panel (Phase G1), just not shown until the student opens it.
   const [historyOpen, setHistoryOpen] = useState(false)
+  // The one piece kept from the 2026-09-04 dashboard redesign (reverted
+  // otherwise, per founder feedback): a small settings entry point holding
+  // the BYOK key form + sign out, instead of no in-app Settings at all.
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   // ── Proactive misconception nudge ───────────────────────────────────────
   // 2026-09-02: every surface on this page was student-initiated (search,
@@ -948,6 +953,28 @@ export default function Learn({ embedded = false }: { embedded?: boolean }) {
             onTopUpload={(f) => void handleMaterialsFile(f, { autoResolve: true })}
           />
         )}
+
+        {uid && (
+          <button
+            type="button"
+            onClick={() => setSettingsOpen(true)}
+            aria-label="Settings"
+            title="Settings"
+            style={{
+              position: 'absolute', top: 16, right: 16, zIndex: 6,
+              width: 38, height: 38, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: '1px solid rgba(140,178,150,0.16)', background: 'rgba(20,31,24,0.9)', backdropFilter: 'blur(6px)',
+              color: 'rgba(205,220,208,0.8)', cursor: 'pointer',
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18" aria-hidden="true">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 13a7.6 7.6 0 0 0 .1-1 7.6 7.6 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3h-4l-.4 2.9a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.4L6.5 11a7.6 7.6 0 0 0-.1 1 7.6 7.6 0 0 0 .1 1l-2 1.6 2 3.4 2.4-1a7.7 7.7 0 0 0 1.7 1l.4 2.9h4l.4-2.9a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6Z" />
+            </svg>
+          </button>
+        )}
+
+        {settingsOpen && <SettingsPanel onClose={() => setSettingsOpen(false)} />}
 
         {!searchedQuery && !materials && !routeCardsFor && (
           <EntryStage

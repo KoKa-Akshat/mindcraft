@@ -18,8 +18,8 @@
   "dependencies": {
     "@huggingface/transformers": "^3.8.1",
     "@react-google-maps/api": "^2.20.8",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@types/katex": "^0.16.8",
     "@types/three": "^0.184.1",
     "firebase": "^10.12.0",

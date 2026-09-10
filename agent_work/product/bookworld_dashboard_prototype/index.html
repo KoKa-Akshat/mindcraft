@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindCraft Bookworld Dashboard</title>
+  <meta name="description" content="A clickable MindCraft dashboard concept where learning evidence grows into a published book.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fredoka:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/app/node_modules/three/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="The Desk home">
+        <span class="brand-mark"><img src="/img/brand/MindCraft-mascot-raccoon.png" alt=""></span>
+        <span><strong>The Desk</strong><small>by MindCraft</small></span>
+      </a>
+
+      <nav class="stage-nav" aria-label="Book creation stages">
+        <button class="stage-nav-item is-active" data-nav-stage="explore"><span>1</span>Explore</button>
+        <button class="stage-nav-item" data-nav-stage="build"><span>2</span>Build</button>
+        <button class="stage-nav-item" data-nav-stage="publish"><span>3</span>Publish</button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="quiet-action" id="crewButton">Crew: 3</button>
+        <button class="profile-button" aria-label="Open Maya's profile">MK</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="mission-rail" aria-label="Current book missions">
+        <section class="book-identity">
+          <span class="eyebrow">Maya's current book</span>
+          <h1>How Cities Breathe</h1>
+          <p>A field guide to heat, shade, and the streets around you.</p>
+          <div class="book-progress">
+            <div><span>Book progress</span><strong id="progressLabel">43%</strong></div>
+            <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
+          </div>
+        </section>
+
+        <section class="mission-list-section">
+          <div class="section-heading">
+            <span class="eyebrow">Mission path</span>
+            <span>2 of 6 complete</span>
+          </div>
+          <ol class="mission-list">
+            <li>
+              <button class="mission-item is-done" data-mission="question">
+                <span class="mission-state">1</span>
+                <span><strong>Frame the question</strong><small>What makes one block hotter?</small></span>
+              </button>
+            </li>
+            <li>
+              <button class="mission-item is-done" data-mission="map">
+                <span class="mission-state">2</span>
+                <span><strong>Map the science</strong><small>Heat, reflection, and shade</small></span>
+              </button>
+            </li>
+            <li>
+              <button class="mission-item is-current" data-mission="lab">
+                <span class="mission-state">3</span>
+                <span><strong>Run the city lab</strong><small>Compare roofs, roads, and trees</small></span>
+              </button>
+            </li>
+            <li>
+              <button class="mission-item" data-mission="fold">
+                <span class="mission-state">4</span>
+                <span><strong>Build a shade fold</strong><small>Test it with your camera</small></span>
+              </button>
+            </li>
+            <li>
+              <button class="mission-item" data-mission="draft">
+                <span class="mission-state">5</span>
+                <span><strong>Explain the pattern</strong><small>Turn evidence into Chapter 3</small></span>
+              </button>
+            </li>
+            <li>
+              <button class="mission-item" data-mission="publish">
+                <span class="mission-state">6</span>
+                <span><strong>Publish the field guide</strong><small>Credit your crew and sources</small></span>
+              </button>
+            </li>
+          </ol>
+        </section>
+
+        <section class="field-mission">
+          <div class="field-art">
+            <img src="/app/src/assets/canvas/generated/dashboard-stickers-3d/explorer-pack-3d.png" alt="">
+          </div>
+          <div>
+            <span class="eyebrow">Saturday field mission</span>
+            <h2>Measure two real blocks</h2>
+            <p>11:00 AM, library courtyard. Guardian approval required.</p>
+            <button id="fieldButton">View mission</button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="world-stage" aria-labelledby="worldTitle">
+        <div class="world-heading">
+          <div>
+            <span class="eyebrow" id="chapterLabel">Chapter 3, city heat</span>
+            <h2 id="worldTitle">Make the invisible heat visible.</h2>
+            <p id="worldPrompt">Run the model. Explain one pattern. Pin the evidence to your book.</p>
+          </div>
+          <div class="mode-switch" role="tablist" aria-label="Learning mode">
+            <button role="tab" aria-selected="true" class="is-active" data-mode="world">World</button>
+            <button role="tab" aria-selected="false" data-mode="simulation">Simulation</button>
+            <button role="tab" aria-selected="false" data-mode="camera">Camera lab</button>
+          </div>
+        </div>
+
+        <div id="worldCanvas" class="world-canvas" aria-label="Interactive city heat model"></div>
+        <div class="canvas-hint">Drag to rotate, scroll to zoom</div>
+
+        <section class="sim-console" id="simConsole" hidden aria-label="Simulation controls">
+          <div class="sim-readout">
+            <span>Dark roof</span><strong id="darkTemp">31&deg;C</strong>
+            <span>Tree shade</span><strong id="shadeTemp">26&deg;C</strong>
+          </div>
+          <label for="sunAngle">
+            <span>Sun angle</span>
+            <output id="sunAngleOutput">52&deg;</output>
+          </label>
+          <input id="sunAngle" type="range" min="15" max="80" value="52">
+          <div class="material-switch" aria-label="City interventions">
+            <button class="is-active" data-intervention="trees">Trees</button>
+            <button data-intervention="roof">Cool roofs</button>
+            <button data-intervention="shade">Street shade</button>
+          </div>
+        </section>
+
+        <section class="camera-lab" id="cameraLab" hidden aria-label="Camera folding mission">
+          <video id="cameraVideo" playsinline muted></video>
+          <div class="fold-guide" aria-hidden="true">
+            <span class="paper-guide"></span>
+            <span class="fold-line"></span>
+          </div>
+          <div class="camera-copy">
+            <span class="eyebrow">Physical build, step 1 of 3</span>
+            <h3>Match the corners.</h3>
+            <p>Place one sheet inside the guide. Fold the top edge to the center line.</p>
+          </div>
+          <div class="camera-actions">
+            <button id="cameraButton">Turn on camera</button>
+            <button id="captureButton" disabled>Capture fold</button>
+          </div>
+          <span class="privacy-note">Camera processing stays on this device.</span>
+        </section>
+
+        <div class="world-action-dock">
+          <div class="crew-stack" aria-label="Mission crew">
+            <span>MK</span><span>NA</span><span>EP</span>
+            <small>Your crew is viewing</small>
+          </div>
+          <button class="primary-action" id="runButton">Run experiment</button>
+        </div>
+      </section>
+
+      <aside class="evidence-rail" aria-label="Book draft and evidence">
+        <section class="draft-overview">
+          <div class="section-heading">
+            <span class="eyebrow">Live book</span>
+            <button class="text-action" id="previewButton">Preview</button>
+          </div>
+          <h2>Chapter 3 is taking shape.</h2>
+          <div class="page-stack" aria-label="Book pages">
+            <button class="page-row is-ready"><span>01</span><strong>Why streets hold heat</strong><small>Ready</small></button>
+            <button class="page-row is-ready"><span>02</span><strong>Following the sunlight</strong><small>Ready</small></button>
+            <button class="page-row is-writing"><span>03</span><strong>The city lab</strong><small>Writing</small></button>
+            <button class="page-row"><span>04</span><strong>Shade you can build</strong><small>Next</small></button>
+          </div>
+        </section>
+
+        <section class="evidence-section">
+          <div class="section-heading">
+            <span class="eyebrow">Evidence desk</span>
+            <span id="evidenceCount">1 pinned</span>
+          </div>
+          <p>Pin what proves the idea. It becomes material for the chapter.</p>
+          <div class="evidence-list">
+            <button class="evidence-item is-pinned" data-evidence="source" aria-pressed="true">
+              <span class="evidence-swatch evidence-swatch-source">S</span>
+              <span><strong>Source note</strong><small>Albedo and reflected energy</small></span>
+              <b>Added</b>
+            </button>
+            <button class="evidence-item" data-evidence="simulation" aria-pressed="false">
+              <span class="evidence-swatch evidence-swatch-sim">3D</span>
+              <span><strong>City model result</strong><small>31&deg;C roof, 26&deg;C shade</small></span>
+              <b>Pin</b>
+            </button>
+            <button class="evidence-item" data-evidence="fold" aria-pressed="false">
+              <span class="evidence-swatch evidence-swatch-fold">F</span>
+              <span><strong>Shade fold</strong><small>Camera capture waiting</small></span>
+              <b>Pin</b>
+            </button>
+          </div>
+        </section>
+
+        <section class="publish-section">
+          <div class="publish-meter">
+            <span>Ready to share</span>
+            <strong id="publishScore">2 of 5</strong>
+          </div>
+          <div class="publish-track" aria-hidden="true"><span id="publishFill"></span></div>
+          <p>Finish the build and explain one result before publishing.</p>
+          <button id="openDraftButton">Open book draft</button>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <dialog id="bookDialog">
+    <div class="dialog-toolbar">
+      <span class="eyebrow">Book preview</span>
+      <button id="closeDialog" aria-label="Close preview">Close</button>
+    </div>
+    <div class="book-spread">
+      <section class="book-cover">
+        <img src="/app/src/assets/canvas/generated/dashboard-stickers-3d/portal-journal-3d.png" alt="">
+        <span>A field guide by Maya K.</span>
+        <h2>How Cities Breathe</h2>
+        <p>Heat, shade, and the streets around you</p>
+      </section>
+      <section class="book-page">
+        <span class="eyebrow">Chapter 3</span>
+        <h2>The city lab</h2>
+        <p class="lead">A roof does not just cover a building. Its color changes where sunlight goes next.</p>
+        <div class="book-figure" aria-label="Pinned simulation result">
+          <span><b>31&deg;C</b> dark roof</span>
+          <span><b>26&deg;C</b> tree shade</span>
+        </div>
+        <p>Our model held the sun angle constant and changed the surface. The cooler block had two things the hotter block did not: shade over the pavement and a roof that reflected more incoming energy.</p>
+        <small>1 source, 1 model result, crew review pending</small>
+      </section>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

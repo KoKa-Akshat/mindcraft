@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>The Desk by MindCraft</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need. The Desk by MindCraft.">
+<link rel="canonical" href="https://joinmindcraft.com/">
+<link rel="icon" type="image/png" href="img/favicon-raccoon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Desk by MindCraft">
+<meta property="og:description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta property="og:url" content="https://joinmindcraft.com/">
+<meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Desk by MindCraft">
+<meta name="twitter:description" content="The M in MindCraft is for making education fun again. Hands-on simulations that build the instincts 2028's workforce will actually need.">
+<meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..680;1,9..144,340..680&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --field:#070f0c; --field-1:#0a1612; --field-2:#0e1e18;
+    --edge:rgba(245,245,244,.09); --edge-soft:rgba(245,245,244,.05);
+    --chalk:#f6f5f0; --chalk-dim:rgba(246,245,240,.68); --chalk-faint:rgba(246,245,240,.42);
+    --lime:#c4f547; --lime-ink:#0a1006;
+    --stakes:#c1121f; --stakes-soft:#e0394a; --stakes-dim:rgba(224,57,74,.14);
+    --gold:#f5d348; --gold-deep:#d3a900;
+    --cream:#fdfbf5; --cream-2:#f5f2e9; --paper:#fffdf7; --card:#fffefa;
+    --ink:#12352a; --ink-soft:rgba(18,53,42,.72); --ink-faint:rgba(18,53,42,.48);
+    --leaf:#1f7548; --leaf2:#5fb779;
+    --grid-line:rgba(95,183,121,.09);
+    --shadow:0 30px 90px rgba(0,0,0,.5);
+    --ease:cubic-bezier(.16,1,.3,1);
+    --sans:"Inter",system-ui,sans-serif;
+    --disp:"Fraunces",Georgia,serif;
+    --serif:"Fraunces",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans); background:var(--field); color:var(--chalk);
+    overflow-x:hidden; -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  button{font-family:inherit;}
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:50; opacity:.05;
+    background-image:radial-gradient(circle at 20% 20%, rgba(95,183,121,.5), transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba(95,183,121,.35), transparent 1px);
+    background-size:4px 4px, 5px 5px;
+  }
+  .progress{
+    position:fixed; top:0; left:0; width:100%; height:3px; z-index:95;
+    background:linear-gradient(90deg, var(--leaf2), var(--gold), var(--leaf));
+    transform:scaleX(0); transform-origin:left center; transition:transform .1s linear;
+  }
+  @media (prefers-reduced-motion:reduce){.progress{transition:none;}}
+  .wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
+  /* blueprint/graph-paper grid, reusable anywhere: drop <div class="grid-bg"></div> as a section's first child */
+  .grid-bg{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      repeating-linear-gradient(to bottom, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent 44px),
+      repeating-linear-gradient(to right, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent 44px);
+    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 18%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 60% 55% at 50% 18%, #000 0%, transparent 72%);
+  }
+  section{position:relative; padding:clamp(84px,10vw,140px) 0;}
+  h1,h2,h3{font-family:var(--disp); font-weight:600; letter-spacing:-.014em; line-height:1.06; text-wrap:balance;}
+  h1 em, h2 em, h3 em{font-style:italic; font-weight:520;}
+  ::selection{background:rgba(196,245,71,.85); color:var(--lime-ink);}
+  .kicker{
+    display:flex; align-items:center; gap:10px; margin-bottom:20px;
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px rgba(196,245,71,.7); flex:none;}
+  .kicker i{font-style:normal; color:var(--lime); letter-spacing:.1em;}
+  .stage-desk .kicker i{color:var(--leaf);}
+  .h2{font-size:clamp(36px,4.8vw,62px); max-width:22ch;}
+  .lede{margin-top:18px; font-size:clamp(16px,1.6vw,19px); font-weight:400; line-height:1.62; color:var(--chalk-dim); max-width:60ch;}
+  .lede strong{color:var(--chalk); font-weight:600;}
+  /* Shared bullet-list look (2026-09-02 ask): reused for the lede, advisor
+     bios, and research-card captions, each of which used to be one dense
+     paragraph. Font-size/color come from whatever else is on the element
+     (.lede, or .advisor-card/.research-card's own descendant rules below),
+     this class only handles list structure and the dot marker, which uses
+     currentColor so it always matches its own text without a separate
+     color rule per context. */
+  .bullets{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .bullets li{position:relative; padding-left:17px;}
+  .bullets li::before{
+    content:''; position:absolute; left:1px; top:0.62em; width:5px; height:5px;
+    border-radius:50%; background:currentColor; opacity:.6;
+  }
+  .serif{font-family:var(--serif); font-style:italic; font-weight:500;}
+
+  /* warm paper stage override, same trick the live site uses. Paper, not
+     screen-white: the light sections should feel like the page of a workbook
+     the dark sections are the chalkboard of. */
+  .stage-desk{
+    --field:#fdfbf5; --field-1:#faf7ef; --field-2:#f5f2e9;
+    --edge:rgba(18,53,42,.14); --edge-soft:rgba(18,53,42,.07);
+    --chalk:#12352a; --chalk-dim:rgba(18,53,42,.74); --chalk-faint:rgba(18,53,42,.52);
+    --shadow:0 20px 54px rgba(18,53,42,.1);
+    --grid-line:rgba(18,53,42,.08);
+    background:var(--field); color:var(--chalk);
+  }
+  .stage-desk .kicker::before{background:var(--leaf); box-shadow:none;}
+  /* A color-to-transparent fade at a cream/dark seam reads as a gray smear,
+     because it has to wash out both the field it starts on and whatever
+     sits underneath. Skip the blend entirely: mark the seam with a slim,
+     fully-saturated brand gradient line, the same lime/gold/leaf sweep the
+     scroll .progress bar already uses. Every section keeps its own real
+     color right up to the line instead of fighting a haze. */
+  .stage-desk::before, .stage-desk::after{
+    content:''; position:absolute; left:0; right:0; height:3px; pointer-events:none; z-index:1;
+    background:linear-gradient(90deg, var(--leaf2), var(--gold), var(--lime), var(--leaf));
+    opacity:.7;
+  }
+  .stage-desk::before{ top:0; }
+  .stage-desk::after{ bottom:0; }
+  /* The line only makes sense where a cream stage actually meets a dark
+     section: the bottom of #claim (footer below is dark). #top, #advisors,
+     #frontier, #human, #desk and #claim are six cream stages in a row now
+     (hero, then the "why it is not instant" advisors section moved up
+     front for legitimacy, the frontier graph, the human chapter, the
+     studio, then early access; the conceptmap "try it yourself" section
+     that used to sit between #desk and #claim, the one dark seam left in
+     this run, was removed), nothing dark between any of them, so those
+     shared seams get no line. #top's own top edge has nothing above it at
+     all, first section on the page. */
+  #top::before, #top::after, #advisors::before, #advisors::after,
+  #frontier::before, #frontier::after, #human::before, #human::after,
+  #desk::before, #desk::after, #claim::before{content:none;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:52px; padding:0 28px; border-radius:999px; border:1px solid var(--edge);
+    font-size:13.5px; font-weight:600; letter-spacing:.01em; cursor:pointer;
+    background:transparent; color:var(--chalk);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, border-color .2s;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:3px;}
+  .btn.primary{background:var(--lime); color:var(--lime-ink); border-color:var(--lime); box-shadow:0 14px 32px rgba(150,200,40,.28);}
+  .btn.primary:hover{box-shadow:0 18px 42px rgba(150,200,40,.38);}
+  .btn.soft{background:rgba(245,245,244,.04);}
+  .btn.soft:hover{background:rgba(245,245,244,.09);}
+  .stage-desk .btn.soft{background:rgba(18,53,42,.045);}
+  .stage-desk .btn.soft:hover{background:rgba(18,53,42,.09);}
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:none;}
+  /* grids of cards land as a small cascade rather than one slab */
+  .in > .sim-card{animation:cardIn .7s var(--ease) both;}
+  .in > .sim-card:nth-child(2){animation-delay:.08s;}
+  .in > .sim-card:nth-child(3){animation-delay:.16s;}
+  .in > .sim-card:nth-child(4){animation-delay:.1s;}
+  .in > .sim-card:nth-child(5){animation-delay:.18s;}
+  .in > .sim-card:nth-child(6){animation-delay:.26s;}
+  @keyframes cardIn{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1; transform:none;}
+  }
+
+  /* ---------- nav ---------- */
+  /* Mascot + Login pill, fixed top right, no bar. The mascot stays a fixed
+     forest green everywhere now (no more swapping with the section behind
+     it), so the Login pill next to it is styled as its complementary
+     partner rather than matching it: a deeper forest fill with a chalk
+     label, not the same lime the primary CTAs use, so the two nav items
+     read as one branded pair instead of two identical chips, and Login
+     doesn't compete visually with "Claim your desk" below. Both are solid,
+     opaque fills, so neither needs the old light/dark section handling. */
+  .mascot-nav{position:fixed; z-index:80; top:max(14px,env(safe-area-inset-top,0px)); right:max(14px,env(safe-area-inset-right,0px)); display:flex; align-items:center; gap:12px;}
+  .mascot-link{display:block; width:38px; height:38px; flex-shrink:0;}
+  .mascot-icon{
+    display:block; width:100%; height:100%; background-color:var(--leaf2);
+    -webkit-mask:url('img/raccoon-logo.png') center/contain no-repeat;
+    mask:url('img/raccoon-logo.png') center/contain no-repeat;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
+  }
+  .mascot-login{
+    padding:9px 18px; border-radius:999px; font-size:13px; font-weight:600;
+    background:var(--leaf); color:var(--chalk); white-space:nowrap;
+    box-shadow:0 6px 14px rgba(0,0,0,.2); transition:background .15s ease, color .15s ease;
+  }
+  .mascot-login:hover{background:var(--leaf2); color:var(--field);}
+  /* ---------- hero ----------
+     Editorial, left aligned, on warm paper. The old version centered a
+     typewriter headline in a lot of open air; this one composes the page
+     like the first spread of a field guide: kicker, a two-line Fraunces
+     headline whose accent word gets a hand-drawn marker underline, one
+     honest lead, two CTAs, and the schools as a quiet credit line at the
+     bottom. The constellation canvas stays behind everything as atmosphere. */
+  .hero{
+    min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 82% 12%, rgba(95,183,121,.14), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 4% 92%, rgba(196,245,71,.12), transparent 55%),
+      linear-gradient(180deg,#fdfbf5 0%,#faf7ef 55%,#fdfbf5 100%);
+  }
+  .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.38; pointer-events:none; transition:transform .2s linear;}
+  .hero-stage{
+    position:relative; z-index:2; width:100%; max-width:1180px; margin:0 auto;
+    padding:clamp(50px,6.5vh,90px) clamp(20px,4vw,48px) clamp(36px,5vh,56px); text-align:left;
+  }
+  .hero-kicker{
+    display:flex; align-items:center; gap:10px; margin-bottom:clamp(18px,3vh,30px);
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-faint); animation:rise .9s .05s var(--ease) both;
+  }
+  .hero-kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--leaf); flex:none;}
+  .hero h1{
+    color:var(--chalk); font-size:clamp(34px,5.4vw,64px); line-height:1.08; letter-spacing:-.022em;
+    font-weight:600;
+  }
+  /* line-mask reveal: each line rises out of its own overflow-hidden row.
+     The bottom padding matters: the marker underline hangs .16em below the
+     baseline, and overflow clips at the PADDING edge, so without this the
+     swash gets guillotined down to a sliver. The pre-reveal translate is
+     pushed past the padded region so no glyph tops peek through the slot
+     while the line waits. */
+  .hero h1 .hl{display:block; overflow:hidden; padding-bottom:.22em; margin-bottom:-.22em;}
+  .hero h1 .hl > span{display:inline-block; transform:translateY(140%); animation:lineUp 1s var(--ease) forwards;}
+  .hero h1 .hl:nth-child(2) > span{animation-delay:.12s;}
+  @keyframes lineUp{to{transform:none;}}
+  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); white-space:nowrap;}
+  .hero .lead{
+    margin:clamp(26px,3.8vh,38px) 0 0; max-width:52ch; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62;
+    color:var(--chalk-dim); animation:rise .9s .3s var(--ease) both;
+  }
+  .hero .lead strong{color:var(--chalk); font-weight:600;}
+  /* Rotating proof line under the title (2026-09-03, moved the marker
+     underline here from the title): three frames on a loop — one
+     highlighted line, two bullets, one line + two bullets — with the
+     hand-drawn swash marking the whole rotator, drawn once on load rather
+     than per frame. All three frames are always in the DOM, stacked in the
+     same grid cell (grid-area 1/1) rather than shown/hidden one at a time,
+     so the container's height is always the TALLEST frame's height and
+     never reflows/flickers as frames swap — only opacity crossfades. */
+  .hero-rotator{
+    position:relative; margin:clamp(30px,4.2vh,42px) 0 0; padding-bottom:.3em; max-width:52ch;
+    display:grid; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62; color:var(--chalk-dim);
+    animation:rise .9s .3s var(--ease) both;
+  }
+  .hero-rotator-frame{
+    grid-area:1/1; align-self:start; margin:0;
+    opacity:0; visibility:hidden; transition:opacity .5s ease;
+  }
+  .hero-rotator-frame.is-active{opacity:1; visibility:visible;}
+  .hero-rotator-frame strong{color:var(--chalk); font-weight:600;}
+  .hero-rotator-frame ul{margin:0; padding-left:1.15em;}
+  .hero-rotator-frame p + ul{margin-top:8px;}
+  .hero-rotator-frame li{margin:0 0 6px;}
+  .hero-rotator-frame li:last-child{margin-bottom:0;}
+  .hero-rotator-frame p{margin:0;}
+  /* A stable divider under the whole rotator, not a tight text-hug — frame
+     length varies a lot (one line vs. a line-plus-two-bullets) so a mark
+     that hugs the text would either float far below short frames or cut
+     through long ones. Pinned to the reserved box's own bottom, thin and
+     quiet, it reads as "this zone is dynamic" rather than misaligned. */
+  .hero-rotator-swash{
+    position:absolute; left:-.5%; right:-.5%; bottom:0; width:101%; height:6px;
+    overflow:visible; pointer-events:none;
+  }
+  .hero-rotator-swash path{
+    fill:none; stroke:var(--lime); stroke-width:3; stroke-linecap:round;
+    stroke-dasharray:1200; stroke-dashoffset:1200; animation:drawSwash .8s 1.05s ease-out forwards;
+  }
+  @keyframes drawSwash{to{stroke-dashoffset:0;}}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,3.6vh,34px); animation:rise .9s .42s var(--ease) both;}
+  @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
+
+  /* ---------- the library numbers (now a strip atop the studio, not a
+     standalone section) ----------
+     Just the counts and what they mean, read from the same library index
+     this page searches. No heading, no lede, nothing to read first. */
+  .desk-stats{
+    display:flex; flex-wrap:wrap; gap:clamp(26px,4vw,52px); margin-bottom:clamp(30px,4.4vh,46px);
+  }
+  .desk-stats div{display:flex; align-items:baseline; gap:9px;}
+  .desk-stats dd{
+    font-family:var(--disp); font-weight:560; font-variant-numeric:tabular-nums;
+    font-size:clamp(22px,2.3vw,29px); letter-spacing:-.02em; line-height:1; color:var(--leaf);
+  }
+  .desk-stats dt{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--chalk-faint);
+  }
+  @media (max-width:640px){ .desk-stats{gap:16px 26px;} }
+
+  /* the schools, as a quiet credit line pinned to the hero's last breath */
+  .hero-cred{
+    margin-top:clamp(44px,7.5vh,84px); padding-top:22px; border-top:1px solid rgba(18,53,42,.1);
+    display:flex; flex-wrap:wrap; align-items:center; gap:18px clamp(26px,4.2vw,48px);
+    animation:rise .9s .58s var(--ease) both;
+  }
+  .hero-cred > span{
+    flex:none; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.2em;
+    text-transform:uppercase; color:rgba(18,53,42,.42); max-width:12ch; line-height:1.7;
+  }
+  .hero-cred-row{display:contents;}
+  .hero-cred img{width:auto; height:68px; opacity:.85; transition:opacity .25s var(--ease); filter:saturate(.85);}
+  .hero-cred img.wordmark{height:46px;}
+  .hero-cred:hover img{opacity:1; filter:none;}
+  @media (max-width:640px){
+    .hero h1{font-size:clamp(52px,15vw,72px);}
+    .hero-ctas .btn{flex:1 1 100%;}
+    .hero-cred{gap:14px 22px;}
+    .hero-cred > span{max-width:none;}
+    .hero-cred img{height:44px;}
+    .hero-cred img.wordmark{height:31px;}
+  }
+
+
+  /* ---------- the desk: creation studio (cream) ----------
+     Not a catalog. The top of the section is a working prompt desk: Jesse
+     asks, the visitor types, the grid behind them wakes up, and a real
+     client-side flow walks Dream it > Build it > Experiment > Make it yours
+     > Share. Nothing here calls paid generation: the "build" step pulls a
+     REAL MicroSim out of the migrated library that matches the idea, says so
+     honestly, and the finish line is the same free marketing-lead endpoint
+     the claim section already uses. */
+  #deskAwake{position:absolute; inset:0; z-index:0; pointer-events:none;}
+  .desk-head{text-align:center; max-width:820px; margin:0 auto;}
+  .desk-head .kicker{justify-content:center;}
+  .desk-head .h2{margin:0 auto; max-width:16ch;}
+  .desk-head .lede{margin-left:auto; margin-right:auto; max-width:52ch;}
+
+  /* progress trail across the top of the creation flow */
+  .studio-trail{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px clamp(6px,1.4vw,14px);
+    margin:clamp(30px,4.5vh,46px) auto 16px; max-width:860px;
+  }
+  /* the [hidden] attribute alone loses to the display:flex above, since an
+     author rule always beats the UA stylesheet's [hidden]{display:none}
+     regardless of specificity. Say it explicitly so the studio card can
+     actually hide the trail until trailTo() first runs. */
+  .studio-trail[hidden]{display:none;}
+  .trail-step{
+    display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; font-weight:600;
+    letter-spacing:.13em; text-transform:uppercase; color:rgba(20,58,46,.38); transition:color .35s;
+  }
+  .trail-step i{
+    font-style:normal; width:11px; height:11px; border-radius:50%; flex:none;
+    border:2px solid rgba(20,58,46,.22); background:transparent;
+    transition:background .35s, border-color .35s, box-shadow .35s;
+  }
+  .trail-step.active{color:var(--ink);}
+  .trail-step.active i{border-color:var(--leaf); box-shadow:0 0 0 4px rgba(196,245,71,.3); animation:trailBreath 1.8s ease-in-out infinite;}
+  .trail-step.done{color:var(--leaf);}
+  .trail-step.done i{background:var(--lime); border-color:var(--lime); box-shadow:none; animation:none;}
+  @keyframes trailBreath{
+    0%,100%{box-shadow:0 0 0 3px rgba(196,245,71,.22);}
+    50%{box-shadow:0 0 0 7px rgba(196,245,71,.4);}
+  }
+  .trail-link{flex:none; width:clamp(12px,2.6vw,30px); height:2px; border-radius:2px; background:rgba(20,58,46,.13); transition:background .35s;}
+  .trail-link.done{background:var(--lime);}
+
+  /* the studio panel itself */
+  .studio{
+    position:relative; margin:0 auto; max-width:860px; border-radius:26px;
+    background:var(--card); border:1px solid rgba(18,53,42,.14); box-shadow:0 26px 70px rgba(18,53,42,.13);
+    padding:clamp(20px,3.2vw,34px);
+  }
+  .studio-coach{display:flex; gap:14px; align-items:flex-start;}
+  .coach-disc{
+    width:46px; height:46px; flex:none; border-radius:50%; background:var(--lime); color:var(--lime-ink);
+    display:grid; place-items:center; font:700 15px/1 var(--disp);
+    box-shadow:0 0 0 6px rgba(196,245,71,.16), 0 10px 24px rgba(196,245,71,.3);
+  }
+  .coach-disc.is-talking{animation:jessePulse 1.5s ease-in-out infinite;}
+  .coach-owl{width:26px; height:26px; color:var(--lime-ink); stroke:var(--lime-ink); stroke-width:1.6;}
+  .coach-says{font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(16px,2vw,20px); line-height:1.42; color:var(--ink);}
+  .studio-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+  .studio-input{
+    flex:1 1 300px; min-width:0; font:inherit; font-size:16px; padding:15px 18px; border-radius:16px;
+    border:1px solid rgba(20,58,46,.18); background:var(--paper); color:var(--ink);
+  }
+  .studio-input::placeholder{color:rgba(20,58,46,.4);}
+  .studio-input:focus{outline:2px solid rgba(196,245,71,.6); border-color:var(--leaf);}
+  .studio-build{flex:none;}
+  .studio-build.is-lit{animation:buildGlow 1.5s ease-in-out infinite;}
+  @keyframes buildGlow{
+    0%,100%{box-shadow:0 16px 36px rgba(196,245,71,.22);}
+    50%{box-shadow:0 0 0 7px rgba(196,245,71,.24), 0 18px 46px rgba(196,245,71,.5);}
+  }
+  .studio-chips{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px;}
+  .studio-chips > span{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,58,46,.4);}
+  .studio-chip{
+    border:1px solid rgba(18,53,42,.16); border-radius:999px; padding:8px 16px; background:var(--card);
+    color:var(--ink-soft); font-size:13px; font-weight:600; cursor:pointer;
+    transition:transform .2s var(--ease), border-color .2s, background .2s, color .2s;
+  }
+  .studio-chip:hover{transform:translateY(-1px); border-color:var(--leaf); color:var(--ink); background:rgba(196,245,71,.14);}
+  .studio-chip:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
+  /* Jesse's guided choices: a few large buttons, never a blank stare */
+  .studio-choices{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px;}
+  @media (max-width:620px){.studio-choices{grid-template-columns:1fr;}}
+  .studio-choice{
+    padding:16px 14px; border-radius:16px; border:1px solid rgba(20,58,46,.16); background:var(--paper);
+    font-family:var(--disp); font-weight:600; font-size:15px; color:var(--ink); cursor:pointer; text-align:left;
+    transition:transform .2s var(--ease), border-color .2s, background .2s, box-shadow .2s;
+  }
+  .studio-choice:hover{transform:translateY(-2px); border-color:var(--lime); background:rgba(196,245,71,.15); box-shadow:0 12px 28px rgba(20,58,46,.12);}
+  .studio-choice:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
+  .studio-choice small{display:block; margin-top:4px; font-family:var(--mono); font-weight:600; font-size:9px; letter-spacing:.11em; text-transform:uppercase; color:rgba(20,58,46,.42);}
+  .studio-simwrap{margin-top:18px; border-radius:18px; overflow:hidden; border:1px solid rgba(18,53,42,.16); background:var(--card); box-shadow:0 16px 42px rgba(18,53,42,.12);}
+  .studio-simhead{display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; padding:11px 16px; border-bottom:1px solid rgba(18,53,42,.1); background:var(--paper);}
+  .studio-simhead b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--ink);}
+  .studio-simhead span{font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:rgba(20,58,46,.45);}
+  .studio-simhead a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf);}
+  .studio-simhead a:hover{text-decoration:underline;}
+  .studio-simwrap iframe{display:block; width:100%; height:min(56vh,440px); border:0; background:#fff;}
+  .zpd-stats dd b{font-variant-numeric:tabular-nums;}
+  .studio-honest{padding:10px 16px; border-top:1px solid rgba(20,58,46,.08); background:var(--paper); font-size:12px; line-height:1.55; color:rgba(20,58,46,.55);}
+  .studio-done h3{font-size:clamp(26px,3.6vw,40px); letter-spacing:-.03em;}
+  .world-plaque{
+    display:inline-flex; align-items:center; gap:10px; margin-top:12px; padding:10px 18px; border-radius:14px;
+    background:var(--ink); color:var(--lime); font-family:var(--disp); font-weight:700; font-size:17px; letter-spacing:-.01em;
+  }
+  .world-plaque i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,245,244,.55);}
+  .studio-fine{margin-top:10px; font-size:12px; line-height:1.55; color:rgba(20,58,46,.5);}
+  .studio-reset{
+    margin-top:14px; border:0; background:transparent; cursor:pointer; padding:0;
+    font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:rgba(20,58,46,.45);
+  }
+  .studio-reset:hover{color:var(--ink); text-decoration:underline;}
+
+  /* six curiosity doors: real sims behind playful entry points */
+  .simlib{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,20px); margin-top:clamp(22px,3vh,32px);}
+  @media (max-width:980px){.simlib{grid-template-columns:1fr 1fr;}}
+  @media (max-width:620px){.simlib{grid-template-columns:1fr;}}
+  .simlib-intro{
+    margin-top:clamp(72px,10vh,110px); display:flex; align-items:center; justify-content:center;
+    flex-wrap:wrap; gap:16px 20px;
+  }
+  .simlib-intro h3{margin:0;}
+  .simlib-intro h3{font-size:clamp(21px,2.6vw,30px);}
+  .simlib-intro p{margin-top:8px; font-size:14.5px; line-height:1.6; color:var(--chalk-dim);}
+  .sim-card{
+    border-radius:22px; background:var(--card); border:1px solid rgba(18,53,42,.12);
+    box-shadow:0 10px 32px rgba(18,53,42,.09);
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .sim-card:hover{transform:translateY(-6px); box-shadow:0 30px 64px rgba(18,53,42,.2);}
+  .sim-card.open{grid-column:1/-1;}
+  .sim-card.open:hover{transform:none;}
+  .cur-thumb{position:relative; aspect-ratio:16/10; background:var(--stage,#0b1026); overflow:hidden;}
+  .cur-thumb canvas{position:absolute; inset:0; width:100%; height:100%;}
+  .cur-live{
+    position:absolute; top:10px; right:10px; font-family:var(--mono); font-size:8.5px; font-weight:700;
+    letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.82);
+    border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:3px 8px;
+    background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+  }
+  .sim-card.open .cur-thumb{display:none;}
+  .sim-face{padding:16px 18px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .sim-card h3{font-size:19px;}
+  .sim-face p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim);}
+  .cur-meta{font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(20,58,46,.42);}
+  .sim-play{
+    margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+    border:0; border-radius:999px; padding:9px 18px; cursor:pointer;
+    background:var(--lime); color:var(--lime-ink); font-size:12.5px; font-weight:700; letter-spacing:.02em;
+    box-shadow:0 8px 20px rgba(196,245,71,.25); transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .sim-play:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(196,245,71,.35);}
+  .sim-play:focus-visible{outline:3px solid rgba(20,58,46,.5); outline-offset:2px;}
+  .sim-card.open .sim-play{display:none;}
+  .sim-stage{display:none; border-top:1px solid var(--edge); background:#fafafa;}
+  .sim-card.open .sim-stage{display:block;}
+  .sim-stage-frame iframe{display:block; width:100%; height:min(62vh,540px); border:0; background:#fff;}
+  /* Dan's sims stack their controls under the drawing, so on a phone the
+     62vh frame cropped the whole control row (the mutation slider sat on the
+     cut). More height means the controls are visible without hunting for the
+     scroll inside the iframe. */
+  @media (max-width:640px){
+    .sim-stage-frame iframe{height:min(76vh,560px);}
+  }
+  .sim-stage-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 16px; background:var(--field-2);}
+  .sim-stage-foot a{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--leaf);}
+  .sim-stage-foot a:hover{text-decoration:underline;}
+  .sim-close{border:1px solid var(--edge); border-radius:999px; padding:6px 14px; background:transparent; color:var(--chalk-dim); font-size:11.5px; font-weight:600; cursor:pointer;}
+  .sim-close:hover{border-color:var(--chalk); color:var(--chalk);}
+
+  /* the quiet second mention: the whole library and the open books, one slim
+     line instead of the full-width band that used to sit here */
+  .desk-more{
+    margin-top:clamp(28px,4vh,40px); display:flex; align-items:center; justify-content:center;
+    gap:10px 14px; flex-wrap:wrap; text-align:center; font-size:13.5px; color:var(--chalk-dim);
+  }
+  .desk-more .btn{min-height:40px; padding:0 18px; font-size:12.5px; border-radius:11px;}
+  .desk-more em{font-style:normal; color:rgba(20,58,46,.35);}
+
+  .books-teaser{
+    margin-top:clamp(32px,4.4vh,52px); padding-top:clamp(36px,4.6vh,52px); border-top:1px solid rgba(20,58,46,.1);
+    display:flex; flex-direction:column; align-items:center; gap:clamp(26px,3.4vh,36px); text-align:center;
+  }
+  .books-teaser-row{display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(24px,3vw,36px);}
+  .book-mini{
+    display:flex; flex-direction:column; gap:10px; width:164px; text-decoration:none;
+    transition:transform .25s var(--ease);
+  }
+  .book-mini:hover{transform:translateY(-3px);}
+  .book-mini img{
+    width:164px; height:246px; object-fit:cover; border-radius:9px;
+    box-shadow:0 14px 32px rgba(20,58,46,.18); border:1px solid rgba(20,58,46,.08);
+  }
+  .book-mini span{font-size:12.5px; font-weight:600; color:var(--chalk-dim); line-height:1.3;}
+
+  /* ---------- chapter 1: the human ---------- */
+  /* Short enough on its own to sit on one line; the global .h2 22ch cap
+     (tuned for the page's longer, wrapping taglines) forces an unwanted
+     wrap here instead. */
+  #human .h2{max-width:none; font-size:clamp(30px,4vw,54px);}
+  .human-video{margin-top:clamp(32px,5vh,52px); max-width:900px;}
+  .human-video video, .human-video-play{
+    display:block; width:100%; aspect-ratio:16/9; border-radius:18px;
+    background:#000; box-shadow:var(--shadow); outline:1px solid var(--edge);
+  }
+  .human-video-play{position:relative; border:0; padding:0; cursor:pointer; overflow:hidden;}
+  .human-video-play img{width:100%; height:100%; object-fit:cover; display:block;}
+  .human-video-playicon{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  }
+  .human-video-playicon svg{
+    width:clamp(52px,8vw,72px); height:clamp(52px,8vw,72px); color:#fff;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.45)); transition:transform .2s var(--ease);
+  }
+  .human-video-play:hover .human-video-playicon svg{transform:scale(1.08);}
+  .human-video-cap{
+    margin-top:16px; font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:clamp(15px,1.6vw,18px); color:var(--chalk-dim); text-align:center;
+  }
+
+  /* ---------- frontier graph (bright, matches the paper stages around it) ---------- */
+  .frontier{
+    background:radial-gradient(ellipse 80% 55% at 50% 8%, var(--field-2), var(--field) 72%);
+    border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
+  }
+
+  /* ---------- native ZPD explorer ----------
+     Replaces the p5 iframe that used to sit here. That embed carried its own
+     dark toolbar and its own type, so it read as somebody else's widget
+     dropped into the page. This is the same pedagogy (comfort zone /
+     proximal zone / frustration zone around where a learner stands) drawn in
+     the page's own CARD language, off the page's own tokens, over real
+     prerequisite edges out of library/zpd.json. Plain SVG, no library: the
+     whole page still loads zero JS frameworks. */
+  .zpd{
+    margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden;
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .zpd-head{
+    display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap;
+    padding:13px 18px; border-bottom:1px solid var(--edge); background:var(--field-2);
+  }
+  .zpd-head b{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--chalk);}
+  .zpd-head .zpd-hint{font-size:12px; color:var(--chalk-faint);}
+  .zpd-seeds{display:flex; gap:6px; flex-wrap:wrap;}
+  .zpd-seed{
+    border:1px solid var(--edge); border-radius:999px; padding:6px 13px; background:transparent;
+    color:var(--chalk-dim); font-family:var(--mono); font-size:10.5px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:color .2s, border-color .2s, background .2s;
+  }
+  .zpd-seed:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+  .zpd-seed[aria-pressed="true"]{background:var(--lime); border-color:var(--lime); color:var(--lime-ink);}
+  .zpd-body{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
+  /* pan-y, not none: a finger swiping DOWN the page over this full-width
+     stage must keep scrolling the page, or the graph turns into a scroll trap
+     that fills most of a phone screen (verified with a synthesized touch
+     scroll: with none, the page moved 0px). The browser keeps vertical
+     swipes; sideways drags still reach the pointer handlers and pan the
+     graph, and a tap still selects a concept. */
+  .zpd-stage{position:relative; background:radial-gradient(ellipse 62% 62% at 50% 46%, rgba(36,122,77,.16), transparent 70%); touch-action:pan-y;}
+  .zpd-stage svg{display:block; width:100%; height:min(62vh,540px); cursor:grab;}
+  .zpd-stage svg.dragging{cursor:grabbing;}
+  .zpd-ring{fill:none; stroke-width:1;}
+  .zpd-ring.r1{stroke:rgba(31,74,53,.45);}
+  .zpd-ring.r2{stroke:rgba(150,196,40,.55); stroke-dasharray:5 6;}
+  .zpd-ring.r3{stroke:rgba(150,180,160,.4); stroke-dasharray:2 7;}
+  .zpd-node{cursor:pointer;}
+  .zpd-node[data-open="false"]{cursor:not-allowed;}
+  .zpd-node circle{transition:r .25s var(--ease), fill .25s, stroke .25s;}
+  .zpd-node text{
+    font-family:var(--sans); font-size:10.5px; font-weight:500; fill:var(--chalk-dim);
+    text-anchor:middle; pointer-events:none;
+  }
+  /* The svg scales to its container, so on a phone a 10.5 unit label renders
+     at about 5 real pixels. `narrow` is set in JS from the measured width, and
+     the label text is shortened to match, so the type grows without the rings
+     turning into overlapping mush. */
+  .zpd-stage svg.narrow .zpd-node text{font-size:17px;}
+  .zpd-stage svg.narrow .zpd-node.z0 text{font-size:19px;}
+  /* One green family, shaded by distance instead of a traffic-light palette:
+     darkest (comfort, already behind you) -> brand lime (proximal, the one
+     actionable ring) -> palest sage (frustration, two steps out, meant to
+     recede). Ring strokes above follow the same logic. */
+  .zpd-node.z0 text{fill:var(--chalk); font-weight:700; font-size:12px;}
+  .zpd-node.z1 circle{fill:#1f4a35; stroke:rgba(31,74,53,.3); stroke-width:5;}
+  .zpd-node.z2 circle{fill:#c4f547; stroke:rgba(196,245,71,.22); stroke-width:5;}
+  .zpd-node.z2 text{fill:var(--chalk);}
+  .zpd-node.z3 circle{fill:rgba(150,180,160,.55); stroke:rgba(150,180,160,.16); stroke-width:4;}
+  .zpd-node.z3 text{fill:rgba(18,53,42,.32);}
+  /* The center mark: the mascot instead of a plain lime dot + "YOU" label,
+     recolored to a deep forest green (the raccoon logo ships lime, its
+     brand color everywhere else on this page) with a filter rather than a
+     second image asset. */
+  .zpd-you-logo{filter:brightness(.55) saturate(.85); pointer-events:none;}
+  /* A rect, not a circle, so none of the per-zone `circle` rules above (or
+     the :hover and .is-picked ones below) can paint the invisible hit target
+     by accident. */
+  .zpd-hit{fill:transparent; stroke:none;}
+  /* Recenter animation. The concepts the new middle drops off the rings are
+     cloned into this layer and faded out from where they stood, so they leave
+     the picture instead of blinking out between two frames. While the graph is
+     travelling the concepts stop taking clicks: a dot sliding under a cursor
+     is not a dot anybody meant to pick. */
+  #zpdGhosts{pointer-events:none;}
+  .zpd-stage svg.moving .zpd-node{pointer-events:none;}
+  .zpd-node:hover circle, .zpd-node:focus-visible circle{stroke-width:12;}
+  .zpd-node:focus{outline:none;}
+  .zpd-node:focus-visible circle{stroke:rgba(196,245,71,.75);}
+  .zpd-node.is-picked circle{stroke:var(--chalk); stroke-width:3;}
+  .zpd-side{
+    padding:20px 22px 22px; border-left:1px solid var(--edge); background:var(--field-1);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .zpd-zone{
+    display:inline-flex; align-items:center; gap:8px; width:fit-content;
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--chalk-faint);
+  }
+  .zpd-zone i{width:9px; height:9px; border-radius:50%; background:currentColor; flex:none; font-style:normal;}
+  .zpd-zone.z0{color:var(--lime);} .zpd-zone.z1{color:var(--leaf2);}
+  .zpd-zone.z2{color:var(--lime);} .zpd-zone.z3{color:var(--stakes-soft);}
+  .zpd-side h3{font-size:clamp(18px,2vw,22px); color:var(--chalk);}
+  .zpd-side .zpd-sub{font-family:var(--mono); font-size:11px; color:var(--chalk-faint); letter-spacing:.04em;}
+  .zpd-side p{font-size:13.5px; line-height:1.6; color:var(--chalk-dim);}
+  .zpd-side p em{font-style:normal; color:var(--chalk);}
+  .zpd-stats{margin-top:6px; display:grid; gap:1px; background:var(--edge); border:1px solid var(--edge); border-radius:14px; overflow:hidden;}
+  .zpd-stats div{display:flex; align-items:baseline; gap:12px; padding:11px 14px; background:var(--field-1);}
+  .zpd-stats dt{
+    font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--chalk-faint); width:88px; flex:none;
+  }
+  .zpd-stats dd{font-size:13px; color:var(--chalk-dim);}
+  .zpd-stats dd b{font-family:var(--disp); font-size:15px; color:var(--chalk); margin-right:6px;}
+  .zpd-stats div.z1 dt{color:var(--leaf2);} .zpd-stats div.z2 dt{color:var(--lime);} .zpd-stats div.z3 dt{color:var(--stakes-soft);}
+  .zpd-act{
+    margin-top:auto; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:0; border-radius:999px; padding:11px 18px; cursor:pointer; width:100%;
+    background:var(--lime); color:var(--lime-ink); font-size:12.5px; font-weight:700;
+    transition:transform .2s var(--ease), opacity .2s;
+  }
+  .zpd-act:hover{transform:translateY(-1px);}
+  .zpd-act[disabled]{background:rgba(18,53,42,.06); color:var(--chalk-faint); cursor:default; transform:none;}
+  .zpd-legend{display:flex; flex-wrap:wrap; gap:8px 16px; padding:12px 18px; border-top:1px solid var(--edge); background:var(--field-2);}
+  .zpd-foot{padding:0 18px 14px; background:var(--field-2); font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
+  @media (max-width:860px){
+    .zpd-body{grid-template-columns:1fr;}
+    .zpd-side{border-left:0; border-top:1px solid var(--edge);}
+    .zpd-stage svg{height:min(56vh,420px);}
+  }
+
+  /* ---------- shared form language (the claim card uses all of this) ---------- */
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:11.5px; font-weight:600; color:rgba(18,53,42,.5); letter-spacing:.04em; text-transform:uppercase;}
+  .field input,.field select,.field textarea{
+    font:inherit; font-size:15px; padding:13px 15px; border-radius:14px;
+    border:1px solid rgba(18,53,42,.16); background:var(--card); color:var(--ink);
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .field textarea{min-height:88px; resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(196,245,71,.55); border-color:var(--leaf);}
+  .apply-submit{width:100%; margin-top:16px;}
+  .honey{position:absolute; left:-9999px;}
+  @media (max-width:900px){
+    .form-grid{grid-template-columns:1fr;}
+  }
+  /* Wrapper only for hide/show, never a real grid box of its own, so its
+     .field children keep landing in .form-grid's own columns exactly as if
+     this div were not here (the alternative, toggling each field
+     individually, is the same result with five times the JS). */
+  .claim-student-block{display:contents;}
+  .claim-student-block[hidden]{display:none;}
+  .claim-role{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px;}
+  .claim-role button{
+    border:1px solid var(--edge); background:transparent; color:var(--ink);
+    border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s;
+  }
+  .claim-role button:hover{border-color:var(--leaf);}
+  .claim-role button.is-active{background:var(--leaf); border-color:var(--leaf); color:#fff;}
+
+
+  /* ---------- advisors (cream) ---------- */
+  .advisors-label{
+    margin-top:clamp(30px,4.5vh,44px); font-family:var(--mono); font-size:11.5px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .advisors-row{margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){.advisors-row{grid-template-columns:1fr;}}
+  .advisor-card{
+    display:flex; gap:16px; align-items:flex-start; padding:20px; border-radius:16px;
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .advisor-card img{
+    width:64px; height:64px; border-radius:50%; object-fit:cover; flex:none;
+    border:1px solid var(--edge);
+  }
+  .advisor-card h3{font-size:16px; margin-bottom:6px;}
+  .advisor-card .bullets{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+
+  /* Pushed down a bit + given room to breathe (2026-09-02 ask): more space
+     above the row, and the card grows to fit taller bullet captions instead
+     of leaving empty space below a one-line source citation. */
+  .research-row{margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){.research-row{grid-template-columns:1fr;}}
+  .research-card{
+    height:100%; display:flex; flex-direction:column;
+    border-radius:16px; overflow:hidden;
+    background:var(--card); border:1px solid var(--edge); box-shadow:var(--shadow);
+  }
+  .research-card img{width:100%; height:300px; padding:24px 20px 0; box-sizing:border-box; object-fit:contain; display:block; background:#fff; flex:none;}
+  .research-card figcaption{padding:18px 20px 22px; flex:1; display:flex; flex-direction:column;}
+  .research-card h3{font-size:15px; margin-bottom:8px;}
+  .research-card .bullets{font-size:13px; line-height:1.55; color:var(--chalk-dim);}
+  .research-cite{margin-top:14px; font-size:11.5px; line-height:1.5; color:var(--chalk-faint);}
+
+  /* ---------- claim your desk (cream) ---------- */
+  .claim{background:var(--cream); color:var(--ink); border-top:1px solid var(--edge); scroll-margin-top:80px;}
+  .claim-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:clamp(28px,4.5vw,64px); align-items:start;}
+  @media (max-width:860px){.claim-grid{grid-template-columns:1fr;}}
+  .claim-points{margin-top:26px; display:grid; gap:13px;}
+  .claim-points div{display:flex; gap:12px; align-items:baseline; font-size:14.5px; line-height:1.55; color:var(--chalk-dim);}
+  .claim-points i{font-style:normal; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--leaf); flex:none; letter-spacing:.08em;}
+  .claim-points b{color:var(--chalk); font-weight:600;}
+  .claim-price{margin-top:24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .claim-price-badge{
+    font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--leaf); border:1px solid var(--edge); border-radius:999px; padding:5px 12px; flex:none;
+  }
+  .claim-price-tag{font-family:var(--serif); font-style:italic; font-size:24px; color:var(--chalk); font-weight:500;}
+  .claim-price-note{flex-basis:100%; font-size:12.5px; color:var(--chalk-faint);}
+  .claim-card{border-radius:24px; background:var(--field-2); border:1px solid var(--edge); padding:clamp(22px,3vw,32px); box-shadow:0 18px 44px rgba(20,58,46,.09);}
+  .claim-card h3{font-size:21px; margin-bottom:6px;}
+  .claim-card > p{font-size:13.5px; line-height:1.55; color:var(--chalk-dim); margin-bottom:18px;}
+  .claim-note{margin-top:12px; font-size:11.5px; line-height:1.5; color:var(--chalk-faint); text-align:center;}
+  .claim-msg{margin-top:14px; padding:13px 16px; border-radius:14px; font-size:13.5px; line-height:1.5;}
+  .claim-msg[hidden]{display:none;}
+  .claim-msg.ok{background:rgba(36,122,77,.12); color:var(--leaf); border:1px solid rgba(36,122,77,.28);}
+  .claim-msg.ok b{display:block; font-size:15px; color:var(--ink); margin-bottom:4px;}
+  .claim-msg.bad{background:rgba(193,18,31,.08); color:#a30f1a; border:1px solid rgba(193,18,31,.24);}
+  .claim-msg.bad b{display:block; font-size:15px; margin-bottom:4px;}
+  .form-legend{
+    grid-column:1/-1; margin-top:8px; font-family:var(--mono); font-size:10px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:rgba(20,58,46,.45);
+  }
+  .form-legend:first-child{margin-top:0;}
+  .claim-sms{margin-top:12px; font-size:10.5px; line-height:1.6; color:rgba(20,58,46,.45);}
+  .claim-sms a{color:var(--leaf); text-decoration:underline; text-underline-offset:2px;}
+
+  footer{background:var(--field); border-top:1px solid var(--edge); padding:clamp(56px,7vw,84px) 0 56px; color:var(--chalk-faint); font-size:13px;}
+  .foot-sign{
+    font-family:var(--disp); font-weight:560; font-size:clamp(24px,3.4vw,42px); letter-spacing:-.014em;
+    line-height:1.16; color:var(--chalk); max-width:26ch; margin-bottom:clamp(28px,4vh,44px); text-wrap:balance;
+  }
+  .foot-sign em{font-style:italic; font-weight:480; color:var(--leaf2);}
+  .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap; padding-top:18px; border-top:1px solid var(--edge);}
+  .foot-links{display:flex; gap:18px; margin-left:auto; flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--chalk);}
+  .foot-quip{margin-top:16px; font-size:11.5px; color:rgba(246,245,240,.3);}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="scrollProgress" aria-hidden="true"></div>
+
+<div class="mascot-nav" id="mascotNav">
+  <a class="mascot-link" href="#top" aria-label="MindCraft home">
+    <span class="mascot-icon" aria-hidden="true"></span>
+  </a>
+  <a class="mascot-login" href="https://mindcraft-93858.web.app/login">Login</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero stage-desk" id="top">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="heroMap" aria-hidden="true"></canvas>
+  <div class="hero-stage">
+    <p class="hero-kicker">The Desk by MindCraft</p>
+    <h1>
+      <span class="hl"><span>The M in MindCraft is for</span></span>
+      <span class="hl"><span><em>&ldquo;making education fun again.&rdquo;</em></span></span>
+    </h1>
+    <div class="hero-rotator" id="heroRotator">
+      <p class="hero-rotator-frame is-active">Our students write and publish <strong>royalty books</strong>.</p>
+      <ul class="hero-rotator-frame">
+        <li>MindCrafters gather to peer review each other's work.</li>
+        <li>Students also meet their tutor 1:1 to review learning goals and outcomes.</li>
+      </ul>
+      <div class="hero-rotator-frame">
+        <p>Parents as well as Teachers can use our platform to teach/learn anything.</p>
+        <ul>
+          <li>Parents: support your kid with interactive, simplified whitepapers.</li>
+          <li>Teachers: create homework that auto-tracks progress, or find new ways to teach in class.</li>
+        </ul>
+      </div>
+      <svg class="hero-rotator-swash" viewBox="0 0 1200 10" aria-hidden="true" preserveAspectRatio="none"><path d="M6 6 C 320 2, 880 2, 1194 7"/></svg>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn primary" href="#claim">Claim your desk</a>
+      <a class="btn soft" href="#desk">Step into the studio</a>
+    </div>
+    <div class="hero-cred">
+      <span>Built with students from</span>
+      <div class="hero-cred-row">
+        <img class="wordmark" src="img/logos/hero/oxford.png" alt="University of Oxford" width="459" height="132">
+        <img src="img/logos/hero/unc.png" alt="UNC Chapel Hill" width="165" height="132">
+        <img src="img/logos/hero/macalester.png" alt="Macalester College" width="132" height="132">
+        <img class="wordmark" src="img/logos/hero/uwc.png" alt="United World Colleges" width="582" height="132">
+        <img src="img/logos/hero/kenyon.png" alt="Kenyon College" width="132" height="132">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY IT IS NOT INSTANT ================= -->
+<section class="advisors stage-desk" id="advisors">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal"><i>01</i> Why it is not instant</div>
+    <h2 class="h2 reveal">Our remarkably <em>slow</em> AI.</h2>
+    <ul class="lede bullets reveal">
+      <li>Every chapter and sim passes a real quality rubric first.</li>
+      <li>Gated behind Dan McCreary's published textbook methodology.</li>
+      <li>Not fired off and hoped for.</li>
+    </ul>
+    <div class="advisors-label reveal">Meet our advisors</div>
+    <div class="advisors-row reveal">
+      <div class="advisor-card">
+        <img src="img/advisors/dan-mccreary.jpg" alt="Dan McCreary" loading="lazy">
+        <div>
+          <h3>Dan McCreary</h3>
+          <ul class="bullets">
+            <li>40+ years building enterprise knowledge graphs in healthcare and NoSQL</li>
+            <li>Co-author of <em>Making Sense of NoSQL</em></li>
+            <li>Researcher behind the MicroSims methodology our quality bar is built on</li>
+          </ul>
+        </div>
+      </div>
+      <div class="advisor-card">
+        <img src="img/advisors/ingrid-erickson.jpg" alt="Ingrid Erickson" loading="lazy">
+        <div>
+          <h3>Ingrid Erickson</h3>
+          <ul class="bullets">
+            <li>Associate Professor at Syracuse University's iSchool</li>
+            <li>PhD from Stanford</li>
+            <li>Studies how AI reshapes how we work and learn together</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="advisors-label reveal">Why the guardrails matter</div>
+    <div class="research-row reveal">
+      <figure class="research-card">
+        <img src="img/research/gpt-base-error-rates.png" alt="Histogram showing how often an ungated GPT gets a wrong answer, from logical and arithmetic errors, across 57 practice problems" loading="lazy">
+        <figcaption>
+          <h3>Left unchecked, it gets things wrong.</h3>
+          <ul class="bullets">
+            <li>57 real problems, tested against an ungated model</li>
+            <li>Logical and arithmetic errors, on a meaningful share</li>
+            <li>Exactly what a quality gate is for</li>
+          </ul>
+        </figcaption>
+      </figure>
+      <figure class="research-card">
+        <img src="img/research/non-superficial-engagement.png" alt="Bar chart showing students have roughly twice the constructive, non-superficial conversation rate with a guardrailed tutor that withholds the answer, versus one that gives it" loading="lazy">
+        <figcaption>
+          <h3>Withholding the answer works.</h3>
+          <ul class="bullets">
+            <li>A tutor that never just hands over the answer</li>
+            <li>Kept students engaged roughly twice as often</li>
+            <li>Hints, not solutions, is the whole design</li>
+          </ul>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="research-cite reveal">Source: Bastani, Bastani, Sungu, Ge, Kabakcı &amp; Mariman, <em>Generative AI Without Guardrails Can Harm Learning: Evidence from High School Mathematics</em>, University of Pennsylvania (Wharton).</p>
+  </div>
+</section>
+
+<!-- ================= THE FRONTIER GRAPH ================= -->
+<section class="frontier stage-desk" id="frontier">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal"><i>02</i> The frontier graph</div>
+    <h2 class="h2 reveal">How does the <em>technology</em> work?</h2>
+    <div class="zpd reveal" id="zpd">
+      <div class="zpd-head">
+        <div class="zpd-seeds" id="zpdSeeds" role="group" aria-label="Pick a starting concept"></div>
+      </div>
+      <div class="zpd-body">
+        <div class="zpd-stage">
+          <svg id="zpdSvg" viewBox="23 19 714 583" role="img" aria-label="Concentric zones of learning around one concept, drawn from real prerequisite edges">
+            <g id="zpdPan">
+              <g id="zpdRings"></g>
+              <g id="zpdLinks"></g>
+              <g id="zpdGhosts" aria-hidden="true"></g>
+              <g id="zpdNodes"></g>
+            </g>
+          </svg>
+        </div>
+        <div class="zpd-side">
+          <span class="zpd-zone" id="zpdZone"><i></i><em id="zpdZoneName">You are here</em></span>
+          <h3 id="zpdName">Loading the graph</h3>
+          <div class="zpd-sub" id="zpdSub"></div>
+          <p id="zpdSay">Reading real prerequisite edges out of the concept library.</p>
+          <dl class="zpd-stats" id="zpdStats"></dl>
+          <button class="zpd-act" id="zpdAct" type="button" disabled>Step onto this concept</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 1: THE HUMAN ================= -->
+<section class="stage-desk human" id="human">
+  <div class="wrap">
+    <div class="kicker reveal"><i>03</i> The human</div>
+    <h2 class="h2 reveal">A real tutor who actually notices.</h2>
+    <p class="lede reveal">Not software that guesses. A person who notices when you're stuck.</p>
+    <div class="human-video reveal">
+      <!-- Click to load: every browser tested (Chromium and WebKit both,
+           despite preload="metadata") fetches the WHOLE video file the
+           moment a <video><source> exists in the DOM, controls or no
+           controls, autoplay or no autoplay. At 2.4MB that was two-thirds
+           of this page's entire initial weight, paid by every visitor
+           whether or not they ever watch. Nothing loads until a real
+           click. -->
+      <button type="button" class="human-video-play" data-video-play aria-label="Play the one-on-one tutoring video">
+        <img src="img/human/mindcraft-1on1-poster.jpg" alt="" loading="lazy">
+        <span class="human-video-playicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      </button>
+      <p class="human-video-cap">One-on-one time. Live events. A tutor who notices when you are stuck, and says so.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE DESK: CREATION STUDIO ================= -->
+<section class="stage-desk" id="desk">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="deskAwake" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <!-- the library, counted: just the numbers and what they mean, sitting
+         above the search bar. No heading of its own, per the 2026-08-31 ask
+         to fold the old standalone stats section in here instead. -->
+    <dl class="desk-stats reveal" aria-label="The library in numbers">
+      <div><dd data-count="4118">4118</dd><dt>Concepts mapped</dt></div>
+      <div><dd data-count="13">13</dd><dt>Subjects</dt></div>
+      <div><dd data-count="3746">3746</dd><dt>Written chapters</dt></div>
+      <div><dd data-count="722">722</dd><dt>Live simulations</dt></div>
+    </dl>
+
+    <!-- the creation flow's progress trail. Filled in by the studio script,
+         which also reveals it (hidden until trailTo() first runs, i.e. the
+         moment a student actually starts building something, per the
+         2026-09-01 ask to lead with the box, not a heading + an empty
+         progress bar with nothing yet to show progress on). -->
+    <div class="studio-trail reveal" id="studioTrail" aria-label="Creation progress" hidden>
+      <span class="trail-step" data-step="dream"><i></i>Dream it</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="build"><i></i>Build it</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="experiment"><i></i>Experiment</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="yours"><i></i>Make it yours</span>
+      <span class="trail-link"></span>
+      <span class="trail-step" data-step="share"><i></i>Share</span>
+    </div>
+
+    <div class="simlib-intro reveal">
+      <h3>Look at what <em>our students made</em>.</h3>
+      <a class="btn soft" href="https://mindcraft-93858.web.app/desk">SimCraft</a>
+    </div>
+
+    <div class="simlib reveal" aria-label="Curiosity doors into the MicroSim library">
+      <article class="sim-card" data-sim="library/sims/biology__natural-selection.html" data-title="Coevolution Arms Race MicroSim">
+        <div class="cur-thumb" style="--stage:#0f2e1d"><canvas data-anim="creature"></canvas><span class="cur-live">Live sim</span></div>
+        <div class="sim-face">
+          <h3>Design a creature</h3>
+          <p>Give prey a defense, give predators an answer, and watch an arms race evolve.</p>
+          <p class="cur-meta">Natural selection &middot; Biology</p>
+          <button class="sim-play" type="button">Try it</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="library/sims/biology__natural-selection.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="library/sims/circuits__harmonics.html" data-title="Harmonic Content Explorer MicroSim">
+        <div class="cur-thumb" style="--stage:#241536"><canvas data-anim="music"></canvas><span class="cur-live">Live sim</span></div>
+        <div class="sim-face">
+          <h3>Make music move</h3>
+          <p>Stack harmonics until a plain wave turns into a sound with real character.</p>
+          <p class="cur-meta">Harmonics &middot; Circuits</p>
+          <button class="sim-play" type="button">Try it</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="library/sims/circuits__harmonics.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="library/sims/psychology__cognitive-biases.html" data-title="Cognitive Bias Detective MicroSim">
+        <div class="cur-thumb" style="--stage:#1c1410"><canvas data-anim="mystery"></canvas><span class="cur-live">Live sim</span></div>
+        <div class="sim-face">
+          <h3>Solve a mystery</h3>
+          <p>Play detective against your own brain and catch the biases planting false clues.</p>
+          <p class="cur-meta">Cognitive biases &middot; Psychology</p>
+          <button class="sim-play" type="button">Try it</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="library/sims/psychology__cognitive-biases.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="books-teaser reveal">
+      <div class="simlib-intro">
+        <h3>Prefer a much more extensive <em>lesson</em>?</h3>
+        <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
+      </div>
+      <div class="books-teaser-row">
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=10">
+          <img src="img/dans-covers/biology.jpg" alt="Biology: An Interactive Course cover" loading="lazy">
+          <span>Biology: An Interactive Course</span>
+        </a>
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=3">
+          <img src="img/dans-covers/circuits.jpg" alt="AI Circuits Course cover" loading="lazy">
+          <span>AI Circuits Course</span>
+        </a>
+        <a class="book-mini" href="https://joinmindcraft.com/dans-archive.html?open=89">
+          <img src="img/dans-covers/psychology.jpg" alt="Psychology cover" loading="lazy">
+          <span>Psychology</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLAIM YOUR DESK ================= -->
+<section class="claim stage-desk" id="claim">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="claim-grid">
+      <div class="reveal">
+        <div class="kicker"><i>05</i> Early access</div>
+        <h2 class="h2">Claim your <em>desk</em>.</h2>
+        <p class="lede">Free right now, a few seats each round. Tell us who you are and we will get back to you personally.</p>
+        <div class="claim-points">
+          <div><i>01</i><p>The whole library, <b>4118 concepts across 13 subjects</b>, with 3746 written chapters and 722 built simulations.</p></div>
+          <div><i>02</i><p>Search that <b>knows where a concept sits</b>, so you get the ramp into it, not just the page.</p></div>
+          <div><i>03</i><p>Jesse, the voice tutor, and a desk that <b>tracks what actually stuck</b> instead of assigning homework.</p></div>
+        </div>
+        <div class="claim-price reveal">
+          <span class="claim-price-badge">Beta</span>
+          <span class="claim-price-tag">Free</span>
+          <span class="claim-price-note">No card, no trial timer, while we are in early access.</span>
+        </div>
+      </div>
+      <div class="claim-card reveal">
+        <h3>Get your seat</h3>
+        <p>A minute of typing. No card, no trial timer.</p>
+        <!-- Who is filling this out (2026-09-02 ask): the form was
+             hardcoded "parent signing up their kid", which reads as
+             unfriendly to a student or tutor signing themselves up. Same
+             fields underneath either way (parentFirst/parentLast etc. stay
+             the wire format the backend expects, see the submit handler
+             below), this just relabels the legend, hides the redundant
+             "the student" block when the signer IS the student, and sends
+             the real role instead of a hardcoded 'parent'. -->
+        <div class="claim-role" id="claimRoleToggle" role="radiogroup" aria-label="Who is signing up">
+          <button type="button" class="is-active" data-claim-role="parent">I'm a parent</button>
+          <button type="button" data-claim-role="student">I'm a student</button>
+          <button type="button" data-claim-role="tutor">I'm a tutor</button>
+        </div>
+        <form id="claimForm" novalidate>
+          <div class="form-grid">
+            <span class="form-legend" id="claimRoleLegend">Parent or guardian</span>
+            <div class="field">
+              <label for="claimParentFirst">First name</label>
+              <input id="claimParentFirst" name="parentFirst" type="text" required autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="claimParentLast">Last name</label>
+              <input id="claimParentLast" name="parentLast" type="text" required autocomplete="family-name">
+            </div>
+            <div class="field">
+              <label for="claimEmail">Email</label>
+              <input id="claimEmail" name="email" type="email" required autocomplete="email" placeholder="you@school.edu">
+            </div>
+            <div class="field">
+              <label for="claimPhone">Phone</label>
+              <input id="claimPhone" name="phone" type="tel" required autocomplete="tel" placeholder="(555) 555-5555">
+            </div>
+            <div class="field full">
+              <label for="claimHeard">How did you hear about us?</label>
+              <select id="claimHeard" name="howHeard">
+                <option value="">Pick one, if you remember</option>
+                <option value="friend_or_family">A friend or family member</option>
+                <option value="school_or_teacher">School or a teacher</option>
+                <option value="instagram">Instagram</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="search">Search</option>
+                <option value="podcast">Podcast</option>
+                <option value="other">Somewhere else</option>
+              </select>
+            </div>
+            <div id="claimStudentBlock" class="claim-student-block">
+              <span class="form-legend">The student</span>
+              <div class="field">
+                <label for="claimStudentFirst">First name</label>
+                <input id="claimStudentFirst" name="studentFirst" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimStudentLast">Last name</label>
+                <input id="claimStudentLast" name="studentLast" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimSchool">School</label>
+                <input id="claimSchool" name="school" type="text" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="claimGrade">Grade</label>
+                <input id="claimGrade" name="grade" type="text" placeholder="Optional">
+              </div>
+            </div>
+            <div class="field full">
+              <label for="claimSubject" id="claimSubjectLabel">Subject</label>
+              <input id="claimSubject" name="subject" type="text" placeholder="English, math, SAT test prep, etc.">
+            </div>
+            <div class="field full">
+              <label for="claimMessage">Message</label>
+              <textarea id="claimMessage" name="message" required placeholder="What are you hoping The Desk does for your student?"></textarea>
+            </div>
+          </div>
+          <input class="honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn primary apply-submit" id="claimSubmit" type="submit">Claim your desk</button>
+          <p class="claim-note">Goes straight to the founders. No list, no reselling.</p>
+          <p class="claim-sms">By providing my phone number to MindCraft, I agree and acknowledge that MindCraft may send text messages to my wireless phone number for any purpose. Message and data rates may apply. Message frequency will vary, and you will be able to opt out by replying STOP. For more information on how your data will be handled, please see our <a href="privacy.html">privacy policy</a>.</p>
+        </form>
+        <div class="claim-msg" id="claimMsg" hidden role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-sign">Built for the weeks before a test, <em>and whatever's stuck after.</em></p>
+    <div class="foot-row">
+      <span>&copy; MindCraft &middot; founders@joinmindcraft.com</span>
+      <div class="foot-links">
+        <a href="https://joinmindcraft.com/blog.html">Blog</a>
+        <a href="https://joinmindcraft.com/dans-archive.html">Open Archive</a>
+        <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noopener">Spotify</a>
+        <a href="https://www.linkedin.com/company/joinmindcraft" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener">X</a>
+        <a href="mailto:founders@joinmindcraft.com">Email</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </div>
+    <p class="foot-quip">Still wondering about the moon, honestly.</p>
+  </div>
+</footer>
+
+<script>
+  // ----- reveal on scroll -----
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+
+  // ----- hero rotator: books -> peer review/tutor bullets -> parents and
+  // teachers, on a loop (2026-09-03). All frames stay in the DOM stacked in
+  // the same grid cell (see .hero-rotator-frame CSS) so the container's
+  // height never changes and swapping is a pure opacity crossfade, no
+  // reflow/flicker. Reduced motion leaves the first frame alone.
+  (function(){
+    var root = document.getElementById('heroRotator');
+    if(!root) return;
+    var frames = Array.prototype.slice.call(root.querySelectorAll('.hero-rotator-frame'));
+    if(frames.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var idx = 0;
+    function advance(){
+      frames[idx].classList.remove('is-active');
+      idx = (idx + 1) % frames.length;
+      frames[idx].classList.add('is-active');
+    }
+    setInterval(advance, 3800);
+  })();
+
+  // ----- library numbers count up to their real totals on first sight -----
+  // The targets live in data-count and in the markup itself, so with JS off
+  // (or reduced motion on) the real numbers are simply already there.
+  (function(){
+    var stats = document.querySelector('.desk-stats');
+    if(!stats) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        io.disconnect();
+        stats.querySelectorAll('dd[data-count]').forEach(function(dd){
+          var target = parseInt(dd.getAttribute('data-count'), 10);
+          var t0 = 0;
+          function frame(ts){
+            if(!t0) t0 = ts;
+            var t = Math.min(1, (ts - t0) / 1300);
+            var e = 1 - Math.pow(1 - t, 3);
+            dd.textContent = String(Math.round(target * e));
+            if(t < 1) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        });
+      });
+    }, {threshold:.4});
+    io.observe(stats);
+  })();
+
+  // ----- top scroll-progress bar -----
+  (function(){
+    var bar = document.getElementById('scrollProgress');
+    if(!bar) return;
+    function update(){
+      var h = document.scrollingElement || document.documentElement;
+      var scrolled = h.scrollTop;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? scrolled / max : 0) + ')';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // ----- chapter 1 video: nothing loads until a real click (see the HTML
+  // comment above .human-video-play for why), then resets to its first
+  // frame once it finishes instead of freezing on its last one -----
+  (function(){
+    var btn = document.querySelector('.human-video-play');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.poster = 'img/human/mindcraft-1on1-poster.jpg';
+      var source = document.createElement('source');
+      source.src = 'img/human/mindcraft-1on1.mp4';
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.addEventListener('ended', function(){ video.currentTime = 0; });
+      btn.replaceWith(video);
+      video.play();
+    }, { once: true });
+  })();
+
+  // ----- hero star map zooms in as you scroll past it -----
+  (function(){
+    var hero = document.getElementById('top');
+    var canvas = document.getElementById('heroMap');
+    if(!hero || !canvas) return;
+    function update(){
+      var h = document.scrollingElement || document.documentElement;
+      var range = Math.max(hero.offsetHeight, 1);
+      var frac = Math.min(1, Math.max(0, h.scrollTop / range));
+      var scale = 1 + frac * 0.6;
+      canvas.style.transform = 'scale(' + scale.toFixed(3) + ')';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // ----- constellation canvases (hero + cta) -----
+  function constellation(id, density, litShare){
+    var cv = document.getElementById(id);
+    if(!cv) return;
+    var ctx = cv.getContext('2d');
+    var nodes = [], W = 0, H = 0, raf = null;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function seed(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      nodes = [];
+      var count = Math.max(20, Math.floor(W * H / density));
+      for(var i = 0; i < count; i++){
+        nodes.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .12, vy: (Math.random() - .5) * .12,
+          r: Math.random() * 1.6 + .8, lit: Math.random() < litShare
+        });
+      }
+    }
+    function draw(){
+      ctx.clearRect(0, 0, W, H);
+      for(var i = 0; i < nodes.length; i++){
+        var a = nodes[i];
+        for(var j = i + 1; j < nodes.length; j++){
+          var b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d = dx*dx + dy*dy;
+          if(d < 24000){
+            ctx.strokeStyle = 'rgba(36,122,77,' + (0.28 * (1 - d / 24000)).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      for(var k = 0; k < nodes.length; k++){
+        var n = nodes[k];
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
+        if(n.lit){
+          ctx.fillStyle = 'rgba(196,245,71,.9)';
+          ctx.shadowColor = 'rgba(196,245,71,.8)'; ctx.shadowBlur = 10;
+        } else {
+          ctx.fillStyle = 'rgba(20,58,46,.28)'; ctx.shadowBlur = 0;
+        }
+        ctx.fill(); ctx.shadowBlur = 0;
+        if(!reduced){
+          n.x += n.vx; n.y += n.vy;
+          if(n.x < 0 || n.x > W) n.vx *= -1;
+          if(n.y < 0 || n.y > H) n.vy *= -1;
+        }
+      }
+      if(!reduced) raf = requestAnimationFrame(draw);
+    }
+    seed(); draw();
+    window.addEventListener('resize', function(){ if(raf) cancelAnimationFrame(raf); seed(); draw(); });
+  }
+  constellation('heroMap', 32000, .15);
+
+  // ----- sim library: play opens the real sim in place, close puts it away -----
+  (function(){
+    var cards = document.querySelectorAll('.sim-card');
+    cards.forEach(function(card){
+      var play = card.querySelector('.sim-play');
+      var closeBtn = card.querySelector('.sim-close');
+      var frame = card.querySelector('.sim-stage-frame');
+      if(!play || !frame) return;
+      function shut(c){
+        c.classList.remove('open');
+        var f = c.querySelector('.sim-stage-frame iframe');
+        if(f) f.remove();
+      }
+      play.addEventListener('click', function(){
+        cards.forEach(function(o){ if(o !== card) shut(o); });
+        if(!frame.querySelector('iframe')){
+          var f = document.createElement('iframe');
+          f.src = card.dataset.sim;
+          f.title = card.dataset.title || 'MicroSim';
+          // p5 sims probe motion sensors on boot; without this the browser
+          // logs a permissions-policy violation for every sim opened.
+          f.setAttribute('allow', 'accelerometer *; gyroscope *; magnetometer *');
+          frame.appendChild(f);
+        }
+        card.classList.add('open');
+        card.scrollIntoView({behavior:'smooth', block:'nearest'});
+      });
+      if(closeBtn) closeBtn.addEventListener('click', function(){ shut(card); });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // The creation studio.
+  //
+  // Everything in this flow is real and everything in it is free. The
+  // matcher, the choices and the state machine run entirely in this file;
+  // the "world" Jesse puts on the desk is a REAL MicroSim from the migrated
+  // library (or Dan McCreary's published course sims, which the cards below
+  // already embed), matched to the idea by honest keyword scoring; and the
+  // finish line posts to the same free marketing-lead endpoint the claim
+  // section uses. Nothing here touches /api/generate-sim or any other
+  // endpoint that spends money per call: live generation is authenticated
+  // and budget-gated in the real product, and a public page has neither the
+  // auth nor the budget. The copy says so instead of faking a generation.
+  // ---------------------------------------------------------------------
+  (function(){
+    var form = document.getElementById('studioForm');
+    if(!form) return;
+    var input = document.getElementById('studioInput');
+    var build = document.getElementById('studioBuild');
+    var chips = document.getElementById('studioChips');
+    var stage = document.getElementById('studioStage');
+    var says = document.getElementById('coachSays');
+    var disc = document.getElementById('coachDisc');
+    var trail = document.getElementById('studioTrail');
+    var sec = document.getElementById('desk');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ----- the grid wakes up as the visitor types -----
+    // Lime pulses at the same 44px intersections .grid-bg draws, on a canvas
+    // spanning the whole section, so typing visibly charges the room up.
+    var awake = (function(){
+      var cv = document.getElementById('deskAwake');
+      if(!cv || reduced) return function(){};
+      var ctx = cv.getContext('2d');
+      var sparks = [], raf = null, W = 0, H = 0;
+      function size(){
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = sec.clientWidth; H = sec.clientHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function frame(){
+        ctx.clearRect(0, 0, W, H);
+        var alive = [];
+        for(var i = 0; i < sparks.length; i++){
+          var s = sparks[i];
+          s.t += 0.016;
+          var life = s.t / 1.25;
+          if(life >= 1) continue;
+          alive.push(s);
+          var fade = 1 - life;
+          var r = 1.2 + 4.5 * Math.sin(Math.min(1, life) * Math.PI);
+          if(s.link){
+            ctx.strokeStyle = 'rgba(95,183,121,' + (0.35 * fade).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.link.x, s.link.y); ctx.stroke();
+          }
+          ctx.strokeStyle = 'rgba(196,245,71,' + (0.5 * fade).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(s.x - r - 4, s.y); ctx.lineTo(s.x + r + 4, s.y);
+          ctx.moveTo(s.x, s.y - r - 4); ctx.lineTo(s.x, s.y + r + 4);
+          ctx.stroke();
+          ctx.fillStyle = 'rgba(196,245,71,' + (0.9 * fade).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(s.x, s.y, r, 0, 7); ctx.fill();
+        }
+        sparks = alive;
+        if(sparks.length){ raf = requestAnimationFrame(frame); }
+        else { raf = null; ctx.clearRect(0, 0, W, H); }
+      }
+      window.addEventListener('resize', function(){ if(W) size(); });
+      return function(count, yFrac){
+        // The section grows as the flow advances, so the canvas re-measures
+        // whenever it is about to matter rather than on a schedule.
+        if(W !== sec.clientWidth || H !== sec.clientHeight) size();
+        for(var i = 0; i < count; i++){
+          var s = {
+            x: Math.round((Math.random() * W) / 44) * 44,
+            y: Math.round((H * (yFrac + Math.random() * 0.3)) / 44) * 44,
+            t: 0,
+            link: sparks.length && Math.random() < 0.45 ? sparks[sparks.length - 1] : null
+          };
+          sparks.push(s);
+        }
+        if(sparks.length > 80) sparks.splice(0, sparks.length - 80);
+        if(!raf) raf = requestAnimationFrame(frame);
+      };
+    })();
+
+    // ----- domains: every sim path here is a real file in library/sims/
+    // (checked against the 722 on disk) or a course sim this page already
+    // embeds from Dan McCreary's published repos. -----
+    var DOMAINS = {
+      space: {
+        pick: 'Space', cap: 'planets and gravity',
+        words: ['space', 'black hole', 'planet', 'star', 'rocket', 'moon', 'gravity', 'orbit', 'galaxy', 'universe', 'mars', 'sun', 'asteroid', 'comet', 'solar', 'astronaut', 'alien', 'cosmos', 'saturn', 'jupiter'],
+        levers: [['Gravity', 'how hard the star pulls'], ['Speed', 'how fast worlds fly'], ['Scale', 'how big it all gets']],
+        sim: {src: 'https://dmccreary.github.io/intro-to-physics-course/sims/solar-system/main.html', title: 'Solar System Simulation', meta: 'Orbital motion · Physics'}
+      },
+      sports: {
+        pick: 'Sports', cap: 'arcs and momentum',
+        words: ['sport', 'soccer', 'basketball', 'football', 'baseball', 'tennis', 'golf', 'throw', 'kick', 'jump', 'ball', 'goal', 'dunk', 'hoop', 'ski', 'skate', 'hockey', 'volleyball', 'archery', 'frisbee', 'pitch', 'homerun', 'home run', 'penalty'],
+        levers: [['Angle', 'where the shot leaves from'], ['Power', 'how hard it gets hit'], ['Gravity', 'which planet you play on']],
+        sim: {src: 'library/sims/algebra-1__projectile-motion.html', title: 'Projectile Motion MicroSim', meta: 'Projectile motion · Algebra'}
+      },
+      animals: {
+        pick: 'Creatures', cap: 'evolution and survival',
+        words: ['animal', 'creature', 'dog', 'cat', 'bird', 'fish', 'dinosaur', 'dragon', 'monster', 'predator', 'prey', 'evolve', 'evolution', 'bug', 'insect', 'shark', 'wolf', 'lion', 'tiger', 'snake', 'frog', 'octopus', 'pet', 'zoo', 'jungle', 'beast', 'species'],
+        levers: [['Speed', 'how fast prey can run'], ['Defenses', 'armor, camouflage, spines'], ['Environment', 'where the chase happens']],
+        sim: {src: 'library/sims/biology__natural-selection.html', title: 'Coevolution Arms Race', meta: 'Natural selection · Biology'}
+      },
+      music: {
+        pick: 'Music', cap: 'waves and harmonics',
+        words: ['music', 'song', 'sound', 'beat', 'drum', 'guitar', 'piano', 'wave', 'note', 'rhythm', 'siren', 'voice', 'sing', 'band', 'melody', 'bass', 'synth', 'violin', 'chord'],
+        levers: [['Pitch', 'how high it rings'], ['Layers', 'how many voices stack'], ['Tempo', 'how fast it moves']],
+        sim: {src: 'library/sims/circuits__harmonics.html', title: 'Harmonic Content Explorer', meta: 'Harmonics · Circuits'}
+      },
+      games: {
+        pick: 'Games', cap: 'rules and algorithms',
+        words: ['game', 'maze', 'puzzle', 'level', 'player', 'score', 'algorithm', 'code', 'robot', 'arcade', 'quest', 'battle', 'chess', 'cards', 'videogame', 'video game', 'minecraft', 'race'],
+        levers: [['Speed', 'how fast the race runs'], ['Rules', 'what counts as winning'], ['Players', 'who lines up at the start']],
+        sim: {src: 'library/sims/computer-science__sorting-comparison.html', title: 'Sorting Algorithm Race', meta: 'Algorithms · Computer science'}
+      },
+      mystery: {
+        pick: 'Mysteries', cap: 'clues and cognition',
+        words: ['mystery', 'detective', 'clue', 'solve', 'brain', 'mind', 'trick', 'illusion', 'secret', 'crime', 'spy', 'magic', 'dream', 'memory', 'sherlock', 'riddle', 'puzzle'],
+        levers: [['Clues', 'what evidence surfaces'], ['Suspects', 'who could have done it'], ['Red herrings', 'how hard your brain gets fooled']],
+        sim: {src: 'library/sims/psychology__cognitive-biases.html', title: 'Cognitive Bias Detective', meta: 'Cognitive biases · Psychology'}
+      }
+    };
+    var DOMAIN_KEYS = Object.keys(DOMAINS);
+
+    var idea = '', domainKey = null, lever = null, worldName = '';
+    var experimented = false, talkTimer = null;
+
+    function say(text){
+      says.textContent = text;
+      disc.classList.add('is-talking');
+      clearTimeout(talkTimer);
+      talkTimer = setTimeout(function(){ disc.classList.remove('is-talking'); }, 1600);
+    }
+    // steps: 0 dream, 1 build, 2 experiment, 3 yours, 4 share. trailTo(n)
+    // marks everything before n done and n active; trailTo(5) is all done.
+    function trailTo(n){
+      trail.hidden = false;
+      trail.querySelectorAll('.trail-step').forEach(function(s, i){
+        s.classList.toggle('done', i < n);
+        s.classList.toggle('active', i === n);
+      });
+      trail.querySelectorAll('.trail-link').forEach(function(l, i){
+        l.classList.toggle('done', i < n);
+      });
+    }
+    function clearStage(){ stage.innerHTML = ''; }
+    function el(tag, cls, text){
+      var n = document.createElement(tag);
+      if(cls) n.className = cls;
+      if(text !== undefined) n.textContent = text;
+      return n;
+    }
+
+    function detect(text){
+      var hay = ' ' + text.toLowerCase() + ' ';
+      var bestKey = null, bestScore = 0;
+      DOMAIN_KEYS.forEach(function(k){
+        var score = 0;
+        DOMAINS[k].words.forEach(function(w){ if(hay.indexOf(w) >= 0) score++; });
+        if(score > bestScore){ bestScore = score; bestKey = k; }
+      });
+      return bestKey;
+    }
+
+    function choiceBtn(label, caption, onPick){
+      var b = el('button', 'studio-choice');
+      b.type = 'button';
+      b.appendChild(document.createTextNode(label));
+      b.appendChild(el('small', null, caption));
+      b.addEventListener('click', onPick);
+      return b;
+    }
+
+    function startIdea(text, forcedKey){
+      idea = String(text || '').trim();
+      if(!idea){ input.focus(); return; }
+      input.value = idea;
+      awake(6, 0.08);
+      trailTo(1);
+      clearStage();
+      var key = forcedKey || detect(idea);
+      if(key){ askLevers(key); } else { askClosest(); }
+    }
+
+    // The honest fallback: no keyword hit means the idea is genuinely outside
+    // what the matcher can place, so Jesse says that instead of pretending.
+    function askClosest(){
+      say('That one is out ahead of my library, honestly. Which of these is closest? We will start there and stretch it.');
+      var grid = el('div', 'studio-choices');
+      ['space', 'animals', 'games'].forEach(function(k){
+        grid.appendChild(choiceBtn(DOMAINS[k].pick, DOMAINS[k].cap, function(){
+          awake(4, 0.1);
+          clearStage();
+          askLevers(k);
+        }));
+      });
+      stage.appendChild(grid);
+    }
+
+    function askLevers(key){
+      domainKey = key;
+      say('That sounds fun. What should players be able to change?');
+      var grid = el('div', 'studio-choices');
+      DOMAINS[key].levers.forEach(function(lv){
+        grid.appendChild(choiceBtn(lv[0], lv[1], function(){
+          lever = lv[0];
+          awake(8, 0.1);
+          buildWorld();
+        }));
+      });
+      stage.appendChild(grid);
+    }
+
+    function buildWorld(){
+      var d = DOMAINS[domainKey];
+      clearStage();
+      trailTo(2);
+      say('Noted: players get to change ' + lever.toLowerCase() + '. I cannot conjure a brand new sim on this page, but here is a live one from the library built on the same idea. Poke it and see how your world will feel.');
+
+      var wrap = el('div', 'studio-simwrap');
+      var head = el('div', 'studio-simhead');
+      head.appendChild(el('b', null, d.sim.title));
+      head.appendChild(el('span', null, d.sim.meta));
+      var link = el('a', null, 'Open full screen ↗');
+      link.href = d.sim.src; link.target = '_blank'; link.rel = 'noopener';
+      head.appendChild(link);
+      var frame = document.createElement('iframe');
+      frame.src = d.sim.src;
+      frame.title = d.sim.title;
+      // same motion-sensor grant the card iframes get, for the same p5 reason
+      frame.setAttribute('allow', 'accelerometer *; gyroscope *; magnetometer *');
+      wrap.appendChild(head);
+      wrap.appendChild(frame);
+      wrap.appendChild(el('div', 'studio-honest',
+        'This is a real MicroSim from the library of 722, not something generated on the spot. On the full Desk, Jesse helps you build your own from a blank canvas.'));
+      stage.appendChild(wrap);
+
+      // Experiment counts when the visitor actually reaches into the sim.
+      function touched(){
+        if(experimented) return;
+        experimented = true;
+        trailTo(3);
+        awake(5, 0.2);
+      }
+      wrap.addEventListener('pointerenter', touched);
+      wrap.addEventListener('touchstart', touched, {passive: true});
+
+      var row = el('form', 'studio-row');
+      var nameIn = document.createElement('input');
+      nameIn.className = 'studio-input';
+      nameIn.type = 'text';
+      nameIn.maxLength = 60;
+      nameIn.placeholder = 'Then name your world. "Gravity Grand Prix"?';
+      nameIn.setAttribute('aria-label', 'Name your world');
+      var nameBtn = el('button', 'btn primary', 'Make it mine');
+      nameBtn.type = 'submit';
+      row.appendChild(nameIn);
+      row.appendChild(nameBtn);
+      row.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(!nameIn.value.trim()){ nameIn.focus(); return; }
+        worldName = nameIn.value.trim();
+        finish(row);
+      });
+      stage.appendChild(row);
+      nameIn.focus();
+    }
+
+    function finish(nameRow){
+      var d = DOMAINS[domainKey];
+      experimented = true;
+      trailTo(4);
+      awake(12, 0.15);
+      say(worldName + '. I like it. Last step: send it home, and we will help you build it for real.');
+      nameRow.remove();
+
+      var done = el('div', 'studio-done');
+      done.appendChild(el('h3', null, 'You built a world.'));
+      var plaque = el('div', 'world-plaque');
+      plaque.appendChild(el('i', null, 'World'));
+      plaque.appendChild(document.createTextNode(worldName));
+      done.appendChild(plaque);
+      var fine = el('p', 'studio-fine');
+      fine.appendChild(document.createTextNode('Dreamed as "' + idea + '", players change ' + lever.toLowerCase() + ', running on ' + d.sim.title + '. Share the sim with someone: '));
+      var shareLink = el('a', null, 'open it full screen');
+      shareLink.href = d.sim.src; shareLink.target = '_blank'; shareLink.rel = 'noopener';
+      shareLink.style.color = 'var(--leaf)';
+      shareLink.style.textDecoration = 'underline';
+      fine.appendChild(shareLink);
+      fine.appendChild(document.createTextNode(' and send the link.'));
+      done.appendChild(fine);
+
+      var row = el('form', 'studio-row');
+      var mail = document.createElement('input');
+      mail.className = 'studio-input';
+      mail.type = 'email';
+      mail.placeholder = 'you@school.edu';
+      mail.setAttribute('aria-label', 'Email to save your world and claim a desk');
+      var send = el('button', 'btn primary', 'Save it and claim my desk');
+      send.type = 'submit';
+      row.appendChild(mail);
+      row.appendChild(send);
+      done.appendChild(row);
+      done.appendChild(el('p', 'studio-fine',
+        'Your idea rides along with your seat request to the same founders the claim form reaches. No list, no reselling.'));
+      var msg = el('div', 'claim-msg');
+      msg.hidden = true;
+      done.appendChild(msg);
+      var again = el('button', 'studio-reset', 'Start another world');
+      again.type = 'button';
+      again.addEventListener('click', reset);
+      done.appendChild(again);
+      stage.appendChild(done);
+
+      row.addEventListener('submit', function(e){
+        e.preventDefault();
+        var email = mail.value.trim();
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+          msg.className = 'claim-msg bad';
+          msg.textContent = 'That email does not look right. Nothing was sent.';
+          msg.hidden = false;
+          mail.focus();
+          return;
+        }
+        send.disabled = true;
+        send.textContent = 'Sending...';
+        fetch('https://mindcraft-webhook.vercel.app/api/marketing-lead', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            email: email,
+            role: 'studio_builder',
+            source: 'joinmindcraft_desk_studio',
+            note: 'Studio world "' + worldName + '". Idea: ' + idea + '. Players change: ' + lever + '. Library sim matched: ' + d.sim.title + '.',
+            page: location.pathname + '#desk',
+            worldName: worldName,
+            idea: idea,
+            lever: lever,
+            simTitle: d.sim.title,
+            simUrl: new URL(d.sim.src, location.href).href
+          })
+        }).then(function(res){
+          return res.json().catch(function(){ return {}; }).then(function(data){
+            return {ok: res.ok && data && data.ok, status: res.status, data: data};
+          });
+        }).then(function(r){
+          if(r.ok){
+            trailTo(5);
+            awake(14, 0.1);
+            say('Sent. A founder reads every one of these personally. Go show ' + worldName + ' to someone who will love it.');
+            msg.className = 'claim-msg ok';
+            msg.textContent = 'Saved. ' + worldName + ' and your email went straight to the founders, and your desk is in the queue.';
+          } else {
+            msg.className = 'claim-msg bad';
+            msg.textContent = (r.data && r.data.error ? r.data.error : 'The signup service answered with ' + r.status + '.') +
+              ' Nothing was saved. founders@joinmindcraft.com works too.';
+          }
+          msg.hidden = false;
+        }).catch(function(err){
+          msg.className = 'claim-msg bad';
+          msg.textContent = 'Could not reach the signup service: ' + String(err && err.message || err) +
+            '. Nothing was saved. founders@joinmindcraft.com works too.';
+          msg.hidden = false;
+        }).then(function(){
+          send.disabled = false;
+          send.textContent = 'Save it and claim my desk';
+        });
+      });
+    }
+
+    function reset(){
+      idea = ''; domainKey = null; lever = null; worldName = ''; experimented = false;
+      input.value = '';
+      build.classList.remove('is-lit');
+      clearStage();
+      trailTo(-1);
+      trail.hidden = true;
+      say('What would you like to bring to life?');
+      input.focus();
+    }
+
+    // typing wakes the grid, lights the first step and charges the CTA
+    input.addEventListener('input', function(){
+      var len = input.value.trim().length;
+      if(len){ trailTo(0); awake(2, 0.05); }
+      build.classList.toggle('is-lit', len >= 3);
+    });
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      startIdea(input.value, null);
+    });
+    chips.querySelectorAll('.studio-chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        if(chip.dataset.surprise){
+          var k = DOMAIN_KEYS[Math.floor(Math.random() * DOMAIN_KEYS.length)];
+          var ideas = {
+            space: 'a comet with a tail I can steer',
+            sports: 'the highest dunk gravity allows',
+            animals: 'an octopus that outsmarts every trap',
+            music: 'a bass drop you can see',
+            games: 'a race where the slowest strategy wins',
+            mystery: 'why my own eyes miss what is right there'
+          };
+          startIdea(ideas[k], k);
+        } else {
+          startIdea(chip.dataset.idea, chip.dataset.domain);
+        }
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // Miniature living thumbnails on the six curiosity cards. Hand-drawn
+  // canvas sketches in the site's own palette, animated on hover (and while
+  // visible on touch screens, which have no hover), frozen to a single
+  // painted frame under prefers-reduced-motion. Decoration for the REAL sim
+  // behind each card, not a claim of being that sim.
+  // ---------------------------------------------------------------------
+  (function(){
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var LIME = '#c4f547', LEAF = '#5fb779', GOLD = '#f5d348', RED = '#e0394a';
+
+    // tiny deterministic PRNG so static frames do not reshuffle on resize
+    function rng(seed){
+      var s = seed >>> 0;
+      return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+    }
+
+    var DRAW = {
+      universe: function(ctx, W, H, st){
+        if(!st.stars){
+          var r = rng(11);
+          st.stars = [];
+          for(var i = 0; i < 26; i++) st.stars.push({x: r() * W, y: r() * H, s: 0.6 + r() * 1.2, p: r() * 6});
+          st.planets = [
+            {rx: 0.17, sp: 0.9, ph: 0.4, c: LEAF, r: 3.4},
+            {rx: 0.28, sp: 0.55, ph: 2.3, c: LIME, r: 4.6},
+            {rx: 0.4, sp: 0.34, ph: 4.6, c: GOLD, r: 3.6}
+          ];
+        }
+        var cx = W / 2, cy = H / 2;
+        st.stars.forEach(function(s){
+          ctx.fillStyle = 'rgba(245,245,244,' + (0.25 + 0.3 * Math.abs(Math.sin(st.t * 1.6 + s.p))).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 7); ctx.fill();
+        });
+        ctx.fillStyle = GOLD;
+        ctx.shadowColor = GOLD; ctx.shadowBlur = 18;
+        ctx.beginPath(); ctx.arc(cx, cy, 8, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+        st.planets.forEach(function(p){
+          var rx = p.rx * W, ry = rx * 0.42;
+          ctx.strokeStyle = 'rgba(245,245,244,.14)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.stroke();
+          var a = st.t * p.sp + p.ph;
+          ctx.fillStyle = p.c;
+          ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, p.r, 0, 7); ctx.fill();
+        });
+      },
+      creature: function(ctx, W, H, st){
+        if(!st.prey){
+          var r = rng(23);
+          st.prey = [];
+          for(var i = 0; i < 5; i++) st.prey.push({p: r() * 6, sp: 0.6 + r() * 0.8, ry: 0.2 + r() * 0.6});
+        }
+        var cx = W * 0.34, cy = H * 0.52, R = H * 0.27;
+        var grad = ctx.createRadialGradient(cx, cy, 2, cx, cy, R * 1.4);
+        grad.addColorStop(0, LIME); grad.addColorStop(1, LEAF);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        for(var k = 0; k <= 26; k++){
+          var ang = (k / 26) * Math.PI * 2;
+          var rr = R * (1 + 0.13 * Math.sin(3 * ang + st.t * 2.1) + 0.07 * Math.sin(5 * ang - st.t * 3.2));
+          var x = cx + Math.cos(ang) * rr, y = cy + Math.sin(ang) * rr;
+          if(k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath(); ctx.fill();
+        // eyes track the nearest fleeing dot
+        var look = Math.sin(st.t * 0.8) * 3;
+        [[-0.28, -0.12], [0.2, -0.16]].forEach(function(e){
+          ctx.fillStyle = '#fff';
+          ctx.beginPath(); ctx.arc(cx + e[0] * R * 2, cy + e[1] * R * 2, 5.5, 0, 7); ctx.fill();
+          ctx.fillStyle = '#0f2e1d';
+          ctx.beginPath(); ctx.arc(cx + e[0] * R * 2 + look, cy + e[1] * R * 2, 2.6, 0, 7); ctx.fill();
+        });
+        st.prey.forEach(function(p, i){
+          var x = W * 0.68 + Math.sin(st.t * p.sp + p.p) * W * 0.16;
+          var y = H * (0.25 + p.ry * 0.5) + Math.cos(st.t * p.sp * 1.3 + p.p) * H * 0.08;
+          ctx.fillStyle = i === 0 ? RED : GOLD;
+          ctx.beginPath(); ctx.arc(x, y, i === 0 ? 4 : 2.6, 0, 7); ctx.fill();
+        });
+      },
+      game: function(ctx, W, H, st){
+        if(!st.arr){
+          var r = rng(7);
+          st.arr = [];
+          for(var i = 0; i < 14; i++) st.arr.push(i + 1);
+          for(var j = st.arr.length - 1; j > 0; j--){
+            var k = Math.floor(r() * (j + 1));
+            var tmp = st.arr[j]; st.arr[j] = st.arr[k]; st.arr[k] = tmp;
+          }
+          st.cool = 0; st.hot = -1;
+        }
+        st.cool -= 1;
+        if(st.cool <= 0){
+          st.cool = 7; st.hot = -1;
+          var swapped = false;
+          for(var a = 0; a < st.arr.length - 1; a++){
+            if(st.arr[a] > st.arr[a + 1]){
+              var t2 = st.arr[a]; st.arr[a] = st.arr[a + 1]; st.arr[a + 1] = t2;
+              st.hot = a; swapped = true;
+              break;
+            }
+          }
+          if(!swapped){
+            // sorted: hold the finished race on screen a beat, then rerun it
+            st.done = (st.done || 0) + 1;
+            if(st.done > 6){ st.arr = null; st.done = 0; return; }
+          }
+        }
+        var n = 14, gap = 4, bw = (W - gap * (n + 1)) / n;
+        for(var b = 0; b < n; b++){
+          var v = st.arr[b] / n;
+          var bh = v * (H - 26) + 6;
+          ctx.fillStyle = (b === st.hot || b === st.hot + 1) ? RED : (v > 0.66 ? GOLD : v > 0.33 ? LIME : LEAF);
+          ctx.fillRect(gap + b * (bw + gap), H - 8 - bh, bw, bh);
+        }
+      },
+      sport: function(ctx, W, H, st){
+        if(st.u === undefined){ st.u = 0; st.hmax = H * 0.62; st.trail = []; }
+        ctx.strokeStyle = 'rgba(245,245,244,.25)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, H - 12); ctx.lineTo(W, H - 12); ctx.stroke();
+        // the goal
+        ctx.strokeStyle = GOLD; ctx.lineWidth = 2;
+        ctx.strokeRect(W - 26, H - 44, 16, 32);
+        st.u += 0.013;
+        if(st.u > 1.25){ st.u = 0; st.hmax = H * (0.35 + Math.random() * 0.35); st.trail = []; }
+        var u = Math.min(st.u, 1);
+        var x = W * 0.08 + u * W * 0.78;
+        var y = (H - 16) - 4 * st.hmax * u * (1 - u);
+        st.trail.push({x: x, y: y});
+        if(st.trail.length > 16) st.trail.shift();
+        st.trail.forEach(function(p, i){
+          ctx.fillStyle = 'rgba(196,245,71,' + (0.08 + 0.4 * (i / st.trail.length)).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, 7); ctx.fill();
+        });
+        ctx.fillStyle = LIME;
+        ctx.shadowColor = LIME; ctx.shadowBlur = 10;
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+      },
+      music: function(ctx, W, H, st){
+        var mid = H * 0.42;
+        [[1, LEAF, 0.5], [0, LIME, 1]].forEach(function(layer){
+          ctx.strokeStyle = layer[1];
+          ctx.globalAlpha = layer[2];
+          ctx.lineWidth = layer[0] ? 1.4 : 2.2;
+          ctx.beginPath();
+          for(var x = 0; x <= W; x += 3){
+            var ph = st.t * (1.6 + layer[0]);
+            var y = mid +
+              Math.sin((x / W) * 12.6 + ph) * H * 0.1 +
+              Math.sin((x / W) * 25.1 - ph * 1.4) * H * 0.05 +
+              Math.sin((x / W) * 37.7 + ph * 0.7) * H * 0.028;
+            if(x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+        var n = 14, gap = 5, bw = (W - gap * (n + 1)) / n;
+        for(var i = 0; i < n; i++){
+          var bh = (0.15 + 0.85 * Math.abs(Math.sin(st.t * 2.2 + i * 0.74))) * H * 0.2;
+          ctx.fillStyle = i % 3 === 0 ? GOLD : 'rgba(196,245,71,.75)';
+          ctx.fillRect(gap + i * (bw + gap), H - 8 - bh, bw, bh);
+        }
+      },
+      mystery: function(ctx, W, H, st){
+        if(!st.dots){
+          var r = rng(41);
+          st.dots = [];
+          for(var i = 0; i < 24; i++) st.dots.push({x: 10 + r() * (W - 20), y: 10 + r() * (H - 20), clue: i % 5 === 0, red: i === 7});
+        }
+        var lx = W * (0.5 + 0.34 * Math.sin(st.t * 0.7));
+        var ly = H * (0.5 + 0.26 * Math.sin(st.t * 1.13 + 1.2));
+        var LR = H * 0.34;
+        var clues = [];
+        st.dots.forEach(function(d){
+          var near = Math.hypot(d.x - lx, d.y - ly) < LR;
+          if(d.clue && near) clues.push(d);
+          if(near && d.red){ ctx.fillStyle = RED; }
+          else if(near && d.clue){ ctx.fillStyle = GOLD; }
+          else { ctx.fillStyle = 'rgba(245,245,244,' + (near ? 0.55 : 0.16) + ')'; }
+          ctx.beginPath(); ctx.arc(d.x, d.y, near && (d.clue || d.red) ? 4 : 2, 0, 7); ctx.fill();
+        });
+        if(clues.length > 1){
+          ctx.strokeStyle = 'rgba(245,211,72,.5)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          clues.forEach(function(c, i){ if(i === 0) ctx.moveTo(c.x, c.y); else ctx.lineTo(c.x, c.y); });
+          ctx.stroke();
+        }
+        ctx.strokeStyle = 'rgba(245,245,244,.7)';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(lx, ly, LR, 0, 7); ctx.stroke();
+        var ha = Math.PI * 0.78;
+        ctx.beginPath();
+        ctx.moveTo(lx + Math.cos(ha) * LR, ly + Math.sin(ha) * LR);
+        ctx.lineTo(lx + Math.cos(ha) * (LR + 12), ly + Math.sin(ha) * (LR + 12));
+        ctx.stroke();
+      }
+    };
+
+    var hoverable = window.matchMedia('(hover: hover)').matches;
+    document.querySelectorAll('.cur-thumb canvas[data-anim]').forEach(function(cv){
+      var fn = DRAW[cv.dataset.anim];
+      if(!fn) return;
+      var ctx = cv.getContext('2d');
+      var st = {t: Math.random() * 40};
+      var raf = null, W = 0, H = 0;
+      function size(){
+        var r = cv.getBoundingClientRect();
+        if(!r.width) return false;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = r.width; H = r.height;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return true;
+      }
+      function paint(){ ctx.clearRect(0, 0, W, H); fn(ctx, W, H, st); }
+      function loop(){ st.t += 0.016; paint(); raf = requestAnimationFrame(loop); }
+      function start(){ if(reduced || raf) return; if(!W && !size()) return; raf = requestAnimationFrame(loop); }
+      function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
+      var card = cv.closest('.sim-card');
+      whenNear(card, function(){ if(size()) paint(); });
+      if(hoverable){
+        card.addEventListener('pointerenter', start);
+        card.addEventListener('pointerleave', stop);
+        card.addEventListener('focusin', start);
+        card.addEventListener('focusout', stop);
+      } else if(!reduced && 'IntersectionObserver' in window){
+        // no hover exists on this device, so the worlds move while on screen
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(en){ if(en.isIntersecting) start(); else stop(); });
+        }, {threshold: 0.4});
+        io.observe(card);
+      }
+      window.addEventListener('resize', function(){ if(W && size()) paint(); });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // Shared: concept id to static filename. Must stay identical to slugFor()
+  // in scripts/export_public_library.mjs, which named the files on disk. The
+  // ids are subject-prefixed ("biology::natural-selection") and a double colon
+  // is a bad idea in a path, so it became a double underscore.
+  // ---------------------------------------------------------------------
+  function conceptSlug(id){ return String(id).replace(/::/g, '__'); }
+
+  // Fetch a static JSON file, and refuse anything that is not really JSON.
+  // serve-landing.mjs answers a missing path with index.html and a 200, and
+  // Firebase Hosting can do the same through a rewrite, so res.ok is not
+  // evidence that the file exists. Parsing is.
+  function getJson(url){
+    return fetch(url).then(function(r){
+      if(!r.ok) throw new Error(url + ' returned ' + r.status);
+      return r.text();
+    }).then(function(t){
+      try { return JSON.parse(t); }
+      catch(e){ throw new Error(url + ' is not there (the server answered with a page, not JSON)'); }
+    });
+  }
+
+  // Run work the first time an element is close to the viewport. The ZPD
+  // graph and the search index are both dead weight for a visitor who never
+  // scrolls this far.
+  function whenNear(el, fn){
+    if(!el) return;
+    if(!('IntersectionObserver' in window)){ fn(); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ io.disconnect(); fn(); } });
+    }, {rootMargin:'300px 0px'});
+    io.observe(el);
+  }
+
+  // ---------------------------------------------------------------------
+  // The frontier: a native Zone of Proximal Development explorer.
+  //
+  // This used to be an iframe around sims/zpd/index.html, an open p5 sketch
+  // from the Learning Graphs textbook. It taught the right idea but arrived
+  // with its own toolbar, its own type and its own dark chrome, so it read as
+  // somebody else's widget parked in the middle of the page. This draws the
+  // same idea in the page's own language, in plain SVG, over REAL prerequisite
+  // edges exported from the live library into library/zpd.json.
+  //
+  // The three rings are computed, never authored:
+  //   ring 1, comfort      the center concept's real prerequisites. Behind you.
+  //   ring 2, proximal     what the center really unlocks. One step out, and
+  //                        the only ring you are allowed to step onto.
+  //   ring 3, frustration  what those unlock in turn. Two steps out, gated
+  //                        behind a ring-2 concept you have not taken.
+  //
+  // Stepping onto a ring-2 concept re-centers the whole diagram on it, which
+  // is the actual point: the zone is not a fixed place, it moves with you.
+  // ---------------------------------------------------------------------
+  (function(){
+    var svg = document.getElementById('zpdSvg');
+    if(!svg) return;
+    var ringsG = document.getElementById('zpdRings');
+    var linksG = document.getElementById('zpdLinks');
+    var nodesG = document.getElementById('zpdNodes');
+    var ghostsG = document.getElementById('zpdGhosts');
+    var panG   = document.getElementById('zpdPan');
+    var seedsBox = document.getElementById('zpdSeeds');
+    var elZone = document.getElementById('zpdZone');
+    var elZoneName = document.getElementById('zpdZoneName');
+    var elName = document.getElementById('zpdName');
+    var elSub  = document.getElementById('zpdSub');
+    var elSay  = document.getElementById('zpdSay');
+    var elAct  = document.getElementById('zpdAct');
+    var elStats = document.getElementById('zpdStats');
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var CX = 380, CY = 310;
+    // Ring radii. Chosen so ring 3 plus its label still clears the 620-unit
+    // viewBox, and so the gaps between rings read as three distinct bands
+    // rather than a gradient.
+    var R = [0, 105, 190, 262];
+    var MAX = [1, 6, 8, 10];
+    var ZONE_NAME = ['You are here', 'Comfort zone', 'Proximal zone', 'Frustration zone'];
+
+    var data = null, centerId = null, layout = [], pickedId = null, gates = {};
+    var tx = 0, ty = 0;
+
+    function el(tag, attrs){
+      var n = document.createElementNS(NS, tag);
+      for(var k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+      return n;
+    }
+    function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+    function clip(s, n){ return s.length > n ? s.slice(0, n - 1).replace(/\s+$/, '') + '…' : s; }
+    function node(id){ return data && data.nodes[id]; }
+
+    function drawRings(){
+      clear(ringsG);
+      for(var z = 1; z <= 3; z++){
+        ringsG.appendChild(el('circle', {cx:CX, cy:CY, r:R[z], class:'zpd-ring r' + z}));
+      }
+    }
+
+    // Places one ring's concepts around its circle. The per-ring angular
+    // offset keeps ring 2 and ring 3 from lining up radially and reading as
+    // one thick spoke.
+    function place(ids, zone){
+      var out = [], n = ids.length;
+      var offset = [-Math.PI/2, -Math.PI/2 + 0.35, -Math.PI/2, -Math.PI/2 + 0.28][zone];
+      for(var i = 0; i < n; i++){
+        var a = offset + (i / n) * Math.PI * 2;
+        out.push({id:ids[i], zone:zone, x:CX + Math.cos(a) * R[zone], y:CY + Math.sin(a) * R[zone]});
+      }
+      return out;
+    }
+
+    function rebuild(id){
+      var c = node(id);
+      if(!c) return;
+      centerId = id;
+      pickedId = id;
+      gates = {};
+
+      var ring1 = c.prereqs.filter(node).slice(0, MAX[1]);
+      var ring2 = c.unlocks.filter(node).slice(0, MAX[2]);
+      var taken = {};
+      taken[id] = 1;
+      ring1.concat(ring2).forEach(function(x){ taken[x] = 1; });
+
+      // Ring 3 is genuinely derived: whatever the proximal concepts unlock,
+      // minus anything already on screen. `gates` records WHICH proximal
+      // concept stands in front of each one, so the side panel can name the
+      // real gate instead of saying a vague "not yet".
+      var ring3 = [];
+      ring2.forEach(function(mid){
+        (node(mid).unlocks || []).forEach(function(far){
+          if(taken[far] || !node(far) || ring3.length >= MAX[3]) return;
+          taken[far] = 1;
+          gates[far] = mid;
+          ring3.push(far);
+        });
+      });
+
+      layout = [{id:id, zone:0, x:CX, y:CY}]
+        .concat(place(ring1, 1), place(ring2, 2), place(ring3, 3));
+
+      // The roster, straight off the rings that were just built. The counts on
+      // the right are the ones the picture is actually drawing, so the two can
+      // never disagree.
+      elStats.innerHTML = '';
+      [[1, ring1.length, 'you already passed'],
+       [2, ring2.length, 'you can take right now'],
+       [3, ring3.length, 'still gated behind those']].forEach(function(row){
+        var d = document.createElement('div');
+        d.className = 'z' + row[0];
+        var dt = document.createElement('dt');
+        dt.textContent = ZONE_NAME[row[0]].replace(' zone', '');
+        var dd = document.createElement('dd');
+        dd.innerHTML = '<b></b>';
+        dd.querySelector('b').textContent = row[1];
+        dd.appendChild(document.createTextNode('concept' + (row[1] === 1 ? ' ' : 's ') + row[2]));
+        d.appendChild(dt); d.appendChild(dd);
+        elStats.appendChild(d);
+      });
+
+      render();
+      select(id);
+    }
+
+    function render(){
+      // Below about 560 real pixels the viewBox is scaled down hard enough
+      // that a 10.5 unit label is unreadable, so the type goes up and the
+      // labels get shorter to keep the rings from colliding.
+      var narrow = svg.getBoundingClientRect().width < 560;
+      svg.classList.toggle('narrow', narrow);
+      var CLIP = narrow ? 13 : 22;
+      clear(linksG); clear(nodesG);
+      var pos = {};
+      layout.forEach(function(p){ pos[p.id] = p; });
+
+      // No connecting lines (2026-09-02 ask: dots read cleaner on their own).
+      // linksG stays in the DOM (cleared, empty) since the recenter
+      // animation below still queries it every frame; an empty group is a
+      // harmless no-op there rather than something that needs its own guard.
+
+      layout.forEach(function(p){
+        var n = node(p.id);
+        var open = p.zone === 0 || (p.zone < 3 && n.full);
+        var g = el('g', {
+          class:'zpd-node z' + p.zone,
+          tabindex:'0', role:'button', 'data-id':p.id, 'data-open':open ? 'true' : 'false'
+        });
+        setPos(g, p.x, p.y);
+        // Invisible hit target first. A frustration-zone dot is 12 units
+        // across, which is an unfair thing to ask anyone to hit, and an SVG
+        // <g> has no surface of its own so a near miss falls straight through
+        // to the background. Concepts are at least 149 units apart at the
+        // tightest ring, so neither size below can steal a neighbour's click.
+        // On a narrow screen the whole viewBox is squeezed into under 560
+        // real pixels, so 44 units land around 16 on-screen pixels, well
+        // under a fingertip; 76 units gets a phone tap target back to about
+        // 28 pixels without moving a single visible dot.
+        var hit = narrow ? 76 : 44;
+        g.appendChild(el('rect', {x:-hit/2, y:-hit/2, width:hit, height:hit, class:'zpd-hit'}));
+        // Center marks itself with the mascot instead of a plain dot + "YOU"
+        // label, everywhere else still gets a dot sized by zone.
+        if(p.zone === 0){
+          g.appendChild(el('image', {
+            href:'img/raccoon-logo.png', x:-23, y:-23, width:46, height:46,
+            class:'zpd-you-logo', 'preserveAspectRatio':'xMidYMid meet'
+          }));
+        } else {
+          g.appendChild(el('circle', {r: p.zone === 3 ? 6 : 9}));
+        }
+        var label = el('text', {y: p.zone === 0 ? 40 : 24});
+        label.textContent = clip(n.name, p.zone === 0 ? (narrow ? 20 : 30) : CLIP);
+        g.appendChild(label);
+        var t = el('title');
+        t.textContent = n.name + ' (' + (data.subjects[n.subject] || n.subject) + ')';
+        g.appendChild(t);
+        nodesG.appendChild(g);
+      });
+      mark();
+    }
+
+    function mark(){
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        g.classList.toggle('is-picked', g.getAttribute('data-id') === pickedId);
+      });
+    }
+
+    function select(id){
+      var n = node(id);
+      if(!n) return;
+      pickedId = id;
+      mark();
+      var entry = null;
+      layout.forEach(function(p){ if(p.id === id) entry = p; });
+      var zone = entry ? entry.zone : 0;
+      var c = node(centerId);
+
+      elZone.className = 'zpd-zone z' + zone;
+      elZoneName.textContent = ZONE_NAME[zone];
+      elName.textContent = n.name;
+      elSub.textContent = (data.subjects[n.subject] || n.subject) + '  ·  ' +
+        n.prereqCount + ' prerequisite' + (n.prereqCount === 1 ? '' : 's') + ', unlocks ' + n.unlockCount;
+
+      if(zone === 0){
+        elSay.innerHTML = 'Everything inside the first ring is behind you. Everything on the dashed ring is <em>one real prerequisite edge away</em>, which is the only place learning actually happens.';
+        elAct.disabled = true;
+        elAct.textContent = 'You are standing here';
+      } else if(zone === 1){
+        elSay.innerHTML = '<em>' + esc(n.name) + '</em> is a prerequisite of ' + esc(c.name) + '. It is already behind you, which is exactly why the next step felt possible.';
+        elAct.disabled = !n.full;
+        elAct.textContent = n.full ? 'Go back to this one' : 'Beyond this slice of the graph';
+      } else if(zone === 2){
+        elSay.innerHTML = '<em>' + esc(c.name) + '</em> is the only thing this needs, and you have it. This is the next real step, not a guess.';
+        elAct.disabled = !n.full;
+        elAct.textContent = n.full ? 'Step onto this concept' : 'Beyond this slice of the graph';
+      } else {
+        var gate = node(gates[id]);
+        elSay.innerHTML = 'Two steps out. This sits behind <em>' + esc(gate ? gate.name : 'a concept you have not taken') + '</em>, so reaching for it now is the part that makes people quit.';
+        elAct.disabled = true;
+        elAct.textContent = gate ? 'Locked behind ' + clip(gate.name, 24) : 'Out of reach';
+      }
+    }
+
+    function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+    // -------------------------------------------------------------------
+    // Moving the graph, rather than swapping it.
+    //
+    // Recentering used to be an instant repaint: clear the svg, redraw the
+    // same three rings around a different middle. Correct, and completely
+    // static, so nothing about it said "you moved". Now every concept that
+    // survives the move slides from where it stood to where it now belongs,
+    // the concept you stepped onto travels into the middle, whatever it
+    // opens up grows outward from it, and the concepts it leaves behind fade
+    // out from where they were.
+    //
+    // Interpolated per frame instead of through a CSS transition on purpose:
+    // a second click, or a drag, has to be able to take over from wherever
+    // the graph actually is at that instant, and a CSS transition will not
+    // hand that position back mid-flight.
+    // -------------------------------------------------------------------
+    var MOVE_MS = 760;
+    var moveRaf = null, moveFinish = null;
+
+    function reduced(){ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+    // The single writer of a node's position, so the DOM always carries the
+    // numbers the next move needs to read back.
+    function setPos(g, x, y){
+      g.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')');
+      g.setAttribute('data-x', x.toFixed(1));
+      g.setAttribute('data-y', y.toFixed(1));
+    }
+    function livePositions(){
+      var out = {};
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        out[g.getAttribute('data-id')] = {
+          x: parseFloat(g.getAttribute('data-x')),
+          y: parseFloat(g.getAttribute('data-y'))
+        };
+      });
+      return out;
+    }
+    function stretchLinks(pos){
+      linksG.querySelectorAll('line').forEach(function(l){
+        var a = pos[l.getAttribute('data-a')], b = pos[l.getAttribute('data-b')];
+        if(!a || !b) return;
+        l.setAttribute('x1', a.x.toFixed(1)); l.setAttribute('y1', a.y.toFixed(1));
+        l.setAttribute('x2', b.x.toFixed(1)); l.setAttribute('y2', b.y.toFixed(1));
+      });
+    }
+    // Jump whatever is in flight straight to its end state. Called before a
+    // new move and before a drag, so neither ever fights the animation.
+    function settleMove(){
+      if(moveRaf){ cancelAnimationFrame(moveRaf); moveRaf = null; }
+      if(moveFinish){ var f = moveFinish; moveFinish = null; f(); }
+    }
+
+    /**
+     * from    where each concept stood a moment ago, by id
+     * origin  where a concept with no previous position starts, which is the
+     *         spot the concept you clicked was standing on, so the new ring
+     *         reads as opening out of your own step rather than appearing
+     * panFrom the drag offset to ease back to zero over the same beat
+     * ghosts  the concepts this move drops, to fade out where they stood
+     */
+    function animateMove(from, origin, panFrom, ghosts){
+      var nodes = [];
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        var id = g.getAttribute('data-id'), prev = from[id];
+        nodes.push({
+          g:g, id:id, fresh:!prev,
+          fx: prev ? prev.x : origin.x, fy: prev ? prev.y : origin.y,
+          tx: parseFloat(g.getAttribute('data-x')), ty: parseFloat(g.getAttribute('data-y'))
+        });
+      });
+
+      function finish(){
+        var pos = {};
+        nodes.forEach(function(n){ setPos(n.g, n.tx, n.ty); n.g.style.opacity = ''; pos[n.id] = {x:n.tx, y:n.ty}; });
+        stretchLinks(pos);
+        panG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ',' + ty.toFixed(1) + ')');
+        ghosts.forEach(function(h){ if(h.g.parentNode) h.g.parentNode.removeChild(h.g); });
+        svg.classList.remove('moving');
+      }
+
+      if(reduced()){ finish(); return; }
+
+      svg.classList.add('moving');
+      nodes.forEach(function(n){
+        setPos(n.g, n.fx, n.fy);
+        if(n.fresh) n.g.style.opacity = '0';
+      });
+      ghosts.forEach(function(h){ setPos(h.g, h.x, h.y); });
+      moveFinish = finish;
+
+      var t0 = 0;
+      function frame(ts){
+        if(!t0) t0 = ts;
+        var t = Math.min(1, (ts - t0) / MOVE_MS);
+        var e = 1 - Math.pow(1 - t, 3);   // ease out, the same settle var(--ease) gives CSS
+        var pos = {};
+        nodes.forEach(function(n){
+          var x = n.fx + (n.tx - n.fx) * e, y = n.fy + (n.ty - n.fy) * e;
+          setPos(n.g, x, y);
+          pos[n.id] = {x:x, y:y};
+          // A new concept holds off until the move is clearly underway, so it
+          // reads as being uncovered by the step rather than crossfaded in.
+          if(n.fresh) n.g.style.opacity = Math.max(0, Math.min(1, (e - 0.2) / 0.5)).toFixed(3);
+        });
+        stretchLinks(pos);
+        panG.setAttribute('transform',
+          'translate(' + (panFrom.x * (1 - e)).toFixed(1) + ',' + (panFrom.y * (1 - e)).toFixed(1) + ')');
+        ghosts.forEach(function(h){
+          setPos(h.g, h.x + h.dx * e, h.y + h.dy * e);
+          h.g.style.opacity = (1 - e).toFixed(3);
+        });
+        if(t < 1){ moveRaf = requestAnimationFrame(frame); return; }
+        moveRaf = null; moveFinish = null;
+        finish();
+      }
+      moveRaf = requestAnimationFrame(frame);
+    }
+
+    // Recenter on a concept, with the travel shown.
+    function goTo(id){
+      if(!node(id)) return;
+      settleMove();
+      var from = livePositions();
+      var origin = from[id] || {x:CX, y:CY};
+      var panFrom = {x:tx, y:ty};
+
+      var wasOnScreen = {};
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){ wasOnScreen[g.getAttribute('data-id')] = g; });
+
+      tx = 0; ty = 0;
+      rebuild(id);
+
+      // Anything the new middle no longer has room for leaves as a ghost:
+      // a copy of the dot it was, drifting a little further out as it fades.
+      clear(ghostsG);
+      var kept = {};
+      layout.forEach(function(p){ kept[p.id] = 1; });
+      var ghosts = [];
+      Object.keys(wasOnScreen).forEach(function(gid){
+        if(kept[gid] || !from[gid]) return;
+        var c = wasOnScreen[gid].cloneNode(true);
+        c.removeAttribute('tabindex');
+        c.removeAttribute('role');
+        var p = from[gid], a = Math.atan2(p.y - CY, p.x - CX);
+        ghosts.push({g:c, x:p.x, y:p.y, dx:Math.cos(a) * 26, dy:Math.sin(a) * 26});
+        ghostsG.appendChild(c);
+      });
+
+      animateMove(from, origin, panFrom, ghosts);
+      seedsBox.querySelectorAll('.zpd-seed').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === id));
+      });
+    }
+
+    function step(){
+      var n = node(pickedId);
+      if(!n || !n.full || pickedId === centerId) return;
+      goTo(pickedId);
+    }
+
+    // One click selects AND steps: select(id) just paints the side panel and
+    // sets pickedId, step() then recenters immediately if this concept is
+    // actually steppable (its own guard: n.full and not already centered),
+    // so a comfort/frustration-zone dot still just selects, informing without
+    // jumping, exactly as before. Used to need a second click on the same
+    // dot (or the side panel's own button) to recenter, per the 2026-09-02
+    // ask to make a single click enough.
+    nodesG.addEventListener('click', function(e){
+      var g = e.target.closest ? e.target.closest('.zpd-node') : null;
+      if(!g) return;
+      var id = g.getAttribute('data-id');
+      select(id);
+      step();
+    });
+    nodesG.addEventListener('keydown', function(e){
+      var g = e.target.closest ? e.target.closest('.zpd-node') : null;
+      if(!g || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var id = g.getAttribute('data-id');
+      select(id);
+      step();
+    });
+    elAct.addEventListener('click', step);
+
+    // A rotation or a window resize can cross the narrow threshold, and the
+    // label lengths are baked in at render time, so re-render on the far side
+    // of a debounce rather than leaving phone-length labels on a desktop.
+    var resizeTimer = null;
+    window.addEventListener('resize', function(){
+      if(!layout.length) return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){
+        settleMove();   // a re-render mid-move would strand nodes at interpolated spots
+        clear(ghostsG);
+        render();
+        select(pickedId);
+      }, 180);
+    });
+
+    // Drag to pan. Deliberately NOT using setPointerCapture: capturing on the
+    // svg retargets the whole gesture, including the click, to the svg, so
+    // every click on a concept would land on the background instead. Tracking
+    // on window gets the same "keep dragging outside the box" behaviour with
+    // the click left alone.
+    (function(){
+      var down = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
+      var SLOP = 3;   // px of travel before this counts as a drag, not a click
+      function move(e){
+        if(!down) return;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if(!moved && Math.abs(dx) + Math.abs(dy) < SLOP) return;
+        moved = true;
+        svg.classList.add('dragging');
+        var k = 760 / svg.getBoundingClientRect().width;   // client px to viewBox units
+        tx = ox + dx * k;
+        ty = oy + dy * k;
+        panG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ',' + ty.toFixed(1) + ')');
+        e.preventDefault();
+      }
+      function up(){
+        if(!down) return;
+        down = false;
+        svg.classList.remove('dragging');
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', up);
+      }
+      svg.addEventListener('pointerdown', function(e){
+        // A recenter still in flight owns the pan transform. Land it first so
+        // the drag starts from a settled graph, exactly as it always has.
+        settleMove();
+        down = true; moved = false;
+        sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+        // The stage allows vertical touch scrolling (touch-action:pan-y), so
+        // when the browser claims a mostly-vertical swipe for the page it
+        // cancels the pointer stream. Treat that exactly like lifting the
+        // finger, or the drag state sticks until the next tap.
+        window.addEventListener('pointercancel', up);
+      });
+      // A drag that happens to end on a concept must not also select it.
+      svg.addEventListener('click', function(e){ if(moved){ e.stopPropagation(); moved = false; } }, true);
+    })();
+
+    whenNear(document.getElementById('zpd'), function(){
+      getJson('library/zpd.json').then(function(d){
+        data = d;
+        drawRings();
+        d.seeds.forEach(function(id, i){
+          var b = document.createElement('button');
+          b.className = 'zpd-seed';
+          b.type = 'button';
+          b.setAttribute('data-id', id);
+          b.setAttribute('aria-pressed', String(i === 0));
+          b.textContent = clip(d.nodes[id].name, 22);
+          // Same animated recenter as stepping onto a concept: a seed is just
+          // a jump to a middle further away, and it should read as travel too.
+          b.addEventListener('click', function(){ goTo(id); });
+          seedsBox.appendChild(b);
+        });
+        rebuild(d.seeds[0]);
+      }).catch(function(err){
+        // An honest failure. A silent empty diagram would read as "the library
+        // has nothing here", which is a different and untrue statement.
+        elName.textContent = 'The graph could not load';
+        elSay.textContent = String(err.message || err) + ' Re-run scripts/export_public_library.mjs --write.';
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------------------
+  // Claim your desk: posts to the real, already-live, unauthenticated lead
+  // endpoint (webhook/lib/handlers/marketing-lead.ts), which stores the lead
+  // in Firestore, emails the founders and schedules a follow-up. No new
+  // backend, and no "thanks!" that fires regardless of what happened: the
+  // message shown is decided by the actual response.
+  //
+  // The intake fields (phone, how they heard, student, school, grade,
+  // subject) are sent twice on purpose: as their own structured keys, which
+  // the extended handler stores, AND packed into `note`, which every version
+  // of the handler that has ever been deployed stores. Either way the
+  // founders get the whole picture.
+  // ---------------------------------------------------------------------
+  (function(){
+    var form = document.getElementById('claimForm');
+    if(!form) return;
+    var btn = document.getElementById('claimSubmit');
+    var msg = document.getElementById('claimMsg');
+    var ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/marketing-lead';
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   // same shape the handler enforces
+
+    // Who is filling this out, see the HTML comment above claim-role for
+    // why: same field names go to the backend regardless (the "parent"
+    // fields are really just "the primary contact"), this only changes
+    // labels, hides "the student" block for a self-signup, and sets the
+    // real role sent in the payload below instead of a hardcoded 'parent'.
+    var claimRole = 'parent';
+    var roleToggle = document.getElementById('claimRoleToggle');
+    var roleLegend = document.getElementById('claimRoleLegend');
+    var studentBlock = document.getElementById('claimStudentBlock');
+    var subjectLabel = document.getElementById('claimSubjectLabel');
+    var subjectInput = document.getElementById('claimSubject');
+    var messageInput = document.getElementById('claimMessage');
+    var ROLE_COPY = {
+      parent: {
+        legend: 'Parent or guardian', subjectLabel: 'Subject',
+        subjectPh: 'English, math, SAT test prep, etc.',
+        messagePh: 'What are you hoping The Desk does for your student?',
+      },
+      student: {
+        legend: 'About you', subjectLabel: 'Subject',
+        subjectPh: 'English, math, SAT test prep, etc.',
+        messagePh: 'What are you hoping The Desk does for you?',
+      },
+      tutor: {
+        legend: 'About you', subjectLabel: 'What you teach',
+        subjectPh: 'Algebra, ACT math, chemistry, etc.',
+        messagePh: 'What subjects or age group do you want to tutor?',
+      },
+    };
+    function setClaimRole(role){
+      claimRole = ROLE_COPY[role] ? role : 'parent';
+      var copy = ROLE_COPY[claimRole];
+      if(roleToggle){
+        roleToggle.querySelectorAll('[data-claim-role]').forEach(function(b){
+          b.classList.toggle('is-active', b.getAttribute('data-claim-role') === claimRole);
+        });
+      }
+      if(roleLegend) roleLegend.textContent = copy.legend;
+      if(studentBlock) studentBlock.hidden = claimRole !== 'parent';
+      if(subjectLabel) subjectLabel.textContent = copy.subjectLabel;
+      if(subjectInput) subjectInput.placeholder = copy.subjectPh;
+      if(messageInput) messageInput.placeholder = copy.messagePh;
+    }
+    if(roleToggle){
+      roleToggle.querySelectorAll('[data-claim-role]').forEach(function(b){
+        b.addEventListener('click', function(){ setClaimRole(b.getAttribute('data-claim-role')); });
+      });
+    }
+
+    function show(kind, title, body){
+      msg.className = 'claim-msg ' + kind;
+      msg.innerHTML = '<b></b><span></span>';
+      msg.querySelector('b').textContent = title;
+      msg.querySelector('span').textContent = body;
+      msg.hidden = false;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var f = form.elements;   // form.name would be the FORM's name, not the field
+      function val(key){ return f[key] ? f[key].value.trim() : ''; }
+      var parentFirst = val('parentFirst');
+      var parentLast = val('parentLast');
+      var email = val('email');
+      var phone = val('phone');
+      var message = val('message');
+
+      if(!parentFirst || !parentLast){
+        show('bad', 'We need a name', 'First and last name, so a founder knows who they are writing back to.');
+        (parentFirst ? f['parentLast'] : f['parentFirst']).focus();
+        return;
+      }
+      if(!EMAIL_RE.test(email)){
+        show('bad', 'That email does not look right', 'Check it and try again. Nothing was sent.');
+        f['email'].focus();
+        return;
+      }
+      if(phone.replace(/\D/g, '').length < 7){
+        show('bad', 'That phone number does not look right', 'A few more digits, please. Nothing was sent.');
+        f['phone'].focus();
+        return;
+      }
+      if(!message){
+        show('bad', 'Tell us one sentence', 'The message is the part a founder actually answers. Nothing was sent.');
+        f['message'].focus();
+        return;
+      }
+
+      // Everything, labeled, in one string: the note field is stored by every
+      // deployed version of the endpoint, so no intake detail can be dropped.
+      var packed = ['Message: ' + message, 'Phone: ' + phone];
+      var heard = val('howHeard');
+      var student = (val('studentFirst') + ' ' + val('studentLast')).trim();
+      if(heard) packed.push('How they heard of us: ' + heard);
+      if(student) packed.push('Student: ' + student);
+      if(val('school')) packed.push('School: ' + val('school'));
+      if(val('grade')) packed.push('Grade: ' + val('grade'));
+      if(val('subject')) packed.push('Subject: ' + val('subject'));
+
+      btn.disabled = true;
+      var label = btn.textContent;
+      btn.textContent = 'Sending...';
+      msg.hidden = true;
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: email,
+          name: parentFirst + ' ' + parentLast,
+          role: claimRole,
+          source: 'joinmindcraft_claim_section',
+          note: packed.join('\n'),
+          page: location.pathname + '#claim',
+          _honey: f['_honey'].value,
+          parentFirstName: parentFirst,
+          parentLastName: parentLast,
+          phone: phone,
+          howHeard: heard,
+          studentFirstName: val('studentFirst'),
+          studentLastName: val('studentLast'),
+          school: val('school'),
+          grade: val('grade'),
+          subject: val('subject'),
+          message: message
+        })
+      }).then(function(res){
+        return res.json().catch(function(){ return {}; }).then(function(data){
+          return {ok: res.ok, status: res.status, data: data};
+        });
+      }).then(function(r){
+        if(r.ok && r.data && r.data.ok){
+          show('ok',
+            r.data.returning ? 'You are already on the list' : 'Your seat is claimed',
+            r.data.returning
+              ? 'We had this email already, so we bumped it back to the top. The founders just got pinged again.'
+              : 'The founders were emailed the moment you hit send. Expect a real reply, not an autoresponder.');
+          form.reset();
+        } else {
+          // The real reason, verbatim where the endpoint gave one.
+          show('bad', 'That did not go through',
+            (r.data && r.data.error ? r.data.error : 'The signup service answered with ' + r.status + '.') +
+            ' Nothing was saved. You can email founders@joinmindcraft.com directly.');
+        }
+      }).catch(function(err){
+        show('bad', 'Could not reach the signup service',
+          String(err && err.message || err) + '. Nothing was saved. founders@joinmindcraft.com works too.');
+      }).then(function(){
+        btn.disabled = false;
+        btn.textContent = label;
+      });
+    });
+  })();
+</script>
+</body>
+</html>

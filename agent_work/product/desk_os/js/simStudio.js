@@ -1,3 +1,6 @@
+import { inventSim, listChainableLibrarySims } from './simInvent.js';
+import { createSimWorld } from './simWorld.js?v=world2';
+
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const BOARD_WIDTH = 1480;
 const BOARD_HEIGHT = 820;
@@ -25,8 +28,9 @@ function simDocument(config) {
     main { min-height: 188px; padding: 12px; display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; }
     .visual { position: relative; min-height: 164px; overflow: hidden; border: 1px solid rgba(20,58,46,.18); border-radius: 6px; background: #f7f3ee; }
     .controls { display: flex; min-width: 0; flex-direction: column; justify-content: center; gap: 8px; }
-    label { display: grid; grid-template-columns: 1fr auto; gap: 3px 8px; color: #52675f; font-size: 10px; font-weight: 700; }
+    label { display: grid; grid-template-columns: 1fr auto; gap: 3px 8px; padding: 3px 4px; border-radius: 5px; color: #52675f; font-size: 10px; font-weight: 700; transition: background-color .3s, box-shadow .3s; }
     label output { color: #143a2e; font-variant-numeric: tabular-nums; }
+    label.is-highlighted { background: rgba(196,245,71,.45); box-shadow: 0 0 0 2px #c4f547; }
     input { grid-column: 1 / -1; width: 100%; accent-color: #247a4d; }
     .readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
     .readout { min-width: 0; padding: 6px; border: 1px solid rgba(20,58,46,.14); border-radius: 5px; background: #f7f3ee; }
@@ -90,9 +94,14 @@ function simDocument(config) {
       }
       const temperature = Number(state.temperature);
       const shade = Number(state.shade);
-      return {
-        growth: Math.round(Math.max(0, 8 - Math.abs(temperature - 24) * 0.27 - Math.abs(shade - 35) * 0.045) * 10) / 10,
-      };
+      const fertilizer = Number(state.fertilizer);
+      const water = Number(state.water);
+      const growth = 10
+        - Math.abs(temperature - 24) * 0.22
+        - Math.abs(shade - 35) * 0.035
+        - Math.abs(fertilizer - 50) * 0.045
+        - Math.abs(water - 60) * 0.05;
+      return { growth: Math.round(Math.max(0, growth) * 10) / 10 };
     }
 
     function paint(outputs) {
@@ -143,7 +152,20 @@ function simDocument(config) {
 
     window.addEventListener('message', (event) => {
       const message = event.data;
-      if (!message || message.type !== 'sim:input' || !message.values || typeof message.values !== 'object') return;
+      if (!message) return;
+      // Fired when a student clicks a factor in the documentation panel
+      // next to this sim (2026-09-04 ask): a brief, real visual link from
+      // "why it matters" straight to the control that does it.
+      if (message.type === 'sim:highlight' && typeof message.inputId === 'string') {
+        const slider = controls.querySelector('[data-input="' + message.inputId + '"]');
+        const label = slider ? slider.closest('label') : null;
+        if (label) {
+          label.classList.add('is-highlighted');
+          setTimeout(() => label.classList.remove('is-highlighted'), 1400);
+        }
+        return;
+      }
+      if (message.type !== 'sim:input' || !message.values || typeof message.values !== 'object') return;
       let changed = false;
       config.inputs.forEach((input) => {
         const next = Number(message.values[input.id]);
@@ -205,9 +227,49 @@ const TEMPLATES = {
       inputs: [
         { id: 'temperature', label: 'Temperature', min: 0, max: 50, step: 0.5, default: 24 },
         { id: 'shade', label: 'Shade', min: 0, max: 100, step: 1, default: 35 },
+        { id: 'fertilizer', label: 'Fertilizer', min: 0, max: 100, step: 1, default: 50 },
+        { id: 'water', label: 'Soil moisture', min: 0, max: 100, step: 1, default: 60 },
       ],
       outputs: [{ id: 'growth', label: 'Growth', unit: 'mm/day' }],
     }),
+  },
+};
+
+/** Real reference facts behind a template, shown next to its live sim so a
+ * student reads the why before they touch the sliders (2026-09-04 ask).
+ * Keyed by TEMPLATES id. Each section's inputId ties it to the exact slider
+ * it explains, click a factor and the matching control glows (see
+ * renderSoloDoc + the sim:highlight bridge in simDocument's own script).
+ * Plant bed's formula (simDocument's kind 'plant' compute()) is tuned to
+ * treat each of these four real optimal points as the zero-penalty best
+ * case, these numbers are not new, they are what the formula was always
+ * built around, made visible and clickable. */
+const DOCS = {
+  plant: {
+    title: 'What actually makes a plant grow',
+    sections: [
+      {
+        heading: 'Temperature',
+        inputId: 'temperature',
+        body: 'Most common garden and houseplants grow fastest between 18C and 27C (65 to 80F). Below 10C growth slows sharply. Above 35C, heat stress cuts growth even when water is not the problem. This sim treats 24C as the optimum, the middle of that real range.',
+      },
+      {
+        heading: 'Light and shade',
+        inputId: 'shade',
+        body: '6 or more hours of light drives strong photosynthesis, but full sun in a hot climate can scorch leaves and dry the soil out fast. 30 to 40% shade is a common sweet spot in real gardens: enough light to grow, less heat and water stress. This sim treats 35% shade as the optimum for the same reason.',
+      },
+      {
+        heading: 'Fertilizer',
+        inputId: 'fertilizer',
+        body: 'A balanced N-P-K fertilizer (like 10-10-10) during active growth covers the basics. Nitrogen (N) grows leaves and stems, phosphorus (P) grows roots and flowers, potassium (K) supports overall health. Too much nitrogen without enough light produces tall, weak, leggy growth, and over-fertilizing at all can burn roots. This sim treats a middle fertilizer level as the optimum, not the max.',
+      },
+      {
+        heading: 'Water and soil',
+        inputId: 'water',
+        body: 'Keep soil consistently moist, not soaked. Check by feeling an inch down, water when it is dry there. Well-draining soil matters as much as watering itself, standing water suffocates roots and causes rot. This sim treats a well-watered but not soaked soil moisture as the optimum.',
+      },
+    ],
+    note: 'Click a factor to see exactly which control it is. All four are live in this sim, move any slider and watch growth respond for real.',
   },
 };
 
@@ -232,7 +294,7 @@ function normalizeOutputs(value) {
   });
 }
 
-export function createSimStudio({ root, onToast = () => {} } = {}) {
+export function createSimStudio({ root, onToast = () => {}, resumePanel = null, tutorMapPanel = null } = {}) {
   if (!root) return { open() {}, reset() {}, destroy() {} };
 
   const board = root.querySelector('[data-sim-board]');
@@ -243,8 +305,14 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
   const resetButton = root.querySelector('[data-sim-reset]');
   const soloDialog = root.querySelector('[data-sim-solo-dialog]');
   const soloMount = root.querySelector('[data-sim-solo-mount]');
+  const soloDoc = root.querySelector('[data-sim-solo-doc]');
   const soloTitle = root.querySelector('[data-sim-solo-title]');
   const soloClose = root.querySelector('[data-sim-solo-close]');
+  const inventForm = root.querySelector('[data-sim-invent-form]');
+  const inventInput = root.querySelector('[data-sim-invent-input]');
+  const inventButton = root.querySelector('[data-sim-invent-submit]');
+  const libraryList = root.querySelector('[data-sim-library-list]');
+  const libraryStatus = root.querySelector('[data-sim-library-status]');
   const nodes = new Map();
   let connections = [];
   let nodeSequence = 0;
@@ -481,8 +549,69 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
     requestAnimationFrame(renderWires);
   }
 
+  /** Fills any container with a template's DOCS panel, wired to the node's
+   * live iframe via the sim:highlight bridge. Shared by the solo dialog and
+   * the world overlay so both doors show the exact same real reference
+   * facts with the exact same click-to-find-the-slider behavior. */
+  function renderDocInto(container, node) {
+    if (!container) return false;
+    const doc = DOCS[node.template.id];
+    if (!doc) {
+      container.hidden = true;
+      container.replaceChildren();
+      return false;
+    }
+    container.hidden = false;
+    container.innerHTML = `
+      <h2>${doc.title}</h2>
+      ${doc.sections.map((section) => `
+        <button type="button" class="sim-solo-doc-factor" data-doc-input="${section.inputId}">
+          <h3>${section.heading}</h3>
+          <p>${section.body}</p>
+        </button>`).join('')}
+      <p class="sim-solo-doc-note">${doc.note}</p>`;
+    container.querySelectorAll('[data-doc-input]').forEach((button) => {
+      button.addEventListener('click', () => {
+        node.iframe.contentWindow?.postMessage({ type: 'sim:highlight', inputId: button.dataset.docInput }, '*');
+        button.classList.add('is-active');
+        setTimeout(() => button.classList.remove('is-active'), 1400);
+      });
+    });
+    return true;
+  }
+
+  function renderSoloDoc(node) {
+    renderDocInto(soloDoc, node);
+  }
+
+  /** Moves a live board node into any external mount (the world overlay),
+   * leaving a placeholder so it can go straight back to its board slot.
+   * Reuses the exact adoption trick openSolo has always used; the iframe
+   * reloads on reparent and reannounces itself over sim:ready, which
+   * handleMessage already handles with no special-casing. */
+  function adoptNode(node, mount) {
+    if (!node || !mount || node.worldPlaceholder) return;
+    if (soloNode === node) closeSolo();
+    node.worldPlaceholder = document.createComment(`world-node-${node.id}`);
+    node.el.parentNode?.insertBefore(node.worldPlaceholder, node.el);
+    mount.appendChild(node.el);
+    node.el.classList.add('is-solo');
+    requestAnimationFrame(renderWires);
+  }
+
+  function restoreNode(node) {
+    if (!node?.worldPlaceholder) return;
+    node.el.classList.remove('is-solo');
+    if (node.worldPlaceholder.parentNode) {
+      node.worldPlaceholder.parentNode.replaceChild(node.el, node.worldPlaceholder);
+    }
+    node.worldPlaceholder = null;
+    requestAnimationFrame(renderWires);
+  }
+
   function openSolo(node) {
     if (!soloDialog || !soloMount || soloNode === node) return;
+    if (node.worldPlaceholder) return; // already open in the world overlay
     closeSolo();
     node.placeholder = document.createComment(`sim-node-${node.id}`);
     node.el.parentNode?.insertBefore(node.placeholder, node.el);
@@ -490,6 +619,7 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
     node.el.classList.add('is-solo');
     soloNode = node;
     if (soloTitle) soloTitle.textContent = node.template.title;
+    renderSoloDoc(node);
     soloDialog.showModal();
   }
 
@@ -497,6 +627,12 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
     const node = nodes.get(nodeId);
     if (!node) return;
     if (soloNode === node) closeSolo();
+    // A node removed while adopted by the world overlay must not come back
+    // when that overlay closes: drop the placeholder so restore is a no-op.
+    if (node.worldPlaceholder) {
+      node.worldPlaceholder.parentNode?.removeChild(node.worldPlaceholder);
+      node.worldPlaceholder = null;
+    }
     connections = connections.filter((connection) => connection.fromNodeId !== nodeId && connection.toNodeId !== nodeId);
     node.el.remove();
     nodes.delete(nodeId);
@@ -534,10 +670,37 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
     });
   }
 
-  function addNode(templateId, x, y) {
-    const template = TEMPLATES[templateId];
-    if (!template) return null;
-    const id = `${templateId}-${++nodeSequence}`;
+  function setNodeHeader(node, { eyebrow, title }) {
+    const head = node.el.querySelector('.sim-node-title');
+    if (!head) return;
+    const small = head.querySelector('small');
+    const strong = head.querySelector('strong');
+    if (small && eyebrow != null) small.textContent = eyebrow;
+    if (strong && title != null) strong.textContent = title;
+    node.el.querySelector('[data-sim-focus]')?.setAttribute('title', `Open ${title}`);
+    node.el.querySelector('[data-sim-focus]')?.setAttribute('aria-label', `Open ${title}`);
+    node.el.querySelector('[data-sim-remove]')?.setAttribute('title', `Remove ${title}`);
+    node.el.querySelector('[data-sim-remove]')?.setAttribute('aria-label', `Remove ${title}`);
+  }
+
+  function setNodeFailed(node, reason) {
+    node.el.classList.remove('is-loading');
+    node.el.classList.add('is-failed');
+    const badge = node.el.querySelector('[data-sim-node-ready]');
+    if (badge) badge.textContent = 'failed';
+    onToast(reason || 'That build did not work out.');
+    node.readyResolve?.();
+    node.readyResolve = null;
+  }
+
+  /** Shared DOM/wiring-plumbing for any node, whichever of the three real
+   * sources built its {title, eyebrow, accent, document}: a hand-authored
+   * TEMPLATES entry, a freshly AI-invented sim, or one pulled from the
+   * generated-sims library. Every node speaks the exact same sim:ready /
+   * sim:output / sim:input bridge regardless of source, so nothing past
+   * this point needs to know which one it came from. */
+  function mountNode(template, x, y, idPrefix = 'node') {
+    const id = `${idPrefix}-${++nodeSequence}`;
     const element = document.createElement('article');
     element.className = 'sim-node is-loading';
     element.dataset.simNode = id;
@@ -580,14 +743,60 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
       readyPromise,
       readyResolve,
       placeholder: null,
+      worldPlaceholder: null,
     };
     nodes.set(id, node);
     makeDraggable(node, element.querySelector('.sim-node-head'));
     element.querySelector('[data-sim-focus]').addEventListener('click', () => openSolo(node));
     element.querySelector('[data-sim-remove]').addEventListener('click', () => removeNode(id));
-    node.iframe.srcdoc = template.document;
+    if (template.document) node.iframe.srcdoc = template.document;
     updateStatus();
     return node;
+  }
+
+  function addNode(templateId, x, y) {
+    const template = TEMPLATES[templateId];
+    if (!template) return null;
+    return mountNode(template, x, y, templateId);
+  }
+
+  /** A student-described custom sim, AI-generated on the spot via the real
+   * /api/generate-sim pipeline (2026-09-04 ask). Mounts immediately in the
+   * same loading state a template node briefly shows, with no document yet,
+   * then swaps in the real generated HTML once it clears the quality gate.
+   * That HTML posts its own real sim:ready the instant it loads, so the
+   * existing handleMessage path picks it up with zero special-casing. */
+  async function addInventedNode(description, x, y) {
+    const node = mountNode(
+      { title: 'Inventing...', eyebrow: description.slice(0, 40), accent: '#c4f547', document: null },
+      x, y, 'invent',
+    );
+    if (!node) return null;
+    updateStatus(`Inventing "${description.slice(0, 60)}"...`);
+    const { sim, reason } = await inventSim(description, (status) => {
+      if (nodes.get(node.id) === node) updateStatus(status);
+    });
+    if (nodes.get(node.id) !== node) return node; // removed while generating
+    if (!sim) {
+      setNodeFailed(node, reason);
+      updateStatus();
+      return node;
+    }
+    setNodeHeader(node, { eyebrow: 'Invented', title: sim.title });
+    node.iframe.srcdoc = sim.html;
+    updateStatus();
+    return node;
+  }
+
+  /** A real, already gate-passed sim pulled straight from the shared
+   * generated_sims library (see simInvent.js's listChainableLibrarySims).
+   * Instant, no generation spend, reusing whatever any student has already
+   * built and paid for once. */
+  function addLibraryNode(librarySim, x, y) {
+    return mountNode(
+      { title: librarySim.title || 'Library sim', eyebrow: 'From the library', accent: '#5b3e8f', document: librarySim.html },
+      x, y, 'library',
+    );
   }
 
   function nextDropPoint() {
@@ -685,6 +894,73 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
     });
   });
 
+  /** A world object is a door into a real board node. Reuses whichever node
+   * already exists so the world and the wiring board are always looking at
+   * the one real thing, adds one if this is the first time it is opened. */
+  function getOrCreateNode(templateId) {
+    const existing = [...nodes.values()].find((node) => node.template.id === templateId);
+    if (existing) return existing;
+    const point = nextDropPoint();
+    return addNode(templateId, point.x, point.y);
+  }
+
+  /** The walkable garden world (2026-09-04 founder ask, replacing tonight's
+   * earlier click-strip + full-screen dialogs). All world data and the
+   * character engine live in simWorld.js; this bridge hands it the real
+   * board plumbing so a world "plant" is the same live node the wiring
+   * board owns, never a copy. */
+  const world = createSimWorld({
+    root: root.querySelector('[data-sim-world]'),
+    resume: resumePanel,
+    tutorMap: tutorMapPanel,
+    bridge: {
+      getOrCreateNode,
+      adoptNode,
+      restoreNode,
+      renderDocs: (container, node) => renderDocInto(container, node),
+      onToast,
+    },
+  });
+
+  inventForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const description = String(inventInput?.value || '').trim();
+    if (!description || inventButton?.disabled) return;
+    if (inventButton) inventButton.disabled = true;
+    if (inventInput) inventInput.value = '';
+    const point = nextDropPoint();
+    void addInventedNode(description, point.x, point.y).finally(() => {
+      if (inventButton) inventButton.disabled = false;
+    });
+  });
+
+  async function refreshLibraryPalette() {
+    if (!libraryList) return;
+    if (libraryStatus) libraryStatus.textContent = 'Loading...';
+    const sims = await listChainableLibrarySims();
+    libraryList.replaceChildren();
+    if (!sims.length) {
+      if (libraryStatus) libraryStatus.textContent = 'Nothing chainable built yet, invent the first one.';
+      return;
+    }
+    if (libraryStatus) libraryStatus.textContent = `${sims.length} ready`;
+    sims.slice(0, 24).forEach((sim) => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'sim-library-item is-from-library';
+      item.innerHTML = `<span class="sim-library-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path></svg>
+      </span><span><strong>${sim.title || 'Untitled'}</strong><small>${sim.conceptLabel || sim.topic || 'From another student'}</small></span>`;
+      item.addEventListener('click', () => {
+        const point = nextDropPoint();
+        const node = addLibraryNode(sim, point.x, point.y);
+        if (node) onToast(`${sim.title || 'Sim'} added to the board.`);
+      });
+      libraryList.appendChild(item);
+    });
+  }
+  void refreshLibraryPalette();
+
   viewport.addEventListener('dragover', (event) => {
     if (!event.dataTransfer?.types.includes('text/x-mindcraft-sim')) return;
     event.preventDefault();
@@ -720,8 +996,14 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
   soloDialog?.addEventListener('close', () => {
     if (soloNode) closeSolo();
   });
-  root.addEventListener('simstudio:show', () => requestAnimationFrame(renderWires));
-  root.addEventListener('simstudio:hide', closeSolo);
+  root.addEventListener('simstudio:show', () => {
+    requestAnimationFrame(renderWires);
+    world.layout();
+  });
+  root.addEventListener('simstudio:hide', () => {
+    closeSolo();
+    world.closeOverlay();
+  });
   new ResizeObserver(renderWires).observe(board);
 
   void reset();
@@ -729,10 +1011,12 @@ export function createSimStudio({ root, onToast = () => {} } = {}) {
   return {
     open() {
       requestAnimationFrame(renderWires);
+      void refreshLibraryPalette();
     },
     reset,
     destroy() {
       closeSolo();
+      world.destroy();
       window.removeEventListener('message', handleMessage);
       nodes.forEach((node) => node.el.remove());
       nodes.clear();

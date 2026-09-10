@@ -1,5 +1,5 @@
+import { Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { ConceptMatch, PathStep } from '../../lib/conceptLibrary'
-import { CARD, Eyebrow, TEXT_FAINT, TEXT_SOFT } from './shared'
 
 export interface PathRampProps {
   path: PathStep[]
@@ -16,64 +16,64 @@ export interface PathRampProps {
  * the ramp (`goToStep`) and the ramp data itself live in Learn.tsx. */
 export default function PathRamp({ path, pathIndex, contentLoading, nextStep, searchedQuery, resolved, isStudied, onGoToStep }: PathRampProps) {
   return (
-    <div style={{ ...CARD, padding: '16px 18px', flexShrink: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
-        <Eyebrow color="#58CC02">Your path to {path[path.length - 1].label}</Eyebrow>
-        <span style={{ fontSize: 11.5, color: contentLoading ? '#8BE85C' : TEXT_FAINT }}>
-          {contentLoading ? 'loading this step...' : `step ${pathIndex + 1} of ${path.length}`}
+    <nav className="lrn-path" aria-label={`Path to ${path[path.length - 1].label}`}>
+      <div className="lrn-path-heading">
+        <div>
+          <span className="lrn-kicker">Learning path</span>
+          <h2>Path to {path[path.length - 1].label}</h2>
+        </div>
+        <span className={contentLoading ? 'lrn-path-count is-loading' : 'lrn-path-count'}>
+          {contentLoading ? 'Loading step...' : `${pathIndex + 1} of ${path.length}`}
         </span>
       </div>
-      <p style={{ margin: '6px 0 10px', fontSize: 13, color: TEXT_FAINT, lineHeight: 1.55 }}>
-        Built from the real prerequisite edges in the concept graph, foundational first. Every step has a written lesson, so any chip is clickable.
+      <p className="lrn-path-intro">
+        Follow the prerequisite trail from foundation to target.
       </p>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+      <div className="lrn-path-steps">
         {path.map((step, i) => {
           const current = i === pathIndex
           const done = i < pathIndex
           return (
-            <span key={step.conceptId} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              {i > 0 && <span style={{ fontSize: 11, color: 'rgba(205,220,208,0.3)' }}>›</span>}
+            <span className="lrn-path-step-wrap" key={step.conceptId}>
+              {i > 0 && <span className="lrn-path-line" aria-hidden="true" />}
               <button
                 onClick={() => onGoToStep(i)}
                 title={step.conceptId}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 5, cursor: 'pointer',
-                  fontSize: 12.5, fontWeight: current ? 700 : 500, padding: '6px 12px', borderRadius: 999,
-                  border: `1px solid ${current ? '#58CC02' : done ? 'rgba(88,204,2,0.32)' : 'rgba(205,220,208,0.18)'}`,
-                  background: current ? 'rgba(88,204,2,0.18)' : done ? 'rgba(88,204,2,0.07)' : 'rgba(205,220,208,0.04)',
-                  color: current ? '#8BE85C' : done ? TEXT_SOFT : TEXT_SOFT,
-                }}
+                aria-current={current ? 'step' : undefined}
+                className={`lrn-path-step${current ? ' is-current' : ''}${done ? ' is-done' : ''}`}
               >
-                <span style={{ fontSize: 10, opacity: 0.7 }}>{i + 1}</span>
-                {step.label}
-                {step.hasSim && <span style={{ fontSize: 9, fontWeight: 700, color: '#F0C060' }}>SIM</span>}
-                {isStudied(step.conceptId) && <span title="you have studied this before" style={{ fontSize: 9, fontWeight: 700, color: '#f2b84b' }}>✓ STUDIED</span>}
+                <span className="lrn-path-number">{isStudied(step.conceptId) ? <Check size={12} /> : i + 1}</span>
+                <span>{step.label}</span>
+                {step.hasSim && <span className="lrn-path-sim">Sim</span>}
               </button>
             </span>
           )
         })}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12, flexWrap: 'wrap' }}>
+      <div className="lrn-path-actions">
         <button
           onClick={() => onGoToStep(pathIndex - 1)}
           disabled={pathIndex === 0}
-          style={{ fontSize: 12.5, padding: '7px 13px', borderRadius: 9, border: '1px solid rgba(205,220,208,0.2)', background: 'transparent', color: pathIndex === 0 ? 'rgba(205,220,208,0.3)' : TEXT_SOFT, cursor: pathIndex === 0 ? 'default' : 'pointer' }}
+          className="lrn-button lrn-button--quiet"
+          aria-label="Previous concept"
         >
-          Back
+          <ChevronLeft size={16} aria-hidden="true" />
+          Previous
         </button>
         {nextStep ? (
           <button
             onClick={() => onGoToStep(pathIndex + 1)}
-            style={{ fontSize: 13, fontWeight: 600, padding: '8px 15px', borderRadius: 9, border: 'none', background: '#58CC02', color: '#0a1a00', cursor: 'pointer' }}
+            className="lrn-button lrn-button--forest"
           >
-            Next concept: {nextStep.label} ›
+            Next: {nextStep.label}
+            <ChevronRight size={16} aria-hidden="true" />
           </button>
         ) : (
-          <span style={{ fontSize: 12.5, color: TEXT_FAINT }}>
-            Last step. This is what "{searchedQuery || resolved.label}" actually resolved to.
+          <span className="lrn-path-finish">
+            Target reached for "{searchedQuery || resolved.label}."
           </span>
         )}
       </div>
-    </div>
+    </nav>
   )
 }

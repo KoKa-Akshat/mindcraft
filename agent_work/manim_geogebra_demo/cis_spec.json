@@ -1,0 +1,79 @@
+{
+  "spec_version": "0.1",
+  "spec_kind": "mindcraft.animation-spec",
+  "source": {
+    "book": "learning-graphs (Dan McCreary)",
+    "chapter": 28,
+    "title": "Concept Impact Score and Predicting Content Length",
+    "path": "docs/chapters/28-concept-impact-score-content-length/index.md",
+    "note": "This spec is the intermediate representation of the pipeline: chapter text/annotations -> spec -> renderer (Manim scene / GeoGebra applet). Any MindCraft-generated chapter with a concept table + worked example can be lowered to this same shape."
+  },
+  "formulas": {
+    "cis": {
+      "text": "CIS(x) = 1 + Σ CIS(d)  for every concept d that directly depends on x",
+      "kind": "recursive_dag_sum"
+    },
+    "elaboration_score": {
+      "text": "E(c) = log(CIS(c) + 1) / log(CIS_max + 1)",
+      "kind": "log_normalization",
+      "cis_max": 661,
+      "cis_max_concept": "Concept"
+    }
+  },
+  "tiers": [
+    { "tier": "A", "label": "Full treatment", "e_min": 0.5, "e_max": 1.0, "words": "500–750", "elements": "Worked example AND diagram/chart/table/MicroSim" },
+    { "tier": "B", "label": "Standard", "e_min": 0.2, "e_max": 0.5, "words": "250–400", "elements": "Worked example" },
+    { "tier": "C", "label": "Brief", "e_min": 0.0, "e_max": 0.2, "words": "120–200", "elements": "Clear definition; short example optional" }
+  ],
+  "worked_example": {
+    "id": "behaviorism-cis-103",
+    "claim": "Behaviorism has indegree 1 (only Instructional Design depends on it directly) but CIS 103, because CIS(Instructional Design) = 102. Indegree sees one hop; CIS sees the whole downstream chain.",
+    "dag": {
+      "orientation": "foundation_at_bottom",
+      "nodes": [
+        { "id": "behaviorism", "label": "Behaviorism", "cis": 103, "level": 0, "real_value": true },
+        { "id": "instructional_design", "label": "Instructional Design", "cis": 102, "level": 1, "real_value": true },
+        { "id": "scaffolding", "label": "Scaffolding", "cis": 31, "level": 2, "real_value": false },
+        { "id": "curriculum_design", "label": "Curriculum Design", "cis": 27, "level": 2, "real_value": false },
+        { "id": "metacognition", "label": "Metacognition", "cis": 24, "level": 2, "real_value": false },
+        { "id": "nine_events", "label": "Nine Events of Instruction", "cis": 19, "level": 2, "real_value": false }
+      ],
+      "edges": [
+        { "dependent": "instructional_design", "prerequisite": "behaviorism" },
+        { "dependent": "scaffolding", "prerequisite": "instructional_design" },
+        { "dependent": "curriculum_design", "prerequisite": "instructional_design" },
+        { "dependent": "metacognition", "prerequisite": "instructional_design" },
+        { "dependent": "nine_events", "prerequisite": "instructional_design" }
+      ],
+      "fidelity_note": "CIS 103 and 102 are the chapter's real published values. The four level-2 sub-scores (31/27/24/19, summing to 101 so that 1 + 101 = 102) are illustrative stand-ins for real downstream subtrees the chapter does not enumerate node-by-node."
+    },
+    "animation_beats": [
+      "show_dag",
+      "show_indegree_view: Behaviorism indegree = 1 → 'looks minor'",
+      "score_leaves: each level-2 subtree reveals its CIS",
+      "sum_into: instructional_design = 1 + 31 + 27 + 24 + 19 = 102",
+      "sum_into: behaviorism = 1 + 102 = 103",
+      "punchline: indegree 1, CIS 103 — top-15 of 410 concepts"
+    ]
+  },
+  "chapter_concepts": [
+    { "label": "Recursive Importance Measure", "cis": 8 },
+    { "label": "PageRank", "cis": 7 },
+    { "label": "Concept Impact Score (CIS)", "cis": 6 },
+    { "label": "Global Normalization", "cis": 4 },
+    { "label": "Elaboration Score", "cis": 3 },
+    { "label": "Chapter Partitioning Problem", "cis": 3 },
+    { "label": "Elaboration Tier", "cis": 2 },
+    { "label": "Single-Pass DAG Computation", "cis": 1 },
+    { "label": "Within-Chapter Concept Ordering", "cis": 1 },
+    { "label": "Content-Budget Allocation", "cis": 1 }
+  ],
+  "reference_concepts": [
+    { "label": "Behaviorism", "cis": 103 },
+    { "label": "Concept (root, CIS_max)", "cis": 661 }
+  ],
+  "renderers": {
+    "geogebra": { "target": "elaboration_score_slider", "output": "elaboration_score_geogebra.html" },
+    "manim": { "target": "cis_dag_bottom_up_sum", "scene": "CISWorkedExample", "output": "CISWorkedExample.mp4" }
+  }
+}

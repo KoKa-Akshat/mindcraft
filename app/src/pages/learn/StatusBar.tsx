@@ -1,5 +1,5 @@
+import { ArrowLeft, BookOpen, Network } from 'lucide-react'
 import type { ConceptMatch, PathStep } from '../../lib/conceptLibrary'
-import { BORDER_SOFT, TEXT_FAINT, TEXT_SOFT } from './shared'
 
 export interface StatusBarProps {
   resolved: ConceptMatch
@@ -24,35 +24,50 @@ export default function StatusBar({
   resolved, outOfDomain, belowThreshold, chapter, contentLoading, contentFailed,
   hasPath, path, pathIndex, matches, resolveMeta, showPanels, onBackToGraph,
 }: StatusBarProps) {
+  const subject = resolved.subjectTitle || resolved.subject
+  const confidence = `${(resolved.score * 100).toFixed(0)}% match`
+  const topMatchMissingLesson = !!matches && matches[0].conceptId !== resolved.conceptId
+
+  let title = resolved.label
+  let detail = chapter ? 'Chapter ready' : 'Looking for a chapter'
+  if (outOfDomain) {
+    title = 'No close lesson match'
+    detail = `The closest result was ${resolved.label}. Try a more specific topic.`
+  } else if (!chapter) {
+    detail = contentLoading
+      ? 'Loading the chapter...'
+      : contentFailed || 'This concept does not have a lesson yet.'
+  } else if (hasPath && pathIndex === 0) {
+    detail = `Starting with ${path[0].label}, the foundation for this ${path.length}-step route.`
+  } else if (topMatchMissingLesson) {
+    detail = 'Showing the closest matching concept that has a lesson.'
+  } else if (belowThreshold) {
+    detail = 'This is a tentative match. The confidence is shown so you can judge it.'
+  }
+
   return (
-    <div style={{ padding: '10px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, borderBottom: BORDER_SOFT, background: 'rgba(205,220,208,0.03)', color: outOfDomain ? '#FF7B7B' : belowThreshold ? '#F0C060' : TEXT_FAINT }}>
-      <span style={{ flex: 1, minWidth: 0 }}>
-        {outOfDomain ? (
-          <>Closest match was <b>{resolved.label}</b> at only {(resolved.score * 100).toFixed(0)}%, which is noise, not a real signal. Nothing in the {resolveMeta ? `${resolveMeta.indexed}-lesson library` : 'library'} is actually about this, so it is not shown as a match.</>
-        ) : !chapter ? (
-          <>
-            Resolved to <b>{resolved.label}</b> in {resolved.subjectTitle || resolved.subject} at {(resolved.score * 100).toFixed(0)}%.
-            {contentLoading ? ' Fetching its chapter...' : contentFailed ? ` ${contentFailed}` : ' No lesson exists for it yet. Honest gap, not a bug.'}
-          </>
-        ) : (
-          <>
-            Resolved to <b>{resolved.label}</b> in {resolved.subjectTitle || resolved.subject} at {(resolved.score * 100).toFixed(0)}% confidence
-            {hasPath && pathIndex === 0 && (
-              <>, but that sits {path.length - 1} prerequisites deep, so you are starting at <b>{path[0].label}</b> and working up (step {pathIndex + 1} of {path.length})</>
-            )}
-            {hasPath && pathIndex > 0 && <>, its {path.length - 1}-step prerequisite ramp is shown below for context</>}
-            {belowThreshold && ', below our calibrated bar, shown honestly rather than faked as a confident match'}
-            {matches && matches[0].conceptId !== resolved.conceptId && (
-              <> (top raw match was "{matches[0].label}" at {(matches[0].score * 100).toFixed(0)}%, but it has no lesson yet, so showing the next best real one)</>
-            )}
-          </>
-        )}
-      </span>
+    <header className={`lrn-status${showPanels ? ' lrn-status--reading' : ''}${outOfDomain ? ' lrn-status--warning' : ''}`}>
+      <div className="lrn-status-icon" aria-hidden="true">
+        {showPanels ? <BookOpen size={19} strokeWidth={2} /> : <Network size={19} strokeWidth={2} />}
+      </div>
+      <div className="lrn-status-copy">
+        <span className="lrn-status-eyebrow">{outOfDomain ? 'Search result' : subject}</span>
+        <strong>{title}</strong>
+        <span className="lrn-status-detail">{detail}</span>
+      </div>
+      {!outOfDomain && (
+        <div className="lrn-status-meta" aria-label="Lesson match details">
+          <span className={belowThreshold ? 'is-tentative' : ''}>{confidence}</span>
+          {hasPath && <span>Step {pathIndex + 1} of {path.length}</span>}
+          {resolveMeta?.coldStart && <span>Search ready</span>}
+        </div>
+      )}
       {showPanels && (
-        <button onClick={onBackToGraph} style={{ flexShrink: 0, fontSize: 12, padding: '5px 13px', borderRadius: 9, border: '1px solid rgba(205,220,208,0.25)', background: 'transparent', color: TEXT_SOFT, cursor: 'pointer' }}>
-          Back to full graph
+        <button className="lrn-status-back" onClick={onBackToGraph}>
+          <ArrowLeft size={16} aria-hidden="true" />
+          Full graph
         </button>
       )}
-    </div>
+    </header>
   )
 }

@@ -12,7 +12,7 @@
  *   3. Add a <Route> entry (wrap in <AuthGuard> if login is required)
  */
 
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useSearchParams } from 'react-router-dom'
 import { createContext, useContext, useEffect, useState, lazy, Suspense } from 'react'
 import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
@@ -69,6 +69,7 @@ import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 // as shown here and in the two <Route> entries below.
 const ManjushreeZone = lazy(() => import('./manjushree/ManjushreeZone'))
 const StorySlideshow = lazy(() => import('./pages/StorySlideshow'))
+const WorldPreview = lazy(() => import('./pages/WorldPreview'))
 
 function ZoneLoading() {
   return (
@@ -252,6 +253,26 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** /learn, with ?embed=1 rendering the same chrome-less embedded Learn that
+ * Dashboard's view=learn already uses (<Learn embedded />). Built for Desk
+ * OS's Research library, which frames /learn?embed=1 from the same origin
+ * inside its in-world overlay (2026-09-04). Auth is unchanged: AuthGuard
+ * still wraps this route, and the framed app shares the origin's Firebase
+ * session. */
+function LearnRoute() {
+  const [params] = useSearchParams()
+  if (params.get('embed') !== '1') return <Learn />
+  // Embedded Learn sizes itself height:100% and expects its HOST to provide
+  // the sized box (Dashboard's stage does). Inside a bare iframe nothing
+  // does, and 100% of an unsized root collapses to zero, so this wrapper
+  // plays the host: 100vh inside an iframe is exactly the iframe's height.
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <Learn embedded />
+    </div>
+  )
+}
+
 /** App root sends visitors to the marketing landing site. */
 function MarketingRedirect() {
   useEffect(() => {
@@ -406,7 +427,7 @@ export default function App() {
             reachable in-place as /dashboard?view=learn; this standalone route
             exists so it can be linked and bookmarked directly, with ?q= to
             run a search on arrival. */}
-        <Route path="/learn"               element={<AuthGuard><Learn /></AuthGuard>} />
+        <Route path="/learn"               element={<AuthGuard><LearnRoute /></AuthGuard>} />
         {/* The living book (2026-09-03): opened from EntryStage's scope chat
             once it resolves a topic to a concept. ?topic= is the student's
             own words; the page resolves it to a real concept itself. */}
@@ -493,6 +514,18 @@ export default function App() {
           <Route path="/story-loop-dev/:conceptId" element={
             <Suspense fallback={<StoryLoading />}>
               <StorySlideshow />
+            </Suspense>
+          } />
+        )}
+        {/* Dev-only preview of the new MindCraftWorldScene (src/world), so it
+            can be reviewed live before any decision is made about replacing
+            the current post-login landing with it. import.meta.env.DEV gated
+            like manjushree-dev/story-loop-dev above, so this never ships in
+            a production build. */}
+        {import.meta.env.DEV && (
+          <Route path="/world-preview-dev" element={
+            <Suspense fallback={null}>
+              <WorldPreview />
             </Suspense>
           } />
         )}

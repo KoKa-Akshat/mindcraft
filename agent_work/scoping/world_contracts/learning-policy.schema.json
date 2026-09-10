@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindcraft.app/schemas/world/learning-policy-v1.json",
+  "title": "MindCraft Mission Learning Policy v1",
+  "description": "A frozen, inspectable instructional policy for one mission assignment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyVersion",
+    "targetConceptIds",
+    "evidenceSnapshotHash",
+    "priorKnowledgeBand",
+    "supportMode",
+    "fadePlan",
+    "retrievalPlan",
+    "interleavingPlan",
+    "predictionRequired",
+    "correctnessBeforeExplanation",
+    "targetAnswerReveal",
+    "explanationFormat",
+    "feedbackPolicy",
+    "collaborationPolicy",
+    "assistanceAttributionRequired",
+    "choiceSetSize",
+    "reasons"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetConceptIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidenceSnapshotHash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "priorKnowledgeBand": {
+      "enum": ["novice", "developing", "competent"]
+    },
+    "supportMode": {
+      "enum": ["worked-example", "completion-example", "guided-build", "independent-build"]
+    },
+    "fadePlan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["afterEvidence", "remove"],
+        "properties": {
+          "afterEvidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remove": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "retrievalPlan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["conceptId", "dueAfterHours", "format", "lowStakes"],
+        "properties": {
+          "conceptId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dueAfterHours": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "format": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lowStakes": {
+            "const": true
+          }
+        }
+      }
+    },
+    "interleavingPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "contrastConceptIds", "reason"],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "contrastConceptIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "predictionRequired": {
+      "const": true
+    },
+    "correctnessBeforeExplanation": {
+      "const": true
+    },
+    "targetAnswerReveal": {
+      "const": "never"
+    },
+    "explanationFormat": {
+      "enum": ["principle-choice", "mapping", "short-constructed", "teach-back"]
+    },
+    "feedbackPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "requiresStudentAction", "personPraiseAllowed"],
+      "properties": {
+        "target": {
+          "enum": ["task", "strategy", "self-regulation"]
+        },
+        "requiresStudentAction": {
+          "const": true
+        },
+        "personPraiseAllowed": {
+          "const": false
+        }
+      }
+    },
+    "collaborationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requireIndividualTransfer", "groupResultIsMasteryEvidence"],
+      "properties": {
+        "structureId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requireIndividualTransfer": {
+          "const": true
+        },
+        "groupResultIsMasteryEvidence": {
+          "const": false
+        }
+      }
+    },
+    "assistanceAttributionRequired": {
+      "const": true
+    },
+    "choiceSetSize": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "implementationIntentionPrompt": {
+      "type": "string",
+      "maxLength": 180
+    },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "summary", "evidenceRefs"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

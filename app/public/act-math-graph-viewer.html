@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>act-math concept graph</title>
+<style>
+  :root{--ink:#e8efe4;--dim:#9aa89a;--field:#080e14;--lime:#c4f547;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--field);color:var(--ink);font:13px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+  #graph{position:absolute;inset:0}
+  .wait{position:absolute;inset:0;display:grid;place-items:center;color:var(--dim);z-index:2}
+</style>
+</head>
+<body>
+  <div class="wait" id="wait">Loading the concept graph</div>
+  <div id="graph"></div>
+  <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
+  <script>
+    const COLORS = { foundational: '#4fd1c5', core: '#c4f547', advanced: '#f2b84b', cross_cutting: '#e05a5a' };
+    const HIGHLIGHT = '#ffffff';
+    const DIM = 'rgba(138,164,176,0.18)';
+    const el = document.getElementById('graph');
+    const wait = document.getElementById('wait');
+    let graph = null;
+    let baseNodes = [];
+
+    fetch('/act-math-graph.json')
+      .then(r => r.json())
+      .then(data => {
+        baseNodes = (data.nodes || []).map(n => ({
+          id: n.id, name: n.label, group: n.group, color: COLORS[n.group] || '#8aa4b0',
+        }));
+        const links = (data.edges || []).map(e => ({ source: e.from, target: e.to }));
+        wait.remove();
+        graph = ForceGraph3D()(el)
+          .graphData({ nodes: baseNodes, links })
+          .backgroundColor('#080e14')
+          .nodeLabel(n => n.name)
+          .nodeColor(n => n.color)
+          .nodeRelSize(3.2)
+          .linkColor(() => 'rgba(196,245,71,.22)')
+          .linkOpacity(0.35)
+          .showNavInfo(false);
+        const controls = graph.controls();
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.6;
+      })
+      .catch(() => { wait.textContent = 'Graph data not found.'; });
+
+    window.addEventListener('message', (ev) => {
+      if (!graph || !ev.data) return;
+      if (ev.data.type === 'highlight') {
+        const { nodeId, neighborIds = [] } = ev.data;
+        const active = new Set([nodeId, ...neighborIds]);
+        graph.nodeColor(n => {
+          if (n.id === nodeId) return HIGHLIGHT;
+          if (active.has(n.id)) return '#c4f547';
+          return DIM;
+        });
+        graph.nodeRelSize(3.2);
+        const target = baseNodes.find(n => n.id === nodeId);
+        if (target) {
+          const distRatio = 1 + 60 / Math.hypot(target.x || 1, target.y || 1, target.z || 1);
+          graph.cameraPosition(
+            { x: (target.x || 0) * distRatio, y: (target.y || 0) * distRatio, z: (target.z || 0) * distRatio },
+            target,
+            1200
+          );
+        }
+      } else if (ev.data.type === 'clear') {
+        graph.nodeColor(n => COLORS[n.group] || '#8aa4b0');
+      }
+    });
+  </script>
+</body>
+</html>

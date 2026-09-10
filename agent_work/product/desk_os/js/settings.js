@@ -46,9 +46,9 @@ export function readByokConfig() {
 }
 
 /**
- * @param {{ button: HTMLElement | null, onToast?: (msg: string) => void }} opts
+ * @param {{ button: HTMLElement | null, onToast?: (msg: string) => void, onSignOut?: () => void }} opts
  */
-export function createSettings({ button, onToast }) {
+export function createSettings({ button, onToast, onSignOut }) {
   let panel = null;
 
   function ensurePanel() {
@@ -85,6 +85,7 @@ export function createSettings({ button, onToast }) {
           <button type="submit">Save</button>
         </form>
         <p class="friends-soft" data-settings-status></p>
+        <button type="button" class="settings-signout" data-settings-signout>Sign out</button>
       </div>
     `;
     document.body.appendChild(panel);
@@ -141,6 +142,7 @@ export function createSettings({ button, onToast }) {
     });
 
     panel.querySelector('[data-settings-close]')?.addEventListener('click', close);
+    panel.querySelector('[data-settings-signout]')?.addEventListener('click', () => onSignOut?.());
     panel.addEventListener('click', (e) => {
       if (e.target === panel) close();
     });

@@ -1,0 +1,371 @@
+<title>Concept Impact Score</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink: #143A2E;
+    --ink-soft: #143A2E99;
+    --ink-faint: #143A2E4D;
+    --cream: #FFF8E9;
+    --paper: #FFFFFF;
+    --paper-border: #143A2E1F;
+    --lime: #C4F547;
+    --lime-ink: #1E2E0A;
+    --violet: #5B4E9C;
+    --violet-soft: #5B4E9C1A;
+    --tierA: #1F7A4D;
+    --tierB: #B8720C;
+    --tierC: #5B6B7B;
+    --shadow: 0 1px 2px rgba(20,58,46,0.04), 0 8px 24px rgba(20,58,46,0.07);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #F2F3E9;
+      --ink-soft: #F2F3E9B3;
+      --ink-faint: #F2F3E966;
+      --cream: #10160F;
+      --paper: #171F16;
+      --paper-border: #F2F3E91F;
+      --lime: #D4FA6B;
+      --lime-ink: #14210A;
+      --violet: #A79AE8;
+      --violet-soft: #A79AE826;
+      --tierA: #4BC98A;
+      --tierB: #E3A73F;
+      --tierC: #9AA7B4;
+      --shadow: 0 1px 2px rgba(0,0,0,0.25), 0 8px 28px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F2F3E9;
+    --ink-soft: #F2F3E9B3;
+    --ink-faint: #F2F3E966;
+    --cream: #10160F;
+    --paper: #171F16;
+    --paper-border: #F2F3E91F;
+    --lime: #D4FA6B;
+    --lime-ink: #14210A;
+    --violet: #A79AE8;
+    --violet-soft: #A79AE826;
+    --tierA: #4BC98A;
+    --tierB: #E3A73F;
+    --tierC: #9AA7B4;
+    --shadow: 0 1px 2px rgba(0,0,0,0.25), 0 8px 28px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, "SF Pro Text", Segoe UI, Roboto, sans-serif;
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+
+  .page { max-width: 1040px; margin: 0 auto; padding: 56px 28px 72px; }
+
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--violet); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: "Newsreader", Georgia, serif; font-weight: 600; font-style: normal;
+    font-size: clamp(30px, 4.5vw, 44px); line-height: 1.08; letter-spacing: -0.01em;
+    margin: 0 0 14px; color: var(--ink); text-wrap: balance;
+  }
+  .lede {
+    font-size: 16.5px; color: var(--ink-soft); max-width: 720px; margin: 0 0 6px;
+  }
+  .pipeline {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px;
+    color: var(--ink-soft); background: var(--paper); border: 1px solid var(--paper-border);
+    border-radius: 8px; padding: 9px 14px; display: inline-block; margin-top: 18px;
+  }
+  .pipeline b { color: var(--violet); font-weight: 600; }
+
+  section { margin-top: 52px; }
+  h2 {
+    font-family: "Newsreader", Georgia, serif; font-weight: 600; font-size: 23px;
+    margin: 0 0 6px; color: var(--ink);
+  }
+  .section-note { font-size: 14px; color: var(--ink-faint); margin: 0 0 20px; max-width: 680px; }
+
+  .card {
+    background: var(--paper); border: 1px solid var(--paper-border); border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---- video ---- */
+  video {
+    display: block; width: 100%; border-radius: 16px 16px 0 0; background: #000;
+  }
+  .video-caption {
+    padding: 14px 18px; font-size: 13.5px; color: var(--ink-faint); border-top: 1px solid var(--paper-border);
+  }
+  .video-caption b { color: var(--ink-soft); }
+
+  /* ---- explorer ---- */
+  .explorer { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  #applet-card { flex: 1 1 560px; min-width: 320px; padding: 14px; }
+  #plot-holder { width: 100%; position: relative; }
+  #plot-canvas { width: 100%; height: auto; display: block; cursor: grab; touch-action: none; border-radius: 10px; }
+  #plot-canvas:active { cursor: grabbing; }
+  #panel { flex: 0 1 340px; min-width: 290px; padding: 20px; }
+
+  .formula {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px;
+    background: var(--violet-soft); color: var(--ink); border-radius: 9px; padding: 10px 12px; margin: 0 0 16px;
+  }
+  .readout { display: flex; gap: 10px; margin-bottom: 16px; }
+  .stat { flex: 1; border: 1px solid var(--paper-border); border-radius: 10px; padding: 9px 10px; }
+  .stat .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
+  .stat .v { font-size: 21px; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  input[type="range"] { width: 100%; accent-color: var(--violet); margin: 2px 0 16px; }
+
+  .tier { border: 1.5px solid var(--paper-border); border-radius: 10px; padding: 9px 12px; margin-bottom: 8px; opacity: 0.5; transition: opacity 0.15s ease, border-color 0.15s ease; }
+  .tier.active { opacity: 1; border-width: 2px; }
+  .tier h3 { margin: 0; font-size: 14px; font-weight: 600; }
+  .tier p { margin: 2px 0 0; font-size: 12px; color: var(--ink-faint); }
+  .tier.A.active { border-color: var(--tierA); } .tier.A h3 { color: var(--tierA); }
+  .tier.B.active { border-color: var(--tierB); } .tier.B h3 { color: var(--tierB); }
+  .tier.C.active { border-color: var(--tierC); } .tier.C h3 { color: var(--tierC); }
+
+  .presets h4 { margin: 16px 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); font-weight: 600; }
+  .presets button {
+    margin: 0 6px 6px 0; padding: 5px 11px; font-size: 12.5px; cursor: pointer;
+    border: 1px solid var(--paper-border); border-radius: 999px; background: transparent; color: var(--ink-soft);
+    font-family: inherit;
+  }
+  .presets button:hover { border-color: var(--violet); color: var(--violet); }
+  .presets button:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--paper-border);
+    font-size: 13px; color: var(--ink-faint); max-width: 760px;
+  }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 640px) {
+    .page { padding: 36px 18px 56px; }
+  }
+</style>
+
+<div class="page">
+  <p class="eyebrow">MindCraft &middot; exploration</p>
+  <h1>Can a chapter animate itself?</h1>
+  <p class="lede">
+    A quick proof-of-concept: take one real, text-rich chapter and drive both a Manim animation and a
+    live GeoGebra applet straight from its own content — no hand-drawn assets. Source chapter:
+    Dan McCreary&rsquo;s <em>learning-graphs</em>, ch. 28, &ldquo;Concept Impact Score and Predicting Content Length.&rdquo;
+  </p>
+  <div class="pipeline">chapter text &rarr; <b>cis_spec.json</b> &rarr; renderer (Manim video / GeoGebra applet)</div>
+
+  <section>
+    <h2>The worked example, animated</h2>
+    <p class="section-note">
+      The chapter's own numbers: Behaviorism has an indegree of 1 (looks minor) but a Concept Impact
+      Score of 103, because everything that transitively depends on it adds up. Watch it climb.
+    </p>
+    <div class="card">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="__VIDEO_BASE64__" type="video/mp4">
+        Your browser can&rsquo;t play this video inline &mdash; the file is at
+        agent_work/manim_geogebra_demo/CISWorkedExample.mp4.
+      </video>
+      <div class="video-caption"><b>CISWorkedExample.mp4</b> &middot; 23s &middot; rendered with Manim, no LaTeX dependency</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The formula, interactive</h2>
+    <p class="section-note">
+      Same spec, a second renderer. Drag the point, use the slider, or click a real concept from the
+      chapter to see which content-budget tier it lands in.
+    </p>
+    <div class="explorer">
+      <div class="card" id="applet-card">
+        <div id="plot-holder"><canvas id="plot-canvas" aria-label="Elaboration Score curve, drag to explore"></canvas></div>
+      </div>
+
+      <div class="card" id="panel">
+        <div class="formula">E(c) = log(CIS + 1) / log(CIS<sub>max</sub> + 1),&nbsp; CIS<sub>max</sub> = 661</div>
+        <div class="readout">
+          <div class="stat"><div class="k">CIS</div><div class="v" id="out-cis">8</div></div>
+          <div class="stat"><div class="k">E(c)</div><div class="v" id="out-e">0.34</div></div>
+          <div class="stat"><div class="k">Word budget</div><div class="v" id="out-words" style="font-size:15px">250&ndash;400</div></div>
+        </div>
+        <input type="range" id="cis-slider" min="1" max="661" step="1" value="8" aria-label="CIS value">
+        <div class="tier A" id="tier-A"><h3>Tier A &mdash; Full treatment</h3><p>500&ndash;750 words &middot; worked example <b>and</b> a diagram/chart/MicroSim</p></div>
+        <div class="tier B" id="tier-B"><h3>Tier B &mdash; Standard</h3><p>250&ndash;400 words &middot; worked example</p></div>
+        <div class="tier C" id="tier-C"><h3>Tier C &mdash; Brief</h3><p>120&ndash;200 words &middot; a clear definition</p></div>
+        <div class="presets">
+          <h4>Real concepts from this chapter</h4>
+          <div id="preset-buttons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b style="color:var(--ink-soft)">What's real vs. illustrative:</b> the CIS values, E(c) formula, CIS<sub>max</sub>=661, and tier thresholds are the chapter's actual numbers. The four unlabeled leaf sub-scores in the video are illustrative &mdash; the chapter doesn't enumerate that subtree. The spec extraction here was done by hand once; an LLM doing that extraction automatically is the unproven step for a real pipeline.</p>
+    <p>The GeoGebra panel keeps a fixed light "instrument" background in both themes &mdash; it's a third-party embedded canvas with its own hardcoded plot colors, styled once rather than re-issued per theme.</p>
+  </footer>
+</div>
+
+<script>
+const SPEC = {
+  cisMax: 661,
+  tiers: [
+    { tier: "A", eMin: 0.5, words: "500–750" },
+    { tier: "B", eMin: 0.2, words: "250–400" },
+    { tier: "C", eMin: 0.0, words: "120–200" }
+  ],
+  presets: [
+    { label: "Behaviorism", cis: 103 },
+    { label: "Recursive Importance Measure", cis: 8 },
+    { label: "PageRank", cis: 7 },
+    { label: "Concept Impact Score (CIS)", cis: 6 },
+    { label: "Global Normalization", cis: 4 },
+    { label: "Elaboration Score", cis: 3 },
+    { label: "Elaboration Tier", cis: 2 },
+    { label: "Single-Pass DAG Computation", cis: 1 },
+    { label: "Concept (root, CIS max)", cis: 661 }
+  ]
+};
+
+const E = cis => Math.log(cis + 1) / Math.log(SPEC.cisMax + 1);
+const tierOf = e => SPEC.tiers.find(t => e >= t.eMin);
+
+let currentCis = 8;
+
+function render(cis) {
+  cis = Math.min(661, Math.max(1, Math.round(cis)));
+  currentCis = cis;
+  const e = E(cis), t = tierOf(e);
+  document.getElementById("out-cis").textContent = cis;
+  document.getElementById("out-e").textContent = e.toFixed(2);
+  document.getElementById("out-words").textContent = t.words;
+  for (const x of ["A", "B", "C"])
+    document.getElementById("tier-" + x).classList.toggle("active", t.tier === x);
+  document.getElementById("cis-slider").value = cis;
+  drawPlot();
+}
+
+document.getElementById("cis-slider").addEventListener("input", ev => render(+ev.target.value));
+const pb = document.getElementById("preset-buttons");
+for (const p of SPEC.presets) {
+  const b = document.createElement("button");
+  b.textContent = `${p.label} (${p.cis})`;
+  b.onclick = () => render(p.cis);
+  pb.appendChild(b);
+}
+
+// ---- Native canvas plot (no external library — the GeoGebra CDN script
+// this originally used is blocked by the Artifacts sandbox's CSP, which
+// permits nothing but Google Fonts. Same math, same interaction, drawn by
+// hand instead of an embedded third-party app.) ----
+const canvas = document.getElementById("plot-canvas");
+const ctx = canvas.getContext("2d");
+const PLOT = { xMin: 1, xMax: 661, yMin: -0.06, yMax: 1.1, padL: 46, padR: 18, padT: 16, padB: 34 };
+
+function token(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function plotRect(width, height) {
+  return { x: PLOT.padL, y: PLOT.padT, w: width - PLOT.padL - PLOT.padR, h: height - PLOT.padT - PLOT.padB };
+}
+function xToPx(cis, rect) { return rect.x + (cis - PLOT.xMin) / (PLOT.xMax - PLOT.xMin) * rect.w; }
+function yToPx(e, rect) { return rect.y + rect.h - (e - PLOT.yMin) / (PLOT.yMax - PLOT.yMin) * rect.h; }
+function pxToX(px, rect) { return PLOT.xMin + (px - rect.x) / rect.w * (PLOT.xMax - PLOT.xMin); }
+
+function drawPlot() {
+  const holder = document.getElementById("plot-holder");
+  const cssWidth = holder.clientWidth;
+  const cssHeight = Math.round(cssWidth * 0.6);
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = cssWidth * dpr;
+  canvas.height = cssHeight * dpr;
+  canvas.style.height = cssHeight + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+  const rect = plotRect(cssWidth, cssHeight);
+  const ink = token("--ink"), inkFaint = token("--ink-faint"), violet = token("--violet");
+  const tierA = token("--tierA"), tierB = token("--tierB"), tierC = token("--tierC");
+
+  // Tier bands
+  const bandTop = yToPx(PLOT.yMax, rect);
+  ctx.globalAlpha = 0.13;
+  ctx.fillStyle = tierA; ctx.fillRect(rect.x, bandTop, rect.w, yToPx(0.5, rect) - bandTop);
+  ctx.fillStyle = tierB; ctx.fillRect(rect.x, yToPx(0.5, rect), rect.w, yToPx(0.2, rect) - yToPx(0.5, rect));
+  ctx.fillStyle = tierC; ctx.fillRect(rect.x, yToPx(0.2, rect), rect.w, yToPx(0, rect) - yToPx(0.2, rect));
+  ctx.globalAlpha = 1;
+
+  // Threshold lines
+  ctx.strokeStyle = tierA; ctx.setLineDash([3, 3]); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(rect.x, yToPx(0.5, rect)); ctx.lineTo(rect.x + rect.w, yToPx(0.5, rect)); ctx.stroke();
+  ctx.strokeStyle = tierB;
+  ctx.beginPath(); ctx.moveTo(rect.x, yToPx(0.2, rect)); ctx.lineTo(rect.x + rect.w, yToPx(0.2, rect)); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Tier labels
+  ctx.font = "11px Inter, sans-serif"; ctx.textBaseline = "middle";
+  ctx.fillStyle = tierA; ctx.fillText("Tier A · 500–750 words", rect.x + 10, yToPx(0.5, rect) - 12);
+  ctx.fillStyle = tierB; ctx.fillText("Tier B · 250–400 words", rect.x + 10, yToPx(0.2, rect) - 12);
+  ctx.fillStyle = tierC; ctx.fillText("Tier C · 120–200 words", rect.x + 10, yToPx(0, rect) - 12);
+
+  // Axes
+  ctx.strokeStyle = inkFaint; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(rect.x, yToPx(0, rect)); ctx.lineTo(rect.x + rect.w, yToPx(0, rect)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(rect.x, rect.y); ctx.lineTo(rect.x, rect.y + rect.h); ctx.stroke();
+  ctx.fillStyle = inkFaint; ctx.font = "11px Inter, sans-serif"; ctx.textAlign = "center";
+  ctx.fillText("CIS", rect.x + rect.w / 2, cssHeight - 10);
+  ctx.save(); ctx.translate(14, rect.y + rect.h / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillText("E(c)", 0, 0); ctx.restore();
+  ctx.textAlign = "left";
+  [1, 165, 330, 495, 661].forEach(v => ctx.fillText(String(v), xToPx(v, rect) - 8, cssHeight - 20));
+  [0, 0.5, 1].forEach(v => { ctx.textAlign = "right"; ctx.fillText(v.toFixed(1), rect.x - 6, yToPx(v, rect)); });
+  ctx.textAlign = "left";
+
+  // Curve
+  ctx.strokeStyle = ink; ctx.lineWidth = 2.5; ctx.beginPath();
+  for (let cis = PLOT.xMin; cis <= PLOT.xMax; cis += 3) {
+    const px = xToPx(cis, rect), py = yToPx(E(cis), rect);
+    cis === PLOT.xMin ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Guides + point
+  const px = xToPx(currentCis, rect), py = yToPx(E(currentCis), rect);
+  ctx.strokeStyle = violet; ctx.setLineDash([2, 3]); ctx.lineWidth = 1.25;
+  ctx.beginPath(); ctx.moveTo(px, yToPx(0, rect)); ctx.lineTo(px, py); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(rect.x, py); ctx.lineTo(px, py); ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = violet; ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = token("--paper"); ctx.lineWidth = 2; ctx.stroke();
+
+  ctx.fillStyle = violet; ctx.font = "600 12px Inter, sans-serif";
+  ctx.fillText(`CIS = ${currentCis}, E = ${E(currentCis).toFixed(2)}`, Math.min(px + 12, rect.x + rect.w - 150), py - 10);
+}
+
+let dragging = false;
+function posToCis(clientX) {
+  const cssRect = canvas.getBoundingClientRect();
+  const rect = plotRect(cssRect.width, cssRect.height);
+  return pxToX(clientX - cssRect.left, rect);
+}
+canvas.addEventListener("pointerdown", ev => { dragging = true; canvas.setPointerCapture(ev.pointerId); render(posToCis(ev.clientX)); });
+canvas.addEventListener("pointermove", ev => { if (dragging) render(posToCis(ev.clientX)); });
+canvas.addEventListener("pointerup", () => { dragging = false; });
+
+new ResizeObserver(() => drawPlot()).observe(document.getElementById("plot-holder"));
+if (window.matchMedia) {
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawPlot);
+}
+render(8);
+</script>

@@ -3432,7 +3432,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 }
 /* These three were missed by the 2026-09-02 "Desk workspace redesign" pass
    (everything below .hub-tutor-duo picked up --desk-ink/--serif; this head
-   never did) — still the pre-redesign sans/near-black styling, visibly
+   never did), still the pre-redesign sans/near-black styling, visibly
    inconsistent with "The Desk"/"Jobs"/the hero h1 next to it. Brought in
    line with .hub-hero-copy h1 / .rh-side-head h3's real serif + --desk-ink
    language, 2026-09-03. */
@@ -3471,7 +3471,7 @@ body.is-hub-chrome .sky { opacity: 0; }
   transition: box-shadow 200ms ease, border-color 200ms ease;
 }
 /* The Location field's click target (2026-09-02): a brief glow on the map
-   pane, not a new interaction of its own — the map already places the pin
+   pane, not a new interaction of its own; the map already places the pin
    on its own click handler the whole time the event form is open. */
 .hub-tutor-pane.map.is-highlighted {
   border-color: rgba(196, 245, 71, 0.7);
@@ -5292,6 +5292,19 @@ body.is-hub-chrome .sky { opacity: 0; }
    marketing page's studio trail this same day. Say it explicitly so the
    model/base-URL fields actually hide until Custom is picked. */
 .settings-form [hidden] { display: none !important; }
+.settings-signout {
+  margin-top: 4px;
+  padding: 11px 12px;
+  border: 1px solid rgba(45, 74, 56, 0.16);
+  border-radius: 12px;
+  background: #fff;
+  color: #a4402c;
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.settings-signout:hover { background: rgba(164, 64, 44, 0.08); border-color: rgba(164, 64, 44, 0.3); }
 .friends-list { display: flex; flex-direction: column; gap: 8px; }
 .friends-row {
   display: flex;
@@ -5391,7 +5404,7 @@ body.is-hub-chrome .sky { opacity: 0; }
    form's own inputs (2026-09-02 ask): sits right under Title, same visual
    language as .tm-ef-input. Clicking it doesn't place a pin itself (the
    map, still the only thing that does that, listens for clicks the whole
-   time this form is open) — it just highlights the map pane so a student
+   time this form is open); it just highlights the map pane so a student
    scanning the form top to bottom actually notices where to look. */
 .tm-ef-location {
   width: 100%;
@@ -6051,7 +6064,11 @@ body.is-hub-chrome .sky { opacity: 0; }
   z-index: 60;
   flex: none;
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(590px, 700px) minmax(240px, 1fr);
+  /* Two columns now, not three: the Call/Settings actions moved into the
+     in-world HUD (2026-09-04), so the old minmax(240px, 1fr) end column
+     would just be dead space here. Brand left, (currently hidden) tab row
+     center-right. */
+  grid-template-columns: minmax(180px, 1fr) minmax(0, 700px);
   align-items: center;
   gap: 20px;
   min-height: 86px;
@@ -6146,11 +6163,6 @@ body.is-hub-chrome .sky { opacity: 0; }
 .hub-tabs2 button:nth-child(3).is-active { background: var(--desk-gold); }
 .hub-tabs2 button:nth-child(4).is-active { background: var(--desk-sage); }
 .hub-tabs2 button.is-active::after { content: none; }
-
-.hub-nav-actions {
-  justify-self: end;
-  gap: 8px;
-}
 
 .hub-friends-btn,
 .hub-settings,
@@ -6365,7 +6377,7 @@ body.is-hub-chrome .sky { opacity: 0; }
 
 /* One clean object, not a page in a paper stack (2026-09-02: dropped the
    paper-back layers, bookmark ribbon, raccoon, and Jesse slip that used to
-   surround it) — .hub-workspace-object and .hub-graph-sheet are the same
+   surround it); .hub-workspace-object and .hub-graph-sheet are the same
    element now, straight (no tilt), filling its full box edge to edge. */
 .hub-workspace-object {
   position: relative;
@@ -6643,6 +6655,330 @@ button.hub-tutor-tile { text-align: left; font-family: inherit; cursor: pointer;
 .sim-library-icon svg { width: 21px; height: 21px; }
 .sim-library-item strong { display: block; font: 750 12px/1.15 var(--sans); }
 .sim-library-item small { display: block; margin-top: 4px; color: var(--desk-muted); font: 600 9px/1.25 var(--sans); }
+.sim-library-item.is-from-library .sim-library-icon { background: #cdbfe8; }
+
+.sim-invent { margin: 18px 0; padding-top: 16px; border-top: 1px dashed var(--desk-ink); }
+.sim-invent-form { display: flex; flex-direction: column; gap: 8px; }
+.sim-invent-form input {
+  width: 100%;
+  padding: 10px 11px;
+  border: 1px solid var(--desk-ink);
+  border-radius: 6px;
+  background: var(--desk-paper);
+  color: var(--desk-ink);
+  font: 600 12px/1.3 var(--sans);
+}
+.sim-invent-form input:focus-visible { outline: 2px solid var(--desk-forest); outline-offset: 1px; }
+.sim-invent-form button {
+  padding: 9px 12px;
+  border: 1px solid var(--desk-ink);
+  border-radius: 6px;
+  background: var(--lime);
+  color: var(--desk-ink);
+  font: 750 11px/1 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.sim-invent-form button:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--desk-ink); }
+.sim-invent-form button:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+
+/* ---------- the walkable world (2026-09-04) ----------
+   A top-down blocky garden drawn entirely in CSS: flat fills, 2px ink
+   borders, hard offset shadows, the same visual language the sims draw
+   themselves with. No images, no engine. simWorld.js renders into
+   [data-world-stage] and owns [data-world-overlay]. */
+.sim-world { margin-bottom: 22px; }
+.sim-world-frame {
+  position: relative;
+  border: 2px solid var(--desk-ink);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 6px 6px 0 rgba(20, 58, 46, 0.2);
+}
+.sim-world-stage {
+  position: relative;
+  height: clamp(380px, 48vh, 520px);
+  overflow: hidden;
+  outline: none;
+  background: #a3cd82;
+}
+.sim-world-stage:focus-visible { box-shadow: inset 0 0 0 3px var(--lime); }
+/* The camera layer: a fixed WORLD_W x WORLD_H px map (simWorld.js sets the
+   size inline, single source of truth), panned with translate3d so the
+   stage above stays a fixed-size window into it. */
+.sim-world-map {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+.sim-world-terrain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid; /* the repeat() template comes inline from simWorld.js */
+}
+.sim-world-tile.is-grass-a { background: #a3cd82; }
+.sim-world-tile.is-grass-b { background: #98c477; }
+.sim-world-tile.is-grass-c { background: #8fbc6e; }
+.sim-world-tile.is-dirt { background: #b98f5e; }
+.sim-world-tile.is-stone { background: #a3a394; }
+.sim-world-path {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px; /* top comes inline from simWorld.js, in world px */
+  background: repeating-conic-gradient(#dcc38d 0% 25%, #d0b478 0% 50%) 0 0 / 36px 36px;
+  border-top: 2px solid rgba(20, 58, 46, 0.22);
+  border-bottom: 2px solid rgba(20, 58, 46, 0.22);
+}
+.sim-world-path.is-vertical {
+  left: auto;
+  right: auto;
+  width: 36px;
+  height: auto; /* left/top/height come inline from simWorld.js */
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 2px solid rgba(20, 58, 46, 0.22);
+  border-right: 2px solid rgba(20, 58, 46, 0.22);
+}
+.sim-world-decor { position: absolute; z-index: 2; transform: translate(-50%, -50%); pointer-events: none; }
+.wsp-flower { display: block; width: 12px; height: 12px; border: 2px solid var(--desk-ink); border-radius: 50%; background: #ef806a; box-shadow: 0 10px 0 -4px var(--desk-forest); }
+.wsp-rock { display: block; width: 24px; height: 15px; border: 2px solid var(--desk-ink); border-radius: 4px; background: #b8b3a6; }
+.wsp-bush { display: block; width: 36px; height: 22px; border: 2px solid var(--desk-ink); border-radius: 8px 8px 4px 4px; background: var(--desk-sage); }
+
+.sim-world-obj {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  transform: translate(-50%, -100%);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.sim-world-obj:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; border-radius: 8px; }
+.sim-world-obj:hover .sim-world-obj-sprite { transform: translateY(-2px); }
+.sim-world-obj-sprite { position: relative; display: block; transition: transform 0.15s ease; }
+.sim-world-obj-label {
+  padding: 4px 8px;
+  border: 2px solid var(--desk-ink);
+  border-radius: 6px;
+  background: var(--desk-paper);
+  color: var(--desk-ink);
+  font: 750 10px/1 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  box-shadow: 3px 3px 0 rgba(20, 58, 46, 0.3);
+}
+
+.sim-world-obj-sprite.is-plant,
+.sim-world-decor.is-plant { width: 64px; height: 68px; }
+.wsp-plant-pot { position: absolute; left: 10px; right: 10px; bottom: 0; height: 26px; border: 2px solid var(--desk-ink); background: var(--desk-gold); }
+.wsp-plant-stem { position: absolute; left: 50%; bottom: 24px; width: 8px; height: 26px; margin-left: -4px; border: 2px solid var(--desk-ink); background: var(--desk-forest); }
+.wsp-plant-leaf { position: absolute; bottom: 44px; width: 26px; height: 16px; border: 2px solid var(--desk-ink); border-radius: 50% 0 50% 0; background: var(--desk-sage); }
+.wsp-plant-leaf.left { left: 4px; transform: rotate(14deg); }
+.wsp-plant-leaf.right { right: 4px; transform: scaleX(-1) rotate(14deg); }
+
+.sim-world-obj-sprite.is-careers,
+.sim-world-obj-sprite.is-library,
+.sim-world-obj-sprite.is-tutors,
+.sim-world-obj-sprite.is-workshop { width: 124px; height: 98px; }
+.wsp-roof { position: absolute; left: -6px; right: -6px; top: 0; height: 26px; border-radius: 4px; background: var(--desk-ink); }
+.wsp-roof.is-navy { background: #35507e; border: 2px solid var(--desk-ink); }
+.wsp-roof.is-coral { background: var(--desk-coral); border: 2px solid var(--desk-ink); }
+.wsp-wall { position: absolute; left: 0; right: 0; top: 22px; bottom: 0; border: 2px solid var(--desk-ink); }
+.wsp-wall.is-gold { background: var(--desk-gold); }
+.wsp-wall.is-paper { background: var(--desk-paper); }
+.wsp-wall.is-coral-wall { background: #f6ddd4; }
+.wsp-wall.is-coral-wall .wsp-window { left: 12px; }
+.wsp-wall.is-coral-wall .wsp-window + .wsp-window { left: auto; right: 12px; }
+.wsp-roof.is-gray { background: #8a8478; border: 2px solid var(--desk-ink); }
+.wsp-wall.is-gray-wall { background: #d9d4c8; }
+.wsp-gear {
+  position: absolute; left: 50%; top: 16px; width: 26px; height: 26px; margin-left: -13px;
+  border: 2px solid var(--desk-ink); border-radius: 50%; background: var(--desk-gold);
+}
+.wsp-gear::before, .wsp-gear::after {
+  content: ''; position: absolute; inset: -5px; border: 2px dashed var(--desk-ink); border-radius: 50%; opacity: .55;
+}
+.wsp-gear::after { inset: 8px; border-style: solid; border-color: var(--desk-paper); background: var(--desk-paper); }
+.wsp-door { position: absolute; left: 50%; bottom: 0; width: 26px; height: 34px; margin-left: -13px; border-radius: 4px 4px 0 0; background: var(--desk-ink); }
+.wsp-window { position: absolute; left: 12px; top: 12px; width: 30px; height: 22px; border: 2px solid var(--desk-ink); background: #bfe6ef; }
+.wsp-window.is-screen { background: var(--lime); animation: wspScreenGlow 2.2s ease-in-out infinite; }
+@keyframes wspScreenGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 245, 71, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(196, 245, 71, 0.45); }
+}
+.wsp-book { position: absolute; right: 12px; top: 12px; width: 22px; height: 26px; border: 2px solid var(--desk-ink); border-radius: 2px 6px 6px 2px; background: #aec3ea; }
+
+.sim-world-char { position: absolute; z-index: 6; width: 26px; height: 40px; pointer-events: none; }
+.sim-world-char-name {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--desk-ink);
+  color: var(--desk-paper);
+  font: 700 8px/1 var(--sans);
+  white-space: nowrap;
+}
+.sim-world-char-head { position: absolute; left: 50%; top: 0; width: 16px; height: 14px; margin-left: -8px; border: 2px solid var(--desk-ink); background: #e8b98a; }
+.sim-world-char-head::after { content: ''; position: absolute; top: 3px; right: 2px; width: 3px; height: 3px; background: var(--desk-ink); }
+.sim-world-char[data-facing="left"] .sim-world-char-head::after { right: auto; left: 2px; }
+.sim-world-char-body { position: absolute; left: 50%; top: 12px; width: 22px; height: 16px; margin-left: -11px; border: 2px solid var(--desk-ink); background: var(--lime); }
+.sim-world-char-legs { position: absolute; left: 50%; top: 27px; display: flex; gap: 3px; transform: translateX(-50%); }
+.sim-world-char-legs span { width: 8px; height: 12px; border-radius: 0 0 2px 2px; background: var(--desk-ink); }
+.sim-world-char.is-walking .sim-world-char-legs span:first-child { animation: wspStepA 0.3s steps(2) infinite; }
+.sim-world-char.is-walking .sim-world-char-legs span:last-child { animation: wspStepB 0.3s steps(2) infinite; }
+@keyframes wspStepA { 50% { height: 8px; } }
+@keyframes wspStepB { 0% { height: 8px; } 50% { height: 12px; } }
+
+/* The in-world overlay: a panel over the scene, never a full-screen dialog.
+   The scrim keeps the world visible and dimmed around it. */
+.sim-world-overlay { position: absolute; inset: 0; z-index: 9; background: rgba(20, 58, 46, 0.42); }
+.sim-world-overlay[hidden] { display: none !important; }
+.sim-world-overlay-panel {
+  position: absolute;
+  inset: clamp(10px, 3.5%, 24px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 2px solid var(--desk-ink);
+  border-radius: 10px;
+  background: var(--desk-paper);
+  box-shadow: 8px 8px 0 rgba(20, 58, 46, 0.45);
+}
+.sim-world-overlay-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--desk-ink);
+  background: var(--desk-cream);
+}
+.sim-world-overlay-head strong { flex: 1; color: var(--desk-ink); font: 400 18px/1.1 var(--serif); }
+.sim-world-overlay-head a { color: var(--desk-forest); font: 700 11px/1 var(--sans); }
+.sim-world-overlay-head button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--desk-ink);
+  border-radius: 5px;
+  background: var(--desk-paper);
+  color: var(--desk-ink);
+  cursor: pointer;
+}
+.sim-world-overlay-head button svg { width: 17px; height: 17px; }
+.sim-world-overlay-body { display: flex; flex: 1; min-height: 0; }
+.sim-world-overlay-doc.sim-solo-doc { width: min(320px, 36%); border-right: 2px solid var(--desk-ink); }
+.sim-world-overlay-mount {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  background: var(--desk-cream);
+}
+.sim-world-overlay-mount iframe.sim-world-embed { display: block; width: 100%; height: 100%; border: 0; background: #101913; }
+.sim-world-overlay-mount .sim-node.is-solo { width: min(660px, 94%); margin: auto; }
+.sim-world-overlay-mount .sim-node.is-solo .sim-node-body { min-height: 280px; }
+.sim-world-overlay-mount .sim-node.is-solo iframe { height: 280px; }
+.sim-world-overlay-mount .hub-resume { height: 100%; margin: 0; padding: 12px; overflow: auto; }
+.sim-world-overlay-mount .rh-app { height: 100%; grid-template-columns: 76px minmax(0, 1.3fr) minmax(240px, 0.85fr); }
+@media (max-width: 760px) {
+  .sim-world-overlay-body { flex-direction: column; }
+  .sim-world-overlay-mount { order: 1; }
+  .sim-world-overlay-doc.sim-solo-doc { order: 2; width: auto; max-height: 36%; border-right: 0; border-top: 2px solid var(--desk-ink); }
+}
+.sim-world-hint { margin: 10px 0 0; color: rgba(20,58,46,.72); font: 600 11px/1.4 var(--sans); }
+
+/* ---------- world mode: the console goes full screen (2026-09-04) ----------
+   While the student world is the live surface, bootHub.js puts
+   .is-world-mode on .hub-stage and the whole shell becomes the console:
+   header and studio heading gone, no card border, the frame runs edge to
+   edge. Scoped under .hub-stage.is-world-mode on purpose so the tutor
+   role's classic header + tiles layout never picks any of this up. */
+.hub-stage.is-world-mode { overflow: hidden; }
+.hub-stage.is-world-mode .hub-nav { display: none; }
+.hub-stage.is-world-mode .hub-main {
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  min-height: 0;
+  padding: 0;
+}
+.hub-stage.is-world-mode .hub-mastery {
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 0;
+}
+.hub-stage.is-world-mode .hub-sim-studio {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.hub-stage.is-world-mode .sim-studio-head { display: none; }
+.hub-stage.is-world-mode .sim-world {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+.hub-stage.is-world-mode .sim-world-frame {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.hub-stage.is-world-mode .sim-world-stage { height: 100%; }
+.hub-stage.is-world-mode .sim-world-hint { display: none; }
+
+/* The in-game HUD: live-flow pill + Call + Settings, floating top right
+   over the scene (moved out of the page header, single owners). Above the
+   tiles, objects, and character, below the overlay's z-index of 9 so an
+   open building panel still dims and covers it. */
+.sim-world-hud {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* HUD chips: same ink-border, hard-shadow language as the rest of the desk,
+   but translucent paper with a blur so the garden reads through them and
+   they sit over the scene instead of flattening into a toolbar. */
+.sim-world-hud .sim-studio-live,
+.sim-world-hud .hub-friends-btn,
+.sim-world-hud .hub-settings {
+  border: 1px solid var(--desk-ink);
+  border-radius: 7px;
+  background: rgba(255, 253, 248, 0.85);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 2px 2px 0 rgba(20, 58, 46, 0.35);
+}
+.sim-world-hud .sim-studio-live { min-height: 42px; }
+.sim-world-hud .hub-friends-btn:hover,
+.sim-world-hud .hub-settings:hover {
+  background: rgba(255, 253, 248, 0.98);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(20, 58, 46, 0.45);
+}
 
 .sim-board-shell { min-width: 0; display: grid; grid-template-rows: 54px minmax(0, 1fr); background: #ebe8df; }
 .sim-board-toolbar {
@@ -6716,6 +7052,8 @@ button.hub-tutor-tile { text-align: left; font-family: inherit; cursor: pointer;
 .sim-node-signal { width: 10px; height: 10px; flex: none; border: 1px solid var(--desk-ink); border-radius: 50%; background: var(--desk-paper); }
 .sim-node.is-loading .sim-node-signal { background: var(--desk-gold); }
 .sim-node:not(.is-loading) .sim-node-signal { background: var(--lime); }
+.sim-node.is-failed .sim-node-signal { background: var(--stakes); }
+.sim-node.is-failed .sim-node-ready { color: var(--stakes); }
 .sim-node-title { min-width: 0; flex: 1; }
 .sim-node-title small { display: block; color: rgba(20,58,46,.7); font: 700 8px/1 var(--mono); text-transform: uppercase; }
 .sim-node-title strong { display: block; margin-top: 3px; overflow: hidden; font: 750 13px/1 var(--sans); text-overflow: ellipsis; white-space: nowrap; }
@@ -6763,7 +7101,7 @@ button.hub-tutor-tile { text-align: left; font-family: inherit; cursor: pointer;
 .sim-port.is-wiring .sim-port-dot { background: var(--lime); transform: scale(1.16); }
 
 .sim-solo-dialog {
-  width: min(820px, calc(100vw - 32px));
+  width: min(1120px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
   padding: 0;
   overflow: hidden;
@@ -6785,7 +7123,35 @@ button.hub-tutor-tile { text-align: left; font-family: inherit; cursor: pointer;
 }
 .sim-solo-dialog > header button { width: 34px; height: 34px; }
 .sim-solo-dialog > header svg { width: 17px; height: 17px; }
-.sim-solo-mount { min-height: 520px; padding: 22px; display: grid; place-items: center; background: var(--desk-cream); }
+.sim-solo-body { display: flex; max-height: calc(100vh - 86px); }
+.sim-solo-mount { flex: 1; min-height: 520px; padding: 22px; display: grid; place-items: center; overflow-y: auto; background: var(--desk-cream); }
+.sim-solo-doc {
+  width: 320px;
+  flex: none;
+  padding: 20px 18px;
+  overflow-y: auto;
+  border-right: 1px solid var(--desk-ink);
+  background: var(--desk-paper);
+}
+.sim-solo-doc h2 { margin: 0 0 14px; font: 400 20px/1.2 var(--serif); }
+.sim-solo-doc-factor {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 11px;
+  border: 1px solid rgba(20,58,46,.2);
+  border-radius: 7px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .18s, border-color .18s;
+}
+.sim-solo-doc-factor:hover { background: rgba(196,245,71,.16); border-color: var(--desk-ink); }
+.sim-solo-doc-factor.is-active { background: rgba(196,245,71,.4); border-color: var(--desk-ink); }
+.sim-solo-doc h3 { margin: 0 0 4px; color: var(--desk-forest); font: 750 11px/1 var(--sans); text-transform: uppercase; letter-spacing: 0.02em; }
+.sim-solo-doc-factor h3::after { content: 'click to find it →'; margin-left: 8px; color: var(--desk-muted); font-weight: 600; text-transform: none; letter-spacing: 0; }
+.sim-solo-doc p { margin: 0; color: var(--desk-ink); font: 500 12.5px/1.55 var(--sans); }
+.sim-solo-doc-note { padding-top: 12px; border-top: 1px dashed var(--desk-ink); color: var(--desk-muted); font-style: italic; }
 .sim-node.is-solo {
   position: relative;
   left: auto !important;
