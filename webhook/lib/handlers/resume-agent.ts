@@ -1,0 +1,423 @@
+/**
+ * POST /api/resume-agent
+ *
+ * Jesse: extract a private resume draft from LinkedIn paste/PDF, Drive
+ * folder text, and uploaded resume, then speak a short guided reply.
+ * Client waits ≥5s before playing voice. Does not invent employers.
+ *
+ * Routed through app-actions (Hobby function cap). Optional Firebase auth.
+ * No Firestore write unless a verified uid is present (not in v1).
+ */
+import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { setCors } from '../cors'
+import { callAnthropic, callByok, callGroq, parseModelJson, sanitizeText, type ByokChatOptions } from '../llmChat'
+
+const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
+// NOT llama-3.3-70b-versatile: Groq shut that model down 2026-08-16 (see
+// english-practice.ts's own discovery of this), this is the live,
+// confirmed replacement.
+const GROQ_MODEL = 'openai/gpt-oss-120b'
+const WAIT_MS = 5000
+const MAX_SOURCE = 24000
+
+export interface ResumeRole {
+  title: string
+  org: string
+  when: string
+  bullets: string[]
+}
+
+export interface ResumeDraft {
+  name: string
+  headline: string
+  school: string
+  email: string
+  location: string
+  age: string
+  skills: string[]
+  roles: ResumeRole[]
+  education: string[]
+  projects: string[]
+  files: string[]
+  linkedinUrl: string
+  drive: boolean
+}
+
+export interface SuggestedRole {
+  company: string
+  role: string
+  why: string
+  query: string
+}
+
+interface ResumeAgentBody {
+  message?: string
+  draft?: Partial<ResumeDraft>
+  sources?: {
+    linkedinUrl?: string
+    linkedinText?: string
+    driveFiles?: { name?: string; text?: string }[]
+    resumeText?: string
+    resumeFileName?: string
+  }
+  // A student-supplied key (2026-09-01), tried only after the platform's own
+  // Anthropic and Groq calls both fail, see callByok's own comment in
+  // llmChat.ts. Optional, never required, never persisted here.
+  byok?: {
+    provider?: string
+    apiKey?: string
+    model?: string
+    baseUrl?: string
+  }
+}
+
+const EMPTY_DRAFT: ResumeDraft = {
+  name: '',
+  headline: '',
+  school: '',
+  email: '',
+  location: '',
+  age: '',
+  skills: [],
+  roles: [],
+  education: [],
+  projects: [],
+  files: [],
+  linkedinUrl: '',
+  drive: false,
+}
+
+function clip(s: unknown, n: number): string {
+  return String(s || '').replace(/\u0000/g, '').slice(0, n)
+}
+
+function uniq(list: string[]): string[] {
+  const out: string[] = []
+  const seen = new Set<string>()
+  for (const raw of list) {
+    const t = String(raw || '').trim()
+    if (!t) continue
+    const k = t.toLowerCase()
+    if (seen.has(k)) continue
+    seen.add(k)
+    out.push(t)
+  }
+  return out
+}
+
+// Dedupe roles by (title, org): the same real job re-extracted on a later
+// turn (a student re-pasting the same resume, or a second source repeating
+// it) should not appear twice. Case-insensitive so "TD Securities" and
+// "td securities" collapse to one.
+function uniqRoles(list: ResumeRole[]): ResumeRole[] {
+  const out: ResumeRole[] = []
+  const seen = new Set<string>()
+  for (const r of list) {
+    const key = `${r.title} ${r.org}`.toLowerCase().trim()
+    if (!key.trim()) continue
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push(r)
+  }
+  return out
+}
+
+function mergeDraft(base: ResumeDraft, next: Partial<ResumeDraft> | null | undefined): ResumeDraft {
+  const b = { ...EMPTY_DRAFT, ...base }
+  const n = next || {}
+  return {
+    name: clip(n.name, 80) || b.name,
+    headline: clip(n.headline, 180) || b.headline,
+    school: clip(n.school, 120) || b.school,
+    email: clip(n.email, 120) || b.email,
+    location: clip(n.location, 80) || b.location,
+    age: clip(n.age, 3) || b.age,
+    skills: uniq([...(b.skills || []), ...((n.skills as string[]) || [])]).slice(0, 24),
+    // Accumulate, not replace-if-present: a single turn's extraction may
+    // only surface one or two roles from a longer resume (found live, a
+    // multi-job resume that only ended up with its most recent role on the
+    // draft), and every other array field here already accumulates. Roles
+    // was the one exception, now fixed to match.
+    roles: uniqRoles([...(b.roles || []), ...((n.roles as ResumeRole[]) || [])])
+      .slice(0, 12)
+      .map((r) => ({
+        title: clip(r.title, 80),
+        org: clip(r.org, 80),
+        when: clip(r.when, 60),
+        bullets: (r.bullets || []).map((x) => clip(x, 180)).filter(Boolean).slice(0, 5),
+      })),
+    education: uniq([...(b.education || []), ...((n.education as string[]) || [])]).slice(0, 8),
+    projects: uniq([...(b.projects || []), ...((n.projects as string[]) || [])]).slice(0, 8),
+    files: uniq([...(b.files || []), ...((n.files as string[]) || [])]).slice(0, 12),
+    linkedinUrl: clip(n.linkedinUrl, 200) || b.linkedinUrl,
+    drive: Boolean(n.drive || b.drive),
+  }
+}
+
+function draftReady(d: ResumeDraft): boolean {
+  return Boolean(d.name) && (d.roles.length > 0 || d.skills.length >= 2)
+}
+
+function heuristicExtract(message: string, sources: ResumeAgentBody['sources'], prior: ResumeDraft): ResumeDraft {
+  const blob = [
+    message,
+    sources?.linkedinUrl,
+    sources?.linkedinText,
+    sources?.resumeText,
+    sources?.resumeFileName,
+    ...(sources?.driveFiles || []).map((f) => `${f.name}\n${f.text}`),
+  ]
+    .filter(Boolean)
+    .join('\n')
+
+  const email = blob.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || prior.email
+  const li = (sources?.linkedinUrl || blob.match(/https?:\/\/(?:www\.)?linkedin\.com\/in\/[A-Za-z0-9\-_%]+/i)?.[0] || prior.linkedinUrl).replace(/\/$/, '')
+
+  const skillHits = ['Python', 'R', 'Excel', 'SQL', 'Stata', 'Java', 'JavaScript', 'TypeScript', 'Tutoring', 'Writing', 'Research', 'Tableau', 'PowerPoint', 'Spanish', 'French']
+    .filter((s) => new RegExp(`\\b${s}\\b`, 'i').test(blob))
+
+  const nameLine = blob.split('\n').map((l) => l.trim()).find((l) => /^[A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)?$/.test(l)) || ''
+  const school =
+    blob.match(/Macalester College|University of [A-Z][a-z]+|College of [A-Z][a-zA-Z ]+/i)?.[0] || prior.school
+
+  const files = uniq([
+    ...prior.files,
+    sources?.resumeFileName || '',
+    ...((sources?.driveFiles || []).map((f) => String(f.name || ''))),
+  ])
+
+  return mergeDraft(prior, {
+    name: prior.name || nameLine,
+    email,
+    school,
+    linkedinUrl: li,
+    skills: skillHits,
+    files,
+    drive: prior.drive || Boolean(sources?.driveFiles?.length),
+    headline: prior.headline,
+  })
+}
+
+function heuristicReply(draft: ResumeDraft, message: string): { reply: string; suggestedRoles: SuggestedRole[] } {
+  const t = message.toLowerCase()
+  if (/apply|job|let's go|lets go|ready/.test(t) && draftReady(draft)) {
+    return {
+      reply: `The draft is on your desk. We can look for ${draft.skills.slice(0, 2).join(' and ') || 'intern'} roles next.`,
+      suggestedRoles: suggestFromDraft(draft),
+    }
+  }
+  if (draft.roles.length) {
+    return {
+      reply: `Pulled ${draft.roles[0].org || 'your roles'} into a private draft. Tell me what to add or cut.`,
+      suggestedRoles: suggestFromDraft(draft),
+    }
+  }
+  if (draft.skills.length) {
+    return {
+      reply: `Added ${draft.skills.slice(0, 3).join(', ')}. Name a role if you want it on the page.`,
+      suggestedRoles: [],
+    }
+  }
+  return {
+    reply: 'I heard you. Paste LinkedIn, open The Desk Drive folder, or upload a PDF and I will place what is useful.',
+    suggestedRoles: [],
+  }
+}
+
+// Age-aware phrasing (2026-09-01): this used to hardcode every student as a
+// high schooler, matching discover-internships.ts's own buildQueries() -
+// which was assuming a college applicant ("college" fallback, "research
+// assistant", "Handshake") with no entry-level/no-experience constraint
+// anywhere, which is how a high schooler ended up with suggestions phrased
+// like real professional job postings. Fixed there, but this heuristic
+// fallback (only reached if the real model call also failed) still assumed
+// high school unconditionally, so a college student's fallback suggestions
+// stayed teen-level even once the AI path was fixed. Only flips tier on an
+// explicit, known age 19+: this is the crude safety-net path, not the real
+// model, so it stays conservative rather than trying to sniff "real
+// professional experience" out of role text with a regex.
+function suggestFromDraft(d: ResumeDraft): SuggestedRole[] {
+  const skills = d.skills.slice(0, 3).join(' ')
+  const school = d.school || 'high school'
+  const age = parseInt(d.age, 10)
+  const isOlder = Number.isFinite(age) && age >= 19
+  const out: SuggestedRole[] = []
+  if (isOlder) {
+    if (/R\b|Excel|SQL|Stata|Python|research/i.test(skills + JSON.stringify(d.roles))) {
+      out.push({
+        company: 'Research assistant / data roles',
+        role: 'Research assistant or analyst internship',
+        why: 'Matches methods and tools already on the draft.',
+        query: `research assistant internship college student ${skills}`.trim(),
+      })
+    }
+    if (/tutor|teaching|writing/i.test(skills + JSON.stringify(d.roles))) {
+      out.push({
+        company: 'Tutoring / education roles',
+        role: 'Tutoring or teaching assistant role',
+        why: 'You already teach or write on the page.',
+        query: `tutoring teaching assistant job ${school}`.trim(),
+      })
+    }
+    out.push({
+      company: 'Internships matching your headline',
+      role: 'Internship matching your headline',
+      why: 'Search from the draft, then log Applied on the board.',
+      query: `${d.headline || 'internship'} college student apply`.trim(),
+    })
+    return out.slice(0, 3)
+  }
+  if (/R\b|Excel|SQL|Stata|Python|research/i.test(skills + JSON.stringify(d.roles))) {
+    out.push({
+      company: 'Teen research programs',
+      role: 'Teen research internship or summer program',
+      why: 'Matches methods and tools already on the draft.',
+      query: `teen research internship high schoolers ${skills}`.trim(),
+    })
+  }
+  if (/tutor|teaching|writing/i.test(skills + JSON.stringify(d.roles))) {
+    out.push({
+      company: 'Local tutoring / education',
+      role: 'Peer or junior tutoring role',
+      why: 'You already teach or write on the page.',
+      query: `high school student tutor volunteer ${school}`.trim(),
+    })
+  }
+  out.push({
+    company: 'Pre-college / summer programs',
+    role: 'Summer program matching your headline',
+    why: 'Search from the draft, then log Applied on the board.',
+    query: `${d.headline || 'summer program'} high school student apply`.trim(),
+  })
+  return out.slice(0, 3)
+}
+
+const SYSTEM = `You are Jesse, the resume agent on The Desk by MindCraft.
+You help a student build a resume that sounds like them. Friendly, certain, short. Like a calm older sibling on a call. Not peppy. Not a recruiter bot.
+
+Rules:
+- Reply in 1-3 spoken sentences. No emoji. No exclamation marks. No em dashes.
+- Never invent employers, dates, GPAs, or skills that are not in SOURCES or the student's words.
+- Extract only useful resume facts: name, headline, school, email, location, age, skills, roles (title, org, when, 1-3 bullets), education, projects.
+- If the student's age is not yet in the draft, ask for it early, in your own words, once. It decides which
+  suggested roles actually fit them, not a headline guess. Do not ask again once it is known.
+- LinkedIn OpenID does not include Experience. Experience comes from pasted About/Experience, a LinkedIn PDF, Drive files, or the call.
+- Drive is folder-scoped: only files from The Desk folder. Say that when Drive is used.
+- The draft is private on their desk. Data stays in accounts they already own.
+- If the draft has a name plus at least one role or two skills, set readyToApply true and suggest up to 3 role DIRECTIONS (search queries), not fake job postings with fake URLs.
+  Match the suggestion tier to the student's REAL situation, read from their stated age and their actual roles,
+  never assumed:
+    Roughly 14 to 18, or no age given yet and no real work history on the draft: treat them as a high schooler.
+    Every suggestion MUST be something they are actually eligible for, a summer program, a pre-college program,
+    a teen research internship, a local volunteer or junior role. NEVER suggest a role that would realistically
+    require a college degree, prior professional experience, or years of experience.
+    19 or older, OR the draft already shows real professional or internship-level experience regardless of
+    stated age (e.g. a named company, an analyst/intern title, a real employer): suggest real next-step roles
+    and internships that actually match what is already on their draft, the same way a career-services advisor
+    would, not summer programs they have already outgrown.
+  When genuinely unsure which tier fits, ask rather than guess.
+- If they ask to apply, set action open_apply.
+- If sources are thin, ask for one next step: LinkedIn paste, Drive folder, or PDF.
+
+Return ONLY JSON:
+{"reply":"...","draft":{"name":"","headline":"","school":"","email":"","location":"","age":"","skills":[],"roles":[{"title":"","org":"","when":"","bullets":[]}],"education":[],"projects":[],"files":[],"linkedinUrl":"","drive":false},"readyToApply":false,"suggestedRoles":[{"company":"","role":"","why":"","query":""}],"action":""}`
+
+interface ParsedResumeReply {
+  reply?: string
+  draft?: Partial<ResumeDraft>
+  readyToApply?: boolean
+  suggestedRoles?: SuggestedRole[]
+  action?: string
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCors(res)
+  if (req.method === 'OPTIONS') return res.status(200).end()
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  const body = (req.body || {}) as ResumeAgentBody
+  const message = clip(body.message, 2000).trim()
+  if (!message) return res.status(400).json({ error: 'No message' })
+
+  const sources = body.sources || {}
+  const prior = mergeDraft(EMPTY_DRAFT, body.draft)
+  const linkedinText = clip(sources.linkedinText, MAX_SOURCE)
+  const resumeText = clip(sources.resumeText, MAX_SOURCE)
+  const driveFiles = (sources.driveFiles || []).slice(0, 6).map((f) => ({
+    name: clip(f.name, 120),
+    text: clip(f.text, 8000),
+  }))
+
+  const user = JSON.stringify({
+    message,
+    priorDraft: prior,
+    sources: {
+      linkedinUrl: clip(sources.linkedinUrl, 200),
+      linkedinText,
+      resumeFileName: clip(sources.resumeFileName, 120),
+      resumeText,
+      driveFiles,
+    },
+  })
+
+  const byok = body.byok
+  const byokProvider = byok?.provider
+  // 4000, not 1400 (2026-09-01): a real report of the AI reply reading as
+  // canned ("Pulled X into a private draft", the exact heuristicReply()
+  // fallback text below) confirmed the model call really was failing for
+  // that request. A direct test against the live Groq API with a realistic
+  // multi-role resume parsed cleanly even at 1400, so token budget was NOT
+  // the confirmed cause there, but a reasoning model (Groq's
+  // openai/gpt-oss-120b, some BYOK choices too) does spend tokens on hidden
+  // reasoning before it writes the JSON, and a longer real resume plus a
+  // writing sample is more source text than that one test used. Cheap,
+  // safe headroom either way, not a guaranteed fix by itself, see the
+  // roles-merge and age-guardrail fixes below for the two bugs that were
+  // actually confirmed by reading the code.
+  const RESUME_MAX_TOKENS = 4000
+  const validByok: ByokChatOptions | null =
+    byok?.apiKey && (byokProvider === 'openai' || byokProvider === 'groq' || byokProvider === 'gemini' || byokProvider === 'openrouter' || byokProvider === 'anthropic' || byokProvider === 'custom')
+      ? {
+          provider: byokProvider,
+          apiKey: clip(byok.apiKey, 200),
+          model: byok.model ? clip(byok.model, 80) : undefined,
+          baseUrl: byok.baseUrl ? clip(byok.baseUrl, 300) : undefined,
+          maxTokens: RESUME_MAX_TOKENS,
+          temperature: 0.3,
+          system: SYSTEM,
+        }
+      : null
+
+  const raw =
+    (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: RESUME_MAX_TOKENS, system: SYSTEM })) ||
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: RESUME_MAX_TOKENS, temperature: 0.3, system: SYSTEM })) ||
+    (validByok ? await callByok(user, validByok) : null)
+  const parsed = raw ? parseModelJson<ParsedResumeReply>(raw) : null
+  const fallback = !parsed
+
+  const extracted = heuristicExtract(message, { ...sources, linkedinText, resumeText, driveFiles }, prior)
+  const draft = mergeDraft(extracted, parsed?.draft)
+  if (sources.resumeFileName) draft.files = uniq([...draft.files, sources.resumeFileName])
+  if (driveFiles.length) draft.drive = true
+  if (sources.linkedinUrl) draft.linkedinUrl = clip(sources.linkedinUrl, 200)
+
+  const heuristic = heuristicReply(draft, message)
+  const reply = sanitizeText(parsed?.reply || heuristic.reply) || heuristic.reply
+  const suggestedRoles = (parsed?.suggestedRoles || []).length
+    ? parsed!.suggestedRoles!.slice(0, 3)
+    : heuristic.suggestedRoles
+  const readyToApply = Boolean(parsed?.readyToApply) || draftReady(draft)
+  const action = parsed?.action === 'open_apply' || /apply|let's apply|lets apply/i.test(message)
+    ? 'open_apply'
+    : ''
+
+  return res.status(200).json({
+    reply,
+    waitMs: WAIT_MS,
+    draft,
+    readyToApply,
+    suggestedRoles,
+    actions: action ? [{ type: action }] : [],
+    fallback,
+  })
+}
