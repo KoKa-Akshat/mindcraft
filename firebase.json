@@ -1,7 +1,4 @@
 {
-  "storage": {
-    "rules": "firebase/storage.rules"
-  },
   "emulators": {
     "firestore": {
       "port": 8091
@@ -11,92 +8,6 @@
     }
   },
   "hosting": [
-    {
-      "target": "app",
-      "public": "app/dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "redirects": [
-        {
-          "source": "/",
-          "destination": "https://joinmindcraft.com/",
-          "type": 302
-        },
-        {
-          "source": "/landing.html",
-          "destination": "https://joinmindcraft.com/",
-          "type": 301
-        },
-        {
-          "source": "/blog.html",
-          "destination": "https://joinmindcraft.com/blog.html",
-          "type": 301
-        },
-        {
-          "source": "/article.html",
-          "destination": "https://joinmindcraft.com/article.html",
-          "type": 301
-        }
-      ],
-      "rewrites": [
-        {
-          "source": "/desk-os",
-          "destination": "/desk-os/index.html"
-        },
-        {
-          "source": "/desk-os/studio",
-          "destination": "/desk-os/studio/index.html"
-        },
-        {
-          "source": "/desk-os/workflows",
-          "destination": "/desk-os/workflows/index.html"
-        },
-        {
-          "source": "/desk-os/workflows/resume",
-          "destination": "/desk-os/workflows/resume/index.html"
-        },
-        {
-          "source": "/desk-os/workflows/archive",
-          "destination": "/desk-os/workflows/archive/index.html"
-        },
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ],
-      "headers": [
-        {
-          "source": "/desk-os/**",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "**",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
-            }
-          ]
-        },
-        {
-          "source": "/assets/**",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "public, max-age=31536000, immutable"
-            }
-          ]
-        }
-      ]
-    },
     {
       "target": "world1",
       "public": "worlds/world2",
