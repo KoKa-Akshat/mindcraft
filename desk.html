@@ -231,51 +231,48 @@
   .hero h1 .hl > span{display:inline-block; transform:translateY(140%); animation:lineUp 1s var(--ease) forwards;}
   .hero h1 .hl:nth-child(2) > span{animation-delay:.12s;}
   @keyframes lineUp{to{transform:none;}}
-  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); white-space:nowrap;}
+  .hero h1 em{font-style:italic; font-weight:500; color:var(--leaf); position:relative; white-space:nowrap;}
+  /* the marker underline draws itself once the lines have landed - back on
+     the title (2026-09-03: moved off the rotating proof line, which is
+     gone now in favor of a static 1x3 grid, onto "making education fun
+     again" where it started). */
+  .hero h1 em svg{
+    position:absolute; left:-.02em; right:-.04em; bottom:-.16em; width:calc(100% + .06em); height:.22em;
+    overflow:visible; pointer-events:none;
+  }
+  .hero h1 em svg path{
+    fill:none; stroke:var(--lime); stroke-width:14; stroke-linecap:round;
+    stroke-dasharray:520; stroke-dashoffset:520; animation:drawSwash .7s .95s ease-out forwards;
+  }
+  @keyframes drawSwash{to{stroke-dashoffset:0;}}
   .hero .lead{
     margin:clamp(26px,3.8vh,38px) 0 0; max-width:52ch; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62;
     color:var(--chalk-dim); animation:rise .9s .3s var(--ease) both;
   }
   .hero .lead strong{color:var(--chalk); font-weight:600;}
-  /* Rotating proof line under the title (2026-09-03, moved the marker
-     underline here from the title): three frames on a loop — one
-     highlighted line, two bullets, one line + two bullets — with the
-     hand-drawn swash marking the whole rotator, drawn once on load rather
-     than per frame. All three frames are always in the DOM, stacked in the
-     same grid cell (grid-area 1/1) rather than shown/hidden one at a time,
-     so the container's height is always the TALLEST frame's height and
-     never reflows/flickers as frames swap — only opacity crossfades. */
-  .hero-rotator{
-    position:relative; margin:clamp(30px,4.2vh,42px) 0 0; padding-bottom:.3em; max-width:52ch;
-    display:grid; font-size:clamp(16px,1.7vw,19.5px); line-height:1.62; color:var(--chalk-dim);
-    animation:rise .9s .3s var(--ease) both;
+  /* Students / Parents / Teachers, 1x3 (2026-09-03, replaces the rotating
+     single-slot proof line): a static grid, all three always visible, each
+     column its own rise-in with a staggered delay so they land one at a
+     time (student, then parent, then teacher) on load, same rise keyframe
+     the rest of the hero already uses for its own load-in choreography. */
+  .hero-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(20px,3vw,40px);
+    margin:clamp(34px,4.6vh,48px) 0 0; max-width:1180px;
   }
-  .hero-rotator-frame{
-    grid-area:1/1; align-self:start; margin:0;
-    opacity:0; visibility:hidden; transition:opacity .5s ease;
+  .hero-col{ opacity:0; animation:rise .8s var(--ease) both; }
+  .hero-col:nth-child(1){animation-delay:.32s;}
+  .hero-col:nth-child(2){animation-delay:.5s;}
+  .hero-col:nth-child(3){animation-delay:.68s;}
+  .hero-col h3{
+    margin:0 0 10px; color:var(--chalk); font:700 15px var(--sans); letter-spacing:-.005em;
   }
-  .hero-rotator-frame.is-active{opacity:1; visibility:visible;}
-  .hero-rotator-frame strong{color:var(--chalk); font-weight:600;}
-  .hero-rotator-frame ul{margin:0; padding-left:1.15em;}
-  .hero-rotator-frame p + ul{margin-top:8px;}
-  .hero-rotator-frame li{margin:0 0 6px;}
-  .hero-rotator-frame li:last-child{margin-bottom:0;}
-  .hero-rotator-frame p{margin:0;}
-  /* A stable divider under the whole rotator, not a tight text-hug — frame
-     length varies a lot (one line vs. a line-plus-two-bullets) so a mark
-     that hugs the text would either float far below short frames or cut
-     through long ones. Pinned to the reserved box's own bottom, thin and
-     quiet, it reads as "this zone is dynamic" rather than misaligned. */
-  .hero-rotator-swash{
-    position:absolute; left:-.5%; right:-.5%; bottom:0; width:101%; height:6px;
-    overflow:visible; pointer-events:none;
+  .hero-col ul{margin:0; padding-left:1.1em; font-size:clamp(14px,1.3vw,15.5px); line-height:1.55; color:var(--chalk-dim);}
+  .hero-col li{margin:0 0 7px;}
+  .hero-col li:last-child{margin-bottom:0;}
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr; gap:22px;}
   }
-  .hero-rotator-swash path{
-    fill:none; stroke:var(--lime); stroke-width:3; stroke-linecap:round;
-    stroke-dasharray:1200; stroke-dashoffset:1200; animation:drawSwash .8s 1.05s ease-out forwards;
-  }
-  @keyframes drawSwash{to{stroke-dashoffset:0;}}
-  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,3.6vh,34px); animation:rise .9s .42s var(--ease) both;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(28px,4vh,40px); animation:rise .9s .86s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
   /* ---------- the library numbers (now a strip atop the studio, not a
@@ -805,22 +802,30 @@
     <p class="hero-kicker">The Desk by MindCraft</p>
     <h1>
       <span class="hl"><span>The M in MindCraft is for</span></span>
-      <span class="hl"><span><em>&ldquo;making education fun again.&rdquo;</em></span></span>
+      <span class="hl"><span><em>&ldquo;making education fun again.&rdquo;<svg viewBox="0 0 200 20" aria-hidden="true" preserveAspectRatio="none"><path d="M4 14 C 52 6, 118 4, 196 10"/></svg></em></span></span>
     </h1>
-    <div class="hero-rotator" id="heroRotator">
-      <p class="hero-rotator-frame is-active">Our students write and publish <strong>royalty books</strong>.</p>
-      <ul class="hero-rotator-frame">
-        <li>MindCrafters gather to peer review each other's work.</li>
-        <li>Students also meet their tutor 1:1 to review learning goals and outcomes.</li>
-      </ul>
-      <div class="hero-rotator-frame">
-        <p>Parents as well as Teachers can use our platform to teach/learn anything.</p>
+    <div class="hero-grid">
+      <div class="hero-col">
+        <h3>Students</h3>
         <ul>
-          <li>Parents: support your kid with interactive, simplified whitepapers.</li>
-          <li>Teachers: create homework that auto-tracks progress, or find new ways to teach in class.</li>
+          <li>Write and publish <strong>books</strong>.</li>
+          <li>Peer cohorts, plus a 1:1 tutor, every week.</li>
         </ul>
       </div>
-      <svg class="hero-rotator-swash" viewBox="0 0 1200 10" aria-hidden="true" preserveAspectRatio="none"><path d="M6 6 C 320 2, 880 2, 1194 7"/></svg>
+      <div class="hero-col">
+        <h3>Parents</h3>
+        <ul>
+          <li>Support your kid, right at home.</li>
+          <li>Find the right resources for anything they're learning.</li>
+        </ul>
+      </div>
+      <div class="hero-col">
+        <h3>Teachers</h3>
+        <ul>
+          <li><strong>Smart homework</strong> that tracks itself.</li>
+          <li>Live updates on every student.</li>
+        </ul>
+      </div>
     </div>
     <div class="hero-ctas">
       <a class="btn primary" href="#claim">Claim your desk</a>
@@ -1200,25 +1205,6 @@
       entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(e){ io.observe(e); });
-  })();
-
-  // ----- hero rotator: books -> peer review/tutor bullets -> parents and
-  // teachers, on a loop (2026-09-03). All frames stay in the DOM stacked in
-  // the same grid cell (see .hero-rotator-frame CSS) so the container's
-  // height never changes and swapping is a pure opacity crossfade, no
-  // reflow/flicker. Reduced motion leaves the first frame alone.
-  (function(){
-    var root = document.getElementById('heroRotator');
-    if(!root) return;
-    var frames = Array.prototype.slice.call(root.querySelectorAll('.hero-rotator-frame'));
-    if(frames.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var idx = 0;
-    function advance(){
-      frames[idx].classList.remove('is-active');
-      idx = (idx + 1) % frames.length;
-      frames[idx].classList.add('is-active');
-    }
-    setInterval(advance, 3800);
   })();
 
   // ----- library numbers count up to their real totals on first sight -----
